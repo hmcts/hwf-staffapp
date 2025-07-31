@@ -76,7 +76,7 @@ module NotifyMailerHelper
     kinds.filter_map do |text|
       key = reverse_lookup[text]
       I18n.t(key.to_s, scope: ['email.general.income_kind.kinds']) if key
-    end
+    end.presence
   end
 
   def dob_text(application)

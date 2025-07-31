@@ -1,8 +1,8 @@
 cy:
   email:
     general:
-      married_true: Sengl
-      married_false: Wedi priodi neu’n byw â rhywun
+      married_true: Wedi priodi neu’n byw â rhywun
+      married_false: Sengl
       saving_and_investments:
         less_than: "Llai na £4,250"
         between: "Rhwng £4,250 a £15,999"

@@ -1,8 +1,8 @@
 en-GB:
   email:
     general:
-      married_true: Single
-      married_false: Married or living with someone
+      married_true: Married or living with someone
+      married_false: Single
       saving_and_investments:
         less_than: 'Less than £4,250'
         between: 'Between £4,250 and £15,999'
