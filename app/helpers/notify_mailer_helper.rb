@@ -5,27 +5,27 @@ module NotifyMailerHelper
   # rubocop:disable Metrics/MethodLength, Metrics/AbcSize
   def to_h(application)
     {
-      application_reference_code: format_opt(application.reference), # same x
-      application_form_name: format_false(application.form_name), # user input x
-      application_fee_paid: format_yes_no(application.refund), # boolean x
-      application_ni_number: format_opt(application.ni_number), # user input x
-      application_status: married_status_text(application), # we set x
-      application_savings_and_investments: format_opt(savings_text(application)), # we set x
-      application_benefits: benefits_text(application), # we set x
-      application_children: children_text(application), # user input or false x
-      application_income_amount: format_opt(income_amount_text(application)), # user input x
-      application_income_period: format_opt(income_period(application)&.capitalize), # we set x
-      application_income_type: format_opt(income_kind_text(application)), # kinds - we set x
-      application_probate: format_yes_no(application.probate), # boolean x
-      application_claim_number: format_false(application.case_number), # user input x
-      application_date_of_birth: format_opt(dob_text(application)), # user input x
-      application_first_name: format_opt(application.first_name), # user input x
-      application_last_name: format_opt(application.last_name), # user input x
-      application_address: format_opt(application.address), # user input x
-      application_postcode: format_opt(application.postcode), # user input x
-      application_email: format_opt(application.email_address), # user input x
-      application_declaration: declaration_text(application), # we set x
-      application_applying_method: applying_method_text(application) # we set x
+      application_reference_code: format_opt(application.reference),
+      application_form_name: format_false(application.form_name),
+      application_fee_paid: format_yes_no(application.refund),
+      application_ni_number: format_opt(application.ni_number),
+      application_status: married_status_text(application),
+      application_savings_and_investments: format_opt(savings_text(application)),
+      application_benefits: benefits_text(application),
+      application_children: children_text(application),
+      application_income_amount: format_opt(income_amount_text(application)),
+      application_income_period: format_opt(income_period(application)&.capitalize),
+      application_income_type: format_opt(income_kind_text(application)),
+      application_probate: format_yes_no(application.probate),
+      application_claim_number: format_false(application.case_number),
+      application_date_of_birth: format_opt(dob_text(application)),
+      application_first_name: format_opt(application.first_name),
+      application_last_name: format_opt(application.last_name),
+      application_address: format_opt(application.address),
+      application_postcode: format_opt(application.postcode),
+      application_email: format_opt(application.email_address),
+      application_declaration: declaration_text(application),
+      application_applying_method: applying_method_text(application)
     }
   end
   # rubocop:enable Metrics/MethodLength, Metrics/AbcSize
@@ -102,7 +102,7 @@ module NotifyMailerHelper
   end
 
   def format_false(value)
-    value || I18n.t('email.confirmation.false')
+    value.presence || I18n.t('email.confirmation.false')
   end
 
   def format_yes_no(value)
@@ -110,6 +110,6 @@ module NotifyMailerHelper
   end
 
   def format_opt(value)
-    value || I18n.t('email.confirmation.none')
+    value.presence || I18n.t('email.confirmation.none')
   end
 end
