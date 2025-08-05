@@ -14,7 +14,7 @@ module NotifyMailerHelper
       application_benefits: benefits_text(application),
       application_children: children_text(application),
       application_income_amount: format_opt(income_amount_text(application)),
-      application_income_period: format_opt(income_period(application)&.capitalize),
+      application_income_period: format_opt(income_period_text(application)&.capitalize),
       application_income_type: format_opt(income_kind_text(application)),
       application_probate: format_yes_no(application.probate),
       application_claim_number: format_false(application.case_number),
@@ -31,6 +31,13 @@ module NotifyMailerHelper
   # rubocop:enable Metrics/MethodLength, Metrics/AbcSize
 
   private
+
+  def income_period_text(application)
+    return if application.income_period.nil?
+
+    scope = 'email.general'
+    I18n.t("income_period_#{application.income_period}", scope: scope).downcase
+  end
 
   def married_status_text(application)
     scope = 'email.general'

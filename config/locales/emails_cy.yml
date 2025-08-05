@@ -1,6 +1,8 @@
 cy:
   email:
     general:
+      income_period_average: Cyfartaledd am y tri mis diwethaf
+      income_period_last_month: Mis calendr diwethaf
       married_true: Wedi priodi neu’n byw â rhywun
       married_false: Sengl
       saving_and_investments:

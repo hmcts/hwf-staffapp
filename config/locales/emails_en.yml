@@ -1,6 +1,8 @@
 en-GB:
   email:
     general:
+      income_period_average: Average income for last three calendar months
+      income_period_last_month: Last calendar month
       married_true: Married or living with someone
       married_false: Single
       saving_and_investments:
