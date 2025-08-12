@@ -359,6 +359,12 @@ Capybara/SpecificFinders:
 Style/CollectionQuerying:
   Enabled: false
 
+Rails/OrderArguments:
+  Enabled: false
+
+Rails/FindByOrAssignmentMemoization:
+  Enabled: false
+
 plugins:
   - rubocop-performance
   - rubocop-rspec
