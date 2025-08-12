@@ -3,7 +3,7 @@ module NotifyMailerHelper
   include IncomePeriodHelper
 
   # rubocop:disable Metrics/MethodLength, Metrics/AbcSize
-  def to_h(application)
+  def hash_for_personalisation(application)
     {
       application_reference_code: format_opt(application.reference),
       application_form_name: format_false(application.form_name),

@@ -6,7 +6,7 @@ class NotifyMailer < GovukNotifyRails::Mailer
     I18n.with_locale(locale) do
       set_template(template(locale, :completed_application_online))
 
-      set_personalisation(to_h(application))
+      set_personalisation(hash_for_personalisation(application))
       mail(to: application.notification_email)
     end
   end
@@ -16,7 +16,7 @@ class NotifyMailer < GovukNotifyRails::Mailer
     I18n.with_locale(locale) do
       set_template(template(locale, :completed_application_paper))
 
-      set_personalisation(to_h(application))
+      set_personalisation(hash_for_personalisation(application))
       mail(to: application.notification_email)
     end
   end
@@ -26,7 +26,7 @@ class NotifyMailer < GovukNotifyRails::Mailer
     I18n.with_locale(locale) do
       set_template(template(locale, :completed_application_refund))
 
-      set_personalisation(to_h(application))
+      set_personalisation(hash_for_personalisation(application))
       mail(to: application.notification_email)
     end
   end
