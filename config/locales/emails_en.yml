@@ -1,7 +1,45 @@
 en-GB:
   email:
+    general:
+      income_period_average: Average income for last three calendar months
+      income_period_last_month: Last calendar month
+      married_true: Married or living with someone
+      married_false: Single
+      saving_and_investments:
+        less_than: 'Less than £4,250'
+        between: 'Between £4,250 and £15,999'
+        more_than: 'More than £16,000'
+      income_period:
+        income_period_last_month: Last calendar month
+        income_period_average: Average income for last three calendar months
+      income_kind:
+        kinds:
+          '1': Wages before tax and National Insurance are taken off
+          '2': Net profits from self employment
+          '3': Child Benefit
+          '4': Working Tax Credit
+          '5': Child Tax Credit
+          '6': Maintenance payments
+          '7': Contribution-based Jobseekers Allowance (JSA)
+          '8': Contribution-based Employment and Support Allowance (ESA)
+          '9': Universal Credit
+          '10': Pensions (state, work, private, pension credit (savings credit))
+          '11': Rent from anyone living with you
+          '12': Rent from other properties you own
+          '13': Cash gifts
+          '14': Financial support from others
+          '15': Loans
+          '16': Other income
+          '17': None of the above
     confirmation:
+      none: 'N/A'
+      false: 'No'
+      true: 'Yes'
+      statement_signed_by_applicant: I am the applicant or litigation friend completing this application.
+      statement_signed_by_representative: I am the legal representative completing this application.
+      benefits_false: 'Not receiving eligible benefits'
       online:
+        applying_method: Online service
         subject: 'Application for help with fees'
         greeting: 'Complete your application for help with fees'
         heading: Your Help with Fees reference number is %{reference}
@@ -14,6 +52,7 @@ en-GB:
         p_four: If you need to contact the court, please follow this link https://www.gov.uk/find-court-tribunal to find further contact details.
         p_five: They will contact you within 21 days to tell you if you need to provide more information or you need to pay towards your court or tribunal fee.
       paper:
+        applying_method: Paper
         subject: 'Application for help with fees'
         greeting: 'Complete your application for help with fees'
         heading: Your Help with Fees reference number is %{reference}

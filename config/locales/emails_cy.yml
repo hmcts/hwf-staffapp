@@ -1,0 +1,44 @@
+cy:
+  email:
+    general:
+      income_period_average: Cyfartaledd am y tri mis diwethaf
+      income_period_last_month: Mis calendr diwethaf
+      married_true: Wedi priodi neu’n byw â rhywun
+      married_false: Sengl
+      saving_and_investments:
+        less_than: "Llai na £4,250"
+        between: "Rhwng £4,250 a £15,999"
+        more_than: "£16,000 neu fwy"
+      income_period:
+        income_period_last_month: Mis calendr diwethaf
+        income_period_average: Cyfartaledd am y tri mis diwethaf
+      income_kind:
+        kinds:
+          '1': Cyflog cyn didyniadau treth ac Yswiriant Gwladol
+          '2': Elw net o fusnesau hunangyflogedig
+          '3': Budd-dal Plant
+          '4': Credyd Treth Gwaith
+          '5': Credyd Treth Plant
+          '6': Taliadau cynhaliaeth
+          '7': Lwfans Ceisio Gwaith yn Seiliedig ar Gyfraniadau (JSA)
+          '8': Lwfans Cyflogaeth a Chymorth yn Seiliedig ar Gyfraniadau (ESA)
+          '9': Credyd Cynhwysol
+          '10': Pensiynau (gwladol, gwaith, preifat, credyd pensiwn (credyd cynilion))
+          '11': Rhent oddi wrth rywun sy'n byw gyda chi
+          '12': Rhent o eiddo arall rydych chi'n berchen arnynt
+          '13': Rhoddion ariannol
+          '14': Cefnogaeth ariannol tan deulu
+          '15': Benthyciadau
+          '16': Incwm arall
+          '17': Dim un o'r uchod
+    confirmation:
+      none: 'N/A'
+      false: 'Nac ydw'
+      true: 'Ydw'
+      statement_signed_by_applicant: Fi yw’r ceisydd neu’r cyfaill cyfreitha sy’n cwblhau’r cais hwn.
+      statement_signed_by_representative: Fi yw’r cynrychiolydd cyfreithiol sy’n cwblhau’r cais hwn.
+      benefits_false: Ddim yn derbyn budd-daliadau cymwys
+      online:
+        applying_method: Gwasanaeth ar-lein
+      paper:
+        applying_method: Bapur

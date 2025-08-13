@@ -1,29 +1,34 @@
 class NotifyMailer < GovukNotifyRails::Mailer
+  include NotifyMailerHelper
 
   def submission_confirmation_online(application, locale)
     @application = application
-    set_template(template(locale, :completed_application_online))
+    I18n.with_locale(locale) do
+      set_template(template(locale, :completed_application_online))
 
-    set_personalisation(application_reference_code: application.reference)
-
-    mail(to: application.notification_email)
+      set_personalisation(hash_for_personalisation(application))
+      mail(to: application.notification_email)
+    end
   end
 
   def submission_confirmation_paper(application, locale)
     @application = application
-    set_template(template(locale, :completed_application_paper))
+    I18n.with_locale(locale) do
+      set_template(template(locale, :completed_application_paper))
 
-    set_personalisation(application_reference_code: application.reference)
-
-    mail(to: application.notification_email)
+      set_personalisation(hash_for_personalisation(application))
+      mail(to: application.notification_email)
+    end
   end
 
   def submission_confirmation_refund(application, locale)
     @application = application
-    set_template(template(locale, :completed_application_refund))
+    I18n.with_locale(locale) do
+      set_template(template(locale, :completed_application_refund))
 
-    set_personalisation(application_reference_code: application.reference)
-    mail(to: application.notification_email)
+      set_personalisation(hash_for_personalisation(application))
+      mail(to: application.notification_email)
+    end
   end
 
   def dwp_is_down_notifier
