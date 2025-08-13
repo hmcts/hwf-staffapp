@@ -8,7 +8,6 @@ class OcmcExportJob < ReportFileJob
     @to_date = args[:to]
     @task_name = 'OCMCExport'
     @all_offices = args[:all_offices]
-    @all_datashare_offices = args[:all_datashare_offices]
     log_task_run('start', @task_name)
     extract
     log_task_run('end', @task_name)
@@ -18,8 +17,7 @@ class OcmcExportJob < ReportFileJob
 
   def extract
     @export = Views::Reports::HmrcOcmcDataExport.new(@from_date, @to_date, @court_id,
-                                                     all_offices: @all_offices,
-                                                     all_datashare_offices: @all_datashare_offices)
+                                                     all_offices: @all_offices)
     @export.to_zip
 
     store_zip_file('OCMC')

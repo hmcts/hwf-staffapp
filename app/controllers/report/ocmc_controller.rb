@@ -12,7 +12,7 @@ module Report
     def data_export
       @form = form
       if @form.valid?
-        if @form.all_offices || @form.all_datashare_offices
+        if @form.all_offices
           delay_job_export
 
           flash[:notice] = flash_message
@@ -38,10 +38,8 @@ module Report
       to_date = date_to(report_params)
       user_id = current_user.id
       all_offices = report_params[:all_offices]
-      all_datashare_offices = report_params[:all_datashare_offices]
 
-      OcmcExportJob.perform_later(from: from_date, to: to_date, court_id:, user_id:, all_offices:,
-                                  all_datashare_offices:)
+      OcmcExportJob.perform_later(from: from_date, to: to_date, court_id:, user_id:, all_offices:)
     end
 
     def authorise_ocmc_data
@@ -57,11 +55,7 @@ module Report
     end
 
     def flash_message
-      if @form.all_datashare_offices
-        I18n.t('.forms/report/ocmc.datashare_notice')
-      else
-        I18n.t('.forms/report/ocmc.notice')
-      end
+      I18n.t('.forms/report/ocmc.notice')
     end
   end
 end
