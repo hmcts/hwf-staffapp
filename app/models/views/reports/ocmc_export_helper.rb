@@ -38,7 +38,7 @@ module Views
       end
 
       def build_query
-        return sql_query unless selected?(@all_offices) || selected?(@all_datashare_offices)
+        return sql_query unless selected?(@all_offices)
 
         sql_query.
           sub("ORDER BY applications.created_at DESC", "ORDER BY offices.name ASC").
@@ -49,9 +49,6 @@ module Views
       def office_ids
         if selected?(@all_offices)
           Office.pluck(:id)
-        elsif selected?(@all_datashare_offices)
-          codes = Settings.evidence_check.hmrc.office_entity_code
-          Office.where(entity_code: codes).pluck(:id)
         else
           []
         end

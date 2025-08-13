@@ -5,12 +5,11 @@ module Views
       require 'csv'
       include OcmcExportHelper
 
-      def initialize(start_date, end_date, office_id, all_offices: false, all_datashare_offices: false)
+      def initialize(start_date, end_date, office_id, all_offices: false)
         @date_from = format_dates(start_date)
         @date_to = format_dates(end_date).end_of_day
         @office_id = office_id
         @all_offices = all_offices
-        @all_datashare_offices = all_datashare_offices
 
         @csv_file_name = "help-with-fees-datashare-applications-by-court-extract-" \
                          "#{start_date[:day]}-#{start_date[:month]}-#{start_date[:year]}-" \
