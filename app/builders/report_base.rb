@@ -9,7 +9,7 @@ class ReportBase
   end
 
   def generate_file
-    Zip::File.open(@zipfile_path, Zip::File::CREATE) do |zipfile|
+    Zip::File.open(@zipfile_path, create: true) do |zipfile|
       zipfile.get_output_stream(@csv_file_name) { |f| f.write @csv_data }
     end
   end

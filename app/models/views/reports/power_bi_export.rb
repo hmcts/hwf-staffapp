@@ -19,7 +19,7 @@ module Views
 
       def generate_file
         csv_file_name = "#{Time.zone.today.to_fs(:db)}-power-bi.csv"
-        Zip::File.open(zipfile_path, Zip::File::CREATE) do |zipfile|
+        Zip::File.open(zipfile_path, create: true) do |zipfile|
           zipfile.get_output_stream(csv_file_name) { |f| f.write @csv_data }
         end
       end

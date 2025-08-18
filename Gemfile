@@ -94,7 +94,7 @@ gem 'groupdate'
 gem 'nokogiri', '~> 1.18.8'
 gem 'pg_search'
 gem 'rest-client'
-gem 'rubyzip'
+gem 'rubyzip', require: 'zip'
 gem 'virtus'
 
 # To fix ruby 3.3.3 gemsepec file issue with this gem
