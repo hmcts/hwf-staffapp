@@ -18,8 +18,8 @@ RSpec.describe OcmcExportJob do
 
   describe '#perform' do
     it "run the export query" do
-      described_class.perform_now(from: '1', to: '2', user_id: user.id, all_offices: true, all_datashare_offices: false)
-      expect(Views::Reports::HmrcOcmcDataExport).to have_received(:new).with('1', '2', nil, { :all_offices => true, :all_datashare_offices => false })
+      described_class.perform_now(from: '1', to: '2', user_id: user.id, all_offices: true)
+      expect(Views::Reports::HmrcOcmcDataExport).to have_received(:new).with('1', '2', nil, { :all_offices => true })
     end
 
     it "run the store file" do

@@ -3,7 +3,7 @@
 require 'rails_helper'
 
 RSpec.describe Views::Reports::HmrcOcmcDataExport do
-  subject(:ocmc_export) { described_class.new(from_date, to_date, office.id, all_offices: false, all_datashare_offices: true) }
+  subject(:ocmc_export) { described_class.new(from_date, to_date, office.id, all_offices: all_offices) }
   let(:from_date) { { day: date_from.day, month: date_from.month, year: date_from.year } }
   let(:to_date) { { day: date_to.day, month: date_to.month, year: date_to.year } }
 
@@ -12,6 +12,7 @@ RSpec.describe Views::Reports::HmrcOcmcDataExport do
   let(:office3) { create(:office, name: 'another working office') }
   let(:date_from) { Date.parse('1/1/2021') }
   let(:date_to) { Date.parse('1/2/2021') }
+  let(:all_offices) { false }
 
   describe 'to_csv' do
     let(:application1) {
@@ -44,12 +45,23 @@ RSpec.describe Views::Reports::HmrcOcmcDataExport do
       application1.applicant.update(partner_ni_number: 'SN789654C')
       allow(Settings.evidence_check.hmrc).to receive(:office_entity_code).and_return(entity_codes)
       office.update!(entity_code: 'ABC123')
-      office2.update!(entity_code: 'ABC123')
+      office2.update!(entity_code: 'ABC12568')
       office3.update!(entity_code: 'ABC456')
     end
 
-    it 'return 4 rows csv data' do
-      expect(data.count).to be(4)
+    context 'when all_offices is true' do
+      let(:all_offices) { true }
+
+      it 'return 4 rows csv data' do
+        expect(Application.count).to be(4)
+        expect(data.count).to be(4)
+        expect(Settings.evidence_check.hmrc).not_to have_received(:office_entity_code)
+      end
+    end
+
+    it 'return 2 rows csv data' do
+      expect(data.count).to be(2)
+      expect(Settings.evidence_check.hmrc).not_to have_received(:office_entity_code)
     end
 
     context 'data fields' do
@@ -59,12 +71,8 @@ RSpec.describe Views::Reports::HmrcOcmcDataExport do
         expect(data_row).to include('Office,HwF reference number,Created at,Fee,Jurisdiction,Application type')
       end
 
-      it 'uses the test offices' do
+      it 'uses the test office' do
         data_row = data[1]
-        expect(data_row).to include('another working office')
-        data_row = data[2]
-        expect(data_row).to include('appearing office')
-        data_row = data[3]
         expect(data_row).to include('test office')
       end
 
@@ -73,28 +81,18 @@ RSpec.describe Views::Reports::HmrcOcmcDataExport do
         expect(data_row).to include('2021-01-01 00:00:00')
       end
 
-      it 'has correct reference numbers' do
+      it 'has correct reference number' do
         data_row = data[1]
-        expect(data_row).to include('AB001-21-3')
-        data_row = data[2]
-        expect(data_row).to include('AB001-21-2')
-        data_row = data[3]
         expect(data_row).to include('AB001-21-1')
       end
 
-      it 'has correct incomes' do
+      it 'has correct income' do
         data_row = data[1]
-        expect(data_row).to include('805')
-        data_row = data[2]
-        expect(data_row).to include('750')
-        data_row = data[3]
         expect(data_row).to include('500')
       end
 
       it 'has correct income period' do
-        data_row = data[2]
-        expect(data_row).to include('last_year')
-        data_row = data[3]
+        data_row = data[1]
         expect(data_row).to include('last_month')
       end
 
