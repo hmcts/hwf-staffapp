@@ -16,7 +16,7 @@
   "dependencies": {
     "@rails/actiontext": "^8.0.200",
     "accessible-autocomplete": "^3.0.0",
-    "govuk-frontend": "5.11.0",
+    "govuk-frontend": "5.11.2",
     "jquery": "^3.7.1",
     "rails-ujs": "^5.2.8-1",
     "trix": "^2.1.15"
