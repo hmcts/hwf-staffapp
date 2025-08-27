@@ -5,6 +5,12 @@ task test: :environment do
     raise "Rubocop failed"
   end
 
+  if system "bundle exec cucumber features/  --tags @smoke"
+    puts "Smoke test passed"
+  else
+    raise "Smoke tests failed"
+  end
+
   unless system("rspec --format RspecJunitFormatter --out tmp/test/rspec.xml")
     raise "Rspec testing failed #{$?}"
   end
