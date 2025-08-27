@@ -42,10 +42,9 @@ module Views
         postcode: 'postcode',
         date_of_birth: 'date of birth',
         date_received: 'date received',
-        decision_date: 'application processed date',
+        decision_date: 'decision date',
         date_fee_paid: 'date paid',
         manual_process_date: 'manual evidence processed date',
-        processed_date: 'processed date',
         date_submitted_online: 'date submitted online',
         statement_signed_by: 'statement signed by',
         partner_ni: 'partner ni entered',
@@ -179,10 +178,6 @@ module Views
                ELSE savings.amount
           END AS savings_amount,
           CASE WHEN ec.income_check_type = 'paper' THEN ec.completed_at ELSE NULL END as manual_process_date,
-          CASE WHEN part_payments.completed_at IS NOT NULL THEN part_payments.completed_at
-               WHEN applications.decision_type = 'evidence_check'
-               AND applications.decision_date IS NOT NULL THEN applications.decision_date
-          ELSE NULL END AS processed_date,
           savings.over_66 AS over_66,
           details.case_number AS case_number,
           oa.postcode AS postcode,
