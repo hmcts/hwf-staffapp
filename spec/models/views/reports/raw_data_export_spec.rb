@@ -170,7 +170,7 @@ RSpec.describe Views::Reports::RawDataExport do
 
         expect(export).to include(row)
         expect(export).to include("#{office},#{full_no_ec.reference}")
-        expect(export).to include("JK123455B,N/A,#{dob},#{date_received},#{decision_date.to_fs},N/A,N/A,N/A,N/A,litigation_friend,false,false,post_ucd")
+        expect(export).to include("JK123455B,N/A,#{dob},#{date_received},#{decision_date.to_fs},N/A,N/A,N/A,litigation_friend,false,false,post_ucd")
       end
     end
 
@@ -182,10 +182,9 @@ RSpec.describe Views::Reports::RawDataExport do
         row = "#{jurisdiction},135864,300.0,50.0,250.0,income,ABC123,N/A,false,false,2000,N/A,N/A,average,NI number,3,1,2,true,No,part,50.0,250.0,paper"
         dob = part_no_ec.applicant.date_of_birth.to_fs
         date_received = part_no_ec.detail.date_received.to_fs
-        completed_at = part_payment_part.completed_at.to_fs
 
         expect(export).to include(row)
-        expect(export).to include("true,false,JK123456C,N/A,#{dob},#{date_received},#{decision_date.to_fs},N/A,N/A,#{completed_at},N/A,legal_representative,true,true,pre_ucd")
+        expect(export).to include("true,false,JK123456C,N/A,#{dob},#{date_received},#{decision_date.to_fs},N/A,N/A,N/A,legal_representative,true,true,pre_ucd")
       end
 
       it 'part payment outcome is "return"' do
@@ -197,7 +196,7 @@ RSpec.describe Views::Reports::RawDataExport do
         dob = part_no_ec_return_pp.applicant.date_of_birth.to_fs
 
         expect(export).to include(row)
-        expect(export).to include("return,false,JK123456F,N/A,#{dob},#{date_received},#{decision_date.to_fs},N/A,N/A,N/A,N/A,applicant")
+        expect(export).to include("return,false,JK123456F,N/A,#{dob},#{date_received},#{decision_date.to_fs},N/A,N/A,N/A,applicant")
       end
 
       it 'part payment outcome is "none"' do
@@ -237,7 +236,7 @@ RSpec.describe Views::Reports::RawDataExport do
         row = "#{jurisdiction},135864,300.34,0.0,300.34,income,ABC123,N/A,false,false,2000,5555,over,N/A,NI number,3,1,2,true,No,none,300.34,0.0,paper"
 
         expect(export).to include(row)
-        expect(export).to include("JK123555F,#{postcode},#{dob},#{date_received},#{decision_date.to_fs},N/A,#{date_completed_ec},#{decision_date.to_fs},#{online_date},applicant,false,false")
+        expect(export).to include("JK123555F,#{postcode},#{dob},#{date_received},#{decision_date.to_fs},N/A,#{date_completed_ec},#{online_date},applicant,false,false")
       end
 
       context 'over_66' do
