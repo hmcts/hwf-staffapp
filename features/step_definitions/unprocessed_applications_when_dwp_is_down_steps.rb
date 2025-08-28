@@ -54,9 +54,10 @@ Given("I am a staff member and I process a paper-based benefit application") do
 end
 
 Given("I'm on the 'Benefits the applicant is receiving page'") do
+  fee_status_page.submit_date_received_no_refund
   personal_details_page.submit_all_personal_details_ni_with_dwp_error_benefits
   application_details_page.submit_fee_600
-  savings_investments_page.submit_less_than
+  savings_investments_page.submit_less_than_ucd
 
   expect(benefits_page.content).to have_benefit_question
 end
@@ -154,7 +155,7 @@ When("I complete processing the application") do
     application_details_page.content.jurisdiction.click
     application_details_page.click_next
     expect(savings_investments_page.content).to have_header
-    application_details_page.click_next
+    savings_investments_page.submit_less_than_ucd
     expect(summary_page.content).to have_header
     complete_processing
   end

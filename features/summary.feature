@@ -1,5 +1,8 @@
 Feature: Summary page
 
+  Background: Summary page
+    Given UCD changes are active
+
   Scenario: Successfully submit my application
       Given I have completed an application
       And I am on the summary page
@@ -10,6 +13,15 @@ Feature: Summary page
       Given I have completed an application
       And I am on the summary page
       Then I should see the personal details
+
+    Scenario: Change date received and fee status
+      Given I have completed an application
+      And I am on the summary page
+      Then I should see the date received and fee status
+      When I click on change date received link
+      Then I am on the fee status page
+      And I change the fee status data
+      Then I should see that my new answer is displayed in the date received summary
 
     Scenario: Change personal details
       Given I have completed an application
@@ -24,9 +36,9 @@ Feature: Summary page
       Given I have completed an application
       And I am on the summary page
       Then I should see the application details
-      When I click on change date received
+      When I click on change fee
       Then I am on the application details page
-      And I change the application data
+      And I change the application fee
       Then I should see that my new answer is displayed in the application details summary
 
     Scenario: Displays benefit summary with paper override
@@ -34,7 +46,6 @@ Feature: Summary page
       And I am on the summary page
       When I see benefit summary
       Then I should see declared benefits in this application
-      And I should not see income details section
       And I have provided the correct evidence
 
     Scenario: Change benefit answers

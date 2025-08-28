@@ -3,6 +3,7 @@
 Feature: Reports page
 
   Background: Reports page
+    Given UCD changes are active
     Given I successfully sign in as admin
     And I am on the reports page
 

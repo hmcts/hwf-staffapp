@@ -1,6 +1,7 @@
 Feature: Processed applications
 
   Background: Processed applications page
+    Given UCD changes are active
     Given I am signed in as a user that has processed multiple applications
     When I click on a processed application
 

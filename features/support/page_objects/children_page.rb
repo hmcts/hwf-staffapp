@@ -4,6 +4,7 @@ class ChildrenPage < BasePage
   section :content, '#content' do
     element :header, 'h1', text: 'Children'
     elements :radio, '.govuk-radios label'
+
     element :next, 'input[value="Next"]'
   end
 
@@ -14,6 +15,12 @@ class ChildrenPage < BasePage
 
   def no_children
     content.radio[0].click
+    content.next.click
+  end
+
+  def yes_children
+    content.radio[1].click
+    find()
     content.next.click
   end
 

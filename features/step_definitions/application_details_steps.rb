@@ -57,19 +57,11 @@ Then('I am on the application details page') do
   expect(application_details_page).to be_displayed
 end
 
-Then('I change the application data') do
-  date_received = Time.zone.today
-  application_details_page.fill_in('Day', with: date_received.day)
-  application_details_page.fill_in('Month', with: date_received.month)
-  application_details_page.fill_in('Year', with: date_received.year)
-
-  application_details_page.content.refund_case.click
-  date_fee_paid = Time.zone.yesterday
-  application_details_page.content.day_date_received.set date_fee_paid.day
-  application_details_page.content.month_date_received.set date_fee_paid.month
-  application_details_page.content.year_date_received.set date_fee_paid.year
+Then('I change the application fee') do
+  application_details_page.content.fee_input.set '200'
 
   application_details_page.fill_in_probate
+  application_details_page.click_next
   application_details_page.click_next
   application_details_page.click_next
   application_details_page.click_next

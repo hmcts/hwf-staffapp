@@ -1,6 +1,7 @@
 Feature: Application details page
 
   Background: Application details page
+    Given UCD changes are active
     Given I have started an application
     And I am on the application details part of the application
     

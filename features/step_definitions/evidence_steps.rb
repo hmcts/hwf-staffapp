@@ -33,6 +33,10 @@ Then("I should see the applicants personal details") do
   expect(evidence_page.content).to have_personal_details
 end
 
+Then("I should see the date received and fee status") do
+  expect(evidence_page.content).to have_date_received_and_fee_status_details
+end
+
 Then("I should see the application details") do
   expect(evidence_page.content).to have_application_details
 end
@@ -139,9 +143,9 @@ Given("I should see a message telling me that the application has been processed
 end
 
 Then("I should see the evidence details on the summary page") do
-  expect(evidence_page.content.evidence_summary[0].text).to have_text 'Evidence'
-  expect(evidence_page.content.evidence_summary[0].summary_row[0].text).to have_text 'Ready to process Yes Change Ready to process'
-  expect(evidence_page.content.evidence_summary[0].summary_row[1].text).to have_text 'Income £500 Change Income'
+  expect(evidence_page.content.evidence).to have_text 'Evidence'
+  expect(evidence_page.content.evidence_summary[0].summary_row[0].text).to have_text 'Ready to process Yes Change'
+  expect(evidence_page.content.evidence_summary[0].summary_row[1].text).to have_text 'Total income 500 Change'
 end
 
 When("I complete processing") do

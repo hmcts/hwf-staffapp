@@ -2,10 +2,12 @@ Given("I have started an application") do
   start_application
   expect(dashboard_page.content).to have_find_an_application_heading
   dashboard_page.process_application
-  expect(personal_details_page.content).to have_header
+  expect(fee_status_page.content).to have_header
 end
 
 And("I am on the personal details part of the application") do
+  expect(fee_status_page.content).to have_header
+  fee_status_page.submit_date_received_no_refund
   expect(personal_details_page.content).to have_header
 end
 
@@ -88,18 +90,18 @@ Then("I see that I should check that the applicant is not") do
 end
 
 Then("I see that I should check the fee") do
-  expect(personal_details_page.content.guidance.guidance_sub_heading[1].text).to eq 'Check the fee:'
-  expect(personal_details_page.content.guidance.guidance_list[1].text).to have_text 'was not processed through the money claim online (MCOL) is not for a search or request for duplicate documents (unless the applicant did not receive the originals or had no fixed address when an order was made)'
+  expect(personal_details_page.content.guidance.guidance_sub_heading[2].text).to eq 'Check the fee:'
+  expect(personal_details_page.content.guidance.guidance_list[2].text).to have_text 'was not processed through the money claim online (MCOL) is not for a search or request for duplicate documents (unless the applicant did not receive the originals or had no fixed address when an order was made)'
   expect(personal_details_page.content.guidance.guidance_text[2].text).to eq 'What to do if the fee is one of these'
-  expect(personal_details_page.content.guidance.guidance_link[1]['href']).to eq how_to_url
+  expect(personal_details_page.content.guidance.guidance_link[1]['href']).to eq new_process_application_url
 end
 
 Then("I see that I should look for a national insurance number") do
   expect(personal_details_page.content.guidance.guidance_header[1].text).to eq 'National Insurance number'
-  expect(personal_details_page.content.guidance.guidance_sub_heading[2].text).to eq 'If NI number isn\'t provided:'
-  expect(personal_details_page.content.guidance.guidance_list[2].text).to have_text "check answer to question 9 if 'No', continue to process without NI number if 'Yes', don't process and contact applicant by phone to ask for their NI number"
+  expect(personal_details_page.content.guidance.guidance_sub_heading[3].text).to eq 'If NI number isn\'t provided:'
+  expect(personal_details_page.content.guidance.guidance_list[3].text).to have_text "check answer to question 10 if 'No', continue to process without NI number if 'Yes', don't process and contact applicant by phone to ask for their NI number"
   expect(personal_details_page.content.guidance.guidance_text[3].text).to eq 'What to do if you’re unable to obtain the NI number'
-  expect(personal_details_page.content.guidance.guidance_link[2]['href']).to eq 'https://intranet.justice.gov.uk/documents/2017/10/help-with-fees-how-to-guide.pdf'
+  expect(personal_details_page.content.guidance.guidance_link[2]['href']).to eq new_process_application_url
 end
 
 Then("I see more information about home office numbers") do
@@ -110,9 +112,9 @@ end
 
 Then("I see that I should check the status of the applicant") do
   expect(personal_details_page.content.guidance.guidance_header[3].text).to eq 'Status'
-  expect(personal_details_page.content.guidance.guidance_list[2].text).to have_text "check answer to question 9 if 'No', continue to process without NI number if 'Yes', don't process and contact applicant by phone to ask for their NI number"
+  expect(personal_details_page.content.guidance.guidance_list[3].text).to have_text "check answer to question 10 if 'No', continue to process without NI number if 'Yes', don't process and contact applicant by phone to ask for their NI number"
   expect(personal_details_page.content.guidance.guidance_text[6].text).to eq "If the applicant is part of a couple but their case concerns their partner, eg divorce, dissolution or domestic violence, select 'Single'."
-  expect(personal_details_page.content.guidance.guidance_link[3]['href']).to eq how_to_url
+  expect(personal_details_page.content.guidance.guidance_link[3]['href']).to eq new_process_application_url
   expect(personal_details_page.content.guidance.guidance_link[4]['href']).to end_with '/guide'
 end
 
@@ -121,7 +123,6 @@ Then("I am on the personal details page") do
 end
 
 Then('I change the personal data') do
-  find_field('Title', visible: false).set('Mrs')
   find_field('First and middle names', visible: false).set('Jean')
   find_field('Last name', visible: false).set('Jones')
 
@@ -134,4 +135,5 @@ Then('I change the personal data') do
   personal_details_page.click_next
   personal_details_page.click_next
   # paper_evidence_page.submit_evidence_yes
+  personal_details_page.click_next
 end
