@@ -54,7 +54,12 @@ def go_to_summary_page_low_savings
   benefits_page.submit_benefits_yes
   expect(paper_evidence_page.content).to have_header
   paper_evidence_page.submit_evidence_yes
+  # expect(summary_page.content).to have_header
+  wait = Selenium::WebDriver::Wait.new(timeout: 10)
+  wait.until { summary_page.content.has_header? }
+
   expect(summary_page.content).to have_header
+
 end
 # rubocop:enable Metrics/MethodLength
 
