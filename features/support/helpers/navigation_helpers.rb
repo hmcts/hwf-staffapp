@@ -59,7 +59,6 @@ def go_to_summary_page_low_savings
   wait.until { summary_page.content.has_header? }
 
   expect(summary_page.content).to have_header
-
 end
 # rubocop:enable Metrics/MethodLength
 
