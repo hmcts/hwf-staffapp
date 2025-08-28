@@ -54,9 +54,8 @@ def go_to_summary_page_low_savings
   benefits_page.submit_benefits_yes
   expect(paper_evidence_page.content).to have_header
   paper_evidence_page.submit_evidence_yes
-  Capybara.using_wait_time(10) do
-    expect(summary_page.content).to have_header
-  end
+  expect(summary_page.content).to have_selector('h1')
+  expect(summary_page.content).to have_header
 end
 # rubocop:enable Metrics/MethodLength
 
