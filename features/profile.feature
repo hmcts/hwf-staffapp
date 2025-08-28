@@ -1,6 +1,9 @@
 Feature: Staff profile
 
-    Scenario: Change user details page 
+  Background: Benefits page
+    Given UCD changes are active
+
+  Scenario: Change user details page
       Given I successfully sign in as a user
       And I am on the change details page
       When I change my details

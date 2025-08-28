@@ -66,17 +66,24 @@ end
 Given("I have completed a part payment paper application") do
   expect(dashboard_page.content).to have_find_an_application_heading
   dashboard_page.process_application
+  expect(fee_status_page.content).to have_header
+  fee_status_page.submit_date_received_no_refund
   expect(personal_details_page.content).to have_header
   personal_details_page.submit_all_personal_details_ni
   expect(application_details_page.content).to have_header
-  application_details_page.submit_fee_600
+  application_details_page.submit_fee_2000
   expect(savings_investments_page.content).to have_header
-  savings_investments_page.submit_less_than
+  savings_investments_page.submit_less_than_ucd
   expect(benefits_page.content).to have_header
   benefits_page.submit_benefits_no
+  expect(children_page.content).to have_header
+  children_page.no_children
+  expect(income_kind_applicant_page.content).to have_header
+  income_kind_applicant_page.submit_wages
   expect(incomes_page.content).to have_header
-  incomes_page.submit_incomes_no
-  incomes_page.submit_incomes_1200
+  incomes_page.submit_incomes_4000_ucd
+  expect(declaration_page.content).to have_header
+  declaration_page.sign_by_applicant
   expect(summary_page.content).to have_header
   complete_processing
   expect(confirmation_page.content).to have_part_payment
@@ -85,17 +92,24 @@ end
 When("I have completed a part refund paper application") do
   expect(dashboard_page.content).to have_find_an_application_heading
   dashboard_page.process_application
+  expect(fee_status_page.content).to have_header
+  fee_status_page.submit_date_received_refund
   expect(personal_details_page.content).to have_header
   personal_details_page.submit_all_personal_details_ni
   expect(application_details_page.content).to have_header
-  application_details_page.submit_as_refund_case_no_decimal
+  application_details_page.submit_fee_2000
   expect(savings_investments_page.content).to have_header
-  savings_investments_page.submit_less_than
+  savings_investments_page.submit_less_than_ucd
   expect(benefits_page.content).to have_header
   benefits_page.submit_benefits_no
+  expect(children_page.content).to have_header
+  children_page.no_children
+  expect(income_kind_applicant_page.content).to have_header
+  income_kind_applicant_page.submit_wages
   expect(incomes_page.content).to have_header
-  incomes_page.submit_incomes_no
-  incomes_page.submit_incomes_1200
+  incomes_page.submit_incomes_4000_ucd
+  expect(declaration_page.content).to have_header
+  declaration_page.sign_by_applicant
   expect(summary_page.content).to have_header
   complete_processing
   expect(confirmation_page.content).to have_part_payment

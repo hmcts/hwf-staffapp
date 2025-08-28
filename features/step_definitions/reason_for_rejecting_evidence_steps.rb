@@ -36,5 +36,5 @@ end
 Then("I should see my reason for evidence on the summary page") do
   expect(summary_page.content).to have_evidence_header
   expect(summary_page.content.summary_section[0].list_row[0].text).to have_text 'Ready to process No Change Ready to process'
-  expect(summary_page.content.summary_section[0].list_row[1].text).to have_text 'Reason Requested sources not provided Change Reason'
+  expect(summary_page.content.summary_section[0].list_row[1].text).to have_text 'Reasons Requested sources not provided Change Reason'
 end

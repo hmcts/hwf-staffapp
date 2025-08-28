@@ -1,6 +1,7 @@
 Feature: Override
 
   Background: Signed in as user
+    Given UCD changes are active
     Given I successfully sign in as a user
 
   Scenario: No reason given to override high income application
