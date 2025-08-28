@@ -36,6 +36,14 @@ h2.govuk-heading-m Evidence check - requested, but not received
           user_name: '{AUTO: CURRENT USERS NAME}',
           expiry_date: '{AUTO: DATE EVIDENCE DUE}')
 
+h2.govuk-heading-m Evidence check - requested, but not received, refund
+.confirmation-letter
+  = t('letters.evidence.no_evidence_received_refund_html',
+          reference: '{AUTO: APPLICATION REFERENCE}',
+          full_name: '{AUTO: APPLICANTS NAME}',
+          user_name: '{AUTO: CURRENT USERS NAME}',
+          expiry_date: '{AUTO: DATE EVIDENCE DUE}')
+
 h2.govuk-heading-m Processed application results in evidence check
 .confirmation-letter
   =t('new_letters.evidence.send_evidence.header_html', reference: '{AUTO: APPLICATION REFERENCE}', full_name: '{AUTO: APPLICANTS NAME}',
@@ -273,6 +281,16 @@ h2.govuk-heading-m Processed application results in evidence check-representatio
 h2.govuk-heading-m Evidence check - requested, but not received-representation
 .confirmation-letter
   = t('new_letters.new_letters.evidence_check_html',
+          reference: '{AUTO: APPLICATION REFERENCE}',
+          full_name: '{AUTO: APPLICANTS NAME}',
+          legal_rep: '{AUTO: THIRD PARTY NAME}',
+          greeting: '{AUTO: THIRD PARTY NAME} regarding {AUTO: APPLICANTS NAME}',
+          evidence_due: '{AUTO: DATE EVIDENCE DUE}',
+          user_name: '{AUTO: CURRENT USERS NAME}')
+
+h2.govuk-heading-m Evidence check - requested, but not received, refund-representation
+.confirmation-letter
+  = t('new_letters.new_letters.evidence_check_refund_html',
           reference: '{AUTO: APPLICATION REFERENCE}',
           full_name: '{AUTO: APPLICANTS NAME}',
           legal_rep: '{AUTO: THIRD PARTY NAME}',

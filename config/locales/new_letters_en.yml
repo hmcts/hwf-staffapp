@@ -421,6 +421,14 @@ en-GB:
         <p>If you still want help with your fees, you will have to complete a new application.</p>
         <p>Yours sincerely,</p>
         <p>%{user_name}</p>
+      evidence_check_refund_html: |
+        <p>Dear %{greeting}</p>
+        <p><strong>Reference: %{reference}</strong></p>
+        <p>We wrote to you about your application for help with fees, asking for additional information by %{evidence_due}.</p>
+        <p>As we haven’t received any information within 28 days of request, we’re unable to process your application and no refund will be issued.</p>
+        <p>If you still want help with your fees, you will have to complete a new application.</p>
+        <p>Yours sincerely,</p>
+        <p>%{user_name}</p>
       information_missing_html: |
         <p>Dear %{greeting}</p>
         <p>We received your help with fees application on %{application_received}. However, the application is incomplete therefore we are unable to process this. </p>
