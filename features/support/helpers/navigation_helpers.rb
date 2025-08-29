@@ -54,6 +54,10 @@ def go_to_summary_page_low_savings
   benefits_page.submit_benefits_yes
   expect(paper_evidence_page.content).to have_header
   paper_evidence_page.submit_evidence_yes
+  # Click the submit button if the Benefits header is present
+  if page.has_css?('h1', text: 'Benefits')
+    find(:css, "input[type='submit']").click
+  end
   expect(summary_page.content).to have_header
 end
 # rubocop:enable Metrics/MethodLength
