@@ -40,7 +40,7 @@ Capybara::Screenshot.register_driver(:chrome) do |driver, path|
   original_size = driver.browser.manage.window.size
   total_width = driver.browser.execute_script("return Math.max(document.body.scrollWidth, document.body.offsetWidth, document.documentElement.clientWidth, document.documentElement.scrollWidth, document.documentElement.offsetWidth);")
   total_height = driver.browser.execute_script("return Math.max(document.body.scrollHeight, document.body.offsetHeight, document.documentElement.clientHeight, document.documentElement.scrollHeight, document.documentElement.offsetHeight);")
-  
+
   driver.browser.manage.window.resize_to([total_width, 1200].max, [total_height, 1000].max)
   driver.browser.save_screenshot(path)
   driver.browser.manage.window.resize_to(original_size.width, original_size.height)
@@ -51,7 +51,7 @@ Capybara::Screenshot.register_driver(:firefox) do |driver, path|
   original_size = driver.browser.manage.window.size
   total_width = driver.browser.execute_script("return Math.max(document.body.scrollWidth, document.body.offsetWidth, document.documentElement.clientWidth, document.documentElement.scrollWidth, document.documentElement.offsetWidth);")
   total_height = driver.browser.execute_script("return Math.max(document.body.scrollHeight, document.body.offsetHeight, document.documentElement.clientHeight, document.documentElement.scrollHeight, document.documentElement.offsetHeight);")
-  
+
   driver.browser.manage.window.resize_to([total_width, 1200].max, [total_height, 1000].max)
   driver.browser.save_screenshot(path)
   driver.browser.manage.window.resize_to(original_size.width, original_size.height)
