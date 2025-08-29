@@ -39,6 +39,14 @@ Capybara::Screenshot.register_driver(:chrome) do |driver, path|
   driver.browser.save_screenshot(path)
 end
 
+Capybara::Screenshot.register_driver(:firefox) do |driver, path|
+  driver.browser.save_screenshot(path)
+end
+
+Capybara::Screenshot.register_driver(:apparition) do |driver, path|
+  driver.save_screenshot(path)
+end
+
 Capybara.register_driver :saucelabs do |app|
   browser = Settings.saucelabs.browsers.send(Settings.saucelabs.browser).to_h
   Capybara::Selenium::Driver.new(app, browser: :remote, url: Settings.saucelabs.url, desired_capabilities: browser)
