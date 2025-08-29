@@ -1,0 +1,23 @@
+- content_for :page_title
+  = "Search staff"
+
+= form_with url: users_path, method: :get, local: true do |f|
+
+  fieldset.govuk-fieldset
+    legend.govuk-fieldset__legend class='govuk-!-padding-top-7'
+      h1.govuk-heading-xl Search staff
+
+    .govuk-form-group
+      = f.label :name, "Name", class: 'govuk-label govuk-label--s'
+      .govuk-hint Enter the first name, last name or full name
+
+      = f.text_field :name, class: 'govuk-input govuk-!-width-one-third'
+
+    .govuk-form-group
+      = f.label :office_id, "Office", class: 'govuk-label govuk-label--s'
+      = f.collection_select :office, @offices, :id, :name, { include_blank: "Please select" }, class: 'govuk-select'
+
+
+    .govuk-button-group
+      = f.submit "Filter", class: "govuk-button"
+      = link_to "Cancel", users_path, class: "govuk-button govuk-button--secondary"

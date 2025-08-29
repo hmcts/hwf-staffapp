@@ -8,6 +8,9 @@
         - if policy(:user).list_deleted?
           li.govuk-link= link_to 'Deleted staff', deleted_users_path
 
+        - if policy(:user).index?
+          li.govuk-link= link_to 'Search staff', search_users_path
+
       h2.govuk-heading-s Last logged in filter
       = form_tag users_path, method: :get do
         .govuk-form-group
