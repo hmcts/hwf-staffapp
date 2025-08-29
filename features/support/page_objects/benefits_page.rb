@@ -27,18 +27,18 @@ class BenefitsPage < BasePage
 
   def click_next
     content.wait_until_next_visible
-    
+
     # Wait for any JavaScript to finish loading/executing
     sleep(0.5)
-    
+
     # Use JavaScript click as backup if regular click fails in CI
     begin
       content.next.click
-    rescue => e
+    rescue StandardError => e
       puts "Regular click failed (#{e.class}: #{e.message}), trying JavaScript click..."
       page.execute_script("document.querySelector('input[value=\"Next\"]').click()")
     end
-    
+
     # Wait for page transition to begin
     sleep(1)
   end

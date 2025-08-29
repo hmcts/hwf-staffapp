@@ -12,7 +12,6 @@ task test: :environment do
     raise "Smoke tests failed"
   end
 
-
   unless system("rspec spec/lib/i18n_spec.rb --format RspecJunitFormatter --out tmp/test/rspec.xml")
     raise "Rspec testing failed #{$?}"
   end
