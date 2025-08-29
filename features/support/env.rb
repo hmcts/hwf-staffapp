@@ -64,10 +64,34 @@ def add_screenshot(scenario = nil)
     
     case page.driver.class.to_s
     when 'Capybara::Selenium::Driver'
-      page.driver.browser.save_screenshot(file_path)
+      # For Selenium, capture full page by temporarily resizing window
+      begin
+        original_size = page.driver.browser.manage.window.size
+        # Get full page dimensions
+        total_width = page.driver.browser.execute_script("return Math.max(document.body.scrollWidth, document.body.offsetWidth, document.documentElement.clientWidth, document.documentElement.scrollWidth, document.documentElement.offsetWidth);")
+        total_height = page.driver.browser.execute_script("return Math.max(document.body.scrollHeight, document.body.offsetHeight, document.documentElement.clientHeight, document.documentElement.scrollHeight, document.documentElement.offsetHeight);")
+        
+        # Resize to capture full page (ensure minimum reasonable dimensions)
+        new_width = [total_width, 1200].max
+        new_height = [total_height, 800].max
+        page.driver.browser.manage.window.resize_to(new_width, new_height)
+        
+        # Wait a moment for page to settle after resize
+        sleep(0.5)
+        page.driver.browser.save_screenshot(file_path)
+        
+        # Restore original window size
+        page.driver.browser.manage.window.resize_to(original_size.width, original_size.height)
+      rescue => resize_error
+        # Fallback to regular screenshot if full page capture fails
+        page.driver.browser.save_screenshot(file_path)
+        attach("Full page screenshot failed, captured viewport only: #{resize_error.message}", 'text/plain')
+      end
     when 'Capybara::Apparition::Driver'
-      page.save_screenshot(file_path)
+      # Apparition supports full page screenshots natively
+      page.save_screenshot(file_path, full: true)
     else
+      # Fallback for other drivers
       page.save_screenshot(file_path)
     end
     

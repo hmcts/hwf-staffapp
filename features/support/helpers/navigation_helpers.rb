@@ -56,7 +56,7 @@ def go_to_summary_page_low_savings
   paper_evidence_page.submit_evidence_yes
   # Click the submit button if the Benefits header is present
   if page.has_css?('h1', text: 'Benefits')
-    find(:css, "input[type='submit']").click
+    click_button('Next')
   end
   expect(summary_page.content).to have_header
 end
