@@ -6,6 +6,7 @@ class BenefitOverridesController < ApplicationController
   end
 
   def paper_evidence_save
+    puts "DEBUG --- paper evidence save method --- DEBUG"
     @form = Forms::BenefitsEvidence.new(benefit_override)
     # if dwp_is_down && no_paper_evidence?
     #   take_user_home
@@ -17,6 +18,7 @@ class BenefitOverridesController < ApplicationController
   private
 
   def authorize_benefit_override_create
+    puts "DEBUG --- Authorizing benefit override creation --- DEBUG"
     authorize benefit_override, :create?
   end
 
