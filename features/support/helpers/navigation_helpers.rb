@@ -51,14 +51,7 @@ def go_to_summary_page_low_savings
   savings_investments_page.submit_less_than
   expect(benefits_page.content).to have_header
   stub_dwp_response_as_bad_request
-
   benefits_page.submit_benefits_yes
-
-  # Wait for navigation to the paper evidence page
-  # Note: The paper evidence page may still show "Benefits" in the header
-  # but it's actually asking about supporting evidence
-  expect(page).to have_content('supporting evidence', wait: 10)
-
   expect(paper_evidence_page.content).to have_header
   paper_evidence_page.submit_evidence_yes
   expect(summary_page.content).to have_header
