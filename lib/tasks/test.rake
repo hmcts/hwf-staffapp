@@ -1,6 +1,12 @@
 # These tasks are needed by Jenkins pipeline
 
 task test: :environment do
+  if system "bundle exec cucumber features/benefit_checker.feature"
+    puts "Functional test passed"
+  else
+    raise "Functional tests failed"
+  end
+
   unless system "bundle exec rubocop"
     raise "Rubocop failed"
   end
@@ -12,11 +18,6 @@ task test: :environment do
     raise "Smoke tests failed"
   end
 
-  if system "bundle exec cucumber features/benefit_checker.feature"
-    puts "Functional test passed"
-  else
-    raise "Functional tests failed"
-  end
 
   unless system("rspec spec/lib/i18n_spec.rb --format RspecJunitFormatter --out tmp/test/rspec.xml")
     raise "Rspec testing failed #{$?}"
