@@ -27,7 +27,6 @@
               = f.radio_button :evidence, 'true', { class: 'govuk-radios__input show-hide-section', data: { section: 'evidence', show: 'true' } }
               = f.label t('evidence_true', scope: @form.i18n_scope), for: 'benefit_override_evidence_true', class: 'govuk-label govuk-radios__label'
 
-      br
       = f.submit 'Next', class: 'govuk-button'
 
     aside.govuk-grid-column-one-third
