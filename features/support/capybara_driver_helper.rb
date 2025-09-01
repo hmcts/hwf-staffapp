@@ -1,9 +1,10 @@
 require 'selenium/webdriver'
+require 'capybara/cuprite'
 
 Selenium::WebDriver.logger.level = :error
 
 Capybara.configure do |config|
-  driver = ENV['DRIVER']&.to_sym || :firefox
+  driver = ENV['DRIVER']&.to_sym || :cuprite
   config.default_driver = driver
   config.default_max_wait_time = 10
   config.default_normalize_ws = true
@@ -25,6 +26,21 @@ Capybara.register_driver :firefox do |app|
   options.args << '--headless'
   options.args << '--disable-gpu'
   Capybara::Selenium::Driver.new(app, browser: :firefox, options: options)
+end
+
+Capybara.register_driver :cuprite do |app|
+  Capybara::Cuprite::Driver.new(app, {
+                                  window_size: [1200, 800],
+                                  browser_options: {
+                                    'no-sandbox' => nil,
+                                    'disable-gpu' => nil,
+                                    'disable-dev-shm-usage' => nil,
+                                    'disable-web-security' => nil,
+                                    'disable-features=VizDisplayCompositor' => nil
+                                  },
+                                  js_errors: false,
+                                  headless: !ENV['HEADFUL']
+                                })
 end
 
 Capybara.register_driver :apparition do |app|
@@ -55,6 +71,11 @@ Capybara::Screenshot.register_driver(:firefox) do |driver, path|
   driver.browser.manage.window.resize_to([total_width, 1200].max, [total_height, 1000].max)
   driver.browser.save_screenshot(path)
   driver.browser.manage.window.resize_to(original_size.width, original_size.height)
+end
+
+Capybara::Screenshot.register_driver(:cuprite) do |driver, path|
+  # Cuprite supports full page screenshots natively
+  driver.save_screenshot(path, full: true)
 end
 
 Capybara::Screenshot.register_driver(:apparition) do |driver, path|

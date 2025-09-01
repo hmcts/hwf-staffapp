@@ -1,11 +1,11 @@
-# Feature: Summary page
+Feature: Summary page
 
-#   @smoke
-#     Scenario: Successfully submit my application
-#       Given I have completed an application
-#       And I am on the summary page
-#       When I successfully submit my application
-#       Then I should be taken to the confirmation page
+  @smoke
+    Scenario: Successfully submit my application
+      Given I have completed an application
+      And I am on the summary page
+      When I successfully submit my application
+      Then I should be taken to the confirmation page
 
 #     Scenario: Displays personal details
 #       Given I have completed an application

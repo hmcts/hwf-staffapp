@@ -149,6 +149,7 @@ group :test do
   gem 'codeclimate-test-reporter'
   gem 'cucumber', require: false
   gem 'cucumber-rails', require: false
+  gem "cuprite"
   gem 'database_cleaner-active_record'
   gem 'faker'
   gem 'launchy'
