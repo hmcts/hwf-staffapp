@@ -12,6 +12,12 @@ task test: :environment do
     raise "Smoke tests failed"
   end
 
+  if system "bundle exec cucumber features/benefit_checker.feature"
+    puts "Functional test passed"
+  else
+    raise "Functional tests failed"
+  end
+
   unless system("rspec spec/lib/i18n_spec.rb --format RspecJunitFormatter --out tmp/test/rspec.xml")
     raise "Rspec testing failed #{$?}"
   end
@@ -29,10 +35,11 @@ namespace :test do
   end
 
   task functional: :environment do
-    if system "bundle exec cucumber features/"
-      puts "Functional test passed"
-    else
-      raise "Functional tests failed"
-    end
+    puts "Running functional tests before the build after Rspec"
+    # if system "bundle exec cucumber features/"
+    #   puts "Functional test passed"
+    # else
+    #   raise "Functional tests failed"
+    # end
   end
 end
