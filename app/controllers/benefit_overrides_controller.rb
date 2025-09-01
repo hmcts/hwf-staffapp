@@ -6,6 +6,7 @@ class BenefitOverridesController < ApplicationController
   end
 
   def paper_evidence_save
+    # rubocop:disable Rails/Output
     puts "DEBUG --- paper evidence save method --- DEBUG"
     @form = Forms::BenefitsEvidence.new(benefit_override)
     # if dwp_is_down && no_paper_evidence?
@@ -13,12 +14,15 @@ class BenefitOverridesController < ApplicationController
     # else
     process_benefit_evidence
     # end
+    # rubocop:enable Rails/Output
   end
 
   private
 
   def authorize_benefit_override_create
+    # rubocop:disable Rails/Output
     puts "DEBUG --- Authorizing benefit override creation --- DEBUG"
+    # rubocop:enable Rails/Output
     authorize benefit_override, :create?
   end
 
