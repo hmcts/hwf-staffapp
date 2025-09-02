@@ -308,8 +308,7 @@ RSpec.describe Views::Reports::RawDataExport do
 
     let(:savings_under_3_no_max) {
       application_no_remission.saving.update(min_threshold_exceeded: min_threshold, max_threshold_exceeded: max_threshold, amount: nil,
-        passed: nil, fee_threshold: nil, over_66: nil
-      )
+                                             passed: nil, fee_threshold: nil, over_66: nil)
     }
 
     before do
