@@ -17,6 +17,7 @@ RSpec.describe Views::Reports::RawDataExport do
   let(:end_date_params) {
     { day: end_date.day, month: end_date.month, year: end_date.year }
   }
+  let(:digital_office) { create(:office, name: 'Digital') }
 
   describe 'when initialised with valid data' do
     it { is_expected.to be_a described_class }
@@ -28,13 +29,14 @@ RSpec.describe Views::Reports::RawDataExport do
     subject { data.to_csv }
 
     it { is_expected.to be_a String }
+
   end
 
   describe 'data returned should only include processed applications' do
     subject { data.total_count }
 
     let(:alternative_parameters) { { office: create(:office), business_entity: create(:business_entity), decision_date: } }
-    let(:ignore_these_parameters) { { office: create(:office, name: 'Digital'), business_entity: business_entity, decision_date: } }
+    let(:ignore_these_parameters) { { office: digital_office, business_entity: business_entity, decision_date: } }
     before do
       # include these
       create_list(:application_full_remission, 1, :processed_state, shared_parameters)
@@ -50,7 +52,9 @@ RSpec.describe Views::Reports::RawDataExport do
     end
 
     it {
-      expect(Application.where(state: 3).count).to eq 4
+      expected_records_in_db = Application.where(state: 3, decision_date: start_date..end_date).where.not(office_id: digital_office.id)
+      # testing duplications cause by sql
+      expect(expected_records_in_db.count).to eq 4
       is_expected.to eq 4
     }
   end
@@ -301,9 +305,11 @@ RSpec.describe Views::Reports::RawDataExport do
     let(:applicant1) {
       application_no_remission.applicant
     }
+
     let(:savings_under_3_no_max) {
-      create(:saving_blank, application: application_no_remission,
-                            min_threshold_exceeded: min_threshold, max_threshold_exceeded: max_threshold)
+      application_no_remission.saving.update(min_threshold_exceeded: min_threshold, max_threshold_exceeded: max_threshold, amount: nil,
+        passed: nil, fee_threshold: nil, over_66: nil
+      )
     }
 
     before do
@@ -318,7 +324,6 @@ RSpec.describe Views::Reports::RawDataExport do
       let(:max_threshold) { true }
 
       it {
-        # binding.pry
         expect(Application.count).to eq 1
         is_expected.to eq 1
       }
