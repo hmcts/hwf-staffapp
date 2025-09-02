@@ -139,9 +139,10 @@ module Views
         ActiveRecord::Base.connection.exec_query(sql).to_a.map(&:with_indifferent_access)
       end
 
+      # rubocop:disable Metrics/MethodLength
       def build_sql_query
-        <<~SQL
-          SELECT 
+        <<~SQL.squish
+          SELECT#{' '}
             applications.id,
             applications.reference,
             applications.children_age_band,
@@ -266,9 +267,10 @@ module Views
             AND applications.decision_date >= '#{@date_from.strftime('%Y-%m-%d %H:%M:%S')}'
             AND applications.decision_date <= '#{@date_to.strftime('%Y-%m-%d %H:%M:%S')}'
             AND applications.state = #{Application.states[:processed]}
-            #{@court_id.present? ? "AND applications.office_id = #{@court_id}" : ""}
+            #{"AND applications.office_id = #{@court_id}" if @court_id.present?}
         SQL
       end
+      # rubocop:enable Metrics/MethodLength
 
       def estimated_cost(row)
         (row['fee'] - row['amount_to_pay'].to_f) || 0
@@ -309,41 +311,36 @@ module Views
         row['date_submitted_online'] || row['date_received']
       end
 
+      def age_band_parse(age_band_value)
+        return {} unless age_band_value.is_a?(String)
+        YAML.safe_load(age_band_value, permitted_classes: [], permitted_symbols: [:one, :two], aliases: true)
+      rescue StandardError
+        begin
+          YAML.load(age_band_value)
+        rescue StandardError
+          {}
+        end
+      end
+
       def children_age_band(row, attr_key)
         return 'N/A' if age_bands_blank?(row)
 
-        children_age_band = row['children_age_band']
-        if children_age_band.is_a?(String)
-          # Try safe_load first with symbols permitted, fallback to unsafe if needed
-          children_age_band = begin
-            YAML.safe_load(children_age_band, permitted_classes: [], permitted_symbols: [:one, :two], aliases: true)
-          rescue
-            YAML.load(children_age_band) rescue {}
-          end
-        end
-        
+        children_age_band_parsed = age_band_parse(row['children_age_band'])
+
         if attr_key == :children_age_band_one
-          children_age_band[:one] || children_age_band['one']
+          children_age_band_parsed[:one] || children_age_band_parsed['one']
         elsif attr_key == :children_age_band_two
-          children_age_band[:two] || children_age_band['two']
+          children_age_band_parsed[:two] || children_age_band_parsed['two']
         end
       end
 
       def age_bands_blank?(row)
-        children_age_band = row['children_age_band']
-        return true if children_age_band.blank?
+        return true if row['children_age_band'].blank?
+        children_age_band_parsed = age_band_parse(row['children_age_band'])
 
-        if children_age_band.is_a?(String)
-          children_age_band = begin
-            YAML.safe_load(children_age_band, permitted_classes: [], permitted_symbols: [:one, :two], aliases: true)
-          rescue
-            YAML.load(children_age_band) rescue {}
-          end
-        end
+        return true unless children_age_band_parsed.is_a?(Hash)
 
-        return true unless children_age_band.is_a?(Hash)
-        
-        children_age_band.keys.select do |key|
+        children_age_band_parsed.keys.select do |key|
           ['one', 'two'].include?(key.to_s)
         end.blank?
       end
