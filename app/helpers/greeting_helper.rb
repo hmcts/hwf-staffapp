@@ -9,6 +9,6 @@ module GreetingHelper
   end
 
   def greeting_condition2(representative, applicant)
-    representative.full_name ? "#{representative.full_name} regarding #{applicant.full_name}" : applicant.full_name
+    representative.full_name.present? ? "#{representative.full_name} regarding #{applicant.full_name}" : applicant.full_name
   end
 end
