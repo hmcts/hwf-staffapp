@@ -308,8 +308,9 @@ RSpec.describe Views::Reports::RawDataExport do
 
     let(:savings_under_3_no_max) {
       application_no_remission.saving.update(min_threshold_exceeded: min_threshold, max_threshold_exceeded: max_threshold, amount: nil,
-                                             passed: nil, fee_threshold: nil, over_66: nil)
+                                             passed: saving_passed, fee_threshold: nil, over_66: nil)
     }
+    let(:saving_passed) { nil }
 
     before do
       savings_under_3_no_max
@@ -331,6 +332,26 @@ RSpec.describe Views::Reports::RawDataExport do
         export = data.to_csv
         row = "paper,false,N/A,false,High,N/A,N/A,N/A,false,JK123456A,N/A,25/11/2000,10/11/2020,#{decision_date.to_fs}"
         expect(export).to include(row)
+      end
+
+      context 'saving passed' do
+        let(:saving_passed) { true }
+
+        it 'true max true min threshold' do
+          export = data.to_csv
+          row = "paper,false,N/A,false,High,N/A,No,N/A,false,JK123456A,N/A,25/11/2000,10/11/2020,#{decision_date.to_fs}"
+          expect(export).to include(row)
+        end
+      end
+
+      context 'saving failed' do
+        let(:saving_passed) { false }
+
+        it 'true max true min threshold' do
+          export = data.to_csv
+          row = "paper,false,N/A,false,High,N/A,Yes,N/A,false,JK123456A,N/A,25/11/2000,10/11/2020,#{decision_date.to_fs}"
+          expect(export).to include(row)
+        end
       end
     end
 
