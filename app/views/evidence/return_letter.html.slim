@@ -21,7 +21,7 @@
        full_name: @applicant.full_name,
        user_name: current_user.name)
 
-- elsif evidence_not_received(@evidence)
+- elsif evidence_not_received(@evidence) && !@application.detail.refund?
   .evidence-letter-next-steps class= "govuk-!-margin-bottom-7"
     h2.govuk-heading-m Next steps
     p.govuk-text
@@ -38,6 +38,24 @@
        greeting: greeting_condition2(@representative, @applicant),
        user_name: current_user.name,
        evidence_due: expiry_date_format(@evidence.expires_at))
+
+- elsif evidence_not_received(@evidence) && @application.detail.refund?
+  .evidence-letter-next-steps class= "govuk-!-margin-bottom-7"
+    h2.govuk-heading-m Next steps
+    p.govuk-text
+      | Write to the applicant using the letter on this page and send back all the documents.
+    p.govuk-text
+      | Update the case management system for this Help with Fees application.
+    p: strong = link_to 'See the guides', guide_path, target: 'blank', class: 'govuk-link'
+
+  .evidence-confirmation-letter
+    =t('new_letters.new_letters.evidence_check_refund_html',
+            reference: @application_view.reference,
+            full_name: @applicant.full_name,
+            legal_rep: @representative.full_name,
+            greeting: greeting_condition2(@representative, @applicant),
+            user_name: current_user.name,
+            evidence_due: expiry_date_format(@evidence.expires_at))
 
 = form_for @evidence, url: :return_application_evidence, method: :post, html: { autocomplete: 'off' } do |f|
   = f.submit 'Back to start', class: 'govuk-button govuk-!-margin-right-1', name: 'back_to_start'

@@ -190,6 +190,14 @@ en-GB:
         <p>If you still want help with your fees, you will have to complete a new application.</p>
         <p>Yours sincerely,</p>
         <p>%{user_name}</p>
+      no_evidence_received_refund_html: |
+        <p>Dear %{full_name}</p>
+        <p><strong>Reference: %{reference}</strong></p>
+        <p>We wrote to you about your application for help with fees, asking for additional information by %{expiry_date}.</p>
+        <p>As we haven’t received any information within 28 days of request, we’re unable to process your application and no refund will be issued.</p>
+        <p>If you still want help with your fees, you will have to complete a new application.</p>
+        <p>Yours sincerely,</p>
+        <p>%{user_name}</p>
       evidence_incorrect_html: |
         <p>Dear %{full_name}</p>
         <p><strong>Reference: %{reference}</strong></p>
