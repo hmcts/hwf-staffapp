@@ -19,7 +19,9 @@ class HwfReferenceGenerator
   end
 
   def reference_string
-    ref = SecureRandom.alphanumeric(5).upcase.insert(2, '-')
+    chars = (('A'..'Z').to_a - ['I']) + ('0'..'9').to_a
+    ref = Array.new(5) { chars[SecureRandom.random_number(chars.length)] }.join
+    ref.insert(2, '-')
     @benefits == 'true' ? "HWF-Z#{ref}" : "HWF-A#{ref}"
   end
 
