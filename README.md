@@ -87,6 +87,11 @@ You will need to install govuk-frontend library
 yarn install
 ```
 
+## Update existing frontend libraries
+```
+yarn upgrade --latest
+```
+
 ## CSS + JS updates
 We are now using propshaft, cssbundling-rails and jsbundling-rails. You will need to run
 ```
