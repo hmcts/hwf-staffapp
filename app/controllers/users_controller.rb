@@ -1,4 +1,4 @@
-class UsersController < ApplicationController
+class UsersController < ApplicationController # rubocop:disable Metrics/ClassLength
   respond_to :html
   before_action :populate_lookups, only: [:edit, :update]
 
@@ -9,11 +9,18 @@ class UsersController < ApplicationController
 
     @users = policy_scope(User).sorted_by_email
     @users = UserFilters.new(@users, filter_params).apply if filter_params.present?
+    @users = UserSearch.new(@users, search_params).apply if search_params.present?
   end
 
   def deleted
     authorize :user, :list_deleted?
     @users = policy_scope(User).only_deleted.sorted_by_email
+  end
+
+  def search
+    authorize :user, :index?
+    @users = policy_scope(User).sorted_by_email
+    @offices = Office.order(:name)
   end
 
   def show
@@ -87,6 +94,10 @@ class UsersController < ApplicationController
     params.slice(:activity, :office)
   end
 
+  def search_params
+    params.slice(:name, :office)
+  end
+
   def flash_notices_for_update(update_successful)
     # rubocop:disable Rails/I18nLocaleTexts
     flash[:notice] = ''
@@ -149,4 +160,4 @@ class UsersController < ApplicationController
   def email_confiration_message
     t('activerecord.attributes.user.email_update_confirmation', new_email: params[:user][:email])
   end
-end
+end # rubocop:enable Metrics/ClassLength

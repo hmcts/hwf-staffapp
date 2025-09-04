@@ -168,6 +168,7 @@ Rails.application.routes.draw do
   get "/404" => "static#not_found"
 
   get 'users/deleted' => 'users#deleted', as: 'deleted_users'
+  get 'users/search' => 'users#search', as: 'search_users'
   patch 'users/:id/restore' => 'users#restore', as: 'restore_user'
   patch 'users/:id/invite' => 'users#invite', as: 'invite_user'
   devise_for :users, skip: :registrations, controllers: {

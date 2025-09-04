@@ -7,11 +7,12 @@ RSpec.describe 'users/index' do
 
   let(:user_new?) { false }
   let(:user_list_deleted?) { false }
+  let(:user_index?) { false }
 
   before do
     assign(:users, users)
     allow(view).to receive(:current_user).and_return(instance_double(User, admin?: true))
-    allow(view).to receive(:policy).with(:user).and_return(instance_double(UserPolicy, new?: user_new?, list_deleted?: user_list_deleted?))
+    allow(view).to receive(:policy).with(:user).and_return(instance_double(UserPolicy, new?: user_new?, list_deleted?: user_list_deleted?, index?: user_index?))
     allow(view).to receive(:policy).with(users[0]).and_return(instance_double(UserPolicy, edit?: true, invite?: true))
     allow(view).to receive(:policy).with(users[1]).and_return(instance_double(UserPolicy, edit?: false, invite?: false))
 
@@ -60,6 +61,22 @@ RSpec.describe 'users/index' do
     context 'when user does not have permission to list deleted users' do
       it 'is not rendered' do
         expect(rendered).to have_no_link('Deleted staff')
+      end
+    end
+  end
+
+  describe 'The link to search users page' do
+    context 'when user has permission to list search users' do
+      let(:user_index?) { true }
+
+      it 'is rendered' do
+        expect(rendered).to have_link('Search staff')
+      end
+    end
+
+    context 'when user does not have permission to list deleted users' do
+      it 'is not rendered' do
+        expect(rendered).to have_no_link('Search staff')
       end
     end
   end
