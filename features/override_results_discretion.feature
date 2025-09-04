@@ -1,6 +1,7 @@
 Feature: Override results Discretionary pass
 
   Background: Signed in as user and halfway through processing paper application
+    Given UCD changes are active
     Given I successfully sign in as a user
     And I process a paper application to the saving and investments page
 
