@@ -4,27 +4,27 @@
 = render('shared/error_block', form: @form) if @form.errors.any?
 
 = form_for @form, as: :benefit_override, url: application_benefit_override_paper_evidence_save_path(@application), method: :post, html: { autocomplete: 'off' } do |f|
-
   .govuk-grid-row
     .govuk-grid-column-two-thirds
       h1.govuk-heading-xl.util_mb-small Benefits
 
       - if error_message_partial(@application)
-       .page-error.util_mb-medium.govuk-error-summary__body
+        .page-error.util_mb-medium.govuk-error-summary__body
           = render(error_message_partial(@application))
 
       .govuk-form-group.group-level
         fieldset.govuk-fieldset
-          legend.govuk-fieldset__legend = t('evidence', scope: @form.i18n_scope)
+          legend.govuk-fieldset__legend
+            = t('evidence', scope: @form.i18n_scope)
           - if @form.errors[:evidence].present?
             span.govuk-error-message
               = f.label :evidence, @form.errors[:evidence].join(', '), class: 'error'
           .govuk-radios.govuk-radios--small id='application_benefit_override_evidence'
             .govuk-radios__item
-              = f.radio_button :evidence, 'false', { class: 'govuk-radios__input show-hide-section' }
+              = f.radio_button :evidence, 'false', class: 'govuk-radios__input show-hide-section'
               = f.label t('evidence_false', scope: @form.i18n_scope), for: 'benefit_override_evidence_false', class: 'govuk-label govuk-radios__label'
             .govuk-radios__item
-              = f.radio_button :evidence, 'true', { class: 'govuk-radios__input show-hide-section', data: { section: 'evidence', show: 'true' } }
+              = f.radio_button :evidence, 'true', class: 'govuk-radios__input show-hide-section', data: { section: 'evidence', show: 'true' }
               = f.label t('evidence_true', scope: @form.i18n_scope), for: 'benefit_override_evidence_true', class: 'govuk-label govuk-radios__label'
 
       = f.submit 'Next', class: 'govuk-button'
