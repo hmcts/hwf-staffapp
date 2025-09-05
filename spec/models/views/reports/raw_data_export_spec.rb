@@ -17,6 +17,7 @@ RSpec.describe Views::Reports::RawDataExport do
   let(:end_date_params) {
     { day: end_date.day, month: end_date.month, year: end_date.year }
   }
+  let(:digital_office) { create(:office, name: 'Digital') }
 
   describe 'when initialised with valid data' do
     it { is_expected.to be_a described_class }
@@ -28,13 +29,14 @@ RSpec.describe Views::Reports::RawDataExport do
     subject { data.to_csv }
 
     it { is_expected.to be_a String }
+
   end
 
   describe 'data returned should only include processed applications' do
     subject { data.total_count }
 
     let(:alternative_parameters) { { office: create(:office), business_entity: create(:business_entity), decision_date: } }
-    let(:ignore_these_parameters) { { office: create(:office, name: 'Digital'), business_entity: business_entity, decision_date: } }
+    let(:ignore_these_parameters) { { office: digital_office, business_entity: business_entity, decision_date: } }
     before do
       # include these
       create_list(:application_full_remission, 1, :processed_state, shared_parameters)
@@ -49,7 +51,12 @@ RSpec.describe Views::Reports::RawDataExport do
       create(:application_full_remission, :deleted_state, shared_parameters)
     end
 
-    it { is_expected.to eq 4 }
+    it {
+      expected_records_in_db = Application.where(state: 3, decision_date: start_date..end_date).where.not(office_id: digital_office.id)
+      # testing duplications cause by sql
+      expect(expected_records_in_db.count).to eq 4
+      is_expected.to eq 4
+    }
   end
 
   describe 'cost estimations' do
@@ -143,7 +150,7 @@ RSpec.describe Views::Reports::RawDataExport do
         export = data.to_csv.split("\n")
         row = "#{id},#{office.name},#{reference}"
         matching_row = export.find { |line| line.include?(row) }
-        expect(matching_row).to include('Medium,3500.0,N/A,true,JK123456A')
+        expect(matching_row).to include('Medium,3500.0,No,N/A,true,JK123456A')
       end
     end
 
@@ -154,7 +161,7 @@ RSpec.describe Views::Reports::RawDataExport do
         export = data.to_csv.split("\n")
         row = "#{id},#{office.name},#{reference}"
         matching_row = export.find { |line| line.include?(row) }
-        expect(matching_row).to include('Medium,3500.0,N/A,false,JK123456A')
+        expect(matching_row).to include('Medium,3500.0,No,N/A,false,JK123456A')
       end
     end
 
@@ -170,7 +177,7 @@ RSpec.describe Views::Reports::RawDataExport do
 
         expect(export).to include(row)
         expect(export).to include("#{office},#{full_no_ec.reference}")
-        expect(export).to include("JK123455B,N/A,#{dob},#{date_received},#{decision_date.to_fs},N/A,N/A,N/A,N/A,litigation_friend,false,false,post_ucd")
+        expect(export).to include("JK123455B,N/A,#{dob},#{date_received},#{decision_date.to_fs},N/A,N/A,N/A,litigation_friend,false,false,post_ucd")
       end
     end
 
@@ -182,10 +189,9 @@ RSpec.describe Views::Reports::RawDataExport do
         row = "#{jurisdiction},135864,300.0,50.0,250.0,income,ABC123,N/A,false,false,2000,N/A,N/A,average,NI number,3,1,2,true,No,part,50.0,250.0,paper"
         dob = part_no_ec.applicant.date_of_birth.to_fs
         date_received = part_no_ec.detail.date_received.to_fs
-        completed_at = part_payment_part.completed_at.to_fs
 
         expect(export).to include(row)
-        expect(export).to include("true,false,JK123456C,N/A,#{dob},#{date_received},#{decision_date.to_fs},N/A,N/A,#{completed_at},N/A,legal_representative,true,true,pre_ucd")
+        expect(export).to include("true,false,JK123456C,N/A,#{dob},#{date_received},#{decision_date.to_fs},N/A,N/A,N/A,legal_representative,true,true,pre_ucd")
       end
 
       it 'part payment outcome is "return"' do
@@ -197,7 +203,7 @@ RSpec.describe Views::Reports::RawDataExport do
         dob = part_no_ec_return_pp.applicant.date_of_birth.to_fs
 
         expect(export).to include(row)
-        expect(export).to include("return,false,JK123456F,N/A,#{dob},#{date_received},#{decision_date.to_fs},N/A,N/A,N/A,N/A,applicant")
+        expect(export).to include("return,false,JK123456F,N/A,#{dob},#{date_received},#{decision_date.to_fs},N/A,N/A,N/A,applicant")
       end
 
       it 'part payment outcome is "none"' do
@@ -237,7 +243,7 @@ RSpec.describe Views::Reports::RawDataExport do
         row = "#{jurisdiction},135864,300.34,0.0,300.34,income,ABC123,N/A,false,false,2000,5555,over,N/A,NI number,3,1,2,true,No,none,300.34,0.0,paper"
 
         expect(export).to include(row)
-        expect(export).to include("JK123555F,#{postcode},#{dob},#{date_received},#{decision_date.to_fs},N/A,#{date_completed_ec},#{decision_date.to_fs},#{online_date},applicant,false,false")
+        expect(export).to include("JK123555F,#{postcode},#{dob},#{date_received},#{decision_date.to_fs},N/A,#{date_completed_ec},#{online_date},applicant,false,false")
       end
 
       context 'over_66' do
@@ -299,10 +305,12 @@ RSpec.describe Views::Reports::RawDataExport do
     let(:applicant1) {
       application_no_remission.applicant
     }
+
     let(:savings_under_3_no_max) {
-      create(:saving_blank, application: application_no_remission,
-                            min_threshold_exceeded: min_threshold, max_threshold_exceeded: max_threshold)
+      application_no_remission.saving.update(min_threshold_exceeded: min_threshold, max_threshold_exceeded: max_threshold, amount: nil,
+                                             passed: saving_passed, fee_threshold: nil, over_66: nil)
     }
+    let(:saving_passed) { nil }
 
     before do
       savings_under_3_no_max
@@ -315,10 +323,35 @@ RSpec.describe Views::Reports::RawDataExport do
       let(:min_threshold) { true }
       let(:max_threshold) { true }
 
+      it {
+        expect(Application.count).to eq 1
+        is_expected.to eq 1
+      }
+
       it 'true max true min threshold' do
         export = data.to_csv
-        row = "paper,false,N/A,false,High,N/A,N/A,false,JK123456A,N/A,25/11/2000,10/11/2020,#{decision_date.to_fs}"
+        row = "paper,false,N/A,false,High,N/A,N/A,N/A,false,JK123456A,N/A,25/11/2000,10/11/2020,#{decision_date.to_fs}"
         expect(export).to include(row)
+      end
+
+      context 'saving passed' do
+        let(:saving_passed) { true }
+
+        it 'true max true min threshold' do
+          export = data.to_csv
+          row = "paper,false,N/A,false,High,N/A,No,N/A,false,JK123456A,N/A,25/11/2000,10/11/2020,#{decision_date.to_fs}"
+          expect(export).to include(row)
+        end
+      end
+
+      context 'saving failed' do
+        let(:saving_passed) { false }
+
+        it 'true max true min threshold' do
+          export = data.to_csv
+          row = "paper,false,N/A,false,High,N/A,Yes,N/A,false,JK123456A,N/A,25/11/2000,10/11/2020,#{decision_date.to_fs}"
+          expect(export).to include(row)
+        end
       end
     end
 
@@ -329,7 +362,7 @@ RSpec.describe Views::Reports::RawDataExport do
 
       it 'false max true min threshold' do
         export = data.to_csv
-        row = "paper,false,N/A,false,Medium,N/A,N/A,false,JK123456A,N/A,25/11/2000,10/11/2020,#{decision_date.to_fs},"
+        row = "paper,false,N/A,false,Medium,N/A,N/A,N/A,false,JK123456A,N/A,25/11/2000,10/11/2020,#{decision_date.to_fs},"
         expect(export).to include(row)
       end
     end
@@ -341,7 +374,7 @@ RSpec.describe Views::Reports::RawDataExport do
 
       it 'nil max true min threshold' do
         export = data.to_csv
-        row = "paper,false,N/A,false,High,N/A,N/A,false,JK123456A,N/A,25/11/2000,12/11/2020"
+        row = "paper,false,N/A,false,High,N/A,N/A,N/A,false,JK123456A,N/A,25/11/2000,12/11/2020"
         expect(export).to include(row)
       end
     end
@@ -353,7 +386,7 @@ RSpec.describe Views::Reports::RawDataExport do
 
       it 'false min and nil max threshold' do
         export = data.to_csv
-        row = "paper,false,N/A,false,Low,N/A,N/A,false,JK123456A,N/A,25/11/2000,10/11/2020"
+        row = "paper,false,N/A,false,Low,N/A,N/A,N/A,false,JK123456A,N/A,25/11/2000,10/11/2020"
         expect(export).to include(row)
       end
     end
@@ -368,7 +401,7 @@ RSpec.describe Views::Reports::RawDataExport do
 
       it 'false min and false max threshold' do
         export = data.to_csv
-        row = "paper,false,N/A,false,Low,N/A,N/A,false,JK123456A,N/A,25/11/2000,10/11/2020"
+        row = "paper,false,N/A,false,Low,N/A,N/A,N/A,false,JK123456A,N/A,25/11/2000,10/11/2020"
         expect(export).to include(row)
       end
 
@@ -377,7 +410,7 @@ RSpec.describe Views::Reports::RawDataExport do
         decision_overrides
 
         export = data.to_csv
-        row = "paper,true,Yes,false,Low,N/A,N/A,false,JK123456A,N/A,25/11/2000,10/11/2020"
+        row = "paper,true,Yes,false,Low,N/A,N/A,N/A,false,JK123456A,N/A,25/11/2000,10/11/2020"
         expect(export).to include(row)
       end
 
@@ -389,7 +422,7 @@ RSpec.describe Views::Reports::RawDataExport do
           decision_overrides
 
           export = data.to_csv
-          row = "paper,true,No,false,Low,N/A,N/A,false,JK123456A,N/A,25/11/2000,10/11/2020"
+          row = "paper,true,No,false,Low,N/A,N/A,N/A,false,JK123456A,N/A,25/11/2000,10/11/2020"
           expect(export).to include(row)
         end
       end
@@ -399,7 +432,7 @@ RSpec.describe Views::Reports::RawDataExport do
         decision_overrides
 
         export = data.to_csv
-        row = "paper,true,Yes,false,Low,N/A,N/A,false,JK123456A,N/A,25/11/2000,10/11/2020"
+        row = "paper,true,Yes,false,Low,N/A,N/A,N/A,false,JK123456A,N/A,25/11/2000,10/11/2020"
         expect(export).to include(row)
       end
     end
