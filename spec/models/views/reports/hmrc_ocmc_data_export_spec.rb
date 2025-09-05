@@ -219,6 +219,16 @@ RSpec.describe Views::Reports::HmrcOcmcDataExport do
           data_row = data.find { |row| row.split(',')[1] == reference }
           expect(data_row).to include('no,full,2021-01-02 00:00:00,N/A,N/A,N/A,N/A,0.0')
         }
+
+        context 'decision none' do
+          it {
+            decision_date = Date.parse('2025-04-22')
+            application1.update(decision: 'none', decision_date:)
+            reference = application1.reference
+            data_row = data.find { |row| row.split(',')[1] == reference }
+            expect(data_row).to include('yes,none,2021-01-02 00:00:00,N/A,N/A,N/A,N/A,0.0')
+          }
+        end
       end
 
       context 'evidence check' do
