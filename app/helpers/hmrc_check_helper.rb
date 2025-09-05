@@ -46,6 +46,7 @@ module HmrcCheckHelper
     if form.three_months_range
       three_months_year_rates(form)
     else
+      return '' if form.to_range.nil?
       return "previous year" if year_rate_check(form, Settings.child_benefits[0])
       "current year" if year_rate_check(form, Settings.child_benefits[1])
     end
@@ -54,10 +55,12 @@ module HmrcCheckHelper
   private
 
   def year_rate_check(form, year_rate)
+    return 0 if form.from_range.nil?
     form.from_range.between?(year_rate.date_from, year_rate.date_to)
   end
 
   def three_months_year_rates(form)
+    return [] if form.to_range.nil?
     range = []
     year_rate = Settings.child_benefits[1]
     range << 'current year' if form.to_range.between?(year_rate.date_from, year_rate.date_to)

@@ -48,6 +48,15 @@ RSpec.describe HmrcCheckHelper do
           expect(helper.addition_income_year_rates(form)).to eq('current year and previous year')
         end
       end
+
+      context 'blank range' do
+        let(:from_range) { nil }
+        let(:to_range) { nil }
+
+        it 'returns "year 24-25 and year 25-26"' do
+          expect(helper.addition_income_year_rates(form)).to eq([])
+        end
+      end
     end
 
     context 'when three_months_range is false' do
@@ -70,6 +79,16 @@ RSpec.describe HmrcCheckHelper do
           expect(helper.addition_income_year_rates(form)).to eq('current year')
         end
       end
+
+      context 'blank range' do
+        let(:from_range) { nil }
+        let(:to_range) { nil }
+
+        it 'returns "year 24-25 and year 25-26"' do
+          expect(helper.addition_income_year_rates(form)).to eq('')
+        end
+      end
+
     end
   end
 end
