@@ -71,7 +71,7 @@ gem 'logstasher', git: 'https://github.com/shadabahmed/logstasher.git',
                   ref: '0b80e972753ba7ef36854b48d2c371e32963bc8d'
 gem 'slim-rails', '~> 3.2'
 
-gem 'puma', '~> 6.3', '>= 6.0.2'
+gem 'puma', '~> 7.0', '>= 7.0.1'
 
 # Date validation
 gem 'date_validator', '0.12'
