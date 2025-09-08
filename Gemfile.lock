@@ -265,7 +265,7 @@ GEM
     execjs (2.10.0)
     factory_bot (6.5.5)
       activesupport (>= 6.1.0)
-    factory_bot_rails (6.5.0)
+    factory_bot_rails (6.5.1)
       factory_bot (~> 6.5)
       railties (>= 6.1.0)
     faker (3.5.2)
@@ -330,7 +330,7 @@ GEM
     guard-rubocop (1.5.0)
       guard (~> 2.0)
       rubocop (< 2.0)
-    hashdiff (1.2.0)
+    hashdiff (1.2.1)
     http-accept (1.7.0)
     http-cookie (1.0.8)
       domain_name (~> 0.5)
@@ -454,7 +454,7 @@ GEM
       date
       stringio
     public_suffix (6.0.2)
-    puma (6.6.1)
+    puma (7.0.1)
       nio4r (~> 2.0)
     pundit (2.5.0)
       activesupport (>= 3.0.0)
@@ -533,7 +533,7 @@ GEM
       http-cookie (>= 1.0.2, < 2.0)
       mime-types (>= 1.16, < 4.0)
       netrc (~> 0.8)
-    rexml (3.4.2)
+    rexml (3.4.3)
     rotp (6.3.0)
     rouge (4.6.0)
     rspec (3.13.1)
@@ -579,10 +579,10 @@ GEM
     rubocop-factory_bot (2.27.1)
       lint_roller (~> 1.1)
       rubocop (~> 1.72, >= 1.72.1)
-    rubocop-performance (1.25.0)
+    rubocop-performance (1.26.0)
       lint_roller (~> 1.1)
       rubocop (>= 1.75.0, < 2.0)
-      rubocop-ast (>= 1.38.0, < 2.0)
+      rubocop-ast (>= 1.44.0, < 2.0)
     rubocop-rails (2.33.3)
       activesupport (>= 4.2.0)
       lint_roller (~> 1.1)
@@ -601,7 +601,7 @@ GEM
       ffi (~> 1.12)
       logger
     ruby2_keywords (0.0.5)
-    rubyzip (3.0.2)
+    rubyzip (3.1.0)
     sdoc (2.6.2)
       rdoc (>= 5.0)
     securerandom (0.4.1)
@@ -754,7 +754,7 @@ DEPENDENCIES
   pg_search
   propshaft
   pry-rails
-  puma (~> 6.3, >= 6.0.2)
+  puma (~> 7.0, >= 7.0.1)
   pundit (~> 2.1)
   rack (~> 3.2, >= 3.2.1)
   rack-host-redirect
