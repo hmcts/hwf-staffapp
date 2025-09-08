@@ -99,6 +99,7 @@ RSpec.describe Forms::Evidence::HmrcCheck do
     end
 
     context 'from_date' do
+
       it "has correct format" do
         form.valid?
         expect(form.from_date).to eql('2024-05-01')
@@ -218,6 +219,25 @@ RSpec.describe Forms::Evidence::HmrcCheck do
 
         it { is_expected.to be false }
       end
+    end
+  end
+
+  context 'load_additional_income_from_benefits when blank request_params' do
+
+    subject(:form) { described_class.new(HmrcCheck.new(evidence_check: evidence, request_params: nil)) }
+
+    let(:additional_income_amount) { nil }
+    let(:additional_income) { nil }
+
+    before do
+      form.update(params)
+      form.valid?
+    end
+
+    it 'additional_income' do
+      form.load_additional_income_from_benefits
+      expect(form.additional_income_amount).to be_nil
+      expect(form.additional_income).to be_nil
     end
   end
 

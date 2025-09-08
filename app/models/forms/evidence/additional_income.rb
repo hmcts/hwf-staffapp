@@ -2,10 +2,12 @@ module Forms
   module Evidence
     module AdditionalIncome
       def from_range
+        return nil if @object.request_params.blank?
         @object.request_params[:date_range][:from].to_date
       end
 
       def to_range
+        return nil if @object.request_params.blank?
         @object.request_params[:date_range][:to].to_date
       end
 
@@ -17,7 +19,7 @@ module Forms
       def child_benefits_per_month
         children = @object.evidence_check.application.children
 
-        return 0 if children.blank? || children.zero?
+        return 0 if children.blank? || children.zero? || @object.request_params.blank?
 
         if three_months_range
           three_months_sum(children) / 3
@@ -42,6 +44,7 @@ module Forms
       end
 
       def three_months_range
+        return nil if @object.request_params.blank?
         (from_range..to_range).count > 31
       end
 
