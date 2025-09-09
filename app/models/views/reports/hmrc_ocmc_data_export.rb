@@ -73,6 +73,9 @@ module Views
         details.date_received as \"Date received\",
         CASE WHEN applicants.married = TRUE THEN 'yes' ELSE 'no' END as \"Married\",
         CASE WHEN applications.state = 4 THEN 'deleted' ELSE applications.decision END as \"Decision\",
+        CASE WHEN savings.passed = FALSE then 'Yes'
+             WHEN savings.passed = TRUE then 'No'
+             ELSE 'N/A' END as \"Failed on savings\",
         applications.completed_at as \"Application processed date\",
         CASE WHEN ec.income_check_type = 'paper' THEN ec.completed_at ELSE NULL
         END as \"Manual evidence processed date\",
