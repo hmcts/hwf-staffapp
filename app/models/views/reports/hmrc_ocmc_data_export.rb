@@ -52,6 +52,7 @@ module Views
           WHEN applications.income_max_threshold_exceeded = TRUE THEN 'over'
           ELSE 'N/A'
         END AS \"Income threshold exceeded\",
+        CASE WHEN applications.income < 101 THEN 'true' ELSE 'false' END AS \"Low income declared\",
         applications.income_period as \"Income period\",
         applications.children as \"Children\",
         applications.children_age_band as \"Age band under 14\",
