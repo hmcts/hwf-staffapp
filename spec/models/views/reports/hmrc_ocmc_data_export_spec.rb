@@ -15,14 +15,14 @@ RSpec.describe Views::Reports::HmrcOcmcDataExport do
   describe 'to_csv' do
     let(:application1) {
       create(:application, :processed_state, office: office, income_kind: {},
-                                             detail: app1_detail, children_age_band: { one: 7, two: 8 }, income_period: 'last_month')
+                                             detail: app1_detail, children_age_band: { one: 7, two: 8 }, income_period: 'last_month', income_min_threshold_exceeded: true)
     }
     let(:application2) { create(:application, :waiting_for_evidence_state, office: office) }
     let(:application3) {
       create(:application, :waiting_for_part_payment_state, office: office,
                                                             detail: app3_detail, children_age_band: { one: 1, two: 1 }, income_period: 'average')
     }
-    let(:application4) { create(:application, :deleted_state, office: office, detail: app2_detail, children_age_band: { one: 0, two: 1 }) }
+    let(:application4) { create(:application, :deleted_state, office: office, detail: app2_detail, children_age_band: { one: 0, two: 1 }, income_max_threshold_exceeded: true) }
     let(:application5) { create(:application, office: office) }
     let(:application6) { create(:application, :processed_state, office: office) }
     let(:application7) { create(:application, :processed_state) }
@@ -137,15 +137,15 @@ RSpec.describe Views::Reports::HmrcOcmcDataExport do
       end
       context 'children age bands' do
         it {
-          expect(data[4]).to include('500,N/A,last_month,1,7,8')
+          expect(data[4]).to include('500,N/A,under,last_month,1,7,8')
         }
 
         it {
-          expect(data[1]).to include('500,N/A,N/A,1,0,1')
+          expect(data[1]).to include('500,N/A,over,N/A,1,0,1')
         }
 
         it {
-          expect(data[2]).to include('500,N/A,average,1,1,1')
+          expect(data[2]).to include('500,N/A,N/A,average,1,1,1')
         }
       end
 
@@ -189,7 +189,7 @@ RSpec.describe Views::Reports::HmrcOcmcDataExport do
           it "from evidence check" do
             reference = application1.reference
             data_row = data.find { |row| row.split(',')[1] == reference }
-            expect(data_row).to include('ABC123,false,false,500,1578,last_month')
+            expect(data_row).to include('ABC123,false,false,500,1578,under,last_month')
             expect(data_row).to include('Manual NumberRule,N/A,N/A,N/A,N/A,1578')
           end
         end

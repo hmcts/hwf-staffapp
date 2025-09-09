@@ -47,6 +47,11 @@ module Views
         CASE WHEN details.emergency_reason IS NULL THEN false ELSE true END AS \"Emergency\",
         applications.income as \"Income\",
         ec.income as \"Post evidence income\",
+        CASE
+          WHEN applications.income_min_threshold_exceeded = TRUE THEN 'under'
+          WHEN applications.income_max_threshold_exceeded = TRUE THEN 'over'
+          ELSE 'N/A'
+        END AS \"Income threshold exceeded\",
         applications.income_period as \"Income period\",
         applications.children as \"Children\",
         applications.children_age_band as \"Age band under 14\",
