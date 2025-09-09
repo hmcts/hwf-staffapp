@@ -53,6 +53,7 @@ module Views
           ELSE 'N/A'
         END AS \"Income threshold exceeded\",
         CASE WHEN applications.income < 101 THEN 'true' ELSE 'false' END AS \"Low income declared\",
+        applications.decision_date as \"Decision date\",
         applications.income_period as \"Income period\",
         applications.children as \"Children\",
         applications.children_age_band as \"Age band under 14\",
@@ -171,6 +172,7 @@ module Views
         csv_row['Application processed date'] = csv_row['Application processed date']&.to_fs(:db)
         csv_row['Manual evidence processed date'] = csv_row['Manual evidence processed date']&.to_fs(:db)
         csv_row['Processed date'] = csv_row['Processed date']&.to_fs(:db)
+        csv_row['Decision date'] = csv_row['Decision date']&.to_fs(:db)
         csv_row['Declared income sources'] = income_kind(row['Declared income sources'])
         csv_row['HMRC request date range'] = hmrc_date_range(row['HMRC request date range'])
         csv_row['Age band under 14'] = children_age_band(row['Age band under 14'], :children_age_band_one)
