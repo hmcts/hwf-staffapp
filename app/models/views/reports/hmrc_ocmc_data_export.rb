@@ -79,6 +79,7 @@ module Views
         savings.amount AS \"Saving and Investments\",
         details.case_number AS \"Case number\",
         details.date_received as \"Date received\",
+        oa.created_at AS \"Date submitted online\",
         CASE WHEN applicants.married = TRUE THEN 'yes' ELSE 'no' END as \"Married\",
         CASE WHEN applications.state = 4 THEN 'deleted' ELSE applications.decision END as \"Decision\",
         CASE WHEN savings.passed = FALSE then 'Yes'
@@ -150,6 +151,7 @@ module Views
         LEFT JOIN savings ON savings.application_id = applications.id
         LEFT JOIN decision_overrides de ON de.application_id = applications.id
         LEFT JOIN benefit_overrides beo ON beo.application_id = applications.id
+        LEFT JOIN online_applications oa ON oa.id = applications.online_application_id
         LEFT JOIN (
          SELECT id as \"hc_id\", income as \"hc_income\", request_params, tax_credit, additional_income,
             error_response, evidence_check_id, created_at, row_number() over
@@ -165,6 +167,7 @@ module Views
       end
 
       # rubocop:disable Metrics/AbcSize
+      # rubocop:disable Metrics/CyclomaticComplexity
       def process_row(row)
         csv_row = row
 
@@ -173,6 +176,7 @@ module Views
         csv_row['Manual evidence processed date'] = csv_row['Manual evidence processed date']&.to_fs(:db)
         csv_row['Processed date'] = csv_row['Processed date']&.to_fs(:db)
         csv_row['Decision date'] = csv_row['Decision date']&.to_fs(:db)
+        csv_row['Date submitted online'] = csv_row['Date submitted online']&.to_fs(:db)
         csv_row['Declared income sources'] = income_kind(row['Declared income sources'])
         csv_row['HMRC request date range'] = hmrc_date_range(row['HMRC request date range'])
         csv_row['Age band under 14'] = children_age_band(row['Age band under 14'], :children_age_band_one)
@@ -186,6 +190,7 @@ module Views
       end
       # rubocop:enable Metrics/AbcSize
       # rubocop:enable Metrics/MethodLength
+      # rubocop:enable Metrics/CyclomaticComplexity
 
       def income_kind(value)
         return 'N/A' if value.nil?

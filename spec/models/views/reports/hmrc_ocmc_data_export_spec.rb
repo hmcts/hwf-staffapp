@@ -15,7 +15,8 @@ RSpec.describe Views::Reports::HmrcOcmcDataExport do
   describe 'to_csv' do
     let(:application1) {
       create(:application, :processed_state, office: office, income_kind: {}, income: 89,
-                                             detail: app1_detail, children_age_band: { one: 7, two: 8 }, income_period: 'last_month', income_min_threshold_exceeded: true)
+                                             detail: app1_detail, children_age_band: { one: 7, two: 8 }, income_period: 'last_month',
+                                             income_min_threshold_exceeded: true, online_application: onlin_application1)
     }
     let(:application2) { create(:application, :waiting_for_evidence_state, office: office) }
     let(:application3) {
@@ -36,6 +37,7 @@ RSpec.describe Views::Reports::HmrcOcmcDataExport do
     let(:benefit_overrides) { create(:benefit_override, application: application1, correct: benefits_override_correct) }
     let(:decision_overrides) { create(:decision_override, application: application1) }
     let(:benefits_override_correct) { true }
+    let(:onlin_application1) { create(:online_application, created_at: Date.parse('1/11/2020')) }
 
     subject(:data) { ocmc_export.to_csv.split("\n") }
 
@@ -178,6 +180,7 @@ RSpec.describe Views::Reports::HmrcOcmcDataExport do
             it "from evidence check" do
               reference = application2.reference
               data_row = data.find { |row| row.split(',')[1] == reference }
+              expect(data_row).to include('JK123456A,2021-01-03,N/A,no,N/A,No')
               expect(data_row).to include('ManualAfterHMRC,Yes,N/A,Yes,N/A,1515')
             end
           end
@@ -192,6 +195,7 @@ RSpec.describe Views::Reports::HmrcOcmcDataExport do
           it "from evidence check" do
             reference = application1.reference
             data_row = data.find { |row| row.split(',')[1] == reference }
+            expect(data_row).to include('JK123456A,2021-01-02,2020-11-01 00:00:00,yes,N/A,No')
             expect(data_row).to include('ABC123,false,false,89,1578,under,true,N/A,last_month')
             expect(data_row).to include('Manual NumberRule,N/A,N/A,N/A,N/A,1578')
           end
