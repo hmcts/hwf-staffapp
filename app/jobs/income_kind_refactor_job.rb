@@ -1,4 +1,4 @@
-class IncomeKindRefactorJob < ApplicationJob
+class IncomeKindRefactorJob < ApplicationJob # rubocop:disable Metrics/ClassLength
   queue_as :urgent
 
   def perform
@@ -14,11 +14,11 @@ class IncomeKindRefactorJob < ApplicationJob
 
   private
 
-  def update_partner_values
+  def update_partner_values # rubocop:disable Metrics/AbcSize, Metrics/CyclomaticComplexity, Metrics/MethodLength, Metrics/PerceivedComplexity
     Application.where.not(income_kind: [blank?, {}]).find_each do |application|
       if application.income_kind[:partner].present?
         if application.income_kind[:partner].include?('Rent from anyone living with the applicant') ||
-          application.income_kind[:partner].include?('Rent from other properties the applicant owns')
+           application.income_kind[:partner].include?('Rent from other properties the applicant owns')
           application.income_kind[:partner].each_with_index do |value, index|
             if value == 'Rent from anyone living with the applicant'
               application.income_kind[:partner][index] = 'Rent from anyone living with the partner'
@@ -29,12 +29,12 @@ class IncomeKindRefactorJob < ApplicationJob
         end
         application.save!
       end
-    end
+    end # rubocop:enable Metrics/AbcSize, Metrics/CyclomaticComplexity, Metrics/MethodLength, Metrics/PerceivedComplexity
 
     OnlineApplication.where.not(income_kind: [blank?, {}]).find_each do |application|
       if application.income_kind['partner'].present?
         if application.income_kind['partner'].include?('Rent from anyone living with the applicant') ||
-          application.income_kind['partner'].include?('Rent from other properties the applicant owns')
+           application.income_kind['partner'].include?('Rent from other properties the applicant owns')
           application.income_kind['partner'].each_with_index do |value, index|
             if value == 'Rent from anyone living with the applicant'
               application.income_kind['partner'][index] = 'Rent from anyone living with the partner'
@@ -50,7 +50,7 @@ class IncomeKindRefactorJob < ApplicationJob
     Application.where.not(income_kind: [blank?, {}]).find_each do |application|
       if application.income_kind[:applicant].present?
         if application.income_kind[:applicant].include?('Rent from anyone living with the partner') ||
-          application.income_kind[:applicant].include?('Rent from other properties the partner owns')
+           application.income_kind[:applicant].include?('Rent from other properties the partner owns')
           application.income_kind[:applicant].each_with_index do |value, index|
             if value == 'Rent from anyone living with the partner'
               application.income_kind[:applicant][index] = 'Rent from anyone living with the applicant'
@@ -66,7 +66,7 @@ class IncomeKindRefactorJob < ApplicationJob
     OnlineApplication.where.not(income_kind: [blank?, {}]).find_each do |application|
       if application.income_kind['applicant'].present?
         if application.income_kind['applicant'].include?('Rent from anyone living with the partner') ||
-          application.income_kind['partner'].include?('Rent from other properties the partner owns')
+           application.income_kind['partner'].include?('Rent from other properties the partner owns')
           application.income_kind['applicant'].each_with_index do |value, index|
             if value == 'Rent from anyone living with the partner'
               application.income_kind['applicant'][index] = 'Rent from anyone living with the applicant'
@@ -80,10 +80,10 @@ class IncomeKindRefactorJob < ApplicationJob
     end
   end
 
-  def update_income_kinds
-    Application.where.not(income_kind: blank?).find_each do |application|
+  def update_income_kinds # rubocop:disable Metrics/AbcSize, Metrics/CyclomaticComplexity, Metrics/MethodLength, Metrics/PerceivedComplexity
+    Application.where.not(income_kind: blank?).find_each do |application| # rubocop:disable Metrics/BlockLength
       if application.income_kind[:applicant].present?
-        application.income_kind[:applicant].each_with_index do |value, index|
+        application.income_kind[:applicant].each_with_index do |value, index| # rubocop:disable Metrics/BlockLength
           case value
 
           when 'Wages before tax and National Insurance are taken off', 'Wages', '1'
@@ -134,7 +134,7 @@ class IncomeKindRefactorJob < ApplicationJob
       end
 
       if application.income_kind[:partner].present?
-        application.income_kind[:partner].each_with_index do |value, index|
+        application.income_kind[:partner].each_with_index do |value, index| # rubocop:disable Metrics/BlockLength
           case value
 
           when 'Wages before tax and National Insurance are taken off', 'Wages', '1'
@@ -184,9 +184,9 @@ class IncomeKindRefactorJob < ApplicationJob
       end
     end
 
-    OnlineApplication.where.not(income_kind: blank?).find_each do |application|
+    OnlineApplication.where.not(income_kind: blank?).find_each do |application| # rubocop:disable Metrics/BlockLength
       if application.income_kind[:applicant].present?
-        application.income_kind[:applicant].each_with_index do |value, index|
+        application.income_kind[:applicant].each_with_index do |value, index| # rubocop:disable Metrics/BlockLength
           case value
 
           when 'Wages before tax and National Insurance are taken off', 'Wages'
@@ -236,7 +236,7 @@ class IncomeKindRefactorJob < ApplicationJob
       end
 
       if application.income_kind[:partner].present?
-        application.income_kind[:partner].each_with_index do |value, index|
+        application.income_kind[:partner].each_with_index do |value, index| # rubocop:disable Metrics/BlockLength
           case value
 
           when 'Wages before tax and National Insurance are taken off', 'Wages'
@@ -285,5 +285,5 @@ class IncomeKindRefactorJob < ApplicationJob
         end
       end
     end
-  end
-end
+  end # rubocop:enable Metrics/AbcSize, Metrics/CyclomaticComplexity, Metrics/MethodLength, Metrics/PerceivedComplexity
+end # rubocop:enable Metrics/ClassLength
