@@ -46,6 +46,7 @@ module Views
         details.refund as \"Refund\",
         CASE WHEN details.emergency_reason IS NULL THEN false ELSE true END AS \"Emergency\",
         applications.income as \"Income\",
+        ec.income as \"Post evidence income\",
         applications.income_period as \"Income period\",
         applications.children as \"Children\",
         applications.children_age_band as \"Age band under 14\",
@@ -67,7 +68,7 @@ module Views
              WHEN savings.max_threshold_exceeded IS NULL AND savings.min_threshold_exceeded = FALSE THEN '0 - 2,999'
              WHEN savings.max_threshold_exceeded IS NULL AND savings.min_threshold_exceeded = TRUE THEN '3000 or more'
              ELSE ''
-        END AS \"Capital\",
+        END AS \"Capital band\",
         savings.amount AS \"Saving and Investments\",
         details.case_number AS \"Case number\",
         details.date_received as \"Date received\",

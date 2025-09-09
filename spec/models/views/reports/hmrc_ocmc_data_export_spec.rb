@@ -137,15 +137,15 @@ RSpec.describe Views::Reports::HmrcOcmcDataExport do
       end
       context 'children age bands' do
         it {
-          expect(data[4]).to include('500,last_month,1,7,8')
+          expect(data[4]).to include('500,N/A,last_month,1,7,8')
         }
 
         it {
-          expect(data[1]).to include('500,N/A,1,0,1')
+          expect(data[1]).to include('500,N/A,N/A,1,0,1')
         }
 
         it {
-          expect(data[2]).to include('500,average,1,1,1')
+          expect(data[2]).to include('500,N/A,average,1,1,1')
         }
       end
 
@@ -189,6 +189,7 @@ RSpec.describe Views::Reports::HmrcOcmcDataExport do
           it "from evidence check" do
             reference = application1.reference
             data_row = data.find { |row| row.split(',')[1] == reference }
+            expect(data_row).to include('ABC123,false,false,500,1578,last_month')
             expect(data_row).to include('Manual NumberRule,N/A,N/A,N/A,N/A,1578')
           end
         end
