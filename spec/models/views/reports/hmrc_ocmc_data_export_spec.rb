@@ -229,6 +229,25 @@ RSpec.describe Views::Reports::HmrcOcmcDataExport do
             expect(data_row).to include('yes,none,2021-01-02 00:00:00,N/A,N/A,N/A,N/A,0.0')
           }
         end
+
+        context 'decision deleted' do
+          it {
+            decision_date = Date.parse('2025-04-22')
+            application1.update(decision: 'full', decision_date:, state: 4)
+            reference = application1.reference
+            data_row = data.find { |row| row.split(',')[1] == reference }
+            expect(data_row).to include('yes,deleted,2021-01-02 00:00:00,N/A,N/A,N/A,N/A,0.0')
+          }
+        end
+
+        context 'application not completed - no decision' do
+          it {
+            application1.update(decision: nil, decision_date: nil, state: 2)
+            reference = application1.reference
+            data_row = data.find { |row| row.split(',')[1] == reference }
+            expect(data_row).to include('yes,N/A,2021-01-02 00:00:00,N/A,N/A,N/A,N/A,0.0')
+          }
+        end
       end
 
       context 'evidence check' do
