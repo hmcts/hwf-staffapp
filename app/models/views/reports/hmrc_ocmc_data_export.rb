@@ -45,7 +45,7 @@ module Views
         details.form_name as \"Form\",
         details.refund as \"Refund\",
         CASE WHEN details.emergency_reason IS NULL THEN false ELSE true END AS \"Emergency\",
-        applications.income as \"Income\",
+        applications.income as \"Pre evidence income\",
         ec.income as \"Post evidence income\",
         CASE
           WHEN applications.income_min_threshold_exceeded = TRUE THEN 'under'
@@ -81,6 +81,11 @@ module Views
         details.date_received as \"Date received\",
         oa.created_at AS \"Date submitted online\",
         CASE WHEN applicants.married = TRUE THEN 'yes' ELSE 'no' END as \"Married\",
+        CASE
+          WHEN savings.over_66 = TRUE THEN 'Yes'
+          WHEN savings.over_66 = FALSE THEN 'No'
+          ELSE 'N/A'
+        END AS \"Pension age\",
         CASE WHEN applications.state = 4 THEN 'deleted' ELSE applications.decision END as \"Decision\",
         CASE WHEN savings.passed = FALSE then 'Yes'
              WHEN savings.passed = TRUE then 'No'

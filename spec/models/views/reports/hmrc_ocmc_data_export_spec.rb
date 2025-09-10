@@ -180,7 +180,7 @@ RSpec.describe Views::Reports::HmrcOcmcDataExport do
             it "from evidence check" do
               reference = application2.reference
               data_row = data.find { |row| row.split(',')[1] == reference }
-              expect(data_row).to include('JK123456A,2021-01-03,N/A,no,N/A,No')
+              expect(data_row).to include('JK123456A,2021-01-03,N/A,no,No,N/A,No')
               expect(data_row).to include('ManualAfterHMRC,Yes,N/A,Yes,N/A,1515')
             end
           end
@@ -195,7 +195,7 @@ RSpec.describe Views::Reports::HmrcOcmcDataExport do
           it "from evidence check" do
             reference = application1.reference
             data_row = data.find { |row| row.split(',')[1] == reference }
-            expect(data_row).to include('JK123456A,2021-01-02,2020-11-01 00:00:00,yes,N/A,No')
+            expect(data_row).to include('JK123456A,2021-01-02,2020-11-01 00:00:00,yes,No,N/A,No')
             expect(data_row).to include('ABC123,false,false,89,1578,under,true,N/A,last_month')
             expect(data_row).to include('Manual NumberRule,N/A,N/A,N/A,N/A,1578')
           end
@@ -225,17 +225,17 @@ RSpec.describe Views::Reports::HmrcOcmcDataExport do
           application1.applicant.update(married: false)
           reference = application1.reference
           data_row = data.find { |row| row.split(',')[1] == reference }
-          expect(data_row).to include('no,full,No,2021-01-02 00:00:00,N/A,N/A,N/A,N/A,0.0')
+          expect(data_row).to include('no,No,full,No,2021-01-02 00:00:00,N/A,N/A,N/A,N/A,0.0')
         }
 
         context 'decision none savings failed' do
           it {
             decision_date = Date.parse('2025-04-22')
             application1.update(decision: 'none', decision_date:)
-            application1.saving.update(passed: false)
+            application1.saving.update(passed: false, over_66: true)
             reference = application1.reference
             data_row = data.find { |row| row.split(',')[1] == reference }
-            expect(data_row).to include('yes,none,Yes,2021-01-02 00:00:00,N/A,N/A,N/A,N/A,0.0')
+            expect(data_row).to include('yes,Yes,none,Yes,2021-01-02 00:00:00,N/A,N/A,N/A,N/A,0.0')
           }
         end
 
@@ -243,9 +243,10 @@ RSpec.describe Views::Reports::HmrcOcmcDataExport do
           it {
             decision_date = Date.parse('2025-04-22')
             application1.update(decision: 'full', decision_date:, state: 4)
+            application1.saving.update(over_66: nil)
             reference = application1.reference
             data_row = data.find { |row| row.split(',')[1] == reference }
-            expect(data_row).to include('yes,deleted,No,2021-01-02 00:00:00,N/A,N/A,N/A,N/A,0.0')
+            expect(data_row).to include('yes,N/A,deleted,No,2021-01-02 00:00:00,N/A,N/A,N/A,N/A,0.0')
           }
         end
 
@@ -254,7 +255,7 @@ RSpec.describe Views::Reports::HmrcOcmcDataExport do
             application1.update(decision: nil, decision_date: nil, state: 2)
             reference = application1.reference
             data_row = data.find { |row| row.split(',')[1] == reference }
-            expect(data_row).to include('yes,N/A,No,2021-01-02 00:00:00,N/A,N/A,N/A,N/A,0.0')
+            expect(data_row).to include('yes,No,N/A,No,2021-01-02 00:00:00,N/A,N/A,N/A,N/A,0.0')
           }
         end
       end
@@ -269,7 +270,7 @@ RSpec.describe Views::Reports::HmrcOcmcDataExport do
 
           reference = application1.reference
           data_row = data.find { |row| row.split(',')[1] == reference }
-          expect(data_row).to include('no,full,No,2021-01-02 00:00:00,2025-04-22 00:00:00,N/A,part,N/A,0.0')
+          expect(data_row).to include('no,No,full,No,2021-01-02 00:00:00,2025-04-22 00:00:00,N/A,part,N/A,0.0')
         }
       end
 
@@ -285,7 +286,7 @@ RSpec.describe Views::Reports::HmrcOcmcDataExport do
         it {
           reference = application1.reference
           data_row = data.find { |row| row.split(',')[1] == reference }
-          expect(data_row).to include('no,full,No,2021-01-02 00:00:00,N/A,2025-04-22 00:00:00,part,full,0.0')
+          expect(data_row).to include('no,No,full,No,2021-01-02 00:00:00,N/A,2025-04-22 00:00:00,part,full,0.0')
           expect(data_row).to include('paper,no,N/A,yes,')
         }
 
