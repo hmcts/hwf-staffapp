@@ -122,6 +122,14 @@ RSpec.describe Views::Reports::HmrcOcmcDataExport do
         end
       end
 
+      context 'income_kind with partner' do
+        let(:income_kind) { { applicant: [], partner: [:wage, :working_credit] } }
+        it "calculates correct value" do
+          data_row = data[3]
+          expect(data_row).to include('Wages before tax and National Insurance are taken off,Working Tax Credit')
+        end
+      end
+
       context 'signed by values and partner data' do
         it {
           expect(data[4]).to include('legal_representative,true,false,post_ucd')
