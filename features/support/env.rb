@@ -12,10 +12,12 @@ require 'database_cleaner/active_record'
 require 'capybara/cucumber'
 require 'capybara-screenshot/cucumber'
 require 'base64'
+require 'fileutils'
 require 'webmock'
 require 'selenium/webdriver'
 include WebMock::API
 require 'mock_redis'
+require "capybara/cuprite"
 
 Dir[File.dirname(__FILE__) + '/page_objects/**/*.rb'].each { |f| require f }
 
@@ -40,22 +42,80 @@ Dir[File.dirname(__FILE__) + '/page_objects/**/*.rb'].each { |f| require f }
 # recommended as it will mask a lot of errors for you!
 #
 ActionController::Base.allow_rescue = false
-Capybara::Screenshot.autosave_on_failure = false
+Capybara::Screenshot.autosave_on_failure = true
 Capybara::Screenshot.prune_strategy = :keep_last_run
 
 After do |scenario|
   if scenario.failed?
-    # add_screenshot
+    add_screenshot(scenario)
     # add_browser_logs
   end
 end
 
-def add_screenshot
-  file_path = 'features/cucumber-report/screenshot.png'
-  page.driver.browser.save_screenshot(file_path)
-  image = open(file_path, 'rb', &:read)
-  encoded_image = Base64.encode64(image)
-  attach(encoded_image, 'image/png;base64')
+def add_screenshot(scenario = nil)
+  begin
+    timestamp = Time.now.strftime('%Y%m%d_%H%M%S_%3N')
+    screenshot_dir = 'tmp/screenshots'
+    FileUtils.mkdir_p(screenshot_dir) unless File.directory?(screenshot_dir)
+
+    # Generate descriptive filename with scenario info
+    scenario_name = scenario ? scenario.name.gsub(/[^a-zA-Z0-9_-]/, '_').downcase[0..50] : 'unknown'
+    filename = "screenshot_#{scenario_name}_#{timestamp}.png"
+    file_path = File.join(screenshot_dir, filename)
+
+    case page.driver.class.to_s
+    when 'Capybara::Cuprite::Driver'
+      # Cuprite supports full page screenshots natively
+      page.save_screenshot(file_path, full: true)
+    when 'Capybara::Selenium::Driver'
+      # For Selenium, capture full page by temporarily resizing window
+      begin
+        original_size = page.driver.browser.manage.window.size
+        # Get full page dimensions
+        total_width = page.driver.browser.execute_script("return Math.max(document.body.scrollWidth, document.body.offsetWidth, document.documentElement.clientWidth, document.documentElement.scrollWidth, document.documentElement.offsetWidth);")
+        total_height = page.driver.browser.execute_script("return Math.max(document.body.scrollHeight, document.body.offsetHeight, document.documentElement.clientHeight, document.documentElement.scrollHeight, document.documentElement.offsetHeight);")
+
+        # Resize to capture full page (ensure minimum reasonable dimensions)
+        new_width = [total_width, 1200].max
+        new_height = [total_height, 800].max
+        page.driver.browser.manage.window.resize_to(new_width, new_height)
+
+        # Wait a moment for page to settle after resize
+        sleep(0.5)
+        page.driver.browser.save_screenshot(file_path)
+
+        # Restore original window size
+        page.driver.browser.manage.window.resize_to(original_size.width, original_size.height)
+      rescue => resize_error
+        # Fallback to regular screenshot if full page capture fails
+        page.driver.browser.save_screenshot(file_path)
+        attach("Full page screenshot failed, captured viewport only: #{resize_error.message}", 'text/plain')
+      end
+    when 'Capybara::Apparition::Driver'
+      # Apparition supports full page screenshots natively
+      page.save_screenshot(file_path, full: true)
+    else
+      # Fallback for other drivers
+      page.save_screenshot(file_path)
+    end
+
+    if File.exist?(file_path)
+      image_data = File.read(file_path)
+      encoded_image = Base64.strict_encode64(image_data)
+      attach(encoded_image, 'image/png;base64')
+
+      # Also save with a descriptive name for CI artifacts
+      if ENV['CIRCLE_ARTIFACTS'] || ENV['BUILD_NUMBER'] || ENV['CI']
+        artifacts_dir = ENV['CIRCLE_ARTIFACTS'] || 'tmp/ci_artifacts'
+        FileUtils.mkdir_p(artifacts_dir) unless File.directory?(artifacts_dir)
+        FileUtils.cp(file_path, File.join(artifacts_dir, File.basename(file_path)))
+      end
+    else
+      attach("Screenshot could not be captured - file not created at #{file_path}", 'text/plain')
+    end
+  rescue => e
+    attach("Screenshot capture failed: #{e.message}\nBacktrace: #{e.backtrace.first(5).join("\n")}", 'text/plain')
+  end
 end
 
 def add_browser_logs

@@ -5,25 +5,31 @@ task test: :environment do
     raise "Rubocop failed"
   end
 
-  unless system("rspec --format RspecJunitFormatter --out tmp/test/rspec.xml")
+  # running smoke test here because it's faster
+  if system "bundle exec cucumber features/  --tags @smoke"
+    puts "Smoke test passed"
+  else
+    raise "Smoke tests failed"
+  end
+
+  if system "bundle exec cucumber features"
+    puts "Functional test passed"
+  else
+    raise "Functional tests failed"
+  end
+
+  unless system("rspec spec/ --format RspecJunitFormatter --out tmp/test/rspec.xml")
     raise "Rspec testing failed #{$?}"
   end
+
 end
 
 namespace :test do
   task smoke: :environment do
-    if system "bundle exec cucumber features/  --tags @smoke"
-      puts "Smoke test passed"
-    else
-      raise "Smoke tests failed"
-    end
+    puts "Running smoke tests before the build after Rspec"
   end
 
   task functional: :environment do
-    if system "bundle exec cucumber features/"
-      puts "Functional test passed"
-    else
-      raise "Functional tests failed"
-    end
+    puts "Running functional tests before the build after Rspec"
   end
 end
