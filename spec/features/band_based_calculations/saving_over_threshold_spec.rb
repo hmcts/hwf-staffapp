@@ -137,10 +137,10 @@ RSpec.feature 'Application stores correct data' do
       fill_in 'application_children_age_band_two', with: '2'
       click_button 'Next'
 
-      find_by_id('application_income_kind_applicant_5', wait: 2).click
+      find_by_id('application_income_kind_applicant_child_credit', wait: 2).click
       click_button 'Next'
 
-      find_by_id('application_income_kind_partner_5', wait: 2).click
+      find_by_id('application_income_kind_partner_child_credit', wait: 2).click
       click_button 'Next'
 
       fill_in 'application_income', with: 6560
