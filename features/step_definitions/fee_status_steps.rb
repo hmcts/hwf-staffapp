@@ -100,8 +100,23 @@ Then('I should be taken to the incomes type page') do
   expect(income_kind_applicant_page.content).to have_header
 end
 
+Then('I should be taken to the incomes page') do
+  expect(incomes_page.content).to have_header
+end
+
 When('I choose wages') do
   expect(income_kind_applicant_page.content.checkboxes[0].text).to eq('Wages before tax and National Insurance are taken off')
   income_kind_applicant_page.content.checkboxes[0].click
   income_kind_applicant_page.content.next.click
+end
+
+Then('I change the fee status data') do
+  fee_status_page.submit_date_received_refund
+
+  application_details_page.click_next
+  application_details_page.click_next
+  application_details_page.click_next
+  application_details_page.click_next
+  paper_evidence_page.submit_evidence_yes
+  application_details_page.click_next
 end
