@@ -18,7 +18,7 @@ window.moj.Modules.JsonSearcherModule = (function() {
         self.findMatches(searchTerm);
       });
       $('#application_fee')
-        .prop('disabled', true)
+        .prop('readonly', true)
         .attr('aria-disabled', 'true')
         .css({
           'background-color': '#e0e0e0',
