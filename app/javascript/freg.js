@@ -48,12 +48,7 @@ window.moj.Modules.JsonSearcherModule = (function() {
         if (resultsList) {
           $('span.search_result_count').text(fees.length)
           if (fee === fees[0]) resultsList.innerHTML = ''; // Clear only once at the start
-            const li = document.createElement('li');
-            fee.service_type.name.toUpperCase()
-            li.textContent = `${fee.service_type.name.toUpperCase()} - ${fee.code} - £ ${fee.current_version.flat_amount.amount}, Description: ${fee.current_version.description}`;
-            li.style.cursor = 'pointer';
-            li.setAttribute('data-amount', fee.current_version.flat_amount.amount);
-            li.classList.add('govuk-link');
+            const li = this.generateListItem(fee);
             li.addEventListener('click', () => {
               const amount = li.getAttribute('data-amount');
               window.moj.Modules.JsonSearcherModule.fillFeeInput({ amount });
@@ -70,5 +65,37 @@ window.moj.Modules.JsonSearcherModule = (function() {
     fillFeeInput: function(fee) {
       $('input[id="application_fee"]').val(fee.amount);
     },
+
+    generateListItem: function(fee) {
+      const li = document.createElement('li');
+      const currentFee = this.loadCurrentFeeValue(fee);
+      const isCurrentFeeAmount = this.currentFeeAmount(fee);
+      fee.service_type.name.toUpperCase()
+      if (isCurrentFeeAmount) {
+        li.textContent = `${fee.service_type.name.toUpperCase()} - ${fee.code} - £${currentFee}, Valid from: ${fee.current_version.valid_from}`;
+      } else {
+        // There will need to be other flow for percentage fees - leaving it for now
+        li.textContent = `${fee.service_type.name.toUpperCase()} - ${fee.code} - ${currentFee}%, Valid from: ${fee.current_version.valid_from}`;
+      }
+
+      li.style.cursor = 'pointer';
+      li.setAttribute('data-amount', currentFee);
+      li.classList.add('govuk-link');
+      return li;
+    },
+
+    currentFeeAmount: function(fee) {
+     return fee.current_version.flat_amount ? true : false;
+    },
+
+    loadCurrentFeeValue: function(fee) {
+      if (fee.current_version.flat_amount) {
+        return fee.current_version.flat_amount.amount;
+      } else if (fee.current_version.percentage_amount) {
+        return fee.current_version.percentage_amount.percentage;
+      } else {
+        return 'N/A';
+      }
+    }
   };
 })();
