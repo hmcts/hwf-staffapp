@@ -103,6 +103,7 @@ window.moj.Modules.JsonSearcherModule = (function() {
 
       li.style.cursor = 'pointer';
       li.setAttribute('data-amount', currentFee);
+      li.setAttribute('title', version.description || 'No description available');
       li.classList.add('govuk-link');
       return li;
     },
