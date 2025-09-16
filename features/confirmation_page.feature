@@ -1,7 +1,8 @@
 Feature: Confirmation page
 
   Background: Confirmation page
-    Given I have processed an application
+    Given UCD changes are active
+    And I have processed an application
     And I am on the confirmation page
 
     Scenario: Result

@@ -1,6 +1,7 @@
 Feature: Read only navigation
 
    Background: Sign in as a read only user
+     Given UCD changes are active
      Given I successfully sign in read only user
 
     Scenario: View profile

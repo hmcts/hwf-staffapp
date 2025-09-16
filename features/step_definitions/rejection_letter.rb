@@ -2,21 +2,24 @@ Given("I process a paper application with high income") do
   start_application
   expect(dashboard_page.content).to have_find_an_application_heading
   dashboard_page.process_application
+  expect(fee_status_page.content).to have_header
+  fee_status_page.submit_date_received_no_refund
   expect(personal_details_page.content).to have_header
   personal_details_page.submit_required_personal_details
   expect(application_details_page.content).to have_header
   application_details_page.submit_fee_100
   expect(savings_investments_page.content).to have_header
-  savings_investments_page.submit_less_than
+  savings_investments_page.submit_less_than_ucd
   expect(benefits_page.content).to have_header
   benefits_page.submit_benefits_no
+  expect(children_page.content).to have_header
+  children_page.no_children
+  expect(income_kind_applicant_page.content).to have_header
+  income_kind_applicant_page.submit_wages
   expect(incomes_page.content).to have_header
-  incomes_page.submit_incomes_no
-end
-
-When("I enter input as £{int}") do |int|
-  incomes_page.submit_incomes(int)
-  expect(summary_page.content).to have_header
+  incomes_page.submit_incomes(10000)
+  expect(declaration_page.content).to have_header
+  declaration_page.sign_by_applicant
   complete_processing
 end
 

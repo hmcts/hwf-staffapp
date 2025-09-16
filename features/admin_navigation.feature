@@ -1,6 +1,7 @@
 Feature: Admin navigation
 
   Background: Signed in as admin
+    Given UCD changes are active
     Given I successfully sign in as admin
 
     Scenario: View profile

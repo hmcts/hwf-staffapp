@@ -1,6 +1,7 @@
 Feature: Return letter
 
   Background: Return letter
+    Given UCD changes are active
     Given I have evidence check application
 
   Scenario: Not arrived or too late letter template

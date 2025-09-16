@@ -1,12 +1,15 @@
 Feature: Unprocessed applications when DWP is down
 
+  Background: Benefits page
+    Given UCD changes are active
+
   Scenario: Processing an online application when DWP Checker Service fails
     Given I am a staff member and I process an online benefit application
     And the benefit checker is set to offline
     When I add a jurisdiction
     And I click next
     Then I should be asked about paper evidence
-    And the applicant has not provided the correct paper evidence
+    And the applicant has not provided the correct paper evidence without declaration
     Then I should see that the application fails on benefits
     # When I answer no and press Next
     # Then I should be redirected to home page
