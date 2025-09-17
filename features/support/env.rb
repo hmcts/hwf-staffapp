@@ -43,6 +43,10 @@ ActionController::Base.allow_rescue = false
 Capybara::Screenshot.autosave_on_failure = false
 Capybara::Screenshot.prune_strategy = :keep_last_run
 
+puts "THIS COULD BE PREVIEW URL"
+puts ENV['TEST_URL']
+puts "THIS COULD BE PREVIEW URL"
+
 After do |scenario|
   if scenario.failed?
     # add_screenshot
