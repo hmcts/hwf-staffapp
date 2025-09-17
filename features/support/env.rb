@@ -45,6 +45,11 @@ Capybara::Screenshot.prune_strategy = :keep_last_run
 
 puts "THIS COULD BE PREVIEW URL"
 puts ENV['TEST_URL']
+puts ENV['APP_HOST']
+puts ENV['NO_PROXY']
+puts ENV['no_proxy']
+puts ENV.fetch('HOSTNAME', 'localhost')
+puts ENV.fetch('CAPYBARA_SERVER_HOST', 'localhost')
 puts "THIS COULD BE PREVIEW URL"
 
 After do |scenario|
