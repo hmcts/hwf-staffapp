@@ -33,14 +33,14 @@ end
 
 Capybara.register_driver :cuprite do |app|
   Capybara::Cuprite::Driver.new(app, {
-    js_errors: false,
-    window_size: [1920, 1080],
-    browser_options: {
-      'no-sandbox': nil,
-      'disable-gpu': nil,
-      'disable-dev-shm-usage': nil
-    }
-  })
+                                  js_errors: false,
+                                  window_size: [1920, 1080],
+                                  browser_options: {
+                                    'no-sandbox': nil,
+                                    'disable-gpu': nil,
+                                    'disable-dev-shm-usage': nil
+                                  }
+                                })
 end
 
 Capybara.register_driver :chrome do |app|
@@ -65,12 +65,11 @@ if ENV.key?('CIRCLE_ARTIFACTS')
 end
 
 Capybara::Screenshot.register_filename_prefix_formatter(:cucumber) do |scenario|
-  title = scenario.name
-    .gsub(/[^\w\s\-]/, '') # Remove all non-word, non-space, non-dash characters
-    .strip
-    .tr(' ', '-')
-    .gsub(/-+/, '-') # Replace multiple consecutive dashes with single dash
-    .gsub(%r{/^.*/cucumber//}, '')
+  title = scenario.name.
+          gsub(/[^\w\s-]/, ''). # Remove all non-word, non-space, non-dash characters
+          strip.
+          tr(' ', '-').squeeze('-'). # Replace multiple consecutive dashes with single dash
+          gsub(%r{/^.*/cucumber//}, '')
   "screenshot_cucumber_#{title}"
 end
 
