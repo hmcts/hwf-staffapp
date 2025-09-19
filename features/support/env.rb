@@ -7,6 +7,7 @@
 require 'cucumber/rails'
 require_relative './page_objects/base_page'
 require 'capybara/apparition'
+require 'capybara/cuprite'
 require 'cucumber/rspec/doubles'
 require 'database_cleaner/active_record'
 require 'capybara/cucumber'

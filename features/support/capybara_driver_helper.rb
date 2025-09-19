@@ -3,7 +3,7 @@ require 'selenium/webdriver'
 Selenium::WebDriver.logger.level = :error
 
 Capybara.configure do |config|
-  driver = ENV['DRIVER']&.to_sym || :firefox
+  driver = ENV['DRIVER']&.to_sym || :cuprite
   config.default_driver = driver
   config.default_max_wait_time = 10
   config.default_normalize_ws = true
@@ -29,6 +29,10 @@ end
 
 Capybara.register_driver :apparition do |app|
   Capybara::Apparition::Driver.new(app, { js_errors: false })
+end
+
+Capybara.register_driver :cuprite do |app|
+  Capybara::Cuprite::Driver.new(app, { js_errors: false })
 end
 
 Capybara.register_driver :chrome do |app|
