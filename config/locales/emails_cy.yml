@@ -14,23 +14,23 @@ cy:
         income_period_average: Cyfartaledd am y tri mis diwethaf
       income_kind:
         kinds:
-          '1': Cyflog cyn didyniadau treth ac Yswiriant Gwladol
-          '2': Elw net o fusnesau hunangyflogedig
-          '3': Budd-dal Plant
-          '4': Credyd Treth Gwaith
-          '5': Credyd Treth Plant
-          '6': Taliadau cynhaliaeth
-          '7': Lwfans Ceisio Gwaith yn Seiliedig ar Gyfraniadau (JSA)
-          '8': Lwfans Cyflogaeth a Chymorth yn Seiliedig ar Gyfraniadau (ESA)
-          '9': Credyd Cynhwysol
-          '10': Pensiynau (gwladol, gwaith, preifat, credyd pensiwn (credyd cynilion))
-          '11': Rhent oddi wrth rywun sy'n byw gyda chi
-          '12': Rhent o eiddo arall rydych chi'n berchen arnynt
-          '13': Rhoddion ariannol
-          '14': Cefnogaeth ariannol tan deulu
-          '15': Benthyciadau
-          '16': Incwm arall
-          '17': Dim un o'r uchod
+          wage: Cyflog cyn didyniadau treth ac Yswiriant Gwladol
+          net_profit: Elw net o fusnesau hunangyflogedig
+          child_benefit: Budd-dal Plant
+          working_credit: Credyd Treth Gwaith
+          child_credit: Credyd Treth Plant
+          maintenance_payments: Taliadau cynhaliaeth
+          jsa: Lwfans Ceisio Gwaith yn Seiliedig ar Gyfraniadau (JSA)
+          esa: Lwfans Cyflogaeth a Chymorth yn Seiliedig ar Gyfraniadau (ESA)
+          universal_credit: Credyd Cynhwysol
+          pensions: Pensiynau (gwladol, gwaith, preifat, credyd pensiwn (credyd cynilion))
+          rent_from_cohabit: Rhent oddi wrth rywun sy'n byw gyda chi
+          rent_from_properties: Rhent o eiddo arall rydych chi'n berchen arnynt
+          cash_gifts: Rhoddion ariannol
+          financial_support: Cefnogaeth ariannol tan deulu
+          loans: Benthyciadau
+          other_income: Incwm arall
+          none_of_the_above: Dim un o'r uchod
     confirmation:
       none: 'N/A'
       false: 'Nac ydw'
