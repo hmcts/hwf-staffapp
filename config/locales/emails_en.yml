@@ -14,23 +14,23 @@ en-GB:
         income_period_average: Average income for last three calendar months
       income_kind:
         kinds:
-          '1': Wages before tax and National Insurance are taken off
-          '2': Net profits from self employment
-          '3': Child Benefit
-          '4': Working Tax Credit
-          '5': Child Tax Credit
-          '6': Maintenance payments
-          '7': Contribution-based Jobseekers Allowance (JSA)
-          '8': Contribution-based Employment and Support Allowance (ESA)
-          '9': Universal Credit
-          '10': Pensions (state, work, private, pension credit (savings credit))
-          '11': Rent from anyone living with you
-          '12': Rent from other properties you own
-          '13': Cash gifts
-          '14': Financial support from others
-          '15': Loans
-          '16': Other income
-          '17': None of the above
+          wage: Wages before tax and National Insurance are taken off
+          net_profit: Net profits from self employment
+          child_benefit: Child Benefit
+          working_credit: Working Tax Credit
+          child_credit: Child Tax Credit
+          maintenance_payments: Maintenance payments
+          jsa: Contribution-based Jobseekers Allowance (JSA)
+          esa: Contribution-based Employment and Support Allowance (ESA)
+          universal_credit: Universal Credit
+          pensions: Pensions (state, work, private, pension credit (savings credit))
+          rent_from_cohabit: Rent from anyone living with the applicant
+          rent_from_properties: Rent from other properties the applicant owns
+          cash_gifts: Cash gifts - include all one off payments
+          financial_support: Financial support from family - include all one off payments
+          loans: Loans
+          other_income: Other income - For example, income from online selling or from dividend or interest payments
+          none_of_the_above: None of the above
     confirmation:
       none: 'N/A'
       false: 'No'
