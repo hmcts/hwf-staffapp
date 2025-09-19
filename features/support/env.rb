@@ -7,6 +7,7 @@
 require 'cucumber/rails'
 require_relative './page_objects/base_page'
 require 'capybara/apparition'
+require 'capybara/cuprite'
 require 'cucumber/rspec/doubles'
 require 'database_cleaner/active_record'
 require 'capybara/cucumber'
@@ -14,6 +15,7 @@ require 'capybara-screenshot/cucumber'
 require 'base64'
 require 'webmock'
 require 'selenium/webdriver'
+require 'fileutils'
 include WebMock::API
 require 'mock_redis'
 
@@ -40,34 +42,63 @@ Dir[File.dirname(__FILE__) + '/page_objects/**/*.rb'].each { |f| require f }
 # recommended as it will mask a lot of errors for you!
 #
 ActionController::Base.allow_rescue = false
-Capybara::Screenshot.autosave_on_failure = false
+Capybara::Screenshot.autosave_on_failure = true
 Capybara::Screenshot.prune_strategy = :keep_last_run
 
 After do |scenario|
   if scenario.failed?
-    # add_screenshot
-    # add_browser_logs
+    add_screenshot
+    add_browser_logs
   end
 end
 
 def add_screenshot
   file_path = 'features/cucumber-report/screenshot.png'
-  page.driver.browser.save_screenshot(file_path)
-  image = open(file_path, 'rb', &:read)
-  encoded_image = Base64.encode64(image)
-  attach(encoded_image, 'image/png;base64')
+
+  # Ensure directory exists
+  FileUtils.mkdir_p(File.dirname(file_path))
+
+  # Take screenshot based on driver type
+  if page.driver.is_a?(Capybara::Cuprite::Driver)
+    page.driver.save_screenshot(file_path, full: true)
+  else
+    page.driver.browser.save_screenshot(file_path)
+  end
+
+  if File.exist?(file_path)
+    image = File.open(file_path, 'rb', &:read)
+    encoded_image = Base64.encode64(image)
+    attach(encoded_image, 'image/png;base64')
+  end
 end
 
 def add_browser_logs
   current_time = DateTime.now
   # Getting current URL
   current_url = Capybara.current_url.to_s
-  # Gather browser logs
-  logs = page.driver.browser.manage.logs.get(:browser).map {|line| [line.level, line.message]}
-  # Remove warnings and info messages
-  logs.reject! { |line| ['WARNING', 'INFO'].include?(line.first) }
-  logs.any? == true
-  attach(current_time.strftime("%d/%m/%Y %H:%M" + "\n") + ( "Current URL: " + current_url + "\n") + logs.join("\n"), 'text/plain')
+
+  # Gather browser logs based on driver type
+  logs = []
+  begin
+    if page.driver.is_a?(Capybara::Cuprite::Driver)
+      # Cuprite doesn't have the same logs API, but we can get console messages
+      logs = page.driver.console_messages.map { |msg| [msg[:level], msg[:text]] }
+    else
+      # For Selenium-based drivers
+      logs = page.driver.browser.manage.logs.get(:browser).map {|line| [line.level, line.message]}
+    end
+
+    # Remove warnings and info messages
+    logs.reject! { |line| ['WARNING', 'INFO'].include?(line.first) }
+  rescue => e
+    logs = [['ERROR', "Failed to retrieve browser logs: #{e.message}"]]
+  end
+
+  log_text = current_time.strftime("%d/%m/%Y %H:%M") + "\n" +
+             "Current URL: " + current_url + "\n" +
+             logs.map { |level, message| "#{level}: #{message}" }.join("\n")
+
+  attach(log_text, 'text/plain')
 end
 
 
