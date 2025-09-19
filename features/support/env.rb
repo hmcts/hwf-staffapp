@@ -60,7 +60,7 @@ def add_screenshot
 
   # Take screenshot based on driver type
   if page.driver.is_a?(Capybara::Cuprite::Driver)
-    page.driver.save_screenshot(file_path)
+    page.driver.save_screenshot(file_path, full: true)
   else
     page.driver.browser.save_screenshot(file_path)
   end
