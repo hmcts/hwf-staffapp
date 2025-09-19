@@ -43,6 +43,10 @@ Capybara::Screenshot.register_driver(:chrome) do |driver, path|
   driver.browser.save_screenshot(path)
 end
 
+Capybara::Screenshot.register_driver(:cuprite) do |driver, path|
+  driver.save_screenshot(path)
+end
+
 Capybara.register_driver :saucelabs do |app|
   browser = Settings.saucelabs.browsers.send(Settings.saucelabs.browser).to_h
   Capybara::Selenium::Driver.new(app, browser: :remote, url: Settings.saucelabs.url, desired_capabilities: browser)
@@ -53,7 +57,12 @@ if ENV.key?('CIRCLE_ARTIFACTS')
 end
 
 Capybara::Screenshot.register_filename_prefix_formatter(:cucumber) do |scenario|
-  title = scenario.name.tr(' ', '-').gsub(%r{/^.*/cucumber//}, '')
+  title = scenario.name
+    .gsub(/[^\w\s\-]/, '') # Remove all non-word, non-space, non-dash characters
+    .strip
+    .tr(' ', '-')
+    .gsub(/-+/, '-') # Replace multiple consecutive dashes with single dash
+    .gsub(%r{/^.*/cucumber//}, '')
   "screenshot_cucumber_#{title}"
 end
 
