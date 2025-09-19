@@ -32,7 +32,15 @@ Capybara.register_driver :apparition do |app|
 end
 
 Capybara.register_driver :cuprite do |app|
-  Capybara::Cuprite::Driver.new(app, { js_errors: false })
+  Capybara::Cuprite::Driver.new(app, {
+    js_errors: false,
+    window_size: [1920, 1080],
+    browser_options: {
+      'no-sandbox': nil,
+      'disable-gpu': nil,
+      'disable-dev-shm-usage': nil
+    }
+  })
 end
 
 Capybara.register_driver :chrome do |app|
@@ -44,7 +52,7 @@ Capybara::Screenshot.register_driver(:chrome) do |driver, path|
 end
 
 Capybara::Screenshot.register_driver(:cuprite) do |driver, path|
-  driver.save_screenshot(path)
+  driver.save_screenshot(path, full: true)
 end
 
 Capybara.register_driver :saucelabs do |app|
