@@ -33,7 +33,7 @@
         fieldset.govuk-fieldset
           legend.govuk-fieldset__legend
             = t('partner_date_of_birth', scope: @form.i18n_scope)
-          div.govuk-hint = t('partner_date_of_birth_hint_html', scope: @form.i18n_scope, today_date: date_hint)
+          div.govuk-hint = t('partner_date_of_birth_hint', scope: @form.i18n_scope)
           - if @form.errors[:partner_date_of_birth].present?
             span.govuk-error-message
               = f.label :partner_date_of_birth, @form.errors[:partner_date_of_birth].join(', '), class: 'error'

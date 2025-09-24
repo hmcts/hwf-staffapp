@@ -663,7 +663,7 @@ en-GB:
         partner_ni_number: 'National Insurance number'
         partner_ho_number: Home Office reference number
         partner_ho_number_hint: Where provided, example L1234567 or L1234567/1 for a family member or 1111-2222-3333-4444 or 1111-2222-3333-4444/1 for a family member
-        partner_date_of_birth_hint_html: For example, %{today_date}
+        partner_date_of_birth_hint: For example, 31 3 1980
         partner_date_of_birth: 'Date of birth'
         day_date_of_birth: 'Day'
         month_date_of_birth: 'Month'
