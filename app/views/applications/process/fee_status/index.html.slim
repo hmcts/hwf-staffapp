@@ -13,7 +13,7 @@
         fieldset.govuk-fieldset
           legend.govuk-fieldset__legend
             =t('date_received', scope: @form.i18n_scope)
-          div.govuk-hint = t('date_hint', scope: @form.i18n_scope)
+          div.govuk-hint = t('date_hint_html', scope: @form.i18n_scope, today_date: date_hint)
         - if @form.errors[:date_received].present?
           span.govuk-error-message
             = f.label :date_received, @form.errors[:date_received].join(', '), class: 'error'
@@ -54,7 +54,7 @@
               .govuk-form-group.group-level
                 legend.govuk-fieldset__legend
                   = t('date_fee_paid', scope: @form.i18n_scope)
-                div.govuk-hint = t('date_hint', scope: @form.i18n_scope)
+                div.govuk-hint = t('date_hint_html', scope: @form.i18n_scope, today_date: date_hint)
                 - if @form.errors[:date_fee_paid].present?
                   span.govuk-error-message
                     = f.label :date_fee_paid, @form.errors[:date_fee_paid].join(', '), class: 'error'
