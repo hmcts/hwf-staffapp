@@ -603,7 +603,7 @@ GEM
       logger
     ruby2_keywords (0.0.5)
     rubyzip (3.1.0)
-    sdoc (2.6.2)
+    sdoc (2.6.4)
       rdoc (>= 5.0)
     securerandom (0.4.1)
     selenium-webdriver (4.35.0)
