@@ -105,6 +105,7 @@ When("I change the date fee paid to a valid date") do
   application_details_page.content.day_date_received.set date_fee_paid.day
   application_details_page.content.month_date_received.set date_fee_paid.month
   application_details_page.content.year_date_received.set date_fee_paid.year
+  application_details_page.content.year_date_received.native.send_keys(:tab)
 end
 
 Then("I should not see discretion information") do
