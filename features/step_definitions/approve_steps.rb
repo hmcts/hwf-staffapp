@@ -2,6 +2,8 @@ Given("I am on the ask a manager page") do
   start_application
   expect(dashboard_page.content).to have_find_an_application_heading
   dashboard_page.process_application
+  expect(fee_status_page.content).to have_header
+  fee_status_page.submit_date_received_no_refund
   expect(personal_details_page.content).to have_header
   personal_details_page.submit_required_personal_details
   expect(application_details_page.content).to have_header

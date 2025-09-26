@@ -1,5 +1,8 @@
 Feature: Refund request row
 
+  Background: Refund request row
+    Given UCD changes are active
+
   Scenario: Online application with refund
     Given An applicant has submitted an online application where fee has been paid
     And I successfully sign in as a user

@@ -1,7 +1,8 @@
 Feature: Benefits page
 
   Background: Benefits page
-    Given I have started an application
+    Given UCD changes are active
+    And I have started an application
     And I am on the benefits part of the application
 
     Scenario: Yes the applicant is receiving benefits
@@ -10,4 +11,4 @@ Feature: Benefits page
 
     Scenario: No the applicant is not receiving benefits
       When I answer no to the benefits question
-      Then I should be taken to the incomes page
+      Then I should be taken to the children page
