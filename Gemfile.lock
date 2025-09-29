@@ -602,7 +602,7 @@ GEM
       ffi (~> 1.12)
       logger
     ruby2_keywords (0.0.5)
-    rubyzip (3.1.0)
+    rubyzip (3.1.1)
     sdoc (2.6.2)
       rdoc (>= 5.0)
     securerandom (0.4.1)
