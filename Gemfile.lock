@@ -221,6 +221,9 @@ GEM
       cucumber (>= 7, < 11)
       railties (>= 6.1, < 9)
     cucumber-tag-expressions (6.1.2)
+    cuprite (0.17)
+      capybara (~> 3.0)
+      ferrum (~> 0.17.0)
     database_cleaner-active_record (2.2.2)
       activerecord (>= 5.a)
       database_cleaner-core (~> 2.0)
@@ -295,6 +298,12 @@ GEM
     faraday-retry (1.0.3)
     faraday_middleware (1.2.1)
       faraday (~> 1.0)
+    ferrum (0.17.1)
+      addressable (~> 2.5)
+      base64 (~> 0.2)
+      concurrent-ruby (~> 1.1)
+      webrick (~> 1.7)
+      websocket-driver (~> 0.7)
     ffi (1.17.2)
     formatador (1.2.1)
       reline
@@ -685,6 +694,7 @@ GEM
       addressable (>= 2.8.0)
       crack (>= 0.3.2)
       hashdiff (>= 0.4.0, < 2.0.0)
+    webrick (1.9.1)
     websocket (1.2.11)
     websocket-driver (0.8.0)
       base64
@@ -720,6 +730,7 @@ DEPENDENCIES
   csv
   cucumber
   cucumber-rails
+  cuprite
   database_cleaner-active_record
   date_validator (= 0.12)
   delayed_cron_job

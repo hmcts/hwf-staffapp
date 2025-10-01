@@ -3,7 +3,7 @@ require 'selenium/webdriver'
 Selenium::WebDriver.logger.level = :error
 
 Capybara.configure do |config|
-  driver = ENV['DRIVER']&.to_sym || :firefox
+  driver = ENV['DRIVER']&.to_sym || :cuprite
   config.default_driver = driver
   config.default_max_wait_time = 10
   config.default_normalize_ws = true
@@ -31,12 +31,28 @@ Capybara.register_driver :apparition do |app|
   Capybara::Apparition::Driver.new(app, { js_errors: false })
 end
 
+Capybara.register_driver :cuprite do |app|
+  Capybara::Cuprite::Driver.new(app, {
+                                  js_errors: false,
+                                  window_size: [1920, 1080],
+                                  browser_options: {
+                                    'no-sandbox': nil,
+                                    'disable-gpu': nil,
+                                    'disable-dev-shm-usage': nil
+                                  }
+                                })
+end
+
 Capybara.register_driver :chrome do |app|
   Capybara::Selenium::Driver.new(app, browser: :chrome)
 end
 
 Capybara::Screenshot.register_driver(:chrome) do |driver, path|
   driver.browser.save_screenshot(path)
+end
+
+Capybara::Screenshot.register_driver(:cuprite) do |driver, path|
+  driver.save_screenshot(path, full: true)
 end
 
 Capybara.register_driver :saucelabs do |app|
@@ -49,7 +65,11 @@ if ENV.key?('CIRCLE_ARTIFACTS')
 end
 
 Capybara::Screenshot.register_filename_prefix_formatter(:cucumber) do |scenario|
-  title = scenario.name.tr(' ', '-').gsub(%r{/^.*/cucumber//}, '')
+  title = scenario.name.
+          gsub(/[^\w\s-]/, ''). # Remove all non-word, non-space, non-dash characters
+          strip.
+          tr(' ', '-').squeeze('-'). # Replace multiple consecutive dashes with single dash
+          gsub(%r{/^.*/cucumber//}, '')
   "screenshot_cucumber_#{title}"
 end
 
