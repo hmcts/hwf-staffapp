@@ -1,5 +1,8 @@
 Feature: Find an application
 
+  Background: Find an application
+    Given UCD changes are active
+
   Scenario: Find an application by valid hwf reference - single result
     Given I am signed in as a user that has processed an application
     When I search for an application using a valid hwf reference

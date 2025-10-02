@@ -1,6 +1,7 @@
 Feature: Pagination on Processed applications page
 
   Background: Signed in and many applications on Processed applications page
+    Given UCD changes are active
     Given I am signed in as a user that has 50 processed applications
     And I click on processed applications
 

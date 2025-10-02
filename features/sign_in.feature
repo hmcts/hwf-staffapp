@@ -1,6 +1,7 @@
 Feature: Sign in page
 
   Background: Navigating to the sign in page
+    Given UCD changes are active
     Given I am on the Help with Fees staff application home page
     When I am not signed in
     Then I am redirected to the sign in page
