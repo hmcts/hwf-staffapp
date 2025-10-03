@@ -75,6 +75,9 @@ end
 
 Capybara.always_include_port = true
 Capybara.javascript_driver = Capybara.default_driver
+
+ENV['TEST_URL'] = 'http://localhost:3000/'
+
 if ENV['TEST_URL']
   Capybara.app_host = ENV['TEST_URL']
   Capybara.run_server = false
