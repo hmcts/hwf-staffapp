@@ -5,7 +5,7 @@ class EvidenceController < ApplicationController
     track_application(application)
   end
 
-  before_action :only_non_processed_applications, except: [:confirmation]
+  before_action :only_non_processed_applications, except: [:confirmation, :return_letter]
   before_action :store_path, except: [:accuracy_save, :income_save, :confirmation]
   before_action :clear_path, only: :confirmation
 
@@ -70,15 +70,6 @@ class EvidenceController < ApplicationController
 
   def return_letter
     assign_views
-  end
-
-  def return_application
-    if ResolverService.new(evidence, current_user).return
-      back_to_start_or_list
-    else
-      flash[:alert] = t('error_messages.evidence.cannot_be_saved')
-      redirect_to return_letter_evidence_path
-    end
   end
 
   def process_evidence_check_flag
