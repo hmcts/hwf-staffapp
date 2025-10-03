@@ -61,7 +61,7 @@ RSpec.feature 'Evidence check' do
     expect(application.reload.state).to eq 'processed'
 
     click_link "Back to start"
-    expect(page).not_to have_content 'This application has been processed. You can’t edit any details.'
+    expect(page).to have_no_content 'This application has been processed. You can’t edit any details.'
   end
 
 end

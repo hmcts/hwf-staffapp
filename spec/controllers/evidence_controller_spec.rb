@@ -391,54 +391,6 @@ RSpec.describe EvidenceController do
     end
   end
 
-  describe 'POST #return_application' do
-    context 'when back to start param is present' do
-      context 'as a signed out user' do
-        before { post :return_application, params: { id: evidence, back_to_start: 'Back to start' } }
-
-        it { expect(response).to have_http_status(:redirect) }
-
-        it { expect(response).to redirect_to(user_session_path) }
-      end
-
-      context 'as a signed in user' do
-        before do
-          sign_in user
-          post :return_application, params: { id: evidence, back_to_start: 'Back to start' }
-        end
-
-        it 'returns the correct status code' do
-          expect(response).to have_http_status(:redirect)
-        end
-
-        it 'renders the dashboard page' do
-          expect(response).to redirect_to(root_path)
-        end
-
-        it 'does not calls the evidence_check_flag' do
-          expect(evidence_check_flagging_service).not_to have_received(:process_flag)
-        end
-      end
-    end
-
-    context 'when back to list param is present' do
-      context 'as a signed in user' do
-        before do
-          sign_in user
-          post :return_application, params: { id: evidence, back_to_list: 'Back to list' }
-        end
-
-        it 'returns the correct status code' do
-          expect(response).to have_http_status(:redirect)
-        end
-
-        it 'renders the evidence checks page' do
-          expect(response).to redirect_to(evidence_checks_path)
-        end
-      end
-    end
-  end
-
   describe 'section helper' do
     describe '#build_sections' do
       let(:representative) { build(:representative) }

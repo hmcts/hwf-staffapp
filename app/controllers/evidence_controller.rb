@@ -72,15 +72,6 @@ class EvidenceController < ApplicationController
     assign_views
   end
 
-  def return_application
-    if ResolverService.new(evidence, current_user).return
-      back_to_start_or_list
-    else
-      flash[:alert] = t('error_messages.evidence.cannot_be_saved')
-      redirect_to return_letter_evidence_path
-    end
-  end
-
   def process_evidence_check_flag
     evidence_check = EvidenceCheckFlaggingService.new(evidence)
     evidence_check.process_flag if evidence_check.can_be_flagged?
