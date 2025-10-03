@@ -45,4 +45,20 @@ RSpec.feature 'Evidence check' do
     expect(page).to have_content '✓ Eligible for help with fees'
   end
 
+  scenario 'Return evidence check' do
+    visit evidence_path(application.evidence_check)
+    expect(page).to have_content("#{application.reference} - Waiting for evidence")
+    expect(page).to have_content "What to do if evidence hasn't arrived"
+    expect(page).to have_content "choose 'Return application' to remove it from 'Waiting for evidence' and return everything to the applicant."
+
+    click_link 'Return application'
+    expect(page).to have_content 'What is the problem?'
+
+    choose "Citizen not proceeding"
+    click_button 'Next'
+
+    expect(page).to have_content 'Processing complete'
+    expect(application.reload.state).to eq 'processed'
+  end
+
 end

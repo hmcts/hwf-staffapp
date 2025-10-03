@@ -385,8 +385,8 @@ RSpec.describe EvidenceController do
         get :return_letter, params: { id: evidence }
       end
 
-      it 'should redirect to dashboard' do
-        expect(response).to redirect_to(root_path)
+      it 'should display return letter' do
+        expect(response).to render_template('return_letter')
       end
     end
   end
