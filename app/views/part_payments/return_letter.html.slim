@@ -25,6 +25,5 @@
          part_payment_amount: @application_view.amount_to_pay,
          date_for_part_payment: @part_payment.expires_at.strftime(Date::DATE_FORMATS[:gov_uk_long]))
 
-    = form_for @part_payment, url: :return_application_part_payment, method: :post, html: { autocomplete: 'off' } do |f|
-      = f.submit 'Back to start', class: 'govuk-button govuk-!-margin-right-1', name: 'back_to_start'
-      = f.submit 'Back to list', class: 'govuk-button govuk-button--secondary', name: 'back_to_list'
+    = link_to 'Back to start', root_path, class: 'govuk-button govuk-!-margin-right-1', name: 'back_to_start'
+    = link_to 'Back to list', evidence_checks_path, class: 'govuk-button govuk-button--secondary', name: 'back_to_list'

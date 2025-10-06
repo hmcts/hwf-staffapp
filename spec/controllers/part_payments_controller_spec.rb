@@ -213,8 +213,8 @@ RSpec.describe PartPaymentsController do
           expect(response).to have_http_status(302)
         end
 
-        it 'renders the dashboard page' do
-          expect(response).to redirect_to(root_path)
+        it 'renders the return letter page' do
+          expect(response).to redirect_to(return_letter_part_payment_path(part_payment))
         end
       end
 
@@ -226,7 +226,7 @@ RSpec.describe PartPaymentsController do
         end
 
         it 'renders the correct template' do
-          expect(response).to redirect_to(return_letter_part_payment_path)
+          expect(response).to redirect_to(part_payment_path(part_payment))
         end
 
         it 'returns an appropriate error in the flash message' do
@@ -235,15 +235,19 @@ RSpec.describe PartPaymentsController do
       end
     end
 
-    context 'when back to list param is present' do
-      before { post :return_application, params: { id: part_payment.id, back_to_list: 'Back to list' } }
+    context 'when application is already processed' do
+      before {
+        application.update(state: 3)
+        get :show, params: { id: part_payment.id }
+      }
 
       it 'returns the correct status code' do
         expect(response).to have_http_status(302)
       end
 
       it 'renders the part payments page' do
-        expect(response).to redirect_to(part_payments_path)
+        expect(response).to redirect_to(root_path)
+        expect(flash[:alert]).to eql('You are not authorized to access this page.')
       end
     end
   end

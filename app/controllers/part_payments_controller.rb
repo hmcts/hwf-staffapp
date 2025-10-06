@@ -1,7 +1,7 @@
 class PartPaymentsController < ApplicationController
   skip_after_action :verify_authorized, only: :index
 
-  before_action :authorize_part_payment_update, except: [:show, :index]
+  before_action :authorize_part_payment_update, except: [:index]
   before_action only: [:show, :accuracy, :summary, :confirmation, :return_letter] do
     track_application(application)
   end
@@ -20,6 +20,7 @@ class PartPaymentsController < ApplicationController
   end
 
   def show
+    processed_already?
     authorize part_payment
 
     processing_details
@@ -63,10 +64,10 @@ class PartPaymentsController < ApplicationController
 
   def return_application
     if ResolverService.new(part_payment, current_user).return
-      back_to_start_or_list
+      redirect_to return_letter_part_payment_path(part_payment)
     else
       flash[:alert] = t('error_messages.part_payment.cannot_be_saved')
-      redirect_to return_letter_part_payment_path
+      redirect_to part_payment_path(part_payment)
     end
   end
 
@@ -94,5 +95,12 @@ class PartPaymentsController < ApplicationController
 
   def back_to_start_or_list
     redirect_to params[:back_to_list].present? ? part_payments_path : root_path
+  end
+
+  def processed_already?
+    if part_payment.application.processed?
+      flash[:alert] = I18n.t('.unauthorized.manage.all')
+      redirect_to root_path and return false
+    end
   end
 end
