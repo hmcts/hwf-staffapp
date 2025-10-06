@@ -30,7 +30,7 @@ module NotifyMailerHelper # rubocop:disable Metrics/ModuleLength
 
     data.each_with_object({}) do |(key, value), result|
       result[key] = value
-      result[:"has_#{key}"] = value.present? && value != 'N/A'
+      result[:"has_#{key}"] = notify_boolean(value.present? && value != 'N/A')
     end
   end
   # rubocop:enable Metrics/MethodLength, Metrics/AbcSize
@@ -127,5 +127,9 @@ module NotifyMailerHelper # rubocop:disable Metrics/ModuleLength
 
   def format_opt(value)
     value.presence || I18n.t('email.confirmation.none')
+  end
+
+  def notify_boolean(value)
+    value.present? ? 'yes' : 'no'
   end
 end
