@@ -1,6 +1,7 @@
 module Evidence
   class HmrcController < ApplicationController
     before_action :load_hmrc_check, only: [:show, :update]
+    before_action :redirect_admin_to_show, only: [:new]
     before_action :load_form, except: :update
 
     def show
@@ -126,6 +127,11 @@ module Evidence
 
     def prepulated_additional_income
       @form.load_additional_income_from_benefits
+    end
+
+    def redirect_admin_to_show
+      return unless current_user.admin?
+      redirect_to evidence_path(evidence)
     end
   end
 end
