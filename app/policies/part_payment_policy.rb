@@ -1,6 +1,6 @@
 class PartPaymentPolicy < BasePolicy
   def show?
-    (staff_or_manager? || reader?) && same_application_office?
+    (staff_or_manager? || reader? || admin?) && same_application_office?
   end
 
   def update?
