@@ -44,9 +44,9 @@ RSpec.describe EvidenceCheckPolicy, type: :policy do
   end
 
   context 'for an admin' do
-    let(:user) { build_stubbed(:admin_user) }
+    let(:user) { build_stubbed(:admin_user, office: office) }
 
-    it { is_expected.not_to permit_action(:show) }
+    it { is_expected.to permit_action(:show) }
     it { is_expected.not_to permit_action(:update) }
     it { is_expected.not_to permit_action(:complete) }
   end
