@@ -126,7 +126,7 @@ module NotifyMailerHelper # rubocop:disable Metrics/ModuleLength
   end
 
   def format_opt(value)
-    value.presence || I18n.t('email.confirmation.none')
+    value.presence
   end
 
   def notify_boolean(value)
