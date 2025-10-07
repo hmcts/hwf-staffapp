@@ -99,7 +99,7 @@ class PartPaymentsController < ApplicationController
 
   def processed_already?
     if part_payment.application.processed?
-      flash[:alert] = I18n.t('.unauthorized.manage.all')
+      flash[:alert] = I18n.t('.application_redirect.processed')
       redirect_to root_path and return false
     end
   end

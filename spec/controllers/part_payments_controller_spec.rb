@@ -247,7 +247,7 @@ RSpec.describe PartPaymentsController do
 
       it 'renders the part payments page' do
         expect(response).to redirect_to(root_path)
-        expect(flash[:alert]).to eql('You are not authorized to access this page.')
+        expect(flash[:alert]).to eql('This application has been processed. You can’t edit any details.')
       end
     end
   end
