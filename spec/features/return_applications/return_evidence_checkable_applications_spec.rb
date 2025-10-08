@@ -1,5 +1,6 @@
 require 'rails_helper'
 
+# PRE UCD
 RSpec.feature 'When evidence checkable applications are returned' do
   include Warden::Test::Helpers
 
@@ -43,7 +44,9 @@ RSpec.feature 'When evidence checkable applications are returned' do
       choose 'Citizen not proceeding'
       click_button 'Next'
       expect(page).to have_content 'Processing complete'
-      click_button 'Back to start'
+      expect(application1.reload.state).to eq 'processed'
+
+      click_link 'Back to start'
       expect(page).to have_button 'Start now'
       expect(page).to have_no_content application1.reference
     end

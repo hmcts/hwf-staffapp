@@ -57,7 +57,7 @@
             user_name: current_user.name,
             evidence_due: expiry_date_format(@evidence.expires_at))
 
-= form_for @evidence, url: :return_application_evidence, method: :post, html: { autocomplete: 'off' } do |f|
-  = f.submit 'Back to start', class: 'govuk-button govuk-!-margin-right-1', name: 'back_to_start'
-  = f.submit 'Back to list', class: 'govuk-button govuk-button--secondary', name: 'back_to_list'
+
+= link_to 'Back to start', root_path, class: 'govuk-button govuk-!-margin-right-1', name: 'back_to_start'
+= link_to 'Back to list', evidence_checks_path, class: 'govuk-button govuk-button--secondary', name: 'back_to_list'
 

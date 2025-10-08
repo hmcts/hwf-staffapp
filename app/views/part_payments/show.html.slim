@@ -13,7 +13,8 @@ h1.govuk-heading-xl #{@part_payment.application.reference} - Waiting for part-pa
       .govuk-details__text
         | Part-payment needs to arrive by <strong>#{@part_payment.expires_at.to_fs(:gov_uk_long)}</strong> for this application. If you’re unable to process part-payment, choose ‘Return application’ to remove it from ‘Waiting for part-payment' and return everything to the applicant.
       .govuk-details__text
-        = link_to 'Return application', send("return_letter_part_payment_path", @part_payment), class: 'govuk-button'
+        = form_for @part_payment, url: :return_application_part_payment, method: :post, html: { autocomplete: 'off' } do |f|
+          = f.submit 'Return application', class: 'govuk-button govuk-!-margin-right-1', name: 'back_to_start'
 
 
 - if show_ucd_changes?(@details.calculation_scheme)

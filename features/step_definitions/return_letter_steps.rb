@@ -61,15 +61,15 @@ Then("I should see no letter template") do
 end
 
 When("I click on Back to start") do
-  click_button('Back to start')
+  click_link('Back to start')
 end
 
 When("I click on Back to list") do
-  click_button('Back to list')
+  click_link('Back to list')
 end
 
 And("on the processed application I can see that the reason for not being processed is staff error") do
-  click_button('Back to start')
+  click_link('Back to start')
   click_reference_link
   expect(evidence_page.content.table_row[1].text).to include 'Reason not processed: "staff error"'
 end

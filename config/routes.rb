@@ -89,7 +89,6 @@ Rails.application.routes.draw do
       post :summary_save
       get :confirmation
       get :return_letter
-      post :return_application
     end
   end
 

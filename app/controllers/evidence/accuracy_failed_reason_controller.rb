@@ -10,6 +10,7 @@ module Evidence
     def update
       @form = Forms::Evidence::Accuracy.new(evidence)
       if save_accuracy_reasons && accuracy_reasons_check
+        return_application
         redirect_to return_letter_evidence_path(evidence)
       else
         render :show
@@ -54,6 +55,10 @@ module Evidence
 
     def clear_reason_category
       evidence.clear_incorrect_reason_category!
+    end
+
+    def return_application
+      ResolverService.new(evidence, current_user).return
     end
   end
 end
