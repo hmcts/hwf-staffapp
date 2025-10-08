@@ -3,6 +3,7 @@ require 'rails_helper'
 RSpec.describe Evidence::HmrcController do
   let(:office) { create(:office) }
   let(:user) { create(:user, office: office) }
+  let(:admin) { create(:admin_user, office: office) }
   let(:applicant) { application.applicant }
   let(:application) { create(:application, :applicant_full, :waiting_for_evidence_state, office: office, created_at: '15.3.2021') }
   let(:evidence) { application.evidence_check }
@@ -19,6 +20,16 @@ RSpec.describe Evidence::HmrcController do
       it { expect(response).to have_http_status(:redirect) }
 
       it { expect(response).to redirect_to(user_session_path) }
+    end
+
+    context 'as a signed in admin' do
+      before {
+        sign_in admin
+        get :new, params: { evidence_check_id: evidence.id }
+      }
+
+      it { expect(response).to have_http_status(:redirect) }
+      it { expect(response).to redirect_to(evidence_path(evidence)) }
     end
 
     context 'as a signed in user' do
@@ -183,6 +194,16 @@ RSpec.describe Evidence::HmrcController do
   end
 
   describe 'GET #show' do
+    context 'as a signed in admin' do
+      before {
+        sign_in admin
+        get :show, params: { evidence_check_id: evidence.id, id: hmrc_check.id }
+      }
+
+      it { expect(response).to have_http_status(:redirect) }
+      it { expect(response).to redirect_to(evidence_path(evidence)) }
+    end
+
     context 'as a signed out user' do
       before { get :show, params: { evidence_check_id: evidence.id, id: hmrc_check.id } }
 
