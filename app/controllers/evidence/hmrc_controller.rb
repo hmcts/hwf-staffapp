@@ -1,7 +1,7 @@
 module Evidence
   class HmrcController < ApplicationController
     before_action :load_hmrc_check, only: [:show, :update]
-    before_action :redirect_admin_to_show, only: [:new]
+    before_action :redirect_admin_to_show, only: [:new, :show]
     before_action :load_form, except: :update
 
     def show
