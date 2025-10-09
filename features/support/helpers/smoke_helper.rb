@@ -71,9 +71,6 @@ end
 
 When('I complete the application') do
   complete_processing
-end
-
-Then('I should see the confirmation page') do
   expect(confirmation_page.content).to have_application_complete
 end
 

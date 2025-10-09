@@ -18,7 +18,6 @@ Feature: Processed online applications
     And the applicant is filling the application just for themselves
     Then I should see check details page
     When I complete the application
-    Then I should see the confirmation page
     And the application is marked to be evidence_checked
 
 
