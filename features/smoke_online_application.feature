@@ -20,6 +20,16 @@ Feature: Processed online applications
     When I complete the application
     And the application is marked to be evidence_checked
 
+    When I start processing evidence page
+    Then I should see applications details
+    When I confirm evidence is ready
+    And I fill in real income
+    Then I should see that application is eligible for part payemnt
+    And I confirm and complete the application
+    Then I should see the confirmation page with results
+
+
+
 
 
 
