@@ -76,11 +76,11 @@ end
 Capybara.always_include_port = true
 Capybara.javascript_driver = Capybara.default_driver
 
-if ENV['LOCAL_SMOKE_TESTS']
-  ENV['TEST_URL'] = 'http://localhost:3000/'
-end
+# if ENV['LOCAL_SMOKE_TESTS']
+#   ENV['TEST_URL'] = 'http://localhost:3000/'
+# end
 
-if ENV['TEST_URL']
+if ENV['TEST_URL'] && ENV['RUN_SMOKE_TESTS'] == 'true'
   Capybara.app_host = ENV['TEST_URL']
   Capybara.run_server = false
 else
