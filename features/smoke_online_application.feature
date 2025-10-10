@@ -28,13 +28,7 @@ Feature: Processed online applications
     And I confirm and complete the application
     Then I should see the confirmation page with results
 
-
-
-
-
-
-
-
-
-
-
+    When I start processing part payment
+    Then I should see part payment applications details
+    When I confirm part payment is made
+    And I will see that the applications was processed successfully

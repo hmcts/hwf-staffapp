@@ -120,3 +120,30 @@ Then('I should see the confirmation page with results') do
   expect(confirmation_page.content).to have_application_complete
   expect(confirmation_page.content).to have_content 'The applicant must pay £556 towards the fee'
 end
+
+When('I start processing part payment') do
+  visit root_path
+  find('table.updated_applications').find('a', text: @smoke_reference_number).click
+end
+
+When('I should see part payment applications details') do
+  expect(page).to have_selector('h1', text: "#{@smoke_reference_number} - Waiting for part-payment")
+  click_link 'Start now'
+end
+
+When('I confirm part payment is made') do
+  expect(part_payment_page.content).to have_header
+  part_payment_page.ready_to_process_payment
+  expect(summary_page.content).to have_header
+  expect(summary_page.content).to have_content 'The applicant has paid £556 towards the fee'
+  complete_processing
+end
+
+When('I will see that the applications was processed successfully') do
+  expect(page).to have_selector('h1', text: "Processing complete")
+  visit root_path
+  row = find('table.updated_applications').find('tr', text: @smoke_reference_number)
+  expect(row).to have_content("processed")
+  row.find('a', text: @smoke_reference_number).click
+  expect(page).to have_selector('h1', text: "#{@smoke_reference_number} - Processed application")
+end
