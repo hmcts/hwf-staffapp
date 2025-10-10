@@ -4,6 +4,7 @@ RSpec.describe PartPaymentPolicy, type: :policy do
   subject(:policy) { described_class.new(user, part_payment) }
 
   let(:office) { build_stubbed(:office) }
+  let(:office2) { build_stubbed(:office) }
   let(:application) { build_stubbed(:application, office: office) }
   let(:part_payment) { build_stubbed(:part_payment, application: application) }
 
@@ -40,7 +41,7 @@ RSpec.describe PartPaymentPolicy, type: :policy do
   end
 
   context 'for an admin' do
-    let(:user) { build_stubbed(:admin_user, office: office) }
+    let(:user) { build_stubbed(:admin_user, office: office2) }
 
     it { is_expected.to permit_action(:show) }
     it { is_expected.not_to permit_action(:update) }
