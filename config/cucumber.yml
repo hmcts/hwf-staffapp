@@ -1,7 +1,7 @@
 <%
 rerun = File.file?('rerun.txt') ? IO.read('rerun.txt') : ""
 rerun_opts = rerun.to_s.strip.empty? ? "--format #{ENV['CUCUMBER_FORMAT'] || 'progress'} features" : "--format #{ENV['CUCUMBER_FORMAT'] || 'pretty'} #{rerun}"
-std_opts = "--format #{ENV['CUCUMBER_FORMAT'] || 'pretty'} --strict --tags 'not @wip'"
+std_opts = "--format #{ENV['CUCUMBER_FORMAT'] || 'pretty'} --strict --tags 'not @wip and not @smoke'"
 create_json_opts = "--format json --out features/cucumber-report/cucumber_report.json"
 %>
 default: <%= std_opts %> --publish
@@ -9,4 +9,5 @@ saucelabs: -t @saucelabs -t "not @fail"
 wip: --tags @wip:3 --wip features
 rerun: <%= rerun_opts %> --format rerun --out rerun.txt --strict --tags 'not @wip'
 report: <%= std_opts %> <%= create_json_opts %> features
-parallel: --format progress --tags 'not @wip'
+parallel: --format progress --tags 'not @smoke and not @wip'
+smoke: --format pretty --strict --tags @smoke features
