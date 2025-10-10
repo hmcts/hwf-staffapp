@@ -4,6 +4,7 @@ RSpec.describe EvidenceCheckPolicy, type: :policy do
   subject(:policy) { described_class.new(user, evidence_check) }
 
   let(:office) { build_stubbed(:office) }
+  let(:office2) { build_stubbed(:office) }
   let(:application) { build_stubbed(:application, office: office) }
   let(:evidence_check) { build_stubbed(:evidence_check, application: application) }
 
@@ -44,7 +45,7 @@ RSpec.describe EvidenceCheckPolicy, type: :policy do
   end
 
   context 'for an admin' do
-    let(:user) { build_stubbed(:admin_user, office: office) }
+    let(:user) { build_stubbed(:admin_user, office: office2) }
 
     it { is_expected.to permit_action(:show) }
     it { is_expected.not_to permit_action(:update) }
