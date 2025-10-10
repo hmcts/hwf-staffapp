@@ -156,4 +156,22 @@ Cucumber report is enabled now. At the end of the test run you should see a link
 When you run tests in parallel it will generate report per process so if you want to see one report only you should
 run test directly without parallel functionality.
 
+### Smoke test ###
+Smoke tests are set up to run on CI not on local but if you want to do it on local
+you can run it as
+```
+cucumber -p smoke
+```
+but before you do update this setup in capybara_driver_helper.rb
+
+```
+# Uncomment and set to your test URL to run tests against localhost
+# ENV['TEST_URL'] = 'http://localhost:3000/'
+
+if ENV['TEST_URL'] && ENV['RUN_SMOKE_TESTS'] == 'true'
+  Capybara.app_host = ENV['TEST_URL']
+  Capybara.run_server = false
+else
+```
+
 Deployment versions trigger: 6

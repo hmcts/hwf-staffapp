@@ -105,4 +105,10 @@ class SignInPage < BasePage
     content.user_password.set user.password
     sign_in
   end
+
+  def sign_in_as_smoke_user
+    content.user_email.set 'joe.smoketest@digital.justice.gov.uk'
+    content.user_password.set '12345678900DFGHHJ'
+    sign_in
+  end
 end

@@ -75,7 +75,16 @@ end
 
 Capybara.always_include_port = true
 Capybara.javascript_driver = Capybara.default_driver
-Capybara.app_host = ENV.fetch('CAPYBARA_APP_HOST', "http://#{ENV.fetch('HOSTNAME', 'localhost')}")
-Capybara.server_host = ENV.fetch('CAPYBARA_SERVER_HOST', ENV.fetch('HOSTNAME', 'localhost'))
-Capybara.server_port = ENV.fetch('CAPYBARA_SERVER_PORT', '3000') unless
-  ENV['CAPYBARA_SERVER_PORT'] == 'random'
+
+# Uncomment and set to your test URL to run tests against localhost
+# ENV['TEST_URL'] = 'http://localhost:3000/'
+
+if ENV['TEST_URL'] && ENV['RUN_SMOKE_TESTS'] == 'true'
+  Capybara.app_host = ENV['TEST_URL']
+  Capybara.run_server = false
+else
+  Capybara.app_host = ENV.fetch('CAPYBARA_APP_HOST', "http://#{ENV.fetch('HOSTNAME', 'localhost')}")
+  Capybara.server_host = ENV.fetch('CAPYBARA_SERVER_HOST', ENV.fetch('HOSTNAME', 'localhost'))
+  Capybara.server_port = ENV.fetch('CAPYBARA_SERVER_PORT', '3000') unless
+    ENV['CAPYBARA_SERVER_PORT'] == 'random'
+end
