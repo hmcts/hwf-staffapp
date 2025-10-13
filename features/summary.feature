@@ -1,7 +1,6 @@
 Feature: Summary page
 
-  @smoke
-    Scenario: Successfully submit my application
+  Scenario: Successfully submit my application
       Given I have completed an application
       And I am on the summary page
       When I successfully submit my application
@@ -33,7 +32,7 @@ Feature: Summary page
     Scenario: Displays benefit summary
       Given I have completed an application
       And I am on the summary page
-      When I see benefit summary 
+      When I see benefit summary
       Then I should see declared benefits in this application
       And I should not see income details section
       And I have provided the correct evidence
