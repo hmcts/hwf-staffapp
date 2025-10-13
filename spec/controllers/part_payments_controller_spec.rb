@@ -2,6 +2,7 @@ require 'rails_helper'
 
 RSpec.describe PartPaymentsController do
   let(:office) { create(:office) }
+  let(:office2) { create(:office) }
   let(:user) { create(:staff, office: office) }
   let(:application) { create(:application, office: office) }
   let(:part_payment) { create(:part_payment, application: application) }
@@ -60,23 +61,34 @@ RSpec.describe PartPaymentsController do
   end
 
   describe 'GET #show' do
-    before do
-      get :show, params: { id: part_payment.id }
+    context 'when admin user form another office' do
+      let(:user) { create(:admin, office: office2) }
+      before { get :show, params: { id: part_payment.id } }
+
+      it 'returns the correct status code' do
+        expect(response).to have_http_status(200)
+      end
     end
 
-    it 'returns the correct status code' do
-      expect(response).to have_http_status(200)
-    end
+    context 'when normal user' do
+      before do
+        get :show, params: { id: part_payment.id }
+      end
 
-    it 'renders the correct template' do
-      expect(response).to render_template(:show)
-    end
+      it 'returns the correct status code' do
+        expect(response).to have_http_status(200)
+      end
 
-    describe 'assigns the view models' do
-      it { expect(assigns(:processing_details)).to eql(processing_details) }
-      it { expect(assigns(:application_view)).to eql(application_view) }
-      it { expect(assigns(:details)).to eql(details) }
-      it { expect(assigns(:applicant)).to eql(applicant_view) }
+      it 'renders the correct template' do
+        expect(response).to render_template(:show)
+      end
+
+      describe 'assigns the view models' do
+        it { expect(assigns(:processing_details)).to eql(processing_details) }
+        it { expect(assigns(:application_view)).to eql(application_view) }
+        it { expect(assigns(:details)).to eql(details) }
+        it { expect(assigns(:applicant)).to eql(applicant_view) }
+      end
     end
   end
 

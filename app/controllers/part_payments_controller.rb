@@ -1,7 +1,7 @@
 class PartPaymentsController < ApplicationController
   skip_after_action :verify_authorized, only: :index
 
-  before_action :authorize_part_payment_update, except: [:index]
+  before_action :authorize_part_payment_update, except: [:index, :show]
   before_action only: [:show, :accuracy, :summary, :confirmation, :return_letter] do
     track_application(application)
   end
