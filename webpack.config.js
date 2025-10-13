@@ -8,8 +8,8 @@ module.exports = {
     application: "./app/javascript/application.js"
   },
   output: {
-    filename: "bundle-6.js",
-    sourceMapFilename: "bundle-6.map",
+    filename: "bundle-7.js",
+    sourceMapFilename: "bundle-7.map",
     chunkFormat: "module",
     path: path.resolve(__dirname, "app/assets/builds"),
   },
