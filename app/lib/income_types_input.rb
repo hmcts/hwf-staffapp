@@ -27,7 +27,7 @@ module IncomeTypesInput
   def self.normalize(input)
     return input if INCOME_TYPES.key?(input.to_sym)
 
-    matched = INCOME_TYPES.find do |key, value|
+    matched = INCOME_TYPES.find do |_key, value|
       value.strip.downcase == input.to_s.strip.downcase
     end
 

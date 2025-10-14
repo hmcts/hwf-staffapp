@@ -175,7 +175,7 @@ module Views
       # rubocop:enable Metrics/AbcSize
       # rubocop:enable Metrics/MethodLength
 
-      def income_kind(value) # rubocop:disable Metrics/MethodLength
+      def income_kind(value) # rubocop:disable Metrics/MethodLength, Metrics/AbcSize
         return 'N/A' if value.nil?
         income_kind_hash = YAML.parse(value).to_ruby
         return 'N/A' if income_kind_hash.blank?
@@ -188,7 +188,7 @@ module Views
         [applicant, partner].compact_blank.join(", ")
       rescue TypeError
         "N/A"
-      end # rubocop:enable Metrics/MethodLength
+      end # rubocop:enable Metrics/MethodLength, Metrics/AbcSize
 
       def date_formatted(date_range)
         return nil if date_range.blank?
