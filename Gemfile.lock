@@ -164,7 +164,7 @@ GEM
     capybara-screenshot (1.0.26)
       capybara (>= 1.0, < 4)
       launchy
-    chartkick (5.2.0)
+    chartkick (5.2.1)
     childprocess (5.1.0)
       logger (~> 1.5)
     climate_control (1.2.0)
