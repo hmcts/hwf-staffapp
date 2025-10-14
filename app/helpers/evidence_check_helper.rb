@@ -40,11 +40,11 @@ module EvidenceCheckHelper
     return nil if application.income_kind.blank?
 
     list = []
-    list += application.income_kind[:applicant].map do |kind|
+    list += IncomeTypesInput.normalize_list(application.income_kind[:applicant]).map do |kind|
       I18n.t(kind, scope: ['activemodel.attributes.forms/application/income_kind_applicant', 'kinds'])
     end
     if application.income_kind.key?(:partner)
-      list += application.income_kind.try(:[], :partner).map do |kind|
+      list += IncomeTypesInput.normalize_list(application.income_kind.try(:[], :partner)).map do |kind|
         I18n.t(kind, scope: ['activemodel.attributes.forms/application/income_kind_partner', 'kinds'])
       end
     end

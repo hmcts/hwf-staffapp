@@ -179,10 +179,10 @@ module Views
         return 'N/A' if value.nil?
         income_kind_hash = YAML.parse(value).to_ruby
         return 'N/A' if income_kind_hash.blank?
-        applicant = income_kind_hash[:applicant].map do |kind|
+        applicant = IncomeTypesInput.normalize_list(income_kind_hash[:applicant]).map do |kind|
           I18n.t(kind, scope: ['activemodel.attributes.forms/application/income_kind_applicant', 'kinds'])
         end.join(',')
-        partner = income_kind_hash[:partner].try(:map) do |kind|
+        partner = IncomeTypesInput.normalize_list(income_kind_hash[:partner]).try(:map) do |kind|
           I18n.t(kind, scope: ['activemodel.attributes.forms/application/income_kind_partner', 'kinds'])
         end.try(:join, ',')
         [applicant, partner].compact_blank.join(", ")

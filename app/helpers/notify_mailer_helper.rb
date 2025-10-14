@@ -73,8 +73,8 @@ module NotifyMailerHelper
 
   def income_kind_text(application)
     kinds = [
-      application&.income_kind&.[](:applicant),
-      application&.income_kind&.[](:partner)
+      IncomeTypesInput.normalize_list(application&.income_kind&.[](:applicant)),
+      IncomeTypesInput.normalize_list(application&.income_kind&.[](:partner))
     ].compact.flatten
 
     kinds.filter_map do |key|

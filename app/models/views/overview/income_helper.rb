@@ -18,7 +18,7 @@ module Views
       def translate_kinds(person)
         return if @application.income_kind.nil? || @application.income_kind[person].blank?
 
-        @application.income_kind[person].map do |kind|
+        IncomeTypesInput.normalize_list(@application.income_kind[person]).map do |kind|
           I18n.t(kind, scope: ["activemodel.attributes.forms/application/income_kind_#{person}", 'kinds'])
         end.join(', ')
       end
