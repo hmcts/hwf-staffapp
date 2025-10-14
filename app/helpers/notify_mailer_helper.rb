@@ -1,12 +1,12 @@
-module NotifyMailerHelper
+module NotifyMailerHelper # rubocop:disable Metrics/ModuleLength
   include ActionView::Helpers::NumberHelper
   include IncomePeriodHelper
 
   # rubocop:disable Metrics/MethodLength, Metrics/AbcSize
   def hash_for_personalisation(application)
-    {
+    data = {
       application_reference_code: format_opt(application.reference),
-      application_form_name: format_false(application.form_name),
+      application_form_name: format_opt(application.form_name),
       application_fee_paid: format_yes_no(application.refund),
       application_ni_number: format_opt(application.ni_number),
       application_status: married_status_text(application),
@@ -17,7 +17,7 @@ module NotifyMailerHelper
       application_income_period: format_opt(income_period_text(application)&.capitalize),
       application_income_type: format_opt(income_kind_text(application)),
       application_probate: format_yes_no(application.probate),
-      application_claim_number: format_false(application.case_number),
+      application_claim_number: format_opt(application.case_number),
       application_date_of_birth: format_opt(dob_text(application)),
       application_first_name: format_opt(application.first_name),
       application_last_name: format_opt(application.last_name),
@@ -27,6 +27,12 @@ module NotifyMailerHelper
       application_declaration: declaration_text(application),
       application_applying_method: applying_method_text(application)
     }
+
+    data.each_with_object({}) do |(key, value), result|
+      clean_value = value.nil? || value == 'N/A' ? '' : value
+      result[key] = clean_value
+      result[:"has_#{key}"] = notify_boolean(value.present? && value != 'N/A')
+    end
   end
   # rubocop:enable Metrics/MethodLength, Metrics/AbcSize
 
@@ -64,10 +70,14 @@ module NotifyMailerHelper
   end
 
   def children_text(application)
-    application.children&.zero? ? I18n.t('email.confirmation.false') : format_false(application.children)
+    return I18n.t('email.confirmation.none') if application.children.nil?
+
+    format_opt(application.children)
   end
 
   def income_amount_text(application)
+    return if application.income.nil?
+
     number_to_currency(application.income, unit: '£', precision: 0)
   end
 
@@ -117,6 +127,10 @@ module NotifyMailerHelper
   end
 
   def format_opt(value)
-    value.presence || I18n.t('email.confirmation.none')
+    value.presence
+  end
+
+  def notify_boolean(value)
+    value.present? ? 'yes' : 'no'
   end
 end
