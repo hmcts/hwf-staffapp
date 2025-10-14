@@ -105,6 +105,7 @@ When("I change the date fee paid to a valid date") do
   application_details_page.content.day_date_received.set date_fee_paid.day
   application_details_page.content.month_date_received.set date_fee_paid.month
   application_details_page.content.year_date_received.set date_fee_paid.year
+  page.execute_script("$('#application_year_date_fee_paid').trigger($.Event('keyup', { keyCode: 13 }))")
 end
 
 Then("I should not see discretion information") do

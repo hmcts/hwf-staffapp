@@ -8,7 +8,7 @@ class PathStorage
   end
 
   def navigation(current_path)
-    @current_path = current_path
+    @current_path = filter_some_paths(current_path)
     return if load_last == @current_path
 
     if current_path_in_the_list
@@ -85,4 +85,13 @@ class PathStorage
     load_navigation_list.include?(@current_path)
   end
 
+  def filter_some_paths(current_path)
+    # becase the return applicatio is POST action and it has no where to go
+    if current_path.match?(%r{part_payments/\d+/return_application$})
+      id = current_path.match(%r{part_payments/(\d+)/return_application$})[1]
+      return part_payments_path(id)
+    end
+
+    current_path
+  end
 end

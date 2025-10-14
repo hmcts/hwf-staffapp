@@ -45,7 +45,15 @@ module Views
         details.form_name as \"Form\",
         details.refund as \"Refund\",
         CASE WHEN details.emergency_reason IS NULL THEN false ELSE true END AS \"Emergency\",
-        applications.income as \"Income\",
+        applications.income as \"Pre evidence income\",
+        ec.income as \"Post evidence income\",
+        CASE
+          WHEN applications.income_min_threshold_exceeded = TRUE THEN 'under'
+          WHEN applications.income_max_threshold_exceeded = TRUE THEN 'over'
+          ELSE 'N/A'
+        END AS \"Income threshold exceeded\",
+        CASE WHEN applications.income < 101 THEN 'true' ELSE 'false' END AS \"Low income declared\",
+        applications.decision_date as \"Decision date\",
         applications.income_period as \"Income period\",
         applications.children as \"Children\",
         applications.children_age_band as \"Age band under 14\",
@@ -67,12 +75,21 @@ module Views
              WHEN savings.max_threshold_exceeded IS NULL AND savings.min_threshold_exceeded = FALSE THEN '0 - 2,999'
              WHEN savings.max_threshold_exceeded IS NULL AND savings.min_threshold_exceeded = TRUE THEN '3000 or more'
              ELSE ''
-        END AS \"Capital\",
+        END AS \"Capital band\",
         savings.amount AS \"Saving and Investments\",
         details.case_number AS \"Case number\",
         details.date_received as \"Date received\",
+        oa.created_at AS \"Date submitted online\",
         CASE WHEN applicants.married = TRUE THEN 'yes' ELSE 'no' END as \"Married\",
-        applications.decision as \"Decision\",
+        CASE
+          WHEN savings.over_66 = TRUE THEN 'Yes'
+          WHEN savings.over_66 = FALSE THEN 'No'
+          ELSE 'N/A'
+        END AS \"Pension age\",
+        CASE WHEN applications.state = 4 THEN 'deleted' ELSE applications.decision END as \"Decision\",
+        CASE WHEN savings.passed = FALSE then 'Yes'
+             WHEN savings.passed = TRUE then 'No'
+             ELSE 'N/A' END as \"Failed on savings\",
         applications.completed_at as \"Application processed date\",
         CASE WHEN ec.income_check_type = 'paper' THEN ec.completed_at ELSE NULL
         END as \"Manual evidence processed date\",
@@ -139,6 +156,7 @@ module Views
         LEFT JOIN savings ON savings.application_id = applications.id
         LEFT JOIN decision_overrides de ON de.application_id = applications.id
         LEFT JOIN benefit_overrides beo ON beo.application_id = applications.id
+        LEFT JOIN online_applications oa ON oa.id = applications.online_application_id
         LEFT JOIN (
          SELECT id as \"hc_id\", income as \"hc_income\", request_params, tax_credit, additional_income,
             error_response, evidence_check_id, created_at, row_number() over
@@ -154,6 +172,7 @@ module Views
       end
 
       # rubocop:disable Metrics/AbcSize
+      # rubocop:disable Metrics/CyclomaticComplexity
       def process_row(row)
         csv_row = row
 
@@ -161,6 +180,8 @@ module Views
         csv_row['Application processed date'] = csv_row['Application processed date']&.to_fs(:db)
         csv_row['Manual evidence processed date'] = csv_row['Manual evidence processed date']&.to_fs(:db)
         csv_row['Processed date'] = csv_row['Processed date']&.to_fs(:db)
+        csv_row['Decision date'] = csv_row['Decision date']&.to_fs(:db)
+        csv_row['Date submitted online'] = csv_row['Date submitted online']&.to_fs(:db)
         csv_row['Declared income sources'] = income_kind(row['Declared income sources'])
         csv_row['HMRC request date range'] = hmrc_date_range(row['HMRC request date range'])
         csv_row['Age band under 14'] = children_age_band(row['Age band under 14'], :children_age_band_one)
@@ -174,6 +195,7 @@ module Views
       end
       # rubocop:enable Metrics/AbcSize
       # rubocop:enable Metrics/MethodLength
+      # rubocop:enable Metrics/CyclomaticComplexity
 
       def income_kind(value) # rubocop:disable Metrics/MethodLength
         return 'N/A' if value.nil?

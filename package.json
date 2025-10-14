@@ -14,9 +14,9 @@
   },
   "engineStrict": true,
   "dependencies": {
-    "@rails/actiontext": "^8.0.201",
+    "@rails/actiontext": "^8.0.300",
     "accessible-autocomplete": "^3.0.0",
-    "govuk-frontend": "5.11.2",
+    "govuk-frontend": "5.13.0",
     "jquery": "^3.7.1",
     "rails-ujs": "^5.2.8-1",
     "trix": "^2.1.15"
@@ -34,8 +34,8 @@
   "author": "",
   "license": "ISC",
   "devDependencies": {
-    "sass": "^1.92.0",
-    "webpack": "^5.101.3",
+    "sass": "^1.93.2",
+    "webpack": "^5.102.1",
     "webpack-cli": "^6.0.1"
   },
   "packageManager": "yarn@1.22.22+sha512.a6b2f7906b721bba3d67d4aff083df04dad64c399707841b7acf00f6b133b7ac24255f2652fa22ae3534329dc6180534e98d17432037ff6fd140556e2bb3137e"

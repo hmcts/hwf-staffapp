@@ -60,4 +60,8 @@ module ApplicationHelper
     path_storage = PathStorage.new(current_user)
     path_storage.path_back
   end
+
+  def date_hint
+    Time.current.strftime("%d %m %Y")
+  end
 end

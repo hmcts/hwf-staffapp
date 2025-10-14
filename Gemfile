@@ -2,7 +2,7 @@ source 'https://rubygems.org'
 
 git_source(:github) { |repo| "https://github.com/#{repo}.git" }
 
-ruby '3.4.5'
+ruby '3.4.7'
 
 gem 'application_insights', '~> 0.5.6'
 gem 'csv'
@@ -26,7 +26,7 @@ gem 'rails-i18n'
 # Azure key vault secrets to ENV variables
 gem 'azure_env_secrets', github: 'hmcts/azure_env_secrets', tag: 'v1.0.1'
 gem 'azure-storage-blob', '~> 2.0', '>= 2.0.3'
-gem 'hwf_hmrc_api', github: 'hmcts/hwf_hmrc_api', tag: 'v0.3.0'
+gem 'hwf_hmrc_api', github: 'hmcts/hwf_hmrc_api', tag: 'v0.3.1'
 
 # configuration
 gem 'config'
@@ -143,6 +143,7 @@ end
 
 group :test do
   gem 'apparition', github: 'twalpole/apparition', ref: 'ca86be4d54af835d531dbcd2b86e7b2c77f85f34'
+  gem 'cuprite'
   gem 'brakeman'
   gem 'capybara'
   gem 'capybara-screenshot'
