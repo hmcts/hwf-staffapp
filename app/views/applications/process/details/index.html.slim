@@ -96,7 +96,7 @@
               .govuk-form-group.group-level
                 legend.govuk-fieldset__legend
                   = t('date_of_death', scope: @form.i18n_scope)
-                div.govuk-hint = t('date_hint', scope: @form.i18n_scope)
+                div.govuk-hint = t('date_hint_html', scope: @form.i18n_scope, today_date: date_hint)
                 - if @form.errors[:date_of_death].present?
                   span.govuk-error-message
                     = f.label :date_of_death, @form.errors[:date_of_death].join(', '), class: 'error'

@@ -47,7 +47,7 @@
         legend.govuk-fieldset__legend
           =t('date_received', scope: @form.i18n_scope)
 
-        div.govuk-hint = t('date_hint', scope: @form.i18n_scope)
+        div.govuk-hint = t('date_hint_html', scope: @form.i18n_scope, today_date: date_hint)
         span.govuk-error-message
           = f.label :date_received, @form.errors[:date_received].join(', '), class: 'error' if @form.errors[:date_received].present?
         .govuk-date-input

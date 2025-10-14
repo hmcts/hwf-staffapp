@@ -9,7 +9,7 @@ def component = "staffapp"
 def rubyBuilder = new uk.gov.hmcts.contino.RubyBuilder(this)
 def yarnBuilder = new uk.gov.hmcts.contino.YarnBuilder(this)
 
-withPipeline(type, product, component) {
+withNightlyPipeline(type, product, component) {
     env.TRIGGER='1'
     env.RAILS_ENV = 'test'
     env.RACK_ENV = 'test'
@@ -51,28 +51,29 @@ withPipeline(type, product, component) {
     env.SENTRY_SSL_VERIFICATION=''
     env.NEW_LEGISLATION_ACTIVE_DATE='27-11-2028'
 
+    enableFortifyScan()
 
-      before('build') {
-        sh script:"""#!/bin/bash -l
-            set +x
-            source /usr/local/rvm/scripts/rvm
-            rvm install ruby-3.4.7
-            rvm use ruby-3.4.7 --default
-        """, label: 'Ruby version install'
-      }
-
-      before('test') {
-        sh script:"""
-            yarn install
-            docker inspect hmctspublic.azurecr.io/imported/postgres:16-alpine > /dev/null 2>&1 || docker pull hmctspublic.azurecr.io/imported/postgres:16-alpine
-            docker stop hwf-test-postgres && docker rm hwf-test-postgres || echo 'Ignoring failure in stopping old postgres'
-            docker run --rm --name hwf-test-postgres --publish 5421:5432 -e POSTGRES_PASSWORD=postgres -d hmctspublic.azurecr.io/imported/postgres:16-alpine
-        """, label: 'Start test postgres'
-
-        rubyBuilder.bundle("exec rails db:create db:schema:load")
-        rubyBuilder.bundle("install")
-        rubyBuilder.bundle("exec rake assets:precompile")
+    before('build') {
+      sh script:"""#!/bin/bash -l
+          set +x
+          source /usr/local/rvm/scripts/rvm
+          rvm install ruby-3.4.6
+          rvm use ruby-3.4.6 --default
+      """, label: 'Ruby version install'
     }
+
+    before('test') {
+      sh script:"""
+          yarn install
+          docker inspect hmctspublic.azurecr.io/imported/postgres:16-alpine > /dev/null 2>&1 || docker pull hmctspublic.azurecr.io/imported/postgres:16-alpine
+          docker stop hwf-test-postgres && docker rm hwf-test-postgres || echo 'Ignoring failure in stopping old postgres'
+          docker run --rm --name hwf-test-postgres --publish 5421:5432 -e POSTGRES_PASSWORD=postgres -d hmctspublic.azurecr.io/imported/postgres:16-alpine
+      """, label: 'Start test postgres'
+
+      rubyBuilder.bundle("exec rails db:create db:schema:load")
+      rubyBuilder.bundle("install")
+      rubyBuilder.bundle("exec rake assets:precompile")
+  }
 
     afterAlways('smokeTest') {
         sh script: "docker stop hwf-test-postgres && docker rm hwf-test-postgres || echo 'Ignoring failure in stopping postgres'",

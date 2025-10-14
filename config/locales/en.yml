@@ -626,7 +626,7 @@ en-GB:
         day_date_fee_paid: Day
         month_date_fee_paid: Month
         year_date_fee_paid: Year
-        date_hint: For example, 04 10 2018
+        date_hint_html: For example, %{today_date}
         discretion_applied: Delivery Manager discretion applied?
         discretion_applied_false: 'No'
         discretion_applied_true: 'Yes'
@@ -691,7 +691,7 @@ en-GB:
         year_date_fee_paid: Year
         emergency: This is an emergency case
         emergency_reason: Reason for emergency
-        date_hint: For example, 04 10 2018
+        date_hint_html: For example, %{today_date}
         discretion_applied: Delivery Manager discretion applied?
         discretion_applied_false: 'No'
         discretion_applied_true: 'Yes'
@@ -840,7 +840,7 @@ en-GB:
         day_date_received: Day
         month_date_received: Month
         year_date_received: Year
-        date_hint: For example, 04 10 2018
+        date_hint_html: For example, %{today_date}
         date_received: Date received
         benefits_override_false: 'No'
         benefits_override_true_html: "Yes, the applicant has provided supporting evidence. Please be aware that by selecting this the customer will be issued a <b>full remission.</b>"
