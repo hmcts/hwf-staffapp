@@ -12,73 +12,78 @@ class IncomeKindRefactorService
     @application.save! if @changed
   end
 
+  ALLOWED_NORMALIZED_VALUES = [
+    :wage, :net_profit, :child_benefit, :working_credit, :child_credit, :maintenance_payments, :jsa, :esa,
+    :universal_credit, :pensions, :rent_from_cohabit, :rent_from_properties, :cash_gifts, :financial_support,
+    :loans, :other_income, :none_of_the_above
+  ].map(&:to_s).freeze
+
   INCOME_KIND_MAP = {
-    'Wages before tax and National Insurance are taken off' => 'wage',
-    'Wages' => 'wage',
+    'wages before tax and national insurance are taken off' => 'wage',
+    'wages' => 'wage',
     '1' => 'wage',
 
-    'Net profits from self employment' => 'net_profit',
+    'net profits from self employment' => 'net_profit',
     '2' => 'net_profit',
 
-    'Child Benefit' => 'child_benefit',
-    'Child benefit' => 'child_benefit',
+    'child benefit' => 'child_benefit',
     '3' => 'child_benefit',
 
-    'Working Tax Credit' => 'working_credit',
+    'working tax credit' => 'working_credit',
     '4' => 'working_credit',
 
-    'Child Tax Credit' => 'child_credit',
+    'child tax credit' => 'child_credit',
     '5' => 'child_credit',
 
-    'Maintenance payments' => 'maintenance_payments',
+    'maintenance payments' => 'maintenance_payments',
     '6' => 'maintenance_payments',
 
-    'Contribution-based Jobseekers Allowance (JSA)' => 'jsa',
+    'contribution-based jobseekers allowance (jsa)' => 'jsa',
     '7' => 'jsa',
 
-    'Contribution-based Employment and Support Allowance (ESA)' => 'esa',
+    'contribution-based employment and support allowance (esa)' => 'esa',
     '8' => 'esa',
 
-    'Universal Credit' => 'universal_credit',
+    'universal credit' => 'universal_credit',
     '9' => 'universal_credit',
 
-    'Pensions (state, work, private, pension credit (savings credit))' => 'pensions',
-    'Pensions (state, work, private)' => 'pensions',
-    'Pension Credit (savings credit)' => 'pensions',
+    'pensions (state, work, private, pension credit (savings credit))' => 'pensions',
+    'pensions (state, work, private)' => 'pensions',
+    'pension credit (savings credit)' => 'pensions',
     '10' => 'pensions',
     '11' => 'pensions',
 
-    'Rent from anyone living with the applicant' => 'rent_from_cohabit',
-    'Rent from anyone living with the partner' => 'rent_from_cohabit',
-    'Rent from anyone living with you' => 'rent_from_cohabit',
+    'rent from anyone living with the applicant' => 'rent_from_cohabit',
+    'rent from anyone living with the partner' => 'rent_from_cohabit',
+    'rent from anyone living with you' => 'rent_from_cohabit',
     '12' => 'rent_from_cohabit',
     '14' => 'rent_from_cohabit',
 
-    'Rent from other properties the applicant owns' => 'rent_from_properties',
-    'Rent from other properties the partner owns' => 'rent_from_properties',
-    'Rent from other properties you own' => 'rent_from_properties',
+    'rent from other properties the applicant owns' => 'rent_from_properties',
+    'rent from other properties the partner owns' => 'rent_from_properties',
+    'rent from other properties you own' => 'rent_from_properties',
     '13' => 'rent_from_properties',
     '15' => 'rent_from_properties',
 
-    'Cash gifts - include all one off payments' => 'cash_gifts',
-    'Cash gifts' => 'cash_gifts',
+    'cash gifts - include all one off payments' => 'cash_gifts',
+    'cash gifts' => 'cash_gifts',
     '16' => 'cash_gifts',
 
-    'Financial support from family - include all one off payments' => 'financial_support',
-    'Financial support from others' => 'financial_support',
+    'financial support from family - include all one off payments' => 'financial_support',
+    'financial support from others' => 'financial_support',
     '17' => 'financial_support',
 
-    'Loans' => 'loans',
+    'loans' => 'loans',
     '18' => 'loans',
 
-    'Other income - For example, income from online selling or from dividend or interest payments' => 'other_income',
-    'Other income - For example, income from online selling' => 'other_income',
-    'Other income  - For example, income from online selling' => 'other_income',
-    'Other income' => 'other_income',
+    'other income - for example, income from online selling or from dividend or interest payments' => 'other_income',
+    'other income - for example, income from online selling' => 'other_income',
+    'other income  - for example, income from online selling' => 'other_income',
+    'other income' => 'other_income',
     '19' => 'other_income',
 
-    'None of the above' => 'none_of_the_above',
-    'No income' => 'none_of_the_above',
+    'none of the above' => 'none_of_the_above',
+    'no income' => 'none_of_the_above',
     '20' => 'none_of_the_above'
   }.freeze
 
@@ -109,12 +114,15 @@ class IncomeKindRefactorService
     end
   end # rubocop:enable Metrics/MethodLength, Metrics/PerceivedComplexity, Metrics/CyclomaticComplexity, Metrics/AbcSize
 
-  def normalize_income_kinds # rubocop:disable Metrics/MethodLength
+  def normalize_income_kinds # rubocop:disable Metrics/MethodLength, Metrics/AbcSize
     [:applicant, :partner].each do |person|
       next unless @application.income_kind[person].is_a?(Array)
 
       @application.income_kind[person].each_with_index do |value, index|
-        normalized = INCOME_KIND_MAP[value]
+        if ALLOWED_NORMALIZED_VALUES.include?(value.to_s)
+          next
+        end
+        normalized = INCOME_KIND_MAP[value.downcase]
         if normalized
           @application.income_kind[person][index] = normalized
           @changed = true
@@ -130,5 +138,5 @@ class IncomeKindRefactorService
         end
       end
     end
-  end # rubocop:enable Metrics/MethodLength
+  end # rubocop:enable Metrics/MethodLength, Metrics/AbcSize
 end
