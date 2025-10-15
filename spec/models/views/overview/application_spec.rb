@@ -403,7 +403,7 @@ RSpec.describe Views::Overview::Application do
   end
 
   describe '#income_kind' do
-    let(:income_kind) { { applicant: [:wage, :net_profit], partner: [:child_benefit, :working_credit] } }
+    let(:income_kind) { { "applicant" => [:wage, :net_profit], "partner" => [:child_benefit, :working_credit] } }
     let(:application) { build_stubbed(:application, income_kind: income_kind) }
 
     context 'applicant' do
