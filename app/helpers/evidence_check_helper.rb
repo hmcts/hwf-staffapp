@@ -11,7 +11,8 @@ module EvidenceCheckHelper
                                "Contribution-based Employment and Support Allowance (ESA)", "Universal Credit",
                                "Pensions (state, work, private)",
                                "Pensions (state, work, private, pension credit (savings credit))"],
-    'goods_selling' => ["Other income - For example, income from online selling or from dividend or interest payments",
+    'goods_selling' => ["Other income - For example, income from online selling",
+                        "Other income - For example, income from online selling or from dividend or interest payments",
                         "Other income"]
   }.freeze
 
@@ -30,19 +31,25 @@ module EvidenceCheckHelper
   end
 
   def display_evidence_section?(application, section_name)
-    list = income_kind_list(application)
+    list = current_income_kind_list(application)
     return false if list.blank? || !SECTION_TO_INCOME_KIND_MAPPING.key?(section_name)
     SECTION_TO_INCOME_KIND_MAPPING[section_name].intersect?(list)
   end
 
-  def income_kind_list(application)
+  def current_income_kind_list(application) # rubocop:disable Metrics/MethodLength
     return nil if application.income_kind.blank?
-    list = application.income_kind[:applicant]
+
+    list = []
+    list += IncomeTypesInput.normalize_list(application.income_kind[:applicant]).map do |kind|
+      I18n.t(kind, scope: ['activemodel.attributes.forms/application/income_kind_applicant', 'kinds'])
+    end
     if application.income_kind.key?(:partner)
-      list += application.income_kind.try(:[], :partner)
+      list += IncomeTypesInput.normalize_list(application.income_kind.try(:[], :partner)).map do |kind|
+        I18n.t(kind, scope: ['activemodel.attributes.forms/application/income_kind_partner', 'kinds'])
+      end
     end
 
     list
-  end
+  end # rubocop:enable Metrics/MethodLength
 
 end

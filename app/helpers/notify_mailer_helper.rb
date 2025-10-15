@@ -82,17 +82,13 @@ module NotifyMailerHelper # rubocop:disable Metrics/ModuleLength
   end
 
   def income_kind_text(application)
-    en_kinds = I18n.t('email.general.income_kind.kinds', locale: 'en-GB')
-    reverse_lookup = en_kinds.invert
-
     kinds = [
-      application&.income_kind&.[](:applicant),
-      application&.income_kind&.[](:partner)
+      IncomeTypesInput.normalize_list(application&.income_kind&.[](:applicant)),
+      IncomeTypesInput.normalize_list(application&.income_kind&.[](:partner))
     ].compact.flatten
 
-    kinds.filter_map do |text|
-      key = reverse_lookup[text]
-      I18n.t(key.to_s, scope: ['email.general.income_kind.kinds']) if key
+    kinds.filter_map do |key|
+      I18n.t(key.to_s, scope: ['email.general.income_kind.kinds'], default: nil)
     end.presence
   end
 

@@ -197,16 +197,20 @@ module Views
       # rubocop:enable Metrics/MethodLength
       # rubocop:enable Metrics/CyclomaticComplexity
 
-      def income_kind(value)
+      def income_kind(value) # rubocop:disable Metrics/MethodLength, Metrics/AbcSize
         return 'N/A' if value.nil?
         income_kind_hash = YAML.parse(value).to_ruby
         return 'N/A' if income_kind_hash.blank?
-        applicant = income_kind_hash[:applicant].join(',')
-        partner = income_kind_hash[:partner].try(:join, ',')
+        applicant = IncomeTypesInput.normalize_list(income_kind_hash[:applicant]).map do |kind|
+          I18n.t(kind, scope: ['activemodel.attributes.forms/application/income_kind_applicant', 'kinds'])
+        end.join(',')
+        partner = IncomeTypesInput.normalize_list(income_kind_hash[:partner]).try(:map) do |kind|
+          I18n.t(kind, scope: ['activemodel.attributes.forms/application/income_kind_partner', 'kinds'])
+        end.try(:join, ',')
         [applicant, partner].compact_blank.join(", ")
       rescue TypeError
         "N/A"
-      end
+      end # rubocop:enable Metrics/MethodLength, Metrics/AbcSize
 
       def date_formatted(date_range)
         return nil if date_range.blank?

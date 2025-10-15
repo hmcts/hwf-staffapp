@@ -108,13 +108,11 @@ module Views
       end
 
       def income_kind_applicant
-        return if @online_application.income_kind.nil? || @online_application.income_kind[:applicant].blank?
-        @online_application.income_kind[:applicant].join(', ')
+        translate_kinds("applicant")
       end
 
       def income_kind_partner
-        return if @online_application.income_kind.nil? || @online_application.income_kind[:partner].blank?
-        @online_application.income_kind[:partner].join(', ')
+        translate_kinds("partner")
       end
 
       def statement_signed_by
@@ -129,6 +127,14 @@ module Views
       end
 
       private
+
+      def translate_kinds(person)
+        return if @online_application.income_kind.nil? || @online_application.income_kind[person].blank?
+
+        IncomeTypesInput.normalize_list(@online_application.income_kind[person]).map do |kind|
+          I18n.t(kind, scope: ["activemodel.attributes.forms/application/income_kind_#{person}", 'kinds'])
+        end.join(', ')
+      end
 
       def format_date(date)
         date&.to_fs(:gov_uk_long)
