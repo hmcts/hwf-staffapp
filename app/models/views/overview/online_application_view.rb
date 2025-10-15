@@ -108,11 +108,11 @@ module Views
       end
 
       def income_kind_applicant
-        translate_kinds(:applicant)
+        translate_kinds("applicant")
       end
 
       def income_kind_partner
-        translate_kinds(:partner)
+        translate_kinds("partner")
       end
 
       def statement_signed_by
