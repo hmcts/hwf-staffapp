@@ -36,7 +36,7 @@ module Forms
       end
 
       def format_income_kind
-        @income_kind = { applicant: income_kind_applicant, partner: @income_kind_partner }
+        @income_kind = { applicant: income_kind_applicant, partner: @income_kind_partner }.with_indifferent_access
       end
 
       def income_kind_applicant
