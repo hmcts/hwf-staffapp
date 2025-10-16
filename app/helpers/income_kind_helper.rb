@@ -7,9 +7,9 @@ module IncomeKindHelper
     ]
   end
 
-  def kind_checked(application, form, claimant, kind)
+  def kind_checked(application, claimant, kind)
     return false if application.income_kind.blank?
 
-    application.income_kind[claimant].include? t(kind, scope: [form.i18n_scope, 'kinds'])
+    application.income_kind[claimant].include? kind.to_s
   end
 end
