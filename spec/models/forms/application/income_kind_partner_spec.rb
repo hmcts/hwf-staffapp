@@ -69,7 +69,11 @@ RSpec.describe Forms::Application::IncomeKindPartner do
       end
 
       it 'saves the parameters in the detail' do
-        expect(application.income_kind).to eq({ applicant: ['test'], partner: ['wage'] })
+        expect(application.income_kind.class).to be ActiveSupport::HashWithIndifferentAccess
+        expect(application.income_kind['applicant']).to eq(['test'])
+        expect(application.income_kind[:applicant]).to eq(['test'])
+        expect(application.income_kind['partner']).to eq(['wage'])
+        expect(application.income_kind[:partner]).to eq(['wage'])
       end
     end
 
