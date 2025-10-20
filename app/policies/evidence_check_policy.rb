@@ -8,7 +8,7 @@ class EvidenceCheckPolicy < BasePolicy
   end
 
   def show?
-    (staff_or_manager? || reader?) && same_application_office?
+    ((staff_or_manager? || reader?) && same_application_office?) || admin?
   end
 
   def update?
