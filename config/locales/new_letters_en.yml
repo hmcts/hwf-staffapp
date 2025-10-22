@@ -117,6 +117,42 @@ en-GB:
         <p>If you need help or support to complete a Help with Fees application form, email: <a href="mailto:support@wearegroup.com">support@wearegroup.com</a> for more information.</p>
         <p>From,</p>
         <p>%{user_name}</p>
+      reject_no_benefits_refund_html: |
+        <p>Dear %{greeting}</p>
+        <p><strong>Your reference: %{reference}</strong></p>
+        <p>We have received your refund Help with Fees application. Unfortunately, you are not eligible for a refund of the fee paid. This is because we cannot find a Department for Work and Pensions (DWP) record of you receiving any of the benefits that make you automatically eligible for help with fees.</p>
+        <p>You will get automatic help with your fee if you’re receiving any of these benefits:</p>
+        <ul class="govuk-list govuk-list--bullet">
+          <li><strong>income-based</strong> Jobseeker’s Allowance (JSA)</li>
+          <li><strong>income-related</strong> Employment and Support Allowance (ESA)</li>
+          <li>Income Support</li>
+          <li>Universal Credit (<strong>and you earn less than £6,000</strong>)</li>
+          <li>Pension Credit (<strong>guarantee credit</strong>)</li>
+        </ul>
+        <p>Please double check that your personal details provided on your help with fees application are correct and match the details on your DWP paperwork. Please also double check on your DWP paperwork that you received these specific benefits and not similarly named ones (see ‘Other benefits or low income’ section).</p>
+        <h3 class='govuk-heading-m'>Appeal by providing evidence</h3>
+        <p>If you have evidence that you were on one of the above passported benefits at the time a fee had to be paid, you should return your help with fees application (if you submitted a paper application) along with proof of the benefits you receive within 14 days. If you applied for help with fees using an online reference number, this number is no longer valid and you will need to complete a new application. You must provide a new help with fees reference to the court alongside your evidence.</p>
+        <p><strong>Please ensure you include the reference number {AUTO: APPLICATION REFERENCE} on all correspondence relating to your appeal. If you are making a new online help with fees application, please include the above reference as well as your new reference number.</strong></p>
+        <p>For evidence, you will need to provide a full breakdown letter from the DWP which clearly states which benefit you receive, how much you are entitled to (including a clear breakdown of the income considered by DWP in their decision (if applicable) and your evidence must also cover the relevant Help with Fees application assessment date. Screenshots or photos of this information are acceptable, but they must be clear images and your name and address needs to be visible. You must be clearly identifiable on everything you send.</p>
+        <p>If the benefit is received jointly but is in your partner’s name, evidence should also be provided that they share your address. </p>
+        <p>Before sending, please check on your DWP paperwork that you received the specific benefits mentioned above and not similarly named ones (such as contribution-based Job Seekers Allowance, contribution-based Employment and Support Allowance and Pension Credit (savings credit). If you receive Universal Credit, please check that your annual earnings before tax and National insurance are less than £6,000. If they are more than £6,000, please refer to the ‘Other benefits or low income’ section.</p>
+        <p>If you think you have declared your benefit status incorrectly, and you still believe you are eligible for Help with Fees, you should reapply on the basis of income, including all benefit payments as income, unless they are explicitly excluded.</p>
+        <p>Remember, you must write your Help with Fees reference number on any letters/emails that you send. Here is your reference number: <strong>{AUTO: APPLICATION REFERENCE}</strong></p>
+        <h3 class='govuk-heading-m'>Other benefits or low income</h3>
+        <p>You may be able to get help with your fee if you’re on a low income and receive other types of benefit. There are examples of some of these types of benefits below.</p>
+        <ul class="govuk-list govuk-list--bullet">
+         <li><strong>contribution-based</strong> Job Seekers Allowance</li>
+         <li><strong>contribution-based</strong> Employment and Support Allowance</li>
+         <li>Pension Credit (<strong>savings credit</strong>)</li>
+         <li>Universal Credit (<strong>and you earn over £6,000 a year before tax and National Insurance</strong>)</li>
+        </ul>
+        <p>If you are receiving any other type of benefits, you must declare them as part of your income in a new Help with Fees application. Remember, some parts of your benefit award may be excluded and do not need declaring, for example housing element of Universal Credit. You can find further information on what is excluded from income at <a href="https://www.gov.uk/get-help-with-court-fees" target="_blank" title="Get help paying court and tribunal fees">https://www.gov.uk/get-help-with-court-fees</a></p>
+        <h3 class='govuk-heading-m'>Useful links</h3>
+        <p>You can use this link to locate the address or email address for the court/tribunal dealing with your main case <a href="https://www.gov.uk/find-court-tribunal" target="_blank" title"Find the right court or tribunal">https://www.gov.uk/find-court-tribunal</a>.</p>
+        <p>You can find more guidance on applying for Help with Fees here: <a href="https://www.gov.uk/get-help-with-court-fees" target="_blank" title"Get help paying court and tribunal fees">https://www.gov.uk/get-help-with-court-fees</a></p>
+        <p>If you need help or support to complete a Help with Fees application form, email: <a href="mailto:support@wearegroup.com">support@wearegroup.com</a> for more information.</p>
+        <p>From,</p>
+        <p>%{user_name}</p>
       reject_no_benefits_representation_html: |
         <p>Dear %{greeting}</p>
         <p><strong>Your reference: %{reference}</strong></p>
