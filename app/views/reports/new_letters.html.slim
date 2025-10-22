@@ -109,6 +109,16 @@ h2.govuk-heading-m Application rejected because benefits not received-on issue
           amount_to_pay: '{AUTO: AMOUNT TO PAY}',
           date_for_part_payment: '{AUTO: DATE FOR PAYMENT}')
 
+h2.govuk-heading-m Application rejected because benefits not received-refunds
+.confirmation-letter
+  = t('new_letters.reject.reject_no_benefits_refund_html',
+          greeting: '{AUTO: APPLICANTS NAME}',
+          reference: '{AUTO: APPLICATION REFERENCE}',
+          full_name: '{AUTO: APPLICANTS NAME}',
+          user_name: '{AUTO: CURRENT USERS NAME}',
+          amount_to_pay: '{AUTO: AMOUNT TO PAY}',
+          date_for_part_payment: '{AUTO: DATE FOR PAYMENT}')
+
 h2.govuk-heading-m Application is not eligible for refund
 .confirmation-letter
   = t('new_letters.refund.not_eligible_html',
