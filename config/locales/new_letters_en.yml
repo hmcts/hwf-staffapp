@@ -76,7 +76,7 @@ en-GB:
       reject_no_benefits_html: |
         <p>Dear %{greeting}</p>
         <p><strong>Your reference: %{reference}</strong></p>
-        <p>We’ve received your application for help with fees. Unfortunately, you are not eligible for help with paying the fee and you will need to pay the full amount. This is because we cannot find a Department for Work and Pensions record of you receiving any of the benefits that make you automatically eligible for help with fees.</p>
+        <p>We’ve received your application for help with fees. Unfortunately, you are not eligible for help with paying the fee and you will need to pay the full amount. This is because we cannot find a Department for Work and Pensions (DWP) record of you receiving any of the benefits that make you automatically eligible for help with fees.</p>
         <p>You will get automatic help with your fee if you’re receiving any of these benefits:</p>
         <ul class="govuk-list govuk-list--bullet">
           <li><strong>income-based</strong> Jobseeker’s Allowance (JSA)</li>
@@ -85,10 +85,15 @@ en-GB:
           <li>Universal Credit (<strong>and you earn less than £6,000</strong>)</li>
           <li>Pension Credit (<strong>guarantee credit</strong>)</li>
         </ul>
-        <p>Please double check on your DWP paperwork that you receive these specific benefits and not similarly named ones. See below.</p>
-        <p>If you’ve started receiving any of these qualifying benefits in the last seven days, or you receive them with your partner, you can return your application (if you submitted a paper application) along with proof of the benefits you receive. You will need to provide a full breakdown letter from the Department for Work and Pensions covering your assessment date and confirming the benefit received. You and your partner (if applicable) must be clearly identifiable on all documents you send and there should be evidence that your partner shares your address.</p>
-        <p>If you applied for Help with Fees using an online reference number, this number is no longer valid and you will need to complete a new application. You must provide a new Help with Fees reference to the court alongside your evidence.</p>
-        <p>You must write your new Help with Fees reference number on any letters that you send <strong>%{reference}</strong></p>
+        <p>Please double check that your personal details provided on your help with fees application are correct and match the details on your DWP paperwork. Please also double check on your DWP paperwork that you received these specific benefits and not similarly named ones (see ‘Other benefits or low income’ section).</p>
+        <h3 class='govuk-heading-m'>Appeal by providing evidence</h3>
+        <p>If you have evidence that you were on one of these passported benefits at the time a fee had to be paid, you should return your help with fees application (if you submitted a paper application) along with proof of the benefits you receive within 14 days. If you applied for help with fees using an online reference number, this number is no longer valid and you will need to complete a new application. You must provide a new help with fees reference to the court alongside your evidence.</p>
+        <p><strong>Please ensure you include the reference number {AUTO: APPLICATION REFERENCE} on all correspondence relating to your appeal. If you are making a new online help with fees application, please include the above reference as well as your new reference number.</strong></p>
+        <p>For evidence, you will need to provide a full breakdown letter from the DWP which clearly states which benefit you receive, how much you are entitled to (including a clear breakdown of the income considered by DWP in their decision (if applicable) and your evidence must also cover the relevant Help with Fees application assessment date. Screenshots or photos of this information are acceptable, but they must be clear images and your name and address needs to be visible. You must be clearly identifiable on everything you send. </p>
+        <p>If the benefit is received jointly but is in your partner’s name, evidence should also be provided that they share your address. </p>
+        <p>Before sending, please check on your DWP paperwork that you received the specific benefits mentioned above and not similarly named ones (such as contribution-based Job Seekers Allowance, contribution-based Employment and Support Allowance and Pension Credit (savings credit). If you receive Universal Credit, please check that your annual earnings before tax and National insurance are less than £6,000. If they are more than £6,000, please refer to the ‘Other benefits or low income’ section.</p>
+        <p>If you think you have declared your benefit status incorrectly, and you still believe you are eligible for Help with Fees, you should reapply on the basis of income, including all benefit payments as income, unless they are explicitly excluded.</p>
+        <p>Remember, you must write your Help with Fees reference number on any letters/emails that you send. Here is your reference number: <strong>{AUTO: APPLICATION REFERENCE}</strong></p>
         <h3 class='govuk-heading-m'>Other benefits or low income</h3>
         <p>You may be able to get help with your fee if you’re on a low income and receive other types of benefit. There are examples of some of these types of benefits below.</p>
         <ul class="govuk-list govuk-list--bullet">
@@ -97,7 +102,7 @@ en-GB:
          <li>Pension Credit (<strong>savings credit</strong>)</li>
          <li>Universal Credit (<strong>and you earn over £6,000 a year before tax and National Insurance</strong>)</li>
         </ul>
-        <p>If you are receiving any other type of benefits, you must declare them as part of your income in a new Help with Fees application. Remember some parts of your benefit award may be excluded and do not need declaring, for example housing element of Universal Credit.</p>
+        <p>If you are receiving any other type of benefits, you must declare them as part of your income in a new Help with Fees application. Remember, some parts of your benefit award may be excluded and do not need declaring, for example housing element of Universal Credit. You can find further information on what is excluded from income at <a href="https://www.gov.uk/get-help-with-court-fees" target="_blank" title="Get help paying court and tribunal fees">https://www.gov.uk/get-help-with-court-fees</a></p>
         <h3 class='govuk-heading-m'>What you need to do if you are paying the fee</h3>
         <p>You need to pay %{amount_to_pay} towards the fee by %{date_for_part_payment}.</p>
         <p>You can pay by:</p>
@@ -106,9 +111,6 @@ en-GB:
           <li>posting a cheque written out to ‘HM Courts and Tribunals Service’ to the address at the top of this letter</li>
         </ul>
         <p>If you don’t use a debit card or cheques, call the court or tribunal on <strong>&lt;add phone number&gt;</strong>.</p>
-        <h3 class='govuk-heading-m'>If you disagree with this decision</h3>
-        <p>You can appeal by writing to the Delivery Manager at the court or tribunal dealing with your fee. If you have applied via paper, please resubmit your application to the court within 14 days from the date you receive this letter, stating full reasons why you disagree with this decision and providing supporting evidence. If you have applied online, your reference number is no longer valid and you will need to provide the court with a new online Help with Fees reference alongside reasons and evidence. We will reply to you within 10 working days from receiving your application. Please note that help with fees cannot take into account your expenditure. If you can demonstrate you are likely to experience exceptional hardship by paying the fee then you may qualify for exceptional remission.</p>
-        <p>Remember to include your reference <strong>%{reference}</strong>.</p>
         <h3 class='govuk-heading-m'>Useful links</h3>
         <p>You can use this link to locate the address or email address for the court/tribunal dealing with your case <a href="https://www.gov.uk/find-court-tribunal" target="_blank" title"Find the right court or tribunal">https://www.gov.uk/find-court-tribunal</a>.</p>
         <p>You can find more guidance on applying for Help with Fees here: <a href="https://www.gov.uk/get-help-with-court-fees" target="_blank" title"Get help paying court and tribunal fees">https://www.gov.uk/get-help-with-court-fees</a></p>
