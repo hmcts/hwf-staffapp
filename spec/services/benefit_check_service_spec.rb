@@ -18,6 +18,23 @@ describe BenefitCheckService do
 
     context 'passing a benefit_check object' do
 
+      context 'fake API call replaces the webmock one' do
+        before do
+          dwp_api_response 'Yes'
+          allow(Settings.dwp_mock).to receive(:fake_api_enabled).and_return(true)
+        end
+
+        it 'uses the mock client' do
+          service = described_class.new(check)
+          expect(service.instance_variable_get(:@client)).to be_a(BenefitCheckers::MockApiClient)
+        end
+
+        it 'returns the expected mock response' do
+          described_class.new(check)
+          expect(check.dwp_result).to eql('No')
+        end
+      end
+
       before do
         dwp_api_response 'Yes'
         described_class.new(check)
