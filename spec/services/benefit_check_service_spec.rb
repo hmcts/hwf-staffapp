@@ -31,7 +31,7 @@ describe BenefitCheckService do
 
         it 'returns the expected mock response' do
           described_class.new(check)
-          expect(check.dwp_result).to eql('No')
+          expect(check.dwp_result).to eql('BadRequest')
         end
       end
 

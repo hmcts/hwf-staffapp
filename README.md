@@ -136,6 +136,17 @@ rake "reports:raw_data_extract[2021-01-01, 2022-12-31]"
 ```
 this will generate a zip file raw_data-1-1-2021-31-12-2022.csv.zip
 
+## Testing
+### Benefit Check mock call
+I added mock benefit check call. It's not mocking the call itself; it's just using a different library To generate request/response.
+This is for testing on demo environments, AAT, and preview. So we can test the normal benefit check flow without calling the actual benefit_checker.
+For now, there are 4 responses. If you are going to match one of these three National Insurance numbers, you will get the following responses.
+Yes - Full outcome - NI number: 'SN789654A'
+No - None outcome - NI number: 'SN789654B'
+Undetermined - None outcome - NI number: 'SN789654C'
+
+To turn this on you need to have a FAKE_BENEFIT_CHECK='true' set up in your env.
+
 
 #### Run tests in parallel
 Follow the [official guides](https://github.com/grosser/parallel_tests#setup-environment-from-scratch-create-db-and-loads-schema-useful-for-ci) to setup your local env
