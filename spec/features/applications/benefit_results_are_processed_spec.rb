@@ -31,7 +31,7 @@ RSpec.feature 'Benefit results are processed' do
       let(:ni_number) { nil }
 
       scenario 'the page is rendered with message prompting to fill all details' do
-        expect(page).to have_xpath('//h1', text: 'Benefits')
+        expect(page).to have_xpath('//h1', text: 'Evidence of benefits')
         expect(page).to have_content('There’s a problem with the applicant’s surname, date of birth or National Insurance number.')
       end
     end
@@ -63,7 +63,7 @@ RSpec.feature 'Benefit results are processed' do
         let(:dwp_result) { 'no' }
 
         scenario 'the benefits override page is rendered' do
-          expect(page).to have_xpath('//h1', text: 'Benefits')
+          expect(page).to have_xpath('//h1', text: 'Evidence of benefits')
         end
       end
 
@@ -72,7 +72,7 @@ RSpec.feature 'Benefit results are processed' do
         let(:dwp_status) { 500 }
 
         scenario 'the benefits override page is rendered with an error message' do
-          expect(page).to have_xpath('//h1', text: 'Benefits')
+          expect(page).to have_xpath('//h1', text: 'Evidence of benefits')
           expect(page).to have_content('You will only be able to process this application if you have supporting evidence that the applicant is receiving benefits')
         end
       end
@@ -91,7 +91,7 @@ RSpec.feature 'Benefit results are processed' do
         let(:dwp_result) { 'undetermined' }
 
         scenario 'the benefits override page is rendered with an error message' do
-          expect(page).to have_xpath('//h1', text: 'Benefits')
+          expect(page).to have_xpath('//h1', text: 'Evidence of benefits')
           expect(page).to have_content('There’s a problem with the applicant’s surname, date of birth or National Insurance number.')
         end
       end
@@ -100,7 +100,7 @@ RSpec.feature 'Benefit results are processed' do
         let(:dwp_result) { 'unspecified error' }
 
         scenario 'the benefits override page is rendered with an error message' do
-          expect(page).to have_xpath('//h1', text: 'Benefits')
+          expect(page).to have_xpath('//h1', text: 'Evidence of benefits')
           expect(page).to have_content('You will only be able to process this application if you have supporting evidence that the applicant is receiving benefits')
         end
       end

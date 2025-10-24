@@ -59,7 +59,7 @@ RSpec.feature 'When benefits checker result is "Undetermined"' do
   end
 
   scenario 'shows the benefits override page' do
-    expect(page).to have_xpath('//h1', text: 'Benefits')
+    expect(page).to have_xpath('//h1', text: 'Evidence of benefits')
     expect(page).to have_content('There’s a problem with the applicant’s surname, date of birth or National Insurance number.')
   end
 end
