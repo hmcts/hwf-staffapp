@@ -13,7 +13,7 @@ gem 'rails', '~> 8.0.0'
 gem 'redis'
 # profiling in Sentry
 gem 'stackprof'
-gem 'sentry-rails', '~> 5.8'
+gem 'sentry-rails', '~> 6.0'
 # Use postgresql as the database for Active Record
 gem 'i18n', '>= 1.10'
 gem 'parser', '>= 3.1.2.0'
