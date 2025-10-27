@@ -55,7 +55,7 @@ Then("I can view RRDS") do
 end
 
 Then("I can view HMRC Datashare") do
-  expect(guide_page.content.hmrc_datashare['href']).to end_with '/my-work/help-with-fees/job-cards/'
+  expect(guide_page.content.hmrc_datashare['href']).to end_with '/my-work/help-with-fees/help-with-fees-guidance-documents/'
 end
 
 Then("I can view Staff guides link on footer") do
