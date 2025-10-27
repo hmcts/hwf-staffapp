@@ -31,6 +31,15 @@ RSpec.describe BenefitCheckers::MockApiClient, type: :service do
       end
     end
 
+    context 'return valid Yes answer for another NI number' do
+      let(:ni_number_for_test) { 'JR054008D' }
+      it 'returns a successful response structure' do
+        result = client.check(params)
+        expect(result[:benefit_checker_status]).to eq('Yes')
+        expect(result[:confirmation_ref]).to include('MOCK-')
+      end
+    end
+
     context 'return valid Undetermined answer' do
       let(:ni_number_for_test) { 'SN789654C' }
       it 'returns a successful response structure' do

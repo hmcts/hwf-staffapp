@@ -12,14 +12,14 @@ module BenefitCheckers
 
     def mock_status(ni_number)
       case ni_number
-      when Settings.dwp_mock.ni_number_yes
+      when *Settings.dwp_mock.ni_number_yes
         'Yes'
       when Settings.dwp_mock.ni_number_no
         'No'
       when Settings.dwp_mock.ni_number_undetermined
         'Undetermined'
       else
-        'BadRequest'
+        'No'
       end
     end
   end

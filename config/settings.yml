@@ -59,7 +59,7 @@ legislation_work:
   active_date: <%= ENV['NEW_LEGISLATION_ACTIVE_DATE'] || '27-11-2023' %>
 redis_url: <%= ENV["REDIS_URL"] || "redis://localhost:6379/1" %>
 dwp_mock:
-  ni_number_yes: 'SN789654A'
+  ni_number_yes: ['SN789654A', 'JR054008D']
   ni_number_no: 'SN789654B'
   ni_number_undetermined: 'SN789654C'
   fake_api_enabled: <%= ENV['FAKE_BENEFIT_CHECK'].present? && ['1', 'true'].include?(ENV['FAKE_BENEFIT_CHECK']) %>
