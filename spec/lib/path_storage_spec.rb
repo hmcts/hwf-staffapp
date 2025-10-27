@@ -27,7 +27,6 @@ RSpec.describe PathStorage do
       end
     end
 
-
     context 'catch exception' do
       let(:list) { ['/path/to/page-1', '/path/to/page-2', '/path/to/page-3'] }
 
