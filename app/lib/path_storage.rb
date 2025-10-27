@@ -1,4 +1,5 @@
 class PathStorage
+  include Rails.application.routes.url_helpers
 
   def initialize(user)
     @user_key = "application-path-#{user.id}"
@@ -89,7 +90,7 @@ class PathStorage
     # becase the return applicatio is POST action and it has no where to go
     if current_path.match?(%r{part_payments/\d+/return_application$})
       id = current_path.match(%r{part_payments/(\d+)/return_application$})[1]
-      return part_payments_path(id)
+      return part_payment_path(id)
     end
 
     current_path
