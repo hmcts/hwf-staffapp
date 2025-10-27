@@ -17,6 +17,16 @@ RSpec.describe PathStorage do
       expect(path_value).to eql(path)
     end
 
+    context 'part payment POST path' do
+      let(:path) { '/part_payments/132/return_application' }
+      it 'filter some paths' do
+        storage_class.navigation(path)
+        path_value = JSON.parse(storage.get(storage_key)).last
+        expect(path_value).not_to eql(path)
+        expect(path_value).to eql('/part_payments/132')
+      end
+    end
+
     context 'catch exception' do
       let(:list) { ['/path/to/page-1', '/path/to/page-2', '/path/to/page-3'] }
 
