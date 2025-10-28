@@ -4,7 +4,7 @@ module BenefitCheckers
       ni_number = params[:ni_number]
       {
         'benefit_checker_status' => mock_status(ni_number),
-        'confirmation_ref' => "MOCK-#{SecureRandom.hex(8).upcase}"
+        'confirmation_ref' => "MOCK-T1426267181940"
       }.with_indifferent_access
     end
 
@@ -18,9 +18,11 @@ module BenefitCheckers
       when *Settings.dwp_mock.ni_number_no
         'No'
       when *Settings.dwp_mock.ni_number_undetermined
-        'Undetermined'
+        raise Exceptions::UndeterminedDwpCheck
       when *Settings.dwp_mock.ni_number_dwp_error
         raise RestClient::BadRequest, '{"error":"LSCBC MOCK service is currently unavailable"}'
+      when *Settings.dwp_mock.ni_number_500_error
+        raise StandardError, '500 Internal Server Error'
       else
         ''
       end

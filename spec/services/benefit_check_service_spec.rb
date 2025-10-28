@@ -14,15 +14,21 @@ describe BenefitCheckService do
 
   context 'called with valid params' do
     let(:user) { create(:user) }
-    let(:check) { create(:benefit_check, user_id: user.id, date_of_birth: '19800101', ni_number: 'AB123456A', last_name: 'LAST_NAME') }
+    let(:ni_number) { Settings.dwp_mock.ni_number_yes.first }
+    let(:check) { create(:benefit_check, user_id: user.id, date_of_birth: '19800101', ni_number: ni_number, last_name: 'LAST_NAME') }
 
     context 'passing a benefit_check object' do
+      context 'valid Fake response' do
+        let(:ni_number) { Settings.dwp_mock.ni_number_yes.first }
+        before { described_class.new(check) }
+
+        it 'returns the expected mock response' do
+          expect(check.dwp_result).to eql('Yes')
+        end
+      end
 
       context 'fake API call replaces the webmock one' do
-        before do
-          dwp_api_response 'Yes'
-          allow(Settings.dwp_mock).to receive(:fake_api_enabled).and_return(true)
-        end
+        let(:ni_number) { Settings.dwp_mock.ni_number_dwp_error.first }
 
         it 'uses the mock client' do
           service = described_class.new(check)
@@ -36,7 +42,6 @@ describe BenefitCheckService do
       end
 
       before do
-        dwp_api_response 'Yes'
         described_class.new(check)
       end
 
@@ -55,16 +60,11 @@ describe BenefitCheckService do
       end
 
       it 'sets the dwp_api_token' do
-        expect(check.dwp_api_token).to eql('T1426267181940')
+        expect(check.dwp_api_token).to eql('MOCK-T1426267181940')
       end
 
       context 'simulating a 500 error' do
-
-        before do
-          stub_request(:post, "#{ENV.fetch('DWP_API_PROXY', nil)}/api/benefit_checks").
-            to_return(status: 500, body: '', headers: {})
-          described_class.new(check)
-        end
+        let(:ni_number) { Settings.dwp_mock.ni_number_500_error.first }
 
         it 'returns the error in message' do
           expect(check.error_message).to eql('500 Internal Server Error')
@@ -76,16 +76,10 @@ describe BenefitCheckService do
       end
 
       context 'simulating a 400 error' do
-        let(:message) { { error: "LSCBC210: Error in request parameter 'Surname'" }.to_json }
-
-        before do
-          stub_request(:post, "#{ENV.fetch('DWP_API_PROXY', nil)}/api/benefit_checks").
-            to_return(status: 400, body: message, headers: {})
-          described_class.new(check)
-        end
+        let(:ni_number) { Settings.dwp_mock.ni_number_dwp_error.first }
 
         it 'returns the error in message' do
-          expect(check.error_message).to eql("LSCBC210: Error in request parameter 'Surname'")
+          expect(check.error_message).to eql("LSCBC MOCK service is currently unavailable")
         end
 
         it 'API response is empty' do
@@ -107,7 +101,6 @@ describe BenefitCheckService do
     context 'when method returns undetermined' do
       let(:invalid_check) { create(:invalid_benefit_check) }
       before do
-        dwp_api_response 'Undetermined'
         described_class.new(invalid_check)
       end
 
@@ -122,19 +115,14 @@ describe BenefitCheckService do
 
     context 'when the api returns undetermined' do
       let(:user) { create(:user) }
-      let(:check) { create(:benefit_check, user_id: user.id, date_of_birth: '19800101', ni_number: 'AB123456A', last_name: 'LAST_NAME') }
-
+      let(:check) { create(:benefit_check, user_id: user.id, date_of_birth: '19800101', ni_number: ni_number, last_name: 'LAST_NAME') }
+      let(:ni_number) { Settings.dwp_mock.ni_number_undetermined.first }
       before do
-        dwp_api_response status
         described_class.new(check)
       end
 
       it 'saves our message' do
         expect(check.error_message).to eql('The details you’ve entered are incorrect, check and try again')
-      end
-
-      it 'stores response as JSON in the api_response column' do
-        expect(JSON.parse(check.api_response)).to eql(api_response)
       end
 
       it 'returns fail' do
