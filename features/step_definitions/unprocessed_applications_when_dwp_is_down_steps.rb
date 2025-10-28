@@ -44,7 +44,7 @@ Given("I am a staff member and I process a paper-based benefit application") do
 end
 
 Given("I'm on the 'Benefits the applicant is receiving page'") do
-  personal_details_page.submit_all_personal_details_ni
+  personal_details_page.submit_all_personal_details_ni_with_dwp_error_benefits
   application_details_page.submit_fee_600
   savings_investments_page.submit_less_than
 

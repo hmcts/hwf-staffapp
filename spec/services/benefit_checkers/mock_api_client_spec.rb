@@ -48,5 +48,12 @@ RSpec.describe BenefitCheckers::MockApiClient, type: :service do
         expect(result[:confirmation_ref]).to include('MOCK-')
       end
     end
+
+    context 'raise BadRequest error' do
+      let(:ni_number_for_test) { 'SN753159C' }
+      it 'returns a successful response structure' do
+        expect { client.check(params) }.to raise_error(RestClient::BadRequest)
+      end
+    end
   end
 end
