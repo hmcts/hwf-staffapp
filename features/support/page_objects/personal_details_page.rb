@@ -85,6 +85,10 @@ class PersonalDetailsPage < BasePage
     content.application_ni_number.set 'JR054008D'
   end
 
+  def ni_for_no_benefit_check
+    content.application_ni_number.set 'SN789654B'
+  end
+
   def valid_ho
     content.application_ho_number.set '1212-0001-0240-0490/01'
   end
@@ -117,6 +121,15 @@ class PersonalDetailsPage < BasePage
     full_name
     valid_dob
     valid_ni
+    content.wait_until_status_single_visible
+    content.status_single.click
+    click_next
+  end
+
+  def submit_all_personal_details_ni_with_no_answer_for_benefits
+    full_name
+    valid_dob
+    ni_for_no_benefit_check
     content.wait_until_status_single_visible
     content.status_single.click
     click_next

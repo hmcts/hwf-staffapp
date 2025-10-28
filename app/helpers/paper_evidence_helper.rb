@@ -40,6 +40,8 @@ module PaperEvidenceHelper
       'missing_details'
     when 'server unavailable', 'unspecified error'
       'technical_error'
+    when 'no'
+      'no_record'
     end
   end
 end

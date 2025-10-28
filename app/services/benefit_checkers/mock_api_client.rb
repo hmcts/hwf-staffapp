@@ -14,9 +14,9 @@ module BenefitCheckers
       case ni_number
       when *Settings.dwp_mock.ni_number_yes
         'Yes'
-      when Settings.dwp_mock.ni_number_no
+      when *Settings.dwp_mock.ni_number_no
         'No'
-      when Settings.dwp_mock.ni_number_undetermined
+      when *Settings.dwp_mock.ni_number_undetermined
         'Undetermined'
       else
         'No'

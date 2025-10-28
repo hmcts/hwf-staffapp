@@ -39,6 +39,25 @@ def go_to_savings_investment_page
 end
 
 # rubocop:disable Metrics/MethodLength
+def go_to_summary_page_low_savings_paper_evidence_benefit_check
+  start_application
+  expect(dashboard_page.content).to have_find_an_application_heading
+  dashboard_page.process_application
+  expect(personal_details_page.content).to have_header
+  personal_details_page.submit_all_personal_details_ni_with_no_answer_for_benefits
+  expect(application_details_page.content).to have_header
+  application_details_page.submit_fee_600
+  expect(savings_investments_page.content).to have_header
+  savings_investments_page.submit_less_than
+  expect(benefits_page.content).to have_header
+  benefits_page.submit_benefits_yes
+  expect(paper_evidence_page.content).to have_header
+  paper_evidence_page.submit_evidence_yes
+  expect(summary_page.content).to have_header
+end
+# rubocop:enable Metrics/MethodLength
+
+# rubocop:disable Metrics/MethodLength
 def go_to_summary_page_low_savings
   start_application
   expect(dashboard_page.content).to have_find_an_application_heading
@@ -50,10 +69,8 @@ def go_to_summary_page_low_savings
   expect(savings_investments_page.content).to have_header
   savings_investments_page.submit_less_than
   expect(benefits_page.content).to have_header
-  stub_dwp_response_as_bad_request
   benefits_page.submit_benefits_yes
-  expect(paper_evidence_page.content).to have_header
-  paper_evidence_page.submit_evidence_yes
+  declaration_page.sign_by_applicant
   expect(summary_page.content).to have_header
 end
 # rubocop:enable Metrics/MethodLength

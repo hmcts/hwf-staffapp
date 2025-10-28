@@ -29,18 +29,31 @@ Then("I should see a notification telling me that I can only process income-base
   expect(benefit_checker_page.content.dwp_down_warning).to have_text 'You can only process: income-based applications benefits-based applications if the applicant has provided supporting evidence'
 end
 
-When("I start processing a paper application") do
+When("I start processing a paper application with no benefits record") do
   expect(dashboard_page.content).to have_find_an_application_heading
   dashboard_page.process_application
   expect(personal_details_page.content).to have_header
-  personal_details_page.submit_all_personal_details_ni
+  personal_details_page.submit_all_personal_details_ni_with_no_answer_for_benefits
   expect(application_details_page.content).to have_header
   application_details_page.submit_fee_600
   expect(savings_investments_page.content).to have_header
   dwp_monitor_state_as('offline')
   savings_investments_page.submit_less_than
   expect(benefits_page.content).to have_benefit_question
-  stub_dwp_response_as_bad_request
+  benefits_page.submit_benefits_yes
+end
+
+When("I start processing a paper application with undetermined benefits check") do
+  expect(dashboard_page.content).to have_find_an_application_heading
+  dashboard_page.process_application
+  expect(personal_details_page.content).to have_header
+  personal_details_page.submit_all_personal_details_ni_with_no_answer_for_benefits
+  expect(application_details_page.content).to have_header
+  application_details_page.submit_fee_600
+  expect(savings_investments_page.content).to have_header
+  dwp_monitor_state_as('offline')
+  savings_investments_page.submit_less_than
+  expect(benefits_page.content).to have_benefit_question
   benefits_page.submit_benefits_yes
 end
 
