@@ -49,6 +49,6 @@ module GuideHelper
   end
 
   def datashare_url
-    'https://intranet.justice.gov.uk/my-work/help-with-fees/job-cards/'
+    'https://intranet.justice.gov.uk/my-work/help-with-fees/help-with-fees-guidance-documents/'
   end
 end

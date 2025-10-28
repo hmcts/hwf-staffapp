@@ -51,6 +51,6 @@ RSpec.describe GuideHelper do
   end
 
   describe '#datashare_url' do
-    it { expect(helper.datashare_url).to include('https://intranet.justice.gov.uk/my-work/help-with-fees/job-cards/') }
+    it { expect(helper.datashare_url).to include('https://intranet.justice.gov.uk/my-work/help-with-fees/help-with-fees-guidance-documents/') }
   end
 end
