@@ -10,7 +10,7 @@ module BenefitCheckers
 
     private
 
-    # rubocop:disable Metrics/MethodLength
+    # rubocop:disable Metrics/MethodLength, Metrics/AbcSize
     def mock_status(ni_number)
       case ni_number
       when *Settings.dwp_mock.ni_number_yes
@@ -29,6 +29,6 @@ module BenefitCheckers
         ''
       end
     end
-    # rubocop:enable Metrics/MethodLength
+    # rubocop:enable Metrics/MethodLength, Metrics/AbcSize
   end
 end
