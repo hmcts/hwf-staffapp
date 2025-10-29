@@ -23,6 +23,8 @@ module BenefitCheckers
         raise RestClient::BadRequest, '{"error":"LSCBC MOCK service is currently unavailable"}'
       when *Settings.dwp_mock.ni_number_500_error
         raise StandardError, '500 Internal Server Error'
+      when *Settings.dwp_mock.ni_number_connection_refused
+        raise Errno::ECONNREFUSED, 'Connection refused'
       else
         ''
       end

@@ -64,4 +64,5 @@ dwp_mock:
   ni_number_undetermined: ['SN789654C']
   ni_number_dwp_error: ['SN753159C']
   ni_number_500_error: ['SN111111C']
+  ni_number_connection_refused: ['SN222222C']
   fake_api_enabled: <%= ENV['FAKE_BENEFIT_CHECK'].present? && ['1', 'true'].include?(ENV['FAKE_BENEFIT_CHECK']) %>

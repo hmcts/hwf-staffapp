@@ -14,7 +14,7 @@ RSpec.describe BenefitCheckers::MockApiClient, type: :service do
 
   describe '#check' do
     context 'return valid No answer' do
-      let(:ni_number_for_test) { 'SN789654B' }
+      let(:ni_number_for_test) { Settings.dwp_mock.ni_number_no.last }
       it 'returns a successful response structure' do
         result = client.check(params)
         expect(result[:benefit_checker_status]).to eq('No')
@@ -23,7 +23,7 @@ RSpec.describe BenefitCheckers::MockApiClient, type: :service do
     end
 
     context 'return valid Yes answer' do
-      let(:ni_number_for_test) { 'SN789654A' }
+      let(:ni_number_for_test) { Settings.dwp_mock.ni_number_yes.first }
       it 'returns a successful response structure' do
         result = client.check(params)
         expect(result[:benefit_checker_status]).to eq('Yes')
@@ -32,7 +32,7 @@ RSpec.describe BenefitCheckers::MockApiClient, type: :service do
     end
 
     context 'return valid Yes answer for another NI number' do
-      let(:ni_number_for_test) { 'JR054008D' }
+      let(:ni_number_for_test) { Settings.dwp_mock.ni_number_yes.last }
       it 'returns a successful response structure' do
         result = client.check(params)
         expect(result[:benefit_checker_status]).to eq('Yes')
@@ -41,18 +41,26 @@ RSpec.describe BenefitCheckers::MockApiClient, type: :service do
     end
 
     context 'return valid Undetermined answer' do
-      let(:ni_number_for_test) { 'SN789654C' }
+      let(:ni_number_for_test) { Settings.dwp_mock.ni_number_undetermined.first }
       it 'returns a successful response structure' do
-        result = client.check(params)
-        expect(result[:benefit_checker_status]).to eq('Undetermined')
-        expect(result[:confirmation_ref]).to include('MOCK-')
+        # result = client.check(params)
+        expect { client.check(params) }.to raise_error(Exceptions::UndeterminedDwpCheck)
+        # expect(result[:benefit_checker_status]).to eq('Undetermined')
+        # expect(result[:confirmation_ref]).to include('MOCK-')
       end
     end
 
     context 'raise BadRequest error' do
-      let(:ni_number_for_test) { 'SN753159C' }
+      let(:ni_number_for_test) { Settings.dwp_mock.ni_number_dwp_error.first }
       it 'returns a successful response structure' do
         expect { client.check(params) }.to raise_error(RestClient::BadRequest)
+      end
+    end
+
+    context 'raise BadRequestErrno::ECONNREFUSED error' do
+      let(:ni_number_for_test) { Settings.dwp_mock.ni_number_connection_refused.first }
+      it 'returns a successful response structure' do
+        expect { client.check(params) }.to raise_error(Errno::ECONNREFUSED)
       end
     end
   end

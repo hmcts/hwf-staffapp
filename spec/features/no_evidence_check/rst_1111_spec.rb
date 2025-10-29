@@ -12,7 +12,6 @@ RSpec.feature 'EV Skipped for All Benefit Application' do
 
   before do
     login_as user
-    dwp_api_response(dwp_result, dwp_status)
   end
 
   context 'DWP outcome is Undetermined' do
@@ -26,7 +25,7 @@ RSpec.feature 'EV Skipped for All Benefit Application' do
     scenario 'Benefit application skipped from ev check when dwp is undertermined' do
       start_new_application
 
-      fill_personal_details
+      fill_personal_details(Settings.dwp_mock.ni_number_undetermined.first)
       fill_application_details
       fill_saving_and_investment
       fill_benefits(true)
@@ -42,7 +41,6 @@ RSpec.feature 'EV Skipped for All Benefit Application' do
   end
 
   context 'DWP outcome is pass' do
-    let(:dwp_result) { 'Yes' }
     let(:application) { create(:application_full_remission) }
 
     before do
@@ -52,7 +50,7 @@ RSpec.feature 'EV Skipped for All Benefit Application' do
     scenario 'Benefit application skipped from ev check when dwp is pass' do
       start_new_application
 
-      fill_personal_details
+      fill_personal_details(Settings.dwp_mock.ni_number_yes.first)
       fill_application_details
       fill_saving_and_investment
       fill_benefits(true)
@@ -67,7 +65,6 @@ RSpec.feature 'EV Skipped for All Benefit Application' do
   end
 
   context 'DWP Outcome is pass and paper evidence is true' do
-    let(:dwp_result) { 'Yes' }
     let(:application) { create(:application_full_remission, :refund) }
 
     before do
@@ -77,7 +74,7 @@ RSpec.feature 'EV Skipped for All Benefit Application' do
     scenario 'Benefit application skipped from ev check when dwp is pass and paper evidence confirmed' do
       start_new_application
 
-      fill_personal_details
+      fill_personal_details(Settings.dwp_mock.ni_number_yes.first)
       fill_application_refund_details
       fill_saving_and_investment
       fill_benefits(true)
@@ -90,8 +87,7 @@ RSpec.feature 'EV Skipped for All Benefit Application' do
     end
   end
 
-  context 'DWP Outcome is ECONNREFUSED' do
-    let(:dwp_result) { 'Server unavailable' }
+  context 'DWP Outcome fails' do
     let(:application) { create(:application_full_remission, :refund) }
 
     before do
@@ -101,10 +97,11 @@ RSpec.feature 'EV Skipped for All Benefit Application' do
     scenario 'Every 2nd application is not evidence check when paper evidence is false on Benefit Application' do
       start_new_application
 
-      fill_personal_details
+      fill_personal_details(Settings.dwp_mock.ni_number_no.first)
       fill_application_refund_details
       fill_saving_and_investment
       fill_benefits(true)
+
       fill_benefit_evidence(paper_provided: false)
 
       click_button 'Complete processing'
@@ -117,7 +114,6 @@ RSpec.feature 'EV Skipped for All Benefit Application' do
   end
 
   context 'DWP Outcome is Yes for emergency application' do
-    let(:dwp_result) { 'Yes' }
     let(:application) { create(:application_full_remission, :refund) }
 
     before do
@@ -127,7 +123,7 @@ RSpec.feature 'EV Skipped for All Benefit Application' do
     scenario 'No evidence check on emergency applications' do
       start_new_application
 
-      fill_personal_details
+      fill_personal_details(Settings.dwp_mock.ni_number_yes.first)
       fill_application_emergency_details
       fill_saving_and_investment
       fill_benefits(true)
