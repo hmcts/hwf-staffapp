@@ -29,6 +29,26 @@ RSpec.describe PaperEvidenceHelper do
         expect(template).to eql('technical_error')
       end
 
+      context 'when dwp_result is not Yes but' do
+        before { allow(application).to receive(:last_benefit_check).and_return last_benefit_check }
+        let(:last_benefit_check) { instance_double(BenefitCheck, dwp_result: dwp_result) }
+
+        context 'No' do
+          let(:dwp_result) { 'No' }
+          it { expect(template).to eql('no_record') }
+        end
+
+        context 'Bad Request' do
+          let(:dwp_result) { 'badrequest' }
+          it { expect(template).to eql('technical_error') }
+        end
+
+        context 'Undetermined' do
+          let(:dwp_result) { 'undetermined' }
+          it { expect(template).to eql('missing_details') }
+        end
+      end
+
       context 'discretion granted' do
         let(:detail) { build_stubbed(:detail, discretion_applied: true) }
 

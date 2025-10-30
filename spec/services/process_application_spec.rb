@@ -32,7 +32,6 @@ RSpec.describe ProcessApplication do
     context 'pre ucd' do
       let(:saving_passed) { true }
       it 'save applicaiton with result' do
-        # debugger
         expect(application.id).not_to be_nil
         expect(application.outcome).to eq 'full'
       end
