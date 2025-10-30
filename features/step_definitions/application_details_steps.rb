@@ -73,5 +73,5 @@ Then('I change the application data') do
   application_details_page.click_next
   application_details_page.click_next
   application_details_page.click_next
-  paper_evidence_page.submit_evidence_yes
+  application_details_page.click_next
 end

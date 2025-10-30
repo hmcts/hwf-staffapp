@@ -132,5 +132,6 @@ Then('I change the personal data') do
   personal_details_page.click_next
   personal_details_page.click_next
   personal_details_page.click_next
-  paper_evidence_page.submit_evidence_yes
+  personal_details_page.click_next
+  # paper_evidence_page.submit_evidence_yes
 end

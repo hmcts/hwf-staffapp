@@ -15,11 +15,10 @@ RSpec.feature 'Staff can search for online application' do
   let(:current_time) { Time.zone.parse('10/10/2015') }
 
   before do
-    dwp_api_response 'Yes'
     login_as user
   end
 
-  let(:online_application) { create(:online_application, :with_reference) }
+  let(:online_application) { create(:online_application, :with_reference, ni_number: Settings.dwp_mock.ni_number_yes.first) }
   let(:full_online_application) { create(:online_application, :partner) }
 
   scenario 'User fills in all required fields and the application is saved' do

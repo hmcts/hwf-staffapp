@@ -6,27 +6,26 @@ Feature: Benefit checker
 
   Scenario: Paper evidence for an applicant receiving benefits
     Given I am signed in as a user and I see the benefit checker is down
-    When I start processing a paper application
+    When I start processing a paper application with no benefits record
     And I am on the benefits paper evidence page
     Then I should see that I will need paper evidence for the benefits
 
   Scenario: The applicant has not provided the correct paper evidence
     Given I am signed in as a user and I see the benefit checker is down
-    When I start processing a paper application
+    When I start processing a paper application with no benefits record
     And I am on the benefits paper evidence page
     And the applicant has not provided the correct paper evidence
-    # Then I should see a message that the DWP Checker is not available
     Then I should see that the applicant fails on benefits
 
   Scenario: The applicant has provided the correct paper evidence
     Given I am signed in as a user and I see the benefit checker is down
-    When I start processing a paper application
+    When I start processing a paper application with no benefits record
     And I am on the benefits paper evidence page
     And the applicant has provided the correct paper evidence
     Then I should see that the applicant passes on benefits
 
   Scenario: The applicant has provided the correct paper evidence for online application
-    Given I have looked up an online application
+    Given I have looked up an online application when the benefit checker is down
     Then I processed the applications until benefit paper evidence page
     And the applicant has provided the correct paper evidence
     Then I should see that the applicant passes on benefits

@@ -210,6 +210,7 @@ en-GB:
         There’s a problem with the applicant’s surname, date of birth or National Insurance number.
         <a href="%{personal_information_url}">Check all details were entered correctly</a>
       technical_error: "You will only be able to process this application if you have supporting evidence that the applicant is receiving benefits"
+      no_record: "There was no record found of benefits. You will only be able to process this application if you have supporting evidence that the applicant is receiving benefits."
       out_of_time: "Fees paid more than 3 months ago can’t be checked with the DWP. The applicant must provide paper evidence to show they were receiving eligible benefits on the date they paid."
   shared:
     forms:

@@ -1,20 +1,20 @@
 Given("An applicant has submitted an online application where fee has been paid") do
-  FactoryBot.create(:online_application, :with_reference, :completed, :with_refund)
+  @online_application = FactoryBot.create(:online_application, :with_reference, :completed, :with_refund, ni_number: 'SN789654A')
 end
 
 When("I process the online application to the check details page") do
-  reference = OnlineApplication.last.reference
+  reference = @online_application.reference
   fill_in 'Reference', with: reference
   dashboard_page.click_look_up
   expect(process_online_application_page.content).to have_application_details_header
   process_online_application_page.content.jurisdiction.click
-  stub_dwp_response_as_ok_request
+  # stub_dwp_response_as_ok_request
   process_online_application_page.click_next
   expect(process_online_application_page.content).to have_check_details_header
 end
 
 Given("An applicant has submitted an online application where fee has not been paid") do
-  FactoryBot.create(:online_application, :with_reference, :completed)
+  @online_application = FactoryBot.create(:online_application, :with_reference, :completed, ni_number: 'SN789654A')
 end
 
 When("I process a paper application where fee has been paid to the check details page") do

@@ -38,8 +38,10 @@ module PaperEvidenceHelper
     case last_benefit_check_result(application)
     when 'undetermined'
       'missing_details'
-    when 'server unavailable', 'unspecified error'
+    when 'server unavailable', 'unspecified error', 'badrequest'
       'technical_error'
+    when 'no'
+      'no_record'
     end
   end
 end

@@ -31,7 +31,7 @@ module Applications
       end
 
       def benefit_check_and_redirect(benefits)
-        if disable_befit_calls?
+        if disable_benefit_calls?
           redirect_to_override_or_dependents
         elsif benefits
           benefit_check_runner.run
@@ -43,10 +43,7 @@ module Applications
       end
 
       def determine_override
-        if application.failed_because_dwp_error?
-          flash[:alert] = t('error_messages.benefit_check.cannot_process_application')
-          redirect_to root_url
-        elsif benefit_check_runner.can_override?
+        if application.allow_benefit_check_override?
           redirect_to application_benefit_override_paper_evidence_path(application)
         else
           redirect_to application_declaration_path(application)
@@ -58,7 +55,7 @@ module Applications
         application.benefit_override.destroy
       end
 
-      def disable_befit_calls?
+      def disable_benefit_calls?
         DwpWarning.last&.check_state == DwpWarning::STATES[:offline]
       end
 

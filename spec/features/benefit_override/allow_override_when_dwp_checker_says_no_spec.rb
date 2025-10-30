@@ -56,7 +56,7 @@ RSpec.feature 'Allow override when DWP checker says "NO"' do
   end
 
   scenario 'they should be on the Benefit page straight away' do
-    expect(page).to have_xpath('//h1', text: 'Benefits')
+    expect(page).to have_xpath('//h1', text: 'Evidence of benefits')
   end
 
   context 'when the user provides paper evidence' do

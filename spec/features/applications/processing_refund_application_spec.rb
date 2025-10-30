@@ -12,6 +12,7 @@ RSpec.feature 'Processing refund application with valid date received date' do
     create(:online_application, :completed, :with_reference,
            married: false,
            children: 3,
+           ni_number: Settings.dwp_mock.ni_number_yes.first,
            benefits: true,
            fee: 1550,
            form_name: 'D11',
@@ -28,6 +29,7 @@ RSpec.feature 'Processing refund application with valid date received date' do
     create(:online_application, :completed, :with_reference,
            married: false,
            children: 3,
+           ni_number: Settings.dwp_mock.ni_number_yes.first,
            benefits: true,
            fee: 1550,
            form_name: 'D11',
@@ -41,11 +43,8 @@ RSpec.feature 'Processing refund application with valid date received date' do
 
   end
 
-  let(:dwp_response) { 'Yes' }
-
   before do
     login_as user
-    dwp_api_response dwp_response
   end
 
   context 'Online refund application' do
@@ -100,44 +99,46 @@ RSpec.feature 'Processing refund application with valid date received date' do
     let(:application) { build(:application, applicant: applicant) }
 
     context 'with benefits' do
-      it "valid date" do
-        visit '/'
-        click_button 'Start now'
-        expect(page).to have_content "Personal details"
-        complete_page_as 'personal_information', application, true
+      context 'valid dwp response' do
+        let(:applicant) { build(:applicant_with_all_details, ni_number: Settings.dwp_mock.ni_number_yes.first) }
+        it "valid date" do
+          visit '/'
+          click_button 'Start now'
+          expect(page).to have_content "Personal details"
+          complete_page_as 'personal_information', application, true
 
-        expect(page).to have_content "Application details"
-        complete_page_as 'application_details', application, false
-        check "This is a refund case"
-        date_fee_paid = 10.days.ago
-        fill_in "application_day_date_fee_paid", with: date_fee_paid.day.to_fs(:db)
-        fill_in "application_month_date_fee_paid", with: date_fee_paid.month.to_fs(:db)
-        fill_in "application_year_date_fee_paid", with: date_fee_paid.year.to_fs(:db)
-        click_button 'Next'
+          expect(page).to have_content "Application details"
+          complete_page_as 'application_details', application, false
+          check "This is a refund case"
+          date_fee_paid = 10.days.ago
+          fill_in "application_day_date_fee_paid", with: date_fee_paid.day.to_fs(:db)
+          fill_in "application_month_date_fee_paid", with: date_fee_paid.month.to_fs(:db)
+          fill_in "application_year_date_fee_paid", with: date_fee_paid.year.to_fs(:db)
+          click_button 'Next'
 
-        choose 'Less than £3,000'
-        fill_in 'application_amount', with: 0
-        click_button 'Next'
+          choose 'Less than £3,000'
+          fill_in 'application_amount', with: 0
+          click_button 'Next'
 
-        expect(page).to have_content "Does the applicant receive benefits?"
-        choose 'Yes'
-        click_button 'Next'
+          expect(page).to have_content "Does the applicant receive benefits?"
+          choose 'Yes'
+          click_button 'Next'
 
-        expect(page).to have_content "Declaration and statement of truth"
-        choose 'Applicant'
-        click_button 'Next'
+          expect(page).to have_content "Declaration and statement of truth"
+          choose 'Applicant'
+          click_button 'Next'
 
-        expect(page).to have_content "Check details"
-        click_button 'Complete processing'
+          expect(page).to have_content "Check details"
+          click_button 'Complete processing'
 
-        expect(page).to have_content 'Savings and investments✓ Passed'
-        expect(page).to have_content 'Benefits✓ Passed'
-        expect(page).to have_content 'Eligible for help with fees'
+          expect(page).to have_content 'Savings and investments✓ Passed'
+          expect(page).to have_content 'Benefits✓ Passed'
+          expect(page).to have_content 'Eligible for help with fees'
+        end
+
       end
 
       context 'failed dwp' do
-        let(:dwp_response) { 'No' }
-
         it "failed paper evidence" do
           visit '/'
           click_button 'Start now'
@@ -177,8 +178,6 @@ RSpec.feature 'Processing refund application with valid date received date' do
       end
 
       context 'invalid date' do
-        let(:dwp_response) { nil }
-
         it "discretion denied" do
           visit '/'
           click_button 'Start now'
@@ -275,7 +274,6 @@ RSpec.feature 'Processing refund application with valid date received date' do
     end
 
     context 'without benefits' do
-      let(:dwp_response) { nil }
       it "valid date" do
         visit '/'
         click_button 'Start now'

@@ -7,11 +7,11 @@ class BenefitOverridesController < ApplicationController
 
   def paper_evidence_save
     @form = Forms::BenefitsEvidence.new(benefit_override)
-    # if dwp_is_down && no_paper_evidence?
-    #   take_user_home
-    # else
-    process_benefit_evidence
-    # end
+    if allow_benefit_override? && no_paper_evidence?
+      take_user_home
+    else
+      process_benefit_evidence
+    end
   end
 
   private
@@ -36,6 +36,7 @@ class BenefitOverridesController < ApplicationController
 
   def process_benefit_evidence
     @form.update(allowed_params)
+
     if @form.save
       redirect_to next_page_to_go
     else
@@ -43,8 +44,8 @@ class BenefitOverridesController < ApplicationController
     end
   end
 
-  def dwp_is_down
-    DwpMonitor.new.state == 'offline' && DwpWarning.state != DwpWarning::STATES[:online]
+  def allow_benefit_override?
+    application.benefit_check_with_error_message? || DwpWarning.last&.check_state == DwpWarning::STATES[:offline]
   end
 
   def no_paper_evidence?

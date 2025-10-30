@@ -58,7 +58,7 @@ RSpec.feature 'No NI number provided' do
   end
 
   scenario 'correct content on the page' do
-    expect(page).to have_xpath('//h1', text: 'Benefits')
+    expect(page).to have_xpath('//h1', text: 'Evidence of benefits')
     expect(page).to have_content('There’s a problem with the applicant’s surname, date of birth or National Insurance number.')
   end
 

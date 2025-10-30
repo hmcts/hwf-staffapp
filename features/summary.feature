@@ -29,8 +29,8 @@ Feature: Summary page
       And I change the application data
       Then I should see that my new answer is displayed in the application details summary
 
-    Scenario: Displays benefit summary
-      Given I have completed an application
+    Scenario: Displays benefit summary with paper override
+      Given I have completed an application with paper evidence benefit check
       And I am on the summary page
       When I see benefit summary
       Then I should see declared benefits in this application

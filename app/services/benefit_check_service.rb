@@ -1,9 +1,10 @@
 class BenefitCheckService
   attr_accessor :result, :message, :response
 
-  def initialize(data_to_check)
+  def initialize(data_to_check, client: nil)
     @result = false
     @check_item = data_to_check
+    @client = client || default_client
     begin
       validate_inputs
       check_remote_api
@@ -43,9 +44,17 @@ class BenefitCheckService
   end
 
   def query_proxy_api
-    @response = JSON.parse(RestClient.post("#{ENV.fetch('DWP_API_PROXY', nil)}/api/benefit_checks", params))
+    @response = @client.check(params)
     fail Exceptions::UndeterminedDwpCheck if @response['benefit_checker_status'] == 'Undetermined'
     @result = true
+  end
+
+  def default_client
+    if Settings.dwp_mock.fake_api_enabled
+      BenefitCheckers::MockApiClient.new
+    else
+      BenefitCheckers::RealApiClient.new
+    end
   end
 
   def params

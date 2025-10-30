@@ -1,5 +1,5 @@
-Given("I have looked up an online application") do
-  FactoryBot.create(:online_application, :with_reference)
+Given("I have looked up an online application with benefits") do
+  @online_application = FactoryBot.create(:online_application, :with_reference, ni_number: 'SN789654A')
   sign_in_page.load_page
   sign_in_page.user_account
   reference = OnlineApplication.last.reference
@@ -43,13 +43,13 @@ Then("I should be taken to the check details page") do
   expect(process_online_application_page.content).to have_check_details_header
 end
 
-When("I process the online application") do
+When("I process the online application with failed benefits") do
+  @online_application.update(ni_number: 'SN789654B')
   expect(process_online_application_page.content).to have_application_details_header
   fill_in('How much is the court or tribunal fee?', with: '450.0')
   process_online_application_page.content.form_input.set 'ABC123'
   process_online_application_page.content.jurisdiction.click
   process_online_application_page.fill_in_date_application_received
-  stub_dwp_response_as_not_eligible_request
   process_online_application_page.click_next
   benefit_checker_page.content.no.click
   benefit_checker_page.click_next

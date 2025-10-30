@@ -14,11 +14,9 @@ And("I have processed an application") do
 
   expect(benefits_page.content).to have_header
 
-  stub_dwp_response_as_bad_request
   benefits_page.submit_benefits_yes
 
-  expect(paper_evidence_page.content).to have_header
-  paper_evidence_page.submit_evidence_yes
+  declaration_page.sign_by_applicant
 
   expect(summary_page.content).to have_header
   complete_processing

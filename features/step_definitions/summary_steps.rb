@@ -6,6 +6,10 @@ Given("I have completed an application with savings in pence") do
   go_to_summary_page_high_savings
 end
 
+Given('I have completed an application with paper evidence benefit check') do
+  go_to_summary_page_low_savings_paper_evidence_benefit_check
+end
+
 Given("I am on the summary page") do
   expect(summary_page.content).to have_header
 end
