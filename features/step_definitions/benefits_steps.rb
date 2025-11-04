@@ -1,5 +1,5 @@
 Given("I am on the benefits part of the application") do
-  personal_details_page.submit_required_personal_details
+  personal_details_page.submit_all_personal_details_ni_with_no_answer_for_benefits
   expect(application_details_page.content).to have_header
   application_details_page.submit_fee_600
   expect(savings_investments_page.content).to have_header
