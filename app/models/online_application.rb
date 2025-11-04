@@ -67,6 +67,14 @@ class OnlineApplication < ActiveRecord::Base
       last_benefit_check.error_message.include?('The benefits checker is not available at the moment')
   end
 
+  def benefit_check_with_error_message?
+    last_benefit_check&.error_message.present?
+  end
+
+  def allow_benefit_check_override?
+    benefit_check_with_error_message? || last_benefit_check&.dwp_result == 'No'
+  end
+
   def notification_email
     legal_representative_email.presence || email_address
   end

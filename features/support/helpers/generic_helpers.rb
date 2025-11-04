@@ -395,8 +395,12 @@ def stub_dwp_response_as_not_eligible_request
   RestClient.stub(:post).with("#{ENV.fetch('DWP_API_PROXY', nil)}/api/benefit_checks", any_args).and_return({ benefit_checker_status: "No", confirmation_ref: 1234 }.to_json)
 end
 
-def create_online_application
-  FactoryBot.create(:online_application, :with_reference, :benefits, :completed)
+def create_online_application(reference = nil)
+  if reference.present?
+    FactoryBot.create(:online_application, :benefits, :completed, reference: reference)
+  else
+    FactoryBot.create(:online_application, :with_reference, :benefits, :completed)
+  end
 end
 
 def dwp_monitor_state_as(state)

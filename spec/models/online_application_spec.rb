@@ -244,4 +244,50 @@ RSpec.describe OnlineApplication do
     end
   end
 
+  describe '#benefit_check_with_error_message?' do
+    let(:online_application) { create(:online_application) }
+
+    it 'returns false when there is no benefit check' do
+      expect(online_application.benefit_check_with_error_message?).to be false
+    end
+
+    it 'returns true when last benefit check has error message' do
+      create(:benefit_check, applicationable: online_application, benefits_valid: false, dwp_result: 'Unspecified error', error_message: 'some error')
+      expect(online_application.reload.benefit_check_with_error_message?).to be true
+    end
+
+    it 'returns false when last benefit check has dwp_result No' do
+      create(:benefit_check, applicationable: online_application, benefits_valid: false, dwp_result: 'No')
+      expect(online_application.reload.benefit_check_with_error_message?).to be false
+    end
+
+    it 'returns false when last benefit check has dwp_result Yes' do
+      create(:benefit_check, applicationable: online_application, benefits_valid: true, dwp_result: 'Yes')
+      expect(online_application.reload.benefit_check_with_error_message?).to be false
+    end
+  end
+
+  describe '#allow_benefit_check_override?' do
+    let(:online_application) { create(:online_application) }
+
+    it 'returns false when there is no benefit check' do
+      expect(online_application.allow_benefit_check_override?).to be false
+    end
+
+    it 'returns true when last benefit check has error message' do
+      create(:benefit_check, applicationable: online_application, benefits_valid: false, dwp_result: 'Unspecified error', error_message: 'some error')
+      expect(online_application.reload.allow_benefit_check_override?).to be true
+    end
+
+    it 'returns true when last benefit check has dwp_result No' do
+      create(:benefit_check, applicationable: online_application, benefits_valid: false, dwp_result: 'No', error_message: nil)
+      expect(online_application.reload.allow_benefit_check_override?).to be true
+    end
+
+    it 'returns false when last benefit check has dwp_result Yes' do
+      create(:benefit_check, applicationable: online_application, benefits_valid: true, dwp_result: 'Yes')
+      expect(online_application.reload.allow_benefit_check_override?).to be false
+    end
+  end
+
 end
