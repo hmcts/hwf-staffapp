@@ -122,7 +122,8 @@ h2.govuk-heading-m Application rejected because benefits not received-refunds
 h2.govuk-heading-m Application rejected because benefits not received-refunds-representation
 .confirmation-letter
   = t('new_letters.reject.reject_no_benefits_refund_representation_html',
-          greeting: '{AUTO: APPLICANTS NAME}',
+          greeting: '{AUTO: THIRD PARTY NAME} regarding {AUTO: APPLICANTS NAME}',
+          legal_rep: '{AUTO: THIRD PARTY NAME}',
           reference: '{AUTO: APPLICATION REFERENCE}',
           full_name: '{AUTO: APPLICANTS NAME}',
           user_name: '{AUTO: CURRENT USERS NAME}',
