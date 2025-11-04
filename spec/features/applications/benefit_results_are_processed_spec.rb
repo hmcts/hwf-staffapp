@@ -19,16 +19,13 @@ RSpec.feature 'Benefit results are processed' do
   context 'when user selects yes to benefits' do
     before do
       login_as user
-
-      dwp_api_response(dwp_result, dwp_status)
-
       visit application_benefits_path(application)
       choose 'application_benefits_true'
       click_button 'Next'
     end
 
     context 'the benefits override page is rendered with an error message' do
-      let(:ni_number) { nil }
+      let(:ni_number) { Settings.dwp_mock.ni_number_undetermined.first }
 
       scenario 'the page is rendered with message prompting to fill all details' do
         expect(page).to have_xpath('//h1', text: 'Evidence of benefits')
@@ -61,6 +58,9 @@ RSpec.feature 'Benefit results are processed' do
         let(:ni_number) { Settings.dwp_mock.ni_number_dwp_error.first }
 
         scenario 'the benefits override page is rendered with an error message' do
+          expect(page).to have_xpath('//h1', text: 'Evidence of benefits')
+          choose 'benefit_override_evidence_false'
+          click_button 'Next'
           expect(page).to have_xpath('//h1', text: 'Find an application')
           expect(page).to have_content('Processing benefit applications without paper evidence is not working at the moment. Try again later when the DWP checker is available.')
         end

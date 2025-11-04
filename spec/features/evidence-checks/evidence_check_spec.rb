@@ -25,7 +25,7 @@ RSpec.feature 'Evidence check' do
       click_button "Start now"
     end
 
-    fill_personal_details
+    fill_personal_details(Settings.dwp_mock.ni_number_no.first)
     fill_application_details
     fill_saving_and_investment
     fill_benefits(true)
