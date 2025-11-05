@@ -845,7 +845,7 @@ en-GB:
         date_hint_html: For example, %{today_date}
         date_received: Date received
         benefits_override_false: 'No'
-        benefits_override_true_html: "Yes, the applicant has provided supporting evidence. Please be aware that by selecting this the customer will be issued a <b>full remission.</b>"
+        benefits_override_true_html: "Yes, by selecting this option, the applicant will be issued with a <b>full remission.</b>"
         paper_evidence: Has the applicant provided the correct paper evidence of benefits received for the period they have declared in the application?
         discretion_applied_true: 'Yes'
         discretion_applied_false: 'No'

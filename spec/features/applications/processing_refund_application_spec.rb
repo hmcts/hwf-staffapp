@@ -163,7 +163,7 @@ RSpec.feature 'Processing refund application with valid date received date' do
           choose 'Yes'
           click_button 'Next'
 
-          expect(page).to have_content "Applicants may have provided supporting evidence to confirm they are receiving benefits"
+          expect(page).to have_content "Has the applicant provided the correct supporting evidence of benefits received for the period they have declared on their application?"
           choose 'No'
           click_button 'Next'
 
@@ -254,10 +254,10 @@ RSpec.feature 'Processing refund application with valid date received date' do
             expect(page).to have_content "Does the applicant receive benefits?"
             choose 'Yes'
             click_button 'Next'
-            expect(page).to have_no_content('You will only be able to process this application if you have supporting evidence that the applicant is receiving benefits')
+            expect(page).to have_no_content('This could be due to a system error and/or the applicant not being found from the details provided.')
 
-            expect(page).to have_content('Applicants may have provided supporting evidence to confirm they are receiving benefits')
-            choose('Yes, the applicant has provided supporting evidence')
+            expect(page).to have_content('Has the applicant provided the correct supporting evidence of benefits received for the period they have declared on their application?')
+            choose('Yes, by selecting this option, the applicant will be issued with a full remission')
             click_button 'Next'
 
             expect(page).to have_content "Check details"
