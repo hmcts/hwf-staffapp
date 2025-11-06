@@ -80,18 +80,15 @@ RSpec.describe Applications::Process::BenefitsController do
     let(:benefit_form) { instance_double(Forms::Application::Benefit, benefits: user_says_on_benefits) }
     let(:dwp_warning) { instance_double(DwpWarning, check_state: dwp_warning_check_state) }
     let(:user_says_on_benefits) { false }
-    let(:can_override) { false }
-    let(:dwp_error?) { false }
     let(:dwp_warning_check_state) { 'online' }
-    let(:benefit_check_runner) { instance_double(BenefitCheckRunner, run: nil, can_override?: can_override) }
-    let(:benefit_override) { nil }
+    let(:benefit_check_runner) { instance_double(BenefitCheckRunner, run: nil) }
+    let(:valid_for_paper_evidence) { true }
 
     before do
       allow(benefit_form).to receive(:update).with(expected_params)
       allow(benefit_form).to receive(:save).and_return(form_save)
       allow(BenefitCheckRunner).to receive(:new).with(application).and_return(benefit_check_runner)
-      allow(application).to receive_messages(failed_because_dwp_error?: dwp_error?, benefit_override: benefit_override)
-      allow(benefit_override).to receive(:destroy)
+      allow(application).to receive_messages(allow_benefit_check_override?: valid_for_paper_evidence)
       allow(DwpWarning).to receive(:last).and_return(dwp_warning)
 
       post :create, params: { application_id: application.id, application: expected_params }
@@ -108,8 +105,6 @@ RSpec.describe Applications::Process::BenefitsController do
         end
 
         context 'when the dwp_warning_check_state is offline do not call benefit check' do
-          let(:can_override) { true }
-          let(:benefit_override) { instance_double(BenefitOverride) }
           let(:dwp_warning_check_state) { 'offline' }
 
           it 'does not run the benefit check on the application' do
@@ -121,32 +116,15 @@ RSpec.describe Applications::Process::BenefitsController do
           end
         end
 
-        context 'when benefit check is disabled and answer is no benefits' do
-          let(:user_says_on_benefits) { false }
-          let(:dwp_warning_check_state) { 'offline' }
-
-          it 'does not run the benefit check on the application' do
-            expect(benefit_check_runner).not_to have_received(:run)
-          end
-
-          it 'redirects to the dependets page' do
-            expect(response).to redirect_to(application_dependents_path(application))
-          end
-        end
-
         context 'when the dwp_warning_check_state is online call benefit check' do
-          let(:can_override) { true }
-          let(:benefit_override) { instance_double(BenefitOverride) }
           let(:dwp_warning_check_state) { 'online' }
 
-          it 'does not run the benefit check on the application' do
+          it 'does run the benefit check on the application' do
             expect(benefit_check_runner).to have_received(:run)
           end
         end
 
         context 'when the dwp_warning_check_state is default_checker call benefit check' do
-          let(:can_override) { true }
-          let(:benefit_override) { instance_double(BenefitOverride) }
           let(:dwp_warning_check_state) { 'default_checker' }
 
           it 'does not run the benefit check on the application' do
@@ -154,36 +132,10 @@ RSpec.describe Applications::Process::BenefitsController do
           end
         end
 
-        context 'when the result can be overridden' do
-          let(:can_override) { true }
-          let(:benefit_override) { instance_double(BenefitOverride) }
-
+        context 'when the benefit check response is valid for paper evidence' do
+          let(:valid_for_paper_evidence) { true }
           it 'redirects to the benefits override page' do
             expect(response).to redirect_to(application_benefit_override_paper_evidence_path(application))
-          end
-
-          it 'don not destroy benefit_override if exist' do
-            expect(benefit_override).not_to have_received(:destroy)
-          end
-
-        end
-
-        context 'when the result is failed because of DWP failed response' do
-          let(:dwp_error?) { true }
-
-          it 'redirects to the home page' do
-            expect(response).to redirect_to(root_path)
-          end
-
-          it 'displays message' do
-            message = "Processing benefit applications without paper evidence is not working at the moment. Try again later when the DWP checker is available."
-            expect(flash['alert']).to eql(message)
-          end
-        end
-
-        context 'when the result can not be overridden' do
-          it 'redirects to the declaration override page' do
-            expect(response).to redirect_to(application_declaration_path(application))
           end
         end
       end
@@ -195,25 +147,14 @@ RSpec.describe Applications::Process::BenefitsController do
           expect(benefit_check_runner).not_to have_received(:run)
         end
 
-        it 'redirects to the income page' do
+        it 'redirects to the dependents page' do
           expect(response).to redirect_to(application_dependents_path(application))
         end
 
         context "it's refund" do
           let(:detail) { build_stubbed(:detail, refund: true) }
 
-          it "still goes to income page" do
-            expect(response).to redirect_to(application_dependents_path(application))
-          end
-        end
-
-        context "it checks existing benefit override" do
-          let(:benefit_override) { instance_double(BenefitOverride) }
-          it 'destroy benefit_override if exist' do
-            expect(benefit_override).to have_received(:destroy)
-          end
-
-          it "still goes to income page" do
+          it "still goes to dependents page" do
             expect(response).to redirect_to(application_dependents_path(application))
           end
         end

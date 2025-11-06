@@ -12,6 +12,7 @@ RSpec.feature 'Processing refund application with valid date received date' do
     create(:online_application, :completed, :with_reference,
            married: false,
            children: 3,
+           ni_number: Settings.dwp_mock.ni_number_yes.first,
            benefits: true,
            fee: 1550,
            form_name: 'D11',
@@ -28,6 +29,7 @@ RSpec.feature 'Processing refund application with valid date received date' do
     create(:online_application, :completed, :with_reference,
            married: false,
            children: 3,
+           ni_number: Settings.dwp_mock.ni_number_yes.first,
            benefits: true,
            fee: 1550,
            form_name: 'D11',
@@ -41,11 +43,8 @@ RSpec.feature 'Processing refund application with valid date received date' do
 
   end
 
-  let(:dwp_response) { 'Yes' }
-
   before do
     login_as user
-    dwp_api_response dwp_response
   end
 
   context 'Online refund application' do
@@ -100,44 +99,47 @@ RSpec.feature 'Processing refund application with valid date received date' do
     let(:application) { build(:application, applicant: applicant) }
 
     context 'with benefits' do
-      it "valid date" do
-        visit '/'
-        click_button 'Start now'
-        expect(page).to have_content "Personal details"
-        complete_page_as 'personal_information', application, true
+      context 'valid dwp response' do
+        let(:applicant) { build(:applicant_with_all_details, ni_number: Settings.dwp_mock.ni_number_yes.first) }
+        it "valid date" do
+          visit '/'
+          click_button 'Start now'
+          expect(page).to have_content "Personal details"
+          complete_page_as 'personal_information', application, true
 
-        expect(page).to have_content "Application details"
-        complete_page_as 'application_details', application, false
-        check "This is a refund case"
-        date_fee_paid = 10.days.ago
-        fill_in "application_day_date_fee_paid", with: date_fee_paid.day.to_fs(:db)
-        fill_in "application_month_date_fee_paid", with: date_fee_paid.month.to_fs(:db)
-        fill_in "application_year_date_fee_paid", with: date_fee_paid.year.to_fs(:db)
-        click_button 'Next'
+          expect(page).to have_content "Application details"
+          complete_page_as 'application_details', application, false
+          check "This is a refund case"
+          date_fee_paid = 10.days.ago
+          fill_in "application_day_date_fee_paid", with: date_fee_paid.day.to_fs(:db)
+          fill_in "application_month_date_fee_paid", with: date_fee_paid.month.to_fs(:db)
+          fill_in "application_year_date_fee_paid", with: date_fee_paid.year.to_fs(:db)
+          click_button 'Next'
 
-        choose 'Less than £3,000'
-        fill_in 'application_amount', with: 0
-        click_button 'Next'
+          choose 'Less than £3,000'
+          fill_in 'application_amount', with: 0
+          click_button 'Next'
 
-        expect(page).to have_content "Does the applicant receive benefits?"
-        choose 'Yes'
-        click_button 'Next'
+          expect(page).to have_content "Does the applicant receive benefits?"
+          choose 'Yes'
+          click_button 'Next'
 
-        expect(page).to have_content "Declaration and statement of truth"
-        choose 'Applicant'
-        click_button 'Next'
+          expect(page).to have_content "Declaration and statement of truth"
+          choose 'Applicant'
+          click_button 'Next'
 
-        expect(page).to have_content "Check details"
-        click_button 'Complete processing'
+          expect(page).to have_content "Check details"
+          click_button 'Complete processing'
 
-        expect(page).to have_content 'Savings and investments✓ Passed'
-        expect(page).to have_content 'Benefits✓ Passed'
-        expect(page).to have_content 'Eligible for help with fees'
+          expect(page).to have_content 'Savings and investments✓ Passed'
+          expect(page).to have_content 'Benefits✓ Passed'
+          expect(page).to have_content 'Eligible for help with fees'
+        end
+
       end
 
       context 'failed dwp' do
-        let(:dwp_response) { 'No' }
-
+        let(:applicant) { build(:applicant_with_all_details, ni_number: Settings.dwp_mock.ni_number_no.first) }
         it "failed paper evidence" do
           visit '/'
           click_button 'Start now'
@@ -161,7 +163,7 @@ RSpec.feature 'Processing refund application with valid date received date' do
           choose 'Yes'
           click_button 'Next'
 
-          expect(page).to have_content "Applicants may have provided supporting evidence to confirm they are receiving benefits"
+          expect(page).to have_content "Has the applicant provided the correct supporting evidence of benefits received for the period they have declared on their application?"
           choose 'No'
           click_button 'Next'
 
@@ -177,8 +179,6 @@ RSpec.feature 'Processing refund application with valid date received date' do
       end
 
       context 'invalid date' do
-        let(:dwp_response) { nil }
-
         it "discretion denied" do
           visit '/'
           click_button 'Start now'
@@ -213,69 +213,72 @@ RSpec.feature 'Processing refund application with valid date received date' do
           expect(Application.last.application_type).not_to be_nil
         end
 
-        it "discretion granted" do
-          visit '/'
-          click_button 'Start now'
-          expect(page).to have_content "Personal details"
-          complete_page_as 'personal_information', application, true
+        context 'valid dwp response' do
+          let(:applicant) { build(:applicant_with_all_details, ni_number: Settings.dwp_mock.ni_number_no.first) }
 
-          expect(page).to have_content "Application details"
-          complete_page_as 'application_details', application, false
-          check "This is a refund case"
-          date_fee_paid = 4.months.ago
-          fill_in "application_day_date_fee_paid", with: date_fee_paid.day.to_fs(:db)
-          fill_in "application_month_date_fee_paid", with: date_fee_paid.month.to_fs(:db)
-          fill_in "application_year_date_fee_paid", with: date_fee_paid.year.to_fs(:db)
+          it "discretion granted" do
+            visit '/'
+            click_button 'Start now'
+            expect(page).to have_content "Personal details"
+            complete_page_as 'personal_information', application, true
 
-          click_button 'Next'
-          expect(page).to have_content("This fee was paid more than 3 months from the date received. Delivery Manager discretion must be applied to progress this application")
+            expect(page).to have_content "Application details"
+            complete_page_as 'application_details', application, false
+            check "This is a refund case"
+            date_fee_paid = 4.months.ago
+            fill_in "application_day_date_fee_paid", with: date_fee_paid.day.to_fs(:db)
+            fill_in "application_month_date_fee_paid", with: date_fee_paid.month.to_fs(:db)
+            fill_in "application_year_date_fee_paid", with: date_fee_paid.year.to_fs(:db)
 
-          within(:xpath, './/fieldset[@class="discretion_applied start-hidden"]') do
+            click_button 'Next'
+            expect(page).to have_content("This fee was paid more than 3 months from the date received. Delivery Manager discretion must be applied to progress this application")
+
+            within(:xpath, './/fieldset[@class="discretion_applied start-hidden"]') do
+              choose 'Yes'
+            end
+            click_button 'Next'
+
+            expect(page).to have_content("Enter Delivery Manager name")
+            expect(page).to have_content("Enter Discretionary reason")
+
+            within(:xpath, './/fieldset[@class="discretion_applied start-hidden"]') do
+              fill_in 'Delivery Manager name', with: 'Dan'
+              fill_in 'Discretion reason', with: 'Looks legit'
+            end
+            click_button 'Next'
+
+            choose 'Less than £3,000'
+            fill_in 'application_amount', with: 0
+            click_button 'Next'
+
+            expect(page).to have_content "Does the applicant receive benefits?"
             choose 'Yes'
+            click_button 'Next'
+            expect(page).to have_no_content('This could be due to a system error and/or the applicant not being found from the details provided.')
+
+            expect(page).to have_content('Has the applicant provided the correct supporting evidence of benefits received for the period they have declared on their application?')
+            choose('Yes, by selecting this option, the applicant will be issued with a full remission')
+            click_button 'Next'
+
+            expect(page).to have_content "Check details"
+
+            expect(page).to have_content "Delivery Manager discretion appliedYes"
+            expect(page).to have_content "Correct evidence providedYes"
+            expect(page).to have_no_content "Benefits letter checkedNo"
+            expect(page).to have_content "Savings and investments"
+
+            click_button 'Complete processing'
+
+            expect(page).to have_content 'Benefits✓ Passed'
+            expect(page).to have_content 'Eligible for help with fees'
+            expect(page).to have_content 'Delivery Manager Discretion✓ Passed'
+            expect(page).to have_content 'Savings and investments✓ Passed'
           end
-          click_button 'Next'
-
-          expect(page).to have_content("Enter Delivery Manager name")
-          expect(page).to have_content("Enter Discretionary reason")
-
-          within(:xpath, './/fieldset[@class="discretion_applied start-hidden"]') do
-            fill_in 'Delivery Manager name', with: 'Dan'
-            fill_in 'Discretion reason', with: 'Looks legit'
-          end
-          click_button 'Next'
-
-          choose 'Less than £3,000'
-          fill_in 'application_amount', with: 0
-          click_button 'Next'
-
-          expect(page).to have_content "Does the applicant receive benefits?"
-          choose 'Yes'
-          click_button 'Next'
-          expect(page).to have_no_content('You will only be able to process this application if you have supporting evidence that the applicant is receiving benefits')
-
-          expect(page).to have_content('Applicants may have provided supporting evidence to confirm they are receiving benefits')
-          choose('Yes, the applicant has provided supporting evidence')
-          click_button 'Next'
-
-          expect(page).to have_content "Check details"
-
-          expect(page).to have_content "Delivery Manager discretion appliedYes"
-          expect(page).to have_content "Correct evidence providedYes"
-          expect(page).to have_no_content "Benefits letter checkedNo"
-          expect(page).to have_content "Savings and investments"
-
-          click_button 'Complete processing'
-
-          expect(page).to have_content 'Benefits✓ Passed'
-          expect(page).to have_content 'Eligible for help with fees'
-          expect(page).to have_content 'Delivery Manager Discretion✓ Passed'
-          expect(page).to have_content 'Savings and investments✓ Passed'
         end
       end
     end
 
     context 'without benefits' do
-      let(:dwp_response) { nil }
       it "valid date" do
         visit '/'
         click_button 'Start now'
@@ -363,61 +366,6 @@ RSpec.feature 'Processing refund application with valid date received date' do
 
         expect(page).to have_content 'Savings and investments✓ Passed'
         expect(page).to have_content 'Eligible for help with fees'
-      end
-
-      it "discretion granted" do
-        visit '/'
-        click_button 'Start now'
-        expect(page).to have_content "Personal details"
-        complete_page_as 'personal_information', application, true
-
-        expect(page).to have_content "Application details"
-        complete_page_as 'application_details', application, false
-        check "This is a refund case"
-
-        date_fee_paid = 4.months.ago
-        fill_in "application_day_date_fee_paid", with: date_fee_paid.day.to_fs(:db)
-        fill_in "application_month_date_fee_paid", with: date_fee_paid.month.to_fs(:db)
-        fill_in "application_year_date_fee_paid", with: date_fee_paid.year.to_fs(:db)
-
-        click_button 'Next'
-        expect(page).to have_content("This fee was paid more than 3 months from the date received. Delivery Manager discretion must be applied to progress this application")
-
-        within(:xpath, './/fieldset[@class="discretion_applied start-hidden"]') do
-          choose 'Yes'
-        end
-        click_button 'Next'
-
-        expect(page).to have_content("Enter Delivery Manager name")
-        expect(page).to have_content("Enter Discretionary reason")
-
-        within(:xpath, './/fieldset[@class="discretion_applied start-hidden"]') do
-          fill_in 'Delivery Manager name', with: 'Dan'
-          fill_in 'Discretion reason', with: 'Looks legit'
-        end
-        click_button 'Next'
-
-        choose 'Less than £3,000'
-        fill_in 'application_amount', with: 0
-        click_button 'Next'
-
-        expect(page).to have_content "Does the applicant receive benefits?"
-        choose 'Yes'
-        click_button 'Next'
-
-        expect(page).to have_content('Applicants may have provided supporting evidence to confirm they are receiving benefits')
-        choose('No')
-        click_button 'Next'
-
-        expect(page).to have_content "Check details"
-
-        expect(page).to have_content "Delivery Manager discretion appliedYes"
-
-        click_button 'Complete processing'
-
-        expect(page).to have_content 'Benefits✗ Failed'
-        expect(page).to have_content '✗   Not eligible for help with fees'
-        expect(page).to have_content 'Delivery Manager Discretion✓ Passed'
       end
     end
   end

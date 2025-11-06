@@ -16,13 +16,23 @@ Given("There are 2 applications that have been submitted and pending for differe
   create_application_with_bad_request_result_with(FactoryBot.create(:user))
 end
 
+Given("the applicant has no records of benefits with DWP") do
+  online_application = OnlineApplication.find_by(reference: 'HWF-ABC-123')
+  online_application.update(ni_number: Settings.dwp_mock.ni_number_no.last)
+end
+
+Given("the applicant will fail DWP call") do
+  online_application = OnlineApplication.find_by(reference: 'HWF-ABC-123')
+  online_application.update(ni_number: Settings.dwp_mock.ni_number_dwp_error.last)
+end
+
 Given("I am a staff member and I process an online benefit application") do
-  create_online_application
+  create_online_application('HWF-ABC-123')
   user = FactoryBot.create(:user)
   sign_in_page.load_page
   sign_in_page.sign_in_with(user)
   expect(dashboard_page.content).to have_find_an_application_heading
-  reference = OnlineApplication.last.reference
+  reference = 'HWF-ABC-123'
   dashboard_page.content.online_search_reference.set reference
   expect(dashboard_page.content.online_search_reference.value).to have_text(reference)
   dashboard_page.content.look_up_button.click
@@ -44,7 +54,7 @@ Given("I am a staff member and I process a paper-based benefit application") do
 end
 
 Given("I'm on the 'Benefits the applicant is receiving page'") do
-  personal_details_page.submit_all_personal_details_ni
+  personal_details_page.submit_all_personal_details_ni_with_dwp_error_benefits
   application_details_page.submit_fee_600
   savings_investments_page.submit_less_than
 
@@ -283,4 +293,9 @@ Then("I should see one application pending") do
   dwp_failed_applications_rows = dwp_failed_applications_page.table_rows
   expect(dwp_failed_applications_rows.size).to eq(1)
   expect(dwp_failed_applications_rows[0]).to have_content("#{@applicant.title} #{@applicant.first_name} #{@applicant.last_name}")
+end
+
+When("the applicant has not provided Evidence of benefits") do
+  benefit_checker_page.content.no.click
+  benefit_checker_page.click_next
 end

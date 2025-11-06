@@ -209,7 +209,8 @@ en-GB:
       missing_details_html: |
         There’s a problem with the applicant’s surname, date of birth or National Insurance number.
         <a href="%{personal_information_url}">Check all details were entered correctly</a>
-      technical_error: "You will only be able to process this application if you have supporting evidence that the applicant is receiving benefits"
+      technical_error: "This could be due to a system error and/or the applicant not being found from the details provided."
+      no_record: "This could be due to a system error and/or the applicant not being found from the details provided."
       out_of_time: "Fees paid more than 3 months ago can’t be checked with the DWP. The applicant must provide paper evidence to show they were receiving eligible benefits on the date they paid."
   shared:
     forms:
@@ -816,9 +817,10 @@ en-GB:
         deleted_reasons_list: Select the reason why the application needs to be deleted
         deleted_reason: Describe why the application needs to be deleted
       forms/benefits_evidence:
-        evidence: 'Applicants may have provided supporting evidence to confirm they are receiving benefits'
+        evidence: 'Has the applicant provided the correct supporting evidence of benefits received for the period they have declared on their application?'
+        evidence_override_hint_html: "BEFORE PROCEEDING FURTHER: you <u>must check</u> whether you have already received supporting evidence from the applicant to confirm they are receiving a qualifying benefit."
         evidence_false: 'No'
-        evidence_true: 'Yes, the applicant has provided supporting evidence'
+        evidence_true_html: Yes, by selecting this option, the applicant will be issued with a <strong>full remission</strong>
         correct: 'Is the evidence for the correct applicant and dated within 3 months of the fee being paid?'
         correct_false: 'No'
         correct_true: 'Yes, the evidence is correct'
@@ -843,7 +845,7 @@ en-GB:
         date_hint_html: For example, %{today_date}
         date_received: Date received
         benefits_override_false: 'No'
-        benefits_override_true_html: "Yes, the applicant has provided supporting evidence. Please be aware that by selecting this the customer will be issued a <b>full remission.</b>"
+        benefits_override_true_html: "Yes, by selecting this option, the applicant will be issued with a <b>full remission.</b>"
         paper_evidence: Has the applicant provided the correct paper evidence of benefits received for the period they have declared in the application?
         discretion_applied_true: 'Yes'
         discretion_applied_false: 'No'

@@ -7,11 +7,14 @@
 
   .govuk-grid-row
     .govuk-grid-column-two-thirds
-      h1.govuk-heading-xl.util_mb-small Benefits
+      h1.govuk-heading-xl.util_mb-small Evidence of benefits
 
       - if error_message_partial(@application)
-       .page-error.util_mb-medium.govuk-error-summary__body
+        .page-error.util_mb-medium.govuk-error-summary__body
+          h4.govuk-heading-s DWP evidence check has failed
           = render(error_message_partial(@application))
+        legend class= 'govuk-fieldset__legend govuk-!-font-weight-bold'
+          = t('evidence_override_hint_html', scope: @form.i18n_scope)
 
       .govuk-form-group.group-level
         fieldset.govuk-fieldset
@@ -25,7 +28,7 @@
               = f.label t('evidence_false', scope: @form.i18n_scope), for: 'benefit_override_evidence_false', class: 'govuk-label govuk-radios__label'
             .govuk-radios__item
               = f.radio_button :evidence, 'true', { class: 'govuk-radios__input show-hide-section', data: { section: 'evidence', show: 'true' } }
-              = f.label t('evidence_true', scope: @form.i18n_scope), for: 'benefit_override_evidence_true', class: 'govuk-label govuk-radios__label'
+              = f.label :evidence, t('evidence_true_html', scope: @form.i18n_scope), for: 'benefit_override_evidence_true', class: 'govuk-label govuk-radios__label'
 
       = f.submit 'Next', class: 'govuk-button'
 

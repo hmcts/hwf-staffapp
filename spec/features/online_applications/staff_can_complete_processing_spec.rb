@@ -73,12 +73,11 @@ RSpec.feature 'Staff can complete processing of an online application' do
   end
 
   def given_user_wants_to_complete_benefit_based_application_with_dwp_yes_response
-    dwp_api_response('Yes', 200)
+    benefit_based.update(ni_number: Settings.dwp_mock.ni_number_yes.first)
     visit "/online_applications/#{benefit_based.id}"
   end
 
   def given_user_wants_to_complete_benefit_based_application_with_dwp_no_response
-    dwp_api_response('No', 200)
     visit "/online_applications/#{benefit_based.id}"
   end
 

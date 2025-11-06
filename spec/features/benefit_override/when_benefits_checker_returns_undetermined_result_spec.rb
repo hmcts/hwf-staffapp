@@ -1,5 +1,6 @@
 require 'rails_helper'
 
+# rubocop:disable Metrics/AbcSize
 def personal_details_page
   dob = Time.zone.today - 25.years
   fill_in 'application_first_name', with: 'Hirani', wait: true
@@ -7,10 +8,11 @@ def personal_details_page
   fill_in 'application_day_date_of_birth', with: dob.day
   fill_in 'application_month_date_of_birth', with: dob.month
   fill_in 'application_year_date_of_birth', with: dob.year
-  fill_in 'application_ni_number', with: 'JK089012B'
+  fill_in 'application_ni_number', with: Settings.dwp_mock.ni_number_undetermined.first
   choose 'application_married_false'
   click_button 'Next'
 end
+# rubocop:enable Metrics/AbcSize
 
 def application_details
   date_received = Time.zone.today
@@ -50,8 +52,6 @@ RSpec.feature 'When benefits checker result is "Undetermined"' do
   Warden.test_mode!
 
   before do
-    dwp_api_response 'Undetermined'
-
     login_as user
     start_new_application
 
@@ -59,7 +59,7 @@ RSpec.feature 'When benefits checker result is "Undetermined"' do
   end
 
   scenario 'shows the benefits override page' do
-    expect(page).to have_xpath('//h1', text: 'Benefits')
+    expect(page).to have_xpath('//h1', text: 'Evidence of benefits')
     expect(page).to have_content('There’s a problem with the applicant’s surname, date of birth or National Insurance number.')
   end
 end

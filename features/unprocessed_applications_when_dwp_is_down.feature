@@ -2,26 +2,24 @@ Feature: Unprocessed applications when DWP is down
 
   Scenario: Processing an online application when DWP Checker Service fails
     Given I am a staff member and I process an online benefit application
-    And the benefit checker is set to offline
+    And the applicant will fail DWP call
     When I add a jurisdiction
     And I click next
     Then I should be asked about paper evidence
-    And the applicant has not provided the correct paper evidence
-    Then I should see that the application fails on benefits
-    # When I answer no and press Next
-    # Then I should be redirected to home page
-    # And I should see a message that the DWP Checker is not available
-    # And I should see 'Process when DWP is back online' section
-
-  Scenario: Processing a paper-based benefit application when DWP Checker Service fails
-    Given I am a staff member and I process a paper-based benefit application
-    And I'm on the 'Benefits the applicant is receiving page'
-    And I answer 'Yes' to 'Is the applicant receiving one of these benefits?' question
-    When I press 'Next' and the DWP response is 'LSCBC959: Service unavailable'
+    And the applicant has not provided Evidence of benefits
     Then I should be redirected to home page
     And I should see a message that the DWP Checker is not available
-    And I should see 'Process when DWP is back online' section
-    And On selecting the link I should see the paper-based application I was just processing in a list
+
+  Scenario: Processing an online application when DWP Checker returns NO
+    Given I am a staff member and I process an online benefit application
+    And the applicant has no records of benefits with DWP
+    When I add a jurisdiction
+    And I click next
+    Then I should be asked about paper evidence
+    And the applicant has not provided Evidence of benefits
+    And I am on the summary page
+    When I complete processing
+    Then I should see that the application fails on benefits
 
   Scenario: Complete processing of an application on the pending list after DWP checker is online by selecting 'Ready to process'
     Given There is an application pending

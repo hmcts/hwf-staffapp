@@ -19,12 +19,16 @@ class OnlineApplicationBenefitsController < OnlineApplicationsController
   private
 
   def decide_redirection
-    # if online_application.failed_because_dwp_error? && !benefits_override?
-    #   flash[:alert] = t('error_messages.benefit_check.cannot_process_application')
-    #   redirect_to root_url
-    # else
-    redirect_to online_application_path(online_application)
-    # end
+    if allow_benefit_override? && !benefits_override?
+      flash[:alert] = t('error_messages.benefit_check.cannot_process_application')
+      redirect_to root_url
+    else
+      redirect_to online_application_path(online_application)
+    end
+  end
+
+  def allow_benefit_override?
+    online_application.benefit_check_with_error_message? || DwpWarning.last&.check_state == DwpWarning::STATES[:offline]
   end
 
   def benefits_override?

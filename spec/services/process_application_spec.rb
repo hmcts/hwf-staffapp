@@ -3,9 +3,12 @@ require 'rails_helper'
 RSpec.describe ProcessApplication do
   subject(:process_application) { described_class.new(application, online_application, user) }
 
-  let(:online_application) { create(:online_application_with_all_details, benefits: benefits, calculation_scheme: scheme) }
-  let(:application) { build(:application, online_application: online_application, saving: Saving.new) }
-  let(:user) { create(:user) }
+  let(:online_application) {
+    create(:online_application_with_all_details, benefits: benefits,
+                                                 calculation_scheme: scheme)
+  }
+  let(:application) { build(:application, online_application: online_application, saving: Saving.new, ni_number: ni_number) }
+  let(:ni_number) { Settings.dwp_mock.ni_number_yes.first }
   let(:user) { create(:user) }
   let(:scheme) { FeatureSwitching::CALCULATION_SCHEMAS[0].to_s }
   let(:dwp_result) { 'Yes' }
@@ -19,17 +22,10 @@ RSpec.describe ProcessApplication do
   let(:remission_outcome) { 'none' }
   let(:amount_to_pay) { 200 }
 
-  let(:stub_benefit_call) {
-    stub_request(:post, "http://localhost:9292/api/benefit_checks").to_return(status: 200, body: {
-      benefit_checker_status: dwp_result, confirmation_ref: '1234'
-    }.to_json, headers: {})
-  }
-
   describe '#process' do
     before do
       allow(BandBaseCalculation).to receive(:new).and_return band_calculation
 
-      stub_benefit_call
       process_application.process
     end
 
@@ -73,7 +69,7 @@ RSpec.describe ProcessApplication do
         end
 
         context 'Not valid benefit check' do
-          let(:dwp_result) { 'No' }
+          let(:ni_number) { Settings.dwp_mock.ni_number_no.first }
 
           it 'save applicaiton with result' do
             expect(application.id).not_to be_nil
@@ -85,7 +81,6 @@ RSpec.describe ProcessApplication do
         end
 
         context 'Valid benefit check' do
-          let(:dwp_result) { 'Yes' }
           let(:remission_outcome) { 'full' }
 
           it 'save applicaiton with result' do

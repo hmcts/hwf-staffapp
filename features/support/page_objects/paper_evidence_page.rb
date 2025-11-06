@@ -2,9 +2,9 @@ class PaperEvidencePage < BasePage
   set_url_matcher %r{/applications/[0-9]+/benefit_override/paper_evidence}
 
   section :content, '#content' do
-    element :header, 'h1', text: 'Benefits'
+    element :header, 'h1', text: 'Evidence of benefits'
     element :no, 'label', text: 'No', visible: false
-    element :yes, 'label', text: 'Yes, the applicant has provided supporting evidence', visible: false
+    element :yes, 'label', text: 'Yes, by selecting this option, the applicant will be issued with a full remission', visible: false
     element :next, 'input[value="Next"]'
   end
 

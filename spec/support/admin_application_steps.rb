@@ -138,9 +138,9 @@ def fill_benefits(benefits)
 end
 
 def fill_benefit_evidence(benefits_options)
-  expect(page).to have_text 'Applicants may have provided supporting evidence to confirm they are receiving benefits'
+  expect(page).to have_text 'Has the applicant provided the correct supporting evidence of benefits received for the period they have declared on their application?'
   if benefits_options[:paper_provided]
-    choose 'Yes, the applicant has provided supporting evidence'
+    choose 'Yes, by selecting this option, the applicant will be issued with a full remission'
   else
     choose 'benefit_override_evidence_false'
   end

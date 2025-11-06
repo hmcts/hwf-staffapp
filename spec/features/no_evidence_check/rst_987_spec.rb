@@ -23,7 +23,7 @@ RSpec.feature 'Application is evidence checked when 1 in X' do
     scenario 'Every 10th application is not evidence check when a benefit application' do
       start_new_application
 
-      fill_personal_details
+      fill_personal_details(Settings.dwp_mock.ni_number_no.first)
       fill_application_details
       fill_saving_and_investment
       fill_benefits(true)
@@ -46,7 +46,7 @@ RSpec.feature 'Application is evidence checked when 1 in X' do
     scenario 'Every 10th application is not evidence check when a benefit application paper check is false' do
       start_new_application
 
-      fill_personal_details
+      fill_personal_details(Settings.dwp_mock.ni_number_no.first)
       fill_application_details
       fill_saving_and_investment
       fill_benefits(true)
@@ -68,7 +68,7 @@ RSpec.feature 'Application is evidence checked when 1 in X' do
     scenario 'Every 2nd application is not evidence check when Benefit Application' do
       start_new_application
 
-      fill_personal_details
+      fill_personal_details(Settings.dwp_mock.ni_number_no.first)
       fill_application_refund_details
       fill_saving_and_investment
       fill_benefits(true)
@@ -91,7 +91,7 @@ RSpec.feature 'Application is evidence checked when 1 in X' do
     scenario 'Every 2nd application is not evidence check when paper evidence is false on Benefit Application' do
       start_new_application
 
-      fill_personal_details
+      fill_personal_details(Settings.dwp_mock.ni_number_no.first)
       fill_application_refund_details
       fill_saving_and_investment
       fill_benefits(true)

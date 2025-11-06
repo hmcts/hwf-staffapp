@@ -1,17 +1,16 @@
 Feature: Process an online application
 
   Background: Looking up an online application
-    Given I have looked up an online application
+    Given I have looked up an online application with benefits
 
   Scenario: Application details
     When I see the application details
-    And Benefit Check is ok
     When I fill in missing online application details
     And I click next
     Then I should be taken to the check details page
 
   Scenario: Complete processing
-    And I process the online application
+    And I process the online application with failed benefits
     Then I see the applicant is not eligible for help with fees
     And back to start takes me to the homepage
     And I can see my processed application
