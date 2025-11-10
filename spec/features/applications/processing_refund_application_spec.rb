@@ -173,7 +173,7 @@ RSpec.feature 'Processing refund application with valid date received date' do
           click_button 'Complete processing'
 
           expect(page).to have_content 'Savings and investments✓ Passed'
-          expect(page).to have_content 'Benefits✗ Failed (paper evidence checked)'
+          expect(page).to have_content 'Benefits✗ Failed'
           expect(page).to have_content 'Not eligible for help with fees'
         end
       end

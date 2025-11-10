@@ -5,7 +5,7 @@ class ConfirmationPage < BasePage
     element :eligible, 'h2', text: '✓ Eligible for help with fees'
     element :ineligible, 'h2', text: '✗ Not eligible for help with fees'
     element :part_payment, '.callout.callout-part'
-    element :failed_benefits, '.govuk-summary-list__row', text: '✗ Failed (paper evidence checked)'
+    element :failed_benefits, '.govuk-summary-list__row', text: '✗ Failed'
     element :passed_benefits, '.govuk-summary-list__row', text: '✓ Passed (paper evidence checked)'
     element :next_steps_steps, 'h2', text: 'Next steps'
     element :outcome_header, 'h2'

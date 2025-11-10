@@ -37,17 +37,19 @@ module Views
         true
       end
 
+      # rubocop:disable Style/ReturnNilInPredicateMethodDefinition
       def benefits_passed?
-        if decision_overridden? && @application.benefits
+        return nil if @application.benefits.blank?
+
+        if decision_overridden?
           I18n.t('activemodel.attributes.forms/application/summary.passed_by_override')
-        elsif online_and_failed_on_benefits?
-          I18n.t('activemodel.attributes.forms/application/summary.failed_with_evidence')
         elsif benefits_have_been_overridden?
-          convert_to_pass_fail(applicant_is_on_benefits)
-        elsif !benefit_overridden?
-          paper_or_standard?
+          benefit_override_result
+        elsif @application.last_benefit_check.present?
+          convert_to_pass_fail(@application.last_benefit_check.passed?)
         end
       end
+      # rubocop:enable Style/ReturnNilInPredicateMethodDefinition
 
       def income_passed?
         return false unless application_type_is?('income')
@@ -137,31 +139,23 @@ module Views
         !benefit_overridden? && benefit_overide_correct?
       end
 
-      def applicant_is_on_benefits
-        result = false
-        if @application.benefits? && @application.last_benefit_check.present?
-          result = @application.last_benefit_check.dwp_result.eql?('Yes')
-        end
-        result.to_s
-      end
-
       def benefit_overide_correct?
-        @application.benefit_override.correct.eql?(true)
+        @application.benefit_override&.correct.eql?(true)
       end
 
       def benefit_overridden?
-        @application.benefit_override.nil?
+        @application.benefit_override.present?
       end
 
       def application_type_is?(input)
         @application.application_type.eql?(input)
       end
 
-      def paper_or_standard?
+      def benefit_override_result
         if benefit_overide_correct?
           I18n.t('activemodel.attributes.forms/application/summary.passed_with_evidence')
         else
-          I18n.t('activemodel.attributes.forms/application/summary.failed_with_evidence')
+          I18n.t('activemodel.attributes.forms/application/summary.failed')
         end
       end
 
@@ -171,10 +165,6 @@ module Views
 
       def income_over_limit?
         @application.income_max_threshold_exceeded == true
-      end
-
-      def online_and_failed_on_benefits?
-        @application.online_application_id.present? && @application.online_application.dwp_manual_decision == false
       end
     end
   end
