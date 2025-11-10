@@ -139,13 +139,6 @@ module Views
         !benefit_overridden? && benefit_overide_correct?
       end
 
-      def applicant_is_on_benefits
-        if @application.benefits? && @application.last_benefit_check.present?
-          result = @application.last_benefit_check.dwp_result.eql?('Yes')
-        end
-        result.to_s
-      end
-
       def benefit_overide_correct?
         @application.benefit_override&.correct.eql?(true)
       end
