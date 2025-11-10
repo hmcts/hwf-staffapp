@@ -88,5 +88,5 @@ end
 Then("I should see that the application fails because of benefits") do
   expect(confirmation_page.content).to have_ineligible
   expect(confirmation_page.content.summary_list_row[1].text).to have_content 'Benefits'
-  expect(confirmation_page.content.summary_list_row[1].text).to have_content '✗ Failed (paper evidence checked)'
+  expect(confirmation_page.content.summary_list_row[1].text).to have_content '✗ Failed'
 end

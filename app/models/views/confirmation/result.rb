@@ -37,6 +37,7 @@ module Views
         true
       end
 
+      # rubocop:disable Style/ReturnNilInPredicateMethodDefinition
       def benefits_passed?
         return nil if @application.benefits.blank?
 
@@ -44,10 +45,11 @@ module Views
           I18n.t('activemodel.attributes.forms/application/summary.passed_by_override')
         elsif benefits_have_been_overridden?
           benefit_override_result
-        else
+        elsif @application.last_benefit_check.present?
           convert_to_pass_fail(@application.last_benefit_check.passed?)
         end
       end
+      # rubocop:enable Style/ReturnNilInPredicateMethodDefinition
 
       def income_passed?
         return false unless application_type_is?('income')
