@@ -96,6 +96,7 @@ RSpec.describe BenefitCheck do
       let(:check) { build(:benefit_check, :no_result) }
 
       it { is_expected.to eql 'none' }
+      it { expect(check.passed?).to be false }
     end
 
     context 'when dwp_result is nil or anything else' do
