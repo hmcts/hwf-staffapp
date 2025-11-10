@@ -374,5 +374,226 @@ RSpec.describe Views::Confirmation::Result do
       let(:evidence_check) { build_stubbed(:evidence_check, income: ev_income) }
       it { is_expected.to eql ev_income }
     end
+
+    context 'evidence_check with nil income' do
+      let(:application) { build_stubbed(:application, :income_type, income: app_income, evidence_check: evidence_check) }
+      let(:evidence_check) { build_stubbed(:evidence_check, income: nil) }
+      it { is_expected.to eql app_income }
+    end
+
+    context 'evidence_check with zero income' do
+      let(:application) { build_stubbed(:application, :income_type, income: app_income, evidence_check: evidence_check) }
+      let(:evidence_check) { build_stubbed(:evidence_check, income: 0) }
+      it { is_expected.to eql app_income }
+    end
+
+    context 'evidence_check with negative income' do
+      let(:application) { build_stubbed(:application, :income_type, income: app_income, evidence_check: evidence_check) }
+      let(:evidence_check) { build_stubbed(:evidence_check, income: -100) }
+      it { is_expected.to eql app_income }
+    end
   end
+
+  describe '#representative_full_name' do
+    subject(:full_name) { view.representative_full_name }
+
+    context 'when representative exists' do
+      let(:representative) { build(:representative, first_name: 'John', last_name: 'Doe') }
+      before { application.representative = representative }
+
+      it { is_expected.to eq 'John Doe' }
+    end
+
+    context 'when representative has only first name' do
+      let(:representative) { build(:representative, first_name: 'John', last_name: '') }
+      before { application.representative = representative }
+
+      it { is_expected.to eq 'John' }
+    end
+
+    context 'when representative has only last name' do
+      let(:representative) { build(:representative, first_name: '', last_name: 'Doe') }
+      before { application.representative = representative }
+
+      it { is_expected.to eq 'Doe' }
+    end
+
+    context 'when representative is blank' do
+      it { is_expected.to be_nil }
+    end
+  end
+
+  describe '#amount_to_pay' do
+    subject(:amount_to_pay) { view.amount_to_pay }
+
+    context 'when there is no evidence check' do
+      let(:application) { build_stubbed(:application, amount_to_pay: 100) }
+
+      it { is_expected.to eq 100 }
+    end
+
+    context 'when evidence check exists and not waiting for evidence' do
+      let(:evidence_check) { build_stubbed(:evidence_check, amount_to_pay: 150) }
+      let(:application) { build_stubbed(:application, amount_to_pay: 100, evidence_check: evidence_check, state: :processed) }
+
+      it { is_expected.to eq 150 }
+    end
+
+    context 'when evidence check exists but waiting for evidence' do
+      let(:evidence_check) { build_stubbed(:evidence_check, amount_to_pay: 150) }
+      let(:application) { build_stubbed(:application, amount_to_pay: 100, evidence_check: evidence_check, state: :waiting_for_evidence) }
+
+      it { is_expected.to eq 100 }
+    end
+  end
+
+  describe '#outcome' do
+    subject(:outcome) { view.outcome }
+
+    context 'when there is no evidence check' do
+      let(:application) { build_stubbed(:application, outcome: 'none') }
+
+      it { is_expected.to eq 'none' }
+    end
+
+    context 'when evidence check exists and not waiting for evidence' do
+      let(:evidence_check) { build_stubbed(:evidence_check, outcome: 'full') }
+      let(:application) { build_stubbed(:application, outcome: 'none', evidence_check: evidence_check, state: :processed) }
+
+      it { is_expected.to eq 'full' }
+    end
+
+    context 'when evidence check exists but waiting for evidence' do
+      let(:evidence_check) { build_stubbed(:evidence_check, outcome: 'full') }
+      let(:application) { build_stubbed(:application, outcome: 'none', evidence_check: evidence_check, state: :waiting_for_evidence) }
+
+      it { is_expected.to eq 'none' }
+    end
+  end
+
+  describe '#calculation_scheme' do
+    subject(:calculation_scheme) { view.calculation_scheme }
+
+    context 'when calculation_scheme is blank' do
+      let(:detail) { build_stubbed(:detail, calculation_scheme: nil) }
+
+      it { is_expected.to eq I18n.t('activemodel.attributes.forms/application/summary.prior_q4_23') }
+    end
+
+    context 'when calculation_scheme is set to post_ucd' do
+      let(:detail) { build_stubbed(:detail, calculation_scheme: 'post_ucd') }
+
+      it { is_expected.to eq I18n.t('activemodel.attributes.forms/application/summary.post_ucd') }
+    end
+
+    context 'when calculation_scheme is set to band' do
+      let(:detail) { build_stubbed(:detail, calculation_scheme: 'band') }
+
+      it { is_expected.to eq I18n.t('activemodel.attributes.forms/application/summary.band') }
+    end
+  end
+
+  describe '#result method' do
+    subject(:result) { view.result }
+
+    context 'with part outcome' do
+      let(:application) { build_stubbed(:application, outcome: 'part') }
+
+      it { is_expected.to eql 'part' }
+    end
+
+    context 'with full outcome' do
+      let(:application) { build_stubbed(:application, outcome: 'full') }
+
+      it { is_expected.to eql 'full' }
+    end
+  end
+
+  describe '#discretion_applied? with decision override' do
+    subject(:discretion_applied) { view.discretion_applied? }
+    let(:decision_override) { build(:decision_override, application: application, reason: 'override reason', id: 5) }
+
+    context 'when decision is overridden and discretion was denied' do
+      let(:detail) { build_stubbed(:detail, discretion_applied: false) }
+      before { decision_override }
+
+      it { is_expected.to eq "✓ Passed (by manager's decision)" }
+    end
+
+    context 'when decision is overridden and discretion was granted' do
+      let(:detail) { build_stubbed(:detail, discretion_applied: true) }
+      before { decision_override }
+
+      it { is_expected.to eq "✓ Passed (by manager's decision)" }
+    end
+  end
+
+  describe '#savings_passed? with additional edge cases' do
+    subject(:savings_passed) { view.savings_passed? }
+
+    context 'when savings failed and decision is overridden' do
+      let(:decision_override) { build(:decision_override, application: application, reason: 'override reason', id: 5) }
+      before do
+        allow(application).to receive(:saving).and_return(saving)
+        allow(saving).to receive_messages(passed?: false, passed: false)
+        decision_override
+      end
+
+      it { is_expected.to eq "✓ Passed (by manager's decision)" }
+    end
+
+    context 'when discretion_applied is false' do
+      let(:detail) { build_stubbed(:detail, discretion_applied: false) }
+      before do
+        allow(application).to receive(:saving).and_return(saving)
+        allow(saving).to receive_messages(passed?: true, passed: true)
+      end
+
+      it { is_expected.to be false }
+    end
+  end
+
+  describe '#income_passed? with waiting for evidence' do
+    subject { view.income_passed? }
+    let(:application) { build_stubbed(:application, :income_type, state: :waiting_for_evidence) }
+
+    it { is_expected.to eq string_waiting_evidence }
+  end
+
+  describe '#income_passed? with non-income application type' do
+    subject { view.income_passed? }
+    let(:application) { build_stubbed(:application, :benefit_type) }
+
+    it { is_expected.to be false }
+  end
+
+  describe '#result with invalid outcome' do
+    subject { view.result }
+    let(:application) { build_stubbed(:application, outcome: 'invalid_outcome') }
+
+    it { is_expected.to eq 'error' }
+  end
+
+  describe '#decision_overridden?' do
+    subject { view.decision_overridden? }
+
+    context 'when decision override exists with id' do
+      let(:decision_override) { build(:decision_override, application: application, reason: 'reason', id: 5) }
+      before { decision_override }
+
+      it { is_expected.to be_truthy }
+    end
+
+    context 'when decision override exists without id' do
+      let(:decision_override) { build(:decision_override, application: application, reason: 'reason', id: nil) }
+      before { decision_override }
+
+      it { is_expected.to be_falsey }
+    end
+
+    context 'when decision override does not exist' do
+      it { is_expected.to be_falsey }
+    end
+  end
+
 end

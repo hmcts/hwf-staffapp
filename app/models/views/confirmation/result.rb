@@ -166,16 +166,6 @@ module Views
       def income_over_limit?
         @application.income_max_threshold_exceeded == true
       end
-
-      def online_and_failed_on_benefits?
-        @application.online_application_id.present? && benefit_check_failed?
-      end
-
-      def benefit_check_failed?
-        bc = @application.benefit_checks.last
-        return false unless bc.nil?
-        !bc.passed?
-      end
     end
   end
 end
