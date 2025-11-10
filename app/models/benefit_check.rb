@@ -41,4 +41,8 @@ class BenefitCheck < ActiveRecord::Base
     dwp_result == 'Server unavailable' &&
       error_message.include?('The benefits checker is not available at the moment')
   end
+
+  def passed?
+    dwp_result == 'Yes'
+  end
 end

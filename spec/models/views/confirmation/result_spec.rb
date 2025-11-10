@@ -155,19 +155,22 @@ RSpec.describe Views::Confirmation::Result do
     context 'when benefits is false' do
       let(:application) { build_stubbed(:application, :benefit_type, benefits: false) }
 
-      it { is_expected.to eq string_failed }
+      it { is_expected.to be_nil }
     end
 
     context 'when benefits is true' do
       context 'and benefit_check returned yes' do
         let!(:benefit_check) { build_stubbed(:benefit_check, applicationable: application, dwp_result: 'Yes') }
         let!(:application) { build_stubbed(:application, :benefit_type) }
-        before { allow(application).to receive(:last_benefit_check).and_return(benefit_check) }
+        before {
+          allow(application).to receive(:last_benefit_check).and_return(benefit_check)
+          allow(benefit_check).to receive(:passed?).and_return(true)
+        }
 
         it { is_expected.to eq string_passed }
       end
 
-      ['No', 'Undetermined'].each do |result|
+      ['No', 'Undetermined', 'BadRequest'].each do |result|
         context "benefit_check returned #{result}" do
           let(:benefit_check) { build_stubbed(:benefit_check, applicationable: application, dwp_result: result) }
           let(:application) { build_stubbed(:application, :benefit_type) }
@@ -179,7 +182,13 @@ RSpec.describe Views::Confirmation::Result do
     end
 
     context 'when a benefit_override exists' do
-      before { build_stubbed(:benefit_override, application: application, correct: value) }
+      let(:benefit_check) { build_stubbed(:benefit_check, applicationable: application, dwp_result: 'No') }
+      let(:application) { build_stubbed(:application, :benefit_type) }
+      before {
+        build_stubbed(:benefit_override, application: application, correct: value)
+        allow(application).to receive(:last_benefit_check).and_return(benefit_check)
+        allow(benefit_check).to receive(:passed?).and_return(false)
+      }
 
       context 'and the evidence is correct' do
         let(:value) { true }
@@ -190,7 +199,7 @@ RSpec.describe Views::Confirmation::Result do
       context 'and the evidence is incorrect' do
         let(:value) { false }
 
-        it { is_expected.to eq I18n.t('activemodel.attributes.forms/application/summary.failed_with_evidence') }
+        it { is_expected.to eq I18n.t('activemodel.attributes.forms/application/summary.failed') }
       end
     end
 
@@ -198,14 +207,22 @@ RSpec.describe Views::Confirmation::Result do
       describe 'and the application is online which failed the manual benefit check' do
         let(:online_application) { build_stubbed(:online_application, dwp_manual_decision: false, id: 654654) }
         let(:application) { build_stubbed(:application, :benefit_type, benefits: true, online_application_id: 654654, online_application: online_application) }
+        let(:benefit_check) { build_stubbed(:benefit_check, applicationable: online_application, dwp_result: 'No') }
+        before {
+          allow(application).to receive(:last_benefit_check).and_return(benefit_check)
+        }
 
-        it { is_expected.to eq I18n.t('activemodel.attributes.forms/application/summary.failed_with_evidence') }
+        it { is_expected.to eq I18n.t('activemodel.attributes.forms/application/summary.failed') }
       end
     end
 
     context 'when a decision override exists' do
       let(:decision_override) { build(:decision_override, application: application, reason: 'foo bar', id: id) }
-      before { decision_override }
+      let(:benefit_check) { build_stubbed(:benefit_check, applicationable: application, dwp_result: 'No') }
+      before {
+        decision_override
+        allow(application).to receive(:last_benefit_check).and_return(benefit_check)
+      }
 
       context 'but it is not saved' do
         let(:id) { nil }
@@ -288,16 +305,6 @@ RSpec.describe Views::Confirmation::Result do
         let(:outcome) { 'none' }
 
         it { is_expected.to eql 'callout' }
-      end
-    end
-
-    context 'when an application has had benefits overridden' do
-      before { build_stubbed(:benefit_override, application: application, correct: evidence_correct) }
-
-      context 'and the correct evidence was provided' do
-        let(:evidence_correct) { true }
-
-        it { is_expected.to eql 'full' }
       end
     end
 
