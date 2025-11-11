@@ -1,18 +1,16 @@
 require 'rails_helper'
 
-# rubocop:disable Metrics/AbcSize
-def personal_details_page
+def personal_details_page(ni_number)
   dob = Time.zone.today - 25.years
   fill_in 'application_first_name', with: 'Hirani', wait: true
   fill_in 'application_last_name', with: 'Hirani', wait: true
   fill_in 'application_day_date_of_birth', with: dob.day
   fill_in 'application_month_date_of_birth', with: dob.month
   fill_in 'application_year_date_of_birth', with: dob.year
-  fill_in 'application_ni_number', with: Settings.dwp_mock.ni_number_undetermined.first
+  fill_in 'application_ni_number', with: ni_number
   choose 'application_married_false'
   click_button 'Next'
 end
-# rubocop:enable Metrics/AbcSize
 
 def application_details
   date_received = Time.zone.today
@@ -35,14 +33,21 @@ def benefits_page
   click_button 'Next'
 end
 
-def drive_to_the_benefits_page
-  personal_details_page
+def drive_to_the_benefits_page_undetermined
+  personal_details_page(Settings.dwp_mock.ni_number_undetermined.first)
   application_details
   savings_and_investments
   benefits_page
 end
 
-RSpec.feature 'When benefits checker result is "Undetermined"' do
+def drive_to_the_benefits_page_technical_fault
+  personal_details_page(Settings.dwp_mock.ni_number_technical_fault.first)
+  application_details
+  savings_and_investments
+  benefits_page
+end
+
+RSpec.feature 'When benefits checker result is valid but not standard response' do
   let!(:jurisdictions)   { create_list(:jurisdiction, 3) }
   let!(:office)          { create(:office, jurisdictions: jurisdictions) }
   let!(:user)            { create(:user, jurisdiction_id: jurisdictions[1].id, office: office) }
@@ -54,12 +59,24 @@ RSpec.feature 'When benefits checker result is "Undetermined"' do
   before do
     login_as user
     start_new_application
-
-    drive_to_the_benefits_page
   end
 
-  scenario 'shows the benefits override page' do
+  scenario 'let user to override benefits page' do
+    drive_to_the_benefits_page_undetermined
     expect(page).to have_xpath('//h1', text: 'Evidence of benefits')
     expect(page).to have_content('This could be due to a system error and/or the applicant not being found from the details provided')
+    choose 'benefit_override_evidence_false'
+    click_button 'Next'
+    expect(page).to have_xpath('//h1', text: 'Check details')
+  end
+
+  scenario 'redirect for no evidence from benefits override page' do
+    drive_to_the_benefits_page_technical_fault
+    expect(page).to have_xpath('//h1', text: 'Evidence of benefits')
+    expect(page).to have_content('This could be due to a system error and/or the applicant not being found from the details provided')
+    choose 'benefit_override_evidence_false'
+    click_button 'Next'
+    expect(page).to have_xpath('//h1', text: 'Find an application')
+    expect(page).to have_content('Processing benefit applications without paper evidence is not working at the moment. Try again later when the DWP checker is available.')
   end
 end
