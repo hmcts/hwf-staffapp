@@ -1,5 +1,5 @@
 Given("An applicant has submitted an online application where fee has been paid") do
-  @online_application = FactoryBot.create(:online_application, :with_reference, :completed, :with_refund, ni_number: 'SN789654A')
+  @online_application = FactoryBot.create(:online_application, :with_reference, :completed, :with_refund, ni_number: Settings.dwp_mock.ni_number_yes.first)
 end
 
 When("I process the online application to the check details page") do
@@ -14,7 +14,7 @@ When("I process the online application to the check details page") do
 end
 
 Given("An applicant has submitted an online application where fee has not been paid") do
-  @online_application = FactoryBot.create(:online_application, :with_reference, :completed, ni_number: 'SN789654A')
+  @online_application = FactoryBot.create(:online_application, :with_reference, :completed, ni_number: Settings.dwp_mock.ni_number_yes.first)
 end
 
 When("I process a paper application where fee has been paid to the check details page") do

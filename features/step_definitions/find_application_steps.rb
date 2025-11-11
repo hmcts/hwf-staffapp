@@ -79,7 +79,7 @@ Then("I should see there is a single result for that national insurance number")
 end
 
 Then("the national insurance number is not displayed in the list of results") do
-  expect(find_application_page.content.search_results_group).to have_no_content('JR054008D')
+  expect(find_application_page.content.search_results_group).to have_no_content(Settings.dwp_mock.ni_number_yes.last)
 end
 
 When("my search is invalid") do

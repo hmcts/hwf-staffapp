@@ -14,7 +14,7 @@ FactoryBot.define do
     children { 0 }
     refund { false }
     probate { false }
-    ni_number { 'AB123456C' }
+    ni_number { Settings.dwp_mock.ni_number_no.first }
     date_of_birth { Time.zone.parse('10/03/1976') }
     first_name { 'Peter' }
     last_name { 'Smith' }
