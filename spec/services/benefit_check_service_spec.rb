@@ -95,34 +95,32 @@ describe BenefitCheckService do
   end
 
   context 'called with invalid params' do
-    let(:api_response) { { "@xmlns" => "https://lsc.gov.uk/benefitchecker/service/1.0/API_1.0_Check", "benefit_checker_status" => status, "confirmation_ref" => "T1426267181940", "original_client_ref" => "unique" } }
-    let(:status) { 'Undetermined' }
-
-    context 'when method returns undetermined' do
-      let(:invalid_check) { create(:invalid_benefit_check) }
-      before do
-        described_class.new(invalid_check)
-      end
-
-      it 'returns the error message' do
-        expect(invalid_check.error_message).to eql('The details you’ve entered are incorrect, check and try again')
-      end
-
-      it 'returns fail' do
-        expect(invalid_check.benefits_valid).to be false
-      end
-    end
+    let(:user) { create(:user) }
+    let(:check) { create(:benefit_check, user_id: user.id, date_of_birth: '19800101', ni_number: ni_number, last_name: 'LAST_NAME') }
 
     context 'when the api returns undetermined' do
-      let(:user) { create(:user) }
-      let(:check) { create(:benefit_check, user_id: user.id, date_of_birth: '19800101', ni_number: ni_number, last_name: 'LAST_NAME') }
       let(:ni_number) { Settings.dwp_mock.ni_number_undetermined.first }
       before do
         described_class.new(check)
       end
 
       it 'saves our message' do
-        expect(check.error_message).to eql('The details you’ve entered are incorrect, check and try again')
+        expect(check.error_message).to be_nil
+      end
+
+      it 'returns fail' do
+        expect(check.benefits_valid).to be false
+      end
+    end
+
+    context 'when the api returns technical fault' do
+      let(:ni_number) { Settings.dwp_mock.ni_number_technical_fault.first }
+      before do
+        described_class.new(check)
+      end
+
+      it 'saves our message' do
+        expect(check.error_message).to eq('The benefits checker is not available at the moment. Please check again later.')
       end
 
       it 'returns fail' do

@@ -29,7 +29,7 @@ RSpec.feature 'Benefit results are processed' do
 
       scenario 'the page is rendered with message prompting to fill all details' do
         expect(page).to have_xpath('//h1', text: 'Evidence of benefits')
-        expect(page).to have_content('There’s a problem with the applicant’s surname, date of birth or National Insurance number.')
+        expect(page).to have_content('This could be due to a system error and/or the applicant not being found from the details provided')
       end
     end
 
@@ -71,7 +71,7 @@ RSpec.feature 'Benefit results are processed' do
 
         scenario 'the benefits override page is rendered with an error message' do
           expect(page).to have_xpath('//h1', text: 'Evidence of benefits')
-          expect(page).to have_content('There’s a problem with the applicant’s surname, date of birth or National Insurance number.')
+          expect(page).to have_content('This could be due to a system error and/or the applicant not being found from the details provided')
         end
       end
 

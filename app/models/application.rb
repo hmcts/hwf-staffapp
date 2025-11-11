@@ -109,7 +109,7 @@ class Application < ActiveRecord::Base
   end
 
   def allow_benefit_check_override?
-    benefit_check_with_error_message? || last_benefit_check&.dwp_result == 'No'
+    benefit_check_with_error_message? || BenefitCheck::BENEFIT_CHECK_NO_VALUES.include?(last_benefit_check&.dwp_result)
   end
 
   def digital?
