@@ -45,7 +45,27 @@ RSpec.describe PaperEvidenceHelper do
 
         context 'Undetermined' do
           let(:dwp_result) { 'undetermined' }
-          it { expect(template).to eql('missing_details') }
+          it { expect(template).to eql('no_record') }
+        end
+
+        context 'Deceased' do
+          let(:dwp_result) { 'deceased' }
+          it { expect(template).to eql('no_record') }
+        end
+
+        context 'Deleted' do
+          let(:dwp_result) { 'deleted' }
+          it { expect(template).to eql('no_record') }
+        end
+
+        context 'Duperseded' do
+          let(:dwp_result) { 'superseded' }
+          it { expect(template).to eql('no_record') }
+        end
+
+        context 'Technical fault' do
+          let(:dwp_result) { 'technical fault' }
+          it { expect(template).to eql('technical_error') }
         end
       end
 
@@ -87,7 +107,7 @@ RSpec.describe PaperEvidenceHelper do
         it "when undetermined" do
           allow(application).to receive(:last_benefit_check).and_return last_benefit_check
           allow(helper).to receive(:last_benefit_check_result).and_return 'undetermined'
-          expect(template).to eql('missing_details')
+          expect(template).to eql('no_record')
         end
       end
 

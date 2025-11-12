@@ -10,7 +10,7 @@ module BenefitCheckers
 
     private
 
-    # rubocop:disable Metrics/MethodLength, Metrics/AbcSize
+    # rubocop:disable Metrics/MethodLength, Metrics/AbcSize, Metrics/CyclomaticComplexity
     def mock_status(ni_number)
       case ni_number
       when *Settings.dwp_mock.ni_number_yes
@@ -18,7 +18,9 @@ module BenefitCheckers
       when *Settings.dwp_mock.ni_number_no
         'No'
       when *Settings.dwp_mock.ni_number_undetermined
-        raise Exceptions::UndeterminedDwpCheck
+        'Undetermined'
+      when *Settings.dwp_mock.ni_number_technical_fault
+        raise Exceptions::TechnicalFaultDwpCheck, 'Technical fault'
       when *Settings.dwp_mock.ni_number_dwp_error
         raise RestClient::BadRequest, '{"error":"LSCBC MOCK service is currently unavailable"}'
       when *Settings.dwp_mock.ni_number_500_error
@@ -29,6 +31,6 @@ module BenefitCheckers
         ''
       end
     end
-    # rubocop:enable Metrics/MethodLength, Metrics/AbcSize
+    # rubocop:enable Metrics/MethodLength, Metrics/AbcSize, Metrics/CyclomaticComplexity
   end
 end

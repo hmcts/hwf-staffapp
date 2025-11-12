@@ -35,8 +35,8 @@ class BenefitCheckService
     query_proxy_api
   rescue RestClient::BadRequest => e
     log_error JSON.parse(e.response)['error'], 'BadRequest'
-  rescue Exceptions::UndeterminedDwpCheck
-    log_error I18n.t('error_messages.benefit_checker.undetermined'), 'Undetermined'
+  rescue Exceptions::TechnicalFaultDwpCheck
+    log_error I18n.t('error_messages.benefit_checker.unavailable'), 'Technical fault'
   rescue Errno::ECONNREFUSED
     log_error I18n.t('error_messages.benefit_checker.unavailable'), 'Server unavailable'
   rescue StandardError => e
@@ -45,7 +45,6 @@ class BenefitCheckService
 
   def query_proxy_api
     @response = @client.check(params)
-    fail Exceptions::UndeterminedDwpCheck if @response['benefit_checker_status'] == 'Undetermined'
     @result = true
   end
 

@@ -36,12 +36,10 @@ module PaperEvidenceHelper
 
   def last_benefit_check_result_partial(application)
     case last_benefit_check_result(application)
-    when 'undetermined'
-      'missing_details'
-    when 'server unavailable', 'unspecified error', 'badrequest'
-      'technical_error'
-    when 'no'
+    when "no", "undetermined", "deceased", "deleted", "superseded"
       'no_record'
+    when 'server unavailable', 'unspecified error', 'badrequest', 'technical fault'
+      'technical_error'
     end
   end
 end

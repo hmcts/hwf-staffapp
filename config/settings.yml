@@ -62,6 +62,7 @@ dwp_mock:
   ni_number_yes: ['SN789654A', 'JR054008D']
   ni_number_no: ['SN789654B', 'AB123456C']
   ni_number_undetermined: ['SN789654C']
+  ni_number_technical_fault: ['SN779654C']
   ni_number_dwp_error: ['SN753159C']
   ni_number_500_error: ['SN111111C']
   ni_number_connection_refused: ['SN222222C']

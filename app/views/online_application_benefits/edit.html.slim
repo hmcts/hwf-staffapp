@@ -11,6 +11,13 @@
         .page-error.util_mb-medium.govuk-error-summary__body
           = t('.message')
 
+      - if error_message_partial(@online_application)
+        .page-error.util_mb-medium.govuk-error-summary__body
+          h4.govuk-heading-s DWP evidence check has failed
+          = render('benefit_overrides/'+ error_message_partial(@online_application))
+        legend class= 'govuk-fieldset__legend govuk-!-font-weight-bold'
+          = t('evidence_override_hint_html', scope: 'activemodel.attributes.forms/benefits_evidence')
+
       .govuk-form-group.group-level
         fieldset.govuk-fieldset
           legend.govuk-fieldset__legend = t('paper_evidence', scope: @form.i18n_scope)

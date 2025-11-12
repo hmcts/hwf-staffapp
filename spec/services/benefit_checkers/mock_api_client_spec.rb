@@ -42,11 +42,19 @@ RSpec.describe BenefitCheckers::MockApiClient, type: :service do
 
     context 'return valid Undetermined answer' do
       let(:ni_number_for_test) { Settings.dwp_mock.ni_number_undetermined.first }
+
       it 'returns a successful response structure' do
-        # result = client.check(params)
-        expect { client.check(params) }.to raise_error(Exceptions::UndeterminedDwpCheck)
-        # expect(result[:benefit_checker_status]).to eq('Undetermined')
-        # expect(result[:confirmation_ref]).to include('MOCK-')
+        result = client.check(params)
+        expect(result[:benefit_checker_status]).to eq('Undetermined')
+        expect(result[:confirmation_ref]).to include('MOCK-')
+      end
+    end
+
+    context 'return valid Technical fault answer' do
+      let(:ni_number_for_test) { Settings.dwp_mock.ni_number_technical_fault.first }
+
+      it 'raise an error' do
+        expect { client.check(params) }.to raise_error(Exceptions::TechnicalFaultDwpCheck)
       end
     end
 

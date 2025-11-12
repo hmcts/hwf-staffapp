@@ -1,3 +1,3 @@
 module Exceptions
-  class UndeterminedDwpCheck < StandardError; end
+  class TechnicalFaultDwpCheck < StandardError; end
 end
