@@ -1,5 +1,5 @@
 Given("I have looked up an online application with benefits") do
-  @online_application = FactoryBot.create(:online_application, :with_reference, ni_number: 'SN789654A')
+  @online_application = FactoryBot.create(:online_application, :with_reference, ni_number: Settings.dwp_mock.ni_number_yes.first)
   sign_in_page.load_page
   sign_in_page.user_account
   reference = OnlineApplication.last.reference
@@ -44,7 +44,7 @@ Then("I should be taken to the check details page") do
 end
 
 When("I process the online application with failed benefits") do
-  @online_application.update(ni_number: 'SN789654B')
+  @online_application.update(ni_number: Settings.dwp_mock.ni_number_no.first)
   expect(process_online_application_page.content).to have_application_details_header
   fill_in('How much is the court or tribunal fee?', with: '450.0')
   process_online_application_page.content.form_input.set 'ABC123'

@@ -306,7 +306,7 @@ def eligable_application(user)
   application = FactoryBot.create(:application, :processed_state, :benefit_type,
                                   decision_cost: 600, user: user, office: user.office, outcome: 'full',
                                   reference: "#{reference_prefix}-000001", children: nil, income: nil)
-  application.applicant.update(title: 'Mr', first_name: 'John Christopher', last_name: 'Smith', ni_number: 'JR054008D')
+  application.applicant.update(title: 'Mr', first_name: 'John Christopher', last_name: 'Smith', ni_number: Settings.dwp_mock.ni_number_yes.last)
   application.detail.update(case_number: 'E71YX571', fee: 600)
 
   FactoryBot.create(:benefit_override, correct: true, application: application)
@@ -336,7 +336,7 @@ def part_payment_application(user)
                                   decision_cost: nil, amount_to_pay: 40, user: user, office: user.office, outcome: 'part',
                                   reference: "#{reference_prefix}-000001", children: 3, income: nil, dependents: true)
 
-  application.applicant.update(title: 'Mr', first_name: 'John Christopher', last_name: 'Smith', ni_number: 'JR054008D')
+  application.applicant.update(title: 'Mr', first_name: 'John Christopher', last_name: 'Smith', ni_number: Settings.dwp_mock.ni_number_yes.last)
   application.detail.update(case_number: 'E71YX571', fee: 600, refund: false)
 
   FactoryBot.create(:part_payment, application: application)
@@ -346,13 +346,13 @@ def waiting_evidence_application_ni(user)
   application = FactoryBot.create(:application, :waiting_for_evidence_state, :income_type,
                                   decision_cost: 656.66, amount_to_pay: 0, user: user, office: user.office, outcome: 'full',
                                   reference: "#{reference_prefix}-000001", children: nil, income: nil)
-  application.applicant.update(title: 'Mr', first_name: 'John Christopher', last_name: 'Smith', ni_number: 'JR054008D')
+  application.applicant.update(title: 'Mr', first_name: 'John Christopher', last_name: 'Smith', ni_number: Settings.dwp_mock.ni_number_yes.last)
   application.detail.update(case_number: 'E71YX571', fee: 656.66, refund: true)
 end
 
 def waiting_hmrc_evidence_application(user)
   application = FactoryBot.create(:application, :waiting_for_evidence_state, user: user, office: user.office)
-  application.applicant.update(title: 'Mr', first_name: 'John Christopher', last_name: 'Smith', ni_number: 'JR054008D')
+  application.applicant.update(title: 'Mr', first_name: 'John Christopher', last_name: 'Smith', ni_number: Settings.dwp_mock.ni_number_yes.last)
   application.evidence_check.update(income_check_type: 'hmrc')
 end
 
@@ -374,7 +374,7 @@ def reference_prefix
 end
 
 def create_application_with_bad_request_result_with(user)
-  application = FactoryBot.create(:application, :applicant_full, ni_number: 'AB123456C', office: user.office, user: user)
+  application = FactoryBot.create(:application, :applicant_full, ni_number: Settings.dwp_mock.ni_number_no.first, office: user.office, user: user)
   FactoryBot.create(:benefit_check, :bad_request_result, applicationable: application, user: user)
   application.applicant
 end

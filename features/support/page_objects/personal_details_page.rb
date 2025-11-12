@@ -82,11 +82,11 @@ class PersonalDetailsPage < BasePage
   end
 
   def valid_ni
-    content.application_ni_number.set 'JR054008D'
+    content.application_ni_number.set Settings.dwp_mock.ni_number_yes.last
   end
 
   def ni_for_no_benefit_check
-    content.application_ni_number.set 'SN789654B'
+    content.application_ni_number.set Settings.dwp_mock.ni_number_no.first
   end
 
   def ni_dwp_error_benefit_check

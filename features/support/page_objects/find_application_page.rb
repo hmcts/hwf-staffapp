@@ -47,7 +47,7 @@ class FindApplicationPage < BasePage
   end
 
   def search_ni_number
-    fill_in 'Search', with: 'JR054008D'
+    fill_in 'Search', with: Settings.dwp_mock.ni_number_yes.last
     content.search_button.click
   end
 
