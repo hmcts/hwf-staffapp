@@ -45,6 +45,7 @@ gem 'ostruct'
 # background jobs and scheduling
 gem 'delayed_cron_job'
 gem 'delayed_job_active_record'
+gem 'benchmark'
 
 # Use SCSS for stylesheets
 # gem "dartsass-sprockets", "~> 3.1"
