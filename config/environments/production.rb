@@ -17,6 +17,7 @@ Rails.application.configure do
 
   # Turn on fragment caching in view templates.
   config.action_controller.perform_caching = true
+  config.public_file_server.headers = { "cache-control" => "public, max-age=#{1.month.to_i}" }
 
   # Ensures that a master key has been made available in ENV["RAILS_MASTER_KEY"], config/master.key, or an environment
   # key such as config/credentials/production.key. This key is used to decrypt credentials (and other encrypted files).

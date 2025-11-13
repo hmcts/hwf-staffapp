@@ -45,7 +45,7 @@ module ProcessedViewsHelper
   # rubocop:enable Rails/HelperInstanceVariable
 
   def per_page
-    params[:per_page].try(:to_i) || Settings.processed_deleted.per_page
+    params[:per_page].try(:to_i) || Settings.processed_deleted.per_page.to_i
   end
 
   def citizen_not_proceeding(evidence)
