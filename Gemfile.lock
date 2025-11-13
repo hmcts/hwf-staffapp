@@ -401,7 +401,7 @@ GEM
       logger
     mini_mime (1.1.5)
     mini_portile2 (2.8.9)
-    minitest (5.26.0)
+    minitest (5.26.1)
     mock_redis (0.52.0)
       redis (~> 5)
     msgpack (1.8.0)
@@ -438,8 +438,8 @@ GEM
     parallel (1.27.0)
     parallel_tests (5.5.0)
       parallel
-    paranoia (3.0.1)
-      activerecord (>= 6, < 8.1)
+    paranoia (3.1.0)
+      activerecord (>= 7, < 8.2)
     parser (3.3.10.0)
       ast (~> 2.4.1)
       racc
