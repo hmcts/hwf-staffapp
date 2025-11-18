@@ -8,9 +8,9 @@ gem 'application_insights', '~> 0.5.6'
 gem 'csv'
 gem 'dotenv-rails', groups: [:development, :test] # this has to be here because of load order
 
-# Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
-gem 'rails', '8.0.3'
+gem 'rails', '~> 8.1', '>= 8.1.1'
 gem 'redis'
+
 # profiling in Sentry
 gem 'stackprof'
 gem 'sentry-rails', '~> 5.8'
@@ -25,7 +25,7 @@ gem 'rails-i18n'
 
 # Azure key vault secrets to ENV variables
 gem 'azure_env_secrets', github: 'hmcts/azure_env_secrets', tag: 'v1.0.1'
-gem 'azure-storage-blob', '~> 2.0', '>= 2.0.3'
+gem 'azure-blob', '~> 0.5.9.1'
 gem 'hwf_hmrc_api', github: 'hmcts/hwf_hmrc_api', tag: 'v0.3.1'
 
 # configuration
@@ -45,6 +45,7 @@ gem 'ostruct'
 # background jobs and scheduling
 gem 'delayed_cron_job'
 gem 'delayed_job_active_record'
+gem 'benchmark'
 
 # Use SCSS for stylesheets
 # gem "dartsass-sprockets", "~> 3.1"

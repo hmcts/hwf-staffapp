@@ -8,7 +8,7 @@ local:
 
 
 azure:
-  service: AzureStorage
+  service: AzureBlob
   storage_account_name: <%= ENV.fetch('AZURE_STORAGE_ACCOUNT', 'hwf-test') %>
   storage_access_key: <%= ENV.fetch('AZURE_STORAGE_ACCESS_KEY', 'hwf-test-key') %>
   container: <%= ENV.fetch('AZURE_STORAGE_CONTAINER', 'private') %>
