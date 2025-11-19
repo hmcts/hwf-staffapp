@@ -104,6 +104,12 @@ RSpec.describe BenefitCheck do
 
       it { is_expected.to eql 'none' }
     end
+
+    context 'when dwp_result is blank' do
+      let(:check) { build(:benefit_check, dwp_result: '') }
+
+      it { is_expected.to eql 'none' }
+    end
   end
 
   describe '#bad_request?' do

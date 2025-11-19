@@ -14,9 +14,14 @@ module Views
         convert_to_boolean(@application.benefits?)
       end
 
+      # provided correct evidenece or DWP says yes
       def override?
-        if @application.benefits? && benefit_overridden?
+        return false unless @application.benefits?
+
+        if benefit_overridden?
           convert_to_boolean(@application.benefit_override.correct)
+        else
+          convert_to_boolean(@application.last_benefit_check&.passed?)
         end
       end
 

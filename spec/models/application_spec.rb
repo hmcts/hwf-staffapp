@@ -262,6 +262,11 @@ RSpec.describe Application do
       create(:benefit_check, applicationable: application, benefits_valid: true, dwp_result: 'Yes')
       expect(application.allow_benefit_check_override?).to be false
     end
+
+    it 'returns true when last benefit check has dwp_result blank' do
+      create(:benefit_check, applicationable: application, benefits_valid: true, dwp_result: '')
+      expect(application.allow_benefit_check_override?).to be true
+    end
   end
 
 end

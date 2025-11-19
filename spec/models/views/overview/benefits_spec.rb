@@ -30,6 +30,14 @@ RSpec.describe Views::Overview::Benefits do
   describe '#override?' do
     subject { view.override? }
 
+    let(:application) { create(:application, benefits: true) }
+    let(:benefit_check) {
+      create(:benefit_check, applicationable: application,
+                             dwp_result: dwp_result)
+    }
+    let(:dwp_result) { 'No' }
+    before { benefit_check }
+
     context 'when a benefit_override exists' do
       [true, false].each do |value|
         context "and the evidence is #{value ? 'correct' : 'incorrect'}" do
@@ -40,14 +48,15 @@ RSpec.describe Views::Overview::Benefits do
       end
     end
 
-    context 'when no benefit_override exists' do
-      it { is_expected.to be_nil }
+    context 'when no benefit_override exists but the DWP check is yes' do
+      let(:dwp_result) { 'Yes' }
+      it { is_expected.to eq I18n.t("convert_boolean.true") }
     end
 
     context 'when user selected "no" to on benefits' do
       let(:application) { build_stubbed(:application, benefits: false) }
 
-      it { is_expected.to be_nil }
+      it { is_expected.to be false }
     end
   end
 end
