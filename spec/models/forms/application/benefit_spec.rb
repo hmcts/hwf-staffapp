@@ -96,6 +96,14 @@ RSpec.describe Forms::Application::Benefit do
               expect(application.outcome).to be_nil
             end
           end
+
+          context 'when benefit check exists with negative result' do
+            let(:benefit_check) { create(:benefit_check, applicationable: application, dwp_result: 'No') }
+
+            it 'updates outcome to none' do
+              expect(application.outcome).to eql 'none'
+            end
+          end
         end
 
         context 'when benefits is false' do
@@ -111,6 +119,20 @@ RSpec.describe Forms::Application::Benefit do
             expect(application.income).to be 1000
             expect(application.income_period).to eql 'last month'
             expect(application.income_kind).to eql 'Wages'
+          end
+
+          context 'when benefit check exists with outcome' do
+            let(:benefit_check) { create(:benefit_check, :yes_result, applicationable: application) }
+
+            before do
+              benefit_check
+              form_update
+              application.reload
+            end
+
+            it 'updates outcome based on the benefit check' do
+              expect(application.outcome).to eql 'full'
+            end
           end
         end
       end
