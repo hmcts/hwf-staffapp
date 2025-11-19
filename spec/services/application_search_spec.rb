@@ -84,9 +84,20 @@ RSpec.describe ApplicationSearch do
       end
 
       context 'when the application has not yet been completed' do
-        let(:application) { create(:application, :uncompleted, reference: reference) }
+        context 'staff user' do
+          let(:application) { create(:application, :uncompleted, reference: reference, office: user.office) }
 
-        it { expect(service_completed).to be_nil }
+          it { expect(service_completed).to be_nil }
+        end
+
+        context 'admin user' do
+          let(:user) { create(:admin_user) }
+          let(:application) { create(:application, :uncompleted, reference: reference) }
+
+          it 'returns the uncompleted application for admin' do
+            expect(service_completed).to eq([application])
+          end
+        end
       end
     end
 
@@ -109,6 +120,74 @@ RSpec.describe ApplicationSearch do
       it 'sets the correct error message' do
         service_completed
         expect(service.error_message).to eq "Enter a search term"
+      end
+    end
+
+    context 'when searching by name' do
+      let(:reference) { 'Smith' }
+      let(:other_office) { create(:office, name: 'Other Office') }
+
+      context 'staff user' do
+        let(:application_same_office) { create(:application, :processed_state, office: user.office) }
+        let(:application_other_office) { create(:application, :processed_state, office: other_office) }
+
+        before do
+          create(:applicant, first_name: 'John', last_name: 'Smith', application: application_same_office)
+          create(:applicant, first_name: 'Jane', last_name: 'Smith', application: application_other_office)
+        end
+
+        it 'only returns applications from the same office' do
+          expect(service_completed).to eq([application_same_office])
+        end
+      end
+
+      context 'admin user' do
+        let(:user) { create(:admin_user) }
+        let(:application_office_1) { create(:application, :processed_state, office: user.office) }
+        let(:application_office_2) { create(:application, :processed_state, office: other_office) }
+
+        before do
+          create(:applicant, first_name: 'John', last_name: 'Smith', application: application_office_1)
+          create(:applicant, first_name: 'Jane', last_name: 'Smith', application: application_office_2)
+        end
+
+        it 'returns applications from all offices' do
+          expect(service_completed).to match_array([application_office_1, application_office_2])
+        end
+      end
+    end
+
+    context 'when searching by NI number' do
+      let(:reference) { 'JR054008D' }
+      let(:other_office) { create(:office, name: 'Other Office') }
+
+      context 'staff user' do
+        let(:application_same_office) { create(:application, :processed_state, office: user.office) }
+        let(:application_other_office) { create(:application, :processed_state, office: other_office) }
+
+        before do
+          create(:applicant, ni_number: reference, application: application_same_office)
+          create(:applicant, ni_number: 'SN123456C', application: application_other_office)
+        end
+
+        it 'only returns applications from the same office' do
+          expect(service_completed).to eq([application_same_office])
+        end
+      end
+
+      context 'admin user' do
+        let(:user) { create(:admin_user) }
+        let(:application_office_1) { create(:application, :processed_state, office: user.office) }
+        let(:application_office_2) { create(:application, :processed_state, office: other_office) }
+
+        before do
+          create(:applicant, ni_number: reference, application: application_office_1)
+          create(:applicant, ni_number: reference, application: application_office_2)
+        end
+
+        it 'returns applications from all offices with matching NI number' do
+          expect(service_completed).to match_array([application_office_1, application_office_2])
+        end
       end
     end
 

@@ -34,7 +34,7 @@ class ApplicationSearch
 
   def search_query
     if reference_number?(@query)
-      result = Application.where(reference: @query).includes(:applicant, :evidence_check, :detail).except_created
+      result = reference_search_query
       processed_by_check(result)
     elsif name_search?(@query)
       name_search_query
@@ -43,16 +43,28 @@ class ApplicationSearch
     end
   end
 
+  def reference_search_query
+    query = Application.where(reference: @query).includes(:applicant, :evidence_check, :detail)
+    admin_can_search_all? ? query : query.except_created
+  end
+
   def extended_search
-    Application.extended_search(@query).
-      includes(:applicant, :evidence_check, :detail).
-      except_created.given_office_only(@current_user.office_id)
+    query = Application.extended_search(@query).includes(:applicant, :evidence_check, :detail)
+    apply_admin_filters(query)
   end
 
   def name_search_query
-    Application.name_search(@query).
-      includes(:applicant, :evidence_check, :detail).
-      except_created.given_office_only(@current_user.office_id)
+    query = Application.name_search(@query).includes(:applicant, :evidence_check, :detail)
+    apply_admin_filters(query)
+  end
+
+  def apply_admin_filters(query)
+    query = query.except_created unless admin_can_search_all?
+    admin_can_search_all? ? query : query.given_office_only(@current_user.office_id)
+  end
+
+  def admin_can_search_all?
+    @current_user.admin?
   end
 
   def name_search?(query)
@@ -91,7 +103,7 @@ class ApplicationSearch
   end
 
   def allowed_to_view?(result)
-    result.last.office_id == @current_user.office_id || @current_user.admin?
+    admin_can_search_all? || result.last.office_id == @current_user.office_id
   end
 
   def paginate_results(page)
