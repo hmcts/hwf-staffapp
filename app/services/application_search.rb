@@ -1,4 +1,6 @@
 class ApplicationSearch
+  include SearchQueryBuilder
+
   attr_reader :error_message, :results
 
   SORT_PARAMS = { reference: 'applications.reference', entered: 'applications.created_at',
@@ -44,27 +46,18 @@ class ApplicationSearch
   end
 
   def reference_search_query
-    query = Application.where(reference: @query).includes(:applicant, :evidence_check, :detail)
-    admin_can_search_all? ? query : query.except_created
+    sql = build_reference_sql
+    execute_search_query(sql)
   end
 
   def extended_search
-    query = Application.extended_search(@query).includes(:applicant, :evidence_check, :detail)
-    apply_admin_filters(query)
+    sql = build_extended_search_sql
+    execute_search_query(sql)
   end
 
   def name_search_query
-    query = Application.name_search(@query).includes(:applicant, :evidence_check, :detail)
-    apply_admin_filters(query)
-  end
-
-  def apply_admin_filters(query)
-    query = query.except_created unless admin_can_search_all?
-    admin_can_search_all? ? query : query.given_office_only(@current_user.office_id)
-  end
-
-  def admin_can_search_all?
-    @current_user.admin?
+    sql = build_name_search_sql
+    execute_search_query(sql)
   end
 
   def name_search?(query)

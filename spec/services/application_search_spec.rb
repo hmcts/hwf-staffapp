@@ -157,6 +157,41 @@ RSpec.describe ApplicationSearch do
       end
     end
 
+    context 'when searching for purged applications' do
+      let(:reference) { 'HWF-PUR-GED' }
+
+      context 'staff user' do
+        let(:purged_application) { create(:application, :processed_state, reference: reference, office: user.office, purged: true) }
+
+        before { purged_application }
+
+        it 'does not return purged applications' do
+          expect(service_completed).to be_nil
+        end
+
+        it 'sets the correct error message' do
+          service_completed
+          expect(service.error_message).to eq "No results found"
+        end
+      end
+
+      context 'admin user' do
+        let(:user) { create(:admin_user) }
+        let(:purged_application) { create(:application, :processed_state, reference: reference, purged: true) }
+
+        before { purged_application }
+
+        it 'does not return purged applications even for admins' do
+          expect(service_completed).to be_nil
+        end
+
+        it 'sets the correct error message' do
+          service_completed
+          expect(service.error_message).to eq "No results found"
+        end
+      end
+    end
+
     context 'when searching by NI number' do
       let(:reference) { 'JR054008D' }
       let(:other_office) { create(:office, name: 'Other Office') }
