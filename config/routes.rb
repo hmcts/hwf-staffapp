@@ -4,6 +4,7 @@ Rails.application.routes.draw do
   resource :dwp_warnings, only: [:edit, :update]
 
   post 'api/submissions' => 'api/submissions#create'
+  post 'api/calculate_percentage_fee' => 'api/fee_calculator#calculate_percentage_fee'
   get 'reports' => 'reports#index'
   get 'reports/public' => 'reports#public'
   get 'reports/finance_report' => 'reports#finance_report'

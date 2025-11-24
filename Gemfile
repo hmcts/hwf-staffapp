@@ -78,6 +78,7 @@ gem 'groupdate'
 gem 'nokogiri'
 gem 'pg_search'
 gem 'faraday', '~> 2.14'
+gem 'faraday-retry', '~> 2.2'
 gem 'rubyzip', require: 'zip'
 
 # To pass vulnerability in 3.3.5
