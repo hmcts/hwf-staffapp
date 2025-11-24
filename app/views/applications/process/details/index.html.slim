@@ -22,6 +22,14 @@
         ul#fee-search-results.govuk-list.govuk-list--bullet
           li= 'no records'
 
+      .govuk-form-group.group-level#percentage-amount-input.govuk-visually-hidden
+        = label_tag :percentage_base_amount, 'Enter the amount to calculate the percentage fee', class: 'govuk-label'
+        - # This input will be shown when a percentage-based fee is selected
+        .field-wrapper
+          span.prefix £
+          = text_field_tag :percentage_base_amount, nil, class: 'govuk-input', type: 'number', step: '0.01', id: 'percentage_base_amount'
+        = button_tag 'Calculate fee', type: 'button', class: 'govuk-button govuk-button--secondary', id: 'calculate-percentage-fee'
+
       .govuk-form-group.group-level
         = f.label :fee, class: 'govuk-label'
         - if @form.errors[:fee].present?

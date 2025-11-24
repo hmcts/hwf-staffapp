@@ -63,6 +63,11 @@ window.moj.Modules.JsonSearcherModule = (function() {
         }
       });
 
+      // Bind calculate percentage fee button
+      $('#calculate-percentage-fee').on('click', function() {
+        self.calculatePercentageFee();
+      });
+
       $('#application_fee')
         .prop('disabled', true)
         .attr('aria-disabled', 'true')
@@ -81,13 +86,23 @@ window.moj.Modules.JsonSearcherModule = (function() {
       var matches = codes.filter(item => {
         // Get the correct fee version based on date received
         const relevantVersion = this.getFeeVersionForDate(item, dateReceived);
-        if (!relevantVersion || !relevantVersion.flat_amount || typeof relevantVersion.flat_amount.amount !== 'number') {
+        if (!relevantVersion) {
           return false;
         }
+
+        // Check if it's a flat amount or percentage fee
+        const hasFlatAmount = relevantVersion.flat_amount && typeof relevantVersion.flat_amount.amount === 'number';
+        const hasPercentage = relevantVersion.percentage_amount && typeof relevantVersion.percentage_amount.percentage === 'number';
+
+        if (!hasFlatAmount && !hasPercentage) {
+          return false;
+        }
+
         return (
           (item.code && item.code.toLowerCase().includes(term.toLowerCase())) ||
           (item.jurisdiction2 && item.jurisdiction2.name && item.jurisdiction2.name.toLowerCase().includes(term.toLowerCase())) ||
-          (relevantVersion && relevantVersion.flat_amount && typeof relevantVersion.flat_amount.amount === 'number' && relevantVersion.flat_amount.amount.toString().includes(term)) ||
+          (hasFlatAmount && relevantVersion.flat_amount.amount.toString().includes(term)) ||
+          (hasPercentage && relevantVersion.percentage_amount.percentage.toString().includes(term)) ||
           (item.event_type && item.event_type.name && item.event_type.name.toLowerCase().includes(term.toLowerCase())) ||
           (item.service_type && item.service_type.name && item.service_type.name.toLowerCase().includes(term.toLowerCase())) ||
           (relevantVersion && relevantVersion.description && relevantVersion.description.toLowerCase().includes(term.toLowerCase()))
@@ -109,18 +124,50 @@ window.moj.Modules.JsonSearcherModule = (function() {
             // Get the correct fee version based on date received
             const relevantVersion = this.getFeeVersionForDate(fee, dateReceived);
 
-            // Display the service type, code, amount, and description for the relevant version
-            const displayText = `${fee.service_type.name.toUpperCase()} - ${fee.code} - £${relevantVersion.flat_amount.amount}`;
+            // Check if it's a percentage or flat amount fee
+            const isPercentageFee = relevantVersion.percentage_amount !== undefined;
+
+            let displayText, feeValueText;
+            if (isPercentageFee) {
+              feeValueText = `${relevantVersion.percentage_amount.percentage}%`;
+              displayText = `${fee.service_type.name.toUpperCase()} - ${fee.code} - ${feeValueText}`;
+            } else {
+              feeValueText = `£${relevantVersion.flat_amount.amount}`;
+              displayText = `${fee.service_type.name.toUpperCase()} - ${fee.code} - ${feeValueText}`;
+            }
+
             const descriptionText = relevantVersion.description;
             const versionInfo = dateReceived ? ` (Valid from: ${relevantVersion.valid_from})` : '';
 
             li.textContent = `${displayText}, Description: ${descriptionText}${versionInfo}`;
             li.style.cursor = 'pointer';
-            li.setAttribute('data-amount', relevantVersion.flat_amount.amount);
             li.classList.add('govuk-link');
+
+            // Store complete fee data for later use
+            li.setAttribute('data-fee', JSON.stringify({
+              code: fee.code,
+              jurisdiction1: fee.jurisdiction1,
+              jurisdiction2: fee.jurisdiction2,
+              event_type: fee.event_type,
+              channel_type: fee.channel_type,
+              service_type: fee.service_type,
+              fee_version: relevantVersion,
+              is_percentage: isPercentageFee,
+              keyword: fee.keyword
+            }));
+
             li.addEventListener('click', () => {
-              const amount = li.getAttribute('data-amount');
-              window.moj.Modules.JsonSearcherModule.fillFeeInput({ amount });
+              const feeData = JSON.parse(li.getAttribute('data-fee'));
+              if (feeData.is_percentage) {
+                // Show percentage input field
+                $('#percentage-amount-input').removeClass('govuk-visually-hidden');
+                // Store fee data for calculation
+                $('#calculate-percentage-fee').data('fee', feeData);
+              } else {
+                // Hide percentage input field and fill regular fee input
+                $('#percentage-amount-input').addClass('govuk-visually-hidden');
+                window.moj.Modules.JsonSearcherModule.fillFeeInput({ amount: relevantVersion.flat_amount.amount });
+              }
             });
             resultsList.appendChild(li);
         }
@@ -133,6 +180,49 @@ window.moj.Modules.JsonSearcherModule = (function() {
 
     fillFeeInput: function(fee) {
       $('input[id="application_fee"]').val(fee.amount);
+    },
+
+    calculatePercentageFee: function() {
+      const feeData = $('#calculate-percentage-fee').data('fee');
+      const baseAmount = $('#percentage_base_amount').val();
+
+      if (!feeData) {
+        alert('Please select a percentage fee first');
+        return;
+      }
+
+      if (!baseAmount || parseFloat(baseAmount) <= 0) {
+        alert('Please enter a valid amount');
+        return;
+      }
+
+      // Call the API with complete fee object
+      $.ajax({
+        url: '/api/calculate_percentage_fee',
+        method: 'POST',
+        contentType: 'application/json',
+        data: JSON.stringify({
+          fee: feeData,
+          base_amount: parseFloat(baseAmount),
+          use_api: false  // Set to true to use external FREG API, false for local calculation
+        }),
+        headers: {
+          'X-CSRF-Token': $('meta[name="csrf-token"]').attr('content')
+        },
+        success: function(response) {
+          // TODO: Handle the response and populate the fee field
+          // For now, just log the response
+          console.log('Fee calculation response:', response);
+          if (response.calculated_fee) {
+            window.moj.Modules.JsonSearcherModule.fillFeeInput({ amount: response.calculated_fee });
+            // $('#percentage-amount-input').addClass('govuk-visually-hidden');
+          }
+        },
+        error: function(xhr, status, error) {
+          console.error('Error calculating fee:', error);
+          alert('Error calculating fee. Please try again.');
+        }
+      });
     },
   };
 })();
