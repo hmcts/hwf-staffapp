@@ -5,6 +5,7 @@ Rails.application.routes.draw do
 
   post 'api/submissions' => 'api/submissions#create'
   post 'api/calculate_percentage_fee' => 'api/fee_calculator#calculate_percentage_fee'
+  get 'api/fee_codes' => 'api/fee_codes#index'
   get 'reports' => 'reports#index'
   get 'reports/public' => 'reports#public'
   get 'reports/finance_report' => 'reports#finance_report'

@@ -33,6 +33,13 @@ class FregApiService
     raise FregApiError, "FREG API call failed: #{e.message}"
   end
 
+  def load_approved_feee
+    @connection.get('/fees-register/approvedFees')
+  rescue Faraday::Error => e
+    Rails.logger.error "[FeeCodesLoader] FREG API error: #{e.message}"
+    raise FeeCodesLoadError, "Failed to load from API: #{e.message}"
+  end
+
   private
 
   # rubocop:disable Metrics/MethodLength
