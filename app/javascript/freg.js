@@ -69,13 +69,12 @@ window.moj.Modules.JsonSearcherModule = (function() {
       });
 
       $('#application_fee')
-        .prop('disabled', true)
-        .attr('aria-disabled', 'true')
+        .prop('readonly', true)
         .css({
           'background-color': '#e0e0e0',
           'color': '#000000',
           'font-weight': 'bold'
-        })
+        });
 
     },
 
