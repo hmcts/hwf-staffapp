@@ -2,7 +2,7 @@
 
 require 'rails_helper'
 
-RSpec.describe Api::FeeCalculatorController, type: :controller do
+RSpec.describe Api::FeeCalculatorController do
   describe 'POST #calculate_percentage_fee' do
     let(:valid_params) do
       {
@@ -14,31 +14,26 @@ RSpec.describe Api::FeeCalculatorController, type: :controller do
             version: 4
           }
         },
-        base_amount: 10_000.00,
-        use_api: false  # Default to local calculation
+        base_amount: 10_000.00
       }
     end
 
-    context 'with use_api parameter' do
-      it 'uses local calculation when use_api is false' do
-        params = valid_params.merge(use_api: false)
-        post :calculate_percentage_fee, params: params, as: :json
-
-        json_response = JSON.parse(response.body)
-        expect(json_response['calculation_method']).to eq('local')
-      end
-
-      it 'uses local calculation when use_api is not provided' do
-        params = valid_params.except(:use_api)
-        post :calculate_percentage_fee, params: params, as: :json
-
-        json_response = JSON.parse(response.body)
-        expect(json_response['calculation_method']).to eq('local')
-      end
+    let(:freg_api_response) do
+      {
+        calculated_fee: 500.0,
+        fee_code: 'FEE0507',
+        description: 'Counter Claim - 5% of claim value',
+        version: 4,
+        raw_response: { 'fee_amount' => 500.0, 'code' => 'FEE0507' }
+      }
     end
+
+    let(:freg_service) { instance_double(FregApiService) }
 
     context 'with valid parameters' do
       before do
+        allow(FregApiService).to receive(:new).and_return(freg_service)
+        allow(freg_service).to receive(:calculate_fee).and_return(freg_api_response)
         post :calculate_percentage_fee, params: valid_params, as: :json
       end
 
@@ -46,13 +41,21 @@ RSpec.describe Api::FeeCalculatorController, type: :controller do
         expect(response).to have_http_status(:ok)
       end
 
+      it 'calls the FREG API service' do
+        expect(FregApiService).to have_received(:new)
+        expect(freg_service).to have_received(:calculate_fee).with(
+          fee_params: hash_including('code' => 'FEE0507'),
+          base_amount: 10_000.0
+        )
+      end
+
       it 'calculates the fee correctly' do
-        json_response = JSON.parse(response.body)
+        json_response = response.parsed_body
         expect(json_response['calculated_fee']).to eq(500.0)
       end
 
       it 'includes fee details in response' do
-        json_response = JSON.parse(response.body)
+        json_response = response.parsed_body
         expect(json_response['fee_code']).to eq('FEE0507')
         expect(json_response['description']).to eq('Counter Claim - 5% of claim value')
         expect(json_response['version']).to eq(4)
@@ -60,60 +63,15 @@ RSpec.describe Api::FeeCalculatorController, type: :controller do
       end
 
       it 'includes calculation details' do
-        json_response = JSON.parse(response.body)
+        json_response = response.parsed_body
         expect(json_response['calculation_details']).to be_present
         expect(json_response['calculation_details']['base_amount']).to eq(10_000.0)
-        expect(json_response['calculation_details']['percentage']).to eq(5.0)
-        expect(json_response['calculation_details']['formula']).to be_present
-      end
-    end
-
-    context 'with different percentages' do
-      it 'calculates 2.5% correctly' do
-        params = valid_params.deep_dup
-        params[:fee][:fee_version][:percentage_amount][:percentage] = 2.5
-        params[:base_amount] = 1000.00
-
-        post :calculate_percentage_fee, params: params, as: :json
-
-        json_response = JSON.parse(response.body)
-        expect(json_response['calculated_fee']).to eq(25.0)
+        expect(json_response['calculation_details']['api_response']).to be_present
       end
 
-      it 'calculates 10% correctly' do
-        params = valid_params.deep_dup
-        params[:fee][:fee_version][:percentage_amount][:percentage] = 10.0
-        params[:base_amount] = 5000.00
-
-        post :calculate_percentage_fee, params: params, as: :json
-
-        json_response = JSON.parse(response.body)
-        expect(json_response['calculated_fee']).to eq(500.0)
-      end
-    end
-
-    context 'with rounding' do
-      it 'rounds to 2 decimal places' do
-        params = valid_params.deep_dup
-        params[:fee][:fee_version][:percentage_amount][:percentage] = 3.33
-        params[:base_amount] = 1000.00
-
-        post :calculate_percentage_fee, params: params, as: :json
-
-        json_response = JSON.parse(response.body)
-        expect(json_response['calculated_fee']).to eq(33.3)
-      end
-    end
-
-    context 'with large amounts' do
-      it 'calculates correctly for large base amounts' do
-        params = valid_params.deep_dup
-        params[:base_amount] = 150_000.00
-
-        post :calculate_percentage_fee, params: params, as: :json
-
-        json_response = JSON.parse(response.body)
-        expect(json_response['calculated_fee']).to eq(7_500.0)
+      it 'uses api calculation method' do
+        json_response = response.parsed_body
+        expect(json_response['calculation_method']).to eq('api')
       end
     end
 
@@ -125,7 +83,7 @@ RSpec.describe Api::FeeCalculatorController, type: :controller do
         post :calculate_percentage_fee, params: params, as: :json
 
         expect(response).to have_http_status(:bad_request)
-        json_response = JSON.parse(response.body)
+        json_response = response.parsed_body
         expect(json_response['error']).to eq('Invalid base amount')
       end
 
@@ -136,32 +94,26 @@ RSpec.describe Api::FeeCalculatorController, type: :controller do
         post :calculate_percentage_fee, params: params, as: :json
 
         expect(response).to have_http_status(:bad_request)
-        json_response = JSON.parse(response.body)
+        json_response = response.parsed_body
         expect(json_response['error']).to eq('Invalid base amount')
       end
     end
 
-    context 'with invalid percentage' do
-      it 'returns bad request for zero percentage' do
-        params = valid_params.deep_dup
-        params[:fee][:fee_version][:percentage_amount][:percentage] = 0
-
-        post :calculate_percentage_fee, params: params, as: :json
-
-        expect(response).to have_http_status(:bad_request)
-        json_response = JSON.parse(response.body)
-        expect(json_response['error']).to eq('Invalid percentage')
+    context 'with API errors' do
+      before do
+        allow(FregApiService).to receive(:new).and_return(freg_service)
       end
 
-      it 'returns bad request for negative percentage' do
-        params = valid_params.deep_dup
-        params[:fee][:fee_version][:percentage_amount][:percentage] = -5
+      it 'handles FREG API errors' do
+        allow(freg_service).to receive(:calculate_fee).and_raise(
+          FregApiService::FregApiError, 'API connection failed'
+        )
 
-        post :calculate_percentage_fee, params: params, as: :json
+        post :calculate_percentage_fee, params: valid_params, as: :json
 
-        expect(response).to have_http_status(:bad_request)
-        json_response = JSON.parse(response.body)
-        expect(json_response['error']).to eq('Invalid percentage')
+        expect(response).to have_http_status(:service_unavailable)
+        json_response = response.parsed_body
+        expect(json_response['error']).to include('External API call failed')
       end
     end
 

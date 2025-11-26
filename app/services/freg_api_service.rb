@@ -22,13 +22,10 @@ class FregApiService
   # @return [Hash] Response from FREG API
   def calculate_fee(fee_params:, base_amount:)
     params = build_query_params(fee_params, base_amount)
-    Rails.logger.info "[FREG API] Calling external API with params: #{params.inspect}"
 
     response = @connection.get('/fees-register/fees/lookup') do |req|
       req.params = params
     end
-
-    Rails.logger.info "[FREG API] Response: status=#{response.status}, body=#{response.body}"
 
     parse_response(response)
   rescue Faraday::Error => e
@@ -38,6 +35,7 @@ class FregApiService
 
   private
 
+  # rubocop:disable Metrics/MethodLength
   def build_connection
     Faraday.new(url: FREG_API_URL) do |faraday|
       faraday.request :json
@@ -54,6 +52,7 @@ class FregApiService
       faraday.options.open_timeout = 10
     end
   end
+  # rubocop:enable Metrics/MethodLength
 
   def build_query_params(fee_params, base_amount)
     {
@@ -86,20 +85,21 @@ class FregApiService
     object.to_s
   end
 
+  # rubocop:disable Metrics/MethodLength
   def parse_response(response)
     body = response.body
 
-    # Handle different response formats from FREG API
     if body.is_a?(Hash)
       {
-        calculated_fee: body[:fee_amount] || body['fee_amount'] || body[:amount] || body['amount'] || body[:calculated_fee] || body['calculated_fee'],
-        fee_code: body[:code] || body['code'],
-        description: body[:description] || body['description'],
-        version: body[:version] || body['version'],
+        calculated_fee: body['fee_amount'] || body['amount'] || body['calculated_fee'],
+        fee_code: body['code'],
+        description: body['description'],
+        version: body['version'],
         raw_response: body
       }
     else
       { raw_response: body }
     end
   end
+  # rubocop:enable Metrics/MethodLength
 end
