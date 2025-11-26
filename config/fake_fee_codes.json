@@ -1,0 +1,402 @@
+[
+  {
+    "code": "FEE0001",
+    "fee_type": "fixed",
+    "channel_type": {
+      "name": "default"
+    },
+    "event_type": {
+      "name": "issue"
+    },
+    "jurisdiction1": {
+      "name": "civil"
+    },
+    "jurisdiction2": {
+      "name": "county court"
+    },
+    "service_type": {
+      "name": "civil"
+    },
+    "keyword": "TestFlatFee",
+    "fee_versions": [
+      {
+        "description": "Test flat fee for development",
+        "status": "approved",
+        "version": 1,
+        "valid_from": "2020-01-01",
+        "flat_amount": {
+          "amount": 100.0
+        },
+        "memo_line": "RECEIPT OF FEES - Test",
+        "natural_account_code": "4481102133"
+      }
+    ],
+    "current_version": {
+      "description": "Test flat fee for development",
+      "status": "approved",
+      "version": 1,
+      "valid_from": "2020-01-01",
+      "flat_amount": {
+        "amount": 100.0
+      },
+      "memo_line": "RECEIPT OF FEES - Test",
+      "natural_account_code": "4481102133"
+    },
+    "unspecified_claim_amount": false,
+    "matching_version": {
+      "description": "Test flat fee for development",
+      "status": "approved",
+      "version": 1,
+      "valid_from": "2020-01-01",
+      "flat_amount": {
+        "amount": 100.0
+      },
+      "memo_line": "RECEIPT OF FEES - Test",
+      "natural_account_code": "4481102133"
+    },
+    "amount_type": "FLAT"
+  },
+  {
+    "code": "FEE0002",
+    "fee_type": "fixed",
+    "channel_type": {
+      "name": "default"
+    },
+    "event_type": {
+      "name": "issue"
+    },
+    "jurisdiction1": {
+      "name": "civil"
+    },
+    "jurisdiction2": {
+      "name": "high court"
+    },
+    "service_type": {
+      "name": "civil"
+    },
+    "keyword": "TestHigherFee",
+    "fee_versions": [
+      {
+        "description": "Test higher fee for development",
+        "status": "approved",
+        "version": 1,
+        "valid_from": "2020-01-01",
+        "flat_amount": {
+          "amount": 250.0
+        },
+        "memo_line": "RECEIPT OF FEES - Test High",
+        "natural_account_code": "4481102136"
+      }
+    ],
+    "current_version": {
+      "description": "Test higher fee for development",
+      "status": "approved",
+      "version": 1,
+      "valid_from": "2020-01-01",
+      "flat_amount": {
+        "amount": 250.0
+      },
+      "memo_line": "RECEIPT OF FEES - Test High",
+      "natural_account_code": "4481102136"
+    },
+    "unspecified_claim_amount": false,
+    "matching_version": {
+      "description": "Test higher fee for development",
+      "status": "approved",
+      "version": 1,
+      "valid_from": "2020-01-01",
+      "flat_amount": {
+        "amount": 250.0
+      },
+      "memo_line": "RECEIPT OF FEES - Test High",
+      "natural_account_code": "4481102136"
+    },
+    "amount_type": "FLAT"
+  },
+  {
+    "code": "FEE0003",
+    "fee_type": "ranged",
+    "channel_type": {
+      "name": "default"
+    },
+    "event_type": {
+      "name": "issue"
+    },
+    "jurisdiction1": {
+      "name": "civil"
+    },
+    "jurisdiction2": {
+      "name": "county court"
+    },
+    "service_type": {
+      "name": "civil money claims"
+    },
+    "keyword": "TestPercentageFee",
+    "fee_versions": [
+      {
+        "description": "Test percentage fee - 5% of claim value",
+        "status": "approved",
+        "version": 1,
+        "valid_from": "2020-01-01",
+        "percentage_amount": {
+          "percentage": 5.0
+        },
+        "memo_line": "RECEIPT OF FEES - Test Percentage",
+        "natural_account_code": "4481102133"
+      }
+    ],
+    "current_version": {
+      "description": "Test percentage fee - 5% of claim value",
+      "status": "approved",
+      "version": 1,
+      "valid_from": "2020-01-01",
+      "percentage_amount": {
+        "percentage": 5.0
+      },
+      "memo_line": "RECEIPT OF FEES - Test Percentage",
+      "natural_account_code": "4481102133"
+    },
+    "range_unit": "GBP",
+    "unspecified_claim_amount": false,
+    "matching_version": {
+      "description": "Test percentage fee - 5% of claim value",
+      "status": "approved",
+      "version": 1,
+      "valid_from": "2020-01-01",
+      "percentage_amount": {
+        "percentage": 5.0
+      },
+      "memo_line": "RECEIPT OF FEES - Test Percentage",
+      "natural_account_code": "4481102133"
+    },
+    "amount_type": "VOLUME"
+  },
+  {
+    "code": "FEE0004",
+    "fee_type": "fixed",
+    "channel_type": {
+      "name": "default"
+    },
+    "event_type": {
+      "name": "miscellaneous"
+    },
+    "jurisdiction1": {
+      "name": "family"
+    },
+    "jurisdiction2": {
+      "name": "family court"
+    },
+    "service_type": {
+      "name": "private law"
+    },
+    "keyword": "TestFamilyFee",
+    "fee_versions": [
+      {
+        "description": "Test family court fee",
+        "status": "approved",
+        "version": 1,
+        "valid_from": "2020-01-01",
+        "flat_amount": {
+          "amount": 75.0
+        },
+        "memo_line": "RECEIPT OF FEES - Test Family",
+        "natural_account_code": "4481102174"
+      }
+    ],
+    "current_version": {
+      "description": "Test family court fee",
+      "status": "approved",
+      "version": 1,
+      "valid_from": "2020-01-01",
+      "flat_amount": {
+        "amount": 75.0
+      },
+      "memo_line": "RECEIPT OF FEES - Test Family",
+      "natural_account_code": "4481102174"
+    },
+    "unspecified_claim_amount": false,
+    "matching_version": {
+      "description": "Test family court fee",
+      "status": "approved",
+      "version": 1,
+      "valid_from": "2020-01-01",
+      "flat_amount": {
+        "amount": 75.0
+      },
+      "memo_line": "RECEIPT OF FEES - Test Family",
+      "natural_account_code": "4481102174"
+    },
+    "amount_type": "FLAT"
+  },
+  {
+    "code": "FEE0005",
+    "fee_type": "fixed",
+    "channel_type": {
+      "name": "default"
+    },
+    "event_type": {
+      "name": "miscellaneous"
+    },
+    "jurisdiction1": {
+      "name": "family"
+    },
+    "jurisdiction2": {
+      "name": "family court"
+    },
+    "service_type": {
+      "name": "private law"
+    },
+    "keyword": "TestFamilyFee",
+    "fee_versions": [
+      {
+        "description": "Test family court fee",
+        "status": "approved",
+        "version": 1,
+        "valid_from": "2020-01-01",
+        "flat_amount": {
+          "amount": 600.0
+        },
+        "memo_line": "RECEIPT OF FEES - Test Family",
+        "natural_account_code": "4481102"
+      }
+    ],
+    "current_version": {
+      "description": "Test family court fee",
+      "status": "approved",
+      "version": 1,
+      "valid_from": "2020-01-01",
+      "flat_amount": {
+        "amount": 600.0
+      },
+      "memo_line": "RECEIPT OF FEES - Test Family",
+      "natural_account_code": "4481102"
+    },
+    "unspecified_claim_amount": false,
+    "matching_version": {
+      "description": "Test family court fee",
+      "status": "approved",
+      "version": 1,
+      "valid_from": "2020-01-01",
+      "flat_amount": {
+        "amount": 600.0
+      },
+      "memo_line": "RECEIPT OF FEES - Test Family",
+      "natural_account_code": "4481102"
+    },
+    "amount_type": "FLAT"
+  },
+  {
+    "code": "FEE0006",
+    "fee_type": "fixed",
+    "channel_type": {
+      "name": "default"
+    },
+    "event_type": {
+      "name": "miscellaneous"
+    },
+    "jurisdiction1": {
+      "name": "family"
+    },
+    "jurisdiction2": {
+      "name": "family court"
+    },
+    "service_type": {
+      "name": "private law"
+    },
+    "keyword": "TestFamilyFee",
+    "fee_versions": [
+      {
+        "description": "Test family court fee",
+        "status": "approved",
+        "version": 1,
+        "valid_from": "2020-01-01",
+        "flat_amount": {
+          "amount": 10001.0
+        },
+        "memo_line": "RECEIPT OF FEES - Test Family",
+        "natural_account_code": "4481102"
+      }
+    ],
+    "current_version": {
+      "description": "Test family court fee",
+      "status": "approved",
+      "version": 1,
+      "valid_from": "2020-01-01",
+      "flat_amount": {
+        "amount": 10001.0
+      },
+      "memo_line": "RECEIPT OF FEES - Test Family",
+      "natural_account_code": "4481102"
+    },
+    "unspecified_claim_amount": false,
+    "matching_version": {
+      "description": "Test family court fee",
+      "status": "approved",
+      "version": 1,
+      "valid_from": "2020-01-01",
+      "flat_amount": {
+        "amount": 10001.0
+      },
+      "memo_line": "RECEIPT OF FEES - Test Family",
+      "natural_account_code": "4481102"
+    },
+    "amount_type": "FLAT"
+  },
+  {
+    "code": "FEE0007",
+    "fee_type": "fixed",
+    "channel_type": {
+      "name": "default"
+    },
+    "event_type": {
+      "name": "miscellaneous"
+    },
+    "jurisdiction1": {
+      "name": "family"
+    },
+    "jurisdiction2": {
+      "name": "family court"
+    },
+    "service_type": {
+      "name": "private law"
+    },
+    "keyword": "TestFamilyFee",
+    "fee_versions": [
+      {
+        "description": "Test family court fee",
+        "status": "approved",
+        "version": 1,
+        "valid_from": "2020-01-01",
+        "flat_amount": {
+          "amount": 20001.0
+        },
+        "memo_line": "RECEIPT OF FEES - Test Family",
+        "natural_account_code": "4481102"
+      }
+    ],
+    "current_version": {
+      "description": "Test family court fee",
+      "status": "approved",
+      "version": 1,
+      "valid_from": "2020-01-01",
+      "flat_amount": {
+        "amount": 20001.0
+      },
+      "memo_line": "RECEIPT OF FEES - Test Family",
+      "natural_account_code": "4481102"
+    },
+    "unspecified_claim_amount": false,
+    "matching_version": {
+      "description": "Test family court fee",
+      "status": "approved",
+      "version": 1,
+      "valid_from": "2020-01-01",
+      "flat_amount": {
+        "amount": 20001.0
+      },
+      "memo_line": "RECEIPT OF FEES - Test Family",
+      "natural_account_code": "4481102"
+    },
+    "amount_type": "FLAT"
+  }
+]
