@@ -185,4 +185,10 @@ if ENV['TEST_URL'] && ENV['RUN_SMOKE_TESTS'] == 'true'
 else
 ```
 
+### Fee codes loading / test
+- "100" → should find FEE0001
+- "250" → should find FEE0002
+- "5" or "FEE0003" → should find the percentage fee
+- "family" → should find FEE0004
+
 Deployment versions trigger: 6
