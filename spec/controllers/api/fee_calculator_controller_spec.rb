@@ -3,29 +3,42 @@
 require 'rails_helper'
 
 RSpec.describe Api::FeeCalculatorController do
-  describe 'POST #calculate_percentage_fee' do
-    let(:valid_params) do
-      {
-        fee: {
-          code: 'FEE0507',
-          fee_version: {
-            percentage_amount: { percentage: 5.0 },
-            description: 'Counter Claim - 5% of claim value',
-            version: 4
-          }
-        },
-        base_amount: 10_000.00
-      }
-    end
+  let(:user) { create(:user) }
 
-    let(:freg_api_response) do
-      {
-        calculated_fee: 500.0,
-        fee_code: 'FEE0507',
-        description: 'Counter Claim - 5% of claim value',
-        version: 4,
-        raw_response: { 'fee_amount' => 500.0, 'code' => 'FEE0507' }
-      }
+  let(:valid_params) do
+    {
+      fee: {
+        code: 'FEE0507',
+        fee_version: {
+          percentage_amount: { percentage: 5.0 },
+          description: 'Counter Claim - 5% of claim value',
+          version: 4
+        }
+      },
+      base_amount: 10_000.00
+    }
+  end
+
+  let(:freg_api_response) do
+    {
+      calculated_fee: 500.0,
+      fee_code: 'FEE0507',
+      description: 'Counter Claim - 5% of claim value',
+      version: 4,
+      raw_response: { 'fee_amount' => 500.0, 'code' => 'FEE0507' }
+    }
+  end
+
+  describe 'GET #calculate_percentage_fee without authentication' do
+    it 'unauthorized access redirects' do
+      post :calculate_percentage_fee, params: valid_params, as: :json
+      expect(response).to have_http_status(:unauthorized)
+    end
+  end
+
+  describe 'POST #calculate_percentage_fee' do
+    before do
+      sign_in user
     end
 
     let(:freg_service) { instance_double(FregApiService) }
@@ -115,6 +128,18 @@ RSpec.describe Api::FeeCalculatorController do
         json_response = response.parsed_body
         expect(json_response['error']).to include('External API call failed')
       end
+
+      it 'handles Standard API errors' do
+        allow(freg_service).to receive(:calculate_fee).and_raise(
+          StandardError, 'something went wrong'
+        )
+
+        post :calculate_percentage_fee, params: valid_params, as: :json
+
+        expect(response).to have_http_status(:internal_server_error)
+        json_response = response.parsed_body
+        expect(json_response['error']).to include('something went wrong')
+      end
     end
 
     context 'with missing parameters' do
@@ -130,5 +155,6 @@ RSpec.describe Api::FeeCalculatorController do
         expect(response).to have_http_status(:bad_request)
       end
     end
+
   end
 end
