@@ -3,7 +3,6 @@
 module Api
   class FeeCalculatorController < ApplicationController
     protect_from_forgery with: :null_session, only: proc { |c| c.request.format.json? }
-    skip_before_action :authenticate_user!
     skip_after_action :verify_authorized
 
     def calculate_percentage_fee
