@@ -23,18 +23,21 @@ class FregApiService
   def calculate_fee(fee_params:, base_amount:)
     params = build_query_params(fee_params, base_amount)
 
-    response = @connection.get('/fees-register/fees/lookup') do |req|
+    response = connection.get('/fees-register/fees/lookup') do |req|
       req.params = params
+    end
+
+    unless response.success?
+      raise FregApiError, "FREG API returned status #{response.status}"
     end
 
     parse_response(response)
   rescue Faraday::Error => e
-    Rails.logger.error "[FREG API] Error: #{e.class} - #{e.message}"
     raise FregApiError, "FREG API call failed: #{e.message}"
   end
 
   def load_approved_feee
-    @connection.get('/fees-register/approvedFees')
+    connection.get('/fees-register/approvedFees')
   rescue Faraday::Error => e
     Rails.logger.error "[FeeCodesLoader] FREG API error: #{e.message}"
     raise FeeCodesLoadError, "Failed to load from API: #{e.message}"

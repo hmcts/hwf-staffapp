@@ -3,7 +3,6 @@
 module Api
   class FeeCodesController < ApplicationController
     protect_from_forgery with: :null_session, only: proc { |c| c.request.format.json? }
-    skip_before_action :authenticate_user!
     skip_after_action :verify_authorized
 
     def index
@@ -11,8 +10,7 @@ module Api
       render json: fee_codes, status: :ok
     rescue FeeCodesLoaderService::FeeCodesLoadError => e
       render json: { error: "Failed to load fee codes: #{e.message}" }, status: :service_unavailable
-    rescue StandardError => e
-      Rails.logger.error "[FeeCodesController] Unexpected error: #{e.message}"
+    rescue StandardError
       render json: { error: 'An unexpected error occurred' }, status: :internal_server_error
     end
   end
