@@ -6,8 +6,6 @@ require 'faraday/retry'
 # FREG API Service
 # Handles external API calls to the FREG (Fee Register) service
 class FregApiService
-  FREG_API_URL = 'http://fees-register-api-demo.service.core-compute-demo.internal'
-
   class FregApiError < StandardError; end
 
   attr_reader :connection
@@ -47,7 +45,8 @@ class FregApiService
 
   # rubocop:disable Metrics/MethodLength
   def build_connection
-    Faraday.new(url: FREG_API_URL) do |faraday|
+    freg_url = Settings.freg_api_url
+    Faraday.new(url: freg_url) do |faraday|
       faraday.request :json
       faraday.request :retry, {
         max: 2,

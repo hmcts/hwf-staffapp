@@ -29,7 +29,8 @@ end
 
 Then('I fill in application details page') do
   expect(application_details_page.content).to have_header
-  application_details_page.submit_fee_600
+  fill_in 'fee_search', with: 'FEE0424'
+  find('#fee-search-results > li').click
 end
 
 Then('the applicants has less savings then minimum threshold') do

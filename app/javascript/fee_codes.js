@@ -32,7 +32,7 @@ window.moj.Modules.LoadCodesModule = (function() {
         console.error('[LoadCodesModule] Failed to load fee codes:', error);
         console.error('[LoadCodesModule] Status:', status, 'Response:', xhr.responseText);
         codes = []; // Return empty array on error
-        alert('Failed to load fee codes. Please refresh the page.');
+        // alert('Failed to load fee codes. Please refresh the page.');
       },
       complete: function() {
         loading = false;
