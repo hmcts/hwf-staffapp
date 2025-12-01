@@ -44,7 +44,7 @@ RSpec.describe FregApiService do
 
     it 'configures the connection with the correct URL' do
       # The url_prefix includes a trailing slash
-      expect(service.connection.url_prefix.to_s).to eq("#{FregApiService::FREG_API_URL}/")
+      expect(service.connection.url_prefix.to_s).to eq("#{Settings.freg_api_url}/")
     end
 
     it 'configures retry middleware' do
@@ -61,7 +61,7 @@ RSpec.describe FregApiService do
   describe '#calculate_fee' do
     let(:stubs) { Faraday::Adapter::Test::Stubs.new }
     let(:test_connection) do
-      Faraday.new(url: FregApiService::FREG_API_URL) do |faraday|
+      Faraday.new(url: Settings.freg_api_url) do |faraday|
         faraday.request :json
         faraday.response :json, content_type: /\bjson$/
         faraday.adapter :test, stubs
@@ -158,7 +158,7 @@ RSpec.describe FregApiService do
   describe '#load_approved_feee' do
     let(:stubs) { Faraday::Adapter::Test::Stubs.new }
     let(:test_connection) do
-      Faraday.new(url: FregApiService::FREG_API_URL) do |faraday|
+      Faraday.new(url: Settings.freg_api_url) do |faraday|
         faraday.request :json
         faraday.response :json, content_type: /\bjson$/
         faraday.adapter :test, stubs
@@ -376,7 +376,7 @@ RSpec.describe FregApiService do
   describe 'integration with Faraday retry' do
     let(:stubs) { Faraday::Adapter::Test::Stubs.new }
     let(:test_connection) do
-      Faraday.new(url: FregApiService::FREG_API_URL) do |faraday|
+      Faraday.new(url: Settings.freg_api_url) do |faraday|
         faraday.request :json
         faraday.request :retry, {
           max: 2,
