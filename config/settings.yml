@@ -67,3 +67,4 @@ dwp_mock:
   ni_number_500_error: ['SN111111C']
   ni_number_connection_refused: ['SN222222C']
   fake_api_enabled: <%= ENV['FAKE_BENEFIT_CHECK'].present? && ['1', 'true'].include?(ENV['FAKE_BENEFIT_CHECK']) %>
+freg_api_url: <%= ENV['FREG_API_URL'] || 'http://fees-register-api-aat.service.core-compute-aat.internal' %>
