@@ -90,7 +90,7 @@ RSpec.feature 'Part Payments flow' do
 
         scenario 'redirects to the confirmation page with the correct content' do
           expect(page).to have_content 'Processing complete'
-          expect(page).to have_content 'We have received your part-payment towards your fee. However we are unable to accept it because:'
+          expect(page).to have_content 'We have received your part-payment towards your fee. However, we are unable to accept it because:'
         end
       end
 

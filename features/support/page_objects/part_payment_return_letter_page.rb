@@ -8,7 +8,7 @@ class PartPaymentReturnLetterPage < BasePage
     element :next_steps_line_3, 'p', text: 'Post the letter and all the documents back to the applicant'
     element :see_guides, 'a', text: 'See the guides'
     section :letter_template, '.evidence-confirmation-letter' do
-      element :explanation, 'p', text: /As we haven’t received payment, we’re unable to process your application/
+      element :explanation, 'p', text: /As we haven't received payment, we're unable to process the application/
     end
   end
 end
