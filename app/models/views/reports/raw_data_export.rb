@@ -14,12 +14,10 @@ module Views
         estimated_cost: 'estimated cost',
         application_type: 'application type',
         form_name: 'form',
-        probate: 'probate',
         refund: 'refund',
         emergency: 'emergency',
         income: 'pre evidence income',
         check_income: 'post evidence income',
-        income_threshold: 'income_threshold exceeded',
         income_period: 'income period',
         reg_number: 'ho/ni number',
         children: 'children',
@@ -90,7 +88,7 @@ module Views
       # rubocop:disable Metrics/CyclomaticComplexity
       # rubocop:disable Metrics/PerceivedComplexity
       def process_row(row, attr)
-        if [:estimated_cost, :estimated_amount_to_pay, :reg_number, :income_threshold,
+        if [:estimated_cost, :estimated_amount_to_pay, :reg_number,
             :final_amount_to_pay].include?(attr)
           send(attr, row)
         elsif [:date_received, :decision_date, :date_fee_paid, :date_of_birth,
@@ -105,8 +103,6 @@ module Views
           children_age_band(row, attr)
         elsif attr == :over_66
           over_66?(row)
-        elsif attr == :low_income_declared
-          low_income_declared(row)
         elsif [:case_number, :form_name].include?(attr)
           row[attr.to_s].presence || 'N/A'
         elsif [:hmrc_request_date_range].include?(attr)
@@ -148,7 +144,6 @@ module Views
             applications.children_age_band,
             details.fee,
             details.form_name,
-            details.probate,
             details.refund,
             details.statement_signed_by,
             applications.application_type,
@@ -213,7 +208,7 @@ module Views
             CASE WHEN applicants.partner_last_name IS NULL THEN 'false'
                  WHEN applicants.partner_last_name IS NOT NULL THEN 'true'
                  END AS partner_name,
-            CASE WHEN applications.income < 101 THEN 'true' ELSE 'false' END AS low_income_declared,
+            CASE WHEN applications.income <= 101 THEN 'true' ELSE 'false' END AS low_income_declared,
             ec.check_type as db_evidence_check_type,
             ec.income_check_type as db_income_check_type,
             ec.hmrc_income_used as hmrc_total_income,
@@ -290,12 +285,6 @@ module Views
         return 'NI number' if row['ni_number'].present?
         return 'Home Office number' if row['ho_number'].present?
         'None'
-      end
-
-      def income_threshold(row)
-        return 'under' if row['income_min_threshold_exceeded']
-        return 'over' if row['income_max_threshold_exceeded']
-        'N/A'
       end
 
       def over_66?(row)
