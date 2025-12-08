@@ -632,7 +632,7 @@ GEM
     systemu (2.6.5)
     temple (0.10.4)
     terminal-notifier-guard (1.7.0)
-    test-prof (1.4.4)
+    test-prof (1.5.0)
     thor (1.4.0)
     thread_safe (0.3.6)
     tilt (2.6.1)
