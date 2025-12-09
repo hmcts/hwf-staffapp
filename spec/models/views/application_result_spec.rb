@@ -222,4 +222,88 @@ RSpec.describe Views::ApplicationResult do
       it { is_expected.to eql('payment') }
     end
   end
+
+  describe '#processed_part_payment?' do
+    subject { view.processed_part_payment? }
+
+    context 'when the application has a part payment and is processed' do
+      let(:part_payment) { build_stubbed(:part_payment) }
+      let(:application) { build_stubbed(:application, part_payment: part_payment, state: 3) }
+
+      it { is_expected.to be true }
+    end
+
+    context 'when the application has no part payment' do
+      let(:application) { build_stubbed(:application, part_payment: nil, state: 3) }
+
+      it { is_expected.to be false }
+    end
+
+    context 'when the application is not processed' do
+      let(:part_payment) { build_stubbed(:part_payment) }
+      let(:application) { build_stubbed(:application, part_payment: part_payment, state: 2) }
+
+      it { is_expected.to be false }
+    end
+  end
+
+  describe '#banner_style' do
+    subject { view.banner_style }
+
+    context 'when the application has a processed part payment' do
+      let(:part_payment) { build_stubbed(:part_payment) }
+      let(:application) { build_stubbed(:application, part_payment: part_payment, state: 3, decision: 'full', outcome: 'part') }
+
+      it 'returns the application decision' do
+        is_expected.to eq 'full'
+      end
+    end
+
+    context 'when the application has no part payment' do
+      let(:application) { build_stubbed(:application, part_payment: nil, outcome: 'granted') }
+
+      it 'returns the result' do
+        is_expected.to eq 'granted'
+      end
+    end
+
+    context 'when the application is not processed' do
+      let(:part_payment) { build_stubbed(:part_payment) }
+      let(:application) { build_stubbed(:application, part_payment: part_payment, state: 2, decision: 'none', outcome: 'part') }
+
+      it 'returns the result' do
+        is_expected.to eq 'part'
+      end
+    end
+  end
+
+  describe '#pp_outcome' do
+    subject { view.pp_outcome }
+
+    context 'when the part payment is successful' do
+      let(:part_payment) { build_stubbed(:part_payment, correct: true, outcome: 'part') }
+      let(:application) { build_stubbed(:application, part_payment: part_payment) }
+
+      it 'returns paid' do
+        is_expected.to eq 'paid'
+      end
+    end
+
+    context 'when the part payment is not successful' do
+      let(:part_payment) { build_stubbed(:part_payment, correct: false, outcome: 'none') }
+      let(:application) { build_stubbed(:application, part_payment: part_payment) }
+
+      it 'returns the part payment outcome' do
+        is_expected.to eq 'none'
+      end
+    end
+
+    context 'when there is no part payment' do
+      let(:application) { build_stubbed(:application, part_payment: nil) }
+
+      it 'returns nil' do
+        is_expected.to be_nil
+      end
+    end
+  end
 end
