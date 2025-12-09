@@ -12,6 +12,22 @@ module Views
       ['granted', 'full', 'part', 'paid', 'none', 'return'].include?(outcome) ? outcome : 'error'
     end
 
+    def banner_style
+      if processed_part_payment?
+        @application.decision
+      else
+        result
+      end
+    end
+
+    def pp_outcome
+      if part_payment_successful
+        'paid'
+      else
+        @application.part_payment&.outcome
+      end
+    end
+
     def amount_to_pay
       # Because we are outside the ActiveRecord::Base scope I can't use is_a?
       if outcome_from.class.name.to_s == 'PartPayment'
@@ -53,6 +69,11 @@ module Views
 
     def amount_to_refund
       @application.detail.fee - amount_to_pay_for_part_payment.to_f
+    end
+
+    def processed_part_payment?
+      return false if @application.part_payment.nil?
+      @application.processed?
     end
 
     delegate :state, to: :@application
