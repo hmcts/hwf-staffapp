@@ -23,10 +23,6 @@ class ReportPolicy < BasePolicy
     admin_or_mi?
   end
 
-  def income_claims_data?
-    admin?
-  end
-
   def ocmc_report?
     admin?
   end

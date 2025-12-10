@@ -14,7 +14,6 @@ RSpec.describe ReportPolicy, type: :policy do
     it { is_expected.not_to permit_action(:public) }
     it { is_expected.to permit_action(:letter) }
     it { is_expected.not_to permit_action(:raw_data) }
-    it { is_expected.not_to permit_action(:income_claims_data) }
     it { is_expected.not_to permit_action(:power_bi) }
     it { is_expected.not_to permit_action(:ocmc_report) }
     it { is_expected.not_to permit_action(:hmrc_purged) }
@@ -30,7 +29,6 @@ RSpec.describe ReportPolicy, type: :policy do
     it { is_expected.not_to permit_action(:public) }
     it { is_expected.to permit_action(:letter) }
     it { is_expected.not_to permit_action(:raw_data) }
-    it { is_expected.not_to permit_action(:income_claims_data) }
     it { is_expected.not_to permit_action(:power_bi) }
     it { is_expected.not_to permit_action(:ocmc_report) }
     it { is_expected.not_to permit_action(:hmrc_purged) }
@@ -46,7 +44,6 @@ RSpec.describe ReportPolicy, type: :policy do
     it { is_expected.not_to permit_action(:public) }
     it { is_expected.to permit_action(:letter) }
     it { is_expected.not_to permit_action(:raw_data) }
-    it { is_expected.not_to permit_action(:income_claims_data) }
     it { is_expected.not_to permit_action(:power_bi) }
     it { is_expected.not_to permit_action(:ocmc_report) }
     it { is_expected.not_to permit_action(:hmrc_purged) }
@@ -62,7 +59,6 @@ RSpec.describe ReportPolicy, type: :policy do
     it { is_expected.to permit_action(:public) }
     it { is_expected.to permit_action(:letter) }
     it { is_expected.to permit_action(:raw_data) }
-    it { is_expected.to permit_action(:income_claims_data) }
     it { is_expected.to permit_action(:ocmc_report) }
     it { is_expected.to permit_action(:hmrc_purged) }
     it { is_expected.to permit_action(:purge_audit) }
@@ -76,7 +72,6 @@ RSpec.describe ReportPolicy, type: :policy do
     it { is_expected.not_to permit_action(:graphs) }
     it { is_expected.to permit_action(:letter) }
     it { is_expected.to permit_action(:raw_data) }
-    it { is_expected.not_to permit_action(:income_claims_data) }
     it { is_expected.not_to permit_action(:power_bi) }
     it { is_expected.not_to permit_action(:ocmc_report) }
     it { is_expected.to permit_action(:hmrc_purged) }

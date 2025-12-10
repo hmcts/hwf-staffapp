@@ -17,8 +17,6 @@ Rails.application.routes.draw do
   namespace :report do
     get 'ccmcc_data' => 'ccmcc_data#show'
     put 'ccmcc_data' => 'ccmcc_data#data_export'
-    get 'income_claims_data' => 'income_claims_data#show'
-    put 'income_claims_data' => 'income_claims_data#data_export'
     get 'power_bi' => 'power_bi#show'
     put 'power_bi' => 'power_bi#data_export'
     get 'raw_data' => 'raw_data#show'
