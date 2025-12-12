@@ -53,7 +53,7 @@ end
 # rubocop:disable Metrics/AbcSize
 def complete_application
   expect(application_details_page.content).to have_header
-  application_details_page.submit_fee_6000
+  application_details_page.submit_fee_600
   expect(savings_investments_page.content).to have_header
   savings_investments_page.submit_less_than
   expect(benefits_page.content).to have_header

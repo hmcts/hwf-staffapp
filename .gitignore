@@ -60,5 +60,5 @@ storage/*
 !/app/assets/builds/.keep
 
 /node_modules
-
+# Ignore AI generated files
 CLAUDE.md
