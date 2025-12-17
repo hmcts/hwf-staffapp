@@ -216,7 +216,9 @@ module Views
             CASE WHEN applicants.partner_last_name IS NULL THEN 'false'
                  WHEN applicants.partner_last_name IS NOT NULL THEN 'true'
                  END AS partner_name,
-            CASE WHEN applications.income <= 101 THEN 'true' ELSE 'false' END AS low_income_declared,
+            CASE WHEN applications.income <= 101 THEN 'true'
+                 WHEN applications.income > 101 THEN 'false'
+                 ELSE 'N/A' END AS low_income_declared,
             ec.check_type as db_evidence_check_type,
             ec.income_check_type as db_income_check_type,
             ec.hmrc_income_used as hmrc_total_income,

@@ -161,7 +161,7 @@ RSpec.describe Views::Reports::RawDataExport do
         export = data.to_csv.split("\n")
         row = "#{id},#{office.name},#{reference}"
         matching_row = export.find { |line| line.include?(row) }
-        expect(matching_row).to include('NI number,1,N/A,N/A,false,No,none,No,0.0,N/A,paper,false,N/A,false,Medium,3500.0,N/A,N/A,false,JK123456A')
+        expect(matching_row).to include('NI number,1,N/A,N/A,false,No,none,No,0.0,N/A,paper,false,N/A,false,Medium,3500.0,N/A,N/A,N/A,JK123456A')
       end
     end
 
@@ -508,12 +508,12 @@ RSpec.describe Views::Reports::RawDataExport do
       end
     end
 
-    context 'blank income' do
+    context 'blank income is N/A value' do
       let(:income) { nil }
       it do
         application2
         export = data.to_csv
-        row = "false,N/A,false,Medium,3500.0,N/A,N/A,false,JK123456A"
+        row = "false,N/A,false,Medium,3500.0,N/A,N/A,N/A,JK123456A"
         expect(export).to include(row)
       end
     end
