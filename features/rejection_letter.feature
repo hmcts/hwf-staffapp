@@ -19,10 +19,10 @@ Feature: Rejection letter based off income / Savings
     Given I have an online application with big savings
     And Benefit Check is ok
     When I process that application
-    Then the rejection letter should state "Your savings and investments total: £16,000 or more"
+    Then the rejection letter should state "The applicant's savings and investments total: £16,000 or more"
 
   Scenario: Online application with saving over £3500
     Given I have an online application with medium savings
     And Benefit Check is ok
     When I process that application
-    Then the rejection letter should state "Your savings and investments total: £3,500"
+    Then the rejection letter should state "The applicant's savings and investments total: £3,500"

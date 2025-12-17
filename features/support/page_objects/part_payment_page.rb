@@ -3,7 +3,7 @@ class PartPaymentPage < BasePage
     element :no, 'label', text: 'No'
     element :yes, 'label', text: 'Yes'
     element :header, 'h1', text: 'Is the part-payment ready to process?'
-    element :evidence_confirmation_letter, '.evidence-confirmation-letter', text: 'We have received your part-payment towards your fee. However we are unable to accept it because:'
+    element :evidence_confirmation_letter, '.evidence-confirmation-letter', text: 'We have received the part-payment towards the fee. However, we are unable to accept it because:'
     element :part_payment_fee, '#result h2', text: 'The applicant must pay £40 towards the fee'
     element :not_received, 'span', text: 'What to do when a part payment has not been received'
     element :return_application_button, 'input[type="submit"][value="Return application"]'

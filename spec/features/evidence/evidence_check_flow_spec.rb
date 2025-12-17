@@ -272,13 +272,13 @@ RSpec.feature 'Evidence check flow' do
         let(:amount) { application.detail.fee.to_i }
         let(:paid_by) { evidence.expires_at.strftime(Date::DATE_FORMATS[:gov_uk_long]) }
 
-        it { expect(page).to have_content 'This is because you have more than the maximum amount of income allowed.' }
+        it { expect(page).to have_content 'This is because the applicant has more than the maximum amount of income allowed.' }
 
         it { expect(page).to have_content(evidence.application.applicant.full_name) }
 
         it { expect(page).to have_content(user.name) }
 
-        it { expect(page).to have_content "You need to pay the full fee amount of £#{amount} by #{paid_by}." }
+        it { expect(page).to have_content "The full fee amount of £#{amount} needs to be paid by #{paid_by}." }
 
         it { expect(page).to have_no_content 'Maximum amount of income allowed: £5,490' }
 

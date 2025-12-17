@@ -19,7 +19,7 @@ end
 Then("I should see evidence has not arrived or too late letter template") do
   reference = "#{reference_prefix}-000001"
   expect(return_letter_page.content.evidence_confirmation_letter.text).to include "Reference: #{reference}"
-  expect(return_letter_page.content.evidence_confirmation_letter.text).to include 'As we haven’t received any information within 28 days of request, we’re unable to process your application'
+  expect(return_letter_page.content.evidence_confirmation_letter.text).to include 'As we haven\'t received any information within 28 days of request, we\'re unable to process the application'
 end
 
 Then("I should see a not proceeding application letter template") do

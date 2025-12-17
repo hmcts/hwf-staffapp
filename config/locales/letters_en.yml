@@ -185,18 +185,25 @@ en-GB:
       no_evidence_received_html: |
         <p>Dear %{full_name}</p>
         <p><strong>Reference: %{reference}</strong></p>
-        <p>We wrote to you about your application for help with fees, asking for additional information by %{expiry_date}.</p>
-        <p>As we haven’t received any information, we’re unable to process your application. You have to pay the full fee. This may have an impact on the original case or claim related to this application.</p>
+        <p>We wrote to you about your Help with Fees application, asking for additional information by %{expiry_date}.</p>
+        <p>As we haven't received any information, we're unable to process your application. You have to pay the full fee. This may have an impact on the original case or claim related to this application.</p>
+        <p>You can pay by:</p>
+        <ul class="govuk-list govuk-list--bullet">
+          <li>calling <strong>&lt;add phone number&gt;</strong> with debit card details</li>
+          <li>posting a cheque written out to 'HM Courts and Tribunals Service' to the address at the top of this letter</li>
+          <li>going to the court counter with cash, a cheque or debit card (please check with the court dealing with your case that they provide a counter service before making the journey)</li>
+        </ul>
+        <p>If none of these options are possible, call the court on <strong>&lt;add phone number&gt;</strong></p>
         <p>If you still want help with your fees, you will have to complete a new application.</p>
-        <p>Yours sincerely,</p>
+        <p>From,</p>
         <p>%{user_name}</p>
       no_evidence_received_refund_html: |
         <p>Dear %{full_name}</p>
         <p><strong>Reference: %{reference}</strong></p>
-        <p>We wrote to you about your application for help with fees, asking for additional information by %{expiry_date}.</p>
-        <p>As we haven’t received any information within 28 days of request, we’re unable to process your application and no refund will be issued.</p>
+        <p>We wrote to you about your Help with Fees application, asking for additional information by %{expiry_date}.</p>
+        <p>As we haven't received any information within 28 days of request, we're unable to process your application and no refund will be issued.</p>
         <p>If you still want help with your fees, you will have to complete a new application.</p>
-        <p>Yours sincerely,</p>
+        <p>From,</p>
         <p>%{user_name}</p>
       evidence_incorrect_html: |
         <p>Dear %{full_name}</p>
@@ -260,19 +267,26 @@ en-GB:
       no_part_payment_received_html: |
         <p>Dear %{full_name}</p>
         <p><strong>Reference: %{reference}</strong></p>
-        <p>We wrote to you about your application for help with fees, asking that you make a part-payment of %{part_payment_amount} towards your fee by %{date_for_part_payment}.</p>
-        <p>As we haven’t received payment, we’re unable to process your application. This may have an impact on the original case or claim related to this application.</p>
+        <p>We wrote to you about your Help with Fees application, asking that you make a part-payment of %{part_payment_amount} towards your fee by %{date_for_part_payment}.</p>
+        <p>As we haven't received payment, we're unable to process your application. This may have an impact on the original case or claim related to this application.</p>
         <p>If you still want help with your fees, you will have to complete a new application.</p>
-        <p>Yours sincerely,</p>
+        <p>From,</p>
         <p>%{user_name}</p>
       part_payment_incorrect_html: |
         <p>Dear %{full_name}</p>
         <p><strong>Reference: %{reference}</strong></p>
-        <p>We have received your part-payment towards your fee. However we are unable to accept it because:</p>
+        <p>We have received your part-payment towards your fee. However, we are unable to accept it because:</p>
         <p>(PLEASE EXPLAIN WHY PAYMENT CAN'T BE ACCEPTED, FOR EXAMPLE: THE CHEQUE IS MADE OUT FOR THE INCORRECT AMOUNT/OUT OF DATE/INCORRECT PAYEE DETAILS)</p>
-        <p>Unfortunately we’re unable to process your application and you will have to pay the full fee. This may have an impact on the original case or claim related to this application.</p>
+        <p>Unfortunately, we're unable to process your application and you will have to pay the full fee. This may have an impact on the original case or claim related to this application.</p>
+        <p>You can pay by:</p>
+        <ul class="govuk-list govuk-list--bullet">
+          <li>calling <strong>&lt;add phone number&gt;</strong> with debit card details</li>
+          <li>posting a cheque written out to 'HM Courts and Tribunals Service' to the address at the top of this letter</li>
+          <li>going to the court counter with cash, a cheque or debit card (please check with the court dealing with your case that they provide a counter service before making the journey)</li>
+        </ul>
+        <p>If none of these options are possible, call the court on <strong>&lt;add phone number&gt;</strong></p>
         <p>If you still want help with your fees, you will have to complete a new application.</p>
-        <p>Yours sincerely,</p>
+        <p>From,</p>
         <p>%{user_name}</p>
     refund:
       not_eligible_html: |
@@ -315,7 +329,8 @@ en-GB:
         <p>The application has been processed and has received a full remission of the court/tribunal fee in question.</p>
         <p>The refund will now be processed in line with the court/tribunal procedures.</p>
         <p><strong>What happens next</strong></p>
-        <p>If the fee was paid via Fee Account the refund will be paid back to the same account. If the fee was paid via cash or cheque the refund will be made through the court/tribunal accounts and sent out in the form of a cheque, to you at the address we hold on our records. The refunded monies will be received within the next 15 working days.</p>
+        <p>We will refund the monies to the original fee payer using the same payment method originally used.</p>
+        <p>The refunded monies will be received within the next 15 working days.</p>
         <p>Please be advised that refund times may vary depending on original method of payment.</p>
         <p>From,</p>
         <p>%{user_name}</p>
