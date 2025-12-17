@@ -14,12 +14,10 @@ module Views
         estimated_cost: 'estimated cost',
         application_type: 'application type',
         form_name: 'form',
-        probate: 'probate',
         refund: 'refund',
         emergency: 'emergency',
         income: 'pre evidence income',
         check_income: 'post evidence income',
-        income_threshold: 'income_threshold exceeded',
         income_period: 'income period',
         reg_number: 'ho/ni number',
         children: 'children',
@@ -38,6 +36,7 @@ module Views
         capital: 'capital band',
         savings_amount: 'savings and investments amount',
         part_payment_outcome: 'part payment outcome',
+        pp_outcome: 'PP outcome',
         low_income_declared: 'low income declared',
         case_number: 'case number',
         postcode: 'postcode',
@@ -45,6 +44,7 @@ module Views
         date_received: 'date received',
         decision_date: 'decision date',
         date_fee_paid: 'date paid',
+        application_processed_date: 'application processed date',
         manual_process_date: 'manual evidence processed date',
         date_submitted_online: 'date submitted online',
         statement_signed_by: 'statement signed by',
@@ -54,11 +54,13 @@ module Views
         db_evidence_check_type: 'DB evidence check type',
         db_income_check_type: 'DB income check type',
         hmrc_total_income: 'HMRC total income',
+        ev_check_outcome: 'EV check outcome',
         evidence_check_type: 'evidence check type',
         hmrc_response: 'HMRC response?',
         hmrc_errors: 'HMRC errors',
         complete_processing: 'complete processing?',
         additional_income: 'additional income',
+        income_processed: 'income processed',
         hmrc_request_date_range: 'HMRC request date range'
       }.freeze
 
@@ -90,11 +92,12 @@ module Views
       # rubocop:disable Metrics/CyclomaticComplexity
       # rubocop:disable Metrics/PerceivedComplexity
       def process_row(row, attr)
-        if [:estimated_cost, :estimated_amount_to_pay, :reg_number, :income_threshold,
+        if [:estimated_cost, :estimated_amount_to_pay, :reg_number,
             :final_amount_to_pay].include?(attr)
           send(attr, row)
         elsif [:date_received, :decision_date, :date_fee_paid, :date_of_birth,
-               :date_submitted_online, :manual_process_date, :processed_date].include?(attr)
+               :date_submitted_online, :manual_process_date, :processed_date,
+               :application_processed_date].include?(attr)
           date_value = row[attr.to_s]
           if date_value.present?
             date_value.respond_to?(:to_fs) ? date_value.to_fs(:default) : Date.parse(date_value.to_s).to_fs(:default)
@@ -105,8 +108,6 @@ module Views
           children_age_band(row, attr)
         elsif attr == :over_66
           over_66?(row)
-        elsif attr == :low_income_declared
-          low_income_declared(row)
         elsif [:case_number, :form_name].include?(attr)
           row[attr.to_s].presence || 'N/A'
         elsif [:hmrc_request_date_range].include?(attr)
@@ -148,7 +149,6 @@ module Views
             applications.children_age_band,
             details.fee,
             details.form_name,
-            details.probate,
             details.refund,
             details.statement_signed_by,
             applications.application_type,
@@ -190,6 +190,7 @@ module Views
             CASE WHEN part_payments.outcome = 'return' THEN 'return'
                  WHEN part_payments.outcome = 'none' THEN 'false'
                  WHEN part_payments.outcome = 'part' THEN 'true' ELSE 'N/A' END AS part_payment_outcome,
+            part_payments.outcome AS pp_outcome,
             CASE WHEN savings.amount >= 16000 THEN NULL
                  ELSE savings.amount
             END AS savings_amount,
@@ -201,11 +202,13 @@ module Views
             details.date_received AS date_received,
             applications.decision_date AS decision_date,
             details.date_fee_paid AS date_fee_paid,
+            applications.completed_at AS application_processed_date,
             oa.created_at AS date_submitted_online,
             details.statement_signed_by AS statement_signed_by,
             details.calculation_scheme AS calculation_scheme,
             ec.income AS check_income,
             ec.amount_to_pay AS evidence_check_amount_to_pay,
+            ec.outcome AS ev_check_outcome,
             CASE WHEN applicants.partner_ni_number IS NULL THEN 'false'
                  WHEN applicants.partner_ni_number = '' THEN 'false'
                  WHEN applicants.partner_ni_number IS NOT NULL THEN 'true'
@@ -213,7 +216,9 @@ module Views
             CASE WHEN applicants.partner_last_name IS NULL THEN 'false'
                  WHEN applicants.partner_last_name IS NOT NULL THEN 'true'
                  END AS partner_name,
-            CASE WHEN applications.income < 101 THEN 'true' ELSE 'false' END AS low_income_declared,
+            CASE WHEN applications.income <= 101 THEN 'true'
+                 WHEN applications.income > 101 THEN 'false'
+                 ELSE 'N/A' END AS low_income_declared,
             ec.check_type as db_evidence_check_type,
             ec.income_check_type as db_income_check_type,
             ec.hmrc_income_used as hmrc_total_income,
@@ -244,6 +249,10 @@ module Views
                 AND hc.additional_income > 0 then hc.additional_income
               ELSE NULL
             END as additional_income,
+            CASE WHEN ec.income IS NULL then applications.income
+              WHEN ec.completed_at IS NOT NULL then ec.income
+              ELSE NULL
+            END as income_processed,
             hc.request_params as hmrc_request_date_range
           FROM applications
           INNER JOIN applicants ON applicants.application_id = applications.id
@@ -290,12 +299,6 @@ module Views
         return 'NI number' if row['ni_number'].present?
         return 'Home Office number' if row['ho_number'].present?
         'None'
-      end
-
-      def income_threshold(row)
-        return 'under' if row['income_min_threshold_exceeded']
-        return 'over' if row['income_max_threshold_exceeded']
-        'N/A'
       end
 
       def over_66?(row)
