@@ -6,6 +6,7 @@ import Rails from 'rails-ujs'
 Rails.start();
 
 import 'jquery'
+import ahoy from 'ahoy.js'
 
 global.$ = require("jquery");
 global.jQuery = global.$;
@@ -26,6 +27,6 @@ import './gtm_track_timestamps'
 import './error_class_loader'
 import './refund'
 import './date_received_online'
-
+import './smart_tracking'
 import "trix"
 import "@rails/actiontext"

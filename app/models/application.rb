@@ -1,9 +1,11 @@
 class Application < ActiveRecord::Base
   # paranoia gem
   acts_as_paranoid column: :purged, sentinel_value: false
+  visitable :ahoy_visit
 
   include PgSearch::Model
   include ApplicationCheckable
+
 
   INCOME_PERIOD = { last_month: 'last_month', average: 'average' }.freeze
 
