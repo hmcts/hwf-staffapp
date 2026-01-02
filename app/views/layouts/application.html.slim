@@ -8,7 +8,7 @@
   = yield :head_scripts
 
 - content_for :content_override
-  #wrapper.group
+  #wrapper.group data-application-id=(application_id_helper)
     - if @dwp_state.present?
       .container
         div class=("dwp-banner-#{@dwp_state}")

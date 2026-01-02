@@ -64,4 +64,16 @@ module ApplicationHelper
   def date_hint
     Time.current.strftime("%d %m %Y")
   end
+
+  def application_id_helper
+    if defined?(@application) && @application.present?
+      @application.id || nil
+    elsif defined?(@evidence) && @evidence.present?
+      @evidence.application_id || nil
+    elsif defined?(@part_payment) && @part_payment.present?
+      @part_payment.application_id || nil
+    else
+      nil
+    end
+  end
 end
