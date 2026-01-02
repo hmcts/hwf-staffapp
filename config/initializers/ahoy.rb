@@ -1,15 +1,17 @@
-class Ahoy::Store < Ahoy::DatabaseStore
-  def track_visit(data)
-    # Skip visit tracking - we only care about events
-    # No background job needed
-  end
+module Ahoy
+  class Store < Ahoy::DatabaseStore
+    def track_visit(data)
+      # Skip visit tracking - we only care about events
+      # No background job needed
+    end
 
-  def track_event(data)
-    # Track events asynchronously in background job
-    AhoyTrackEventJob.perform_later(
-      event: data,
-      user: user
-    )
+    def track_event(data)
+      # Track events asynchronously in background job
+      AhoyTrackEventJob.perform_later(
+        event: data,
+        user: user
+      )
+    end
   end
 end
 
