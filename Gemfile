@@ -5,6 +5,7 @@ git_source(:github) { |repo| "https://github.com/#{repo}.git" }
 ruby '3.4.8'
 
 gem 'application_insights', '~> 0.5.6'
+gem "ahoy_matey"
 gem 'csv'
 gem 'dotenv-rails', groups: [:development, :test] # this has to be here because of load order
 
