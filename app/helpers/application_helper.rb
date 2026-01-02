@@ -64,4 +64,16 @@ module ApplicationHelper
   def date_hint
     Time.current.strftime("%d %m %Y")
   end
+
+  # rubocop:disable Rails/HelperInstanceVariable
+  def application_id_helper
+    if @application.present?
+      @application&.id
+    elsif @evidence.present?
+      @evidence&.application_id
+    elsif @part_payment.present?
+      @part_payment&.application_id
+    end
+  end
+  # rubocop:enable Rails/HelperInstanceVariable
 end
