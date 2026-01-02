@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.1].define(version: 2026_01_02_104317) do
+ActiveRecord::Schema[8.1].define(version: 2026_01_02_140022) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
   enable_extension "pg_trgm"
@@ -56,11 +56,13 @@ ActiveRecord::Schema[8.1].define(version: 2026_01_02_104317) do
   end
 
   create_table "ahoy_events", force: :cascade do |t|
+    t.integer "application_id"
     t.string "name"
     t.jsonb "properties"
     t.datetime "time"
     t.bigint "user_id"
     t.bigint "visit_id"
+    t.index ["application_id"], name: "index_ahoy_events_on_application_id"
     t.index ["name", "time"], name: "index_ahoy_events_on_name_and_time"
     t.index ["properties"], name: "index_ahoy_events_on_properties", opclass: :jsonb_path_ops, using: :gin
     t.index ["user_id"], name: "index_ahoy_events_on_user_id"

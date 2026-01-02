@@ -3,14 +3,29 @@ import ahoy from 'ahoy.js'
 // Generic click tracking for the entire application
 document.addEventListener('DOMContentLoaded', function() {
 
+  // Helper function to get application ID from the page
+  function getApplicationId() {
+    const wrapper = document.getElementById('wrapper');
+    return wrapper ? wrapper.dataset.applicationId : null;
+  }
+
   // Helper function to get the current page context
   function getPageContext() {
     const path = window.location.pathname;
     const pageName = path.split('/').filter(Boolean).join('_') || 'home';
-    return {
+    const applicationId = getApplicationId();
+
+    const context = {
       page: pageName,
       url: path
     };
+
+    // Only add application_id if it exists
+    if (applicationId) {
+      context.application_id = applicationId;
+    }
+
+    return context;
   }
 
   // Helper function to get text content from an element
