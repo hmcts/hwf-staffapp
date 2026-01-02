@@ -6,7 +6,6 @@ class Application < ActiveRecord::Base
   include PgSearch::Model
   include ApplicationCheckable
 
-
   INCOME_PERIOD = { last_month: 'last_month', average: 'average' }.freeze
 
   serialize :income_kind, coder: YAML

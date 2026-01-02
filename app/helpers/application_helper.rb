@@ -65,15 +65,15 @@ module ApplicationHelper
     Time.current.strftime("%d %m %Y")
   end
 
+  # rubocop:disable Rails/HelperInstanceVariable
   def application_id_helper
-    if defined?(@application) && @application.present?
-      @application.id || nil
-    elsif defined?(@evidence) && @evidence.present?
-      @evidence.application_id || nil
-    elsif defined?(@part_payment) && @part_payment.present?
-      @part_payment.application_id || nil
-    else
-      nil
+    if @application.present?
+      @application&.id
+    elsif @evidence.present?
+      @evidence&.application_id
+    elsif @part_payment.present?
+      @part_payment&.application_id
     end
   end
+  # rubocop:enable Rails/HelperInstanceVariable
 end
