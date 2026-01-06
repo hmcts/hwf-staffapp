@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe Ahoy::Event, type: :model do
+RSpec.describe Ahoy::Event do
   describe 'associations' do
     it { is_expected.to belong_to(:visit).optional }
     it { is_expected.to belong_to(:user).optional }
@@ -107,26 +107,26 @@ RSpec.describe Ahoy::Event, type: :model do
     let(:application) { create(:application) }
 
     it 'can order events by time to track application flow' do
-      event1 = create(:ahoy_event,
-                      name: 'Start Application',
-                      application_id: application.id,
-                      time: 1.hour.ago)
-      event2 = create(:ahoy_event,
-                      name: 'Fill Personal Info',
-                      application_id: application.id,
-                      time: 50.minutes.ago)
-      event3 = create(:ahoy_event,
-                      name: 'Submit Application',
-                      application_id: application.id,
-                      time: 40.minutes.ago)
+      create(:ahoy_event,
+             name: 'Start Application',
+             application_id: application.id,
+             time: 1.hour.ago)
+      create(:ahoy_event,
+             name: 'Fill Personal Info',
+             application_id: application.id,
+             time: 50.minutes.ago)
+      create(:ahoy_event,
+             name: 'Submit Application',
+             application_id: application.id,
+             time: 40.minutes.ago)
 
       events = described_class.where(application_id: application.id).order(:time)
 
       expect(events.pluck(:name)).to eq([
-        'Start Application',
-        'Fill Personal Info',
-        'Submit Application'
-      ])
+                                          'Start Application',
+                                          'Fill Personal Info',
+                                          'Submit Application'
+                                        ])
     end
   end
 end

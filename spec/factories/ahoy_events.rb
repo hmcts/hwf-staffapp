@@ -11,15 +11,15 @@ FactoryBot.define do
     time { Time.current }
 
     trait :with_application do
-      association :application
+      application
     end
 
     trait :with_user do
-      association :user
+      user
     end
 
     trait :with_visit do
-      association :visit, factory: :ahoy_visit
+      visit factory: [:ahoy_visit]
     end
 
     trait :button_click do
@@ -62,7 +62,7 @@ FactoryBot.define do
     started_at { Time.current }
 
     trait :with_user do
-      association :user
+      user
     end
   end
 end

@@ -19,6 +19,14 @@ class ProcessedApplicationsController < ApplicationController
     track_application(application)
   end
 
+  def flow
+    authorize application
+    @events_by_page = Ahoy::Event.
+                      where(application_id: application.id).
+                      order(:time).
+                      group_by { |event| event.properties&.dig('page') || 'Unknown Page' }
+  end
+
   def update
     @deleted_reasons = delete_reasons
     @form = Forms::Application::Delete.new(application)

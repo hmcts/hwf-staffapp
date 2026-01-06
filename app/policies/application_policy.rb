@@ -16,6 +16,10 @@ class ApplicationPolicy < BasePolicy
     (staff_or_manager? || reader?) && same_office?
   end
 
+  def flow?
+    show?
+  end
+
   def update?
     staff_or_manager? && same_office?
   end

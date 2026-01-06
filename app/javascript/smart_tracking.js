@@ -3,6 +3,19 @@ import ahoy from 'ahoy.js'
 // Generic click tracking for the entire application
 document.addEventListener('DOMContentLoaded', function() {
 
+  // Check if tracking should be disabled (for processed applications)
+  function isTrackingDisabled() {
+    const path = window.location.pathname;
+    return path.includes('/processed_applications') ||
+           path.includes('/deleted_applications');
+  }
+
+  // Exit early if tracking is disabled
+  if (isTrackingDisabled()) {
+    console.log('Tracking disabled for processed/deleted applications');
+    return;
+  }
+
   // Helper function to get application ID from the page
   function getApplicationId() {
     const wrapper = document.getElementById('wrapper');

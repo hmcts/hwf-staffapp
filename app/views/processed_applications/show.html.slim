@@ -1,5 +1,8 @@
 =render('shared/processed_and_deleted/show', state: :processed)
 
+p.govuk-body
+  = link_to "View Application Flow Visualization", flow_processed_application_path(@application), class: "govuk-link"
+
 - details_attributes = @form.errors.empty? ? {} : { open: 'open' }
 
 - if Pundit.policy(current_user, @application).update?

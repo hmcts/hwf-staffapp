@@ -1,0 +1,65 @@
+.govuk-grid-row
+  .govuk-grid-column-full
+    h1.govuk-heading-l Application Flow Data
+
+    p.govuk-body
+      = link_to "← Back to Application", processed_application_path(@application), class: "govuk-link"
+
+    - if @events_by_page.present?
+      div.govuk-accordion(data-module="govuk-accordion" id="accordion-flow")
+        - @events_by_page.each_with_index do |(page_name, page_events), index|
+          div.govuk-accordion__section
+            div.govuk-accordion__section-header
+              h2.govuk-accordion__section-heading
+                span.govuk-accordion__section-button(id="accordion-flow-heading-#{index + 1}")
+                  = translate_page_name(page_name)
+                  span.govuk-hint(style="display: inline; margin-left: 10px;")
+                    = "(#{page_events.count} events)"
+
+            div.govuk-accordion__section-content(id="accordion-flow-content-#{index + 1}")
+              table.govuk-table
+                thead.govuk-table__head
+                  tr.govuk-table__row
+                    th.govuk-table__header(scope="col") Event
+                    th.govuk-table__header(scope="col") Properties
+
+                tbody.govuk-table__body
+                  - page_events.each do |single_event|
+                    tr.govuk-table__row
+                      td.govuk-table__cell
+                        = format_event_name(single_event)
+                      td.govuk-table__cell
+                        - if single_event.properties.present?
+                          details.govuk-details
+                            summary.govuk-details__summary
+                              span.govuk-details__summary-text View properties
+                            div.govuk-details__text
+                              dl.govuk-summary-list
+                                - single_event.properties.each do |prop_key, prop_value|
+                                  div.govuk-summary-list__row
+                                    dt.govuk-summary-list__key
+                                      = prop_key.titleize
+                                    dd.govuk-summary-list__value
+                                      - if prop_value.is_a?(Hash)
+                                        pre
+                                          = JSON.pretty_generate(prop_value)
+                                      - else
+                                        = prop_value
+                        - else
+                          | No properties
+
+    - else
+      div.govuk-warning-text
+        span.govuk-warning-text__icon(aria-hidden="true")
+          | !
+        strong.govuk-warning-text__text
+          span.govuk-warning-text__assistive Warning
+          = " No tracking data available for this application."
+
+javascript:
+  if (typeof window.GOVUKFrontend !== 'undefined') {
+    var accordions = document.querySelectorAll('[data-module="govuk-accordion"]');
+    accordions.forEach(function(accordion) {
+      new window.GOVUKFrontend.Accordion(accordion).init();
+    });
+  }

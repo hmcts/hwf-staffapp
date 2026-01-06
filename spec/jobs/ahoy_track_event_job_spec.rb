@@ -1,6 +1,8 @@
 require 'rails_helper'
 
-RSpec.describe AhoyTrackEventJob, type: :job do
+RSpec.describe AhoyTrackEventJob do
+  include ActiveSupport::Testing::TimeHelpers
+
   describe '#perform' do
     let(:user) { create(:user) }
     let(:application) { create(:application) }
@@ -79,8 +81,8 @@ RSpec.describe AhoyTrackEventJob, type: :job do
 
       described_class.new.perform(job_data)
 
-      expect(Rails.logger).to have_received(:info)
-        .with("Ahoy event tracked: #{event_name} for application #{application.id}")
+      expect(Rails.logger).to have_received(:info).
+        with("Ahoy event tracked: #{event_name} for application #{application.id}")
     end
 
     it 'sets the correct timestamp' do

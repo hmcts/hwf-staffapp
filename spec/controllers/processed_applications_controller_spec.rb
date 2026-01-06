@@ -159,6 +159,42 @@ RSpec.describe ProcessedApplicationsController do
     it_behaves_like 'renders correctly and assigns required variables'
   end
 
+  describe 'GET #flow' do
+    let(:event1) { create(:ahoy_event, application_id: application1.id, properties: { 'page' => 'home' }, time: 1.hour.ago) }
+    let(:event2) { create(:ahoy_event, application_id: application1.id, properties: { 'page' => 'home' }, time: 30.minutes.ago) }
+    let(:event3) { create(:ahoy_event, application_id: application1.id, properties: { 'page' => 'applications_details' }, time: 20.minutes.ago) }
+
+    before do
+      event1
+      event2
+      event3
+      get :flow, params: { id: application1.id }
+    end
+
+    it 'returns the correct status code' do
+      expect(response).to have_http_status(200)
+    end
+
+    it 'renders the correct template' do
+      expect(response).to render_template(:flow)
+    end
+
+    it 'assigns events grouped by page' do
+      expect(assigns(:events_by_page)).to be_a(Hash)
+      expect(assigns(:events_by_page).keys).to contain_exactly('home', 'applications_details')
+    end
+
+    it 'groups events correctly by page' do
+      expect(assigns(:events_by_page)['home'].count).to eq(2)
+      expect(assigns(:events_by_page)['applications_details'].count).to eq(1)
+    end
+
+    it 'orders events by time within each group' do
+      home_events = assigns(:events_by_page)['home']
+      expect(home_events.first.time).to be < home_events.last.time
+    end
+  end
+
   describe 'PUT #update' do
     let(:expected_params) { { deleted_reason: 'REASON' } }
     let(:resolver) { instance_double(ResolverService, delete: true) }

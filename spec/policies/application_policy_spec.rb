@@ -17,6 +17,7 @@ RSpec.describe ApplicationPolicy, type: :policy do
 
       it { is_expected.to permit_action(:create) }
       it { is_expected.to permit_action(:show) }
+      it { is_expected.to permit_action(:flow) }
       it { is_expected.to permit_action(:update) }
       it { is_expected.to permit_action(:approve) }
       it { is_expected.to permit_action(:approve_save) }
@@ -25,6 +26,7 @@ RSpec.describe ApplicationPolicy, type: :policy do
     context 'when the application does not belong to their office' do
       it { is_expected.not_to permit_action(:create) }
       it { is_expected.not_to permit_action(:show) }
+      it { is_expected.not_to permit_action(:flow) }
       it { is_expected.not_to permit_action(:update) }
       it { is_expected.not_to permit_action(:approve) }
       it { is_expected.not_to permit_action(:approve_save) }
@@ -42,6 +44,7 @@ RSpec.describe ApplicationPolicy, type: :policy do
 
       it { is_expected.to permit_action(:create) }
       it { is_expected.to permit_action(:show) }
+      it { is_expected.to permit_action(:flow) }
       it { is_expected.to permit_action(:update) }
       it { is_expected.to permit_action(:approve) }
       it { is_expected.to permit_action(:approve_save) }
@@ -50,6 +53,7 @@ RSpec.describe ApplicationPolicy, type: :policy do
     context 'when the application does not belong to their office' do
       it { is_expected.not_to permit_action(:create) }
       it { is_expected.not_to permit_action(:show) }
+      it { is_expected.not_to permit_action(:flow) }
       it { is_expected.not_to permit_action(:update) }
       it { is_expected.not_to permit_action(:approve) }
       it { is_expected.not_to permit_action(:approve_save) }
@@ -62,6 +66,7 @@ RSpec.describe ApplicationPolicy, type: :policy do
     it { is_expected.not_to permit_action(:new) }
     it { is_expected.not_to permit_action(:create) }
     it { is_expected.to permit_action(:show) }
+    it { is_expected.to permit_action(:flow) }
     it { is_expected.not_to permit_action(:update) }
   end
 
@@ -82,6 +87,7 @@ RSpec.describe ApplicationPolicy, type: :policy do
     it { is_expected.not_to permit_action(:create) }
     it { is_expected.to permit_action(:index) }
     it { is_expected.not_to permit_action(:show) }
+    it { is_expected.not_to permit_action(:flow) }
     it { is_expected.not_to permit_action(:update) }
 
     context 'when the application does not belong to their office' do
@@ -91,6 +97,7 @@ RSpec.describe ApplicationPolicy, type: :policy do
       it { is_expected.not_to permit_action(:create) }
       it { is_expected.to permit_action(:index) }
       it { is_expected.to permit_action(:show) }
+      it { is_expected.to permit_action(:flow) }
       it { is_expected.not_to permit_action(:update) }
     end
 
@@ -100,6 +107,7 @@ RSpec.describe ApplicationPolicy, type: :policy do
       it { is_expected.not_to permit_action(:create) }
       it { is_expected.to permit_action(:index) }
       it { is_expected.to permit_action(:show) }
+      it { is_expected.to permit_action(:flow) }
       it { is_expected.not_to permit_action(:update) }
     end
   end
