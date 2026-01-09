@@ -94,7 +94,7 @@ gem 'chartkick'
 gem 'groupdate'
 gem 'nokogiri', '~> 1.18.8'
 gem 'pg_search'
-gem 'rest-client'
+gem 'faraday', '~> 2.14'
 gem 'rubyzip', require: 'zip'
 gem 'virtus'
 
