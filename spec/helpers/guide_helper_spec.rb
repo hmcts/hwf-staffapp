@@ -53,4 +53,8 @@ RSpec.describe GuideHelper do
   describe '#datashare_url' do
     it { expect(helper.datashare_url).to include('https://intranet.justice.gov.uk/my-work/help-with-fees/help-with-fees-guidance-documents/') }
   end
+
+  describe '#faq_url' do
+    it { expect(helper.faq_url).to eq('https://intranet.justice.gov.uk/documents/2025/11/help-with-fees-frequently-asked-questions.pdf') }
+  end
 end

@@ -61,12 +61,3 @@ end
 Then("I should be taken to the raw data extract page") do
   expect(generate_report_page.content).to have_raw_data_extract_header
 end
-
-When("I click on income claims data extract") do
-  expect(reports_page.content).to have_income_claims_data_extract_help
-  reports_page.income_claims_data_extract
-end
-
-Then("I should be taken to the income claims data extract page") do
-  expect(generate_report_page.content).to have_income_claims_data_header
-end

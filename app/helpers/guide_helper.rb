@@ -51,4 +51,8 @@ module GuideHelper
   def datashare_url
     'https://intranet.justice.gov.uk/my-work/help-with-fees/help-with-fees-guidance-documents/'
   end
+
+  def faq_url
+    'https://intranet.justice.gov.uk/documents/2025/11/help-with-fees-frequently-asked-questions.pdf'
+  end
 end

@@ -45,13 +45,9 @@ module Views
         details.form_name as \"Form\",
         details.refund as \"Refund\",
         CASE WHEN details.emergency_reason IS NULL THEN false ELSE true END AS \"Emergency\",
+        applications.amount_to_pay as \"Applicant pays estimate\",
         applications.income as \"Pre evidence income\",
         ec.income as \"Post evidence income\",
-        CASE
-          WHEN applications.income_min_threshold_exceeded = TRUE THEN 'under'
-          WHEN applications.income_max_threshold_exceeded = TRUE THEN 'over'
-          ELSE 'N/A'
-        END AS \"Income threshold exceeded\",
         CASE WHEN applications.income < 101 THEN 'true' ELSE 'false' END AS \"Low income declared\",
         applications.decision_date as \"Decision date\",
         applications.income_period as \"Income period\",
@@ -101,7 +97,6 @@ module Views
         END AS \"Processed date\",
         ec.outcome as \"EV check outcome\",
         pp.outcome as \"PP outcome\",
-        applications.amount_to_pay as \"Applicant pays estimate\",
         applications.income_kind as \"Declared income sources\",
         ec.check_type as \"DB evidence check type\",
         ec.income_check_type as \"DB income check type\",

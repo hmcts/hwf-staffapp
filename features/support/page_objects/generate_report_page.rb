@@ -4,7 +4,6 @@ class GenerateReportPage < BasePage
     element :transactional_header, 'h1', text: 'Generate finance transactional report'
     element :public_application_stats_header, 'h1', text: 'Public application stats'
     element :raw_data_extract_header, 'h1', text: 'Raw data extract'
-    element :income_claims_data_header, 'h1', text: 'Income claims data by court'
     element :generate_report_button, 'input[value="Generate report"]'
     element :date_from_label, 'label', text: 'Date From'
     elements :date_hint, '.hint', text: 'Use this format DD/MM/YYYY'

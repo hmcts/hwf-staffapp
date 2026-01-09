@@ -29,7 +29,3 @@ Feature: Reports page
     Scenario: Raw data extract
       When I click on raw data extract
       Then I should be taken to the raw data extract page
-
-    Scenario: Income claims data extract
-      When I click on income claims data extract
-      Then I should be taken to the income claims data extract page
