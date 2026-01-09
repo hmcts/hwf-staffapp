@@ -3,7 +3,7 @@ module Users
     skip_after_action :verify_authorized
 
     def new
-      @notification = Notification.first
+      @notification = Notification.order(:id).first
       @dwp_state = dwp_checker_state
       super
     end

@@ -90,13 +90,13 @@ class ApplicationSearch
 
   def processed_by_check(result)
     if result.present? && !allowed_to_view?(result)
-      @processed_by = result.last.office.name
+      @processed_by = result.order(created_at: :desc).last.office.name
     end
     result
   end
 
   def allowed_to_view?(result)
-    admin_can_search_all? || result.last.office_id == @current_user.office_id
+    admin_can_search_all? || result.order(created_at: :desc).last.office_id == @current_user.office_id
   end
 
   def paginate_results(page)

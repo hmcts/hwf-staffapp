@@ -280,7 +280,7 @@ RSpec.describe BenefitCheckRunner do
 
   describe '#checks_allowed?' do
     before do
-      allow(DwpWarning).to receive(:last).and_return(dwp_warning)
+      allow(DwpWarning).to receive(:order).and_return([dwp_warning, 'test'])
       allow(BenefitCheckService).to receive(:new)
     end
 

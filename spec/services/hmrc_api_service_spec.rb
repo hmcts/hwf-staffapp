@@ -46,7 +46,7 @@ describe HmrcApiService do
 
       context 'stored token' do
         before {
-          allow(HmrcToken).to receive(:last).and_return hmrc_token
+          allow(HmrcToken).to receive(:order).and_return([hmrc_token])
           allow(HwfHmrcApi).to receive(:new).and_return hmrc_api
           allow(hmrc_api).to receive(:match_user)
         }
@@ -79,8 +79,8 @@ describe HmrcApiService do
               service.match_user
             end
 
-            it { expect(HmrcToken.last.access_token).to eq '111333' }
-            it { expect(HmrcToken.last.expires_in).to eq Time.zone.parse('01-03-2021 10:50') }
+            it { expect(HmrcToken.order(id: :desc).first.access_token).to eq '111333' }
+            it { expect(HmrcToken.order(id: :desc).first.expires_in).to eq Time.zone.parse('01-03-2021 10:50') }
           end
 
           context 'token changed' do
@@ -90,8 +90,8 @@ describe HmrcApiService do
               service.match_user
             end
 
-            it { expect(HmrcToken.last.access_token).to eq '123456' }
-            it { expect(HmrcToken.last.expires_in).to eq expires_in }
+            it { expect(HmrcToken.order(id: :desc).first.access_token).to eq '123456' }
+            it { expect(HmrcToken.order(id: :desc).first.expires_in).to eq expires_in }
           end
 
           context 'token raises an encription error' do

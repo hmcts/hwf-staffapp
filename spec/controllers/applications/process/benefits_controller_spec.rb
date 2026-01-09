@@ -89,7 +89,7 @@ RSpec.describe Applications::Process::BenefitsController do
       allow(benefit_form).to receive(:save).and_return(form_save)
       allow(BenefitCheckRunner).to receive(:new).with(application).and_return(benefit_check_runner)
       allow(application).to receive_messages(allow_benefit_check_override?: valid_for_paper_evidence)
-      allow(DwpWarning).to receive(:last).and_return(dwp_warning)
+      allow(DwpWarning).to receive(:order).and_return([dwp_warning, 'test'])
 
       post :create, params: { application_id: application.id, application: expected_params }
     end
