@@ -72,7 +72,7 @@ en-GB:
           <li>posting a cheque written out to 'HM Courts and Tribunals Service' to the address at the top of this letter</li>
           <li>going to the court counter with cash, a cheque or debit card (please check with the court dealing with your case that they provide a counter service before making the journey)</li>
         </ul>
-        <p>If none of these options are possible, call the court on <strong>&lt;add phone number&gt;</strong>.</p>
+        <p>If none of these options are possible, call the court on <strong>&lt;add phone number&gt;</strong></p>
         <h3 class='govuk-heading-m'>If you disagree with this decision</h3>
         <p>You can appeal by writing to the Delivery Manager at the court or tribunal dealing with your fee. If you have applied via paper, please resubmit your application to the court within 14 days from the date you receive this letter, stating full reasons why you disagree with this decision and providing supporting evidence. If you have applied online, your reference number is no longer valid and you will need to provide the court with a new online Help with Fees reference alongside reasons and evidence. We will reply to you within 10 working days from receiving your application. Please note that Help with Fees cannot take into account your expenditure. If you can demonstrate you are likely to experience exceptional hardship by paying the fee then you may qualify for exceptional remission.</p>
         <p>Remember to include your reference <strong>%{reference}</strong>.</p>
@@ -99,7 +99,7 @@ en-GB:
           <li>going to the court counter with cash, a cheque or debit card (please check with the court dealing with your case that they provide a counter service before making the journey)</li>
           <li>If you have a PBA number - by providing this to the Court with authorisation to deduct the fee from your account. Remember to quote the reference above and any claim number (if applicable).</li>
         </ul>
-        <p>If none of these options are possible, call the court on <strong>&lt;add phone number&gt;</strong>.</p>
+        <p>If none of these options are possible, call the court on <strong>&lt;add phone number&gt;</strong></p>
         <h3 class='govuk-heading-m'>If you disagree with this decision</h3>
         <p>You can appeal by writing to the Delivery Manager at the court or tribunal dealing with the fee. If you have applied via paper, please resubmit the application to the court within 14 days from the date you receive this letter, stating full reasons why you disagree with this decision and providing supporting evidence. If you have applied online, the reference number is no longer valid and you will need to provide the court with a new online Help with Fees reference alongside reasons and evidence. We will reply to you within 10 working days from receiving the application. Please note that Help with Fees cannot take into account the applicant’s expenditure. If you can demonstrate the applicant is likely to experience exceptional hardship by paying the fee then they may qualify for exceptional remission.</p>
         <p>Remember to include the reference <strong>%{reference}</strong>.</p>
@@ -129,7 +129,7 @@ en-GB:
         <p>You can pay by:</p>
         <ul class="govuk-list govuk-list--bullet">
           <li>posting a cheque written out to 'HM Courts and Tribunals Service' to the address at the top of this letter</li>
-          <li>calling <strong>&lt;add phone number&gt;</strong> with your debit card details</li>
+          <li>calling <strong>&lt;add phone number&gt;</strong> with debit card details</li>
           <li>going to the court counter with cash, a cheque or your debit card (please check with the court dealing with your case that they provide a counter service before making the journey)</li>
         </ul>
         <h3 class='govuk-heading-m'>If you disagree</h3>
@@ -292,7 +292,7 @@ en-GB:
           <li>going to the court counter with cash, a cheque or debit card (please check with the court dealing with your case that they provide a counter service before making the journey)</li>
           <li>If you have a PBA number - by providing this to the Court with authorisation to deduct the fee from your account. Remember to quote the reference above and any claim number (if applicable).</li>
         </ul>
-        <p>If none of these options are possible, call the court on<strong>&lt;add phone number&gt;</strong>.</p>
+        <p>If none of these options are possible, call the court on<strong>&lt;add phone number&gt;</strong></p>
         <h3 class='govuk-heading-m'>Useful links</h3>
         <p>You can use this link to locate the address or email address for the court/tribunal dealing with the applicant's main case <a href="https://www.gov.uk/find-court-tribunal" target="_blank" title"Find the right court or tribunal">https://www.gov.uk/find-court-tribunal</a>.</p>
         <p>You can find more guidance on applying for Help with Fees here: <a href="https://www.gov.uk/get-help-with-court-fees" target="_blank" title"Get help paying court and tribunal fees">https://www.gov.uk/get-help-with-court-fees</a></p>
@@ -463,7 +463,7 @@ en-GB:
         <p>The applicant needs to pay <strong>%{part_payment_amount}</strong> towards the fee by <strong>%{date_for_part_payment}</strong>.</p>
         <p>This can be paid by:</p>
         <ul class="govuk-list govuk-list--bullet">
-          <li>calling <strong>&lt;add phone number&gt;</strong> with your debit card details</li>
+          <li>calling <strong>&lt;add phone number&gt;</strong> with debit card details</li>
           <li>posting a cheque written out to 'HM Courts and Tribunals Service' to the address at the top of this letter</li>
           <li>going to the court counter with cash, a cheque or debit card (please check with the court dealing with your case that they provide a counter service before making the journey)</li>
           <li>If you have a PBA number - by providing this to the Court with authorisation to deduct the fee from your account. Remember to quote the reference above and any claim number (if applicable).</li>
@@ -492,7 +492,7 @@ en-GB:
         <p>You need to pay <strong>%{part_payment_amount}</strong> towards the fee by <strong>%{date_for_part_payment}</strong>.</p>
         <p>You can pay by:</p>
         <ul class="govuk-list govuk-list--bullet">
-          <li>calling <strong>&lt;add phone number&gt;</strong> with your debit card details</li>
+          <li>calling <strong>&lt;add phone number&gt;</strong> with debit card details</li>
           <li>posting a cheque written out to 'HM Courts and Tribunals Service' to the address at the top of this letter</li>
           <li>going to the court counter with cash, a cheque or debit card (please check with the court dealing with your case that they provide a counter service before making the journey)</li>
         </ul>
@@ -721,7 +721,7 @@ en-GB:
           <li>going to the court counter with cash, a cheque or debit card (please check with the court dealing with your case that they provide a counter service before making the journey)</li>
           <li>If you have a PBA number - by providing this to the Court with authorisation to deduct the fee from your account. Remember to quote the reference above and any claim number (if applicable).</li>
         </ul>
-        <p>If none of these options are possible, call the court on <strong>&lt;add phone number&gt;</strong>.</p>
+        <p>If none of these options are possible, call the court on <strong>&lt;add phone number&gt;</strong></p>
         <p>If the applicant still wants to apply for help with this fee, they will have to complete a new application.</p>
         <p>From,</p>
         <p>%{user_name}</p>
