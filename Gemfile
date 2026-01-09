@@ -8,7 +8,7 @@ gem 'application_insights', '~> 0.5.6'
 gem 'csv'
 gem 'dotenv-rails', groups: [:development, :test] # this has to be here because of load order
 
-gem 'rails', '~> 8.1', '>= 8.1.1'
+gem 'rails', '~> 8.1', '>= 8.1.2'
 gem 'redis'
 
 # profiling in Sentry
