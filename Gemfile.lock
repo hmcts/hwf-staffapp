@@ -7,11 +7,11 @@ GIT
 
 GIT
   remote: https://github.com/hmcts/hwf_hmrc_api.git
-  revision: c1862110a70c6dfcb45d599caea7b81134dc5850
-  tag: v0.3.1
+  revision: fc8135dd572f0560b680547ecc22a6ac707a5d6b
+  tag: v0.3.2
   specs:
-    hwf_hmrc_api (0.3.1)
-      httparty (~> 0.23.0)
+    hwf_hmrc_api (0.3.2)
+      httparty (~> 0.24.0)
       rotp (~> 6.3.0)
       uuid (~> 2.3.9)
 
@@ -212,7 +212,7 @@ GEM
       cucumber-messages (>= 31, < 32)
     cucumber-html-formatter (22.3.0)
       cucumber-messages (> 23, < 33)
-    cucumber-messages (31.1.0)
+    cucumber-messages (31.2.0)
     cucumber-rails (4.0.0)
       capybara (>= 3.25, < 4)
       cucumber (>= 7, < 11)
@@ -319,7 +319,7 @@ GEM
       guard (~> 2.0)
       rubocop (< 2.0)
     hashdiff (1.2.1)
-    httparty (0.23.2)
+    httparty (0.24.0)
       csv
       mini_mime (>= 1.0.0)
       multi_xml (>= 0.5.2)
@@ -606,7 +606,7 @@ GEM
       simplecov_json_formatter (~> 0.1)
     simplecov-html (0.13.2)
     simplecov_json_formatter (0.1.4)
-    site_prism (5.1)
+    site_prism (5.1.1)
       addressable (~> 2.8, >= 2.8.4)
       capybara (~> 3.34)
       site_prism-all_there (> 3, < 5)
@@ -633,7 +633,7 @@ GEM
     test-prof (1.5.0)
     thor (1.5.0)
     thread_safe (0.3.6)
-    tilt (2.6.1)
+    tilt (2.7.0)
     timecop (0.9.10)
     timeout (0.6.0)
     tsort (0.2.0)
