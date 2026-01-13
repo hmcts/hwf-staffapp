@@ -93,7 +93,7 @@ class EvidenceCheckSelector
   end
 
   def evidence_check_flag
-    @evidence_check_flag ||= EvidenceCheckFlag.where(reg_number: registration_number).last
+    @evidence_check_flag ||= EvidenceCheckFlag.where(reg_number: registration_number).order(id: :desc).first
   end
 
   def registration_number

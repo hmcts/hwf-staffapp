@@ -33,8 +33,8 @@ class BenefitCheckService
 
   def process_proxy_api_call
     query_proxy_api
-  rescue RestClient::BadRequest => e
-    log_error JSON.parse(e.response)['error'], 'BadRequest'
+  rescue BenefitCheckers::BadRequestError => e
+    log_error JSON.parse(e.message)['error'], 'BadRequest'
   rescue Exceptions::TechnicalFaultDwpCheck
     log_error I18n.t('error_messages.benefit_checker.unavailable'), 'Technical fault'
   rescue Errno::ECONNREFUSED

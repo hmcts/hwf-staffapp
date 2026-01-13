@@ -2,13 +2,13 @@ source 'https://rubygems.org'
 
 git_source(:github) { |repo| "https://github.com/#{repo}.git" }
 
-ruby '3.4.8'
+ruby '4.0.0'
 
 gem 'application_insights', '~> 0.5.6'
 gem 'csv'
 gem 'dotenv-rails', groups: [:development, :test] # this has to be here because of load order
 
-gem 'rails', '~> 8.1', '>= 8.1.1'
+gem 'rails', '~> 8.1', '>= 8.1.2'
 gem 'redis'
 
 # profiling in Sentry
@@ -26,7 +26,7 @@ gem 'rails-i18n'
 # Azure key vault secrets to ENV variables
 gem 'azure_env_secrets', github: 'hmcts/azure_env_secrets', tag: 'v1.0.1'
 gem 'azure-blob', '~> 0.5.9.1'
-gem 'hwf_hmrc_api', github: 'hmcts/hwf_hmrc_api', tag: 'v0.3.1'
+gem 'hwf_hmrc_api', github: 'hmcts/hwf_hmrc_api', tag: 'v0.3.2'
 
 # configuration
 gem 'config'
@@ -94,7 +94,7 @@ gem 'chartkick'
 gem 'groupdate'
 gem 'nokogiri', '~> 1.18.8'
 gem 'pg_search'
-gem 'rest-client'
+gem 'faraday', '~> 2.14'
 gem 'rubyzip', require: 'zip'
 gem 'virtus'
 

@@ -108,6 +108,6 @@ class HomeController < ApplicationController
     @online_search_form ||= Forms::Search.new
     @completed_search_form ||= Forms::Search.new
     @dwp_state = dwp_checker_state
-    @notification = Notification.first
+    @notification = Notification.order(:id).first
   end
 end

@@ -40,7 +40,7 @@ class ApplicationController < ActionController::Base
 
   def dwp_checker_state
     return DwpMonitor.new.state if DwpWarning.use_default_check?
-    DwpWarning.last.check_state
+    DwpWarning.order(id: :desc).first.check_state
   end
 
   def add_datalayer_event(name, data)

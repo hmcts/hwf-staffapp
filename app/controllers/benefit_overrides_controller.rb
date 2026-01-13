@@ -45,7 +45,7 @@ class BenefitOverridesController < ApplicationController
   end
 
   def allow_benefit_override?
-    application.benefit_check_with_error_message? || DwpWarning.last&.check_state == DwpWarning::STATES[:offline]
+    application.benefit_check_with_error_message? || DwpWarning.order(id: :desc).first&.check_state == DwpWarning::STATES[:offline]
   end
 
   def no_paper_evidence?

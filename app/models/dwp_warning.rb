@@ -4,14 +4,14 @@ class DwpWarning < ActiveRecord::Base
   STATES = { online: 'online', offline: 'offline', default_checker: 'default_checker' }.freeze
 
   def self.use_default_check?
-    return true if last.blank?
+    return true if order(id: :desc).first.blank?
 
-    last.check_state == STATES[:default_checker]
+    order(id: :desc).first.check_state == STATES[:default_checker]
   end
 
   def self.state
-    return if last.blank?
-    last.check_state
+    return if order(id: :desc).first.blank?
+    order(id: :desc).first.check_state
   end
 
   private

@@ -22,7 +22,7 @@ module BenefitCheckers
       when *Settings.dwp_mock.ni_number_technical_fault
         raise Exceptions::TechnicalFaultDwpCheck, 'Technical fault'
       when *Settings.dwp_mock.ni_number_dwp_error
-        raise RestClient::BadRequest, '{"error":"LSCBC MOCK service is currently unavailable"}'
+        raise BenefitCheckers::BadRequestError, '{"error":"LSCBC MOCK service is currently unavailable"}'
       when *Settings.dwp_mock.ni_number_500_error
         raise StandardError, '500 Internal Server Error'
       when *Settings.dwp_mock.ni_number_connection_refused
