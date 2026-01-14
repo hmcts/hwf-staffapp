@@ -126,7 +126,7 @@ GEM
       descendants_tracker (~> 0.0.4)
       ice_nine (~> 0.11.0)
       thread_safe (~> 0.3, >= 0.3.1)
-    azure-blob (0.5.9.1)
+    azure-blob (0.7.0)
       rexml
     base64 (0.3.0)
     bcrypt (3.1.21)
@@ -229,6 +229,9 @@ GEM
     date_validator (0.12.0)
       activemodel (>= 3)
       activesupport (>= 3)
+    debug (1.11.1)
+      irb (~> 1.10)
+      reline (>= 0.3.8)
     deep_merge (1.2.2)
     delayed_cron_job (0.9.0)
       fugit (>= 1.5)
@@ -679,7 +682,7 @@ PLATFORMS
 DEPENDENCIES
   apparition!
   application_insights (~> 0.5.6)
-  azure-blob (~> 0.5.9.1)
+  azure-blob (~> 0.7.0)
   azure_env_secrets!
   benchmark
   better_errors
@@ -702,6 +705,7 @@ DEPENDENCIES
   cuprite
   database_cleaner-active_record
   date_validator (= 0.12)
+  debug
   delayed_cron_job
   delayed_job_active_record
   devise (>= 4.9.3)

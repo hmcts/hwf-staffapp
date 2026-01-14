@@ -25,7 +25,7 @@ gem 'rails-i18n'
 
 # Azure key vault secrets to ENV variables
 gem 'azure_env_secrets', github: 'hmcts/azure_env_secrets', tag: 'v1.0.1'
-gem 'azure-blob', '~> 0.5.9.1'
+gem 'azure-blob', '~> 0.7.0'
 gem 'hwf_hmrc_api', github: 'hmcts/hwf_hmrc_api', tag: 'v0.3.2'
 
 # configuration
@@ -120,6 +120,7 @@ group :development, :test do
   gem 'better_errors'
   gem 'bullet'
   gem 'bundler-audit'
+  gem 'debug'
   gem 'byebug'
   gem 'climate_control'
   gem 'factory_bot_rails'
