@@ -104,7 +104,7 @@ gem 'net-pop', github: 'ruby/net-pop'
 # To pass vulnerability in 3.3.5
 gem 'rexml', '>= 3.3.9'
 gem 'uri', '>= 1.0.3'
-
+gem 'cgi', '~> 0.5.1'
 # GovUK Notify
 gem 'govuk_notify_rails'
 
