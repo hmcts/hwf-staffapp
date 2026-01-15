@@ -121,7 +121,6 @@ group :development, :test do
   gem 'bullet'
   gem 'bundler-audit'
   gem 'debug'
-  gem 'byebug'
   gem 'climate_control'
   gem 'factory_bot_rails'
   gem 'guard-rspec'
