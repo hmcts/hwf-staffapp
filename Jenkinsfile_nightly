@@ -10,73 +10,79 @@ def rubyBuilder = new uk.gov.hmcts.contino.RubyBuilder(this)
 def yarnBuilder = new uk.gov.hmcts.contino.YarnBuilder(this)
 
 withNightlyPipeline(type, product, component) {
-    env.TRIGGER='1'
-    env.RAILS_ENV = 'test'
-    env.RACK_ENV = 'test'
-    env.DB_HOST = 'localhost'
-    env.DB_USER = 'postgres'
-    env.DB_PORT = '5421'
-    env.DB_PASSWORD = 'postgres'
-    env.TEST_BROWSER = 'chrome_local'
-    env.NODE_OPTIONS='--openssl-legacy-provider'
-    env.ENABLE_COVERAGE='true'
+  env.TRIGGER='1'
+  env.RAILS_ENV = 'test'
+  env.RACK_ENV = 'test'
+  env.DB_HOST = 'localhost'
+  env.DB_USER = 'postgres'
+  env.DB_PORT = '5421'
+  env.DB_PASSWORD = 'postgres'
+  env.TEST_BROWSER = 'chrome_local'
+  env.NODE_OPTIONS='--openssl-legacy-provider'
+  env.ENABLE_COVERAGE='true'
 
-    env.REDIRECTION_DOMAINS='trial.domain:production.domain'
-    env.ACTIVE_JOB_ENABLED='false'
-    env.PROCESSED_DELETED_PER_PAGE='20'
-    env.DWP_NOTIFICATION_ALERT_EMAILS=['dan@test.com', 'petr@test.gov.uk']
-    env.DWP_API_PROXY='http://localhost:9292'
+  env.REDIRECTION_DOMAINS='trial.domain:production.domain'
+  env.ACTIVE_JOB_ENABLED='false'
+  env.PROCESSED_DELETED_PER_PAGE='20'
+  env.DWP_NOTIFICATION_ALERT_EMAILS=['dan@test.com', 'petr@test.gov.uk']
+  env.DWP_API_PROXY='http://localhost:9292'
 
-    env.ENV='test'
-    env.HMRC_SECRET='LIOAIHSDFSDFSDFIRSH'
-    env.HMRC_CLIENT_ID='QwW73@omyZ6b6rw3g9z'
-    env.GOVUK_NOTIFY_API_KEY=''
+  env.ENV='test'
+  env.HMRC_SECRET='LIOAIHSDFSDFSDFIRSH'
+  env.HMRC_CLIENT_ID='QwW73@omyZ6b6rw3g9z'
+  env.GOVUK_NOTIFY_API_KEY=''
 
-    env.NOTIFY_PASSWORD_RESET_TEMPLATE_ID=''
-    env.NOTIFY_COMPLETED_TEMPLATE_ID='ab017b1b-0f5a-45df-b2c5-467f97a654654'
-    env.NOTIFY_COMPLETED_REFUND_ONLINE_TEMPLATE_ID='8fdc6d59-c072-45cd-8303-64528654654'
-    env.NOTIFY_COMPLETED_REFUND_PAPER_TEMPLATE_ID=''
-    env.NOTIFY_COMPLETED_NEW_REFUND_TEMPLATE_ID='dbd72fa4-0232-4825-9460-b6f1d369b481'
-    env.NOTIFY_COMPLETED_ONLINE_TEMPLATE_ID='ab017b1b-0f5a-45df-b2c5-467f97a54828'
-    env.NOTIFY_COMPLETED_PAPER_TEMPLATE_ID='115e4918-ce48-4bfe-8784-1b8404237d4c'
-    env.NOTIFY_COMPLETED_CY_NEW_REFUND_TEMPLATE_ID='d92e6d1d-08b6-4124-84d3-a93bfb6b4c26'
-    env.NOTIFY_COMPLETED_CY_ONLINE_TEMPLATE_ID='61cb8166-c137-459b-b1c0-b0ca63c1da6e'
-    env.NOTIFY_COMPLETED_CY_PAPER_TEMPLATE_ID='9f52cb39-33bd-4df6-871c-e337c058972b'
-    env.NOTIFY_COMPLETED_CY_TEMPLATE_ID=''
-    env.NOTIFY_COMPLETED_CY_REFUND_ONLINE_TEMPLATE_ID=''
-    env.NOTIFY_COMPLETED_CY_REFUND_PAPER_TEMPLATE_ID=''
-    env.NOTIFY_DWP_DOWN_TEMPLATE_ID='22025e7a-1bdd-450b-bb8f-a35f7493bd7c'
-    env.NOTIFY_USER_INVITE_TEMPLATE_ID='9e7bb557-8512-4913-9f91-f181487f4fe3'
-    env.SENTRY_DSN=''
-    env.SENTRY_SSL_VERIFICATION=''
-    env.NEW_LEGISLATION_ACTIVE_DATE='27-11-2028'
+  env.NOTIFY_PASSWORD_RESET_TEMPLATE_ID=''
+  env.NOTIFY_COMPLETED_TEMPLATE_ID='ab017b1b-0f5a-45df-b2c5-467f97a654654'
+  env.NOTIFY_COMPLETED_REFUND_ONLINE_TEMPLATE_ID='8fdc6d59-c072-45cd-8303-64528654654'
+  env.NOTIFY_COMPLETED_REFUND_PAPER_TEMPLATE_ID=''
+  env.NOTIFY_COMPLETED_NEW_REFUND_TEMPLATE_ID='dbd72fa4-0232-4825-9460-b6f1d369b481'
+  env.NOTIFY_COMPLETED_ONLINE_TEMPLATE_ID='ab017b1b-0f5a-45df-b2c5-467f97a54828'
+  env.NOTIFY_COMPLETED_PAPER_TEMPLATE_ID='115e4918-ce48-4bfe-8784-1b8404237d4c'
+  env.NOTIFY_COMPLETED_CY_NEW_REFUND_TEMPLATE_ID='d92e6d1d-08b6-4124-84d3-a93bfb6b4c26'
+  env.NOTIFY_COMPLETED_CY_ONLINE_TEMPLATE_ID='61cb8166-c137-459b-b1c0-b0ca63c1da6e'
+  env.NOTIFY_COMPLETED_CY_PAPER_TEMPLATE_ID='9f52cb39-33bd-4df6-871c-e337c058972b'
+  env.NOTIFY_COMPLETED_CY_TEMPLATE_ID=''
+  env.NOTIFY_COMPLETED_CY_REFUND_ONLINE_TEMPLATE_ID=''
+  env.NOTIFY_COMPLETED_CY_REFUND_PAPER_TEMPLATE_ID=''
+  env.NOTIFY_DWP_DOWN_TEMPLATE_ID='22025e7a-1bdd-450b-bb8f-a35f7493bd7c'
+  env.NOTIFY_USER_INVITE_TEMPLATE_ID='9e7bb557-8512-4913-9f91-f181487f4fe3'
+  env.SENTRY_DSN=''
+  env.SENTRY_SSL_VERIFICATION=''
+  env.NEW_LEGISLATION_ACTIVE_DATE='27-11-2028'
 
-    enableFortifyScan()
+  enableFortifyScan()
 
-    before('build') {
-      sh script:"""#!/bin/bash -l
-          set +x
-          source /usr/local/rvm/scripts/rvm
-          rvm install ruby-3.4.6
-          rvm use ruby-3.4.6 --default
-      """, label: 'Ruby version install'
-    }
-
-    before('test') {
-      sh script:"""
-          yarn install
-          docker inspect hmctspublic.azurecr.io/imported/postgres:16-alpine > /dev/null 2>&1 || docker pull hmctspublic.azurecr.io/imported/postgres:16-alpine
-          docker stop hwf-test-postgres && docker rm hwf-test-postgres || echo 'Ignoring failure in stopping old postgres'
-          docker run --rm --name hwf-test-postgres --publish 5421:5432 -e POSTGRES_PASSWORD=postgres -d hmctspublic.azurecr.io/imported/postgres:16-alpine
-      """, label: 'Start test postgres'
-
-      rubyBuilder.bundle("exec rails db:create db:schema:load")
-      rubyBuilder.bundle("install")
-      rubyBuilder.bundle("exec rake assets:precompile")
+  before('build') {
+    sh script:"""#!/bin/bash -l
+        set +x
+        source /usr/local/rvm/scripts/rvm
+        rvm install ruby-3.4.6
+        rvm use ruby-3.4.6 --default
+    """, label: 'Ruby version install'
   }
 
-    afterAlways('smokeTest') {
-        sh script: "docker stop hwf-test-postgres && docker rm hwf-test-postgres || echo 'Ignoring failure in stopping postgres'",
-            label: "docker stop hwf-test-postgres"
-    }
+  before('test') {
+    sh script:"""
+        yarn install
+        docker inspect hmctspublic.azurecr.io/imported/postgres:16-alpine > /dev/null 2>&1 || docker pull hmctspublic.azurecr.io/imported/postgres:16-alpine
+        docker stop hwf-test-postgres && docker rm hwf-test-postgres || echo 'Ignoring failure in stopping old postgres'
+        docker run --rm --name hwf-test-postgres --publish 5421:5432 -e POSTGRES_PASSWORD=postgres -d hmctspublic.azurecr.io/imported/postgres:16-alpine
+    """, label: 'Start test postgres'
+
+    rubyBuilder.bundle("exec rails db:create db:schema:load")
+    rubyBuilder.bundle("install")
+    rubyBuilder.bundle("exec rake assets:precompile")
+  }
+
+  afterAlways('smokeTest') {
+      sh script: "docker stop hwf-test-postgres && docker rm hwf-test-postgres || echo 'Ignoring failure in stopping postgres'",
+          label: "docker stop hwf-test-postgres"
+  }
+
+  // afterAlways('fortify-scan') {
+  //   steps.archiveArtifacts allowEmptyArchive: true, artifacts: '**/Fortify Scan/**/*'
+  // }
+
+  afterSuccess('fortify-scan') { steps.archiveArtifacts allowEmptyArchive: true, artifacts: '**/Fortify Scan/**/*' }
 }
