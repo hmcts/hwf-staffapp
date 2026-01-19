@@ -12,7 +12,6 @@ And("I have processed an application") do
   savings_investments_page.submit_less_than_ucd
   expect(benefits_page.content).to have_header
   benefits_page.submit_benefits_yes
-  declaration_page.sign_by_applicant
   expect(declaration_page.content).to have_header
   declaration_page.sign_by_applicant
   expect(summary_page.content).to have_header

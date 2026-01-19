@@ -9,6 +9,7 @@ Given("I have completed an ineligible paper application - savings too high") do
   application_details_page.submit_fee_100
   expect(savings_investments_page.content).to have_header
   savings_investments_page.submit_between_under_66_ucd
+  savings_investments_page.submit_amount_5000
   expect(declaration_page.content).to have_header
   declaration_page.sign_by_applicant
   expect(summary_page.content).to have_header

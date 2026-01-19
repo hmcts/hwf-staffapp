@@ -40,7 +40,7 @@ When("I start processing a paper application with no benefits record") do
   application_details_page.submit_fee_600
   expect(savings_investments_page.content).to have_header
   dwp_monitor_state_as('offline')
-  savings_investments_page.submit_less_than
+  savings_investments_page.submit_less_than_ucd
   expect(benefits_page.content).to have_benefit_question
   benefits_page.submit_benefits_yes
 end
