@@ -25,6 +25,14 @@ class IncomesPage < BasePage
     click_next
   end
 
+  def submit_incomes_50_ucd
+    incomes_page.content.wait_until_question_ucd_visible
+    find('#application_income', visible: false).set('50')
+    find_field('Last calendar month', visible: false).click
+    click_next
+  end
+
+
   def submit_incomes_1200
     incomes_page.content.wait_until_question_visible
     find_field('Total monthly income', visible: false).set('1200')
