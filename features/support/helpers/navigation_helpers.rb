@@ -92,7 +92,6 @@ def go_to_summary_page_low_savings
   declaration_page.sign_by_applicant
   expect(summary_page.content).to have_header
 end
-# rubocop:enable Metrics/MethodLength
 
 def go_to_summary_page_high_savings
   start_application
@@ -109,6 +108,7 @@ def go_to_summary_page_high_savings
   declaration_page.sign_by_applicant
   expect(summary_page.content).to have_header
 end
+# rubocop:enable Metrics/MethodLength
 
 def go_to_pending_applications
   dashboard_page.content.wait_until_pending_applications_link_visible

@@ -70,8 +70,8 @@ Then('I should see that my new answer is displayed in the application details su
 end
 
 Then('I should see that my new answer is displayed in the date received summary') do
-  date_received = (Time.zone.today - 2.month).strftime("%-d %B %Y")
-  date_fee_paid = (Time.zone.today - 4.month).strftime("%-d %B %Y")
+  date_received = (Time.zone.today - 2.months).strftime("%-d %B %Y")
+  date_fee_paid = (Time.zone.today - 4.months).strftime("%-d %B %Y")
 
   expect(summary_page.content.summary_section[0].list_row[0].text).to have_content "Date received #{date_received} Change Date received"
   expect(summary_page.content.summary_section[0].list_row[1].text).to have_content "Refund request Yes Change Refund request"

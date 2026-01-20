@@ -32,7 +32,6 @@ class IncomesPage < BasePage
     click_next
   end
 
-
   def submit_incomes_1200
     incomes_page.content.wait_until_question_visible
     find_field('Total monthly income', visible: false).set('1200')

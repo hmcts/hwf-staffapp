@@ -62,6 +62,7 @@ class SavingsInvestmentsPage < BasePage
     content.application_amount.set '1000'
     click_next
   end
+
   def submit_amount_5000
     content.wait_until_application_amount_visible
     content.application_amount.set '5000'

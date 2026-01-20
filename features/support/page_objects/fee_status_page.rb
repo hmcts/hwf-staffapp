@@ -51,4 +51,3 @@ class FeeStatusPage < BasePage
     click_next
   end
 end
-

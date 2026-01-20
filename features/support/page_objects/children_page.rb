@@ -20,7 +20,7 @@ class ChildrenPage < BasePage
 
   def yes_children
     content.radio[1].click
-    find()
+    # find()
     content.next.click
   end
 
