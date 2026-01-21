@@ -126,7 +126,6 @@ group :test do
   gem 'brakeman'
   gem 'capybara'
   gem 'capybara-screenshot'
-  gem 'codeclimate-test-reporter'
   gem 'cucumber', require: false
   gem 'cucumber-rails', require: false
   gem 'database_cleaner-active_record'

@@ -165,8 +165,6 @@ GEM
     childprocess (5.1.0)
       logger (~> 1.5)
     climate_control (1.2.0)
-    codeclimate-test-reporter (1.0.7)
-      simplecov
     coderay (1.1.3)
     coercible (1.0.0)
       descendants_tracker (~> 0.0.1)
@@ -643,7 +641,6 @@ DEPENDENCIES
   cgi (~> 0.5.1)
   chartkick
   climate_control
-  codeclimate-test-reporter
   config
   cssbundling-rails
   csv
