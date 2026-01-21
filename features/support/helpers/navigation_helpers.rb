@@ -11,7 +11,7 @@ def go_to_finance_transactional_report_page
 end
 
 def go_to_paper_evidence_page
-  personal_details_page.submit_all_personal_details_ni
+  personal_details_page.submit_all_personal_details_ni_with_no_answer_for_benefits
   expect(application_details_page.content).to have_header
   application_details_page.submit_fee_600
   expect(savings_investments_page.content).to have_header
