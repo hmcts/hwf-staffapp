@@ -95,7 +95,6 @@ gem 'govuk_notify_rails'
 
 group :development, :test do
   gem 'mutex_m'
-  gem 'better_errors'
   gem 'bullet'
   gem 'bundler-audit'
   gem 'debug'
