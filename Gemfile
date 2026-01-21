@@ -18,7 +18,6 @@ gem 'sentry-rails', '~> 6.2'
 gem 'i18n', '>= 1.10'
 gem 'parser', '>= 3.1.2.0'
 gem 'pg', '~> 1.2'
-gem 'rack-host-redirect'
 gem 'rack', '~> 3.2', '>= 3.2.3'
 
 gem 'rails-i18n'
