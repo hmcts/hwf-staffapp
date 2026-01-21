@@ -108,13 +108,6 @@ gem 'cgi', '~> 0.5.1'
 # GovUK Notify
 gem 'govuk_notify_rails'
 
-group :development do
-  # speed up local development via livereload
-  gem 'rack-livereload'
-  gem 'terminal-notifier-guard'
-  gem 'web-console'
-end
-
 group :development, :test do
   gem 'mutex_m'
   gem 'better_errors'
@@ -124,8 +117,6 @@ group :development, :test do
   gem 'byebug'
   gem 'climate_control'
   gem 'factory_bot_rails'
-  gem 'guard-rspec'
-  gem 'guard-rubocop'
   gem 'listen'
   gem 'parallel_tests'
   gem 'pry-rails'
