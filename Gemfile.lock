@@ -16,13 +16,6 @@ GIT
       uuid (~> 2.3.9)
 
 GIT
-  remote: https://github.com/ruby/net-pop.git
-  revision: 30d89b359c940610d84ecd1fed0dba4003508fde
-  specs:
-    net-pop (0.1.2)
-      net-protocol
-
-GIT
   remote: https://github.com/shadabahmed/logstasher.git
   revision: 0b80e972753ba7ef36854b48d2c371e32963bc8d
   ref: 0b80e972753ba7ef36854b48d2c371e32963bc8d
@@ -358,6 +351,8 @@ GEM
     net-imap (0.6.2)
       date
       net-protocol
+    net-pop (0.1.2)
+      net-protocol
     net-protocol (0.2.2)
       timeout
     net-smtp (0.5.1)
@@ -672,7 +667,6 @@ DEPENDENCIES
   logstasher!
   mock_redis
   mutex_m
-  net-pop!
   nokogiri (~> 1.18.8)
   ostruct
   paper_trail

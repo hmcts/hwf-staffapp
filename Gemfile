@@ -86,9 +86,6 @@ gem 'faraday', '~> 2.14'
 gem 'rubyzip', require: 'zip'
 gem 'virtus'
 
-# To fix ruby 3.3.3 gemsepec file issue with this gem
-gem 'net-pop', github: 'ruby/net-pop'
-
 # To pass vulnerability in 3.3.5
 gem 'rexml', '>= 3.3.9'
 gem 'uri', '>= 1.0.3'
