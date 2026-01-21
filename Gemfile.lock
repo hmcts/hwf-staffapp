@@ -16,16 +16,6 @@ GIT
       uuid (~> 2.3.9)
 
 GIT
-  remote: https://github.com/shadabahmed/logstasher.git
-  revision: 0b80e972753ba7ef36854b48d2c371e32963bc8d
-  ref: 0b80e972753ba7ef36854b48d2c371e32963bc8d
-  specs:
-    logstasher (0.6.5)
-      activesupport (>= 3.0)
-      logstash-event (~> 1.2.0)
-      request_store
-
-GIT
   remote: https://github.com/twalpole/apparition.git
   revision: ca86be4d54af835d531dbcd2b86e7b2c77f85f34
   ref: ca86be4d54af835d531dbcd2b86e7b2c77f85f34
@@ -313,7 +303,9 @@ GEM
       rb-fsevent (~> 0.10, >= 0.10.3)
       rb-inotify (~> 0.9, >= 0.9.10)
     logger (1.7.0)
-    logstash-event (1.2.02)
+    logstasher (3.0.0)
+      activesupport (>= 7.0)
+      request_store
     loofah (2.25.0)
       crass (~> 1.0.2)
       nokogiri (>= 1.12.0)
@@ -658,7 +650,7 @@ DEPENDENCIES
   jsbundling-rails
   launchy
   listen
-  logstasher!
+  logstasher (~> 3.0)
   mock_redis
   mutex_m
   nokogiri (~> 1.18.8)
