@@ -1,6 +1,6 @@
 And("there is an application waiting for evidence") do
   user = FactoryBot.create(:user)
-  @application = FactoryBot.create(:application_full_remission, :waiting_for_evidence_state, ni_number: 'AB123456D', office: user.office, user: user)
+  @application = FactoryBot.create(:application_full_remission, :waiting_for_evidence_state, ni_number: 'AB123456D', office: user.office, user: user, detail_traits: [:post_ucd])
 
   sign_in_page.load_page
   sign_in_page.sign_in_with(user)
