@@ -35,9 +35,8 @@ module Forms
       validates :discretion_manager_name,
                 :discretion_reason, presence: true, if: proc { |detail| detail.discretion_applied }
 
-      validates :date_received, date: {
-        before: :tomorrow
-      }
+      validate :validate_date_received
+      validates :date_received, comparison: { less_than: :tomorrow, message: :date_before }, if: :date_received_is_date?
       validates :refund, inclusion: { in: [true, false] }
       validate :date_received_within_limit
 
@@ -45,12 +44,17 @@ module Forms
       validates :discretion_applied, presence: true, if: proc { validate_discretion? }
       validate :calculation_scheme_change
 
-      with_options if: :validate_date_fee_paid? do
-        validates :date_fee_paid, date: {
-          after_or_equal_to: :max_refund_date,
-          before_or_equal_to: :date_received
-        }
-      end
+      validate :validate_date_fee_paid_presence, if: -> { validate_date_fee_paid? }
+
+      validates :date_fee_paid, comparison: {
+        greater_than_or_equal_to: :max_refund_date,
+        message: :date_after_or_equal_to
+      }, if: -> { validate_date_fee_paid? && date_fee_paid_is_date? }
+
+      validates :date_fee_paid, comparison: {
+        less_than_or_equal_to: :date_received,
+        message: :date_before_or_equal_to
+      }, if: -> { validate_date_fee_paid? && date_fee_paid_is_date? }
 
       def format_date_fields
         [:date_received, :date_fee_paid].each do |key|
@@ -83,6 +87,26 @@ module Forms
 
       def tomorrow
         Time.zone.tomorrow
+      end
+
+      def validate_date_received
+        if date_received.blank? || date_received.is_a?(String)
+          errors.add(:date_received, :not_a_date)
+        end
+      end
+
+      def validate_date_fee_paid_presence
+        if date_fee_paid.blank? || date_fee_paid.is_a?(String)
+          errors.add(:date_fee_paid, :not_a_date)
+        end
+      end
+
+      def date_received_is_date?
+        date_received.is_a?(Date)
+      end
+
+      def date_fee_paid_is_date?
+        date_fee_paid.is_a?(Date)
       end
 
       def persist!

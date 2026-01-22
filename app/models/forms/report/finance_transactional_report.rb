@@ -21,11 +21,11 @@ module Forms
 
       validates :date_to, :date_from, presence: true
 
-      validates :date_to, date: {
-        after: :date_from, allow_blank: true,
-        before: proc { |obj| obj.date_from + 2.years },
+      validates :date_to, comparison: { greater_than: :date_from }, allow_blank: true, if: :date_from
+      validates :date_to, comparison: {
+        less_than: ->(record) { record.date_from + 2.years },
         message: I18n.t("activemodel.errors.models.forms/report/finance_transactional_report.date_range_length")
-      }, if: :date_from
+      }, allow_blank: true, if: :date_from
 
       before_validation :format_dates
 

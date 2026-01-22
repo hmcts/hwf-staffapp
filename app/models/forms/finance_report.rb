@@ -22,9 +22,7 @@ module Forms
 
     validates :date_to, :date_from, presence: true
 
-    validates :date_to, date: {
-      after: :date_from, allow_blank: true
-    }
+    validates :date_to, comparison: { greater_than: :date_from }, allow_blank: true
 
     validates :entity_code, presence: true, unless: proc { |form|
       form.all_offices || form.entity_code.nil?

@@ -60,8 +60,6 @@ gem 'slim-rails', '~> 3.2'
 
 gem 'puma', '~> 7.0', '>= 7.0.1'
 
-# Date validation
-gem 'date_validator', '0.12'
 gem 'will_paginate'
 
 # Soft deletion
@@ -102,6 +100,7 @@ group :development, :test do
   gem 'listen'
   gem 'parallel_tests'
   gem 'pry-rails'
+  gem 'readline'
   gem 'rspec-rails'
   gem 'rubocop', require: false
   gem 'rubocop-performance', require: false
