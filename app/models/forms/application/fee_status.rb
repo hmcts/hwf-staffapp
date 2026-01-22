@@ -4,7 +4,7 @@ module Forms
       include ActiveModel::Validations::Callbacks
       include DataFieldFormattable
       include RefundValidatable
-      include FeeDatesValidatable
+      include DateFieldsValidatable
 
       # rubocop:disable Metrics/MethodLength
       def self.permitted_attributes

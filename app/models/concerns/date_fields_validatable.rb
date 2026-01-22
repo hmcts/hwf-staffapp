@@ -1,18 +1,18 @@
-module DetailDatesValidatable
+module DateFieldsValidatable
   extend ActiveSupport::Concern
 
   included do
-    with_options if: :validate_date_fee_paid? do
-      validate :validate_date_fee_paid_presence
-      validates :date_fee_paid, comparison: {
-        greater_than_or_equal_to: :max_refund_date,
-        message: :date_after_or_equal_to
-      }, if: -> { validate_date_fee_paid? && date_fee_paid_is_date? }
-      validates :date_fee_paid, comparison: {
-        less_than_or_equal_to: :date_received,
-        message: :date_before_or_equal_to
-      }, if: -> { validate_date_fee_paid? && date_fee_paid_is_date? }
-    end
+    validate :validate_date_fee_paid_presence, if: -> { validate_date_fee_paid? }
+
+    validates :date_fee_paid, comparison: {
+      greater_than_or_equal_to: :max_refund_date,
+      message: :date_after_or_equal_to
+    }, if: -> { validate_date_fee_paid? && date_fee_paid_is_date? }
+
+    validates :date_fee_paid, comparison: {
+      less_than_or_equal_to: :date_received,
+      message: :date_before_or_equal_to
+    }, if: -> { validate_date_fee_paid? && date_fee_paid_is_date? }
   end
 
   def validate_date_received
@@ -44,5 +44,4 @@ module DetailDatesValidatable
   def date_fee_paid_is_date?
     date_fee_paid.is_a?(Date)
   end
-
 end
