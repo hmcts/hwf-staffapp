@@ -99,7 +99,7 @@ RSpec.describe Forms::OnlineApplication do
 
       context 'when the application was created and received more the 3 months ago' do
         before do
-          Timecop.freeze(5.months.ago) do
+          travel_to(5.months.ago) do
             online_application
           end
 
@@ -120,7 +120,7 @@ RSpec.describe Forms::OnlineApplication do
 
       context 'received after submitted' do
         before do
-          Timecop.freeze(1.day.ago) do
+          travel_to(1.day.ago) do
             online_application
           end
           form.date_received = Time.zone.now
@@ -131,7 +131,7 @@ RSpec.describe Forms::OnlineApplication do
 
       context 'received exactly 3 months after submitted' do
         before do
-          Timecop.freeze(3.months.ago) do
+          travel_to(3.months.ago) do
             online_application
           end
           form.date_received = Time.zone.now
@@ -142,7 +142,7 @@ RSpec.describe Forms::OnlineApplication do
 
       context 'received more then 3 months after submitted' do
         before do
-          Timecop.freeze(4.months.ago) do
+          travel_to(4.months.ago) do
             online_application
           end
           form.date_received = Time.zone.now
@@ -169,7 +169,7 @@ RSpec.describe Forms::OnlineApplication do
 
       context 'received yesterday' do
         before do
-          Timecop.travel(Time.zone.local(2014, 10, 1, 12, 30, 0)) do
+          travel_to(Time.zone.local(2014, 10, 1, 12, 30, 0)) do
             online_application
           end
           form.date_received = Time.zone.yesterday

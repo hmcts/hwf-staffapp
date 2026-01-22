@@ -13,7 +13,7 @@ RSpec.describe ReferenceGenerator, type: :service do
 
     context 'when the current date is after the new SOP reference date' do
       subject(:attributes) do
-        Timecop.freeze(current_time) do
+        travel_to(current_time) do
           generator.attributes
         end
       end
@@ -43,7 +43,7 @@ RSpec.describe ReferenceGenerator, type: :service do
 
         context 'no sql caching for this' do
           it 'returns hash with the reference next in sequence' do
-            Timecop.freeze(current_time) do
+            travel_to(current_time) do
               if generator.attributes[:reference] == 'PA16-000020'
                 existing_application2.update(reference: 'PA16-000020')
               end

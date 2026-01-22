@@ -215,8 +215,7 @@ RSpec.describe Forms::Application::Detail do
       let(:refund_status) { true }
       let(:case_number) { 'ABC123' }
 
-      before { Timecop.freeze(current_time) }
-      after { Timecop.return }
+      before { travel_to(current_time) }
 
       it { is_expected.to be_valid }
 

@@ -16,7 +16,7 @@ shared_examples 'date_received validation' do
 
   context 'when the format is invalid' do
     before do
-      Timecop.freeze(Time.zone.local(2015, 12, 1, 10, 10, 10)) do
+      travel_to(Time.zone.local(2015, 12, 1, 10, 10, 10)) do
         form.day_date_received = '32'
         form.month_date_received = '09'
         form.year_date_received = '2015'
@@ -34,7 +34,7 @@ shared_examples 'date_received validation' do
       describe 'date_received' do
 
         it 'is in the future' do
-          Timecop.travel(Time.zone.local(2014, 10, 1, 12, 30, 0)) do
+          travel_to(Time.zone.local(2014, 10, 1, 12, 30, 0)) do
             received = Time.zone.local(2014, 10, 3, 12, 30, 0)
 
             form.date_received = received

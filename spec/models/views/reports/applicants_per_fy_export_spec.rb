@@ -37,7 +37,7 @@ RSpec.describe Views::Reports::ApplicantsPerFyExport do
     let(:fy_end) { 2020 }
 
     before {
-      Timecop.freeze(Time.zone.local(2020, 1, 1, 12, 0, 0)) {
+      travel_to(Time.zone.local(2020, 1, 1, 12, 0, 0)) {
         application1.applicant.update(first_name: 'John', last_name: 'Doe', date_of_birth: '1980-01-01')
         application2.applicant.update(first_name: 'John', last_name: 'Mnemonic', date_of_birth: '1980-01-01')
         application3.applicant.update(first_name: 'John', last_name: 'Doe', date_of_birth: '1980-01-01')

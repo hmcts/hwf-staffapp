@@ -22,7 +22,7 @@ RSpec.feature 'Staff can search for online application' do
   let(:full_online_application) { create(:online_application, :partner) }
 
   scenario 'User fills in all required fields and the application is saved' do
-    Timecop.freeze(current_time) do
+    travel_to(current_time) do
       online_application
       given_user_is_editting_the_application(online_application.id)
       when_they_fill_in_all_required_fields
@@ -31,7 +31,7 @@ RSpec.feature 'Staff can search for online application' do
   end
 
   scenario 'User can see partner details on Application details page' do
-    Timecop.freeze(current_time) do
+    travel_to(current_time) do
       full_online_application
       given_user_is_editting_the_application(full_online_application.id)
       they_see_all_partner_details
@@ -39,7 +39,7 @@ RSpec.feature 'Staff can search for online application' do
   end
 
   scenario 'User does not fill in all the required fields and the application fails to save' do
-    Timecop.freeze(current_time) do
+    travel_to(current_time) do
       given_user_is_editting_the_application(online_application.id)
       when_they_do_not_fill_in_all_required_fields
       then_the_application_fails_to_save

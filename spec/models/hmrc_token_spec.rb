@@ -6,7 +6,7 @@ RSpec.describe HmrcToken do
 
   context 'expired?' do
     it 'yes' do
-      Timecop.freeze(Time.zone.parse('01-02-2021 11:55')) do
+      travel_to(Time.zone.parse('01-02-2021 11:55')) do
         expect(token.expired?).to be_truthy
       end
     end
@@ -17,7 +17,7 @@ RSpec.describe HmrcToken do
     end
 
     it 'no' do
-      Timecop.freeze(Time.zone.parse('01-02-2021 9:55')) do
+      travel_to(Time.zone.parse('01-02-2021 9:55')) do
         expect(token.expired?).to be_falsey
       end
     end

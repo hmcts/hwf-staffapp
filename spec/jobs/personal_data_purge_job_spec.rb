@@ -16,7 +16,7 @@ RSpec.describe PersonalDataPurgeJob do
       allow(ApplicationInsights::TelemetryClient).to receive(:new).and_return app_insight
       allow(app_insight).to receive(:track_event)
 
-      Timecop.freeze(7.years.ago) do
+      travel_to(7.years.ago) do
         application1
         application3
       end

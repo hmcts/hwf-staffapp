@@ -36,7 +36,7 @@ RSpec.describe BenefitCheckRerunJob do
           create_list(:benefit_check, 1, dwp_result: 'Unspecified error', error_message: '500 Internal Server Error')
           create_list(:benefit_check, 2, applicationable: application, dwp_result: 'Unspecified error', error_message: '500 Internal Server Error')
           create_list(:benefit_check, 2, applicationable: online_application, dwp_result: 'Unspecified error', error_message: '500 Internal Server Error')
-          Timecop.freeze(4.days.ago) do
+          travel_to(4.days.ago) do
             create_list(:benefit_check, 2, dwp_result: 'Unspecified error', error_message: '500 Internal Server Error')
           end
         end
@@ -79,7 +79,7 @@ RSpec.describe BenefitCheckRerunJob do
         end
 
         it 'does not schedule another run' do
-          Timecop.freeze(time_to_run - 15.minutes.ago) do
+          travel_to(time_to_run - 15.minutes) do
             described_class.perform_now
             expect(bc_runner_job).not_to have_received(:perform_later)
           end
@@ -95,7 +95,7 @@ RSpec.describe BenefitCheckRerunJob do
         end
 
         it 'does not schedule another run' do
-          Timecop.freeze(time_to_run - 15.minutes.ago) do
+          travel_to(time_to_run - 15.minutes) do
             described_class.perform_now
             expect(bc_runner_job).not_to have_received(:perform_later)
           end

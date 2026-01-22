@@ -77,7 +77,7 @@ RSpec.describe Applications::Process::SummaryController do
       before do
         allow(ResolverService).to receive(:new).with(application, user).and_return(resolver)
 
-        Timecop.freeze(current_time) do
+        travel_to(current_time) do
           sign_in user
           post :create, params: { application_id: application.id }
         end
@@ -104,7 +104,7 @@ RSpec.describe Applications::Process::SummaryController do
       end
 
       def post_summary_save
-        Timecop.freeze(current_time) do
+        travel_to(current_time) do
           sign_in user
           post :create, params: { application_id: application.id }
         end

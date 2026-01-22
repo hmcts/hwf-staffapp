@@ -569,7 +569,6 @@ GEM
     thor (1.5.0)
     thread_safe (0.3.6)
     tilt (2.7.0)
-    timecop (0.9.10)
     timeout (0.6.0)
     tsort (0.2.0)
     tzinfo (2.0.6)
@@ -691,7 +690,6 @@ DEPENDENCIES
   slim-rails (~> 3.2)
   stackprof
   test-prof (~> 1.0)
-  timecop
   uri (>= 1.0.3)
   virtus
   webmock
