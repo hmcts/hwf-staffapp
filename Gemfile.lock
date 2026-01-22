@@ -346,7 +346,7 @@ GEM
     net-smtp (0.5.1)
       net-protocol
     nio4r (2.7.5)
-    nokogiri (1.18.10)
+    nokogiri (1.19.0)
       mini_portile2 (~> 2.8.2)
       racc (~> 1.4)
     notifications-ruby-client (6.3.0)
@@ -652,7 +652,7 @@ DEPENDENCIES
   logstasher (~> 3.0)
   mock_redis
   mutex_m
-  nokogiri (~> 1.18.8)
+  nokogiri
   ostruct
   paper_trail
   parallel_tests
