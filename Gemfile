@@ -56,7 +56,7 @@ gem 'jbuilder', '~> 2.2'
 gem 'sdoc', '>= 2', group: :doc
 
 gem 'logstasher', '~> 3.0'
-gem 'slim-rails', '~> 3.2'
+gem 'slim-rails'
 
 gem 'puma', '~> 7.0', '>= 7.0.1'
 
