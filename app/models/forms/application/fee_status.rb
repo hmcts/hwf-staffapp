@@ -93,9 +93,9 @@ module Forms
       end
 
       def calculation_scheme_change
-        return if @calculation_scheme.blank?
+        return if calculation_scheme.blank?
 
-        if FeatureSwitching.calculation_scheme(calculation_scheme_data) != @calculation_scheme.to_sym
+        if FeatureSwitching.calculation_scheme(calculation_scheme_data) != calculation_scheme.to_sym
           if date_received != @object.date_received
             before_and_after_legislation_erorrs(date_received, :date_received)
           elsif date_fee_paid != @object.date_fee_paid

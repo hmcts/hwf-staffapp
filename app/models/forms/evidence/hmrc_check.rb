@@ -30,11 +30,19 @@ module Forms
       validates :additional_income_amount, numericality: { greater_than_or_equal_to: 0 }, if: :income_step?
 
       def from_date
-        @from_date.strftime("%Y-%m-%d")
+        from_date_value&.strftime("%Y-%m-%d")
       end
 
       def to_date
-        @to_date.strftime("%Y-%m-%d")
+        to_date_value&.strftime("%Y-%m-%d")
+      end
+
+      def from_date_value
+        @from_date_value
+      end
+
+      def to_date_value
+        @to_date_value
       end
 
       def load_additional_income_from_benefits
@@ -56,12 +64,12 @@ module Forms
 
       def format_dates
         begin
-          @from_date = concat_from_date.to_date
+          @from_date_value = concat_from_date.to_date
         rescue NoMethodError, Date::Error
           errors.add(:from_date, "Format of From date is not valid")
         end
         begin
-          @to_date = concat_to_date.to_date
+          @to_date_value = concat_to_date.to_date
         rescue NoMethodError, Date::Error
           errors.add(:to_date, "Format of To date is not valid")
         end
@@ -92,12 +100,12 @@ module Forms
       end
 
       def one_month_validation
-        return if (@from_date + 1.month) - 1.day == @to_date
+        return if (@from_date_value + 1.month) - 1.day == @to_date_value
         errors.add(:date_range, "Enter a calendar month date range")
       end
 
       def three_months_validation
-        return if (@from_date + 3.months) - 1.day == @to_date
+        return if (@from_date_value + 3.months) - 1.day == @to_date_value
         errors.add(:date_range, "Enter a 3 calendar months date range")
       end
 

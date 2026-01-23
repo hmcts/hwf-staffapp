@@ -92,7 +92,7 @@ module Forms
     # rubocop:enable Metrics/MethodLength
 
     def format_fee
-      @fee = fee.strip.to_f if fee.is_a?(String) && fee.strip.to_f.positive?
+      self.fee = fee.strip.to_f if fee.is_a?(String) && fee.strip.to_f.positive?
     end
 
     def refund?

@@ -80,7 +80,6 @@ gem 'nokogiri'
 gem 'pg_search'
 gem 'faraday', '~> 2.14'
 gem 'rubyzip', require: 'zip'
-gem 'virtus'
 
 # To pass vulnerability in 3.3.5
 gem 'rexml', '>= 3.3.9'

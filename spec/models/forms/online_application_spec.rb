@@ -69,9 +69,23 @@ RSpec.describe Forms::OnlineApplication do
 
   describe 'validations' do
     it { is_expected.to validate_presence_of(:fee) }
-    it { is_expected.to validate_numericality_of(:fee).is_less_than(20_000) }
     it { is_expected.to validate_presence_of(:jurisdiction_id) }
     it { is_expected.to validate_length_of(:emergency_reason).is_at_most(500) }
+
+    # ActiveModel::Attributes coerces non-numeric strings to 0, so we test boundaries directly
+    describe 'fee numericality' do
+      it 'is invalid when fee is greater than or equal to 20000' do
+        form.fee = 20_000
+        form.valid?
+        expect(form.errors[:fee]).to be_present
+      end
+
+      it 'is valid when fee is less than 20000' do
+        form.fee = 410
+        form.valid?
+        expect(form.errors[:fee]).to be_empty
+      end
+    end
 
     describe 'date_received' do
       let(:online_application) { build_stubbed(:online_application, :completed) }

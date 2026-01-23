@@ -72,7 +72,7 @@ module Forms
 
       def check_thresholds
         return unless ucd_changes_apply?(@object.application.detail.calculation_scheme)
-        case @choice
+        case choice
         when 'less'
           less_fields_setup
         when 'between'
@@ -83,20 +83,20 @@ module Forms
       end
 
       def less_fields_setup
-        @min_threshold_exceeded = false
-        @over_66 = nil
+        self.min_threshold_exceeded = false
+        self.over_66 = nil
       end
 
       def between_fields_setup
-        @min_threshold_exceeded = true
-        @max_threshold_exceeded = false
+        self.min_threshold_exceeded = true
+        self.max_threshold_exceeded = false
       end
 
       def more_fields_setup
-        @max_threshold_exceeded = true
-        @min_threshold_exceeded = true
-        @over_66 = nil
-        @amount = 16000
+        self.max_threshold_exceeded = true
+        self.min_threshold_exceeded = true
+        self.over_66 = nil
+        self.amount = 16000
       end
 
       def saving_threshold_value
@@ -112,7 +112,7 @@ module Forms
       end
 
       def numericality
-        if @amount.present? && @amount.is_a?(Numeric)
+        if amount.present? && amount.is_a?(Numeric)
           amount_thresholds
         else
           errors.add(:amount, :not_a_number)
@@ -120,7 +120,7 @@ module Forms
       end
 
       def amount_thresholds
-        if @amount < saving_threshold_value || @ucd_max < @amount
+        if amount < saving_threshold_value || @ucd_max < amount
           errors.add(:amount, @numericality_error_key)
         end
       end

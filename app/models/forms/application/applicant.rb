@@ -58,9 +58,9 @@ module Forms
       end
 
       def format_dob
-        @date_of_birth = concat_dob_dates.to_date
+        self.date_of_birth = concat_dob_dates.to_date
       rescue StandardError
-        @date_of_birth = concat_dob_dates
+        self.date_of_birth = concat_dob_dates
       end
 
       def concat_dob_dates
@@ -70,18 +70,15 @@ module Forms
       end
 
       def day_date_of_birth
-        return @day_date_of_birth if @day_date_of_birth
-        date_of_birth&.day
+        attributes['day_date_of_birth'] || date_of_birth&.day
       end
 
       def month_date_of_birth
-        return @month_date_of_birth if @month_date_of_birth
-        date_of_birth&.month
+        attributes['month_date_of_birth'] || date_of_birth&.month
       end
 
       def year_date_of_birth
-        return @year_date_of_birth if @year_date_of_birth
-        date_of_birth&.year
+        attributes['year_date_of_birth'] || date_of_birth&.year
       end
 
       private

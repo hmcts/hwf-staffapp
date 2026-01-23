@@ -59,9 +59,34 @@ RSpec.describe Forms::Application::Detail do
 
   describe 'validations' do
     it { is_expected.to validate_presence_of(:fee) }
-    it { is_expected.to validate_numericality_of(:fee).is_less_than(20_000) }
-    it { is_expected.to validate_numericality_of(:fee).is_greater_than_or_equal_to(3) }
     it { is_expected.to validate_presence_of(:jurisdiction_id) }
+
+    # ActiveModel::Attributes coerces non-numeric strings to 0, so we test boundaries directly
+    describe 'fee numericality' do
+      it 'is invalid when fee is greater than or equal to 20000' do
+        form.fee = 20_000
+        form.valid?
+        expect(form.errors[:fee]).to be_present
+      end
+
+      it 'is valid when fee is less than 20000' do
+        form.fee = 19_999
+        form.valid?
+        expect(form.errors[:fee]).to be_empty
+      end
+
+      it 'is invalid when fee is less than 3' do
+        form.fee = 2
+        form.valid?
+        expect(form.errors[:fee]).to be_present
+      end
+
+      it 'is valid when fee is 3 or more' do
+        form.fee = 3
+        form.valid?
+        expect(form.errors[:fee]).to be_empty
+      end
+    end
 
     context 'when fee is blank' do
       let(:application_details) do
