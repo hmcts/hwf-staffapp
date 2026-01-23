@@ -21,7 +21,7 @@ module Forms
     attribute :all_offices, :boolean
 
     def initialize(attrs = {})
-      super(attrs)
+      super
       nullify_blanks
     end
 

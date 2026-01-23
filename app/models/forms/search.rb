@@ -8,7 +8,7 @@ module Forms
     validates :reference, presence: true
 
     def initialize(attrs = {})
-      super(attrs)
+      super
       nullify_blanks
     end
 

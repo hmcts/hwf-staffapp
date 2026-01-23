@@ -37,13 +37,7 @@ module Forms
         to_date_value&.strftime("%Y-%m-%d")
       end
 
-      def from_date_value
-        @from_date_value
-      end
-
-      def to_date_value
-        @to_date_value
-      end
+      attr_reader :from_date_value, :to_date_value
 
       def load_additional_income_from_benefits
         if child_benefits_per_month.positive?

@@ -1,6 +1,5 @@
 module Forms
   module Application
-    # rubocop:disable Metrics/ClassLength
     class Applicant < ::FormObject
 
       MINIMUM_AGE = 16
@@ -148,6 +147,5 @@ module Forms
         }
       end
     end
-    # rubocop:enable Metrics/ClassLength
   end
 end

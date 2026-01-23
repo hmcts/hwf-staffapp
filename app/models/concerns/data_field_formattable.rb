@@ -3,6 +3,7 @@ module DataFieldFormattable
 
   # These methods are included after ActiveModel::Attributes to override the attribute getters
   # They provide computed values from the date attribute when the component attribute is nil
+  # rubocop:disable Metrics/BlockLength
   included do
     # Override the day/month/year getters to fall back to date component values
     def day_date_received
@@ -43,12 +44,13 @@ module DataFieldFormattable
 
     private
 
-    def read_date_component_or_derive(attr_name, &fallback)
+    def read_date_component_or_derive(attr_name)
       return nil unless respond_to?(:attributes)
       value = attributes[attr_name.to_s]
-      value.nil? ? fallback.call : value
+      value.nil? ? yield : value
     end
   end
+  # rubocop:enable Metrics/BlockLength
 
   def format_the_dates?(date_attr_name)
     date = send(date_attr_name.to_s)

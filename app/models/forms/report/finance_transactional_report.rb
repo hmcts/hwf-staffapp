@@ -20,7 +20,7 @@ module Forms
       attribute :jurisdiction_id, :integer
 
       def initialize(attrs = {})
-        super(attrs)
+        super
         nullify_blanks
       end
 
