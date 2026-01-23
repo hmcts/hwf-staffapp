@@ -3,9 +3,9 @@ module Forms
     class Representative < ::FormObject
       def self.permitted_attributes
         {
-          first_name: String,
-          last_name: String,
-          organisation: String
+          first_name: :string,
+          last_name: :string,
+          organisation: :string
         }
       end
 

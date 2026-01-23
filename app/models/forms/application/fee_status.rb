@@ -9,19 +9,19 @@ module Forms
       # rubocop:disable Metrics/MethodLength
       def self.permitted_attributes
         {
-          date_received: Date,
-          day_date_received: Integer,
-          month_date_received: Integer,
-          year_date_received: Integer,
-          refund: Boolean,
-          date_fee_paid: Date,
-          day_date_fee_paid: Integer,
-          month_date_fee_paid: Integer,
-          year_date_fee_paid: Integer,
-          discretion_applied: Boolean,
-          discretion_manager_name: String,
-          discretion_reason: String,
-          calculation_scheme: String
+          date_received: :date,
+          day_date_received: :integer,
+          month_date_received: :integer,
+          year_date_received: :integer,
+          refund: :boolean,
+          date_fee_paid: :date,
+          day_date_fee_paid: :integer,
+          month_date_fee_paid: :integer,
+          year_date_fee_paid: :integer,
+          discretion_applied: :boolean,
+          discretion_manager_name: :string,
+          discretion_reason: :string,
+          calculation_scheme: :string
         }
       end
       # rubocop:enable Metrics/MethodLength

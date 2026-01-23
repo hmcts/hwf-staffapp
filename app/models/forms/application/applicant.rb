@@ -11,17 +11,17 @@ module Forms
       # rubocop:disable Metrics/MethodLength
       def self.permitted_attributes
         {
-          last_name: String,
-          date_of_birth: Date,
-          day_date_of_birth: Integer,
-          month_date_of_birth: Integer,
-          year_date_of_birth: Integer,
-          married: Boolean,
-          title: String,
-          ni_number: String,
-          ho_number: String,
-          first_name: String,
-          date_received: Date
+          last_name: :string,
+          date_of_birth: :date,
+          day_date_of_birth: :integer,
+          month_date_of_birth: :integer,
+          year_date_of_birth: :integer,
+          married: :boolean,
+          title: :string,
+          ni_number: :string,
+          ho_number: :string,
+          first_name: :string,
+          date_received: :date
         }
       end
       # rubocop:enable Metrics/MethodLength

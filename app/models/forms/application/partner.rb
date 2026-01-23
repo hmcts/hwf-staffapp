@@ -10,14 +10,14 @@ module Forms
 
       def self.permitted_attributes
         {
-          partner_first_name: String,
-          partner_last_name: String,
-          partner_date_of_birth: Date,
-          day_date_of_birth: Integer,
-          month_date_of_birth: Integer,
-          year_date_of_birth: Integer,
-          partner_ni_number: String,
-          ni_number: String
+          partner_first_name: :string,
+          partner_last_name: :string,
+          partner_date_of_birth: :date,
+          day_date_of_birth: :integer,
+          month_date_of_birth: :integer,
+          year_date_of_birth: :integer,
+          partner_ni_number: :string,
+          ni_number: :string
         }
       end
       define_attributes

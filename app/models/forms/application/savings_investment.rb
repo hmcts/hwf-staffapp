@@ -8,11 +8,11 @@ module Forms
 
       def self.permitted_attributes
         {
-          min_threshold_exceeded: Boolean,
-          over_66: Boolean,
-          max_threshold_exceeded: Boolean,
-          amount: Decimal,
-          choice: String
+          min_threshold_exceeded: :boolean,
+          over_66: :boolean,
+          max_threshold_exceeded: :boolean,
+          amount: :decimal,
+          choice: :string
         }
       end
 

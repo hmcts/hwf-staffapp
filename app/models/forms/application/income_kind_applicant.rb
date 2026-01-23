@@ -6,8 +6,8 @@ module Forms
 
       def self.permitted_attributes
         {
-          income_kind: Hash,
-          income_kind_applicant: []
+          income_kind: :hash,
+          income_kind_applicant: :array
         }
       end
 

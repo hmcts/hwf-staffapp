@@ -1,21 +1,6 @@
-# Define type classes that Virtus provided but don't exist in plain Ruby
-# These are used in permitted_attributes hashes across form classes
-Decimal = Class.new unless defined?(Decimal)
-Boolean = Class.new unless defined?(Boolean)
-
 class FormObject
   include ActiveModel::Model
   include ActiveModel::Attributes
-
-  TYPE_MAPPING = {
-    String => :string,
-    Integer => :integer,
-    Decimal => :decimal,
-    BigDecimal => :decimal,
-    Boolean => :boolean,
-    Date => :date,
-    Float => :float
-  }.freeze
 
   def initialize(object)
     store_if_model_passed(object)
@@ -46,19 +31,15 @@ class FormObject
 
   def self.define_attributes
     permitted_attributes.each do |attr, type|
-      # Handle Array type (Virtus used [] to define arrays)
-      # Handle Hash type for complex objects
-      # Check for: [] syntax, Array instances, Array class, or Hash class
-      if type == [] || type.is_a?(Array) || type == Array || type == Hash
-        # For arrays and hashes, we use a simple attr_accessor and skip type coercion
+      # Handle Array and Hash types with attr_accessor (no type coercion)
+      if [:array, :hash].include?(type)
         attr_accessor attr
       else
-        mapped_type = TYPE_MAPPING.fetch(type, :string)
-        attribute attr, mapped_type
+        attribute attr, type
 
         # ActiveModel::Attributes doesn't create predicate methods for booleans
         # unlike ActiveRecord, so we need to define them manually
-        if mapped_type == :boolean
+        if type == :boolean
           define_method(:"#{attr}?") { !!send(attr) }
         end
       end

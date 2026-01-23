@@ -7,17 +7,17 @@ module Forms
       # rubocop:disable Metrics/MethodLength
       def self.permitted_attributes
         {
-          from_date: Date,
-          from_date_day: Integer,
-          from_date_month: Integer,
-          from_date_year: Integer,
-          to_date: Date,
-          to_date_day: Integer,
-          to_date_month: Integer,
-          to_date_year: Integer,
-          additional_income: Boolean,
-          additional_income_amount: Integer,
-          user_id: Integer
+          from_date: :date,
+          from_date_day: :integer,
+          from_date_month: :integer,
+          from_date_year: :integer,
+          to_date: :date,
+          to_date_day: :integer,
+          to_date_month: :integer,
+          to_date_year: :integer,
+          additional_income: :boolean,
+          additional_income_amount: :integer,
+          user_id: :integer
         }
       end
       # rubocop:enable Metrics/MethodLength

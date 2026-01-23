@@ -6,12 +6,12 @@ module Forms
 
       def self.permitted_attributes
         {
-          income: Integer,
-          dependents: Boolean,
-          children: Integer,
-          children_age_band: Hash,
-          children_age_band_one: Integer,
-          children_age_band_two: Integer
+          income: :integer,
+          dependents: :boolean,
+          children: :integer,
+          children_age_band: :hash,
+          children_age_band_one: :integer,
+          children_age_band_two: :integer
         }
       end
 

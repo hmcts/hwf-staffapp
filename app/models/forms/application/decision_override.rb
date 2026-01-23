@@ -3,9 +3,9 @@ module Forms
     class DecisionOverride < ::FormObject
       def self.permitted_attributes
         {
-          value: String,
-          reason: String,
-          created_by_id: Integer
+          value: :string,
+          reason: :string,
+          created_by_id: :integer
         }
       end
 
