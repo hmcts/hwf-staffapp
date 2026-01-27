@@ -236,6 +236,17 @@ RSpec.describe Views::Reports::HmrcOcmcDataExport do
           expect(data_row).to include('no,No,full,No,2021-01-02 00:00:00,N/A,N/A,N/A,N/A')
         }
 
+        context 'nil amount_to_pay defaults to zero' do
+          it {
+            decision_date = Date.parse('2025-04-22')
+            application1.update(decision: 'full', decision_date:, amount_to_pay: nil)
+            application1.applicant.update(married: false)
+            reference = application1.reference
+            data_row = data.find { |row| row.split(',')[1] == reference }
+            expect(data_row).to include('false,0.0,89')
+          }
+        end
+
         context 'decision none savings failed' do
           it {
             decision_date = Date.parse('2025-04-22')

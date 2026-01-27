@@ -289,6 +289,22 @@ RSpec.describe Views::Reports::RawDataExport do
       end
     end
 
+    context 'nil amount_to_pay defaults to zero' do
+      let(:nil_amount_app) {
+        create(:application_full_remission, :processed_state,
+               decision_date:, office: office, business_entity: business_entity,
+               amount_to_pay: nil, decision_cost: 300, fee: 300)
+      }
+
+      it 'exports zero for estimated and final amount to pay' do
+        nil_amount_app
+        export = data.to_csv
+        jurisdiction = nil_amount_app.detail.jurisdiction.name
+        row = "#{jurisdiction},135864,300.0,0.0,300.0"
+        expect(export).to include(row)
+      end
+    end
+
     context 'part_remission with evidence check' do
       it 'fills in estimated_cost based on fee and amount_to_pay' do
         part_ec
