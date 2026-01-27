@@ -88,6 +88,8 @@ When("the applicant has provided the correct paper evidence") do
   benefit_checker_page.content.wait_until_yes_visible
   benefit_checker_page.content.yes.click
   benefit_checker_page.click_next
+  expect(declaration_page.content).to have_header
+  declaration_page.sign_by_applicant
   expect(summary_page.content).to have_header
   complete_processing
 end
