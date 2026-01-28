@@ -156,7 +156,7 @@ module Views
             applications.income_period,
             applications.children,
             applications.decision,
-            applications.amount_to_pay,
+            COALESCE(applications.amount_to_pay, 0) as amount_to_pay,
             applications.decision_cost,
             applicants.married,
             applicants.partner_ni_number,
@@ -292,7 +292,7 @@ module Views
       def final_amount_to_pay(row)
         return row['fee'] if row['pp_outcome'].present? && row['pp_outcome'] != 'part'
         ec_amount = row['evidence_check_amount_to_pay']
-        ec_amount || row['amount_to_pay']
+        ec_amount || row['amount_to_pay'] || 0
       end
 
       def reg_number(row)

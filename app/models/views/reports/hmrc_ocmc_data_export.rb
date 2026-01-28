@@ -5,6 +5,10 @@ module Views
       require 'csv'
       include OcmcExportHelper
 
+      NUMERIC_FIELDS = [
+        'Applicant pays estimate', 'Applicant pays'
+      ].freeze
+
       def initialize(start_date, end_date, office_id, all_offices: false)
         @date_from = format_dates(start_date)
         @date_to = format_dates(end_date).end_of_day
@@ -45,7 +49,7 @@ module Views
         details.form_name as \"Form\",
         details.refund as \"Refund\",
         CASE WHEN details.emergency_reason IS NULL THEN false ELSE true END AS \"Emergency\",
-        applications.amount_to_pay as \"Applicant pays estimate\",
+        COALESCE(applications.amount_to_pay, 0) as \"Applicant pays estimate\",
         applications.income as \"Pre evidence income\",
         ec.income as \"Post evidence income\",
         CASE WHEN applications.income < 101 THEN 'true' ELSE 'false' END AS \"Low income declared\",
@@ -54,9 +58,11 @@ module Views
         applications.children as \"Children\",
         applications.children_age_band as \"Age band under 14\",
         applications.children_age_band as \"Age band 14+\",
-        CASE WHEN ec.id IS NULL THEN applications.amount_to_pay ELSE ec.amount_to_pay END as \"Applicant pays\",
-        details.fee - applications.amount_to_pay as \"Departmental cost estimate\",
-        CASE WHEN ec.id IS NULL THEN details.fee - applications.amount_to_pay ELSE details.fee - ec.amount_to_pay
+        CASE WHEN ec.id IS NULL THEN COALESCE(applications.amount_to_pay, 0)
+        ELSE COALESCE(ec.amount_to_pay, 0) END as \"Applicant pays\",
+        details.fee - COALESCE(applications.amount_to_pay, 0) as \"Departmental cost estimate\",
+        CASE WHEN ec.id IS NULL THEN details.fee - COALESCE(applications.amount_to_pay, 0)
+        ELSE details.fee - COALESCE(ec.amount_to_pay, 0)
           END as \"Departmental cost\",
         CASE WHEN applications.reference LIKE 'HWF%' THEN 'digital' ELSE 'paper' END AS \"Source\",
         CASE WHEN de.id IS NULL THEN 'no' ELSE 'yes' END AS \"Granted?\",
@@ -167,7 +173,6 @@ module Views
       end
 
       # rubocop:disable Metrics/AbcSize
-      # rubocop:disable Metrics/CyclomaticComplexity
       def process_row(row)
         csv_row = row
 
@@ -183,14 +188,21 @@ module Views
         csv_row['Age band 14+'] = children_age_band(row['Age band 14+'], :children_age_band_two)
 
         row.each do |field, value|
-          csv_row[field] = value.nil? ? 'N/A' : value
+          csv_row[field] = numberic_values_check(value, field)
         end
 
         csv_row
       end
+
       # rubocop:enable Metrics/AbcSize
       # rubocop:enable Metrics/MethodLength
-      # rubocop:enable Metrics/CyclomaticComplexity
+      def numberic_values_check(value, field)
+        if value.nil?
+          NUMERIC_FIELDS.include?(field) ? 0 : 'N/A'
+        else
+          value
+        end
+      end
 
       def income_kind(value) # rubocop:disable Metrics/MethodLength, Metrics/AbcSize
         return 'N/A' if value.nil?
