@@ -156,6 +156,8 @@ When("I complete processing the application") do
     application_details_page.click_next
     expect(savings_investments_page.content).to have_header
     savings_investments_page.submit_less_than_ucd
+    expect(benefits_page.content).to have_header
+    benefits_page.submit_benefits_yes
     expect(summary_page.content).to have_header
     complete_processing
   end
