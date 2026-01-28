@@ -30,7 +30,7 @@ Feature: Benefit checker
   Scenario: The applicant has provided the correct paper evidence for online application
     Given I have looked up an online application when the benefit checker is down
     Then I processed the applications until benefit paper evidence page
-    And the applicant has provided the correct paper evidence
+    And the applicant has provided the correct paper evidence without declaration
     Then I should see that the applicant passes on benefits
 
   Scenario: Benefit checker is now back online

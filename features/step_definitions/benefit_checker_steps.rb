@@ -13,7 +13,7 @@ Given("I have looked up an online application when the benefit checker is down")
   RSpec::Mocks.with_temporary_scope do
     dwp = instance_double('DwpMonitor', state: 'offline')
     DwpMonitor.stub(:new).and_return dwp
-    FactoryBot.create(:online_application, :with_reference, :completed)
+    FactoryBot.create(:online_application, :with_reference, :completed, calculation_scheme: 'post_ucd')
     sign_in_page.load_page
     expect(sign_in_page.content).to have_sign_in_title
     sign_in_page.user_account
@@ -79,6 +79,14 @@ end
 
 When("the applicant has not provided the correct paper evidence without declaration") do
   benefit_checker_page.content.no.click
+  benefit_checker_page.click_next
+  expect(summary_page.content).to have_header
+  complete_processing
+end
+
+When("the applicant has provided the correct paper evidence without declaration") do
+  benefit_checker_page.content.wait_until_yes_visible
+  benefit_checker_page.content.yes.click
   benefit_checker_page.click_next
   expect(summary_page.content).to have_header
   complete_processing
