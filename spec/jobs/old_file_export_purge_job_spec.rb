@@ -9,9 +9,9 @@ RSpec.describe OldFileExportPurgeJob do
     let(:app_insight) { instance_double(ApplicationInsights::TelemetryClient, flush: '') }
 
     before do
-      Timecop.freeze(2.days.ago) { storage_1 }
-      Timecop.freeze(1.day.ago) { storage_2 }
-      Timecop.freeze(23.hours.ago) { storage_3 }
+      travel_to(2.days.ago) { storage_1 }
+      travel_to(1.day.ago) { storage_2 }
+      travel_to(23.hours.ago) { storage_3 }
 
       allow(ApplicationInsights::TelemetryClient).to receive(:new).and_return app_insight
       allow(app_insight).to receive(:track_event)

@@ -232,7 +232,7 @@ RSpec.feature 'Evidence check flow' do
     context 'when the reference_date is passed' do
       let(:outcome) { 'full' }
       before do
-        Timecop.freeze(Date.new(2016, 8, 1)) {
+        travel_to(Date.new(2016, 8, 1)) {
           visit confirmation_evidence_path(id: evidence.id)
         }
       end

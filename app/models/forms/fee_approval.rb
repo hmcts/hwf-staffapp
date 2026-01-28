@@ -2,8 +2,8 @@ module Forms
   class FeeApproval < ::FormObject
     def self.permitted_attributes
       {
-        fee_manager_firstname: String,
-        fee_manager_lastname: String
+        fee_manager_firstname: :string,
+        fee_manager_lastname: :string
       }
     end
 

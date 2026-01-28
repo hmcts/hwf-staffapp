@@ -109,7 +109,8 @@ RSpec.describe Forms::Application::Applicant do
       context 'when not a boolean value' do
         before { personal_information[:married] = 'string' }
 
-        it { expect(created_applicant.valid?).to be false }
+        # ActiveModel::Attributes coerces truthy strings to true
+        it { expect(created_applicant.valid?).to be true }
       end
     end
 

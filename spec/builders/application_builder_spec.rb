@@ -13,7 +13,7 @@ RSpec.describe ApplicationBuilder do
 
   describe '#build' do
     subject(:build_result) do
-      Timecop.freeze(current_time) do
+      travel_to(current_time) do
         application_builder.build
       end
     end
@@ -63,7 +63,7 @@ RSpec.describe ApplicationBuilder do
 
   describe '#build_from' do
     subject(:built_application) do
-      Timecop.freeze(current_time) do
+      travel_to(current_time) do
         application_builder.build_from(online_application)
       end
     end

@@ -1,17 +1,28 @@
 class FormObject
-  include Virtus.model(nullify_blank: true)
   include ActiveModel::Model
+  include ActiveModel::Attributes
 
   def initialize(object)
     store_if_model_passed(object)
     attrs = extract_params(object)
     super(attrs)
+    nullify_blanks
   end
 
   def update(params)
     params.each do |name, value|
       public_send(:"#{name}=", value)
     end
+    nullify_blanks
+  end
+
+  # Support hash-like access for backwards compatibility with Virtus
+  def [](key)
+    public_send(key)
+  end
+
+  def []=(key, value)
+    public_send(:"#{key}=", value)
   end
 
   def self.permitted_attributes
@@ -19,7 +30,27 @@ class FormObject
   end
 
   def self.define_attributes
-    permitted_attributes.each { |attr, type| attribute attr, type }
+    permitted_attributes.each do |attr, type|
+      # Handle Array and Hash types with attr_accessor (no type coercion)
+      if [:array, :hash].include?(type)
+        attr_accessor attr
+      else
+        attribute attr, type
+
+        # ActiveModel::Attributes doesn't create predicate methods for booleans
+        # unlike ActiveRecord, so we need to define them manually
+        if type == :boolean
+          define_method(:"#{attr}?") { !!send(attr) }
+        end
+      end
+    end
+  end
+
+  def nullify_blanks
+    self.class.permitted_attributes.each_key do |attr|
+      value = send(attr)
+      send(:"#{attr}=", nil) if value.is_a?(String) && value.blank?
+    end
   end
 
   def save

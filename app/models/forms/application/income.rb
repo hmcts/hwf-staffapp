@@ -6,8 +6,8 @@ module Forms
 
       def self.permitted_attributes
         {
-          income: Integer,
-          income_period: String
+          income: :integer,
+          income_period: :string
         }
       end
 

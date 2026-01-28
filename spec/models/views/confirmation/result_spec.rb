@@ -332,7 +332,7 @@ RSpec.describe Views::Confirmation::Result do
 
   describe "#expires_at" do
     subject {
-      Timecop.freeze(Date.new(2022, 1, 8)) {
+      travel_to(Date.new(2022, 1, 8)) {
         view.expires_at
       }
     }

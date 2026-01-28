@@ -1,6 +1,57 @@
 module DataFieldFormattable
   extend ActiveSupport::Concern
 
+  # These methods are included after ActiveModel::Attributes to override the attribute getters
+  # They provide computed values from the date attribute when the component attribute is nil
+  # rubocop:disable Metrics/BlockLength
+  included do
+    # Override the day/month/year getters to fall back to date component values
+    def day_date_received
+      read_date_component_or_derive(:day_date_received) { date_received&.day }
+    end
+
+    def month_date_received
+      read_date_component_or_derive(:month_date_received) { date_received&.month }
+    end
+
+    def year_date_received
+      read_date_component_or_derive(:year_date_received) { date_received&.year }
+    end
+
+    def day_date_of_death
+      read_date_component_or_derive(:day_date_of_death) { date_of_death&.day }
+    end
+
+    def month_date_of_death
+      read_date_component_or_derive(:month_date_of_death) { date_of_death&.month }
+    end
+
+    def year_date_of_death
+      read_date_component_or_derive(:year_date_of_death) { date_of_death&.year }
+    end
+
+    def day_date_fee_paid
+      read_date_component_or_derive(:day_date_fee_paid) { date_fee_paid&.day }
+    end
+
+    def month_date_fee_paid
+      read_date_component_or_derive(:month_date_fee_paid) { date_fee_paid&.month }
+    end
+
+    def year_date_fee_paid
+      read_date_component_or_derive(:year_date_fee_paid) { date_fee_paid&.year }
+    end
+
+    private
+
+    def read_date_component_or_derive(attr_name)
+      return nil unless respond_to?(:attributes)
+      value = attributes[attr_name.to_s]
+      value.nil? ? yield : value
+    end
+  end
+  # rubocop:enable Metrics/BlockLength
+
   def format_the_dates?(date_attr_name)
     date = send(date_attr_name.to_s)
     day = send(:"day_#{date_attr_name}")
@@ -11,9 +62,9 @@ module DataFieldFormattable
   end
 
   def format_dates(date_attr_name)
-    instance_variable_set(:"@#{date_attr_name}", concat_dates(date_attr_name).to_date)
+    send(:"#{date_attr_name}=", concat_dates(date_attr_name).to_date)
   rescue ArgumentError
-    instance_variable_set(:"@#{date_attr_name}", concat_dates(date_attr_name))
+    send(:"#{date_attr_name}=", concat_dates(date_attr_name))
   end
 
   def concat_dates(date_attr_name)
@@ -23,51 +74,6 @@ module DataFieldFormattable
     return '' if day.blank? || month.blank? || year.blank?
 
     "#{day}/#{month}/#{year}"
-  end
-
-  def day_date_received
-    return @day_date_received if @day_date_received
-    date_received&.day
-  end
-
-  def month_date_received
-    return @month_date_received if @month_date_received
-    date_received&.month
-  end
-
-  def year_date_received
-    return @year_date_received if @year_date_received
-    date_received&.year
-  end
-
-  def day_date_of_death
-    return @day_date_of_death if @day_date_of_death
-    date_of_death&.day
-  end
-
-  def month_date_of_death
-    return @month_date_of_death if @month_date_of_death
-    date_of_death&.month
-  end
-
-  def year_date_of_death
-    return @year_date_of_death if @year_date_of_death
-    date_of_death&.year
-  end
-
-  def day_date_fee_paid
-    return @day_date_fee_paid if @day_date_fee_paid
-    date_fee_paid&.day
-  end
-
-  def month_date_fee_paid
-    return @month_date_fee_paid if @month_date_fee_paid
-    date_fee_paid&.month
-  end
-
-  def year_date_fee_paid
-    return @year_date_fee_paid if @year_date_fee_paid
-    date_fee_paid&.year
   end
 
   def format_probate

@@ -3,7 +3,7 @@ require 'rails_helper'
 module Forms
   class FormTestClass < FormObject
     def self.permitted_attributes
-      { id: Integer, fee: Integer }
+      { id: :integer, fee: :integer }
     end
 
     define_attributes

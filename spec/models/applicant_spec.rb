@@ -112,7 +112,7 @@ RSpec.describe Applicant do
       before { applicant.date_of_birth = Date.new(1964, 2, 29) }
 
       it 'returns the correct value' do
-        Timecop.freeze(Date.new(2014, 10, 28)) do
+        travel_to(Date.new(2014, 10, 28)) do
           is_expected.to eq 50
         end
       end
@@ -149,7 +149,7 @@ RSpec.describe Applicant do
 
   describe '#over_66?' do
     subject do
-      Timecop.freeze(current_time) do
+      travel_to(current_time) do
         applicant.over_66?
       end
     end
@@ -179,7 +179,7 @@ RSpec.describe Applicant do
 
   describe '#under_age?' do
     subject do
-      Timecop.freeze(current_time) do
+      travel_to(current_time) do
         applicant.under_age?
       end
     end

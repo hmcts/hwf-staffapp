@@ -23,11 +23,11 @@ RSpec.describe Views::Reports::HmrcPurgedExport do
     subject(:data) { hmrc_export.to_csv.split("\n") }
 
     before do
-      Timecop.freeze(date_from + 1.day) { hmrc_check1 }
-      Timecop.freeze(date_from + 5.days) { hmrc_check2 }
-      Timecop.freeze(date_from + 3.days) { hmrc_check3 }
-      Timecop.freeze(date_to + 1.day) { hmrc_check4 }
-      Timecop.freeze(date_from - 1.day) { hmrc_check5 }
+      travel_to(date_from + 1.day) { hmrc_check1 }
+      travel_to(date_from + 5.days) { hmrc_check2 }
+      travel_to(date_from + 3.days) { hmrc_check3 }
+      travel_to(date_to + 1.day) { hmrc_check4 }
+      travel_to(date_from - 1.day) { hmrc_check5 }
     end
 
     it 'return 4 rows csv data' do

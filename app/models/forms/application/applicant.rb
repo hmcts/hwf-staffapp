@@ -1,6 +1,5 @@
 module Forms
   module Application
-    # rubocop:disable Metrics/ClassLength
     class Applicant < ::FormObject
 
       MINIMUM_AGE = 16
@@ -12,17 +11,17 @@ module Forms
       # rubocop:disable Metrics/MethodLength
       def self.permitted_attributes
         {
-          last_name: String,
-          date_of_birth: Date,
-          day_date_of_birth: Integer,
-          month_date_of_birth: Integer,
-          year_date_of_birth: Integer,
-          married: Boolean,
-          title: String,
-          ni_number: String,
-          ho_number: String,
-          first_name: String,
-          date_received: Date
+          last_name: :string,
+          date_of_birth: :date,
+          day_date_of_birth: :integer,
+          month_date_of_birth: :integer,
+          year_date_of_birth: :integer,
+          married: :boolean,
+          title: :string,
+          ni_number: :string,
+          ho_number: :string,
+          first_name: :string,
+          date_received: :date
         }
       end
       # rubocop:enable Metrics/MethodLength
@@ -58,9 +57,9 @@ module Forms
       end
 
       def format_dob
-        @date_of_birth = concat_dob_dates.to_date
+        self.date_of_birth = concat_dob_dates.to_date
       rescue StandardError
-        @date_of_birth = concat_dob_dates
+        self.date_of_birth = concat_dob_dates
       end
 
       def concat_dob_dates
@@ -70,18 +69,15 @@ module Forms
       end
 
       def day_date_of_birth
-        return @day_date_of_birth if @day_date_of_birth
-        date_of_birth&.day
+        attributes['day_date_of_birth'] || date_of_birth&.day
       end
 
       def month_date_of_birth
-        return @month_date_of_birth if @month_date_of_birth
-        date_of_birth&.month
+        attributes['month_date_of_birth'] || date_of_birth&.month
       end
 
       def year_date_of_birth
-        return @year_date_of_birth if @year_date_of_birth
-        date_of_birth&.year
+        attributes['year_date_of_birth'] || date_of_birth&.year
       end
 
       private
@@ -151,6 +147,5 @@ module Forms
         }
       end
     end
-    # rubocop:enable Metrics/ClassLength
   end
 end

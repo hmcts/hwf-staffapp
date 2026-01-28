@@ -44,7 +44,7 @@ RSpec.describe Report::HmrcController do
       before {
         allow(Views::Reports::HmrcPurgedExport).to receive(:new).and_return hmrc_export_class
         allow(hmrc_export_class).to receive(:to_csv).and_return report
-        Timecop.freeze(current_time) do
+        travel_to(current_time) do
           put :data_export
         end
       }

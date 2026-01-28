@@ -3,10 +3,10 @@ module Forms
 
     def self.permitted_attributes
       {
-        correct: Boolean,
-        incorrect_reason: String,
-        incorrect_reason_category: Array,
-        staff_error_details: String
+        correct: :boolean,
+        incorrect_reason: :string,
+        incorrect_reason_category: :array,
+        staff_error_details: :string
       }
     end
 

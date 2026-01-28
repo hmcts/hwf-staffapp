@@ -5,8 +5,8 @@ module Forms
 
       def self.permitted_attributes
         {
-          statement_signed_by: String,
-          discretion_applied: Boolean
+          statement_signed_by: :string,
+          discretion_applied: :boolean
         }
       end
       define_attributes
