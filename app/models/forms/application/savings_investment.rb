@@ -3,6 +3,7 @@ module Forms
     class SavingsInvestment < ::FormObject
 
       include ActiveModel::Validations::Callbacks
+      include AgeValidatable
 
       LOCALE = 'activemodel.errors.models.forms/application/savings_investment.attributes'.freeze
 
@@ -124,28 +125,6 @@ module Forms
           errors.add(:amount, @numericality_error_key)
         end
       end
-
-      def validate_over_66?
-        return false unless ucd_changes_apply?(@object.application.detail.calculation_scheme)
-        min_threshold_exceeded && !max_threshold_exceeded
-      end
-
-      # rubocop:disable Metrics/AbcSize
-      def applicant_partner_over_66
-        return false unless over_66?
-
-        details = @object.application.applicant
-        age_66 = Time.zone.today - 66.years
-
-        if details.married? && details.partner_date_of_birth.present?
-          if details.date_of_birth > age_66 && details.partner_date_of_birth > age_66
-            errors.add(:over_66, :not_over_66_married)
-          end
-        elsif details.date_of_birth > age_66
-          errors.add(:over_66, :not_over_66)
-        end
-      end
-      # rubocop:enable Metrics/AbcSize
     end
   end
 end
