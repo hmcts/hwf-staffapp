@@ -117,7 +117,11 @@ Rails.application.routes.draw do
     end
   end
 
-  resources :processed_applications, only: [:index, :show, :update]
+  resources :processed_applications, only: [:index, :show, :update] do
+    member do
+      get :flow
+    end
+  end
   resources :deleted_applications, only: [:index, :show]
   resources :dwp_failed_applications, only: [:index]
 

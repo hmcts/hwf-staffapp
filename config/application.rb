@@ -3,7 +3,7 @@ require_relative "boot"
 require "rails"
 # Pick the frameworks you want:
 require "active_model/railtie"
-# require "active_job/railtie"
+require "active_job/railtie"
 require "active_record/railtie"
 require "active_storage/engine"
 require "action_controller/railtie"
@@ -54,6 +54,9 @@ module FrStaffapp
 
     config.active_support.remove_deprecated_time_with_zone_name = true
     config.active_record.yaml_column_permitted_classes = [Symbol, Date, Time, ActiveSupport::HashWithIndifferentAccess]
+
+    # Configure ActiveJob to use Delayed Job
+    config.active_job.queue_adapter = :delayed_job
 
     # Enable Gzip compression to improve performance of CSS & JS files.
     # config.middleware.use Rack::Deflater

@@ -1,4 +1,26 @@
 en-GB:
+  page_titles:
+    home: "Home"
+    processed_applications: "Processed Applications"
+    processed_applications_flow: "Application Flow"
+    applications_details: "Application Details"
+    applications_personal_informations: "Personal Information"
+    applications_partner_informations: "Partner Information"
+    applications_savings_investments: "Savings and Investments"
+    applications_benefits: "Benefits"
+    applications_dependents: "Dependents"
+    applications_incomes: "Income"
+    applications_income_kind_applicants: "Applicant Income Type"
+    applications_income_kind_partners: "Partner Income Type"
+    applications_summary: "Application Summary"
+    applications_declaration: "Declaration"
+    applications_representative: "Representative"
+    applications_fee_status: "Fee Status"
+    applications_confirmation: "Confirmation"
+    evidence: "Evidence"
+    part_payments: "Part Payment"
+    online_applications: "Online Application"
+
   helpers:
     submit:
       create: "Create %{model.downcase}"
