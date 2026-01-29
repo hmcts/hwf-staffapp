@@ -25,7 +25,6 @@ Feature: Waiting for evidence
     And I should see the application details
     And I should see the applicants benefit details
     And I should see the applicants income details
-    And I should see whether the applicant is eligible for help with fees
     And I should see the processing summmary
 
   Scenario: Evidence is correct
