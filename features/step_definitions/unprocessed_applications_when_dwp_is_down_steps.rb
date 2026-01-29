@@ -6,7 +6,7 @@ end
 
 Given("There is an application pending") do
   @current_user = FactoryBot.create(:user)
-  @applicant = create_application_with_bad_request_result_with(@current_user)
+  @applicant = create_application_with_ok_request_result_with(@current_user)
 end
 
 Given("There are 2 applications that have been submitted and pending for different offices") do
@@ -158,6 +158,8 @@ When("I complete processing the application") do
     savings_investments_page.submit_less_than_ucd
     expect(benefits_page.content).to have_header
     benefits_page.submit_benefits_yes
+    expect(declaration_page.content).to have_header
+    declaration_page.sign_by_applicant
     expect(summary_page.content).to have_header
     complete_processing
   end
@@ -210,7 +212,7 @@ end
 
 Then("I should be on the result page with the application status set to processed") do
   expect(evidence_page.content).to have_result
-  expect(evidence_page.content.evidence_summary[0].summary_row[0]).to have_text 'Savings and investments ✗ Failed'
+  expect(evidence_page.content.evidence_summary[0].summary_row[0]).to have_text 'Savings and investments ✓ Passed'
 end
 
 Then("I should be on the page 'Pending benefit applications'") do
