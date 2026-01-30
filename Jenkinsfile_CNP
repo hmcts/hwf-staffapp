@@ -21,7 +21,6 @@ withPipeline(type, product, component) {
     env.NODE_OPTIONS='--openssl-legacy-provider'
     env.ENABLE_COVERAGE='true'
 
-    env.REDIRECTION_DOMAINS='trial.domain:production.domain'
     env.ACTIVE_JOB_ENABLED='false'
     env.PROCESSED_DELETED_PER_PAGE='20'
     env.DWP_NOTIFICATION_ALERT_EMAILS=['dan@test.com', 'petr@test.gov.uk']

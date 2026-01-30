@@ -18,20 +18,20 @@ RSpec.describe Query::LastDwpFailedApplications do
     let(:application7) { create(:application, :benefit_type, :processed_state, user: user, reference: 'ABC7', office: office1) }
 
     before do
-      Timecop.freeze(3.months.ago + 1.day) do
+      travel_to(3.months.ago + 1.day) do
         create(:benefit_check, dwp_result: 'BadRequest', error_message: 'LSCBC959: Service unavailable.', applicationable: application5, user: user)
       end
 
-      Timecop.freeze(3.months.ago) do
+      travel_to(3.months.ago) do
         create(:benefit_check, dwp_result: 'BadRequest', error_message: 'LSCBC959: Service unavailable.', applicationable: application6, user: user)
       end
 
-      Timecop.freeze(2.hours.ago) do
+      travel_to(2.hours.ago) do
         create(:benefit_check, :yes_result, applicationable: application1, updated_at: 2.hours.ago, user: user)
         create(:benefit_check, dwp_result: 'Unspecified error', error_message: 'Server broke connection', applicationable: application2, user: user)
       end
 
-      Timecop.freeze(1.hour.ago) do
+      travel_to(1.hour.ago) do
         # duplicating the call so we can test for duplication in final query
         create(:benefit_check, dwp_result: 'Unspecified error', error_message: 'Server broke connection', applicationable: application1, user: user)
         create(:benefit_check, dwp_result: 'Unspecified error', error_message: 'Server broke connection', applicationable: application1, user: user)

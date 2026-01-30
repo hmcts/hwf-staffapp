@@ -9,9 +9,7 @@ class BusinessEntity < ActiveRecord::Base
   validates :sop_code, :name, :valid_from, presence: true
   validates :sop_code, uniqueness: { scope: [:office_id, :name] }
 
-  validates :valid_to, date: {
-    after: :valid_from, allow_blank: true
-  }
+  validates :valid_to, comparison: { greater_than: :valid_from }, allow_blank: true
 
   def self.current_for(office, jurisdiction)
     BusinessEntity.find_by(office: office, jurisdiction: jurisdiction, valid_to: nil)

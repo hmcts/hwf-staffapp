@@ -12,9 +12,9 @@ module Forms
 
     def format_dates
       [:date_from, :date_to].each do |date_attr_name|
-        instance_variable_set(:"@#{date_attr_name}", concat_dates(date_attr_name).to_date)
+        send(:"#{date_attr_name}=", concat_dates(date_attr_name).to_date)
       rescue StandardError
-        instance_variable_set(:"@#{date_attr_name}", concat_dates(date_attr_name))
+        send(:"#{date_attr_name}=", concat_dates(date_attr_name))
       end
     end
 

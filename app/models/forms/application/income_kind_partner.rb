@@ -6,8 +6,8 @@ module Forms
 
       def self.permitted_attributes
         {
-          income_kind: String,
-          income_kind_partner: []
+          income_kind: :hash,
+          income_kind_partner: :array
         }
       end
 
@@ -25,22 +25,24 @@ module Forms
 
       def fields_to_update
         {
-          income_kind: @income_kind
+          income_kind: income_kind
         }
       end
 
       def none_of_above_selected
+        return if income_kind_partner.blank?
         if income_kind_partner.include?('none_of_the_above') && income_kind_partner.count > 1
           errors.add(:income_kind_partner, :invalid)
         end
       end
 
       def format_income_kind
-        @income_kind = { applicant: income_kind_applicant, partner: @income_kind_partner }.with_indifferent_access
+        self.income_kind = { applicant: income_kind_applicant_value,
+                             partner: income_kind_partner }.with_indifferent_access
       end
 
-      def income_kind_applicant
-        @income_kind.try(:[], :applicant) || []
+      def income_kind_applicant_value
+        income_kind.try(:[], :applicant) || []
       end
     end
   end

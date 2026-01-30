@@ -2,7 +2,7 @@ module Forms
   module Application
     class Benefit < ::FormObject
       def self.permitted_attributes
-        { benefits: Boolean }
+        { benefits: :boolean }
       end
 
       define_attributes

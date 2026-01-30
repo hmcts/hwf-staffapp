@@ -1,30 +1,33 @@
 module Forms
   class FinanceReport
-    include Virtus.model(nullify_blank: true)
     include ActiveModel::Model
+    include ActiveModel::Attributes
     include ActiveModel::Validations::Callbacks
     include FinanceReportHelper
 
-    attribute :date_from, Date
-    attribute :day_date_from, Integer
-    attribute :month_date_from, Integer
-    attribute :year_date_from, Integer
-    attribute :date_to, Date
-    attribute :day_date_to, Integer
-    attribute :month_date_to, Integer
-    attribute :year_date_to, Integer
-    attribute :sop_code, String
-    attribute :refund, Boolean
-    attribute :application_type, String
-    attribute :jurisdiction_id, Integer
-    attribute :entity_code, String
-    attribute :all_offices, Boolean
+    attribute :date_from, :date
+    attribute :day_date_from, :integer
+    attribute :month_date_from, :integer
+    attribute :year_date_from, :integer
+    attribute :date_to, :date
+    attribute :day_date_to, :integer
+    attribute :month_date_to, :integer
+    attribute :year_date_to, :integer
+    attribute :sop_code, :string
+    attribute :refund, :boolean
+    attribute :application_type, :string
+    attribute :jurisdiction_id, :integer
+    attribute :entity_code, :string
+    attribute :all_offices, :boolean
+
+    def initialize(attrs = {})
+      super
+      nullify_blanks
+    end
 
     validates :date_to, :date_from, presence: true
 
-    validates :date_to, date: {
-      after: :date_from, allow_blank: true
-    }
+    validates :date_to, comparison: { greater_than: :date_from }, allow_blank: true
 
     validates :entity_code, presence: true, unless: proc { |form|
       form.all_offices || form.entity_code.nil?
@@ -36,5 +39,13 @@ module Forms
       :'activemodel.attributes.forms/finance_report'
     end
 
+    private
+
+    def nullify_blanks
+      [:sop_code, :application_type, :entity_code].each do |attr|
+        value = send(attr)
+        send(:"#{attr}=", nil) if value.is_a?(String) && value.blank?
+      end
+    end
   end
 end

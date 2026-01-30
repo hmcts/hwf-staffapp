@@ -2,9 +2,9 @@ module Forms
   class BenefitsEvidence < ::FormObject
     def self.permitted_attributes
       {
-        evidence: Boolean,
-        correct: Boolean,
-        incorrect_reason: String
+        evidence: :boolean,
+        correct: :boolean,
+        incorrect_reason: :string
       }
     end
 

@@ -18,16 +18,16 @@ RSpec.describe Views::Reports::AuditPersonalDataReport do
   describe 'to_csv' do
     subject(:data) { audit_export.to_csv.split("\n") }
     before {
-      Timecop.freeze(Date.parse('1/1/2020')) {
+      travel_to(Date.parse('1/1/2020')) {
         PersonalDataPurge.new([application1]).purge!
       }
-      Timecop.freeze(Date.parse('1/11/2021')) {
+      travel_to(Date.parse('1/11/2021')) {
         PersonalDataPurge.new([application2]).purge!
       }
-      Timecop.freeze(Date.parse('10/1/2021')) {
+      travel_to(Date.parse('10/1/2021')) {
         PersonalDataPurge.new([application3]).purge!
       }
-      Timecop.freeze(Date.parse('12/1/2021')) {
+      travel_to(Date.parse('12/1/2021')) {
         PersonalDataPurge.new([application4.linked_application]).purge!
       }
     }

@@ -3,14 +3,14 @@
 require 'rails_helper'
 
 RSpec.describe Views::Reports::PublicSubmissionData do
-  let!(:online_application) { Timecop.freeze(8.days.ago) { create(:online_application, :completed, :with_reference) } }
+  let!(:online_application) { travel_to(8.days.ago) { create(:online_application, :completed, :with_reference) } }
 
   before do
-    Timecop.freeze(8.days.ago) do
+    travel_to(8.days.ago) do
       create_list(:online_application, 3, :completed, :with_reference, convert_to_application: true)
       create(:application, :uncompleted, :with_office, state: :created, online_application: online_application, reference: online_application.reference)
     end
-    Timecop.freeze(2.days.ago) do
+    travel_to(2.days.ago) do
       create_list(:online_application, 1, :completed, :with_reference, convert_to_application: true)
     end
   end

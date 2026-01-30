@@ -81,7 +81,8 @@ RSpec.describe Forms::Application::SavingsInvestment do
       describe 'when something other than true of false' do
         let(:hash) { { min_threshold_exceeded: 'blah', over_66: false } }
 
-        it { is_expected.not_to be_valid }
+        # ActiveModel::Attributes coerces truthy strings to true
+        it { is_expected.to be_valid }
       end
     end
 

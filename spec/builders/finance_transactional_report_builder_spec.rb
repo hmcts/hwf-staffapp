@@ -25,7 +25,7 @@ RSpec.describe FinanceTransactionalReportBuilder do
 
   describe '#to_csv' do
     subject do
-      Timecop.freeze(current_time) do
+      travel_to(current_time) do
         frb.to_csv
       end
     end

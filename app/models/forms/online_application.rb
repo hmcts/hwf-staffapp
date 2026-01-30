@@ -7,20 +7,20 @@ module Forms
 
     # rubocop:disable Metrics/MethodLength
     def self.permitted_attributes
-      { fee: Decimal,
-        jurisdiction_id: Integer,
-        date_received: Date,
-        day_date_received: Integer,
-        month_date_received: Integer,
-        year_date_received: Integer,
-        form_name: String,
-        case_number: String,
-        emergency: Boolean,
-        emergency_reason: String,
-        benefits_override: Boolean,
-        user_id: Integer,
-        discretion_applied: Boolean,
-        dwp_manual_decision: Boolean }
+      { fee: :decimal,
+        jurisdiction_id: :integer,
+        date_received: :date,
+        day_date_received: :integer,
+        month_date_received: :integer,
+        year_date_received: :integer,
+        form_name: :string,
+        case_number: :string,
+        emergency: :boolean,
+        emergency_reason: :string,
+        benefits_override: :boolean,
+        user_id: :integer,
+        discretion_applied: :boolean,
+        dwp_manual_decision: :boolean }
     end
     # rubocop:enable Metrics/MethodLength
 
@@ -92,7 +92,7 @@ module Forms
     # rubocop:enable Metrics/MethodLength
 
     def format_fee
-      @fee = fee.strip.to_f if fee.is_a?(String) && fee.strip.to_f.positive?
+      self.fee = fee.strip.to_f if fee.is_a?(String) && fee.strip.to_f.positive?
     end
 
     def refund?

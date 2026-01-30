@@ -299,7 +299,7 @@ RSpec.describe HomeController do
 
   describe '#dwp_maintenance?' do
     subject do
-      Timecop.freeze(current_time) do
+      travel_to(current_time) do
         controller.dwp_maintenance?
       end
     end

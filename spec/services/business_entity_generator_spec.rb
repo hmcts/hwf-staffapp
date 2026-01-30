@@ -10,7 +10,7 @@ RSpec.describe BusinessEntityGenerator, type: :service do
 
   describe '#attributes' do
     subject(:attributes) do
-      Timecop.freeze(current_time) do
+      travel_to(current_time) do
         generator.attributes
       end
     end

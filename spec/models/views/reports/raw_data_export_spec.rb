@@ -497,6 +497,44 @@ RSpec.describe Views::Reports::RawDataExport do
       }
       it { expect(data.total_count).to eq 1 }
     end
+
+    context 'low_income check_type' do
+      let(:low_income_evidence_check) {
+        create(:evidence_check, amount_to_pay: 0, application: application2, income: 100,
+                                check_type: 'low_income', income_check_type: income_check_type, completed_at: Date.parse('2025/1/1'))
+      }
+
+      context 'with paper income_check_type and no HMRC check' do
+        let(:income_check_type) { 'paper' }
+
+        it 'returns Manual LowIncome evidence check type' do
+          low_income_evidence_check
+          export = data.to_csv
+          expect(export).to include('Manual LowIncome')
+        end
+      end
+
+      context 'with hmrc income_check_type' do
+        let(:income_check_type) { 'hmrc' }
+
+        it 'returns HMRC LowIncome evidence check type' do
+          low_income_evidence_check
+          export = data.to_csv
+          expect(export).to include('HMRC LowIncome')
+        end
+      end
+
+      context 'with paper income_check_type and HMRC check present' do
+        let(:income_check_type) { 'paper' }
+
+        it 'returns ManualAfterHMRC evidence check type' do
+          low_income_evidence_check
+          create(:hmrc_check, evidence_check: low_income_evidence_check, created_at: 1.day.ago, request_params: date_range)
+          export = data.to_csv
+          expect(export).to include('ManualAfterHMRC')
+        end
+      end
+    end
   end
 
   describe 'Income' do
