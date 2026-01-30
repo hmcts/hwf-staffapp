@@ -219,6 +219,50 @@ RSpec.describe Views::Reports::HmrcOcmcDataExport do
             expect(data_row).to include('1578,N/A,legal_representative,true,false,post_ucd')
           end
         end
+
+        context 'low_income check_type' do
+          let(:low_income_evidence_check) {
+            create(:evidence_check, application: application1,
+                                    check_type: 'low_income',
+                                    income_check_type: ec_income_check_type,
+                                    completed_at: 1.day.ago)
+          }
+
+          context 'with paper income_check_type and no HMRC check' do
+            let(:ec_income_check_type) { 'paper' }
+
+            it 'returns Manual LowIncome evidence check type' do
+              low_income_evidence_check
+              reference = application1.reference
+              data_row = data.find { |row| row.split(',')[1] == reference }
+              expect(data_row).to include('Manual LowIncome')
+            end
+          end
+
+          context 'with hmrc income_check_type' do
+            let(:ec_income_check_type) { 'hmrc' }
+
+            it 'returns HMRC LowIncome evidence check type' do
+              low_income_evidence_check
+              reference = application1.reference
+              data_row = data.find { |row| row.split(',')[1] == reference }
+              expect(data_row).to include('HMRC LowIncome')
+            end
+          end
+
+          context 'with paper income_check_type and HMRC check present' do
+            let(:ec_income_check_type) { 'paper' }
+
+            it 'returns ManualAfterHMRC evidence check type' do
+              low_income_evidence_check
+              create(:hmrc_check, evidence_check: low_income_evidence_check,
+                                  created_at: 1.day.ago, request_params: date_range)
+              reference = application1.reference
+              data_row = data.find { |row| row.split(',')[1] == reference }
+              expect(data_row).to include('ManualAfterHMRC')
+            end
+          end
+        end
       end
     end
 
