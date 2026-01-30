@@ -49,7 +49,7 @@ withNightlyPipeline(type, product, component) {
     env.NOTIFY_USER_INVITE_TEMPLATE_ID='9e7bb557-8512-4913-9f91-f181487f4fe3'
     env.SENTRY_DSN=''
     env.SENTRY_SSL_VERIFICATION=''
-    env.NEW_LEGISLATION_ACTIVE_DATE='27-11-2028'
+    env.NEW_LEGISLATION_ACTIVE_DATE='27-10-2023'
 
     enableFortifyScan()
 

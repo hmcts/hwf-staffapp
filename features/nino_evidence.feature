@@ -1,5 +1,8 @@
 Feature: Evidence check will be called or not based off the NINO
 
+  Background: Evidence check will be called or not based off the NINO
+    Given UCD changes are active
+
   Scenario: One correct evidence check will pass all other checks
     Given I create an application A that waits for evidence
     And I create an Application B that has correct evidence

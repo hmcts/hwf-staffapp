@@ -18,7 +18,7 @@ class ConfirmationPage < BasePage
     element :granted_hwf, 'h2', text: '✓ Granted help with fees'
     element :next, 'a', text: 'Next'
     element :total_income, 'p', text: /Your income total|Your total monthly income|Your average income for the last 3 months/
-    element :fee_to_pay, 'p', text: /Amount you need to pay|Fee to pay/
+    element :fee_to_pay, 'p', text: /Amount the applicant needs to pay|Amount you need to pay|Fee to pay/
     element :total_savings, 'p', text: /The applicant's savings and investments total/
     element :max_savings, 'p', text: /Maximum amount of savings and investments allowed/
     element :part_payment_sentence, 'p', text: /The application has been processed for the fee of/

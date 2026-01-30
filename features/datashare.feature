@@ -1,6 +1,7 @@
 Feature: Datashare income checking
 
   Background: Signed in as a user
+    Given UCD changes are active
     Given I successfully sign in as a user who has an online application that will be hmrc checked
     And I look up an online application using a valid reference number
 

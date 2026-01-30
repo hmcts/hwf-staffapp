@@ -1,5 +1,8 @@
 Feature: Evidence check on home office number
 
+  Background: Evidence check on home office number
+    Given UCD changes are active
+
   Scenario: Refund application with same home office number
     Given I process applications with waiting evidence check where the applicant has a home office number
     When a second application is processed with the same home office number

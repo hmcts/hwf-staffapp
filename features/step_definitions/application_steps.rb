@@ -4,12 +4,12 @@ end
 
 Then("I should see the result for savings on the processed application page") do
   expect(application_page.content.summary_section[3]).to have_savings_question
-  expect(application_page.content.summary_section[3]).to have_savings_passed
+  expect(application_page.content.summary_section[7]).to have_savings_passed
 end
 
 Then("I should see the result for benefits on the processed application page") do
-  expect(application_page.content.summary_section[3]).to have_benefits_question
-  expect(application_page.content.summary_section[3]).to have_benefits_passed
+  expect(application_page.content.summary_section[4]).to have_benefits_question
+  expect(application_page.content.summary_section[7]).to have_benefits_passed
 end
 
 Then("I look at the result on the confirmation page") do
@@ -31,26 +31,20 @@ When("I see benefit summary") do
 end
 
 Then("I should see declared benefits in this processed application") do
-  expect(application_page.content.summary_section[2]).to have_benefits_question
-  expect(application_page.content.summary_section[2]).to have_answer_yes
+  expect(application_page.content.summary_section[4]).to have_benefits_question
+  expect(application_page.content.summary_section[4]).to have_answer_yes
 end
 
 Then("I should see declared benefits in this application") do
-  expect(application_page.content.summary_section[3]).to have_benefits_question
-  expect(application_page.content.summary_section[3]).to have_answer_yes
+  expect(application_page.content.summary_section[4]).to have_benefits_question
+  expect(application_page.content.summary_section[4]).to have_answer_yes
 end
 
 Then("I have provided the correct evidence") do
-  expect(application_page.content.summary_section[3]).to have_evidence_question
-  expect(application_page.content.summary_section[3]).to have_answer_yes
-end
-
-Then('I should not see income details section') do
-  expect(application_page.content.summary_section[4]).to be_nil
+  expect(application_page.content.summary_section[4]).to have_evidence_question
+  expect(application_page.content.summary_section[4]).to have_answer_yes
 end
 
 Then('I should see income details section') do
-  expect(application_page.content.summary_section[4]).to have_income_question_children
-  expect(application_page.content.summary_section[4]).to have_income_question_number_of_children
-  expect(application_page.content.summary_section[4]).to have_income_question_total
+  expect(application_page.content.summary_section[6]).to have_income_question_total
 end

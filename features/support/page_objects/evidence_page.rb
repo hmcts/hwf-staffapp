@@ -13,8 +13,10 @@ class EvidencePage < BasePage
     element :benefits, 'h2', text: 'Benefits'
     element :income, 'h2', text: 'Income'
     element :result, 'h2', text: 'Result'
+    element :date_received_and_fee_status_details, 'h2', text: 'Date received and fee status'
     element :personal_details, 'h2', text: 'Personal details'
     element :application_details, 'h2', text: 'Application details'
+    element :evidence, 'h2', text: 'Evidence'
     sections :evidence_summary, '.govuk-summary-list' do
       elements :summary_row, '.govuk-summary-list__row'
     end

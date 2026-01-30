@@ -1,6 +1,7 @@
 Feature: Reason for rejecting the evidence
 
   Background: Reason for rejecting the evidence page
+    Given UCD changes are active
     Given I have evidence check application
     And I am on reason for rejecting the evidence page
 

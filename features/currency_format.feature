@@ -1,5 +1,8 @@
 Feature: Currency format
 
+  Background: Currency format
+    Given UCD changes are active
+
   Scenario: Letter - ineligible and no evidence check
     Given I successfully sign in as a user
     When I have completed an ineligible paper application - savings too high
