@@ -17,7 +17,7 @@
     "@rails/actiontext": "^8.1.200",
     "accessible-autocomplete": "^3.0.0",
     "govuk-frontend": "5.13.0",
-    "jquery": "^3.7.1",
+    "jquery": "^4.0.0",
     "rails-ujs": "^5.2.8-1",
     "trix": "^2.1.16"
   },
