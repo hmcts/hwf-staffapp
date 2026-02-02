@@ -27,6 +27,13 @@ class ApplicationDetailsPage < BasePage
     end
   end
 
+  def date_application_received
+    date_received = Time.zone.today - 2.months
+    fill_in('Day', with: date_received.day)
+    fill_in('Month', with: date_received.month)
+    fill_in('Year', with: date_received.year)
+  end
+
   def refund_case_with_valid_date
     content.refund_case.click
     date_fee_paid = Time.zone.today - 4.months
@@ -71,6 +78,15 @@ class ApplicationDetailsPage < BasePage
   def submit_fee_600
     fill_in('How much is the court or tribunal fee?', with: '600')
     content.jurisdiction.click
+    content.form_input.set 'C100'
+    fill_in('Case number', with: 'E71YX571')
+    click_next
+  end
+
+  def submit_fee_600_pre_ucd
+    fill_in('How much is the court or tribunal fee?', with: '600')
+    content.jurisdiction.click
+    date_application_received
     content.form_input.set 'C100'
     fill_in('Case number', with: 'E71YX571')
     click_next
