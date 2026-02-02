@@ -1,7 +1,6 @@
 Feature: Incomes page
 
   Background: Incomes page
-    Given UCD changes are active
     Given I have started an application
     And I am on the income part of the application
 

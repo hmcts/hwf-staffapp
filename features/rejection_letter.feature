@@ -1,8 +1,5 @@
 Feature: Rejection letter based off income / Savings
 
-  Background: Rejection letter based on income / savings
-    Given UCD changes are active
-
   Scenario: Paper application with income over £10000
     Given I process a paper application with high income
     Then the rejection letter should state "Your total monthly income: £10,000"

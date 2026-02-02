@@ -1,7 +1,6 @@
 Feature: Personal details page
 
   Background: Personal details page
-    Given UCD changes are active
     Given I have started an application
     And I am on the personal details part of the application
 

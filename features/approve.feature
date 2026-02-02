@@ -1,8 +1,7 @@
 Feature: Ask a manager page
 
     Background: Ask a manager page
-      Given UCD changes are active
-      And I am on the ask a manager page
+      Given I am on the ask a manager page
 
     Scenario: Successfully submit manager name
       When I successfully submit a manager name

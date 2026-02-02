@@ -2,7 +2,6 @@
 Feature: Processed online applications
 
   Background: Processed applications page
-    Given UCD changes are active
     Given I am signed in as a smoke user
 
   Scenario: Process paper application application

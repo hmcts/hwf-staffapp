@@ -1,8 +1,5 @@
 Feature: User dashboard and navigation
 
-  Background: User dashboard and navigation
-    Given UCD changes are active
-
   Scenario: View profile
     Given I successfully sign in as a user
     When I click on view profile

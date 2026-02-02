@@ -1,8 +1,5 @@
 Feature: Summary page
 
-  Background: Summary page
-    Given UCD changes are active
-
   Scenario: Successfully submit my application
       Given I have completed an application
       And I am on the summary page

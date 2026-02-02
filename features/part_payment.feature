@@ -1,7 +1,6 @@
 Feature: Processing part payments
 
   Background: Processed refund application that requires a part payment
-    Given UCD changes are active
     Given I have processed an application that is a part payment
 
   Scenario: Successfully process part payment

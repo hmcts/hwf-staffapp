@@ -1,8 +1,5 @@
 Feature: Staff
 
-  Background: Staff
-    Given UCD changes are active
-
     Scenario: Filter by office
       Given I am admin on the staff page
       When I filter by office

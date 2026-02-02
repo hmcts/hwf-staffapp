@@ -1,8 +1,5 @@
 Feature: Unprocessed applications when DWP is down
 
-  Background: Benefits page
-    Given UCD changes are active
-
   Scenario: Processing an online application when DWP Checker Service fails
     Given I am a staff member and I process an online benefit application
     And the applicant will fail DWP call

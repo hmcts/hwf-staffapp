@@ -1,7 +1,6 @@
 Feature: Savings and investments page
 
   Background: Savings and investments page
-    Given UCD changes are active
     Given I have started an application
 
     Scenario: Successfully submit less than £4250

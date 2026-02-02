@@ -1,8 +1,5 @@
 Feature: DWP warning message
 
-  Background: DWP warning message
-    Given UCD changes are active
-
   Scenario: DWP message is displayed for users
     Given I successfully sign in as a user
     Then I should see a message saying I can process benefits and income based applications

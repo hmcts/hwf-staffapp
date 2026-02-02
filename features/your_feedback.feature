@@ -1,7 +1,6 @@
 Feature: Your feedback page
 
   Background: Your feedback page
-    Given UCD changes are active
     Given I successfully sign in as a user
     And I am on your feedback page
 

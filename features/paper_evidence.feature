@@ -1,7 +1,6 @@
 Feature: Paper evidence page
 
   Background: Paper evidence page
-    Given UCD changes are active
     Given I have started an application
     And I am on the paper evidence part of the application
 

@@ -1,7 +1,6 @@
 Feature: Problem with evidence page
 
   Background: Problem with evidence page
-    Given UCD changes are active
     Given I have evidence check application
     And I am on the problem with evidence page
 

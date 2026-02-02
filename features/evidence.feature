@@ -1,7 +1,6 @@
 Feature: Waiting for evidence
 
   Background: Waiting for evidence
-    Given UCD changes are active
     Given there is an application waiting for evidence
 
   Scenario: Process evidence

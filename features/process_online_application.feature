@@ -1,7 +1,6 @@
 Feature: Process an online application
 
   Background: Looking up an online application
-    Given UCD changes are active
     Given I have looked up an online application with benefits
 
   Scenario: Application details

@@ -1,8 +1,5 @@
 Feature: Change user details
 
-  Background: Benefits page
-    Given UCD changes are active
-
   Scenario: Role permission for manager
     Given I am manager on the staff page
     When I click on change details of a user

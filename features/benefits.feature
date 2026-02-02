@@ -1,8 +1,7 @@
 Feature: Benefits page
 
   Background: Benefits page
-    Given UCD changes are active
-    And I have started an application
+    Given I have started an application
     And I am on the benefits part of the application
 
     Scenario: Yes the applicant is receiving benefits

@@ -1,7 +1,6 @@
 Feature: Staff guides
 
   Background: Navigate to staff guides
-    Given UCD changes are active
     Given I am on the Help with Fees staff application home page
 
     Scenario: See the guides

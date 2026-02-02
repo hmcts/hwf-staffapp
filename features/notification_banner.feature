@@ -1,7 +1,6 @@
 Feature: Notification banner
 
   Background: Signed in as admin
-    Given UCD changes are active
     Given I successfully sign in as admin
     And I am on the edit notification page
 
