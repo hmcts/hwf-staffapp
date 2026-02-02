@@ -1,5 +1,5 @@
 Given('UCD changes are inactive') do
-  # TODO: disable UCD features
+  disable_feature_switch('band_calculation')
 end
 
 When('I successfully submit my required application details pre UCD') do

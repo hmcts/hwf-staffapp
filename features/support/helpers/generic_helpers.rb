@@ -427,7 +427,11 @@ def click_reference_link
 end
 
 def enable_feature_switch(feature_name)
-  FeatureSwitching.create(feature_key: feature_name, enabled: true)
+  FeatureSwitching.create_or_find_by(feature_key: feature_name).update(enabled: true)
+end
+
+def disable_feature_switch(feature_name)
+  FeatureSwitching.create_or_find_by(feature_key: feature_name).update(enabled: false)
 end
 
 def update_legislation_value
