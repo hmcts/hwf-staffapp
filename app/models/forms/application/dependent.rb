@@ -6,12 +6,12 @@ module Forms
 
       def self.permitted_attributes
         {
-          income: Integer,
-          dependents: Boolean,
-          children: Integer,
-          children_age_band: String,
-          children_age_band_one: Integer,
-          children_age_band_two: Integer
+          income: :integer,
+          dependents: :boolean,
+          children: :integer,
+          children_age_band: :hash,
+          children_age_band_one: :integer,
+          children_age_band_two: :integer
         }
       end
 
@@ -62,10 +62,10 @@ module Forms
       def prepare_children_fields
         return unless dependents
         return unless ucd_changes_apply?(@object.detail.calculation_scheme)
-        @children = band_one_value + band_two_value
-        @children_age_band = { one: band_one_value, two: band_two_value }
+        self.children = band_one_value + band_two_value
+        self.children_age_band = { one: band_one_value, two: band_two_value }
 
-        if @children <= 0
+        if children <= 0
           errors.add(:children_age_band_one, :blank)
           errors.add(:children_age_band_two, :blank)
         end
@@ -75,8 +75,8 @@ module Forms
         return unless ucd_changes_apply?(@object.detail.calculation_scheme)
         return if dependents
 
-        @children = 0
-        @children_age_band = nil
+        self.children = 0
+        self.children_age_band = nil
       end
 
       def band_one_value

@@ -3,13 +3,13 @@ require 'rails_helper'
 describe EvidenceCheckSelector do
   subject(:evidence_check_selector) { described_class.new(application, expires_in_days) }
 
-  let(:current_time) { Time.zone.now }
+  let(:current_time) { Time.zone.local(2026, 1, 15, 12, 30, 0) }
   let(:expires_in_days) { 2 }
   let(:applicant) { application.applicant }
 
   describe '#decide!' do
     subject(:decision) do
-      Timecop.freeze(current_time) do
+      travel_to(current_time) do
         evidence_check_selector.decide!
       end
 

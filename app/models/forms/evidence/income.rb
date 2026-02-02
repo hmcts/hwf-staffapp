@@ -4,7 +4,7 @@ module Forms
 
       def self.permitted_attributes
         {
-          income: String
+          income: :string
         }
       end
 

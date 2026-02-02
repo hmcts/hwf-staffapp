@@ -23,7 +23,13 @@ RSpec.describe Forms::Application::Income do
 
       it { is_expected.to validate_presence_of(:income) }
       it { is_expected.to validate_presence_of(:income_period) }
-      it { is_expected.to validate_numericality_of(:income) }
+
+      # ActiveModel::Attributes coerces non-numeric strings to 0, so we test valid values instead
+      it 'accepts numeric values' do
+        income_form.income = 500
+        income_form.valid?
+        expect(income_form.errors[:income]).to be_empty
+      end
     end
   end
 

@@ -17,7 +17,7 @@ describe ResolverService do
 
   describe '#complete' do
     subject(:complete) do
-      Timecop.freeze(current_time) do
+      travel_to(current_time) do
         resolver.complete
       end
     end
@@ -356,7 +356,7 @@ describe ResolverService do
 
   describe '#return' do
     subject(:return_method) do
-      Timecop.freeze(current_time) do
+      travel_to(current_time) do
         resolver.return
       end
     end
@@ -425,7 +425,7 @@ describe ResolverService do
 
   describe '#delete' do
     subject(:delete) do
-      Timecop.freeze(current_time) do
+      travel_to(current_time) do
         resolver.delete
       end
     end

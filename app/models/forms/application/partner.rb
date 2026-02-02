@@ -10,14 +10,14 @@ module Forms
 
       def self.permitted_attributes
         {
-          partner_first_name: String,
-          partner_last_name: String,
-          partner_date_of_birth: Date,
-          day_date_of_birth: Integer,
-          month_date_of_birth: Integer,
-          year_date_of_birth: Integer,
-          partner_ni_number: String,
-          ni_number: String
+          partner_first_name: :string,
+          partner_last_name: :string,
+          partner_date_of_birth: :date,
+          day_date_of_birth: :integer,
+          month_date_of_birth: :integer,
+          year_date_of_birth: :integer,
+          partner_ni_number: :string,
+          ni_number: :string
         }
       end
       define_attributes
@@ -46,8 +46,8 @@ module Forms
       end
 
       def format_dob
-        @partner_date_of_birth = nil
-        @partner_date_of_birth = concat_dob_dates.to_date unless check_dob_entered
+        self.partner_date_of_birth = nil
+        self.partner_date_of_birth = concat_dob_dates.to_date unless check_dob_entered
       rescue StandardError
         errors.add(:partner_date_of_birth, :not_a_date)
       end
@@ -55,26 +55,23 @@ module Forms
       def concat_dob_dates
         return nil if check_dob_entered
 
-        "#{@day_date_of_birth}/#{@month_date_of_birth}/#{@year_date_of_birth}"
+        "#{day_date_of_birth}/#{month_date_of_birth}/#{year_date_of_birth}"
       end
 
       def check_dob_entered
-        @day_date_of_birth.blank? || @month_date_of_birth.blank? || @year_date_of_birth.blank?
+        day_date_of_birth.blank? || month_date_of_birth.blank? || year_date_of_birth.blank?
       end
 
       def day_date_of_birth
-        return @day_date_of_birth if @day_date_of_birth
-        partner_date_of_birth&.day
+        attributes['day_date_of_birth'] || partner_date_of_birth&.day
       end
 
       def month_date_of_birth
-        return @month_date_of_birth if @month_date_of_birth
-        partner_date_of_birth&.month
+        attributes['month_date_of_birth'] || partner_date_of_birth&.month
       end
 
       def year_date_of_birth
-        return @year_date_of_birth if @year_date_of_birth
-        partner_date_of_birth&.year
+        attributes['year_date_of_birth'] || partner_date_of_birth&.year
       end
 
       private

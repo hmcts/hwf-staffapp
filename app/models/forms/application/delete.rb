@@ -3,8 +3,8 @@ module Forms
     class Delete < ::FormObject
       def self.permitted_attributes
         {
-          deleted_reasons_list: String,
-          deleted_reason: String
+          deleted_reasons_list: :string,
+          deleted_reason: :string
         }
       end
 

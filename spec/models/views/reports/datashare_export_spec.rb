@@ -39,9 +39,9 @@ RSpec.describe Views::Reports::HmrcOcmcDataExport do
     subject(:data) { ocmc_export.to_csv.split("\n") }
 
     before do
-      Timecop.freeze(date_from + 1.day) { application1 }
-      Timecop.freeze(date_from + 2.days) { application2 }
-      Timecop.freeze(date_from + 3.days) { application3 }
+      travel_to(date_from + 1.day) { application1 }
+      travel_to(date_from + 2.days) { application2 }
+      travel_to(date_from + 3.days) { application3 }
       application1.applicant.update(partner_ni_number: 'SN789654C')
       allow(Settings.evidence_check.hmrc).to receive(:office_entity_code).and_return(entity_codes)
       office.update!(entity_code: 'ABC123')

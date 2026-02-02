@@ -18,7 +18,6 @@ gem 'sentry-rails', '~> 6.2'
 gem 'i18n', '>= 1.10'
 gem 'parser', '>= 3.1.2.0'
 gem 'pg', '~> 1.2'
-gem 'rack-host-redirect'
 gem 'rack', '~> 3.2', '>= 3.2.3'
 
 gem 'rails-i18n'
@@ -47,35 +46,20 @@ gem 'delayed_cron_job'
 gem 'delayed_job_active_record'
 gem 'benchmark'
 
-# Use SCSS for stylesheets
-# gem "dartsass-sprockets", "~> 3.1"
-
 gem 'propshaft'
 gem 'cssbundling-rails'
 gem 'jsbundling-rails'
 
-# gem 'terser'
-# Use CoffeeScript for .coffee assets and views
-gem 'coffee-rails', '~> 5.0.0'
-# See https://github.com/sstephenson/execjs#readme for more supported runtimes
-# gem 'therubyracer', platforms: :ruby
-
-# Use jquery as the JavaScript library
-# gem 'jquery-rails'
 # Build JSON APIs with ease. Read more: https://github.com/rails/jbuilder
 gem 'jbuilder', '~> 2.2'
 # bundle exec rake doc:rails generates the API under doc/api.
 gem 'sdoc', '>= 2', group: :doc
 
-# template language
-gem 'logstasher', git: 'https://github.com/shadabahmed/logstasher.git',
-                  ref: '0b80e972753ba7ef36854b48d2c371e32963bc8d'
-gem 'slim-rails', '~> 3.2'
+gem 'logstasher', '~> 3.0'
+gem 'slim-rails'
 
 gem 'puma', '~> 7.0', '>= 7.0.1'
 
-# Date validation
-gem 'date_validator', '0.12'
 gem 'will_paginate'
 
 # Soft deletion
@@ -92,14 +76,10 @@ gem 'gtm_on_rails'
 
 gem 'chartkick'
 gem 'groupdate'
-gem 'nokogiri', '~> 1.18.8'
+gem 'nokogiri'
 gem 'pg_search'
 gem 'faraday', '~> 2.14'
 gem 'rubyzip', require: 'zip'
-gem 'virtus'
-
-# To fix ruby 3.3.3 gemsepec file issue with this gem
-gem 'net-pop', github: 'ruby/net-pop'
 
 # To pass vulnerability in 3.3.5
 gem 'rexml', '>= 3.3.9'
@@ -108,27 +88,18 @@ gem 'cgi', '~> 0.5.1'
 # GovUK Notify
 gem 'govuk_notify_rails'
 
-group :development do
-  # speed up local development via livereload
-  gem 'rack-livereload'
-  gem 'terminal-notifier-guard'
-  gem 'web-console'
-end
-
 group :development, :test do
   gem 'mutex_m'
-  gem 'better_errors'
   gem 'bullet'
   gem 'bundler-audit'
   gem 'debug'
   gem 'byebug'
   gem 'climate_control'
   gem 'factory_bot_rails'
-  gem 'guard-rspec'
-  gem 'guard-rubocop'
   gem 'listen'
   gem 'parallel_tests'
   gem 'pry-rails'
+  gem 'readline'
   gem 'rspec-rails'
   gem 'rubocop', require: false
   gem 'rubocop-performance', require: false
@@ -138,9 +109,6 @@ group :development, :test do
   gem 'rubocop-factory_bot'
   gem 'rubocop-rspec_rails'
   gem 'simplecov', '~> 0.22.0'
-  gem 'spring'
-  gem 'spring-watcher-listen', '~> 2.0'
-  gem 'timecop'
 end
 
 group :test do
@@ -149,7 +117,6 @@ group :test do
   gem 'brakeman'
   gem 'capybara'
   gem 'capybara-screenshot'
-  gem 'codeclimate-test-reporter'
   gem 'cucumber', require: false
   gem 'cucumber-rails', require: false
   gem 'database_cleaner-active_record'

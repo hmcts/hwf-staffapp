@@ -7,7 +7,7 @@ module RefundValidatable
 
   def validate_date_fee_paid?
     refund? && (date_received.is_a?(Date) ||
-      date_received.is_a?(Time)) && @discretion_applied.nil?
+      date_received.is_a?(Time)) && discretion_applied.nil?
   end
 
   def validate_discretion?
@@ -36,12 +36,12 @@ module RefundValidatable
   end
 
   def clear_date_fee_paid
-    @date_fee_paid = nil
+    self.date_fee_paid = nil
   end
 
   def reset_discretion_values
-    @discretion_applied = nil
-    @discretion_manager_name = nil
-    @discretion_reason = nil
+    self.discretion_applied = nil
+    self.discretion_manager_name = nil
+    self.discretion_reason = nil
   end
 end
