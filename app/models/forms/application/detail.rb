@@ -4,34 +4,35 @@ module Forms
       include ActiveModel::Validations::Callbacks
       include DataFieldFormattable
       include RefundValidatable
+      include DateFieldsValidatable
 
       # rubocop:disable Metrics/MethodLength
       def self.permitted_attributes
-        { fee: Decimal,
-          jurisdiction_id: Integer,
-          date_received: Date,
-          day_date_received: Integer,
-          month_date_received: Integer,
-          year_date_received: Integer,
-          probate: Boolean,
-          date_of_death: Date,
-          day_date_of_death: Integer,
-          month_date_of_death: Integer,
-          year_date_of_death: Integer,
-          deceased_name: String,
-          refund: Boolean,
-          emergency: Boolean,
-          emergency_reason: String,
-          date_fee_paid: Date,
-          day_date_fee_paid: Integer,
-          month_date_fee_paid: Integer,
-          year_date_fee_paid: Integer,
-          form_name: String,
-          case_number: String,
-          discretion_applied: Boolean,
-          discretion_manager_name: String,
-          discretion_reason: String,
-          statement_signed_by: String }
+        { fee: :decimal,
+          jurisdiction_id: :integer,
+          date_received: :date,
+          day_date_received: :integer,
+          month_date_received: :integer,
+          year_date_received: :integer,
+          probate: :boolean,
+          date_of_death: :date,
+          day_date_of_death: :integer,
+          month_date_of_death: :integer,
+          year_date_of_death: :integer,
+          deceased_name: :string,
+          refund: :boolean,
+          emergency: :boolean,
+          emergency_reason: :string,
+          date_fee_paid: :date,
+          day_date_fee_paid: :integer,
+          month_date_fee_paid: :integer,
+          year_date_fee_paid: :integer,
+          form_name: :string,
+          case_number: :string,
+          discretion_applied: :boolean,
+          discretion_manager_name: :string,
+          discretion_reason: :string,
+          statement_signed_by: :string }
       end
       # rubocop:enable Metrics/MethodLength
 
@@ -48,26 +49,17 @@ module Forms
       validates :discretion_manager_name,
                 :discretion_reason, presence: true, if: proc { |detail| detail.discretion_applied }
 
-      validates :date_received, date: {
-        before: :tomorrow
-      }
+      validate :validate_date_received
+      validates :date_received, comparison: { less_than: :tomorrow, message: :date_before }, if: :date_received_is_date?
 
       validates :form_name, format: { with: /\A((?!EX160|COP44A).)*\z/i }, allow_nil: true
       validates :form_name, presence: true
 
       with_options if: :probate? do
         validates :deceased_name, presence: true
-        validates :date_of_death, date: {
-          before: :tomorrow
-        }
-      end
-
-      with_options if: :validate_date_fee_paid? do
-        validates :date_fee_paid, date: {
-          after_or_equal_to: :max_refund_date,
-          before_or_equal_to: :date_received,
-          allow_blank: false
-        }
+        validate :validate_date_of_death
+        validates :date_of_death, comparison: { less_than: :tomorrow, message: :date_before },
+                                  if: :date_of_death_is_date?
       end
 
       validate :reason

@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-require 'rspec'
+require 'rails_helper'
 
 RSpec.describe BandBaseCalculation do
   let(:applicant) { build(:applicant, married: married) }

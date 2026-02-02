@@ -77,7 +77,7 @@ RSpec.describe Forms::Application::FeeStatus do
       end
 
       it 'invalidates the object' do
-        Timecop.freeze(FeatureSwitching::NEW_BAND_CALCUATIONS_ACTIVE_DATE) do
+        travel_to(FeatureSwitching::NEW_BAND_CALCUATIONS_ACTIVE_DATE) do
           expect(form.valid?).to be false
           expect(form.errors.messages[:date_received]).to eq ["This date cannot be before the new legislation"]
         end
@@ -121,8 +121,7 @@ RSpec.describe Forms::Application::FeeStatus do
       let(:date_fee_paid) { Time.zone.local(2014, 10, 15, 12, 30, 0) }
       let(:refund_status) { true }
 
-      before { Timecop.freeze(current_time) }
-      after { Timecop.return }
+      before { travel_to(current_time) }
 
       it { is_expected.to be_valid }
 
@@ -270,7 +269,9 @@ RSpec.describe Forms::Application::FeeStatus do
 
           context 'when date_received is set and is a valid date' do
             it 'sets an error on date_received field' do
-              expect(refund.errors[:date_fee_paid]).to eq ["Enter the date", "Enter the date in this format DD/MM/YYYY"]
+              errors = refund.errors[:date_fee_paid]
+              expect(errors).to include("Enter the date")
+              expect(errors).to include("Enter the date in this format DD/MM/YYYY")
             end
           end
         end

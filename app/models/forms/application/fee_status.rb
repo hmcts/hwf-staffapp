@@ -4,23 +4,24 @@ module Forms
       include ActiveModel::Validations::Callbacks
       include DataFieldFormattable
       include RefundValidatable
+      include DateFieldsValidatable
 
       # rubocop:disable Metrics/MethodLength
       def self.permitted_attributes
         {
-          date_received: Date,
-          day_date_received: Integer,
-          month_date_received: Integer,
-          year_date_received: Integer,
-          refund: Boolean,
-          date_fee_paid: Date,
-          day_date_fee_paid: Integer,
-          month_date_fee_paid: Integer,
-          year_date_fee_paid: Integer,
-          discretion_applied: Boolean,
-          discretion_manager_name: String,
-          discretion_reason: String,
-          calculation_scheme: String
+          date_received: :date,
+          day_date_received: :integer,
+          month_date_received: :integer,
+          year_date_received: :integer,
+          refund: :boolean,
+          date_fee_paid: :date,
+          day_date_fee_paid: :integer,
+          month_date_fee_paid: :integer,
+          year_date_fee_paid: :integer,
+          discretion_applied: :boolean,
+          discretion_manager_name: :string,
+          discretion_reason: :string,
+          calculation_scheme: :string
         }
       end
       # rubocop:enable Metrics/MethodLength
@@ -35,22 +36,14 @@ module Forms
       validates :discretion_manager_name,
                 :discretion_reason, presence: true, if: proc { |detail| detail.discretion_applied }
 
-      validates :date_received, date: {
-        before: :tomorrow
-      }
+      validate :validate_date_received
+      validates :date_received, comparison: { less_than: :tomorrow, message: :date_before }, if: :date_received_is_date?
       validates :refund, inclusion: { in: [true, false] }
       validate :date_received_within_limit
 
       validates :date_fee_paid, presence: true, if: proc { |detail| detail.refund && discretion_applied != true }
       validates :discretion_applied, presence: true, if: proc { validate_discretion? }
       validate :calculation_scheme_change
-
-      with_options if: :validate_date_fee_paid? do
-        validates :date_fee_paid, date: {
-          after_or_equal_to: :max_refund_date,
-          before_or_equal_to: :date_received
-        }
-      end
 
       def format_date_fields
         [:date_received, :date_fee_paid].each do |key|
@@ -100,9 +93,9 @@ module Forms
       end
 
       def calculation_scheme_change
-        return if @calculation_scheme.blank?
+        return if calculation_scheme.blank?
 
-        if FeatureSwitching.calculation_scheme(calculation_scheme_data) != @calculation_scheme.to_sym
+        if FeatureSwitching.calculation_scheme(calculation_scheme_data) != calculation_scheme.to_sym
           if date_received != @object.date_received
             before_and_after_legislation_erorrs(date_received, :date_received)
           elsif date_fee_paid != @object.date_fee_paid

@@ -17,7 +17,7 @@ class SignInPage < BasePage
     element :sign_in_title, 'h1', text: 'Sign in'
     element :sign_in_button, 'input[value="Sign in"]'
     element :sign_in_alert, '.govuk-error-summary', text: 'You need to sign in before continuing.'
-    element :sign_in_error, '.govuk-error-summary__list', text: 'Invalid Email or password.'
+    element :sign_in_error, '.govuk-error-summary__list', text: 'Invalid email or password.'
     element :forgot_your_password, 'a', text: 'Forgot your password?'
     section :guidance, '.guidance' do
       element :get_help_header, 'h2', text: 'Get help'

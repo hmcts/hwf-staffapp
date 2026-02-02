@@ -17,8 +17,6 @@ payment:
   expires_in_days: 14
 submission:
   token: <%= ENV['SUBMISSION_TOKEN'] %>
-redirection:
-  domains: <%= ENV['REDIRECTION_DOMAINS'] || '' %>
 active_job:
   enabled: <%= ENV['ACTIVE_JOB_ENABLED'].present? && ['1', 'true'].include?(ENV['ACTIVE_JOB_ENABLED'].downcase) && (!ENV['APP_BUILD_TAG'].present? || !ENV['APP_BUILD_TAG'].downcase.starts_with?('jenkins-fr-staff-branch-builder')) %>
 analytics:

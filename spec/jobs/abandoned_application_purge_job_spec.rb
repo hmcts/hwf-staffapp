@@ -11,11 +11,11 @@ RSpec.describe AbandonedApplicationPurgeJob do
     let(:app_insight) { instance_double(ApplicationInsights::TelemetryClient, flush: '') }
 
     before do
-      Timecop.freeze(30.days.ago) { application1 }
-      Timecop.freeze(28.days.ago) { application2 }
-      Timecop.freeze(1.day.ago) { application3 }
-      Timecop.freeze(30.days.ago) { application4 }
-      Timecop.freeze(30.days.ago) { application5 }
+      travel_to(30.days.ago) { application1 }
+      travel_to(28.days.ago) { application2 }
+      travel_to(1.day.ago) { application3 }
+      travel_to(30.days.ago) { application4 }
+      travel_to(30.days.ago) { application5 }
 
       allow(ApplicationInsights::TelemetryClient).to receive(:new).and_return app_insight
       allow(app_insight).to receive(:track_event)

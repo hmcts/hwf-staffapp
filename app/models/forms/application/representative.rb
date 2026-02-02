@@ -3,9 +3,9 @@ module Forms
     class Representative < ::FormObject
       def self.permitted_attributes
         {
-          first_name: String,
-          last_name: String,
-          organisation: String
+          first_name: :string,
+          last_name: :string,
+          organisation: :string
         }
       end
 
@@ -31,7 +31,7 @@ module Forms
 
       def special_characters_check
         self.class.permitted_attributes.each_key do |name|
-          next if contains_only_standard_characters?(instance_variable_get(:"@#{name}"))
+          next if contains_only_standard_characters?(send(name))
           errors.add(name, 'Must not contain special characters')
         end
       end

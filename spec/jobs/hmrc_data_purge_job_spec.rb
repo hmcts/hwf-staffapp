@@ -17,16 +17,16 @@ RSpec.describe HmrcDataPurgeJob do
         allow(ApplicationInsights::TelemetryClient).to receive(:new).and_return app_insight
         allow(app_insight).to receive(:track_event)
 
-        Timecop.freeze(2.months.ago) do
+        travel_to(2.months.ago) do
           hmrc_check_1
         end
-        Timecop.freeze(6.months.ago - 1.day) do
+        travel_to(6.months.ago - 1.day) do
           hmrc_check_2
         end
-        Timecop.freeze(7.months.ago) do
+        travel_to(7.months.ago) do
           hmrc_check_3
         end
-        Timecop.freeze(7.months.ago) do
+        travel_to(7.months.ago) do
           hmrc_check_4
         end
 

@@ -42,13 +42,13 @@ RSpec.describe Views::Reports::HmrcOcmcDataExport do
     subject(:data) { ocmc_export.to_csv.split("\n") }
 
     before do
-      Timecop.freeze(date_from + 1.day) { application1 }
-      Timecop.freeze(date_from + 2.days) { application2 }
-      Timecop.freeze(date_from + 3.days) { application3 }
-      Timecop.freeze(date_from + 4.days) { application4 }
-      Timecop.freeze(date_from + 5.days) { application5 }
-      Timecop.freeze(date_from + 36.days) { application6 }
-      Timecop.freeze(date_from + 6.days) { application7 }
+      travel_to(date_from + 1.day) { application1 }
+      travel_to(date_from + 2.days) { application2 }
+      travel_to(date_from + 3.days) { application3 }
+      travel_to(date_from + 4.days) { application4 }
+      travel_to(date_from + 5.days) { application5 }
+      travel_to(date_from + 36.days) { application6 }
+      travel_to(date_from + 6.days) { application7 }
       application1.applicant.update(partner_ni_number: 'SN789654C', married: true, ni_number: 'SN789654C')
       application3.applicant.update(partner_ni_number: 'SN789654C', partner_last_name: 'Jones', married: true, ni_number: 'SN789654C')
       application4.applicant.update(partner_ni_number: '', partner_last_name: 'Jones', married: true, ni_number: 'SN789654C')
@@ -235,6 +235,17 @@ RSpec.describe Views::Reports::HmrcOcmcDataExport do
           data_row = data.find { |row| row.split(',')[1] == reference }
           expect(data_row).to include('no,No,full,No,2021-01-02 00:00:00,N/A,N/A,N/A,N/A')
         }
+
+        context 'nil amount_to_pay defaults to zero' do
+          it {
+            decision_date = Date.parse('2025-04-22')
+            application1.update(decision: 'full', decision_date:, amount_to_pay: nil)
+            application1.applicant.update(married: false)
+            reference = application1.reference
+            data_row = data.find { |row| row.split(',')[1] == reference }
+            expect(data_row).to include('false,0.0,89')
+          }
+        end
 
         context 'decision none savings failed' do
           it {

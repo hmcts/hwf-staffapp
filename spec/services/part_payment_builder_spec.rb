@@ -3,12 +3,12 @@ require 'rails_helper'
 describe PartPaymentBuilder do
   subject(:part_payment_builder) { described_class.new(application, expires_in_days) }
 
-  let(:current_time) { Time.zone.now }
+  let(:current_time) { Time.zone.local(2026, 1, 15, 12, 30, 0) }
   let(:expires_in_days) { 2 }
 
   describe '#decide!' do
     subject(:decide) do
-      Timecop.freeze(current_time) do
+      travel_to(current_time) do
         part_payment_builder.decide!
       end
 
