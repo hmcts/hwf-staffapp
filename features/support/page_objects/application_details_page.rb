@@ -12,6 +12,10 @@ class ApplicationDetailsPage < BasePage
     element :form_label, 'label', text: 'Form number'
     element :form_hint, 'label', text: 'You\'ll find this on the bottom of the form, for example C100 or ADM1A'
     element :form_input, '#application_form_name'
+    element :refund_case, '.govuk-label', text: 'This is a refund case'
+    element :day_date_received, '#application_day_date_fee_paid'
+    element :month_date_received, '#application_month_date_fee_paid'
+    element :year_date_received, '#application_year_date_fee_paid'
     element :exceed_fee_limit_error, '.error', text: 'You need to enter an amount below £20,000'
     element :fee_blank_error, '.error', text: 'Enter a court or tribunal fee'
     element :form_error_message, '.error', text: 'Enter a valid form number'
@@ -122,6 +126,16 @@ class ApplicationDetailsPage < BasePage
     content.jurisdiction.click
     content.form_input.set 'C100'
     fill_in('Case number', with: 'E71YX571', visible: false)
+    click_next
+  end
+
+  def submit_as_refund_case_pre_ucd
+    fill_in('How much is the court or tribunal fee?', with: '656.66', visible: false)
+    content.jurisdiction.click
+    date_application_received
+    content.form_input.set 'C100'
+    fill_in('Case number', with: 'E71YX571', visible: false)
+    refund_case_with_valid_date
     click_next
   end
 

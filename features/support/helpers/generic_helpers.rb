@@ -385,6 +385,12 @@ def create_application_with_ok_request_result_with(user)
   application.applicant
 end
 
+def create_application_with_bad_request_result_pre_ucd_with(user)
+  application = FactoryBot.create(:application, :applicant_full, ni_number: Settings.dwp_mock.ni_number_no.first, office: user.office, user: user)
+  FactoryBot.create(:benefit_check, :bad_request_result, applicationable: application, user: user)
+  application.applicant
+end
+
 def stub_dwp_response_as_bad_request
   allow_any_instance_of(Faraday::Connection).to receive(:post).and_raise(
     Faraday::TimeoutError.new("Request Timeout")

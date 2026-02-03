@@ -72,6 +72,11 @@ class IncomesPage < BasePage
     click_next
   end
 
+  def submit_income_no_pre_ucd
+    incomes_page.content.wait_until_question_visible
+    incomes_page.content.radio[0].click
+  end
+
   def submit_income_no
     incomes_page.content.wait_until_question_ucd_visible
     incomes_page.content.radio[0].click
