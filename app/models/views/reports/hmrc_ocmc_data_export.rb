@@ -110,11 +110,14 @@ module Views
         CASE WHEN ec.check_type = 'random' AND ec.income_check_type = 'paper' AND hc_id IS NULL then 'Manual NumberRule'
          WHEN ec.check_type = 'flag' AND ec.income_check_type = 'paper' AND hc_id IS NULL then 'Manual NIFlag'
          WHEN ec.check_type = 'ni_exist' AND ec.income_check_type = 'paper' AND hc_id IS NULL then 'Manual NIDuplicate'
+         WHEN ec.check_type = 'low_income' AND ec.income_check_type = 'paper' AND hc_id IS NULL THEN 'Manual LowIncome'
          WHEN ec.check_type = 'random' AND ec.income_check_type = 'hmrc' then 'HMRC NumberRule'
          WHEN ec.check_type = 'flag' AND ec.income_check_type = 'hmrc' then 'HMRC NIFlag'
          WHEN ec.check_type = 'ni_exist' AND ec.income_check_type = 'hmrc' then 'HMRC NIDuplicate'
+         WHEN ec.check_type = 'low_income' AND ec.income_check_type = 'hmrc' THEN 'HMRC LowIncome'
          WHEN ec.check_type = 'flag' AND ec.income_check_type = 'paper' AND hc_id IS NOT NULL then 'ManualAfterHMRC'
          WHEN ec.check_type = 'random' AND ec.income_check_type = 'paper' AND hc_id IS NOT NULL then 'ManualAfterHMRC'
+         WHEN ec.check_type = 'low_income' AND income_check_type = 'paper' AND hc_id IS NOT NULL THEN 'ManualAfterHMRC'
            ELSE NULL
         END AS \"Evidence check type\",
         CASE WHEN hc_id IS NULL then NULL
