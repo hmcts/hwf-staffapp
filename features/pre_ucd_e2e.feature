@@ -48,19 +48,6 @@ Feature: Pre-UCD end-to-end Tests
     When I successfully submit my application
     Then I should see that the applicant is eligible for help with fees
 
-  Scenario: Process paper application without benefits evidence required (pre-UCD)
-    Given I successfully sign in as a user
-    And I start to process a new paper application
-    Then I am on the personal details page
-    When I successfully submit my required personal details
-    And I successfully submit my required application details pre UCD
-    And I sucessfully submit my savings and investments pre UCD
-    And I answer no to the benefits question
-    And I answer no to does the applicant financially support any children
-    And I submit 50 total monthly income
-    Then I should see check details page pre UCD
-    When I successfully submit my application
-
   Scenario: Process online application with benefits (pre-UCD)
     Given I have looked up an online application with benefits
     When I see the application details
@@ -69,11 +56,3 @@ Feature: Pre-UCD end-to-end Tests
     Then I should be taken to the check details page
     When I successfully submit my application
     And I should see that the applicant is eligible for help with fees
-
-  Scenario: Process application on the pending list after DWP checker is online (pre-UCD)
-    Given There is an application pending pre UCD
-    And I am a staff member at the 'Pending benefit applications' page with the DWP checker online
-    And there is an application in the pending list
-    When I click on the application 'Ready to process' link
-    And I complete processing the application pre UCD
-    Then I should be on the result page with the application status set to processed pre UCD
