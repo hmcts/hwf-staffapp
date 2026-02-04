@@ -1,6 +1,6 @@
 Feature: Pre-UCD end-to-end Tests
 
-  Background: Setup
+  Background: Setup for pre-UCD changes
     Given UCD changes are inactive
 
   Scenario: Process paper application with benefits - full remission (pre-UCD)
