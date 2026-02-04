@@ -1,6 +1,8 @@
 Given("I process a paper application to the saving and investments page") do
   expect(dashboard_page.content).to have_find_an_application_heading
   dashboard_page.process_application
+  expect(fee_status_page.content).to have_header
+  fee_status_page.submit_date_received_no_refund
   expect(personal_details_page.content).to have_header
   personal_details_page.submit_all_personal_details_ni_with_no_answer_for_benefits
   expect(application_details_page.content).to have_header
@@ -9,8 +11,9 @@ Given("I process a paper application to the saving and investments page") do
 end
 
 Given("I submit a high savings amount and complete processing") do
-  savings_investments_page.submit_more_than
-  savings_investments_page.submit_exact_amount
+  savings_investments_page.submit_more_than_ucd
+  expect(declaration_page.content).to have_header
+  declaration_page.sign_by_applicant
   expect(summary_page.content).to have_header
   complete_processing
   expect(confirmation_page.content).to have_application_complete
@@ -27,24 +30,31 @@ Then("I should see the applicant has been granted help with fees") do
 end
 
 Given("I input low savings and no benefits but {int} income and then complete processing") do |int|
-  savings_investments_page.submit_less_than
+  savings_investments_page.submit_less_than_ucd
   expect(benefits_page.content).to have_header
   benefits_page.submit_benefits_no
+  expect(children_page.content).to have_header
+  children_page.no_children
+  expect(income_kind_applicant_page.content).to have_header
+  income_kind_applicant_page.submit_wages
   expect(incomes_page.content).to have_header
-  incomes_page.submit_incomes_no
   incomes_page.submit_incomes(int)
+  expect(declaration_page.content).to have_header
+  declaration_page.sign_by_applicant
   expect(summary_page.content).to have_header
   complete_processing
   expect(confirmation_page.content).to have_application_complete
 end
 
 Given("I input low savings with benefits but no paper evidence and then complete processing") do
-  savings_investments_page.submit_less_than
+  savings_investments_page.submit_less_than_ucd
   expect(benefits_page.content).to have_header
   stub_dwp_response_as_bad_request
   benefits_page.submit_benefits_yes
   expect(paper_evidence_page.content).to have_header
   paper_evidence_page.submit_evidence_no
+  expect(declaration_page.content).to have_header
+  declaration_page.sign_by_applicant
   expect(summary_page.content).to have_header
   complete_processing
   expect(confirmation_page.content).to have_application_complete

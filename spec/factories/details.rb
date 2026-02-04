@@ -44,6 +44,10 @@ FactoryBot.define do
       emergency_reason { 'It can not wait' }
     end
 
+    trait :post_ucd do
+      calculation_scheme { FeatureSwitching::CALCULATION_SCHEMAS[1] }
+    end
+
     after(:build) do |detail|
       detail.application ||= build(:application, detail: detail)
     end

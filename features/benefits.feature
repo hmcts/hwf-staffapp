@@ -10,4 +10,4 @@ Feature: Benefits page
 
     Scenario: No the applicant is not receiving benefits
       When I answer no to the benefits question
-      Then I should be taken to the incomes page
+      Then I should be taken to the children page

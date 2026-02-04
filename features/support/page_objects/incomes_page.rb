@@ -27,7 +27,6 @@ class IncomesPage < BasePage
 
   def submit_incomes_50_ucd
     incomes_page.content.wait_until_question_ucd_visible
-
     find('#application_income', visible: false).set('50')
     find_field('Last calendar month', visible: false).click
     click_next
@@ -41,8 +40,14 @@ class IncomesPage < BasePage
 
   def submit_incomes_1200_ucd
     incomes_page.content.wait_until_question_ucd_visible
-
     find('#application_income', visible: false).set('1200')
+    find_field('Last calendar month', visible: false).click
+    click_next
+  end
+
+  def submit_incomes_4000_ucd
+    incomes_page.content.wait_until_question_ucd_visible
+    find('#application_income', visible: false).set('4000')
     find_field('Last calendar month', visible: false).click
     click_next
   end
@@ -53,22 +58,30 @@ class IncomesPage < BasePage
     click_next
   end
 
-  def submit_incomes(num)
-    incomes_page.content.wait_until_question_visible
-    find_field('Total monthly income', visible: false).set(num)
+  def submit_incomes_2000_ucd
+    incomes_page.content.wait_until_question_ucd_visible
+    find('#application_income', visible: false).set('2000')
+    find_field('Last calendar month', visible: false).click
     click_next
   end
 
-  def submit_incomes_no
-    incomes_page.content.wait_until_question_visible
-    incomes_page.content.radio[0].click
+  def submit_incomes(num)
+    incomes_page.content.wait_until_question_ucd_visible
+    find('#application_income', visible: false).set(num)
+    find_field('Last calendar month', visible: false).click
+    click_next
   end
 
-  def submit_incomes_yes_3
-    incomes_page.content.wait_until_question_visible
+  def submit_income_no
+    incomes_page.content.wait_until_question_ucd_visible
+    incomes_page.content.radio[0].click
+    click_next
+  end
+
+  def submit_income
+    incomes_page.content.wait_until_question_ucd_visible
+    find('#application_income', visible: false).set('1900')
     incomes_page.content.radio[1].click
-    find_field('Number of children', visible: false).set('3')
-    find_field('Total monthly income', visible: false).set('1900')
     click_next
   end
 

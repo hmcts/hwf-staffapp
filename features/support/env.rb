@@ -146,3 +146,7 @@ end
 Before do
   extend GuideHelper
 end
+
+Before do
+  enable_feature_switch('band_calculation')
+end

@@ -374,7 +374,13 @@ def reference_prefix
 end
 
 def create_application_with_bad_request_result_with(user)
-  application = FactoryBot.create(:application, :applicant_full, ni_number: Settings.dwp_mock.ni_number_no.first, office: user.office, user: user)
+  application = FactoryBot.create(:application, :applicant_full, ni_number: Settings.dwp_mock.ni_number_no.first, office: user.office, user: user, detail_traits: [:post_ucd])
+  FactoryBot.create(:benefit_check, :bad_request_result, applicationable: application, user: user)
+  application.applicant
+end
+
+def create_application_with_ok_request_result_with(user)
+  application = FactoryBot.create(:application, :applicant_full, ni_number: Settings.dwp_mock.ni_number_yes.first, office: user.office, user: user, detail_traits: [:post_ucd])
   FactoryBot.create(:benefit_check, :bad_request_result, applicationable: application, user: user)
   application.applicant
 end
@@ -421,7 +427,11 @@ def click_reference_link
 end
 
 def enable_feature_switch(feature_name)
-  FeatureSwitching.create(feature_key: feature_name, enabled: true)
+  FeatureSwitching.create_or_find_by(feature_key: feature_name).update(enabled: true)
+end
+
+def disable_feature_switch(feature_name)
+  FeatureSwitching.create_or_find_by(feature_key: feature_name).update(enabled: false)
 end
 
 def update_legislation_value
