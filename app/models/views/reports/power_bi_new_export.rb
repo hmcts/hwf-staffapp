@@ -1,14 +1,17 @@
 # frozen_string_literal: true
 
-# rubocop:disable Metrics/ClassLength, Rails/Output
+# rubocop:disable Metrics/ClassLength
 module Views
   module Reports
-    # Power BI Export V2 - Efficient export for large date ranges (12+ months)
-    # Usage from Rails console:
-    #   export = Views::Reports::PowerBiExportV2.new('2024-01-01', '2024-12-31')
-    #   export.export
+    # Power BI New Export - Unified export with three modes
     #
-    class PowerBiExportV2
+    # Usage from Rails console:
+    #   export = Views::Reports::PowerBiNewExport.new('2024-01-01', '2025-02-01', verbose: true)
+    #   export.export1  # processed only (by decision_date)
+    #   export.export2  # all except 'created' (by created_at)
+    #   export.export3  # waiting_for_evidence and waiting_for_part_payment only (by created_at)
+    #
+    class PowerBiNewExport
       require 'csv'
       require 'zip'
 
@@ -59,35 +62,71 @@ module Views
         'HMRC request date range'
       ].freeze
 
-      def initialize(start_date, end_date)
+      EXCLUDED_OFFICES = "('Digital', 'HMCTS HQ Team')"
+
+      def initialize(start_date, end_date, verbose: false)
         @date_from = parse_date(start_date)
         @date_to = parse_date(end_date).end_of_day
-        timestamp = Time.current.strftime('%Y%m%d_%H%M%S')
-        @csv_file_name = "power_bi_export_#{timestamp}.csv"
-        @csv_file_path = Rails.root.join('tmp', @csv_file_name)
-        @zipfile_path = Rails.root.join('tmp', "#{@csv_file_name}.zip")
+        @verbose = verbose
       end
 
-      # Main entry point - generates CSV and zips it
-      def export
-        puts "Starting export for #{@date_from.to_date} to #{@date_to.to_date}..."
+      # Export 1: Processed applications only (by decision_date)
+      def export1
+        @export_type = :processed
+        @date_field = 'decision_date'
+        @state_filter = "= #{Application.states[:processed]}"
+        @filter_description = "processed only"
+        run_export('export1')
+      end
+
+      # Export 2: All states except 'created' (by created_at)
+      def export2
+        @export_type = :all_except_created
+        @date_field = 'created_at'
+        @state_filter = "!= #{Application.states[:created]}"
+        @filter_description = "all states except 'created'"
+        run_export('export2')
+      end
+
+      # Export 3: Waiting for evidence and waiting for part payment only (by created_at)
+      def export3
+        @export_type = :waiting_only
+        @date_field = 'created_at'
+        waiting_states = [
+          Application.states[:waiting_for_evidence],
+          Application.states[:waiting_for_part_payment]
+        ].join(', ')
+        @state_filter = "IN (#{waiting_states})"
+        @filter_description = "waiting_for_evidence and waiting_for_part_payment only"
+        run_export('export3')
+      end
+
+      def total_count
+        @total_count ||= 0
+      end
+
+      private
+
+      def run_export(export_name)
+        setup_file_paths(export_name)
+        log "Starting #{export_name} for #{@date_from.to_date} to #{@date_to.to_date}..."
+        log "Filtering: #{@filter_description}"
         start_time = Time.current
 
         generate_csv
         zip_file
 
-        duration = (Time.current - start_time).round(2)
-        puts "Export completed in #{duration} seconds"
-        puts "Output: #{@zipfile_path}"
-
+        log "Export completed in #{(Time.current - start_time).round(2)} seconds"
+        log "Output: #{@zipfile_path}"
         @zipfile_path.to_s
       end
 
-      def total_count
-        @total_count ||= count_records
+      def setup_file_paths(export_name)
+        timestamp = Time.current.strftime('%Y%m%d_%H%M%S')
+        @csv_file_name = "power_bi_#{export_name}_#{timestamp}.csv"
+        @csv_file_path = Rails.root.join('tmp', @csv_file_name)
+        @zipfile_path = Rails.root.join('tmp', "#{@csv_file_name}.zip")
       end
-
-      private
 
       def parse_date(date_input)
         case date_input
@@ -104,24 +143,23 @@ module Views
 
       # rubocop:disable Metrics/MethodLength
       def generate_csv
-        puts "Generating CSV..."
+        log "Generating CSV..."
         row_count = 0
 
         File.open(@csv_file_path, 'w') do |file|
           file.write(CSV.generate_line(HEADERS))
 
-          # Use find_each equivalent with raw SQL for memory efficiency
           fetch_data_in_batches do |rows|
             rows.each do |row|
               file.write(CSV.generate_line(build_csv_row(row)))
               row_count += 1
             end
-            puts "  Processed #{row_count} records..." if (row_count % 10_000).zero?
+            log "  Processed #{row_count} records..." if (row_count % 10_000).zero?
           end
         end
 
         @total_count = row_count
-        puts "  Total records: #{row_count}"
+        log "  Total records: #{row_count}"
       end
       # rubocop:enable Metrics/MethodLength
 
@@ -140,19 +178,6 @@ module Views
 
           offset += batch_size
         end
-      end
-
-      def count_records
-        sql = <<~SQL.squish
-          SELECT COUNT(*) as count
-          FROM applications
-          INNER JOIN offices ON offices.id = applications.office_id
-          WHERE offices.name NOT IN ('Digital')
-            AND applications.decision_date >= '#{@date_from.strftime('%Y-%m-%d %H:%M:%S')}'
-            AND applications.decision_date <= '#{@date_to.strftime('%Y-%m-%d %H:%M:%S')}'
-            AND applications.state = #{Application.states[:processed]}
-        SQL
-        ActiveRecord::Base.connection.exec_query(sql).first['count']
       end
 
       # rubocop:disable Metrics/MethodLength
@@ -252,10 +277,10 @@ module Views
                    ROW_NUMBER() OVER (PARTITION BY evidence_check_id ORDER BY created_at DESC) AS row_number
             FROM hmrc_checks
           ) hc ON ec.id = hc.evidence_check_id AND (hc.row_number = 1 OR hc.row_number IS NULL)
-          WHERE offices.name NOT IN ('Digital')
-            AND applications.decision_date >= '#{@date_from.strftime('%Y-%m-%d %H:%M:%S')}'
-            AND applications.decision_date <= '#{@date_to.strftime('%Y-%m-%d %H:%M:%S')}'
-            AND applications.state = #{Application.states[:processed]}
+          WHERE offices.name NOT IN #{EXCLUDED_OFFICES}
+            AND applications.#{@date_field} >= '#{@date_from.strftime('%Y-%m-%d %H:%M:%S')}'
+            AND applications.#{@date_field} <= '#{@date_to.strftime('%Y-%m-%d %H:%M:%S')}'
+            AND applications.state #{@state_filter}
           ORDER BY applications.id
           LIMIT #{limit} OFFSET #{offset}
         SQL
@@ -351,18 +376,21 @@ module Views
       end
 
       def zip_file
-        puts "Compressing to zip..."
+        log "Compressing to zip..."
         FileUtils.rm_f(@zipfile_path)
 
         Zip::File.open(@zipfile_path, create: true) do |zipfile|
           zipfile.add(@csv_file_name, @csv_file_path)
         end
 
-        # Remove the uncompressed CSV
         FileUtils.rm_f(@csv_file_path)
-        puts "  Compressed: #{File.size(@zipfile_path)} bytes"
+        log "  Compressed: #{File.size(@zipfile_path)} bytes"
+      end
+
+      def log(message)
+        puts message if @verbose # rubocop:disable Rails/Output
       end
     end
   end
 end
-# rubocop:enable Metrics/ClassLength, Rails/Output
+# rubocop:enable Metrics/ClassLength
