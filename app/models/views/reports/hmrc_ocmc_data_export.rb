@@ -170,6 +170,7 @@ module Views
         INNER JOIN \"details\" ON \"details\".\"application_id\" = \"applications\".\"id\"
         LEFT JOIN jurisdictions ON jurisdictions.id = details.jurisdiction_id
         WHERE applications.office_id = #{@office_id}
+        AND offices.name NOT IN ('Digital', 'HMCTS HQ Team')
         AND applications.created_at between '#{@date_from.to_fs(:db)}' AND '#{@date_to.to_fs(:db)}'
         AND (row_number = 1 OR row_number IS NULL)
         AND applications.state != 0 ORDER BY applications.created_at DESC;"
