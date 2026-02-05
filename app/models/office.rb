@@ -7,7 +7,7 @@ class Office < ActiveRecord::Base
   has_many :dev_notes, as: :notable, dependent: :destroy
 
   scope :sorted, -> { order(:name) }
-  scope :non_digital, -> { where.not(name: 'Digital') }
+  scope :non_digital, -> { where.not(name: ['Digital', 'HMCTS HQ Team']) }
 
   validates :name, presence: true, uniqueness: true
 
