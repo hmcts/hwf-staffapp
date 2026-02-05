@@ -41,6 +41,24 @@ RSpec.describe Office do
     end
   end
 
+  describe '.non_digital' do
+    let!(:regular_office) { create(:office, name: 'Bristol') }
+    let!(:digital_office) { create(:office, name: 'Digital') }
+    let!(:hmcts_hq_office) { create(:office, name: 'HMCTS HQ Team') }
+
+    it 'excludes Digital office' do
+      expect(described_class.non_digital).not_to include(digital_office)
+    end
+
+    it 'excludes HMCTS HQ Team office' do
+      expect(described_class.non_digital).not_to include(hmcts_hq_office)
+    end
+
+    it 'includes regular offices' do
+      expect(described_class.non_digital).to include(regular_office)
+    end
+  end
+
   describe 'business_entities' do
     subject { office.business_entities.count }
 
