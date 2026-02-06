@@ -1,3 +1,4 @@
+
 # frozen_string_literal: true
 
 # rubocop:disable Metrics/ClassLength
@@ -6,9 +7,9 @@ module Views
     # Power BI New Export - Unified export with three modes
     #
     # Usage from Rails console:
-    #   export = Views::Reports::PowerBiNewExport.new('2024-01-01', '2025-02-01', verbose: true)
+    #   export = Views::Reports::PowerBiNewExport.new('2025-01-01', '2026-01-31', verbose: true)
     #   export.export1  # processed only (by decision_date)
-    #   export.export2  # all except 'created' (by created_at)
+    #   export.export2  # all states (by created_at)
     #   export.export3  # waiting_for_evidence and waiting_for_part_payment only (by created_at)
     #
     class PowerBiNewExport
@@ -79,12 +80,12 @@ module Views
         run_export('export1')
       end
 
-      # Export 2: All states except 'created' (by created_at)
+      # Export 2: All applications (by created_at) - no state filter
       def export2
-        @export_type = :all_except_created
+        @export_type = :all
         @date_field = 'created_at'
-        @state_filter = "!= #{Application.states[:created]}"
-        @filter_description = "all states except 'created'"
+        @state_filter = nil
+        @filter_description = "all states"
         run_export('export2')
       end
 
@@ -280,7 +281,7 @@ module Views
           WHERE offices.name NOT IN #{EXCLUDED_OFFICES}
             AND applications.#{@date_field} >= '#{@date_from.strftime('%Y-%m-%d %H:%M:%S')}'
             AND applications.#{@date_field} <= '#{@date_to.strftime('%Y-%m-%d %H:%M:%S')}'
-            AND applications.state #{@state_filter}
+            #{"AND applications.state #{@state_filter}" if @state_filter}
           ORDER BY applications.id
           LIMIT #{limit} OFFSET #{offset}
         SQL
