@@ -65,7 +65,7 @@ RSpec.describe Views::Reports::PowerBiNewExport do
     end
   end
 
-  describe '#export2 (all except created by created_at)' do
+  describe '#export2 (all states by created_at)' do
     context 'with processed application' do
       let!(:application) do
         create(:application_full_remission, :processed_state,
@@ -117,11 +117,12 @@ RSpec.describe Views::Reports::PowerBiNewExport do
                office: office, business_entity: business_entity, created_at: Time.zone.now)
       end
 
-      it 'excludes created applications' do
+      it 'includes created applications' do
         report.export2
         csv_content = read_csv_from_zip
+        row = csv_content.find { |r| r['id'].to_i == application.id }
 
-        expect(csv_content).to be_empty
+        expect(row).to be_present
       end
     end
   end
