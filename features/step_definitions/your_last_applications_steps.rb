@@ -1,3 +1,8 @@
+Given("I fill in the fee status of the application") do
+  expect(fee_status_page.content).to have_header
+  fee_status_page.submit_date_received_no_refund
+end
+
 Given("I fill in personal details of the application") do
   expect(personal_details_page.content).to have_header
   personal_details_page.submit_all_personal_details_ni
@@ -19,6 +24,7 @@ When("I open my last application") do
 end
 
 Then("I should see the personal details populated with information") do
+  fee_status_page.submit_date_received_no_refund
   expect(personal_details_page.content).to have_header
   expect(personal_details_page.content.application_first_name['value']).to eq 'John Christopher'
   personal_details_page.click_next

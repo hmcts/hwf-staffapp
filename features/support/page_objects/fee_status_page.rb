@@ -37,4 +37,17 @@ class FeeStatusPage < BasePage
     find('#application_discretion_manager_name', visible: false).fill_in(with: 'John Doe')
     find('#application_discretion_reason', visible: false).fill_in(with: 'Test reason')
   end
+
+  def submit_date_received_no_refund
+    fill_in_date_received
+    find_field('No', visible: false).click
+    click_next
+  end
+
+  def submit_date_received_refund
+    fill_in_date_received
+    find_field('Yes', visible: false).click
+    fill_in_date_payed(4.months)
+    click_next
+  end
 end

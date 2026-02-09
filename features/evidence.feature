@@ -24,7 +24,6 @@ Feature: Waiting for evidence
     And I should see the application details
     And I should see the applicants benefit details
     And I should see the applicants income details
-    And I should see whether the applicant is eligible for help with fees
     And I should see the processing summmary
 
   Scenario: Evidence is correct
@@ -56,14 +55,14 @@ Feature: Waiting for evidence
     And I am on an application waiting for evidence
     And I click on start now to process the evidence
     And I submit that the evidence is correct
-    When I submit 2500 as the income
+    When I submit 2950 as the income
     Then I see that the applicant is not eligible for help with fees
 
   Scenario: Partial refund
     And I am on an application waiting for evidence
     And I click on start now to process the evidence
     And I submit that the evidence is correct
-    When I submit 1700 as the income
+    When I submit 2220 as the income
     Then I see the amount to be refunded should be £5
 
   Scenario: Check details

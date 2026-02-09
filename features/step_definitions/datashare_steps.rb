@@ -39,7 +39,7 @@ Given(/^I fill in the form details for a medium income user$/) do
 end
 
 Then(/^I should see waiting for part payment$/) do
-  expect(datashare_evidence_page.content).to have_text('You’re eligible to get some money taken off')
+  expect(datashare_evidence_page.content).to have_text('The applicant is eligible to get some money taken off')
 end
 
 Given(/^I fill in the form details for a higher income user$/) do
