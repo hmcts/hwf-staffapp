@@ -50,6 +50,36 @@ RSpec.describe Query::LastDwpFailedApplications do
       is_expected.to match_array([application5, application1, application2, application3])
     end
 
+    context 'online application converted to paper application' do
+      let(:online_application) { create(:online_application, :benefits, user: user, reference: 'ONLINE1') }
+
+      before do
+        create(:benefit_check, dwp_result: 'Server unavailable',
+                               error_message: 'The benefits checker is not available at the moment.',
+                               applicationable: online_application, user: user)
+      end
+
+      context 'when linked application is still in created state' do
+        before do
+          create(:application, :benefit_type, user: user, reference: 'ONLINE1', office: office1, online_application: online_application)
+        end
+
+        it 'includes the online application in the list' do
+          is_expected.to include(online_application)
+        end
+      end
+
+      context 'when linked application has been processed' do
+        before do
+          create(:application, :benefit_type, :processed_state, user: user, reference: 'ONLINE1', office: office1, online_application: online_application)
+        end
+
+        it 'excludes the online application from the list' do
+          is_expected.not_to include(online_application)
+        end
+      end
+    end
+
     context 'same office' do
       let(:user2) { create(:user, office: office1) }
       subject(:query) { described_class.new(user2) }

@@ -275,7 +275,7 @@ module Views
             (partition by evidence_check_id order by created_at desc)
             as row_number from hmrc_checks
           ) hc ON ec.id = hc.evidence_check_id AND (hc.row_number = 1 OR hc.row_number IS NULL)
-          WHERE offices.name NOT IN ('Digital')
+          WHERE offices.name NOT IN ('Digital', 'HMCTS HQ Team')
             AND applications.decision_date >= '#{@date_from.strftime('%Y-%m-%d %H:%M:%S')}'
             AND applications.decision_date <= '#{@date_to.strftime('%Y-%m-%d %H:%M:%S')}'
             AND applications.state = #{Application.states[:processed]}
