@@ -12,6 +12,40 @@ RSpec.describe Views::Reports::HmrcOcmcDataExport do
   let(:date_from) { Date.parse('1/1/2021') }
   let(:date_to) { Date.parse('1/2/2021') }
 
+  describe 'excluded offices' do
+    context 'when office is Digital and HMCTS one' do
+      let(:digital_office) { create(:office, name: 'Digital') }
+      let(:hmcts_hq_office) { create(:office, name: 'HMCTS HQ Team') }
+
+      before do
+        travel_to(date_from + 1.day) do
+          create(:application, :processed_state, office: digital_office)
+          create(:application, :processed_state, office: hmcts_hq_office)
+        end
+      end
+
+      it 'returns no results' do
+        expect(ocmc_export.to_csv).to eq('no results')
+      end
+    end
+
+    context 'when office is Bristol' do
+      let(:bristol_office) { create(:office, name: 'Bristol') }
+      let(:office_id) { bristol_office.id }
+
+      before do
+        travel_to(date_from + 1.day) do
+          create(:application, :processed_state, office: bristol_office, reference: 'BR123456A')
+        end
+      end
+
+      it 'returns no results' do
+        expect(ocmc_export.to_csv).not_to eq('no results')
+        expect(ocmc_export.to_csv).to include('BR123456A')
+      end
+    end
+  end
+
   describe 'to_csv' do
     let(:application1) {
       create(:application, :processed_state, office: office, income_kind: {}, income: 89,

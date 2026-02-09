@@ -18,6 +18,7 @@ RSpec.describe Views::Reports::RawDataExport do
     { day: end_date.day, month: end_date.month, year: end_date.year }
   }
   let(:digital_office) { create(:office, name: 'Digital') }
+  let(:hmcts_hq_office) { create(:office, name: 'HMCTS HQ Team') }
 
   describe 'when initialised with valid data' do
     it { is_expected.to be_a described_class }
@@ -36,7 +37,9 @@ RSpec.describe Views::Reports::RawDataExport do
     subject { data.total_count }
 
     let(:alternative_parameters) { { office: create(:office), business_entity: create(:business_entity), decision_date: } }
-    let(:ignore_these_parameters) { { office: digital_office, business_entity: business_entity, decision_date: } }
+    let(:digital_office_parameters) { { office: digital_office, business_entity: business_entity, decision_date: } }
+    let(:hmcts_hq_parameters) { { office: hmcts_hq_office, business_entity: business_entity, decision_date: } }
+
     before do
       # include these
       create_list(:application_full_remission, 1, :processed_state, shared_parameters)
@@ -45,14 +48,16 @@ RSpec.describe Views::Reports::RawDataExport do
       create(:application_no_remission, :processed_state, shared_parameters)
       # and exclude the following
       create(:application_full_remission, :processed_state, business_entity: business_entity, decision_date: 2.months.ago.freeze)
-      create(:application_full_remission, :processed_state, ignore_these_parameters)
+      create(:application_full_remission, :processed_state, digital_office_parameters)
+      create(:application_full_remission, :processed_state, hmcts_hq_parameters)
       create(:application_full_remission, :waiting_for_evidence_state, shared_parameters)
       create(:application_full_remission, :waiting_for_part_payment_state, shared_parameters)
       create(:application_full_remission, :deleted_state, shared_parameters)
     end
 
     it {
-      expected_records_in_db = Application.where(state: 3, decision_date: start_date..end_date).where.not(office_id: digital_office.id)
+      excluded_office_ids = [digital_office.id, hmcts_hq_office.id]
+      expected_records_in_db = Application.where(state: 3, decision_date: start_date..end_date).where.not(office_id: excluded_office_ids)
       # testing duplications cause by sql
       expect(expected_records_in_db.count).to eq 4
       is_expected.to eq 4
