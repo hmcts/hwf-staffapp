@@ -16,8 +16,17 @@ module Query
 
     def unprocessed_failed_checks(checks_method)
       method(checks_method).call.map(&:applicationable).select do |application|
-        (application.is_a?(Application) && application.state == 'created') || application.is_a?(OnlineApplication)
+        if application.is_a?(Application)
+          application.state == 'created'
+        else
+          unprocessed_application?(application.reference)
+        end
       end
+    end
+
+    def unprocessed_application?(reference)
+      linked_application = Application.where(reference: reference).last
+      linked_application.blank? || linked_application&.state == 'created'
     end
 
     def failed_checks
