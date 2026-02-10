@@ -125,6 +125,79 @@ RSpec.describe Views::Reports::PowerBiNewExport do
         expect(row).to be_present
       end
     end
+
+    context 'with application missing date_received' do
+      let!(:application) do
+        create(:application_full_remission,
+               office: office, business_entity: business_entity, created_at: Time.zone.now)
+      end
+
+      before do
+        application.detail.update!(date_received: nil)
+      end
+
+      it 'excludes the application' do
+        report.export2
+        csv_content = read_csv_from_zip
+        row = csv_content.find { |r| r['id'].to_i == application.id }
+
+        expect(row).to be_nil
+      end
+    end
+
+    context 'with unlinked online_application with date_received' do
+      let!(:online_application) do
+        create(:online_application, date_received: Time.zone.today,
+                                    fee: 300, form_name: 'EX160',
+                                    created_at: Time.zone.now,
+                                    reference: 'HWF-OA1-TEST')
+      end
+
+      it 'includes the online application' do
+        report.export2
+        csv_content = read_csv_from_zip
+        row = csv_content.find { |r| r['id'].to_i == online_application.id }
+
+        expect(row).to be_present
+        expect(row['source']).to eq('digital')
+      end
+    end
+
+    context 'with unlinked online_application without date_received' do
+      let!(:online_application) do
+        create(:online_application, date_received: nil,
+                                    created_at: Time.zone.now)
+      end
+
+      it 'excludes the online application' do
+        report.export2
+        csv_content = read_csv_from_zip
+
+        expect(csv_content).to be_empty
+      end
+    end
+
+    context 'with linked online_application (no duplicates)' do
+      let!(:online_application) do
+        create(:online_application, date_received: Time.zone.today,
+                                    fee: 300, form_name: 'EX160',
+                                    created_at: Time.zone.now)
+      end
+      let!(:application) do
+        create(:application_full_remission,
+               office: office, business_entity: business_entity,
+               online_application: online_application,
+               created_at: Time.zone.now)
+      end
+
+      it 'includes only one row for the linked application' do
+        report.export2
+        csv_content = read_csv_from_zip
+
+        expect(csv_content.size).to eq(1)
+        expect(csv_content.first['id'].to_i).to eq(application.id)
+      end
+    end
   end
 
   describe '#export3 (waiting states only by created_at)' do

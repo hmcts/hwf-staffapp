@@ -1,4 +1,3 @@
-
 # frozen_string_literal: true
 
 # rubocop:disable Metrics/ClassLength
@@ -9,7 +8,7 @@ module Views
     # Usage from Rails console:
     #   export = Views::Reports::PowerBiNewExport.new('2025-01-01', '2026-01-31', verbose: true)
     #   export.export1  # processed only (by decision_date)
-    #   export.export2  # all states (by created_at)
+    #   export.export2  # all states with date_received, includes unlinked online applications (by created_at)
     #   export.export3  # waiting_for_evidence and waiting_for_part_payment only (by created_at)
     #
     class PowerBiNewExport
@@ -81,11 +80,14 @@ module Views
       end
 
       # Export 2: All applications (by created_at) - no state filter
+      # Requires date_received to be present, includes unlinked online applications
       def export2
         @export_type = :all
         @date_field = 'created_at'
         @state_filter = nil
-        @filter_description = "all states"
+        @require_date_received = true
+        @include_online_applications = true
+        @filter_description = "all states with date_received"
         run_export('export2')
       end
 
@@ -181,8 +183,42 @@ module Views
         end
       end
 
-      # rubocop:disable Metrics/MethodLength
       def build_sql_query(limit:, offset:)
+        if @include_online_applications
+          build_union_sql_query(limit: limit, offset: offset)
+        else
+          build_applications_sql_query(limit: limit, offset: offset)
+        end
+      end
+
+      def build_applications_sql_query(limit:, offset:)
+        <<~SQL.squish
+          #{applications_select_sql}
+          #{applications_from_sql}
+          #{applications_where_sql}
+          ORDER BY applications.id
+          LIMIT #{limit} OFFSET #{offset}
+        SQL
+      end
+
+      def build_union_sql_query(limit:, offset:)
+        <<~SQL.squish
+          SELECT * FROM (
+            #{applications_select_sql}
+            #{applications_from_sql}
+            #{applications_where_sql}
+            UNION ALL
+            #{online_applications_select_sql}
+            #{online_applications_from_sql}
+            #{online_applications_where_sql}
+          ) combined
+          ORDER BY combined.id
+          LIMIT #{limit} OFFSET #{offset}
+        SQL
+      end
+
+      # rubocop:disable Metrics/MethodLength
+      def applications_select_sql
         <<~SQL.squish
           SELECT
             applications.id,
@@ -228,43 +264,25 @@ module Views
             ec.income_check_type AS db_income_check_type,
             ec.hmrc_income_used AS hmrc_total_income,
             ec.outcome AS ev_check_outcome,
-            CASE WHEN ec.check_type = 'random' AND ec.income_check_type = 'paper' AND hc.hc_id IS NULL THEN 'Manual NumberRule'
-                 WHEN ec.check_type = 'flag' AND ec.income_check_type = 'paper' AND hc.hc_id IS NULL THEN 'Manual NIFlag'
-                 WHEN ec.check_type = 'ni_exist' AND ec.income_check_type = 'paper' AND hc.hc_id IS NULL THEN 'Manual NIDuplicate'
-                 WHEN ec.check_type = 'low_income' AND ec.income_check_type = 'paper' AND hc.hc_id IS NULL THEN 'Manual LowIncome'
-                 WHEN ec.check_type = 'random' AND ec.income_check_type = 'hmrc' THEN 'HMRC NumberRule'
-                 WHEN ec.check_type = 'flag' AND ec.income_check_type = 'hmrc' THEN 'HMRC NIFlag'
-                 WHEN ec.check_type = 'ni_exist' AND ec.income_check_type = 'hmrc' THEN 'HMRC NIDuplicate'
-                 WHEN ec.check_type = 'low_income' AND ec.income_check_type = 'hmrc' THEN 'HMRC LowIncome'
-                 WHEN ec.check_type = 'flag' AND ec.income_check_type = 'paper' AND hc.hc_id IS NOT NULL THEN 'ManualAfterHMRC'
-                 WHEN ec.check_type = 'random' AND ec.income_check_type = 'paper' AND hc.hc_id IS NOT NULL THEN 'ManualAfterHMRC'
-                 WHEN ec.check_type = 'low_income' AND ec.income_check_type = 'paper' AND hc.hc_id IS NOT NULL THEN 'ManualAfterHMRC'
-                 ELSE NULL
-            END AS evidence_check_type,
-            CASE WHEN hc.hc_id IS NULL THEN NULL
-                 WHEN hc.hc_id IS NOT NULL AND hc.error_response IS NULL THEN 'Yes'
-                 WHEN hc.hc_id IS NOT NULL AND hc.error_response IS NOT NULL THEN 'No'
-                 ELSE NULL
-            END AS hmrc_response,
+            #{evidence_check_type_case_sql},
+            #{hmrc_response_case_sql},
             hc.error_response AS hmrc_errors,
-            CASE WHEN hc.hc_id IS NULL THEN NULL
-                 WHEN hc.hc_id IS NOT NULL AND ec.completed_at IS NOT NULL THEN 'Yes'
-                 WHEN hc.hc_id IS NOT NULL AND ec.completed_at IS NULL THEN 'No'
-                 ELSE NULL
-            END AS complete_processing,
-            CASE WHEN hc.additional_income IS NULL THEN NULL
-                 WHEN hc.additional_income IS NOT NULL AND ec.income_check_type = 'paper' THEN NULL
-                 WHEN hc.additional_income IS NOT NULL AND ec.income_check_type = 'hmrc'
-                   AND hc.additional_income > 0 THEN hc.additional_income
-                 ELSE NULL
-            END AS additional_income,
+            #{complete_processing_case_sql},
+            #{additional_income_case_sql},
             CASE WHEN ec.income IS NULL THEN applications.income
                  WHEN ec.completed_at IS NOT NULL THEN ec.income
                  ELSE NULL
             END AS income_processed,
             hc.request_params AS hmrc_request_date_range
+        SQL
+      end
+      # rubocop:enable Metrics/MethodLength
+
+      # rubocop:disable Metrics/MethodLength
+      def applications_from_sql
+        <<~SQL.squish
           FROM applications
-          INNER JOIN applicants ON applicants.application_id = applications.id
+          LEFT JOIN applicants ON applicants.application_id = applications.id
           INNER JOIN details ON details.application_id = applications.id
           INNER JOIN offices ON offices.id = applications.office_id
           LEFT JOIN jurisdictions ON jurisdictions.id = details.jurisdiction_id
@@ -278,15 +296,140 @@ module Views
                    ROW_NUMBER() OVER (PARTITION BY evidence_check_id ORDER BY created_at DESC) AS row_number
             FROM hmrc_checks
           ) hc ON ec.id = hc.evidence_check_id AND (hc.row_number = 1 OR hc.row_number IS NULL)
+        SQL
+      end
+
+      # rubocop:enable Metrics/MethodLength
+
+      def applications_where_sql
+        <<~SQL.squish
           WHERE offices.name NOT IN #{EXCLUDED_OFFICES}
             AND applications.#{@date_field} >= '#{@date_from.strftime('%Y-%m-%d %H:%M:%S')}'
             AND applications.#{@date_field} <= '#{@date_to.strftime('%Y-%m-%d %H:%M:%S')}'
             #{"AND applications.state #{@state_filter}" if @state_filter}
-          ORDER BY applications.id
-          LIMIT #{limit} OFFSET #{offset}
+            #{'AND details.date_received IS NOT NULL' if @require_date_received}
+        SQL
+      end
+
+      # rubocop:disable Metrics/MethodLength
+      def online_applications_select_sql
+        <<~SQL.squish
+          SELECT
+            oa2.id,
+            NULL AS office,
+            jurisdictions2.name AS jurisdiction,
+            oa2.fee,
+            COALESCE(oa2.amount, 0) AS amount_to_pay,
+            NULL AS application_type,
+            oa2.form_name AS form,
+            oa2.refund,
+            oa2.income AS pre_evidence_income,
+            NULL AS post_evidence_income,
+            oa2.income_period,
+            oa2.married,
+            oa2.over_66,
+            NULL AS decision,
+            'N/A' AS saving_failed,
+            NULL AS ec_amount_to_pay,
+            NULL AS pp_outcome,
+            NULL AS decision_cost,
+            CASE WHEN oa2.reference LIKE 'HWF%' THEN 'digital' ELSE 'paper' END AS source,
+            'N/A' AS benefits_granted,
+            'no' AS evidence_checked,
+            NULL AS savings_amount,
+            CASE WHEN oa2.income <= 101 THEN 'true'
+                 WHEN oa2.income > 101 THEN 'false'
+                 ELSE 'N/A' END AS low_income_declared,
+            oa2.date_received,
+            NULL AS decision_date,
+            oa2.date_fee_paid,
+            NULL AS application_processed_date,
+            NULL AS manual_process_date,
+            oa2.created_at AS date_submitted_online,
+            oa2.statement_signed_by,
+            NULL AS db_evidence_check_type,
+            NULL AS db_income_check_type,
+            NULL AS hmrc_total_income,
+            NULL AS ev_check_outcome,
+            NULL AS evidence_check_type,
+            NULL AS hmrc_response,
+            NULL AS hmrc_errors,
+            NULL AS complete_processing,
+            NULL AS additional_income,
+            oa2.income AS income_processed,
+            NULL AS hmrc_request_date_range
         SQL
       end
       # rubocop:enable Metrics/MethodLength
+
+      def online_applications_from_sql
+        <<~SQL.squish
+          FROM online_applications oa2
+          LEFT JOIN applications app2 ON app2.online_application_id = oa2.id
+          LEFT JOIN jurisdictions jurisdictions2 ON jurisdictions2.id = oa2.jurisdiction_id
+        SQL
+      end
+
+      def online_applications_where_sql
+        <<~SQL.squish
+          WHERE app2.id IS NULL
+            AND oa2.date_received IS NOT NULL
+            AND oa2.created_at >= '#{@date_from.strftime('%Y-%m-%d %H:%M:%S')}'
+            AND oa2.created_at <= '#{@date_to.strftime('%Y-%m-%d %H:%M:%S')}'
+        SQL
+      end
+
+      # rubocop:disable Metrics/MethodLength
+      def evidence_check_type_case_sql
+        <<~SQL.squish
+          CASE WHEN ec.check_type = 'random' AND ec.income_check_type = 'paper' AND hc.hc_id IS NULL THEN 'Manual NumberRule'
+               WHEN ec.check_type = 'flag' AND ec.income_check_type = 'paper' AND hc.hc_id IS NULL THEN 'Manual NIFlag'
+               WHEN ec.check_type = 'ni_exist' AND ec.income_check_type = 'paper' AND hc.hc_id IS NULL THEN 'Manual NIDuplicate'
+               WHEN ec.check_type = 'low_income' AND ec.income_check_type = 'paper' AND hc.hc_id IS NULL THEN 'Manual LowIncome'
+               WHEN ec.check_type = 'random' AND ec.income_check_type = 'hmrc' THEN 'HMRC NumberRule'
+               WHEN ec.check_type = 'flag' AND ec.income_check_type = 'hmrc' THEN 'HMRC NIFlag'
+               WHEN ec.check_type = 'ni_exist' AND ec.income_check_type = 'hmrc' THEN 'HMRC NIDuplicate'
+               WHEN ec.check_type = 'low_income' AND ec.income_check_type = 'hmrc' THEN 'HMRC LowIncome'
+               WHEN ec.check_type = 'flag' AND ec.income_check_type = 'paper' AND hc.hc_id IS NOT NULL THEN 'ManualAfterHMRC'
+               WHEN ec.check_type = 'random' AND ec.income_check_type = 'paper' AND hc.hc_id IS NOT NULL THEN 'ManualAfterHMRC'
+               WHEN ec.check_type = 'low_income' AND ec.income_check_type = 'paper' AND hc.hc_id IS NOT NULL THEN 'ManualAfterHMRC'
+               ELSE NULL
+          END AS evidence_check_type
+        SQL
+      end
+
+      # rubocop:enable Metrics/MethodLength
+
+      def hmrc_response_case_sql
+        <<~SQL.squish
+          CASE WHEN hc.hc_id IS NULL THEN NULL
+               WHEN hc.hc_id IS NOT NULL AND hc.error_response IS NULL THEN 'Yes'
+               WHEN hc.hc_id IS NOT NULL AND hc.error_response IS NOT NULL THEN 'No'
+               ELSE NULL
+          END AS hmrc_response
+        SQL
+      end
+
+      def complete_processing_case_sql
+        <<~SQL.squish
+          CASE WHEN hc.hc_id IS NULL THEN NULL
+               WHEN hc.hc_id IS NOT NULL AND ec.completed_at IS NOT NULL THEN 'Yes'
+               WHEN hc.hc_id IS NOT NULL AND ec.completed_at IS NULL THEN 'No'
+               ELSE NULL
+          END AS complete_processing
+        SQL
+      end
+
+      def additional_income_case_sql
+        <<~SQL.squish
+          CASE WHEN hc.additional_income IS NULL THEN NULL
+               WHEN hc.additional_income IS NOT NULL AND ec.income_check_type = 'paper' THEN NULL
+               WHEN hc.additional_income IS NOT NULL AND ec.income_check_type = 'hmrc'
+                 AND hc.additional_income > 0 THEN hc.additional_income
+               ELSE NULL
+          END AS additional_income
+        SQL
+      end
 
       # rubocop:disable Metrics/AbcSize, Metrics/MethodLength
       def build_csv_row(row)
