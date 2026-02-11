@@ -10,6 +10,7 @@ module HomeHelper
 
   def path_for_application_based_on_state(application)
     return edit_online_application_path(application) if application.is_a?(OnlineApplication)
+
     if application.state.to_sym == :waiting_for_evidence && hmrc_check_link?(application)
       return hmrc_evidence_check_link(application)
     end
@@ -104,14 +105,22 @@ module HomeHelper
   def hmrc_evidence_check_link(application)
     evidence_check = application.evidence_check
 
-    if evidence_check.hmrc_check.present?
-      evidence_check_hmrc_path(evidence_check, evidence_check.hmrc_check)
-    else
+    if evidence_check.hmrc_check.blank? || new_hrmc_check_page?(evidence_check)
       new_evidence_check_hmrc_path(evidence_check)
+    else
+      evidence_check_hmrc_path(evidence_check, evidence_check.hmrc_check)
     end
   end
 
   def hmrc_check_link?(application)
     application.evidence_check.hmrc?
+  end
+
+  def new_hrmc_check_page?(evidence_check)
+    return true if evidence_check.hmrc_check.error_response.present?
+
+    if evidence_check.partner_hmrc_check.present? && evidence_check.partner_hmrc_check.error_response.present?
+      true
+    end
   end
 end
