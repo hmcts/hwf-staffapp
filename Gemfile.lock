@@ -105,7 +105,8 @@ GEM
       public_suffix (>= 2.0.2, < 8.0)
     application_insights (0.5.6)
     ast (2.4.3)
-    azure-blob (0.7.0)
+    azure-blob (0.8.0)
+      cgi
       rexml
     base64 (0.3.0)
     bcrypt (3.1.21)
@@ -595,7 +596,7 @@ PLATFORMS
 DEPENDENCIES
   apparition!
   application_insights (~> 0.5.6)
-  azure-blob (~> 0.7.0)
+  azure-blob (~> 0.8.0)
   azure_env_secrets!
   benchmark
   bootsnap
