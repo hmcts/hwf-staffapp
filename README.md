@@ -143,6 +143,20 @@ Undetermined - None outcome - NI number: 'SN789654C'
 To turn this on you need to have a FAKE_BENEFIT_CHECK='true' set up in your env.
 
 
+#### Running MiniTest tests
+MiniTest tests live in the `test/` directory. Run them with:
+```
+bundle exec rails test test/helpers/home_helper_test.rb
+```
+
+To run a single test, use `-n` with a regex. Rails converts `test 'some test name'` into a method
+called `test_some_test_name` (spaces become underscores), so you can match against that:
+```
+bundle exec rails test test/helpers/home_helper_test.rb -n /partner_hmrc/
+```
+
+Note: the `file:line` syntax does not work with Minitest 6.
+
 #### Run tests in parallel
 Follow the [official guides](https://github.com/grosser/parallel_tests#setup-environment-from-scratch-create-db-and-loads-schema-useful-for-ci) to setup your local env
 

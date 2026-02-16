@@ -38,6 +38,39 @@ RSpec.describe HomeHelper do
 
           let(:hmrc_check) { create(:hmrc_check, evidence_check: evidence_check) }
           it { expect(path_for_application_based_on_state(last_application)).to eql("/evidence_checks/#{evidence_check.id}/hmrc/#{hmrc_check.id}") }
+
+          context 'when hmrc check has error_response' do
+            let(:hmrc_check) { create(:hmrc_check, evidence_check: evidence_check, error_response: 'HMRC error') }
+
+            it 'redirects to new hmrc check page' do
+              expect(path_for_application_based_on_state(last_application)).to eql("/evidence_checks/#{evidence_check.id}/hmrc/new")
+            end
+          end
+
+          context 'when partner hmrc check has error_response' do
+            let(:partner_check) do
+              create(:hmrc_check, evidence_check: evidence_check, check_type: 'partner', error_response: 'HMRC error')
+            end
+
+            before { partner_check }
+
+            it 'redirects to new hmrc check page' do
+              expect(path_for_application_based_on_state(last_application)).to eql("/evidence_checks/#{evidence_check.id}/hmrc/new")
+            end
+          end
+
+          context 'when applicant passes but partner fails' do
+            let(:hmrc_check) { create(:hmrc_check, evidence_check: evidence_check, error_response: nil) }
+            let(:partner_check) do
+              create(:hmrc_check, evidence_check: evidence_check, check_type: 'partner', error_response: 'HMRC error')
+            end
+
+            before { partner_check }
+
+            it 'redirects to new hmrc check page' do
+              expect(path_for_application_based_on_state(last_application)).to eql("/evidence_checks/#{evidence_check.id}/hmrc/new")
+            end
+          end
         end
 
       end
