@@ -550,7 +550,7 @@ GEM
       actionpack (>= 3.1)
       railties (>= 3.1)
       slim (>= 3.0, < 6.0, != 5.0.0)
-    stackprof (0.2.27)
+    stackprof (0.2.28)
     stringio (3.2.0)
     sys-uname (1.4.1)
       ffi (~> 1.1)
