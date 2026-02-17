@@ -84,7 +84,7 @@ module Views
       def build_data
         HmrcCheck.where('hmrc_checks.created_at between ? AND ?', @date_from, @date_to).
           order('hmrc_checks.created_at asc').includes(evidence_check: [:application]).
-          includes(evidence_check: [application: [:applicant, :office, :user, :business_entity]]).
+          includes(evidence_check: [{ application: [:applicant, :office, :user, :business_entity] }]).
           pluck('hmrc_checks.created_at', 'hmrc_checks.purged_at', 'applications.reference',
                 'offices.name', 'business_entities.sop_code', 'users.name',
                 'hmrc_checks.date_of_birth', 'hmrc_checks.request_params', 'hmrc_checks.income',
