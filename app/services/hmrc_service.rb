@@ -70,8 +70,14 @@ class HmrcService
     message = error.message
     if message.include?('MESSAGE_THROTTLED_OUT')
       message = "HMRC checking is currently unavailable please try again later. (429)"
+    elsif partners_data_not_found(message)
+      message = "HMRC can’t receive data from both applicant and partner"
     end
     @form.errors.add(:request, message)
+  end
+
+  def partners_data_not_found(message)
+    message.include?('MATCHING_FAILED') && applicant_married? && partner_valid_for_check?
   end
 
   def process_timeout_error
