@@ -260,6 +260,26 @@ describe HmrcService do
       end
     end
 
+    context 'fail - MATCHING_FAILED with partner' do
+      let(:married) { true }
+      let(:applicant) { create(:applicant_with_all_details, :married, application: application) }
+      let(:errors) { instance_double(ActiveModel::Errors) }
+      before do
+        allow(api_service).to receive(:match_user).and_raise(HwfHmrcApiError.new('MATCHING_FAILED'))
+        allow(form).to receive(:errors).and_return errors
+        allow(errors).to receive(:add)
+        service.call
+      end
+
+      it 'add error with partner message' do
+        expect(errors).to have_received(:add).with(:request, "HMRC can\u2019t receive data from both applicant and partner")
+      end
+
+      it 'saves the error' do
+        expect(hmrc_check).to have_received(:update).with({ error_response: 'MATCHING_FAILED' })
+      end
+    end
+
     context 'no hmrc_check' do
       let(:errors) { instance_double(ActiveModel::Errors) }
       before do
