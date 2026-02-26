@@ -12,7 +12,9 @@ class ReportFileJob < ApplicationJob
 
   def store_zip_file(file_name)
     @storage = ExportFileStorage.new(user: @user, name: file_name)
-    @storage.export_file.attach(io: File.open(@export.zipfile_path), filename: "#{file_name}.zip")
+    File.open(@export.zipfile_path) do |file|
+      @storage.export_file.attach(io: file, filename: "#{file_name}.zip")
+    end
     @storage.save
   end
 
