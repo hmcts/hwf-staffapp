@@ -16,7 +16,7 @@ RSpec.describe SecretToken do
     end
 
     context 'when not in production' do
-      let(:token) { ('a' * 30) }
+      let(:token) { 'a' * 30 }
 
       it { is_expected.to eq token }
     end
