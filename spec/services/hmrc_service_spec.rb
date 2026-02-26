@@ -272,7 +272,7 @@ describe HmrcService do
       end
 
       it 'add error with partner message' do
-        expect(errors).to have_received(:add).with(:request, "HMRC can\u2019t receive data from both applicant and partner")
+        expect(errors).to have_received(:add).with(:request, "HMRC can’t receive data from both applicant and partner, please opt out to manual checking below.")
       end
 
       it 'saves the error' do
