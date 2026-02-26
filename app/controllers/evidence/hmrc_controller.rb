@@ -73,7 +73,7 @@ module Evidence
 
     def add_hmrc_check_error_message
       message = @hmrc_check.errors.full_messages.join(', ')
-      @form.errors.add(:hmrc_check, message.to_s)
+      @form.errors.add(:hmrc_check, message.to_s) if message.present?
     end
 
     def hmrc_service
