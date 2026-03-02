@@ -14,8 +14,8 @@ class FeeCodesLoaderService
   end
 
   def load_fees
-    # Use fake data in development and test environments
-    return load_fake_data if Rails.env.local?
+    # Use fake data only in test environment
+    return load_fake_data if Rails.env.test?
 
     # First try to load from file
     return load_from_file if File.exist?(FEE_CODES_FILE_PATH)
