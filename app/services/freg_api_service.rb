@@ -19,19 +19,18 @@ class FregApiService
   # @param base_amount [Float] Base amount for calculation
   # @return [Hash] Response from FREG API
   def calculate_fee(fee_params:, base_amount:)
-    params = build_query_params(fee_params, base_amount)
-
-    response = connection.get('/fees-register/fees/lookup') do |req|
-      req.params = params
-    end
-
-    unless response.success?
-      raise FregApiError, "FREG API returned status #{response.status}"
-    end
+    response = lookup_fee(fee_params, base_amount)
+    return { no_match: true, raw_response: response.body } if response.status == 404
+    raise FregApiError, "FREG API returned status #{response.status}" unless response.success?
 
     parse_response(response)
   rescue Faraday::Error => e
     raise FregApiError, "FREG API call failed: #{e.message}"
+  end
+
+  def lookup_fee(fee_params, base_amount)
+    params = build_query_params(fee_params, base_amount)
+    connection.get('/fees-register/fees/lookup') { |req| req.params = params }
   end
 
   def load_approved_feee
@@ -70,7 +69,7 @@ class FregApiService
       jurisdiction2: extract_name(fee_params[:jurisdiction2]),
       channel: extract_name(fee_params[:channel_type]),
       event: extract_name(fee_params[:event_type]),
-      amount_or_volume: base_amount.to_i,
+      amount_or_volume: base_amount,
       keyword: extract_keyword(fee_params)
     }
   end
