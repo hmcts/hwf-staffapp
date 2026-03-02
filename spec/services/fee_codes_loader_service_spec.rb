@@ -11,9 +11,9 @@ RSpec.describe FeeCodesLoaderService do
     context 'when in test environment' do
       it 'loads fake data' do
         fake_data = [{ 'code' => 'FEE0001', 'amount' => 100 }]
-        allow(File).to receive(:read)
-          .with(FeeCodesLoaderService::FAKE_FEE_CODES_FILE_PATH)
-          .and_return(fake_data.to_json)
+        allow(File).to receive(:read).
+          with(FeeCodesLoaderService::FAKE_FEE_CODES_FILE_PATH).
+          and_return(fake_data.to_json)
 
         result = service.load_fees
 
