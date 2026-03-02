@@ -10,7 +10,7 @@ RSpec.describe Forms::Application::Detail do
                  :day_date_fee_paid, :month_date_fee_paid, :year_date_fee_paid,
                  :case_number, :emergency, :emergency_reason, :discretion_applied,
                  :discretion_manager_name, :discretion_reason, :statement_signed_by,
-                 :fee_code, :claim_amount]
+                 :fee_code, :claim_amount, :fee_version_valid_from]
 
   let(:detail) { attributes_for(:detail) }
 
