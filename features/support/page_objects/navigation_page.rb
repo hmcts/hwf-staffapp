@@ -1,6 +1,5 @@
 class NavigationPage < BasePage
-  section :navigation_link, '.govuk-header__content' do
-    element :welcome_user, 'li', text: 'Welcome user'
+  section :navigation_link, '.govuk-service-navigation' do
     element :view_profile, 'a', text: 'View profile'
     element :view_office, 'a', text: 'View office'
     element :view_staff, 'a', text: 'View staff'
@@ -12,7 +11,7 @@ class NavigationPage < BasePage
     element :new_letter_templates, 'a', text: 'New scheme templates'
     element :feedback, 'a', text: 'Feedback'
     element :sign_out, 'a', text: 'Sign out'
-    element :home_page, '.govuk-header__link.govuk-header__service-name'
+    element :home_page, '.govuk-service-navigation__link'
   end
 
   def go_to_homepage

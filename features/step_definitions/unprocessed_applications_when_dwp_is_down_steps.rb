@@ -49,7 +49,7 @@ Given("I am a staff member and I process a paper-based benefit application") do
   user = FactoryBot.create(:user)
   sign_in_page.load_page
   sign_in_page.sign_in_with(user)
-  expect(dashboard_page).to have_welcome_user
+
   dashboard_page.process_application
 end
 
@@ -78,7 +78,7 @@ Given("I am a staff member at the home page") do
     sign_in_page.load_page
     sign_in_page.sign_in_with(user)
 
-    expect(dashboard_page).to have_welcome_user
+  
     expect(dashboard_page).to have_dwp_online_banner
   end
 end
@@ -89,7 +89,7 @@ Given("I am a staff member at the 'Pending benefit applications' page with the D
 
     sign_in_page.load_page
     sign_in_page.sign_in_with(@current_user)
-    expect(dashboard_page).to have_welcome_user
+  
     expect(dashboard_page).to have_dwp_online_banner
 
     expect(dashboard_page.content).to have_process_when_back_online_heading
@@ -104,7 +104,7 @@ Given("I am a staff member at the 'Pending benefit applications' page with the D
 
     sign_in_page.load_page
     sign_in_page.sign_in_with(@current_user)
-    expect(dashboard_page).to have_welcome_user
+  
     expect(dashboard_page).to have_dwp_offline_banner
 
     expect(dashboard_page.content).to have_process_when_back_online_heading
@@ -289,7 +289,7 @@ Given("I am logged in as an admin and there is an application pending") do
     sign_in_page.load_page
     sign_in_page.sign_in_with(user)
 
-    expect(dashboard_page).to have_welcome_user
+  
     expect(dashboard_page).to have_dwp_online_banner
   end
 end

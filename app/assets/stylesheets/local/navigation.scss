@@ -26,6 +26,10 @@
   }
 }
 
+.govuk-service-navigation__item:not(:last-child) {
+  @include govuk-responsive-margin(3, $direction: right);
+}
+
 .anchor {
   display: block;
   float: right;

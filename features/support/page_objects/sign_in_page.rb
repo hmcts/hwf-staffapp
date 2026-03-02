@@ -5,7 +5,6 @@ class SignInPage < BasePage
 
   set_url '/users/sign_in'
 
-  element :welcome_user, 'span', text: 'Welcome user'
   section :content, '#content' do
     element :generate_reports, 'h2', text: 'Generate reports'
     element :view_offices, 'h2', text: 'View offices'

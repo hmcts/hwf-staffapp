@@ -1,10 +1,9 @@
 // Entry point for your Sass build
 
 $govuk-global-styles: true;
-$govuk-new-typography-scale: true;
 
 $govuk-fonts-path: 'govuk-frontend/dist/govuk/assets/fonts/';
-$govuk-images-path: 'govuk-frontend/dist/govuk/assets/rebrand/images/';
+$govuk-images-path: 'govuk-frontend/dist/govuk/assets/images/';
 
 @import "govuk-frontend/dist/govuk/index";
 @import "accessible-autocomplete/dist/accessible-autocomplete.min";

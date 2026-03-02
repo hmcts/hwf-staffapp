@@ -49,7 +49,7 @@ class BenefitCheckService
   end
 
   def default_client
-    if Settings.dwp_mock.fake_api_enabled
+    if false
       BenefitCheckers::MockApiClient.new
     else
       BenefitCheckers::RealApiClient.new

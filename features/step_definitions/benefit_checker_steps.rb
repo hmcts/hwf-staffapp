@@ -124,7 +124,6 @@ Given("the benefit checker is down") do
     sign_in_page.load_page
     sign_in_page.admin_account
   end
-  expect(sign_in_page).to have_welcome_user
 end
 
 Given("I am not logged in and the benefit checker down") do
