@@ -81,7 +81,7 @@ RSpec.describe FregApiService do
           expect(env.params['jurisdiction2']).to eq('Family')
           expect(env.params['channel']).to eq('Default')
           expect(env.params['event']).to eq('Issue')
-          expect(env.params['amount_or_volume']).to eq('1000')
+          expect(env.params['amount_or_volume']).to eq('1000.0')
           expect(env.params['keyword']).to eq('divorce')
 
           [200, { 'Content-Type' => 'application/json' }, successful_response_body.to_json]
@@ -251,10 +251,10 @@ RSpec.describe FregApiService do
         expect(result[:event]).to eq('Issue')
       end
 
-      it 'converts base_amount to integer' do
+      it 'passes base_amount as decimal' do
         result = service.send(:build_query_params, fee_params, 1234.56)
 
-        expect(result[:amount_or_volume]).to eq(1234)
+        expect(result[:amount_or_volume]).to eq(1234.56)
       end
 
       it 'extracts keyword from fee_version' do

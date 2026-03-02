@@ -242,6 +242,8 @@ window.moj.Modules.JsonSearcherModule = (function() {
       $('#selected-fee-display').removeClass('govuk-visually-hidden');
       this.feeSelected = true;
       this.selectedFeeCode = feeData.code;
+      $('#application_fee_code').val(feeData.code);
+      $('#application_claim_amount').val('');
     },
 
     fillFeeInput: function(fee) {
@@ -281,8 +283,10 @@ window.moj.Modules.JsonSearcherModule = (function() {
         success: function(response) {
           if (response.calculated_fee !== undefined && response.calculated_fee !== null) {
             self.fillFeeInput({ amount: response.calculated_fee });
+            $('#application_claim_amount').val(baseAmount);
 
             if (response.band_changed) {
+              $('#application_fee_code').val(response.fee_code);
               $('#band-change-details').text(
                 ' Original fee: ' + self.selectedFeeCode +
                 ', Matched fee: ' + response.fee_code +
