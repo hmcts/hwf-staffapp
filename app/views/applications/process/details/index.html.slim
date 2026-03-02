@@ -22,13 +22,36 @@
         ul#fee-search-results.govuk-list.govuk-list--bullet
           li= 'no records'
 
+      #no-results-message.govuk-error-message.govuk-visually-hidden
+        | No fees match your search. Please try different search terms.
+
+      #selected-fee-display.govuk-inset-text.govuk-visually-hidden
+        p.govuk-body
+          strong Selected fee:&nbsp;
+          span#selected-fee-text
+
+      #band-change-warning.govuk-warning-text.govuk-visually-hidden
+        span.govuk-warning-text__icon aria-hidden="true" !
+        strong.govuk-warning-text__text
+          span.govuk-visually-hidden Warning
+          |  The claim amount falls in a different fee band. The fee has been updated.
+          span#band-change-details
+
+      #claim-value-error.govuk-error-message.govuk-visually-hidden
+        span#claim-value-error-text
+
+      #rateable-fee-warning.govuk-warning-text.govuk-visually-hidden
+        span.govuk-warning-text__icon aria-hidden="true" !
+        strong.govuk-warning-text__text
+          span.govuk-visually-hidden Warning
+          |  This is a rateable fee with a zero amount. Please enter the court or tribunal fee manually.
+
       .govuk-form-group.group-level#percentage-amount-input.govuk-visually-hidden
-        = label_tag :percentage_base_amount, 'Enter the amount to calculate the percentage fee', class: 'govuk-label'
-        - # This input will be shown when a percentage-based fee is selected
+        = label_tag :percentage_base_amount, 'Enter the claim amount', class: 'govuk-label', id: 'claim-amount-label'
         .field-wrapper
           span.prefix £
           = text_field_tag :percentage_base_amount, nil, class: 'govuk-input', type: 'number', step: '0.01', id: 'percentage_base_amount'
-        = button_tag 'Calculate fee', type: 'button', class: 'govuk-button govuk-button--secondary', id: 'calculate-percentage-fee'
+        = button_tag 'Look up fee', type: 'button', class: 'govuk-button govuk-button--secondary', id: 'calculate-percentage-fee'
 
       .govuk-form-group.group-level
         = f.label :fee, class: 'govuk-label'
@@ -37,7 +60,9 @@
             = f.label :fee, @form.errors[:fee].join(', '), class: 'error'
         .field-wrapper
           span.prefix £
-          = f.text_field :fee, { value: @form.fee ? '%.2f' % @form.fee.to_f : '', class: 'govuk-input', inputmode: 'decimal', pattern: '[0-9]*\\.?[0-9]*' }
+        = f.text_field :fee, { value: @form.fee ? '%.2f' % @form.fee.to_f : '', class: 'govuk-input', inputmode: 'decimal', pattern: '[0-9]*\\.?[0-9]*' }
+        = f.hidden_field :fee_code, id: 'application_fee_code'
+        = f.hidden_field :claim_amount, id: 'application_claim_amount'
 
       .govuk-form-group.group-level
         fieldset.govuk-fieldset
