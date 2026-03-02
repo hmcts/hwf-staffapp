@@ -140,6 +140,26 @@ RSpec.describe FregApiService do
       end
     end
 
+    context 'when API returns 404 (no matching band)' do
+      before do
+        stubs.get('/fees-register/fees/lookup') do
+          [404, { 'Content-Type' => 'application/json' }, { 'error' => 'No fee found' }.to_json]
+        end
+      end
+
+      it 'returns no_match hash instead of raising' do
+        result = test_service.calculate_fee(fee_params: fee_params, base_amount: base_amount)
+
+        expect(result[:no_match]).to be true
+      end
+
+      it 'includes raw response body' do
+        result = test_service.calculate_fee(fee_params: fee_params, base_amount: base_amount)
+
+        expect(result[:raw_response]).to be_present
+      end
+    end
+
     context 'when API returns non-200 status' do
       before do
         stubs.get('/fees-register/fees/lookup') do
