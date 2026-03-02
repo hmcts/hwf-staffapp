@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.1].define(version: 2025_11_20_104205) do
+ActiveRecord::Schema[8.1].define(version: 2026_03_02_141700) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
   enable_extension "pg_trgm"
@@ -217,6 +217,7 @@ ActiveRecord::Schema[8.1].define(version: 2025_11_20_104205) do
     t.integer "application_id", null: false
     t.string "calculation_scheme"
     t.string "case_number"
+    t.decimal "claim_amount"
     t.datetime "created_at", precision: nil, null: false
     t.date "date_fee_paid"
     t.date "date_of_death"
@@ -227,6 +228,7 @@ ActiveRecord::Schema[8.1].define(version: 2025_11_20_104205) do
     t.string "discretion_reason"
     t.string "emergency_reason"
     t.decimal "fee"
+    t.string "fee_code"
     t.string "fee_manager_firstname"
     t.string "fee_manager_lastname"
     t.string "form_name"
