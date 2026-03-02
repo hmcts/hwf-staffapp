@@ -232,6 +232,7 @@ ActiveRecord::Schema[8.1].define(version: 2026_05_07_100000) do
     t.string "fee_code"
     t.string "fee_manager_firstname"
     t.string "fee_manager_lastname"
+    t.date "fee_version_valid_from"
     t.string "form_name"
     t.integer "jurisdiction_id"
     t.boolean "probate"

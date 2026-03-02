@@ -244,6 +244,20 @@ window.moj.Modules.JsonSearcherModule = (function() {
       this.selectedFeeCode = feeData.code;
       $('#application_fee_code').val(feeData.code);
       $('#application_claim_amount').val('');
+      $('#application_fee_version_valid_from').val(feeData.fee_version.valid_from || '');
+    },
+
+    lookupValidFrom: function(feeCode, version) {
+      var match = codes.find(function(item) { return item.code === feeCode; });
+      if (!match) return null;
+
+      if (version && match.fee_versions) {
+        var versionMatch = match.fee_versions.find(function(v) { return v.version === version; });
+        if (versionMatch) return versionMatch.valid_from;
+      }
+
+      if (match.current_version) return match.current_version.valid_from;
+      return null;
     },
 
     fillFeeInput: function(fee) {
@@ -287,6 +301,8 @@ window.moj.Modules.JsonSearcherModule = (function() {
 
             if (response.band_changed) {
               $('#application_fee_code').val(response.fee_code);
+              var newValidFrom = self.lookupValidFrom(response.fee_code, response.version);
+              $('#application_fee_version_valid_from').val(newValidFrom || '');
               $('#band-change-details').text(
                 ' Original fee: ' + self.selectedFeeCode +
                 ', Matched fee: ' + response.fee_code +
