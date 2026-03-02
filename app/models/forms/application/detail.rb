@@ -32,7 +32,9 @@ module Forms
           discretion_applied: :boolean,
           discretion_manager_name: :string,
           discretion_reason: :string,
-          statement_signed_by: :string }
+          statement_signed_by: :string,
+          fee_code: :string,
+          claim_amount: :decimal }
       end
       # rubocop:enable Metrics/MethodLength
 
