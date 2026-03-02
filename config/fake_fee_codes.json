@@ -398,5 +398,120 @@
       "natural_account_code": "4481102"
     },
     "amount_type": "FLAT"
+  },
+  {
+    "code": "FEE0010",
+    "fee_type": "ranged",
+    "channel_type": {
+      "name": "default"
+    },
+    "event_type": {
+      "name": "issue"
+    },
+    "jurisdiction1": {
+      "name": "civil"
+    },
+    "jurisdiction2": {
+      "name": "county court"
+    },
+    "service_type": {
+      "name": "civil money claims"
+    },
+    "keyword": "TestBandedFlatFee",
+    "fee_versions": [
+      {
+        "description": "Court fee for claims between £300.01 and £500",
+        "status": "approved",
+        "version": 1,
+        "valid_from": "2020-01-01",
+        "flat_amount": {
+          "amount": 35.0
+        },
+        "memo_line": "RECEIPT OF FEES - Banded Flat",
+        "natural_account_code": "4481102133"
+      }
+    ],
+    "current_version": {
+      "description": "Court fee for claims between £300.01 and £500",
+      "status": "approved",
+      "version": 1,
+      "valid_from": "2020-01-01",
+      "flat_amount": {
+        "amount": 35.0
+      },
+      "memo_line": "RECEIPT OF FEES - Banded Flat",
+      "natural_account_code": "4481102133"
+    },
+    "range_unit": "GBP",
+    "unspecified_claim_amount": false,
+    "matching_version": {
+      "description": "Court fee for claims between £300.01 and £500",
+      "status": "approved",
+      "version": 1,
+      "valid_from": "2020-01-01",
+      "flat_amount": {
+        "amount": 35.0
+      },
+      "memo_line": "RECEIPT OF FEES - Banded Flat",
+      "natural_account_code": "4481102133"
+    },
+    "amount_type": "VOLUME"
+  },
+  {
+    "code": "FEE0020",
+    "fee_type": "fixed",
+    "channel_type": {
+      "name": "default"
+    },
+    "event_type": {
+      "name": "issue"
+    },
+    "jurisdiction1": {
+      "name": "civil"
+    },
+    "jurisdiction2": {
+      "name": "county court"
+    },
+    "service_type": {
+      "name": "civil"
+    },
+    "keyword": "TestRateableFee",
+    "fee_versions": [
+      {
+        "description": "Rateable fee - amount varies by case",
+        "status": "approved",
+        "version": 1,
+        "valid_from": "2020-01-01",
+        "flat_amount": {
+          "amount": 0.0
+        },
+        "memo_line": "RECEIPT OF FEES - Rateable",
+        "natural_account_code": "4481102133"
+      }
+    ],
+    "current_version": {
+      "description": "Rateable fee - amount varies by case",
+      "status": "approved",
+      "version": 1,
+      "valid_from": "2020-01-01",
+      "flat_amount": {
+        "amount": 0.0
+      },
+      "memo_line": "RECEIPT OF FEES - Rateable",
+      "natural_account_code": "4481102133"
+    },
+    "unspecified_claim_amount": true,
+    "matching_version": {
+      "description": "Rateable fee - amount varies by case",
+      "status": "approved",
+      "version": 1,
+      "valid_from": "2020-01-01",
+      "flat_amount": {
+        "amount": 0.0
+      },
+      "memo_line": "RECEIPT OF FEES - Rateable",
+      "natural_account_code": "4481102133"
+    },
+    "amount_type": "FLAT"
   }
 ]

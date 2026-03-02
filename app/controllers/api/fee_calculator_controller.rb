@@ -13,18 +13,32 @@ module Api
       render_json_error("An unexpected error occurred: #{e.message}", :internal_server_error)
     end
 
+    def calculate_fee
+      calculate_fee_via_api
+    rescue ActionController::ParameterMissing => e
+      render_json_error("Missing required parameter: #{e.message}", :bad_request)
+    rescue StandardError => e
+      render_json_error("An unexpected error occurred: #{e.message}", :internal_server_error)
+    end
+
     private
 
     def calculate_fee_via_api
       base_amount = base_amount_param.to_f
-
-      if base_amount <= 0
-        render_json_error('Invalid base amount', :bad_request)
-        return
-      end
+      return render_json_error('Invalid base amount', :bad_request) if base_amount <= 0
 
       result = freg_api_call(fee_params, base_amount)
-      render_json_result(result, fee_params, base_amount) if result
+      return unless result
+
+      if result[:no_match]
+        render_no_match
+      else
+        render_json_result(result, fee_params, base_amount)
+      end
+    end
+
+    def render_no_match
+      render json: { error: 'No matching fee band found', no_match: true }, status: :not_found
     end
 
     def freg_api_call(fee_params, base_amount)
@@ -41,11 +55,14 @@ module Api
 
     # rubocop:disable Metrics/MethodLength
     def render_json_result(result, fee_params, base_amount)
+      returned_code = result[:fee_code] || fee_params[:code]
+
       render json: {
         calculated_fee: result[:calculated_fee],
-        fee_code: result[:fee_code] || fee_params[:code],
+        fee_code: returned_code,
         description: result[:description] || fee_params.dig(:fee_version, :description),
         version: result[:version] || fee_params.dig(:fee_version, :version),
+        band_changed: returned_code.present? && returned_code != fee_params[:code],
         calculation_details: {
           base_amount: base_amount,
           api_response: result[:raw_response]
@@ -62,7 +79,7 @@ module Api
 
     def fee_params
       params.require(:fee).permit(
-        :code,   :is_percentage, :date_received, :keyword,
+        :code, :is_percentage, :date_received, :keyword,
         jurisdiction1: {}, jurisdiction2: {}, event_type: {},
         channel_type: {}, service_type: {},
         fee_version: [:version, :valid_from, :valid_to, :description, :keyword, :status,

@@ -157,4 +157,100 @@ RSpec.describe Api::FeeCalculatorController do
     end
 
   end
+
+  describe 'POST #calculate_fee' do
+    before do
+      sign_in user
+    end
+
+    let(:freg_service) { instance_double(FregApiService) }
+
+    context 'with valid parameters and same band returned' do
+      before do
+        allow(FregApiService).to receive(:new).and_return(freg_service)
+        allow(freg_service).to receive(:calculate_fee).and_return(freg_api_response)
+        post :calculate_fee, params: valid_params, as: :json
+      end
+
+      it 'returns success status' do
+        expect(response).to have_http_status(:ok)
+      end
+
+      it 'returns band_changed as false' do
+        json_response = response.parsed_body
+        expect(json_response['band_changed']).to be false
+      end
+
+      it 'returns the calculated fee' do
+        json_response = response.parsed_body
+        expect(json_response['calculated_fee']).to eq(500.0)
+      end
+    end
+
+    context 'when FREG returns a different band' do
+      let(:different_band_response) do
+        {
+          calculated_fee: 205.0,
+          fee_code: 'FEE0508',
+          description: 'Higher band fee',
+          version: 2,
+          raw_response: { 'fee_amount' => 205.0, 'code' => 'FEE0508' }
+        }
+      end
+
+      before do
+        allow(FregApiService).to receive(:new).and_return(freg_service)
+        allow(freg_service).to receive(:calculate_fee).and_return(different_band_response)
+        post :calculate_fee, params: valid_params, as: :json
+      end
+
+      it 'returns band_changed as true' do
+        json_response = response.parsed_body
+        expect(json_response['band_changed']).to be true
+      end
+
+      it 'returns the new fee code' do
+        json_response = response.parsed_body
+        expect(json_response['fee_code']).to eq('FEE0508')
+      end
+
+      it 'returns the new calculated fee' do
+        json_response = response.parsed_body
+        expect(json_response['calculated_fee']).to eq(205.0)
+      end
+    end
+
+    context 'when FREG returns no match (404)' do
+      before do
+        allow(FregApiService).to receive(:new).and_return(freg_service)
+        allow(freg_service).to receive(:calculate_fee).and_return({ no_match: true, raw_response: nil })
+        post :calculate_fee, params: valid_params, as: :json
+      end
+
+      it 'returns not found status' do
+        expect(response).to have_http_status(:not_found)
+      end
+
+      it 'returns no_match flag' do
+        json_response = response.parsed_body
+        expect(json_response['no_match']).to be true
+      end
+
+      it 'returns error message' do
+        json_response = response.parsed_body
+        expect(json_response['error']).to eq('No matching fee band found')
+      end
+    end
+
+    context 'with invalid base amount' do
+      it 'returns bad request for zero amount' do
+        params = valid_params.deep_dup
+        params[:base_amount] = 0
+
+        post :calculate_fee, params: params, as: :json
+
+        expect(response).to have_http_status(:bad_request)
+      end
+    end
+  end
 end
