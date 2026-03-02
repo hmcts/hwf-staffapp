@@ -63,6 +63,7 @@
           = f.text_field :fee, { value: @form.fee ? '%.2f' % @form.fee.to_f : '', class: 'govuk-input', type: 'number', step: '0.01' }
         = f.hidden_field :fee_code, id: 'application_fee_code'
         = f.hidden_field :claim_amount, id: 'application_claim_amount'
+        = f.hidden_field :fee_version_valid_from, id: 'application_fee_version_valid_from'
 
       .govuk-form-group.group-level
         fieldset.govuk-fieldset
