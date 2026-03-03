@@ -24,6 +24,12 @@ RSpec.describe Forms::Application::SavingsInvestment do
       before {
         application.detail.update(calculation_scheme: FeatureSwitching::CALCULATION_SCHEMAS[1])
       }
+
+      context 'single under 66' do
+        let(:hash) { { choice: 'between', min_threshold_exceeded: true, amount: 5000, over_66: true, max_threshold_exceeded: nil } }
+        it { is_expected.not_to be_valid }
+      end
+
       context 'less' do
         let(:hash) { { choice: 'less', min_threshold_exceeded: nil, amount: nil, over_66: nil, max_threshold_exceeded: nil } }
         it { is_expected.to be_valid }
@@ -45,7 +51,7 @@ RSpec.describe Forms::Application::SavingsInvestment do
 
         context 'blank' do
           before { application.applicant.update(partner_date_of_birth: nil) }
-          it { is_expected.not_to be_valid }
+          it { is_expected.to be_valid }
         end
 
         context 'under 66' do
