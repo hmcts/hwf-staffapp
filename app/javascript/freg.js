@@ -8,6 +8,8 @@ window.moj.Modules.JsonSearcherModule = (function() {
     selectedFeeCode: null,
 
     init: function() {
+      if ($('input[id="fee_search"]').length === 0) return;
+
       codes = window.moj.Modules.LoadCodesModule.getCodes();
       this.bindEvents();
     },
