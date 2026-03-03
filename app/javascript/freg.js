@@ -78,7 +78,21 @@ window.moj.Modules.JsonSearcherModule = (function() {
       this.setFeeReadonly(true);
     },
 
+    resetSelection: function() {
+      this.feeSelected = false;
+      this.selectedFeeCode = null;
+      this.clearMessages();
+      $('#selected-fee-display').addClass('govuk-visually-hidden');
+      $('#percentage-amount-input').addClass('govuk-visually-hidden');
+      $('#application_fee_code').val('');
+      $('#application_claim_amount').val('');
+      $('#application_fee_version_valid_from').val('');
+      $('input[id="application_fee"]').val('');
+      this.setFeeReadonly(true);
+    },
+
     findMatches: function (term) {
+      this.resetSelection();
       const dateReceived = this.getDateReceived();
 
       var matches = codes.filter(item => {
