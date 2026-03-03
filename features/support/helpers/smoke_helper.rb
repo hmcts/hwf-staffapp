@@ -30,7 +30,7 @@ end
 Then('I fill in application details page') do
   expect(application_details_page.content).to have_header
   page.execute_script("document.getElementById('application_fee').readOnly = false")
-  fill_in 'application_fee', with: '53.00'
+  fill_in 'application_fee', with: '600.00'
   page.execute_script("document.getElementById('application_fee_code').value = 'FEE0403'")
   page.execute_script("document.getElementById('application_fee_version_valid_from').value = '2014-04-22'")
   application_details_page.content.jurisdiction.click
