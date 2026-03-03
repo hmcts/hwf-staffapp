@@ -29,8 +29,10 @@ end
 
 Then('I fill in application details page') do
   expect(application_details_page.content).to have_header
-  fill_in 'fee_search', with: 'FEE0403'
-  find('#fee-search-results > li').click
+  page.execute_script("document.getElementById('application_fee').readOnly = false")
+  fill_in 'application_fee', with: '53.00'
+  page.execute_script("document.getElementById('application_fee_code').value = 'FEE0403'")
+  page.execute_script("document.getElementById('application_fee_version_valid_from').value = '2014-04-22'")
   application_details_page.content.jurisdiction.click
   application_details_page.content.form_input.set 'C100'
   application_details_page.fill_in('Case number', with: 'E71YX571')
