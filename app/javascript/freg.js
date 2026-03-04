@@ -121,6 +121,10 @@ window.moj.Modules.JsonSearcherModule = (function() {
         );
       });
 
+      matches.sort(function(a, b) {
+        return (a.code || '').localeCompare(b.code || '');
+      });
+
       this.displayFees(matches, dateReceived);
     },
 
