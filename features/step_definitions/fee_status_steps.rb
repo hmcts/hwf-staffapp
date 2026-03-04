@@ -60,9 +60,7 @@ Then('I should not see fields from fee status page') do
 end
 
 When('I successfully submit my required application details post UCD') do
-  fill_in 'fee_search', with: '600'
-  find('#fee-search-results > li').click
-
+  application_details_page.content.fee_input.set '600'
   application_details_page.content.jurisdiction.click
   application_details_page.content.form_input.set 'C100'
   application_details_page.fill_in('Case number', with: 'E71YX571')

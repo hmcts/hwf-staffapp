@@ -73,8 +73,7 @@ class ApplicationDetailsPage < BasePage
   end
 
   def choose_fee(amount)
-    fill_in 'fee_search', with: amount.to_s
-    find('#fee-search-results > li').click
+    content.fee_input.set amount.to_s
   end
 
   def submit_fee_100
