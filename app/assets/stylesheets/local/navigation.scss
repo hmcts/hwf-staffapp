@@ -30,6 +30,10 @@
   @include govuk-responsive-margin(3, $direction: right);
 }
 
+.govuk-notification-banner {
+  margin-top: 10px;
+}
+
 .anchor {
   display: block;
   float: right;

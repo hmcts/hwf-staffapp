@@ -42,25 +42,25 @@
     button.govuk-service-navigation__toggle.js-header-toggle type="button" aria-controls="navigation" aria-label="Show or hide menu" hidden="hidden" Menu
     - if user_signed_in?
       ul#navigation.govuk-service-navigation__list aria-label="Top Level Navigation"
-        li.govuk-service-navigation__item.govuk-service-navigation__item--active
+        li class=nav_item_class(user_path(current_user.id))
           = link_to "View profile", user_path(current_user.id), {class: 'govuk-service-navigation__link'}
         -if current_user.elevated?
-          li.govuk-service-navigation__item
+          li class=nav_item_class(office_path(current_user.office))
             = link_to 'View office', current_user.office, {class: 'govuk-service-navigation__link'}
-          li.govuk-service-navigation__item
+          li class=nav_item_class(users_path)
             = link_to 'View staff', users_path, {class: 'govuk-service-navigation__link'}
         -if current_user.admin?
-          li.govuk-service-navigation__item
+          li class=nav_item_class(edit_notifications_path)
             = link_to 'Edit banner', edit_notifications_path, {class: 'govuk-service-navigation__link'}
-          li.govuk-service-navigation__item
+          li class=nav_item_class(edit_dwp_warnings_path)
             = link_to 'DWP message', edit_dwp_warnings_path, {class: 'govuk-service-navigation__link'}
-        li.govuk-service-navigation__item
+        li class=nav_item_class(guide_path)
           = link_to 'Staff Guides', guide_path, {class: 'govuk-service-navigation__link'}
         li.govuk-service-navigation__item
           = link_to 'Feedback', feedback_link, {class: 'govuk-service-navigation__link'}
-        li.govuk-service-navigation__item
+        li class=nav_item_class(letter_templates_path)
           = link_to 'Old scheme templates', letter_templates_path, {class: 'govuk-service-navigation__link'}
-        li.govuk-service-navigation__item
+        li class=nav_item_class(new_letter_templates_path)
           = link_to 'New scheme templates', new_letter_templates_path, { class: 'govuk-service-navigation__link' }
         li.govuk-service-navigation__item
           = link_to 'Sign out', destroy_user_session_path, { method: :delete, class: 'govuk-service-navigation__link'}

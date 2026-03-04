@@ -3,6 +3,11 @@ module ApplicationHelper
     current_page.in?(['/users/sign_in', '/users/password/edit'])
   end
 
+  def nav_item_class(path)
+    active = current_page?(path) ? ' govuk-service-navigation__item--active' : ''
+    "govuk-service-navigation__item#{active}"
+  end
+
   def parse_amount_to_pay(amount_to_pay)
     return unless amount_to_pay
     (amount_to_pay % 1).zero? ? amount_to_pay.to_i : amount_to_pay
