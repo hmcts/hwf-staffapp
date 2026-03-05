@@ -13,7 +13,7 @@
     li= 'no records'
 
 #no-results-message.govuk-error-message.govuk-visually-hidden
-  | No fees match your search. Please try different search terms.
+  | No fee code found. Search for another fee by the fee code, amount or description
 
 #selected-fee-display.govuk-inset-text.govuk-visually-hidden
   p.govuk-body
@@ -35,7 +35,7 @@
   span.govuk-warning-text__icon aria-hidden="true" !
   strong.govuk-warning-text__text
     span.govuk-visually-hidden Warning
-    |  This is a rateable fee with a zero amount. Please enter the court or tribunal fee manually.
+    |  This is a rateable fee with a zero amount. Please enter the court or tribunal fee.
 
 .govuk-form-group.group-level#percentage-amount-input.govuk-visually-hidden
   = label_tag :percentage_base_amount, 'Enter the claim amount', class: 'govuk-label', id: 'claim-amount-label'
