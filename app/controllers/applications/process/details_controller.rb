@@ -18,6 +18,7 @@ module Applications
           redirect_to DetailsRouter.new(application).approval_or_continue
         else
           @jurisdictions = user_jurisdictions
+          @fee_search_term = params[:fee_search]
           render :index
         end
       end

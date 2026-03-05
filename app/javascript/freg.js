@@ -12,6 +12,11 @@ window.moj.Modules.JsonSearcherModule = (function() {
 
       codes = window.moj.Modules.LoadCodesModule.getCodes();
       this.bindEvents();
+
+      var existingSearch = $('input[id="fee_search"]').val();
+      if (existingSearch && existingSearch.length >= 2) {
+        this.findMatches(existingSearch);
+      }
     },
 
     getDateReceived: function() {
@@ -94,6 +99,7 @@ window.moj.Modules.JsonSearcherModule = (function() {
       $('#application_fee_code').val('');
       $('#application_claim_amount').val('');
       $('#application_fee_version_valid_from').val('');
+      $('#fee_search_has_results').val('false');
       $('input[id="application_fee"]').val('');
       this.setFeeReadonly(true);
     },
@@ -141,10 +147,12 @@ window.moj.Modules.JsonSearcherModule = (function() {
       if (fees.length === 0) {
         $('span.search_result_count').text(0);
         resultsList.innerHTML = '';
+        $('#fee_search_has_results').val('false');
         $('#no-results-message').removeClass('govuk-visually-hidden');
         return;
       }
 
+      $('#fee_search_has_results').val('true');
       $('#no-results-message').addClass('govuk-visually-hidden');
 
       fees.forEach(function(fee, index) {
@@ -345,16 +353,14 @@ window.moj.Modules.JsonSearcherModule = (function() {
         error: function(xhr) {
           var body = xhr.responseJSON || {};
 
+          var errorMessage;
           if (xhr.status === 404 || body.no_match) {
-            $('#claim-value-error-text').text(
-              'No matching fee band found for the entered claim amount. ' +
-              'Please re-enter the claim amount or select a different fee.'
-            );
+            errorMessage = 'No court or tribunal fee found for the claim amount. ' +
+              'Enter another claim amount.';
           } else {
-            $('#claim-value-error-text').text(
-              'Error looking up fee. Please try again. (' + (body.error || 'Unknown error') + ')'
-            );
+            errorMessage = 'Error looking up fee. Please try again. (' + (body.error || 'Unknown error') + ')';
           }
+          $('#claim-value-error-text').text(errorMessage);
           $('#claim-value-error').removeClass('govuk-visually-hidden');
         }
       });

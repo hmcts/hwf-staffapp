@@ -35,7 +35,8 @@ module Forms
           statement_signed_by: :string,
           fee_code: :string,
           claim_amount: :decimal,
-          fee_version_valid_from: :string }
+          fee_version_valid_from: :string,
+          fee_search_has_results: :string }
       end
       # rubocop:enable Metrics/MethodLength
 
@@ -47,6 +48,7 @@ module Forms
 
       validates :fee, presence: true,
                       numericality: { allow_blank: true, less_than: 20_000, greater_than_or_equal_to: 3 }
+      validate :fee_search_selection
       validates :jurisdiction_id, presence: true
       validates :case_number, presence: true, if: proc { |detail| detail.refund? }
       validates :discretion_manager_name,
@@ -121,8 +123,14 @@ module Forms
         @object.update(fields_to_update)
       end
 
+      def fee_search_selection
+        return unless fee_search_has_results == 'true' && fee.blank?
+
+        errors.add(:fee, 'Select an entry from the search results list')
+      end
+
       def fields_to_update
-        excluded_keys = [:emergency,
+        excluded_keys = [:emergency, :fee_search_has_results,
                          :day_date_received, :month_date_received, :year_date_received,
                          :day_date_of_death, :month_date_of_death, :year_date_of_death,
                          :day_date_fee_paid, :month_date_fee_paid, :year_date_fee_paid]
