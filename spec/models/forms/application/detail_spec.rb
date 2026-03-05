@@ -10,7 +10,8 @@ RSpec.describe Forms::Application::Detail do
                  :day_date_fee_paid, :month_date_fee_paid, :year_date_fee_paid,
                  :case_number, :emergency, :emergency_reason, :discretion_applied,
                  :discretion_manager_name, :discretion_reason, :statement_signed_by,
-                 :fee_code, :claim_amount, :fee_version_valid_from]
+                 :fee_code, :claim_amount, :fee_version_valid_from,
+                 :fee_search_has_results]
 
   let(:detail) { attributes_for(:detail) }
 
@@ -39,7 +40,7 @@ RSpec.describe Forms::Application::Detail do
     let(:detail) { build_stubbed(:complete_detail) }
 
     params_list.each do |attr_name|
-      next if /day|month|year|emergency/.match?(attr_name.to_s)
+      next if /day|month|year|emergency|fee_search_has_results/.match?(attr_name.to_s)
       it "assigns #{attr_name}" do
         expect(form.send(attr_name)).to eq detail.send(attr_name)
       end
@@ -50,7 +51,7 @@ RSpec.describe Forms::Application::Detail do
     let(:detail) { attributes_for(:complete_detail) }
 
     params_list.each do |attr_name|
-      next if /day|month|year|emergency/.match?(attr_name.to_s)
+      next if /day|month|year|emergency|fee_search_has_results/.match?(attr_name.to_s)
 
       it "assigns #{attr_name}" do
         expect(form.send(attr_name)).to eq detail[attr_name]
@@ -86,6 +87,40 @@ RSpec.describe Forms::Application::Detail do
         form.fee = 3
         form.valid?
         expect(form.errors[:fee]).to be_empty
+      end
+    end
+
+    describe 'fee search selection' do
+      let(:base_params) do
+        { jurisdiction_id: 1, form_name: 'ABC123',
+          date_received: Time.zone.yesterday }
+      end
+
+      context 'when search returned results but no fee was selected' do
+        let(:form) { described_class.new(base_params.merge(fee: nil, fee_search_has_results: 'true')) }
+
+        it 'is invalid' do
+          form.valid?
+          expect(form.errors[:fee]).to include('Select an entry from the search results list')
+        end
+      end
+
+      context 'when search returned results and a fee was selected' do
+        let(:form) { described_class.new(base_params.merge(fee: 100, fee_search_has_results: 'true')) }
+
+        it 'does not add the search selection error' do
+          form.valid?
+          expect(form.errors[:fee]).not_to include('Select an entry from the search results list')
+        end
+      end
+
+      context 'when no search was performed' do
+        let(:form) { described_class.new(base_params.merge(fee: nil, fee_search_has_results: 'false')) }
+
+        it 'does not add the search selection error' do
+          form.valid?
+          expect(form.errors[:fee]).not_to include('Select an entry from the search results list')
+        end
       end
     end
 
