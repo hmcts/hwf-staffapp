@@ -1,7 +1,6 @@
 class DashboardPage < BasePage
   set_url '/'
 
-  element :welcome_user, 'span', text: 'Welcome user'
   element :dwp_offline_banner, '.dwp-banner-offline', text: 'DWP checkerYou can’t check an applicant’s benefits. We’re investigating this issue.'
   element :dwp_online_banner, '.dwp-banner-online', text: 'DWP checkerYou can process benefits and income based applications.'
   element :help_with_fees_home, 'a', text: 'Help with fees'

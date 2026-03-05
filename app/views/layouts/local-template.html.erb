@@ -1,6 +1,6 @@
 <%= yield :top_of_page %>
 <!DOCTYPE html>
-<html lang="en" class="govuk-template--rebranded app-html-class">
+<html lang="en" class="govuk-template govuk-template--rebranded app-html-class">
 
   <head>
     <meta charset="utf-8" />
@@ -10,8 +10,8 @@
 
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
 
-    <link rel="icon" sizes="48x48" href="<%= asset_path "govuk-frontend/dist/govuk/assets/rebrand/images/favicon.ico" %>" />
-    <link rel="icon" sizes="any" href="<%= asset_path "govuk-frontend/dist/govuk/assets/rebrand/images/favicon.svg" %>" type="image/svg+xml">
+    <link rel="icon" sizes="48x48" href="<%= asset_path "govuk-frontend/dist/govuk/assets/images/favicon.ico" %>" />
+    <link rel="icon" sizes="any" href="<%= asset_path "govuk-frontend/dist/govuk/assets/images/favicon.svg" %>" type="image/svg+xml">
     <link rel="mask-icon" href="<%= asset_url 'govuk-mask-icon.svg'%>" color="#0b0c0c">
     <link rel="apple-touch-icon" sizes="180x180" href="<%= asset_url 'govuk-apple-touch-icon-180x180.png'%>">
     <link rel="apple-touch-icon" sizes="167x167" href="<%= asset_url 'govuk-apple-touch-icon-167x167.png'%>">
@@ -24,7 +24,7 @@
       <script src="/html5-shiv/html5shiv.js"></script>
     <![endif]-->
 
-    <meta property="og:image" content="/assets/rebrand/images/govuk-opengraph-image.png">
+    <meta property="og:image" content="/assets/images/govuk-opengraph-image.png">
     <%= yield :stylesheets %>
     <%= yield :head %>
   </head>
@@ -45,7 +45,7 @@
       <div class="govuk-header__container govuk-width-container">
 
         <div class="govuk-header__logo">
-          <a href="https://www.gov.uk/" class="govuk-header__link govuk-header__link--homepage">
+          <a href="https://www.gov.uk/" class="govuk-header__homepage-link">
             <svg
               focusable="false"
               role="img"
@@ -76,22 +76,23 @@
 
         <%= yield :inside_header %>
 
-        <div class="govuk-header__content">
+      </div>
+    </header>
 
+    <div class="govuk-service-navigation" data-module="govuk-service-navigation">
+      <div class="govuk-width-container">
+        <div class="govuk-service-navigation__container">
           <% if content_for?(:proposition_header) %>
             <%= yield(:proposition_header) %>
           <% else %>
-            <div class="header-proposition">
-              <div class="content">
-                <a href="/" id="proposition-name"><%= "#{config_item(:proposition_title)}" %></a>
-                <%= yield(:proposition_links) %>
-              </div>
-            </div>
+            <span class="govuk-service-navigation__service-name">
+              <a href="/" class="govuk-service-navigation__link" id="proposition-name"><%= config_item(:proposition_title) %></a>
+            </span>
+            <%= yield(:proposition_links) %>
           <% end %>
-
         </div>
       </div>
-    </header>
+    </div>
   <% end %>
 
   <%= yield :after_header %>
@@ -113,7 +114,7 @@
 
   <%= render 'shared/footer' %>
 
-  <%= javascript_include_tag "bundle-9" %>
+  <%= javascript_include_tag "bundle-10" %>
   <script type="module">
     window.moj.init();
   </script>

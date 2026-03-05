@@ -35,40 +35,39 @@
         = yield
 
 - content_for :proposition_header
-  a.govuk-header__link.govuk-header__service-name href="/" = Rails.application.config.app_title
+  span.govuk-service-navigation__service-name
+    a.govuk-service-navigation__link href="/" = Rails.application.config.app_title
 
-  nav.govuk-header__navigation aria-label="Menu"
-    button.govuk-header__menu-button.js-header-toggle type="button" aria-controls="navigation" aria-label="Show or hide menu" hidden="hidden" Menu
+  nav.govuk-service-navigation__wrapper aria-label="Menu"
+    button.govuk-service-navigation__toggle.js-header-toggle type="button" aria-controls="navigation" aria-label="Show or hide menu" hidden="hidden" Menu
     - if user_signed_in?
-      ul#navigation.govuk-header__navigation-list aria-label="Top Level Navigation"
-        li.govuk-header__navigation-item
-          span Welcome #{current_user.name}
-        li.govuk-header__navigation-item
-          = link_to "View profile", user_path(current_user.id), {class: 'govuk-header__link govuk-header__navigation-item--active'}
+      ul#navigation.govuk-service-navigation__list aria-label="Top Level Navigation"
+        li class=nav_item_class(user_path(current_user.id))
+          = link_to "View profile", user_path(current_user.id), {class: 'govuk-service-navigation__link'}
         -if current_user.elevated?
-          li.govuk-header__navigation-item
-            = link_to 'View office', current_user.office, {class: 'govuk-header__link'}
-          li.govuk-header__navigation-item
-            = link_to 'View staff', users_path, {class: 'govuk-header__link'}
+          li class=nav_item_class(office_path(current_user.office))
+            = link_to 'View office', current_user.office, {class: 'govuk-service-navigation__link'}
+          li class=nav_item_class(users_path)
+            = link_to 'View staff', users_path, {class: 'govuk-service-navigation__link'}
         -if current_user.admin?
-          li.govuk-header__navigation-item
-            = link_to 'Edit banner', edit_notifications_path, {class: 'govuk-header__link'}
-          li.govuk-header__navigation-item
-            = link_to 'DWP message', edit_dwp_warnings_path, {class: 'govuk-header__link'}
-        li.govuk-header__navigation-item
-          = link_to 'Staff Guides', guide_path, {class: 'govuk-header__link'}
-        li.govuk-header__navigation-item
-          = link_to 'Feedback', feedback_link, {class: 'govuk-header__link'}
-        li.govuk-header__navigation-item
-          = link_to 'Old scheme templates', letter_templates_path, {class: 'govuk-header__link'}
-          li.govuk-header__navigation-item
-            = link_to 'New scheme templates', new_letter_templates_path, { class: 'govuk-header__link' }
-        li.govuk-header__navigation-item
-          = link_to 'Sign out', destroy_user_session_path, { method: :delete, class: 'govuk-header__link'}
+          li class=nav_item_class(edit_notifications_path)
+            = link_to 'Edit banner', edit_notifications_path, {class: 'govuk-service-navigation__link'}
+          li class=nav_item_class(edit_dwp_warnings_path)
+            = link_to 'DWP message', edit_dwp_warnings_path, {class: 'govuk-service-navigation__link'}
+        li class=nav_item_class(guide_path)
+          = link_to 'Staff Guides', guide_path, {class: 'govuk-service-navigation__link'}
+        li.govuk-service-navigation__item
+          = link_to 'Feedback', feedback_link, {class: 'govuk-service-navigation__link'}
+        li class=nav_item_class(letter_templates_path)
+          = link_to 'Old scheme templates', letter_templates_path, {class: 'govuk-service-navigation__link'}
+        li class=nav_item_class(new_letter_templates_path)
+          = link_to 'New scheme templates', new_letter_templates_path, { class: 'govuk-service-navigation__link' }
+        li.govuk-service-navigation__item
+          = link_to 'Sign out', destroy_user_session_path, { method: :delete, class: 'govuk-service-navigation__link'}
     - else
-      ul#navigation.govuk-header__navigation-list
-        li.govuk-header__navigation-item
-          = link_to 'Feedback', "mailto:#{Settings.mail.feedback}",{class:'govuk-header__link'}
+      ul#navigation.govuk-service-navigation__list
+        li.govuk-service-navigation__item
+          = link_to 'Feedback', "mailto:#{Settings.mail.feedback}",{class:'govuk-service-navigation__link'}
 
 
 - content_for :javascripts

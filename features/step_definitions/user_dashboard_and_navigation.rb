@@ -142,7 +142,7 @@ Given("I am signed in as a user that has processed an application that is waitin
   waiting_evidence_application_ni(user)
   sign_in_page.load_page
   sign_in_page.sign_in_with(user)
-  expect(dashboard_page).to have_welcome_user
+
 end
 
 Given("I am signed in as a user that has processed an application that is a part payment") do
@@ -150,7 +150,7 @@ Given("I am signed in as a user that has processed an application that is a part
   part_payment_application(user)
   sign_in_page.load_page
   sign_in_page.sign_in_with(user)
-  expect(dashboard_page).to have_welcome_user
+
 end
 
 Given('I am signed in as a user that has processed an application that is a waiting for hmrc evidence') do
@@ -158,7 +158,7 @@ Given('I am signed in as a user that has processed an application that is a wait
   waiting_hmrc_evidence_application(user)
   sign_in_page.load_page
   sign_in_page.sign_in_with(user)
-  expect(dashboard_page).to have_welcome_user
+
 end
 
 Then('I am taken to the hmrc check page') do

@@ -14,8 +14,7 @@ RSpec.feature 'Naviation links' do
     scenario 'display navigation' do
       login_as(user)
       visit root_url
-      within(:xpath, './/ul[@class="govuk-header__navigation-list"]') do
-        expect(page).to have_text('Welcome Johny Mnemonic')
+      within('.govuk-service-navigation') do
         expect(page).to have_xpath(".//a[contains(.,'View profile')][@href='#{user_path(user)}']")
         expect(page).to have_xpath(".//a[contains(.,'Staff Guides')][@href='#{guide_path}']")
         expect(page).to have_xpath(".//a[contains(.,'Old scheme templates')][@href='#{letter_templates_path}']")
@@ -31,8 +30,7 @@ RSpec.feature 'Naviation links' do
     scenario 'display navigation' do
       login_as(manager)
       visit root_url
-      within(:xpath, './/ul[@class="govuk-header__navigation-list"]') do
-        expect(page).to have_text('Welcome Agent Smith')
+      within('.govuk-service-navigation') do
         expect(page).to have_xpath(".//a[contains(.,'View profile')][@href='#{user_path(manager)}']")
         expect(page).to have_xpath(".//a[contains(.,'View office')][@href='#{office_path(office)}']")
         expect(page).to have_xpath(".//a[contains(.,'View staff')][@href='#{users_path}']")

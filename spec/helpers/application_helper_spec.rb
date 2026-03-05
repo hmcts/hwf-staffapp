@@ -15,6 +15,24 @@ RSpec.describe ApplicationHelper do
     end
   end
 
+  describe '#nav_item_class' do
+    context 'when on the current page' do
+      before { allow(helper).to receive(:current_page?).with('/users/1').and_return(true) }
+
+      it 'returns the item class with active modifier' do
+        expect(helper.nav_item_class('/users/1')).to eq 'govuk-service-navigation__item govuk-service-navigation__item--active'
+      end
+    end
+
+    context 'when not on the current page' do
+      before { allow(helper).to receive(:current_page?).with('/users/1').and_return(false) }
+
+      it 'returns only the item class' do
+        expect(helper.nav_item_class('/users/1')).to eq 'govuk-service-navigation__item'
+      end
+    end
+  end
+
   describe 'amount_to_refund' do
     let(:application) { build(:application, fee: 100, amount_to_pay: 80) }
 
