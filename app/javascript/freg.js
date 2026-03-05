@@ -63,12 +63,17 @@ window.moj.Modules.JsonSearcherModule = (function() {
       var self = this;
       $('input[id="fee_search"]').on('keyup', function(event){
         var searchTerm = $(event.target).val();
+        if (searchTerm.length < 2) {
+          self.resetSelection();
+          $('div.fee-search-results-block.govuk-inset-text').addClass('govuk-visually-hidden');
+          return;
+        }
         self.findMatches(searchTerm);
       });
 
       $('input[id$="day_date_received"], input[id$="month_date_received"], input[id$="year_date_received"]').on('change blur', function() {
         var currentSearchTerm = $('input[id="fee_search"]').val();
-        if (currentSearchTerm) {
+        if (currentSearchTerm && currentSearchTerm.length >= 2) {
           self.findMatches(currentSearchTerm);
         }
       });
