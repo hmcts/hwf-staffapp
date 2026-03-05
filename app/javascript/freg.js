@@ -70,6 +70,7 @@ window.moj.Modules.JsonSearcherModule = (function() {
         var searchTerm = $(event.target).val();
         if (searchTerm.length < 2) {
           self.resetSelection();
+          $('span.search_result_count').text(0);
           $('div.fee-search-results-block.govuk-inset-text').addClass('govuk-visually-hidden');
           return;
         }
