@@ -7,19 +7,19 @@ When("I am signed in on the guide page") do
 end
 
 Then("I can view How to Guide") do
-  expect(guide_page.content.how_to_guide['href']).to end_with '/documents/2017/10/help-with-fees-how-to-guide.pdf'
+  expect(guide_page.content.how_to_guide['href']).to include 'sourcedoc=%7B5D999F01-6E39-4EB6-8703-E3E4A0262580%7D'
 end
 
 Then("I can view the training course") do
-  expect(guide_page.content.training_course['href']).to eq 'https://mydevelopment.org.uk/course/view.php?id=9824'
+  expect(guide_page.content.training_course['href']).to include 'sourcedoc=%7BB3128FFC-3EF6-4648-B2BB-8A3D8A29E9BA%7D'
 end
 
 When("I can view key control checks guide") do
-  expect(guide_page.content.key_control_checks['href']).to end_with '/documents/2017/02/help-with-fees-kccs.docx'
+  expect(guide_page.content.key_control_checks['href']).to include 'sourcedoc=%7BF13EB074-F2F7-4349-BC0A-BA191503BBE9%7D'
 end
 
 When("I can view staff guidance") do
-  expect(guide_page.content.staff_guidance['href']).to end_with '/documents/2023/12/help-with-fees-policy-guide-for-applications-post-27th-november-23.pdf/'
+  expect(guide_page.content.staff_guidance['href']).to include 'sourcedoc=%7BDD4BE471-9B43-43D4-9E71-0FB28A9B41EE%7D'
 end
 
 Then("I can view old process application") do
@@ -27,11 +27,11 @@ Then("I can view old process application") do
 end
 
 Then("I can view new process application") do
-  expect(guide_page.content.new_process_application['href']).to end_with '/documents/2024/11/process-a-paper-help-with-fees-application.pdf/'
+  expect(guide_page.content.new_process_application['href']).to include 'sourcedoc=%7BB62AF5DB-DF50-4415-A261-A4598E61B298%7D'
 end
 
 Then("I can view new online process application") do
-  expect(guide_page.content.new_online_process_application['href']).to end_with '/documents/2024/11/processing-an-online-help-with-fees-application.pdf/'
+  expect(guide_page.content.new_online_process_application['href']).to include 'sourcedoc=%7B1ADE6338-5A41-4D11-8047-ACBB1A070C19%7D'
 end
 
 Then("I can view old evidence checks") do
@@ -39,23 +39,23 @@ Then("I can view old evidence checks") do
 end
 
 Then("I can view new evidence checks") do
-  expect(guide_page.content.new_evidence_checks['href']).to end_with '/documents/2024/11/process-a-help-with-fees-evidence.pdf/'
+  expect(guide_page.content.new_evidence_checks['href']).to include 'sourcedoc=%7B40446293-A8A9-4003-B09E-F228F727A441%7D'
 end
 
 Then("I can view part payments") do
-  expect(guide_page.content.part_payments['href']).to end_with '/documents/2024/11/process-a-help-with-fees-part-payment.pdf/'
+  expect(guide_page.content.part_payments['href']).to include 'sourcedoc=%7BA5D5C042-C211-45A6-B1C5-22275AC6E0C5%7D'
 end
 
 Then("I can view fraud awareness guide") do
-  expect(guide_page.content.fraud_awareness['href']).to end_with '/documents/2018/05/help-with-fees-fraud-awareness-pdf.pdf'
+  expect(guide_page.content.fraud_awareness['href']).to include 'sourcedoc=%7B03E83158-CD55-45F0-9D99-FC7B02BF2343%7D'
 end
 
 Then("I can view RRDS") do
-  expect(guide_page.content.rrds['href']).to end_with '/publications/record-retention-and-disposition-schedules'
+  expect(guide_page.content.rrds['href']).to include 'sourcedoc=%7B34D2BF32-AEB1-41D7-BF74-9C76A6E8042B%7D'
 end
 
 Then("I can view HMRC Datashare") do
-  expect(guide_page.content.hmrc_datashare['href']).to end_with '/my-work/help-with-fees/help-with-fees-guidance-documents/'
+  expect(guide_page.content.hmrc_datashare['href']).to include 'sourcedoc=%7BD130FF65-E19C-4A4D-9F02-5E2FF579B229%7D'
 end
 
 Then("I can view Staff guides link on footer") do
