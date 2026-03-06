@@ -6,6 +6,8 @@ window.moj.Modules.JsonSearcherModule = (function() {
   return {
     feeSelected: false,
     selectedFeeCode: null,
+    originalFeeCode: null,
+    originalDisplayText: null,
 
     init: function() {
       if ($('input[id="fee_search"]').length === 0) return;
@@ -94,6 +96,8 @@ window.moj.Modules.JsonSearcherModule = (function() {
     resetSelection: function() {
       this.feeSelected = false;
       this.selectedFeeCode = null;
+      this.originalFeeCode = null;
+      this.originalDisplayText = null;
       this.clearMessages();
       $('#selected-fee-display').addClass('govuk-visually-hidden');
       $('#percentage-amount-input').addClass('govuk-visually-hidden');
@@ -276,6 +280,8 @@ window.moj.Modules.JsonSearcherModule = (function() {
       $('#selected-fee-display').removeClass('govuk-visually-hidden');
       this.feeSelected = true;
       this.selectedFeeCode = feeData.code;
+      this.originalFeeCode = feeData.code;
+      this.originalDisplayText = displayText || feeData.code;
       $('#application_fee_code').val(feeData.code);
       $('#application_claim_amount').val('');
       $('#application_fee_version_valid_from').val(feeData.fee_version.valid_from || '');
@@ -348,10 +354,15 @@ window.moj.Modules.JsonSearcherModule = (function() {
                 response.fee_code + ' - ' + response.description +
                 ' (\u00A3' + response.calculated_fee + ')'
               );
+            } else {
+              self.selectedFeeCode = self.originalFeeCode;
+              $('#application_fee_code').val(self.originalFeeCode);
+              $('#selected-fee-text').text(self.originalDisplayText);
             }
           }
         },
         error: function(xhr) {
+          console.log('Calculate fee error:', xhr.status, xhr.responseJSON);
           var body = xhr.responseJSON || {};
 
           var errorMessage;
