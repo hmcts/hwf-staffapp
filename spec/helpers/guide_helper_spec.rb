@@ -18,20 +18,12 @@ RSpec.describe GuideHelper do
     it { expect(helper.staff_guidance_url).to include('sourcedoc=%7BDD4BE471-9B43-43D4-9E71-0FB28A9B41EE%7D') }
   end
 
-  describe '#old_process_application_url' do
-    it { expect(helper.old_process_application_url).to include('https://intranet.justice.gov.uk/documents/2021/11/processing-a-help-with-fees-application.docx') }
-  end
-
   describe '#new_process_application_url' do
     it { expect(helper.new_process_application_url).to include('sourcedoc=%7BB62AF5DB-DF50-4415-A261-A4598E61B298%7D') }
   end
 
   describe '#new_online_process_application_url' do
     it { expect(helper.new_online_process_application_url).to include('sourcedoc=%7B1ADE6338-5A41-4D11-8047-ACBB1A070C19%7D') }
-  end
-
-  describe '#old_evidence_checks_url' do
-    it { expect(helper.old_evidence_checks_url).to include('https://intranet.justice.gov.uk/documents/2020/12/help-with-fees-processing-evidence-job-card.pdf') }
   end
 
   describe '#new_evidence_checks_url' do

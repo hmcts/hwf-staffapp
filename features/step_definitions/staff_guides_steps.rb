@@ -22,20 +22,12 @@ When("I can view staff guidance") do
   expect(guide_page.content.staff_guidance['href']).to include 'sourcedoc=%7BDD4BE471-9B43-43D4-9E71-0FB28A9B41EE%7D'
 end
 
-Then("I can view old process application") do
-  expect(guide_page.content.old_process_application['href']).to end_with '/documents/2021/11/processing-a-help-with-fees-application.docx'
-end
-
 Then("I can view new process application") do
   expect(guide_page.content.new_process_application['href']).to include 'sourcedoc=%7BB62AF5DB-DF50-4415-A261-A4598E61B298%7D'
 end
 
 Then("I can view new online process application") do
   expect(guide_page.content.new_online_process_application['href']).to include 'sourcedoc=%7B1ADE6338-5A41-4D11-8047-ACBB1A070C19%7D'
-end
-
-Then("I can view old evidence checks") do
-  expect(guide_page.content.old_evidence_checks['href']).to end_with '/documents/2020/12/help-with-fees-processing-evidence-job-card.pdf'
 end
 
 Then("I can view new evidence checks") do
