@@ -97,7 +97,7 @@ Then("I see digital check the fee") do
   expect(application_details_digital_page.content.guidance.guidance_sub_heading[1].text).to eq 'Check the fee:'
   expect(application_details_digital_page.content.guidance.guidance_list[1].text).to have_text 'was not processed through the money claim online (MCOL)'
   expect(application_details_digital_page.content.guidance.guidance_text[1].text).to eq 'What to do if the fee is one of these'
-  expect(application_details_digital_page.content.guidance.guidance_link[1]['href']).to eq 'https://intranet.justice.gov.uk/documents/2024/11/process-a-paper-help-with-fees-application.pdf/'
+  expect(application_details_digital_page.content.guidance.guidance_link[1]['href']).to include 'sourcedoc=%7BB62AF5DB-DF50-4415-A261-A4598E61B298%7D'
 
 end
 
@@ -115,7 +115,7 @@ Then("I see digital examples of emergency cases") do
   expect(application_details_digital_page.content.guidance.guidance_sub_heading[3].text).to eq 'Example of emergency cases:'
   expect(application_details_digital_page.content.guidance.guidance_list[3].text).to have_text 'suspending an eviction debtor insolvency petition children or vulnerable adults domestic violence injunctions ‘out of hours’ provisions at the Royal Courts of Justice'
   expect(application_details_digital_page.content.guidance.guidance_text[3].text).to eq 'What to do if the application can’t be processed before the emergency application is heard'
-  expect(application_details_digital_page.content.guidance.guidance_link[2]['href']).to eq 'https://intranet.justice.gov.uk/documents/2024/11/process-a-paper-help-with-fees-application.pdf/'
+  expect(application_details_digital_page.content.guidance.guidance_link[2]['href']).to include 'sourcedoc=%7BB62AF5DB-DF50-4415-A261-A4598E61B298%7D'
 end
 
 When("I click emergency checkbox") do

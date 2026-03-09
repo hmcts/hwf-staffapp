@@ -28,10 +28,6 @@ Feature: Staff guides
       And I am signed in on the guide page
       Then I can view staff guidance
 
-    Scenario: Old Process application
-      And I am signed in on the guide page
-      Then I can view old process application
-
     Scenario: New Process application
       And I am signed in on the guide page
       Then I can view new process application
@@ -39,10 +35,6 @@ Feature: Staff guides
     Scenario: New Online Process application
       And I am signed in on the guide page
       Then I can view new online process application
-
-    Scenario: Old Evidence Checks
-      And I am signed in on the guide page
-      Then I can view old evidence checks
 
     Scenario: New Evidence Checks
       And I am signed in on the guide page
