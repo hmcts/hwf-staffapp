@@ -14,8 +14,8 @@ class ReportFileJob < ApplicationJob
     @storage = ExportFileStorage.new(user: @user, name: file_name)
     File.open(@export.zipfile_path) do |file|
       @storage.export_file.attach(io: file, filename: "#{file_name}.zip")
+      @storage.save!
     end
-    @storage.save
   end
 
   def send_email_notifications
