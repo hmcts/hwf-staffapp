@@ -4,7 +4,7 @@ RSpec.describe RawDataExportJob do
   let(:app_insight) { instance_double(ApplicationInsights::TelemetryClient, flush: '') }
   let(:mailer) { instance_double(ActionMailer::MessageDelivery, deliver_now: true) }
   let(:raw_data_export) { instance_double(Views::Reports::RawDataExport, to_zip: 'zip_file', zipfile_path: '.') }
-  let(:storage) { instance_double(ExportFileStorage, export_file: export_file, save: true, id: '123') }
+  let(:storage) { instance_double(ExportFileStorage, export_file: export_file, save!: true, id: '123') }
   let(:export_file) { instance_double(ActiveStorage::Attached::One, attach: true) }
   let(:user) { create(:user) }
 
@@ -25,7 +25,7 @@ RSpec.describe RawDataExportJob do
     it "run the store file" do
       described_class.perform_now(from: '1', to: '2', user_id: user.id)
       expect(ExportFileStorage).to have_received(:new).with(user: user, name: 'raw_data')
-      expect(storage).to have_received(:save)
+      expect(storage).to have_received(:save!)
     end
 
     context 'notifications' do
