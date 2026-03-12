@@ -20,7 +20,7 @@ RSpec.describe Views::Overview::Details do
 
       context 'paper application' do
         it "returns relevant fields" do
-          is_expected.to eql(['fee', 'jurisdiction', 'form_name', 'case_number',
+          is_expected.to eql(['fee', 'fee_code', 'jurisdiction', 'form_name', 'case_number',
                               'deceased_name', 'date_of_death', 'emergency_reason'])
         end
       end
@@ -28,7 +28,7 @@ RSpec.describe Views::Overview::Details do
       context 'digital application' do
         let(:application) { build_stubbed(:online_application) }
         it "returns relevant fields" do
-          is_expected.to eql(['fee', 'jurisdiction', 'form_name', 'case_number',
+          is_expected.to eql(['fee', 'fee_code', 'jurisdiction', 'form_name', 'case_number',
                               "discretion_applied", 'deceased_name', 'date_of_death', 'emergency_reason'])
         end
       end

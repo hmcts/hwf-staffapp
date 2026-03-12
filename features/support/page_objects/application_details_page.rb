@@ -72,15 +72,19 @@ class ApplicationDetailsPage < BasePage
     content.probate_section.deceased_name.set 'John Doe'
   end
 
+  def choose_fee(amount)
+    content.fee_input.set amount.to_s
+  end
+
   def submit_fee_100
-    fill_in('How much is the court or tribunal fee?', with: '100')
+    choose_fee '100'
     content.jurisdiction.click
     content.form_input.set 'C100'
     click_next
   end
 
   def submit_fee_600
-    fill_in('How much is the court or tribunal fee?', with: '600')
+    choose_fee '600'
     content.jurisdiction.click
     content.form_input.set 'C100'
     fill_in('Case number', with: 'E71YX571')
@@ -97,7 +101,7 @@ class ApplicationDetailsPage < BasePage
   end
 
   def submit_fee_2000
-    fill_in('How much is the court or tribunal fee?', with: '2000')
+    choose_fee '2000'
     content.jurisdiction.click
     content.form_input.set 'C100'
     fill_in('Case number', with: 'E71YX571')
@@ -105,7 +109,7 @@ class ApplicationDetailsPage < BasePage
   end
 
   def submit_fee_6000
-    fill_in('How much is the court or tribunal fee?', with: '6000')
+    choose_fee '6000'
     content.jurisdiction.click
     content.form_input.set 'C100'
     fill_in('Case number', with: 'E71YX571')
@@ -113,7 +117,7 @@ class ApplicationDetailsPage < BasePage
   end
 
   def submit_as_refund_case_no_decimal
-    fill_in('How much is the court or tribunal fee?', with: '650', visible: false)
+    choose_fee '600'
     content.jurisdiction.click
     content.form_input.set 'C100'
     fill_in('Case number', with: 'E71YX571', visible: false)
@@ -122,7 +126,7 @@ class ApplicationDetailsPage < BasePage
   end
 
   def submit_as_refund_case
-    fill_in('How much is the court or tribunal fee?', with: '656.66', visible: false)
+    choose_fee '600'
     content.jurisdiction.click
     content.form_input.set 'C100'
     fill_in('Case number', with: 'E71YX571', visible: false)
@@ -140,7 +144,7 @@ class ApplicationDetailsPage < BasePage
   end
 
   def submit_as_refund_case_date_too_late
-    fill_in('How much is the court or tribunal fee?', with: '656.66', visible: false)
+    choose_fee '600'
     content.jurisdiction.click
     content.form_input.set 'C100'
     fill_in('Case number', with: 'E71YX571', visible: false)
@@ -149,7 +153,8 @@ class ApplicationDetailsPage < BasePage
   end
 
   def submit_as_refund_case_future_date
-    fill_in('How much is the court or tribunal fee?', with: '656.66', visible: false)
+    choose_fee '600'
+
     content.jurisdiction.click
     content.form_input.set 'C100'
     fill_in('Case number', with: 'E71YX571', visible: false)
@@ -157,13 +162,15 @@ class ApplicationDetailsPage < BasePage
   end
 
   def submit_without_form_number
-    fill_in('How much is the court or tribunal fee?', with: '300')
+    choose_fee '100'
+
     content.jurisdiction.click
     click_next
   end
 
   def submit_fee_10001
-    fill_in('How much is the court or tribunal fee?', with: '10001')
+    choose_fee '10001'
+
     content.jurisdiction.click
     content.form_input.set 'C100'
     fill_in('Case number', with: 'E71YX571')
@@ -171,7 +178,8 @@ class ApplicationDetailsPage < BasePage
   end
 
   def submit_fee_600_blank_refund_date
-    fill_in('How much is the court or tribunal fee?', with: '600')
+    choose_fee '600'
+
     content.jurisdiction.click
     content.form_input.set 'C100'
     fill_in('Case number', with: 'E71YX571')

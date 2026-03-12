@@ -1,5 +1,5 @@
 Given('I am signed in as a smoke user') do
-  page.driver.browser.url_blacklist = ['**/assets/**']
+  # page.driver.browser.url_blacklist = ['**/assets/**']
   visit 'users/sign_in'
   expect(page).to have_content('Sign in', wait: 10)
 
@@ -29,7 +29,14 @@ end
 
 Then('I fill in application details page') do
   expect(application_details_page.content).to have_header
-  application_details_page.submit_fee_600
+  page.execute_script("document.getElementById('application_fee').readOnly = false")
+  fill_in 'application_fee', with: '600.00'
+  page.execute_script("document.getElementById('application_fee_code').value = 'FEE0403'")
+  page.execute_script("document.getElementById('application_fee_version_valid_from').value = '2014-04-22'")
+  application_details_page.content.jurisdiction.click
+  application_details_page.content.form_input.set 'C100'
+  application_details_page.fill_in('Case number', with: 'E71YX571')
+  application_details_page.click_next
 end
 
 Then('the applicants has less savings then minimum threshold') do
@@ -65,8 +72,8 @@ end
 
 Then('I should see check details page') do
   expect(summary_page.content).to have_header
-  expect(summary_page.content.summary_section[3].list_row[0].text).to have_content 'Less than £4,250 Yes ChangeLess than £4,250'
-  expect(summary_page.content.summary_section[6].list_row[0].text).to have_content 'Total income £50 ChangeTotal income'
+  expect(summary_page.content.summary_section[3].list_row[0].text).to have_content 'Less than £4,250 Yes Change Less than £4,250'
+  expect(summary_page.content.summary_section[6].list_row[0].text).to have_content 'Total income £50 Change Total income'
 end
 
 When('I complete the application') do
