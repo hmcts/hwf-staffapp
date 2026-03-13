@@ -57,8 +57,8 @@ withNightlyPipeline(type, product, component) {
     sh script:"""#!/bin/bash -l
         set +x
         source /usr/local/rvm/scripts/rvm
-        rvm install ruby-3.4.6
-        rvm use ruby-3.4.6 --default
+        rvm install ruby-4.0.1
+        rvm use ruby-4.0.1 --default
     """, label: 'Ruby version install'
   }
 
