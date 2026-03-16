@@ -35,7 +35,7 @@ namespace :fortify_scan do
     fod_username = 'petr.zaparka@hmcts.net'
     fod_pat = ENV['FORTIFY_PASSWORD'] || raise("FORTIFY_PASSWORD not set")
     fod_tenant = 'mojuk'
-    fod_release_id = ENV['FORTIFY_USER_NAME'] || raise("FORTIFY_USER_NAME not set")
+    fod_release_id = '131130'
 
     upload_cmd = [
       "java -jar FodUpload.jar",
