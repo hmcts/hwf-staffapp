@@ -1,6 +1,5 @@
 class CCMCCEvidenceCheckRules
 
-  OFFICE_CODES = ['DH403', 'DH401', 'GE401', 'IE413'].freeze
   FIVE_K_RULE_FREQUENCY = 1
   FIVE_K_RULE_ANNOTATION = '1 over 5 thousand'.freeze
   ONE_TO_5_K_RULE_FREQUENCY = 4
@@ -23,7 +22,6 @@ class CCMCCEvidenceCheckRules
   end
 
   def rule_applies?
-    return false unless same_office?
     fee_range_applies?
   end
 
@@ -52,10 +50,6 @@ class CCMCCEvidenceCheckRules
 
   def amount_to_remit
     @application.detail.fee - (@application.amount_to_pay || 0)
-  end
-
-  def same_office?
-    OFFICE_CODES.include?(@application.office.try(:entity_code))
   end
 
   def over_five_thousand
