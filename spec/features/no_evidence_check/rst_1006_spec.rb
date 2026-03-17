@@ -16,8 +16,8 @@ RSpec.feature 'Application is not evidence check when income is above threshold'
     let(:application) { create(:application_full_remission) }
 
     before do
-      create(:application_full_remission_ev)
-      create_list(:application_full_remission, 9)
+      create(:application_full_remission_ev, office: user.office)
+      create_list(:application_full_remission, 9, office: user.office)
     end
 
     scenario 'Every 10th application is not evidence check for application with income exceeding threshold' do
@@ -49,8 +49,8 @@ RSpec.feature 'Application is not evidence check when income is above threshold'
     let(:application) { create(:application_full_remission, :refund) }
 
     before do
-      create(:application_full_remission_ev, :refund)
-      create(:application_full_remission, :refund)
+      create(:application_full_remission_ev, :refund, office: user.office)
+      create(:application_full_remission, :refund, office: user.office)
     end
 
     scenario 'Every 2nd application is not evidence check for emergency application' do

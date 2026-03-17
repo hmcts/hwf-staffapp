@@ -11,8 +11,8 @@ RSpec.feature 'Skip evidence check for 15 and under' do
   before do
     dwp_api_response ''
     login_as user
-    create(:application_full_remission_ev)
-    create_list(:application_part_remission, 9)
+    create(:application_full_remission_ev, office: user.office)
+    create_list(:application_part_remission, 9, office: user.office)
   end
 
   scenario "If the applicant is under 15, 'Applicant over 16' is displayed on the Summary page" do

@@ -112,8 +112,8 @@ RSpec.feature 'Application is not evidence check when income is above threshold'
     let(:application) { create(:application_full_remission, :refund) }
 
     before do
-      create(:application_full_remission_ev, :refund)
-      create(:application_full_remission, :refund)
+      create(:application_full_remission_ev, :refund, office: office)
+      create(:application_full_remission, :refund, office: office)
     end
 
     scenario 'Create duplicate NINO and verify it is not included in 1 in 2 count' do
