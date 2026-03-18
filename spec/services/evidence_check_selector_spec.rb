@@ -45,10 +45,17 @@ describe EvidenceCheckSelector do
 
         context 'frequency test with stubs' do
           let(:query_checkeable) { instance_double(Query::EvidenceCheckable) }
+          let(:ccmcc_mock) { instance_double(CCMCCEvidenceCheckRules) }
+          let(:find_all_result) { double('find_all_result') } # rubocop:disable RSpec/VerifiedDoubles
 
           before do
             allow(Query::EvidenceCheckable).to receive(:new).and_return(query_checkeable)
-            allow(query_checkeable).to receive(:list).and_return list
+            allow(query_checkeable).to receive_messages(list: list, find_all: find_all_result)
+            allow(find_all_result).to receive_messages(where: find_all_result, last: list)
+            allow(CCMCCEvidenceCheckRules).to receive(:new).and_return(ccmcc_mock)
+            allow(ccmcc_mock).to receive_messages(rule_applies?: true, frequency: ccmcc_test_frequency,
+                                                  check_type: nil, query_type: CCMCCEvidenceCheckRules::QUERY_ALL,
+                                                  clean_annotation_data: true)
           end
 
           let(:evidence) { instance_double(EvidenceCheck, check_type: 'random') }
@@ -57,6 +64,7 @@ describe EvidenceCheckSelector do
 
           context 'frequency 2' do
             let(:application) { create(:application_full_remission, :refund, income: 150) }
+            let(:ccmcc_test_frequency) { 2 }
 
             context '2nd' do
               let(:list) { [app_ev_check, app_no_ev_check] }
@@ -104,6 +112,7 @@ describe EvidenceCheckSelector do
 
           context 'frequency 10' do
             let(:application) { create(:application_full_remission, :refund, income: 150) }
+            let(:ccmcc_test_frequency) { 10 }
 
             context '10th' do
               let(:list) {

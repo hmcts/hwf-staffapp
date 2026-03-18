@@ -32,7 +32,7 @@ When("I create Application C") do
   fill_in 'Password', with: 'password1234'
   click_on 'Sign in'
 
-  online_application = FactoryBot.create(:online_application, :with_reference, :income1000, :partner_no_nino, ni_number: 'AB123456D')
+  online_application = FactoryBot.create(:online_application, :with_reference, :income1000, :partner_no_nino, ni_number: 'AB123456D', fee: 500)
   reference = online_application.reference
   fill_in 'Reference', with: reference
   expect(dashboard_page.content.online_search_reference.value).to have_text(reference)
@@ -88,7 +88,7 @@ end
 Then("I create Application D") do
   click_link 'Sign out', visible: false
   sign_in_as_user
-  online_application = FactoryBot.create(:online_application, :with_reference, :income1000, :partner_no_nino, ni_number: 'AB123456D')
+  online_application = FactoryBot.create(:online_application, :with_reference, :income1000, :partner_no_nino, ni_number: 'AB123456D', fee: 500)
 
   reference = online_application.reference
   fill_in 'Reference', with: reference
@@ -122,7 +122,7 @@ end
 Then("I create Application E") do
   click_link 'Sign out', visible: false
   sign_in_as_user
-  application = FactoryBot.create(:online_application, :with_reference, :income1000, :partner_no_nino, ni_number: 'AB123456D')
+  application = FactoryBot.create(:online_application, :with_reference, :income1000, :partner_no_nino, ni_number: 'AB123456D', fee: 500)
   reference = application.reference
   fill_in 'Reference', with: reference
   expect(dashboard_page.content.online_search_reference.value).to have_text(reference)
@@ -206,7 +206,7 @@ When("I create Application C with the same ho_number") do
   fill_in 'Password', with: 'password1234'
   click_on 'Sign in'
 
-  FactoryBot.create(:online_application, :with_reference, :income1000, :partner_no_nino, ho_number: 'L1234567', ni_number: '')
+  FactoryBot.create(:online_application, :with_reference, :income1000, :partner_no_nino, ho_number: 'L1234567', ni_number: '', fee: 500)
   reference = OnlineApplication.last.reference
   fill_in 'Reference', with: reference
   expect(dashboard_page.content.online_search_reference.value).to have_text(reference)
@@ -225,7 +225,7 @@ When("I create Application C with the same ho_number and lowercase ho_number") d
   fill_in 'Password', with: 'password1234'
   click_on 'Sign in'
 
-  FactoryBot.create(:online_application, :with_reference, :income1000, :partner_no_nino, ho_number: 'l1234567', ni_number: '')
+  FactoryBot.create(:online_application, :with_reference, :income1000, :partner_no_nino, ho_number: 'l1234567', ni_number: '', fee: 500)
   reference = OnlineApplication.last.reference
   fill_in 'Reference', with: reference
   expect(dashboard_page.content.online_search_reference.value).to have_text(reference)
@@ -240,7 +240,7 @@ end
 Then("I create Application D with the same ho_number") do
   click_link 'Sign out', visible: false
   sign_in_as_user
-  FactoryBot.create(:online_application, :with_reference, :income1000, :partner_no_nino, ho_number: 'L1234567', ni_number: '')
+  FactoryBot.create(:online_application, :with_reference, :income1000, :partner_no_nino, ho_number: 'L1234567', ni_number: '', fee: 500)
   reference = OnlineApplication.last.reference
   fill_in 'Reference', with: reference
   expect(dashboard_page.content.online_search_reference.value).to have_text(reference)
@@ -277,7 +277,7 @@ end
 Then("I create Application E with the same ho_number") do
   click_link 'Sign out', visible: false
   sign_in_as_user
-  FactoryBot.create(:online_application, :with_reference, :income1000, :partner_no_nino, ho_number: 'L1234567', ni_number: '')
+  FactoryBot.create(:online_application, :with_reference, :income1000, :partner_no_nino, ho_number: 'L1234567', ni_number: '', fee: 500)
   reference = OnlineApplication.last.reference
   fill_in 'Reference', with: reference
   expect(dashboard_page.content.online_search_reference.value).to have_text(reference)

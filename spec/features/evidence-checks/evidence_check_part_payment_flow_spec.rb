@@ -23,8 +23,8 @@ RSpec.feature 'Part payment application with evidence check for refund' do
   end
 
   scenario 'Is marked as waiting for payment after providing evidence' do
-    create(:application_full_remission_ev, :refund)
-    create(:application_full_remission, :refund)
+    create(:application_full_remission_ev, :refund, office: office)
+    create(:application_full_remission, :refund, office: office)
 
     visit application_summary_path(application)
 
