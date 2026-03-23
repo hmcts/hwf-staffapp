@@ -14,7 +14,7 @@ module Forms
       define_attributes
 
       validates :income, presence: true
-      validates :income, numericality: { allow_blank: true }
+      validates :income, numericality: { allow_blank: true, greater_than_or_equal_to: 0 }
       validates :income_period, presence: true
 
       private

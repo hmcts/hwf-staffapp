@@ -30,6 +30,20 @@ RSpec.describe Forms::Application::Income do
         income_form.valid?
         expect(income_form.errors[:income]).to be_empty
       end
+
+      it 'rejects values less than 0' do
+        income_form.income = -1
+        income_form.income_period = 'monthly'
+        income_form.valid?
+        expect(income_form.errors[:income]).to include('must be greater than or equal to 0')
+      end
+
+      it 'accepts values equal to 0' do
+        income_form.income = 0
+        income_form.income_period = 'monthly'
+        income_form.valid?
+        expect(income_form.errors[:income]).to be_empty
+      end
     end
   end
 
