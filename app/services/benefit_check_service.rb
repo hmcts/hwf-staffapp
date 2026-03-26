@@ -52,7 +52,7 @@ class BenefitCheckService
     if Settings.dwp_mock.fake_api_enabled
       BenefitCheckers::MockApiClient.new
     elsif Settings.dwp_api_enabled
-      BenefitCheckers::DwpApiClient.new
+      BenefitCheckers::DwpApiClient.new(@check_item)
     else
       BenefitCheckers::RealApiClient.new
     end

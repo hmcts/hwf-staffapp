@@ -24,19 +24,20 @@ RSpec.describe BenefitCheckers::DwpApiClient, type: :service do
   end
 
   describe '#initialize' do
-    it 'creates a DWP API connection' do
+    it 'creates a client without connecting' do
       client = described_class.new
       expect(client).to be_a(described_class)
     end
 
-    context 'when the connection fails' do
-      before do
-        allow(HwfDwpApi).to receive(:new).and_raise(HwfDwpApiError.new('Connection refused'))
-      end
+    it 'accepts a benefit_check' do
+      benefit_check = create(:benefit_check)
+      client = described_class.new(benefit_check)
+      expect(client).to be_a(described_class)
+    end
 
-      it 'raises a BadRequestError' do
-        expect { described_class.new }.to raise_error(BenefitCheckers::BadRequestError, 'Connection refused')
-      end
+    it 'does not connect to the DWP API' do
+      described_class.new
+      expect(HwfDwpApi).not_to have_received(:new)
     end
   end
 
@@ -122,7 +123,7 @@ RSpec.describe BenefitCheckers::DwpApiClient, type: :service do
       before do
         allow(connection).to receive(:match_citizen).with(expected_citizen_params).and_return(match_response)
         allow(connection).to receive(:get_claims).with(citizen_guid).and_raise(
-          HwfDwpApiError.new(not_found_error_message)
+          HwfDwpApiError.new(not_found_error_message, :not_found)
         )
       end
 
@@ -140,14 +141,14 @@ RSpec.describe BenefitCheckers::DwpApiClient, type: :service do
       before do
         allow(connection).to receive(:match_citizen).with(expected_citizen_params).and_return(match_response)
         allow(connection).to receive(:get_claims).with(citizen_guid).and_raise(
-          HwfDwpApiError.new(error_message)
+          HwfDwpApiError.new(error_message, :invalid_request)
         )
       end
 
-      it 'raises a BadRequestError with the error detail' do
-        expect { client.check(params) }.to raise_error(
-          BenefitCheckers::BadRequestError, 'Internal server error'
-        )
+      it 'raises a BadRequestError with JSON error format' do
+        expect { client.check(params) }.to raise_error(BenefitCheckers::BadRequestError) do |error|
+          expect(JSON.parse(error.message)['error']).to eq('Internal server error')
+        end
       end
     end
 
@@ -170,6 +171,45 @@ RSpec.describe BenefitCheckers::DwpApiClient, type: :service do
       end
     end
 
+    context 'when match_citizen returns not_found error' do
+      let(:error_message) do
+        { 'errors' => [{ 'status' => '404',
+                         'detail' => 'Unable to find a unique match for the supplied matching dataset' }] }.to_json
+      end
+
+      before do
+        allow(connection).to receive(:match_citizen).and_raise(
+          HwfDwpApiError.new(error_message, :not_found)
+        )
+      end
+
+      it 'returns No status' do
+        result = client.check(params)
+        expect(result['benefit_checker_status']).to eq('No')
+      end
+
+      it 'does not raise an error' do
+        expect { client.check(params) }.not_to raise_error
+      end
+    end
+
+    context 'when match_citizen returns bad_request error' do
+      let(:error_message) do
+        { 'errors' => [{ 'status' => '400', 'detail' => 'Invalid request' }] }.to_json
+      end
+
+      before do
+        allow(connection).to receive(:match_citizen).and_raise(
+          HwfDwpApiError.new(error_message, :bad_request)
+        )
+      end
+
+      it 'returns No status' do
+        result = client.check(params)
+        expect(result['benefit_checker_status']).to eq('No')
+      end
+    end
+
     context 'when match_citizen returns nil response' do
       before do
         allow(connection).to receive(:match_citizen).with(expected_citizen_params).and_return(nil)
@@ -181,31 +221,55 @@ RSpec.describe BenefitCheckers::DwpApiClient, type: :service do
       end
     end
 
-    context 'when match_citizen raises an error' do
+    context 'when match_citizen raises an invalid_request error' do
       let(:error_message) do
         { 'errors' => [{ 'status' => '400', 'detail' => 'Invalid NINO format' }] }.to_json
       end
 
       before do
-        allow(connection).to receive(:match_citizen).and_raise(HwfDwpApiError.new(error_message))
+        allow(connection).to receive(:match_citizen).and_raise(HwfDwpApiError.new(error_message, :invalid_request))
       end
 
-      it 'raises a BadRequestError with the parsed error detail' do
-        expect { client.check(params) }.to raise_error(
-          BenefitCheckers::BadRequestError, 'Invalid NINO format'
-        )
+      it 'raises a BadRequestError with JSON error format' do
+        expect { client.check(params) }.to raise_error(BenefitCheckers::BadRequestError) do |error|
+          expect(JSON.parse(error.message)['error']).to eq('Invalid NINO format')
+        end
       end
     end
 
-    context 'when match_citizen raises an error with non-JSON message' do
+    context 'when match_citizen raises a connection_error' do
       before do
-        allow(connection).to receive(:match_citizen).and_raise(HwfDwpApiError.new('Network timeout'))
+        allow(connection).to receive(:match_citizen).and_raise(
+          HwfDwpApiError.new('Connection refused: localhost:443', :connection_error)
+        )
       end
 
-      it 'raises a BadRequestError with the raw message' do
-        expect { client.check(params) }.to raise_error(
-          BenefitCheckers::BadRequestError, 'Network timeout'
+      it 'raises Errno::ECONNREFUSED' do
+        expect { client.check(params) }.to raise_error(Errno::ECONNREFUSED)
+      end
+    end
+
+    context 'when match_citizen raises a certificate_error' do
+      before do
+        allow(connection).to receive(:match_citizen).and_raise(
+          HwfDwpApiError.new('mTLS connection failed', :certificate_error)
         )
+      end
+
+      it 'raises TechnicalFaultDwpCheck' do
+        expect { client.check(params) }.to raise_error(Exceptions::TechnicalFaultDwpCheck)
+      end
+    end
+
+    context 'when match_citizen raises a standard_error' do
+      before do
+        allow(connection).to receive(:match_citizen).and_raise(
+          HwfDwpApiError.new('Something unexpected', :standard_error)
+        )
+      end
+
+      it 'raises StandardError' do
+        expect { client.check(params) }.to raise_error(StandardError, 'Something unexpected')
       end
     end
 
@@ -246,6 +310,30 @@ RSpec.describe BenefitCheckers::DwpApiClient, type: :service do
         expect(result['benefit_checker_status']).to eq('No')
       end
     end
+
+    context 'when the DWP API connection fails with connection_error' do
+      before do
+        allow(HwfDwpApi).to receive(:new).and_raise(
+          HwfDwpApiError.new('Connection refused', :connection_error)
+        )
+      end
+
+      it 'raises Errno::ECONNREFUSED' do
+        expect { client.check(params) }.to raise_error(Errno::ECONNREFUSED)
+      end
+    end
+
+    context 'when the DWP API connection fails with validation error' do
+      before do
+        allow(HwfDwpApi).to receive(:new).and_raise(
+          HwfDwpApiError.new('CLIENT ID is missing', :validation)
+        )
+      end
+
+      it 'raises TechnicalFaultDwpCheck' do
+        expect { client.check(params) }.to raise_error(Exceptions::TechnicalFaultDwpCheck)
+      end
+    end
   end
 
   describe '#citizen_params' do
@@ -274,6 +362,102 @@ RSpec.describe BenefitCheckers::DwpApiClient, type: :service do
     it 'handles missing birth_date' do
       result = client.send(:citizen_params, params.merge(birth_date: nil))
       expect(result).not_to have_key(:date_of_birth)
+    end
+  end
+
+  describe 'API call storage' do
+    let(:benefit_check) { create(:benefit_check) }
+
+    subject(:client) { described_class.new(benefit_check) }
+
+    let(:citizen_guid) { 'abc-123-guid' }
+    let(:match_response) { { 'data' => { 'id' => citizen_guid } } }
+    let(:claims_response) do
+      {
+        'data' => [
+          { 'id' => 'uc_0', 'attributes' => { 'status' => 'in_payment' } }
+        ]
+      }
+    end
+
+    context 'on a successful check' do
+      before do
+        allow(connection).to receive_messages(match_citizen: match_response, get_claims: claims_response)
+      end
+
+      it 'stores a DwpApiCall for match_citizen' do
+        client.check(params)
+        call = benefit_check.dwp_api_calls.find_by(endpoint_name: 'match_citizen')
+        expect(call).to be_present
+        expect(call.data).to eq(match_response)
+        expect(call.request_params['last_name']).to eq('JONES')
+      end
+
+      it 'stores a DwpApiCall for get_claims' do
+        client.check(params)
+        call = benefit_check.dwp_api_calls.find_by(endpoint_name: 'get_claims')
+        expect(call).to be_present
+        expect(call.data).to eq(claims_response)
+        expect(call.request_params['guid']).to eq(citizen_guid)
+      end
+
+      it 'creates two DwpApiCall records' do
+        expect { client.check(params) }.to change(DwpApiCall, :count).by(2)
+      end
+    end
+
+    context 'when match_citizen fails' do
+      let(:error_message) do
+        { 'errors' => [{ 'status' => '400', 'detail' => 'Bad request' }] }.to_json
+      end
+
+      before do
+        allow(connection).to receive(:match_citizen).and_raise(
+          HwfDwpApiError.new(error_message, :invalid_request)
+        )
+      end
+
+      it 'stores the error response' do
+        client.check(params)
+      rescue BenefitCheckers::BadRequestError
+        call = benefit_check.dwp_api_calls.find_by(endpoint_name: 'match_citizen')
+        expect(call).to be_present
+        expect(call.data['errors']).to be_present
+      end
+    end
+
+    context 'when get_claims fails with 404' do
+      let(:not_found_error) do
+        { 'errors' => [{ 'status' => '404', 'detail' => 'No claims found' }] }.to_json
+      end
+
+      before do
+        allow(connection).to receive(:match_citizen).and_return(match_response)
+        allow(connection).to receive(:get_claims).and_raise(HwfDwpApiError.new(not_found_error, :not_found))
+      end
+
+      it 'stores both API calls' do
+        client.check(params)
+        expect(benefit_check.dwp_api_calls.count).to eq(2)
+      end
+
+      it 'stores the error in the get_claims call' do
+        client.check(params)
+        call = benefit_check.dwp_api_calls.find_by(endpoint_name: 'get_claims')
+        expect(call.data['errors'].first['status']).to eq('404')
+      end
+    end
+
+    context 'without a benefit_check' do
+      subject(:client) { described_class.new }
+
+      before do
+        allow(connection).to receive_messages(match_citizen: match_response, get_claims: claims_response)
+      end
+
+      it 'does not store any DwpApiCall records' do
+        expect { client.check(params) }.not_to change(DwpApiCall, :count)
+      end
     end
   end
 end
