@@ -1,14 +1,18 @@
 module BenefitCheckers
   class DwpApiClient < BaseClient
-    def initialize
-      @connection = ::HwfDwpApi.new
-    rescue ::HwfDwpApiError => e
-      Rails.logger.error("DWP API connection failed: #{e.message}")
-      raise BenefitCheckers::BadRequestError, e.message
+    include DwpApiParamFormatter
+    include DwpApiErrorHandler
+
+    # TODO - store the auth token in a cache and reuse until it expires, instead of requesting a new one for every check
+
+    def initialize(benefit_check = nil)
+      @benefit_check = benefit_check
     end
 
     def check(params)
+      connect!
       response = dwp_api_match(params)
+
       if guid_present?(response)
         fetch_claims(@guid)
       else
@@ -18,52 +22,42 @@ module BenefitCheckers
 
     private
 
-    def dwp_api_match(params)
-      @connection.match_citizen(citizen_params(params))
+    def connect!
+      @connection = ::HwfDwpApi.new
     rescue ::HwfDwpApiError => e
-      raise BenefitCheckers::BadRequestError, dwp_error_message(e)
+      raise_mapped_error(e)
     end
 
-    def citizen_params(params)
-      {
-        last_name: params[:surname],
-        date_of_birth: format_date(params[:birth_date]),
-        nino_fragment: extract_nino_fragment(params[:ni_number])
-      }.compact
-    end
+    def dwp_api_match(params)
+      transformed = citizen_params(params)
+      response = @connection.match_citizen(transformed)
+      store_api_call('match_citizen', transformed, response)
+      response
+    rescue ::HwfDwpApiError => e
+      store_api_call('match_citizen', transformed, parse_error_data(e))
+      return nil if match_not_found?(e)
 
-    def format_date(date_string)
-      return if date_string.blank?
-
-      Date.strptime(date_string, '%Y%m%d').strftime('%Y-%m-%d')
-    end
-
-    def extract_nino_fragment(nino)
-      return if nino.blank?
-
-      nino.gsub(/[A-Za-z]/, '').last(4)
+      raise_mapped_error(e)
     end
 
     def fetch_claims(guid)
       claims = @connection.get_claims(guid)
+      store_api_call('get_claims', { guid: guid }, claims)
       benefits_result(claims)
     rescue ::HwfDwpApiError => e
-      handle_claims_error(e)
-    end
+      store_api_call('get_claims', { guid: guid }, parse_error_data(e))
+      return no_user_found_response if e.error_type == :not_found
 
-    def benefits_result(claims)
-      user_on_benefits?(claims) ? on_benefits_response : no_user_found_response
-    end
-
-    def handle_claims_error(error)
-      return no_user_found_response if not_found_error?(error)
-
-      raise BenefitCheckers::BadRequestError, dwp_error_message(error)
+      raise_mapped_error(e)
     end
 
     def guid_present?(response)
       @guid = response&.dig('data', 'id')
       @guid.present?
+    end
+
+    def benefits_result(claims)
+      user_on_benefits?(claims) ? on_benefits_response : no_user_found_response
     end
 
     def user_on_benefits?(claims)
@@ -85,22 +79,15 @@ module BenefitCheckers
       }.with_indifferent_access
     end
 
-    def dwp_error_message(error)
-      parsed = JSON.parse(error.message)
-      errors = parsed['errors']
-      return errors.first['detail'] if errors&.any?
+    def store_api_call(endpoint_name, request_params, response_data)
+      return unless @benefit_check
 
-      error.message
-    rescue JSON::ParserError
-      error.message
-    end
-
-    def not_found_error?(error)
-      parsed = JSON.parse(error.message)
-      errors = parsed['errors']
-      errors&.any? { |e| e['status'] == '404' }
-    rescue JSON::ParserError, NoMethodError
-      false
+      DwpApiCall.create(
+        benefit_check: @benefit_check,
+        endpoint_name: endpoint_name,
+        request_params: request_params,
+        data: response_data
+      )
     end
   end
 end
