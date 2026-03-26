@@ -2,6 +2,7 @@ class BenefitCheck < ActiveRecord::Base
   belongs_to :applicationable, polymorphic: true
   belongs_to :user, optional: true
   has_many :dev_notes, as: :notable, dependent: :destroy
+  has_many :dwp_api_calls, dependent: :destroy
   BENEFIT_CHECK_NO_VALUES = ['No', 'Undetermined', 'Deceased', 'Deleted', 'Superseded', ''].freeze
 
   include CommonScopes
