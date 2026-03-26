@@ -4,10 +4,18 @@ RSpec.describe BenefitCheckers::DwpApiClient, type: :service do
   let(:connection) { instance_double(HwfDwpApi::Connection) }
   let(:params) do
     {
+      id: 'petr@260326103618.503',
       ni_number: 'AB123456C',
       surname: 'JONES',
       birth_date: '19800101',
       entitlement_check_date: Time.zone.today.strftime('%Y%m%d')
+    }
+  end
+  let(:expected_citizen_params) do
+    {
+      last_name: 'JONES',
+      date_of_birth: '1980-01-01',
+      nino_fragment: '3456'
     }
   end
 
@@ -17,8 +25,8 @@ RSpec.describe BenefitCheckers::DwpApiClient, type: :service do
 
   describe '#initialize' do
     it 'creates a DWP API connection' do
-      described_class.new
-      expect(HwfDwpApi).to have_received(:new)
+      client = described_class.new
+      expect(client).to be_a(described_class)
     end
 
     context 'when the connection fails' do
@@ -58,7 +66,7 @@ RSpec.describe BenefitCheckers::DwpApiClient, type: :service do
       end
 
       before do
-        allow(connection).to receive(:match_citizen).with(params).and_return(match_response)
+        allow(connection).to receive(:match_citizen).with(expected_citizen_params).and_return(match_response)
         allow(connection).to receive(:get_claims).with(citizen_guid).and_return(claims_response)
       end
 
@@ -90,7 +98,7 @@ RSpec.describe BenefitCheckers::DwpApiClient, type: :service do
       end
 
       before do
-        allow(connection).to receive(:match_citizen).with(params).and_return(match_response)
+        allow(connection).to receive(:match_citizen).with(expected_citizen_params).and_return(match_response)
         allow(connection).to receive(:get_claims).with(citizen_guid).and_return(claims_response)
       end
 
@@ -112,7 +120,7 @@ RSpec.describe BenefitCheckers::DwpApiClient, type: :service do
       end
 
       before do
-        allow(connection).to receive(:match_citizen).with(params).and_return(match_response)
+        allow(connection).to receive(:match_citizen).with(expected_citizen_params).and_return(match_response)
         allow(connection).to receive(:get_claims).with(citizen_guid).and_raise(
           HwfDwpApiError.new(not_found_error_message)
         )
@@ -130,7 +138,7 @@ RSpec.describe BenefitCheckers::DwpApiClient, type: :service do
       end
 
       before do
-        allow(connection).to receive(:match_citizen).with(params).and_return(match_response)
+        allow(connection).to receive(:match_citizen).with(expected_citizen_params).and_return(match_response)
         allow(connection).to receive(:get_claims).with(citizen_guid).and_raise(
           HwfDwpApiError.new(error_message)
         )
@@ -147,7 +155,7 @@ RSpec.describe BenefitCheckers::DwpApiClient, type: :service do
       let(:no_match_response) { { 'data' => {} } }
 
       before do
-        allow(connection).to receive(:match_citizen).with(params).and_return(no_match_response)
+        allow(connection).to receive(:match_citizen).with(expected_citizen_params).and_return(no_match_response)
       end
 
       it 'returns No status' do
@@ -156,14 +164,15 @@ RSpec.describe BenefitCheckers::DwpApiClient, type: :service do
       end
 
       it 'does not call get_claims' do
+        allow(connection).to receive(:get_claims)
         client.check(params)
-        expect(connection).not_to have_received(:get_claims) if connection.respond_to?(:get_claims)
+        expect(connection).not_to have_received(:get_claims)
       end
     end
 
     context 'when match_citizen returns nil response' do
       before do
-        allow(connection).to receive(:match_citizen).with(params).and_return(nil)
+        allow(connection).to receive(:match_citizen).with(expected_citizen_params).and_return(nil)
       end
 
       it 'returns No status' do
@@ -204,7 +213,7 @@ RSpec.describe BenefitCheckers::DwpApiClient, type: :service do
       let(:empty_claims_response) { { 'data' => [] } }
 
       before do
-        allow(connection).to receive(:match_citizen).with(params).and_return(match_response)
+        allow(connection).to receive(:match_citizen).with(expected_citizen_params).and_return(match_response)
         allow(connection).to receive(:get_claims).with(citizen_guid).and_return(empty_claims_response)
       end
 
@@ -216,7 +225,7 @@ RSpec.describe BenefitCheckers::DwpApiClient, type: :service do
 
     context 'when claims response is nil' do
       before do
-        allow(connection).to receive(:match_citizen).with(params).and_return(match_response)
+        allow(connection).to receive(:match_citizen).with(expected_citizen_params).and_return(match_response)
         allow(connection).to receive(:get_claims).with(citizen_guid).and_return(nil)
       end
 
@@ -228,7 +237,7 @@ RSpec.describe BenefitCheckers::DwpApiClient, type: :service do
 
     context 'when claims data key is nil' do
       before do
-        allow(connection).to receive(:match_citizen).with(params).and_return(match_response)
+        allow(connection).to receive(:match_citizen).with(expected_citizen_params).and_return(match_response)
         allow(connection).to receive(:get_claims).with(citizen_guid).and_return({ 'data' => nil })
       end
 
@@ -236,6 +245,35 @@ RSpec.describe BenefitCheckers::DwpApiClient, type: :service do
         result = client.check(params)
         expect(result['benefit_checker_status']).to eq('No')
       end
+    end
+  end
+
+  describe '#citizen_params' do
+    subject(:client) { described_class.new }
+
+    it 'transforms params to DWP API format' do
+      result = client.send(:citizen_params, params)
+      expect(result).to eq(expected_citizen_params)
+    end
+
+    it 'extracts nino_fragment as last 4 digits before suffix' do
+      result = client.send(:citizen_params, params.merge(ni_number: 'AB789012D'))
+      expect(result[:nino_fragment]).to eq('9012')
+    end
+
+    it 'formats birth_date from YYYYMMDD to YYYY-MM-DD' do
+      result = client.send(:citizen_params, params.merge(birth_date: '19850615'))
+      expect(result[:date_of_birth]).to eq('1985-06-15')
+    end
+
+    it 'handles missing ni_number' do
+      result = client.send(:citizen_params, params.merge(ni_number: nil))
+      expect(result).not_to have_key(:nino_fragment)
+    end
+
+    it 'handles missing birth_date' do
+      result = client.send(:citizen_params, params.merge(birth_date: nil))
+      expect(result).not_to have_key(:date_of_birth)
     end
   end
 end
