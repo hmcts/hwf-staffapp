@@ -8,17 +8,16 @@ gem 'application_insights', '~> 0.5.6'
 gem 'csv'
 gem 'dotenv-rails', groups: [:development, :test] # this has to be here because of load order
 
-gem 'rails', '~> 8.1', '>= 8.1.2'
+gem 'rails', '~> 8.1', '>= 8.1.3'
 gem 'redis'
 
 # profiling in Sentry
 gem 'stackprof'
-gem 'sentry-rails', '~> 6.2'
-# Use postgresql as the database for Active Record
-gem 'i18n', '>= 1.10'
-gem 'parser', '>= 3.1.2.0'
-gem 'pg', '~> 1.2'
-gem 'rack', '~> 3.2', '>= 3.2.3'
+gem 'sentry-rails'
+gem 'i18n'
+gem 'parser'
+gem 'pg'
+gem 'rack'
 
 gem 'rails-i18n'
 
@@ -33,7 +32,7 @@ gem 'config'
 gem 'bootsnap', require: false
 
 # authentication
-gem 'devise', '>= 4.9.3'
+gem 'devise'
 gem 'devise_invitable', '>= 2.0.9'
 gem 'devise-security', '~> 0.18.0'
 
