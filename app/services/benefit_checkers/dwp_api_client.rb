@@ -1,8 +1,8 @@
 module BenefitCheckers
   class DwpApiClient < BaseClient
     def initialize
-      @connection = HwfDwpApi.new
-    rescue HwfDwpApiError => e
+      @connection = ::HwfDwpApi.new
+    rescue ::HwfDwpApiError => e
       Rails.logger.error("DWP API connection failed: #{e.message}")
       raise BenefitCheckers::BadRequestError, e.message
     end
@@ -19,15 +19,35 @@ module BenefitCheckers
     private
 
     def dwp_api_match(params)
-      @connection.match_citizen(params)
-    rescue HwfDwpApiError => e
+      @connection.match_citizen(citizen_params(params))
+    rescue ::HwfDwpApiError => e
       raise BenefitCheckers::BadRequestError, dwp_error_message(e)
+    end
+
+    def citizen_params(params)
+      {
+        last_name: params[:surname],
+        date_of_birth: format_date(params[:birth_date]),
+        nino_fragment: extract_nino_fragment(params[:ni_number])
+      }.compact
+    end
+
+    def format_date(date_string)
+      return if date_string.blank?
+
+      Date.strptime(date_string, '%Y%m%d').strftime('%Y-%m-%d')
+    end
+
+    def extract_nino_fragment(nino)
+      return if nino.blank?
+
+      nino.gsub(/[A-Za-z]/, '').last(4)
     end
 
     def fetch_claims(guid)
       claims = @connection.get_claims(guid)
       benefits_result(claims)
-    rescue HwfDwpApiError => e
+    rescue ::HwfDwpApiError => e
       handle_claims_error(e)
     end
 
