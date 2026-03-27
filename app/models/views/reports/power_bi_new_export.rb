@@ -74,6 +74,7 @@ module Views
 
       # Export 1: Processed applications only (by decision_date)
       def export1
+        reset_export_options
         @export_type = :processed
         @date_field = 'decision_date'
         @state_filter = "= #{Application.states[:processed]}"
@@ -84,6 +85,7 @@ module Views
       # Export 2: All applications (by created_at) - no state filter
       # Requires date_received to be present, includes unlinked online applications
       def export2
+        reset_export_options
         @export_type = :all
         @date_field = 'created_at'
         @state_filter = nil
@@ -95,6 +97,7 @@ module Views
 
       # Export 3: Waiting for evidence and waiting for part payment only (by created_at)
       def export3
+        reset_export_options
         @export_type = :waiting_only
         @date_field = 'created_at'
         waiting_states = [
@@ -111,6 +114,15 @@ module Views
       end
 
       private
+
+      def reset_export_options
+        @export_type = nil
+        @date_field = nil
+        @state_filter = nil
+        @require_date_received = false
+        @include_online_applications = false
+        @filter_description = nil
+      end
 
       def run_export(export_name)
         setup_file_paths(export_name)

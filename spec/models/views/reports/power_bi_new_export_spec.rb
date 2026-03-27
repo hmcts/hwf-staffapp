@@ -506,6 +506,32 @@ RSpec.describe Views::Reports::PowerBiNewExport do
     end
   end
 
+  describe 'running export2 then export3 on the same instance' do
+    let!(:online_application) do
+      create(:online_application, date_received: Time.zone.today,
+                                  fee: 300, form_name: 'EX160',
+                                  created_at: Time.zone.now,
+                                  reference: 'HWF-REUSE-TEST')
+    end
+    let!(:application) do
+      create(:application_full_remission, :waiting_for_evidence_state,
+             office: office, business_entity: business_entity, created_at: Time.zone.now)
+    end
+
+    it 'export3 does not include unlinked online applications from export2' do
+      report.export2
+      FileUtils.rm_f(report.zipfile_path)
+
+      report.export3
+      csv_content = read_csv_from_zip
+      online_app_row = csv_content.find { |r| r['id'].to_i == online_application.id }
+
+      expect(online_app_row).to be_nil
+      expect(csv_content.size).to eq(1)
+      expect(csv_content.first['id'].to_i).to eq(application.id)
+    end
+  end
+
   describe 'part payment data' do
     let!(:application) do
       create(:application_part_remission, :waiting_for_part_payment_state,
