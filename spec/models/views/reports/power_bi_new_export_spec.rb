@@ -27,12 +27,13 @@ RSpec.describe Views::Reports::PowerBiNewExport do
         expect(File.exist?(report.zipfile_path)).to be true
       end
 
-      it 'includes processed applications' do
+      it 'includes processed applications with reference' do
         report.export1
         csv_content = read_csv_from_zip
         row = csv_content.find { |r| r['id'].to_i == application.id }
 
         expect(row).to be_present
+        expect(row['reference']).to eq(application.reference)
       end
     end
 
@@ -153,12 +154,13 @@ RSpec.describe Views::Reports::PowerBiNewExport do
                                     reference: 'HWF-OA1-TEST')
       end
 
-      it 'includes the online application' do
+      it 'includes the online application with reference' do
         report.export2
         csv_content = read_csv_from_zip
         row = csv_content.find { |r| r['id'].to_i == online_application.id }
 
         expect(row).to be_present
+        expect(row['reference']).to eq('HWF-OA1-TEST')
         expect(row['source']).to eq('digital')
       end
     end

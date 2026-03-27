@@ -19,6 +19,7 @@ module Views
 
       HEADERS = [
         'id',
+        'reference',
         'office',
         'jurisdiction',
         'fee',
@@ -222,6 +223,7 @@ module Views
         <<~SQL.squish
           SELECT
             applications.id,
+            applications.reference,
             offices.name AS office,
             jurisdictions.name AS jurisdiction,
             details.fee,
@@ -316,6 +318,7 @@ module Views
         <<~SQL.squish
           SELECT
             oa2.id,
+            oa2.reference,
             NULL AS office,
             jurisdictions2.name AS jurisdiction,
             oa2.fee,
@@ -435,6 +438,7 @@ module Views
       def build_csv_row(row)
         [
           row['id'],
+          row['reference'] || 'N/A',
           row['office'],
           row['jurisdiction'],
           row['fee'],
