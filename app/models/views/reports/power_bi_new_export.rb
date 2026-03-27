@@ -20,6 +20,7 @@ module Views
       HEADERS = [
         'id',
         'reference',
+        'status',
         'office',
         'jurisdiction',
         'fee',
@@ -224,6 +225,7 @@ module Views
           SELECT
             applications.id,
             applications.reference,
+            #{status_case_sql},
             offices.name AS office,
             jurisdictions.name AS jurisdiction,
             details.fee,
@@ -319,6 +321,9 @@ module Views
           SELECT
             oa2.id,
             oa2.reference,
+            CASE WHEN oa2.date_received IS NOT NULL AND oa2.refund IS NOT NULL THEN 'Unprocessed'
+                 ELSE NULL
+            END AS status,
             NULL AS office,
             jurisdictions2.name AS jurisdiction,
             oa2.fee,
@@ -423,6 +428,18 @@ module Views
         SQL
       end
 
+      def status_case_sql
+        <<~SQL.squish
+          CASE WHEN applications.state = #{Application.states[:waiting_for_evidence]} THEN 'Waiting for evidence'
+               WHEN applications.state = #{Application.states[:waiting_for_part_payment]} THEN 'Waiting for part-payment'
+               WHEN applications.state = #{Application.states[:deleted]} THEN 'Deleted'
+               WHEN applications.state = #{Application.states[:processed]} THEN 'Completed'
+               WHEN details.date_received IS NOT NULL AND COALESCE(details.refund, oa.refund) IS NOT NULL AND applications.completed_at IS NULL THEN 'Unprocessed'
+               ELSE NULL
+          END AS status
+        SQL
+      end
+
       def additional_income_case_sql
         <<~SQL.squish
           CASE WHEN hc.additional_income IS NULL THEN NULL
@@ -439,6 +456,7 @@ module Views
         [
           row['id'],
           row['reference'] || 'N/A',
+          row['status'],
           row['office'],
           row['jurisdiction'],
           row['fee'],

@@ -377,6 +377,135 @@ RSpec.describe Views::Reports::PowerBiNewExport do
     end
   end
 
+  describe 'status column' do
+    context 'with processed application' do
+      let!(:application) do
+        create(:application_full_remission, :processed_state,
+               office: office, business_entity: business_entity,
+               decision_date: Time.zone.now, completed_at: 1.day.ago)
+      end
+
+      it 'returns Completed' do
+        report.export1
+        csv_content = read_csv_from_zip
+        row = csv_content.find { |r| r['id'].to_i == application.id }
+
+        expect(row['status']).to eq('Completed')
+      end
+    end
+
+    context 'with waiting_for_evidence application' do
+      let!(:application) do
+        create(:application_full_remission, :waiting_for_evidence_state,
+               office: office, business_entity: business_entity, created_at: Time.zone.now)
+      end
+
+      it 'returns Waiting for evidence' do
+        report.export2
+        csv_content = read_csv_from_zip
+        row = csv_content.find { |r| r['id'].to_i == application.id }
+
+        expect(row['status']).to eq('Waiting for evidence')
+      end
+    end
+
+    context 'with waiting_for_part_payment application' do
+      let!(:application) do
+        create(:application_full_remission, :waiting_for_part_payment_state,
+               office: office, business_entity: business_entity, created_at: Time.zone.now)
+      end
+
+      it 'returns Waiting for part-payment' do
+        report.export3
+        csv_content = read_csv_from_zip
+        row = csv_content.find { |r| r['id'].to_i == application.id }
+
+        expect(row['status']).to eq('Waiting for part-payment')
+      end
+    end
+
+    context 'with deleted application' do
+      let!(:application) do
+        create(:application_full_remission, :deleted_state,
+               office: office, business_entity: business_entity, created_at: Time.zone.now)
+      end
+
+      it 'returns Deleted' do
+        report.export2
+        csv_content = read_csv_from_zip
+        row = csv_content.find { |r| r['id'].to_i == application.id }
+
+        expect(row['status']).to eq('Deleted')
+      end
+    end
+
+    context 'when online application is picked up by staff but not completed' do
+      let!(:online_application) do
+        create(:online_application, date_received: Time.zone.today,
+                                    fee: 300, form_name: 'EX160',
+                                    created_at: Time.zone.now,
+                                    reference: 'HWF-OA3-TEST')
+      end
+      let!(:application) do
+        create(:application_full_remission,
+               office: office, business_entity: business_entity,
+               online_application: online_application,
+               created_at: Time.zone.now, completed_at: nil)
+      end
+
+      before do
+        # In production, details.refund is NULL when staff picks up an online app
+        # but the refund data is on the online_application itself
+        application.detail.update!(refund: nil)
+      end
+
+      it 'returns Unprocessed (falls back to online_application refund)' do
+        report.export2
+        csv_content = read_csv_from_zip
+        row = csv_content.find { |r| r['id'].to_i == application.id }
+
+        expect(row['status']).to eq('Unprocessed')
+      end
+    end
+
+    context 'with paper application missing refund data' do
+      let!(:application) do
+        create(:application_full_remission,
+               office: office, business_entity: business_entity,
+               created_at: Time.zone.now, completed_at: nil)
+      end
+
+      before do
+        application.detail.update!(refund: nil)
+      end
+
+      it 'does not return Unprocessed' do
+        report.export2
+        csv_content = read_csv_from_zip
+        row = csv_content.find { |r| r['id'].to_i == application.id }
+
+        expect(row['status']).not_to eq('Unprocessed')
+      end
+    end
+
+    context 'when unlinked online application has date_received and refund' do
+      let!(:online_application) do
+        create(:online_application, date_received: Time.zone.today,
+                                    fee: 300, form_name: 'EX160',
+                                    created_at: Time.zone.now,
+                                    reference: 'HWF-OA2-TEST')
+      end
+
+      it 'returns Unprocessed' do
+        report.export2
+        csv_content = read_csv_from_zip
+        row = csv_content.find { |r| r['id'].to_i == online_application.id }
+
+        expect(row['status']).to eq('Unprocessed')
+      end
+    end
+  end
+
   describe 'part payment data' do
     let!(:application) do
       create(:application_part_remission, :waiting_for_part_payment_state,
