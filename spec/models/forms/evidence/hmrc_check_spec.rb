@@ -266,6 +266,32 @@ RSpec.describe Forms::Evidence::HmrcCheck do
       end
     end
 
+    context 'FY 26/27' do
+      let(:from_range) { '2026-06-01' }
+      let(:to_range) { '2026-06-30' }
+
+      {
+        1 => 108,
+        2 => 180,
+        3 => 251,
+        4 => 323,
+        5 => 395,
+        6 => 466,
+        7 => 538,
+        8 => 609
+      }.each do |number_of_children, expected_amount|
+        context "with #{number_of_children} #{number_of_children == 1 ? 'child' : 'children'}" do
+          let(:children) { number_of_children }
+
+          it "returns additional_income_amount of #{expected_amount}" do
+            form.load_additional_income_from_benefits
+            expect(form.additional_income_amount).to eq expected_amount
+            expect(form.additional_income).to be true
+          end
+        end
+      end
+    end
+
     context '1 child' do
       let(:children) { 1 }
 
@@ -280,7 +306,7 @@ RSpec.describe Forms::Evidence::HmrcCheck do
         end
       end
 
-      context '25/25 3 months average' do
+      context '24/25 3 months average' do
         let(:from_range) { '2024-01-01' }
         let(:to_range) { '2024-03-31' }
 
