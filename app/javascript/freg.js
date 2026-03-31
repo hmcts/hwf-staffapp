@@ -269,10 +269,33 @@ window.moj.Modules.JsonSearcherModule = (function() {
     },
 
     clearMessages: function() {
-      $('#band-change-warning').addClass('govuk-visually-hidden');
       $('#claim-value-error').addClass('govuk-visually-hidden');
       $('#rateable-fee-warning').addClass('govuk-visually-hidden');
       $('#no-results-message').addClass('govuk-visually-hidden');
+      $('.band-change-error-item').remove();
+    },
+
+    showBandChangeError: function() {
+      $('.band-change-error-item').remove();
+      var errorItem = '<li class="band-change-error-item">' +
+        'The claim amount falls in a different fee band. ' +
+        'Enter another claim amount or search for/select another fee code.</li>';
+
+      var existingSummary = $('.govuk-error-summary');
+      if (existingSummary.length) {
+        existingSummary.find('.govuk-error-summary__list').append(errorItem);
+      } else {
+        var errorHtml = '<div role="alert">' +
+          '<div class="govuk-error-summary" tabindex="-1" data-module="govuk-error-summary">' +
+          '<h2 class="govuk-error-summary__title">There is a problem</h2>' +
+          '<div class="govuk-error-summary__body">' +
+          '<ul class="govuk-list govuk-error-summary__list">' +
+          errorItem +
+          '</ul></div></div></div>';
+        var form = $('form[id^="edit_"], form.new_application, form').first();
+        form.before(errorHtml);
+      }
+      $('.govuk-error-summary')[0].scrollIntoView({ behavior: 'smooth' });
     },
 
     setSelectedFee: function(feeData, displayText) {
@@ -336,25 +359,12 @@ window.moj.Modules.JsonSearcherModule = (function() {
         },
         success: function(response) {
           if (response.calculated_fee !== undefined && response.calculated_fee !== null) {
-            self.fillFeeInput({ amount: response.calculated_fee });
-            $('#application_claim_amount').val(baseAmount);
-
             if (response.band_changed) {
-              $('#application_fee_code').val(response.fee_code);
-              var newValidFrom = self.lookupValidFrom(response.fee_code, response.version);
-              $('#application_fee_version_valid_from').val(newValidFrom || '');
-              $('#band-change-details').text(
-                ' Original fee: ' + self.selectedFeeCode +
-                ', Matched fee: ' + response.fee_code +
-                ' - ' + response.description
-              );
-              $('#band-change-warning').removeClass('govuk-visually-hidden');
-              self.selectedFeeCode = response.fee_code;
-              $('#selected-fee-text').text(
-                response.fee_code + ' - ' + response.description +
-                ' (\u00A3' + response.calculated_fee + ')'
-              );
+              $('input[id="application_fee"]').val('');
+              self.showBandChangeError();
             } else {
+              self.fillFeeInput({ amount: response.calculated_fee });
+              $('#application_claim_amount').val(baseAmount);
               self.selectedFeeCode = self.originalFeeCode;
               $('#application_fee_code').val(self.originalFeeCode);
               $('#selected-fee-text').text(self.originalDisplayText);
