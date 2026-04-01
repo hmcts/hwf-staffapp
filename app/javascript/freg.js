@@ -69,6 +69,8 @@ window.moj.Modules.JsonSearcherModule = (function() {
     bindEvents: function() {
       var self = this;
       $('input[id="fee_search"]').on('keyup', function(event){
+        if (event.key === 'Tab' || event.key === 'Shift' || event.key === 'Control' ||
+            event.key === 'Alt' || event.key === 'Meta') return;
         var searchTerm = $(event.target).val();
         if (searchTerm.length < 2) {
           self.resetSelection();
@@ -273,6 +275,10 @@ window.moj.Modules.JsonSearcherModule = (function() {
       $('#rateable-fee-warning').addClass('govuk-visually-hidden');
       $('#no-results-message').addClass('govuk-visually-hidden');
       $('.band-change-error-item').remove();
+      var summaryList = $('.govuk-error-summary__list');
+      if (summaryList.length && summaryList.children().length === 0) {
+        summaryList.closest('[role="alert"]').remove();
+      }
     },
 
     showBandChangeError: function() {
@@ -295,7 +301,9 @@ window.moj.Modules.JsonSearcherModule = (function() {
         var form = $('form[id^="edit_"], form.new_application, form').first();
         form.before(errorHtml);
       }
-      $('.govuk-error-summary')[0].scrollIntoView({ behavior: 'smooth' });
+      var summary = $('.govuk-error-summary')[0];
+      summary.scrollIntoView({ behavior: 'smooth' });
+      summary.focus();
     },
 
     setSelectedFee: function(feeData, displayText) {
