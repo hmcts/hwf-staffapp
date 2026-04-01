@@ -42,7 +42,8 @@ module Forms
       def load_additional_income_from_benefits
         if child_benefits_per_month.positive?
           self.additional_income = true
-          self.additional_income_amount = additional_income_value.round
+          # There is no rounding - the field in DB is integer so the decimal part is just deleted
+          self.additional_income_amount = additional_income_value
         end
       end
 

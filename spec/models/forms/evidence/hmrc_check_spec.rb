@@ -272,12 +272,12 @@ RSpec.describe Forms::Evidence::HmrcCheck do
 
       {
         1 => 108,
-        2 => 180,
+        2 => 179,
         3 => 251,
         4 => 323,
-        5 => 395,
+        5 => 394,
         6 => 466,
-        7 => 538,
+        7 => 537,
         8 => 609
       }.each do |number_of_children, expected_amount|
         context "with #{number_of_children} #{number_of_children == 1 ? 'child' : 'children'}" do
