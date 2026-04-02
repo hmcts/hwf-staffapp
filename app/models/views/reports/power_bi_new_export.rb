@@ -8,8 +8,8 @@ module Views
     # Usage from Rails console:
     #   export = Views::Reports::PowerBiNewExport.new('2025-01-01', '2026-01-31', verbose: true)
     #   export.export1  # processed only (by decision_date)
-    #   export.export2  # all states with date_received, includes unlinked online applications (by created_at)
-    #   export.export3  # waiting_for_evidence and waiting_for_part_payment only (by created_at)
+    #   export.export2  # all states with date_received, includes unlinked online applications (by date_received)
+    #   export.export3  # waiting_for_evidence and waiting_for_part_payment only (by date_received)
     #
     class PowerBiNewExport
       require 'csv'
@@ -76,18 +76,18 @@ module Views
       def export1
         reset_export_options
         @export_type = :processed
-        @date_field = 'decision_date'
+        @date_field = 'applications.decision_date'
         @state_filter = "= #{Application.states[:processed]}"
         @filter_description = "processed only"
         run_export('export1')
       end
 
-      # Export 2: All applications (by created_at) - no state filter
+      # Export 2: All applications (by date_received) - no state filter
       # Requires date_received to be present, includes unlinked online applications
       def export2
         reset_export_options
         @export_type = :all
-        @date_field = 'created_at'
+        @date_field = 'details.date_received'
         @state_filter = nil
         @require_date_received = true
         @include_online_applications = true
@@ -95,11 +95,11 @@ module Views
         run_export('export2')
       end
 
-      # Export 3: Waiting for evidence and waiting for part payment only (by created_at)
+      # Export 3: Waiting for evidence and waiting for part payment only (by date_received)
       def export3
         reset_export_options
         @export_type = :waiting_only
-        @date_field = 'created_at'
+        @date_field = 'details.date_received'
         waiting_states = [
           Application.states[:waiting_for_evidence],
           Application.states[:waiting_for_part_payment]
@@ -210,7 +210,7 @@ module Views
           #{applications_select_sql}
           #{applications_from_sql}
           #{applications_where_sql}
-          ORDER BY applications.id
+          ORDER BY #{@date_field}
           LIMIT #{limit} OFFSET #{offset}
         SQL
       end
@@ -226,7 +226,7 @@ module Views
             #{online_applications_from_sql}
             #{online_applications_where_sql}
           ) combined
-          ORDER BY combined.id
+          ORDER BY combined.date_received
           LIMIT #{limit} OFFSET #{offset}
         SQL
       end
@@ -320,8 +320,8 @@ module Views
       def applications_where_sql
         <<~SQL.squish
           WHERE offices.name NOT IN #{EXCLUDED_OFFICES}
-            AND applications.#{@date_field} >= '#{@date_from.strftime('%Y-%m-%d %H:%M:%S')}'
-            AND applications.#{@date_field} <= '#{@date_to.strftime('%Y-%m-%d %H:%M:%S')}'
+            AND #{@date_field} >= '#{@date_from.strftime('%Y-%m-%d %H:%M:%S')}'
+            AND #{@date_field} <= '#{@date_to.strftime('%Y-%m-%d %H:%M:%S')}'
             #{"AND applications.state #{@state_filter}" if @state_filter}
             #{'AND details.date_received IS NOT NULL' if @require_date_received}
         SQL
@@ -394,8 +394,8 @@ module Views
         <<~SQL.squish
           WHERE app2.id IS NULL
             AND oa2.date_received IS NOT NULL
-            AND oa2.created_at >= '#{@date_from.strftime('%Y-%m-%d %H:%M:%S')}'
-            AND oa2.created_at <= '#{@date_to.strftime('%Y-%m-%d %H:%M:%S')}'
+            AND oa2.date_received >= '#{@date_from.strftime('%Y-%m-%d %H:%M:%S')}'
+            AND oa2.date_received <= '#{@date_to.strftime('%Y-%m-%d %H:%M:%S')}'
         SQL
       end
 

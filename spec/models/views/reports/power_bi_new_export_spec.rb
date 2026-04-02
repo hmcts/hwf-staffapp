@@ -66,11 +66,13 @@ RSpec.describe Views::Reports::PowerBiNewExport do
     end
   end
 
-  describe '#export2 (all states by created_at)' do
+  describe '#export2 (all states by date_received)' do
     context 'with processed application' do
       let!(:application) do
-        create(:application_full_remission, :processed_state,
-               office: office, business_entity: business_entity, created_at: Time.zone.now)
+        app = create(:application_full_remission, :processed_state,
+                     office: office, business_entity: business_entity, created_at: 6.months.ago)
+        app.detail.update!(date_received: 2.weeks.ago)
+        app
       end
 
       it 'includes processed applications' do
@@ -84,8 +86,10 @@ RSpec.describe Views::Reports::PowerBiNewExport do
 
     context 'with waiting_for_evidence application' do
       let!(:application) do
-        create(:application_full_remission, :waiting_for_evidence_state,
-               office: office, business_entity: business_entity, created_at: Time.zone.now)
+        app = create(:application_full_remission, :waiting_for_evidence_state,
+                     office: office, business_entity: business_entity, created_at: 6.months.ago)
+        app.detail.update!(date_received: 1.week.ago)
+        app
       end
 
       it 'includes waiting_for_evidence applications' do
@@ -100,7 +104,7 @@ RSpec.describe Views::Reports::PowerBiNewExport do
     context 'with waiting_for_part_payment application' do
       let!(:application) do
         create(:application_full_remission, :waiting_for_part_payment_state,
-               office: office, business_entity: business_entity, created_at: Time.zone.now)
+               office: office, business_entity: business_entity)
       end
 
       it 'includes waiting_for_part_payment applications' do
@@ -115,7 +119,7 @@ RSpec.describe Views::Reports::PowerBiNewExport do
     context 'with created application' do
       let!(:application) do
         create(:application_full_remission,
-               office: office, business_entity: business_entity, created_at: Time.zone.now)
+               office: office, business_entity: business_entity)
       end
 
       it 'includes created applications' do
@@ -130,7 +134,7 @@ RSpec.describe Views::Reports::PowerBiNewExport do
     context 'with application missing date_received' do
       let!(:application) do
         create(:application_full_remission,
-               office: office, business_entity: business_entity, created_at: Time.zone.now)
+               office: office, business_entity: business_entity)
       end
 
       before do
@@ -150,7 +154,6 @@ RSpec.describe Views::Reports::PowerBiNewExport do
       let!(:online_application) do
         create(:online_application, date_received: Time.zone.today,
                                     fee: 300, form_name: 'EX160',
-                                    created_at: Time.zone.now,
                                     reference: 'HWF-OA1-TEST')
       end
 
@@ -167,8 +170,7 @@ RSpec.describe Views::Reports::PowerBiNewExport do
 
     context 'with unlinked online_application without date_received' do
       let!(:online_application) do
-        create(:online_application, date_received: nil,
-                                    created_at: Time.zone.now)
+        create(:online_application, date_received: nil)
       end
 
       it 'excludes the online application' do
@@ -182,14 +184,12 @@ RSpec.describe Views::Reports::PowerBiNewExport do
     context 'with linked online_application (no duplicates)' do
       let!(:online_application) do
         create(:online_application, date_received: Time.zone.today,
-                                    fee: 300, form_name: 'EX160',
-                                    created_at: Time.zone.now)
+                                    fee: 300, form_name: 'EX160')
       end
       let!(:application) do
         create(:application_full_remission,
                office: office, business_entity: business_entity,
-               online_application: online_application,
-               created_at: Time.zone.now)
+               online_application: online_application)
       end
 
       it 'includes only one row for the linked application' do
@@ -202,11 +202,13 @@ RSpec.describe Views::Reports::PowerBiNewExport do
     end
   end
 
-  describe '#export3 (waiting states only by created_at)' do
+  describe '#export3 (waiting states only by date_received)' do
     context 'with waiting_for_evidence application' do
       let!(:application) do
-        create(:application_full_remission, :waiting_for_evidence_state,
-               office: office, business_entity: business_entity, created_at: Time.zone.now)
+        app = create(:application_full_remission, :waiting_for_evidence_state,
+                     office: office, business_entity: business_entity, created_at: 6.months.ago)
+        app.detail.update!(date_received: 2.weeks.ago)
+        app
       end
 
       it 'generates a zip file' do
@@ -225,8 +227,10 @@ RSpec.describe Views::Reports::PowerBiNewExport do
 
     context 'with waiting_for_part_payment application' do
       let!(:application) do
-        create(:application_full_remission, :waiting_for_part_payment_state,
-               office: office, business_entity: business_entity, created_at: Time.zone.now)
+        app = create(:application_full_remission, :waiting_for_part_payment_state,
+                     office: office, business_entity: business_entity, created_at: 6.months.ago)
+        app.detail.update!(date_received: 1.week.ago)
+        app
       end
 
       it 'includes waiting_for_part_payment applications' do
@@ -241,7 +245,7 @@ RSpec.describe Views::Reports::PowerBiNewExport do
     context 'with processed application' do
       let!(:application) do
         create(:application_full_remission, :processed_state,
-               office: office, business_entity: business_entity, created_at: Time.zone.now)
+               office: office, business_entity: business_entity)
       end
 
       it 'excludes processed applications' do
@@ -255,7 +259,7 @@ RSpec.describe Views::Reports::PowerBiNewExport do
     context 'with created application' do
       let!(:application) do
         create(:application_full_remission,
-               office: office, business_entity: business_entity, created_at: Time.zone.now)
+               office: office, business_entity: business_entity)
       end
 
       it 'excludes created applications' do
@@ -275,7 +279,7 @@ RSpec.describe Views::Reports::PowerBiNewExport do
       let!(:application) do
         create(:application_full_remission, :processed_state,
                office: digital_office, business_entity: business_entity,
-               decision_date: Time.zone.now, created_at: Time.zone.now)
+               decision_date: Time.zone.now)
       end
 
       it 'excludes from export1' do
@@ -295,7 +299,7 @@ RSpec.describe Views::Reports::PowerBiNewExport do
       let!(:application) do
         create(:application_full_remission, :processed_state,
                office: hmcts_office, business_entity: business_entity,
-               decision_date: Time.zone.now, created_at: Time.zone.now)
+               decision_date: Time.zone.now)
       end
 
       it 'excludes from export1' do
@@ -315,7 +319,7 @@ RSpec.describe Views::Reports::PowerBiNewExport do
   describe 'evidence check data' do
     let!(:application) do
       create(:application_part_remission,
-             office: office, business_entity: business_entity, created_at: Time.zone.now,
+             office: office, business_entity: business_entity,
              income: 500, state: :waiting_for_evidence)
     end
     let!(:evidence_check) do
@@ -397,7 +401,7 @@ RSpec.describe Views::Reports::PowerBiNewExport do
     context 'with waiting_for_evidence application' do
       let!(:application) do
         create(:application_full_remission, :waiting_for_evidence_state,
-               office: office, business_entity: business_entity, created_at: Time.zone.now)
+               office: office, business_entity: business_entity)
       end
 
       it 'returns Waiting for evidence' do
@@ -412,7 +416,7 @@ RSpec.describe Views::Reports::PowerBiNewExport do
     context 'with waiting_for_part_payment application' do
       let!(:application) do
         create(:application_full_remission, :waiting_for_part_payment_state,
-               office: office, business_entity: business_entity, created_at: Time.zone.now)
+               office: office, business_entity: business_entity)
       end
 
       it 'returns Waiting for part-payment' do
@@ -427,7 +431,7 @@ RSpec.describe Views::Reports::PowerBiNewExport do
     context 'with deleted application' do
       let!(:application) do
         create(:application_full_remission, :deleted_state,
-               office: office, business_entity: business_entity, created_at: Time.zone.now)
+               office: office, business_entity: business_entity)
       end
 
       it 'returns Deleted' do
@@ -443,14 +447,13 @@ RSpec.describe Views::Reports::PowerBiNewExport do
       let!(:online_application) do
         create(:online_application, date_received: Time.zone.today,
                                     fee: 300, form_name: 'EX160',
-                                    created_at: Time.zone.now,
                                     reference: 'HWF-OA3-TEST')
       end
       let!(:application) do
         create(:application_full_remission,
                office: office, business_entity: business_entity,
                online_application: online_application,
-               created_at: Time.zone.now, completed_at: nil)
+               completed_at: nil)
       end
 
       before do
@@ -472,7 +475,7 @@ RSpec.describe Views::Reports::PowerBiNewExport do
       let!(:application) do
         create(:application_full_remission,
                office: office, business_entity: business_entity,
-               created_at: Time.zone.now, completed_at: nil)
+               completed_at: nil)
       end
 
       before do
@@ -492,7 +495,6 @@ RSpec.describe Views::Reports::PowerBiNewExport do
       let!(:online_application) do
         create(:online_application, date_received: Time.zone.today,
                                     fee: 300, form_name: 'EX160',
-                                    created_at: Time.zone.now,
                                     reference: 'HWF-OA2-TEST')
       end
 
@@ -510,12 +512,11 @@ RSpec.describe Views::Reports::PowerBiNewExport do
     let!(:online_application) do
       create(:online_application, date_received: Time.zone.today,
                                   fee: 300, form_name: 'EX160',
-                                  created_at: Time.zone.now,
                                   reference: 'HWF-REUSE-TEST')
     end
     let!(:application) do
       create(:application_full_remission, :waiting_for_evidence_state,
-             office: office, business_entity: business_entity, created_at: Time.zone.now)
+             office: office, business_entity: business_entity)
     end
 
     it 'export3 does not include unlinked online applications from export2' do
@@ -532,10 +533,79 @@ RSpec.describe Views::Reports::PowerBiNewExport do
     end
   end
 
+  describe 'ordering' do
+    context 'export1 orders by decision_date' do
+      let!(:older_app) do
+        create(:application_full_remission, :processed_state,
+               office: office, business_entity: business_entity,
+               decision_date: 2.weeks.ago)
+      end
+      let!(:newer_app) do
+        create(:application_full_remission, :processed_state,
+               office: office, business_entity: business_entity,
+               decision_date: 1.week.ago)
+      end
+
+      it 'returns applications ordered by decision_date' do
+        report.export1
+        csv_content = read_csv_from_zip
+        ids = csv_content.map { |r| r['id'].to_i }
+
+        expect(ids).to eq([older_app.id, newer_app.id])
+      end
+    end
+
+    context 'export2 orders by date_received' do
+      let!(:older_app) do
+        app = create(:application_full_remission, :processed_state,
+                     office: office, business_entity: business_entity, created_at: 1.day.ago)
+        app.detail.update!(date_received: 2.weeks.ago)
+        app
+      end
+      let!(:newer_app) do
+        app = create(:application_full_remission, :processed_state,
+                     office: office, business_entity: business_entity, created_at: 2.days.ago)
+        app.detail.update!(date_received: 1.week.ago)
+        app
+      end
+
+      it 'returns applications ordered by date_received not created_at' do
+        report.export2
+        csv_content = read_csv_from_zip
+        ids = csv_content.map { |r| r['id'].to_i }
+
+        expect(ids).to eq([older_app.id, newer_app.id])
+      end
+    end
+
+    context 'export3 orders by date_received' do
+      let!(:older_app) do
+        app = create(:application_full_remission, :waiting_for_evidence_state,
+                     office: office, business_entity: business_entity, created_at: 1.day.ago)
+        app.detail.update!(date_received: 2.weeks.ago)
+        app
+      end
+      let!(:newer_app) do
+        app = create(:application_full_remission, :waiting_for_part_payment_state,
+                     office: office, business_entity: business_entity, created_at: 2.days.ago)
+        app.detail.update!(date_received: 1.week.ago)
+        app
+      end
+
+      it 'returns applications ordered by date_received not created_at' do
+        report.export3
+        csv_content = read_csv_from_zip
+        ids = csv_content.map { |r| r['id'].to_i }
+
+        expect(ids).to eq([older_app.id, newer_app.id])
+      end
+    end
+  end
+
   describe 'part payment data' do
     let!(:application) do
       create(:application_part_remission, :waiting_for_part_payment_state,
-             office: office, business_entity: business_entity, created_at: Time.zone.now)
+             office: office, business_entity: business_entity)
     end
     let!(:part_payment) do
       create(:part_payment, application: application, outcome: 'part')
