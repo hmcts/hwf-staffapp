@@ -339,6 +339,17 @@ RSpec.describe Forms::Evidence::HmrcCheck do
         end
       end
 
+      context '25/26 and 26/27 3 months average - 2 months overlap' do
+        let(:from_range) { '2026-03-01' }
+        let(:to_range) { '2026-05-31' }
+
+        it 'additional_income' do
+          form.load_additional_income_from_benefits
+          expect(form.additional_income_amount).to eq 106
+          expect(form.additional_income).to be true
+        end
+      end
+
       context '24/25 financial year' do
         let(:from_range) { '2025-06-01' }
         let(:to_range) { '2025-06-30' }
