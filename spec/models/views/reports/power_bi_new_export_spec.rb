@@ -1,0 +1,635 @@
+# frozen_string_literal: true
+
+require 'rails_helper'
+
+# rubocop:disable RSpec/LetSetup
+RSpec.describe Views::Reports::PowerBiNewExport do
+  subject(:report) { described_class.new(start_date, end_date) }
+
+  let(:office) { create(:office) }
+  let(:business_entity) { create(:business_entity) }
+  let(:start_date) { (Time.zone.today - 1.month).to_s }
+  let(:end_date) { (Time.zone.today + 1.month).to_s }
+
+  after do
+    FileUtils.rm_f(report.zipfile_path) if report.zipfile_path && File.exist?(report.zipfile_path)
+  end
+
+  describe '#export1 (processed only by decision_date)' do
+    context 'with processed application' do
+      let!(:application) do
+        create(:application_full_remission, :processed_state,
+               office: office, business_entity: business_entity, decision_date: Time.zone.now)
+      end
+
+      it 'generates a zip file' do
+        report.export1
+        expect(File.exist?(report.zipfile_path)).to be true
+      end
+
+      it 'includes processed applications with reference' do
+        report.export1
+        csv_content = read_csv_from_zip
+        row = csv_content.find { |r| r['id'].to_i == application.id }
+
+        expect(row).to be_present
+        expect(row['reference']).to eq(application.reference)
+      end
+    end
+
+    context 'with waiting_for_evidence application' do
+      let!(:application) do
+        create(:application_full_remission, :waiting_for_evidence_state,
+               office: office, business_entity: business_entity, decision_date: Time.zone.now)
+      end
+
+      it 'excludes waiting_for_evidence applications' do
+        report.export1
+        csv_content = read_csv_from_zip
+
+        expect(csv_content).to be_empty
+      end
+    end
+
+    context 'with created application' do
+      let!(:application) do
+        create(:application_full_remission,
+               office: office, business_entity: business_entity, decision_date: Time.zone.now)
+      end
+
+      it 'excludes created applications' do
+        report.export1
+        csv_content = read_csv_from_zip
+
+        expect(csv_content).to be_empty
+      end
+    end
+  end
+
+  describe '#export2 (all states by date_received)' do
+    context 'with processed application' do
+      let!(:application) do
+        app = create(:application_full_remission, :processed_state,
+                     office: office, business_entity: business_entity, created_at: 6.months.ago)
+        app.detail.update!(date_received: 2.weeks.ago)
+        app
+      end
+
+      it 'includes processed applications' do
+        report.export2
+        csv_content = read_csv_from_zip
+        row = csv_content.find { |r| r['id'].to_i == application.id }
+
+        expect(row).to be_present
+      end
+    end
+
+    context 'with waiting_for_evidence application' do
+      let!(:application) do
+        app = create(:application_full_remission, :waiting_for_evidence_state,
+                     office: office, business_entity: business_entity, created_at: 6.months.ago)
+        app.detail.update!(date_received: 1.week.ago)
+        app
+      end
+
+      it 'includes waiting_for_evidence applications' do
+        report.export2
+        csv_content = read_csv_from_zip
+        row = csv_content.find { |r| r['id'].to_i == application.id }
+
+        expect(row).to be_present
+      end
+    end
+
+    context 'with waiting_for_part_payment application' do
+      let!(:application) do
+        create(:application_full_remission, :waiting_for_part_payment_state,
+               office: office, business_entity: business_entity)
+      end
+
+      it 'includes waiting_for_part_payment applications' do
+        report.export2
+        csv_content = read_csv_from_zip
+        row = csv_content.find { |r| r['id'].to_i == application.id }
+
+        expect(row).to be_present
+      end
+    end
+
+    context 'with created application' do
+      let!(:application) do
+        create(:application_full_remission,
+               office: office, business_entity: business_entity)
+      end
+
+      it 'includes created applications' do
+        report.export2
+        csv_content = read_csv_from_zip
+        row = csv_content.find { |r| r['id'].to_i == application.id }
+
+        expect(row).to be_present
+      end
+    end
+
+    context 'with application missing date_received' do
+      let!(:application) do
+        create(:application_full_remission,
+               office: office, business_entity: business_entity)
+      end
+
+      before do
+        application.detail.update!(date_received: nil)
+      end
+
+      it 'excludes the application' do
+        report.export2
+        csv_content = read_csv_from_zip
+        row = csv_content.find { |r| r['id'].to_i == application.id }
+
+        expect(row).to be_nil
+      end
+    end
+
+    context 'with unlinked online_application with date_received' do
+      let!(:online_application) do
+        create(:online_application, date_received: Time.zone.today,
+                                    fee: 300, form_name: 'EX160',
+                                    reference: 'HWF-OA1-TEST')
+      end
+
+      it 'includes the online application with reference' do
+        report.export2
+        csv_content = read_csv_from_zip
+        row = csv_content.find { |r| r['id'].to_i == online_application.id }
+
+        expect(row).to be_present
+        expect(row['reference']).to eq('HWF-OA1-TEST')
+        expect(row['source']).to eq('digital')
+      end
+    end
+
+    context 'with unlinked online_application without date_received' do
+      let!(:online_application) do
+        create(:online_application, date_received: nil)
+      end
+
+      it 'excludes the online application' do
+        report.export2
+        csv_content = read_csv_from_zip
+
+        expect(csv_content).to be_empty
+      end
+    end
+
+    context 'with linked online_application (no duplicates)' do
+      let!(:online_application) do
+        create(:online_application, date_received: Time.zone.today,
+                                    fee: 300, form_name: 'EX160')
+      end
+      let!(:application) do
+        create(:application_full_remission,
+               office: office, business_entity: business_entity,
+               online_application: online_application)
+      end
+
+      it 'includes only one row for the linked application' do
+        report.export2
+        csv_content = read_csv_from_zip
+
+        expect(csv_content.size).to eq(1)
+        expect(csv_content.first['id'].to_i).to eq(application.id)
+      end
+    end
+  end
+
+  describe '#export3 (waiting states only by date_received)' do
+    context 'with waiting_for_evidence application' do
+      let!(:application) do
+        app = create(:application_full_remission, :waiting_for_evidence_state,
+                     office: office, business_entity: business_entity, created_at: 6.months.ago)
+        app.detail.update!(date_received: 2.weeks.ago)
+        app
+      end
+
+      it 'generates a zip file' do
+        report.export3
+        expect(File.exist?(report.zipfile_path)).to be true
+      end
+
+      it 'includes waiting_for_evidence applications' do
+        report.export3
+        csv_content = read_csv_from_zip
+        row = csv_content.find { |r| r['id'].to_i == application.id }
+
+        expect(row).to be_present
+      end
+    end
+
+    context 'with waiting_for_part_payment application' do
+      let!(:application) do
+        app = create(:application_full_remission, :waiting_for_part_payment_state,
+                     office: office, business_entity: business_entity, created_at: 6.months.ago)
+        app.detail.update!(date_received: 1.week.ago)
+        app
+      end
+
+      it 'includes waiting_for_part_payment applications' do
+        report.export3
+        csv_content = read_csv_from_zip
+        row = csv_content.find { |r| r['id'].to_i == application.id }
+
+        expect(row).to be_present
+      end
+    end
+
+    context 'with processed application' do
+      let!(:application) do
+        create(:application_full_remission, :processed_state,
+               office: office, business_entity: business_entity)
+      end
+
+      it 'excludes processed applications' do
+        report.export3
+        csv_content = read_csv_from_zip
+
+        expect(csv_content).to be_empty
+      end
+    end
+
+    context 'with created application' do
+      let!(:application) do
+        create(:application_full_remission,
+               office: office, business_entity: business_entity)
+      end
+
+      it 'excludes created applications' do
+        report.export3
+        csv_content = read_csv_from_zip
+
+        expect(csv_content).to be_empty
+      end
+    end
+  end
+
+  describe 'excluded offices' do
+    let!(:digital_office) { create(:office, name: 'Digital') }
+    let!(:hmcts_office) { create(:office, name: 'HMCTS HQ Team') }
+
+    context 'with application from Digital office' do
+      let!(:application) do
+        create(:application_full_remission, :processed_state,
+               office: digital_office, business_entity: business_entity,
+               decision_date: Time.zone.now)
+      end
+
+      it 'excludes from export1' do
+        report.export1
+        csv_content = read_csv_from_zip
+        expect(csv_content).to be_empty
+      end
+
+      it 'excludes from export2' do
+        report.export2
+        csv_content = read_csv_from_zip
+        expect(csv_content).to be_empty
+      end
+    end
+
+    context 'with application from HMCTS HQ Team office' do
+      let!(:application) do
+        create(:application_full_remission, :processed_state,
+               office: hmcts_office, business_entity: business_entity,
+               decision_date: Time.zone.now)
+      end
+
+      it 'excludes from export1' do
+        report.export1
+        csv_content = read_csv_from_zip
+        expect(csv_content).to be_empty
+      end
+
+      it 'excludes from export2' do
+        report.export2
+        csv_content = read_csv_from_zip
+        expect(csv_content).to be_empty
+      end
+    end
+  end
+
+  describe 'evidence check data' do
+    let!(:application) do
+      create(:application_part_remission,
+             office: office, business_entity: business_entity,
+             income: 500, state: :waiting_for_evidence)
+    end
+    let!(:evidence_check) do
+      create(:evidence_check, application: application,
+                              income: 1200,
+                              outcome: 'part',
+                              check_type: 'random',
+                              income_check_type: 'hmrc',
+                              hmrc_income_used: 1150.50,
+                              completed_at: 1.day.ago)
+    end
+
+    it 'includes evidence check income as post evidence income' do
+      report.export2
+      csv_content = read_csv_from_zip
+      row = csv_content.find { |r| r['id'].to_i == application.id }
+
+      expect(row['post evidence income']).to eq('1200')
+    end
+
+    it 'includes evidence check outcome' do
+      report.export2
+      csv_content = read_csv_from_zip
+      row = csv_content.find { |r| r['id'].to_i == application.id }
+
+      expect(row['evidence check outcome']).to eq('part')
+    end
+
+    it 'includes DB evidence check type' do
+      report.export2
+      csv_content = read_csv_from_zip
+      row = csv_content.find { |r| r['id'].to_i == application.id }
+
+      expect(row['DB evidence check type']).to eq('random')
+    end
+
+    it 'includes DB income check type' do
+      report.export2
+      csv_content = read_csv_from_zip
+      row = csv_content.find { |r| r['id'].to_i == application.id }
+
+      expect(row['DB income check type']).to eq('hmrc')
+    end
+
+    it 'includes HMRC total income' do
+      report.export2
+      csv_content = read_csv_from_zip
+      row = csv_content.find { |r| r['id'].to_i == application.id }
+
+      expect(row['HMRC total income']).to eq('1150.5')
+    end
+
+    it 'marks evidence checked as yes' do
+      report.export2
+      csv_content = read_csv_from_zip
+      row = csv_content.find { |r| r['id'].to_i == application.id }
+
+      expect(row['evidence checked?']).to eq('yes')
+    end
+  end
+
+  describe 'status column' do
+    context 'with processed application' do
+      let!(:application) do
+        create(:application_full_remission, :processed_state,
+               office: office, business_entity: business_entity,
+               decision_date: Time.zone.now, completed_at: 1.day.ago)
+      end
+
+      it 'returns Completed' do
+        report.export1
+        csv_content = read_csv_from_zip
+        row = csv_content.find { |r| r['id'].to_i == application.id }
+
+        expect(row['status']).to eq('Completed')
+      end
+    end
+
+    context 'with waiting_for_evidence application' do
+      let!(:application) do
+        create(:application_full_remission, :waiting_for_evidence_state,
+               office: office, business_entity: business_entity)
+      end
+
+      it 'returns Waiting for evidence' do
+        report.export2
+        csv_content = read_csv_from_zip
+        row = csv_content.find { |r| r['id'].to_i == application.id }
+
+        expect(row['status']).to eq('Waiting for evidence')
+      end
+    end
+
+    context 'with waiting_for_part_payment application' do
+      let!(:application) do
+        create(:application_full_remission, :waiting_for_part_payment_state,
+               office: office, business_entity: business_entity)
+      end
+
+      it 'returns Waiting for part-payment' do
+        report.export3
+        csv_content = read_csv_from_zip
+        row = csv_content.find { |r| r['id'].to_i == application.id }
+
+        expect(row['status']).to eq('Waiting for part-payment')
+      end
+    end
+
+    context 'with deleted application' do
+      let!(:application) do
+        create(:application_full_remission, :deleted_state,
+               office: office, business_entity: business_entity)
+      end
+
+      it 'returns Deleted' do
+        report.export2
+        csv_content = read_csv_from_zip
+        row = csv_content.find { |r| r['id'].to_i == application.id }
+
+        expect(row['status']).to eq('Deleted')
+      end
+    end
+
+    context 'when online application is picked up by staff but not completed' do
+      let!(:online_application) do
+        create(:online_application, date_received: Time.zone.today,
+                                    fee: 300, form_name: 'EX160',
+                                    reference: 'HWF-OA3-TEST')
+      end
+      let!(:application) do
+        create(:application_full_remission,
+               office: office, business_entity: business_entity,
+               online_application: online_application,
+               completed_at: nil)
+      end
+
+      before do
+        # In production, details.refund is NULL when staff picks up an online app
+        # but the refund data is on the online_application itself
+        application.detail.update!(refund: nil)
+      end
+
+      it 'returns Unprocessed (falls back to online_application refund)' do
+        report.export2
+        csv_content = read_csv_from_zip
+        row = csv_content.find { |r| r['id'].to_i == application.id }
+
+        expect(row['status']).to eq('Unprocessed')
+      end
+    end
+
+    context 'with paper application missing refund data' do
+      let!(:application) do
+        create(:application_full_remission,
+               office: office, business_entity: business_entity,
+               completed_at: nil)
+      end
+
+      before do
+        application.detail.update!(refund: nil)
+      end
+
+      it 'does not return Unprocessed' do
+        report.export2
+        csv_content = read_csv_from_zip
+        row = csv_content.find { |r| r['id'].to_i == application.id }
+
+        expect(row['status']).not_to eq('Unprocessed')
+      end
+    end
+
+    context 'when unlinked online application has date_received and refund' do
+      let!(:online_application) do
+        create(:online_application, date_received: Time.zone.today,
+                                    fee: 300, form_name: 'EX160',
+                                    reference: 'HWF-OA2-TEST')
+      end
+
+      it 'returns Unprocessed' do
+        report.export2
+        csv_content = read_csv_from_zip
+        row = csv_content.find { |r| r['id'].to_i == online_application.id }
+
+        expect(row['status']).to eq('Unprocessed')
+      end
+    end
+  end
+
+  describe 'running export2 then export3 on the same instance' do
+    let!(:online_application) do
+      create(:online_application, date_received: Time.zone.today,
+                                  fee: 300, form_name: 'EX160',
+                                  reference: 'HWF-REUSE-TEST')
+    end
+    let!(:application) do
+      create(:application_full_remission, :waiting_for_evidence_state,
+             office: office, business_entity: business_entity)
+    end
+
+    it 'export3 does not include unlinked online applications from export2' do
+      report.export2
+      FileUtils.rm_f(report.zipfile_path)
+
+      report.export3
+      csv_content = read_csv_from_zip
+      online_app_row = csv_content.find { |r| r['id'].to_i == online_application.id }
+
+      expect(online_app_row).to be_nil
+      expect(csv_content.size).to eq(1)
+      expect(csv_content.first['id'].to_i).to eq(application.id)
+    end
+  end
+
+  describe 'ordering' do
+    context 'export1 orders by decision_date' do
+      let!(:older_app) do
+        create(:application_full_remission, :processed_state,
+               office: office, business_entity: business_entity,
+               decision_date: 2.weeks.ago)
+      end
+      let!(:newer_app) do
+        create(:application_full_remission, :processed_state,
+               office: office, business_entity: business_entity,
+               decision_date: 1.week.ago)
+      end
+
+      it 'returns applications ordered by decision_date' do
+        report.export1
+        csv_content = read_csv_from_zip
+        ids = csv_content.map { |r| r['id'].to_i }
+
+        expect(ids).to eq([older_app.id, newer_app.id])
+      end
+    end
+
+    context 'export2 orders by date_received' do
+      let!(:older_app) do
+        app = create(:application_full_remission, :processed_state,
+                     office: office, business_entity: business_entity, created_at: 1.day.ago)
+        app.detail.update!(date_received: 2.weeks.ago)
+        app
+      end
+      let!(:newer_app) do
+        app = create(:application_full_remission, :processed_state,
+                     office: office, business_entity: business_entity, created_at: 2.days.ago)
+        app.detail.update!(date_received: 1.week.ago)
+        app
+      end
+
+      it 'returns applications ordered by date_received not created_at' do
+        report.export2
+        csv_content = read_csv_from_zip
+        ids = csv_content.map { |r| r['id'].to_i }
+
+        expect(ids).to eq([older_app.id, newer_app.id])
+      end
+    end
+
+    context 'export3 orders by date_received' do
+      let!(:older_app) do
+        app = create(:application_full_remission, :waiting_for_evidence_state,
+                     office: office, business_entity: business_entity, created_at: 1.day.ago)
+        app.detail.update!(date_received: 2.weeks.ago)
+        app
+      end
+      let!(:newer_app) do
+        app = create(:application_full_remission, :waiting_for_part_payment_state,
+                     office: office, business_entity: business_entity, created_at: 2.days.ago)
+        app.detail.update!(date_received: 1.week.ago)
+        app
+      end
+
+      it 'returns applications ordered by date_received not created_at' do
+        report.export3
+        csv_content = read_csv_from_zip
+        ids = csv_content.map { |r| r['id'].to_i }
+
+        expect(ids).to eq([older_app.id, newer_app.id])
+      end
+    end
+  end
+
+  describe 'part payment data' do
+    let!(:application) do
+      create(:application_part_remission, :waiting_for_part_payment_state,
+             office: office, business_entity: business_entity)
+    end
+    let!(:part_payment) do
+      create(:part_payment, application: application, outcome: 'part')
+    end
+
+    it 'includes part payment outcome' do
+      report.export3
+      csv_content = read_csv_from_zip
+      row = csv_content.find { |r| r['id'].to_i == application.id }
+
+      expect(row['PP outcome']).to eq('part')
+    end
+  end
+
+  private
+
+  def read_csv_from_zip
+    csv_content = nil
+    Zip::File.open(report.zipfile_path) do |zip_file|
+      zip_file.each do |entry|
+        csv_content = CSV.parse(entry.get_input_stream.read, headers: true)
+      end
+    end
+    csv_content
+  end
+end
+# rubocop:enable RSpec/LetSetup
