@@ -61,7 +61,7 @@ RSpec.describe Views::Reports::HmrcOcmcDataExport do
       create(:application, :deleted_state, office: office, detail: app2_detail,
                                            children_age_band: { one: 0, two: 1 }, income_max_threshold_exceeded: true, decision_date: Date.parse('2021-01-03'))
     }
-    let(:application5) { create(:application, office: office) }
+    let(:application5) { create(:application, :with_reference, office: office) }
     let(:application6) { create(:application, :processed_state, office: office) }
     let(:application7) { create(:application, :processed_state) }
 
@@ -88,8 +88,86 @@ RSpec.describe Views::Reports::HmrcOcmcDataExport do
       application4.applicant.update(partner_ni_number: '', partner_last_name: 'Jones', married: true, ni_number: 'SN789654C')
     end
 
-    it 'return 5 rows csv data' do
-      expect(data.count).to be(5)
+    it 'return 6 rows csv data' do
+      expect(data.count).to be(6)
+    end
+
+    describe 'id column' do
+      it 'includes Id in the header' do
+        expect(data[0]).to include('Id')
+      end
+
+      it 'contains the application id' do
+        reference = application1.reference
+        data_row = data.find { |row| row.include?(reference) }
+        expect(data_row).to include(application1.id.to_s)
+      end
+    end
+
+    describe 'status column' do
+      it 'includes Status in the header' do
+        expect(data[0]).to include('Status')
+      end
+
+      it 'returns Completed for processed application' do
+        reference = application1.reference
+        data_row = data.find { |row| row.split(',')[3] == reference }
+        expect(data_row).to include('Completed')
+      end
+
+      it 'returns Waiting for evidence for waiting_for_evidence application' do
+        reference = application2.reference
+        data_row = data.find { |row| row.split(',')[3] == reference }
+        expect(data_row).to include('Waiting for evidence')
+      end
+
+      it 'returns Waiting for part-payment for waiting_for_part_payment application' do
+        reference = application3.reference
+        data_row = data.find { |row| row.split(',')[3] == reference }
+        expect(data_row).to include('Waiting for part-payment')
+      end
+
+      it 'returns Deleted for deleted application' do
+        reference = application4.reference
+        data_row = data.find { |row| row.split(',')[3] == reference }
+        expect(data_row).to include('Deleted')
+      end
+
+      it 'returns Unprocessed for created application with date_received' do
+        reference = application5.reference
+        data_row = data.find { |row| row.split(',')[3] == reference }
+        expect(data_row).to include('Unprocessed')
+      end
+
+      context 'created application without date_received' do
+        let(:application_no_date) { create(:application, :with_reference, office: office) }
+
+        before do
+          travel_to(date_from + 5.days) { application_no_date }
+          application_no_date.detail.update!(date_received: nil)
+        end
+
+        it 'excludes the application' do
+          reference = application_no_date.reference
+          data_row = data.find { |row| row.split(',')[3] == reference }
+          expect(data_row).to be_nil
+        end
+      end
+
+      context 'created application without refund' do
+        let(:application_no_refund) { create(:application, :with_reference, office: office) }
+
+        before do
+          travel_to(date_from + 5.days) { application_no_refund }
+          application_no_refund.detail.update!(refund: nil)
+        end
+
+        it 'excludes the application' do
+          reference = application_no_refund.reference
+          data_row = data.find { |row| row.split(',')[3] == reference }
+          expect(data_row).to be_nil
+        end
+      end
     end
 
     context 'data fields' do
@@ -119,19 +197,19 @@ RSpec.describe Views::Reports::HmrcOcmcDataExport do
       context 'paye income' do
         let(:paye_income) { [{ "taxablePay" => 120.04 }] }
         it "calculates correct value" do
-          data_row = data[3]
+          data_row = data[4]
           expect(data_row).to include('123.56')
         end
       end
 
       context 'paye and tax credit income' do
         it "calculates correct value" do
-          data_row = data[3]
+          data_row = data[4]
           expect(data_row).to include('123.56')
         end
 
         it 'displays formatted date range' do
-          data_row = data[3]
+          data_row = data[4]
           expect(data_row).to include('1/7/2022 - 31/7/2022')
         end
 
@@ -139,14 +217,14 @@ RSpec.describe Views::Reports::HmrcOcmcDataExport do
           let(:hmrc_income_used) { 120.04 }
 
           it "calculates correct value" do
-            data_row = data[3]
+            data_row = data[4]
             expect(data_row).to include('120.04')
           end
 
           context 'no date' do
             let(:date_range) { nil }
             it "calculates correct value" do
-              data_row = data[3]
+              data_row = data[4]
               expect(data_row).to include('120.04')
             end
           end
@@ -156,7 +234,7 @@ RSpec.describe Views::Reports::HmrcOcmcDataExport do
       context 'income_kind' do
         let(:income_kind) { { applicant: [:wage, :working_credit] } }
         it "calculates correct value" do
-          data_row = data[3]
+          data_row = data[4]
           expect(data_row).to include('Wages before tax and National Insurance are taken off,Working Tax Credit')
         end
       end
@@ -164,35 +242,35 @@ RSpec.describe Views::Reports::HmrcOcmcDataExport do
       context 'income_kind with partner' do
         let(:income_kind) { { applicant: [], partner: [:wage, :working_credit] } }
         it "calculates correct value" do
-          data_row = data[3]
+          data_row = data[4]
           expect(data_row).to include('Wages before tax and National Insurance are taken off,Working Tax Credit')
         end
       end
 
       context 'signed by values and partner data' do
         it {
-          expect(data[4]).to include('legal_representative,true,false,post_ucd')
+          expect(data[5]).to include('legal_representative,true,false,post_ucd')
         }
 
         it {
-          expect(data[1]).to include('litigation_friend,false,true,pre_ucd')
+          expect(data[2]).to include('litigation_friend,false,true,pre_ucd')
         }
 
         it {
-          expect(data[2]).to include('applicant,true,true')
+          expect(data[3]).to include('applicant,true,true')
         }
       end
       context 'children age bands' do
         it {
-          expect(data[4]).to include('89,N/A,true,N/A,last_month,1,7,8')
+          expect(data[5]).to include('89,N/A,true,N/A,last_month,1,7,8')
         }
 
         it {
-          expect(data[1]).to include('500,N/A,false,2021-01-03 00:00:00,N/A,1,0,1')
+          expect(data[2]).to include('500,N/A,false,2021-01-03 00:00:00,N/A,1,0,1')
         }
 
         it {
-          expect(data[2]).to include('500,N/A,false,N/A,average,1,1,1')
+          expect(data[3]).to include('500,N/A,false,N/A,average,1,1,1')
         }
       end
 
@@ -210,7 +288,7 @@ RSpec.describe Views::Reports::HmrcOcmcDataExport do
             let(:ec_income) { 1536 }
             it "from evidence check" do
               reference = application2.reference
-              data_row = data.find { |row| row.split(',')[1] == reference }
+              data_row = data.find { |row| row.split(',')[3] == reference }
               expect(data_row).to include('HMRC NumberRule,Yes,N/A,Yes,N/A,1536')
             end
           end
@@ -221,7 +299,7 @@ RSpec.describe Views::Reports::HmrcOcmcDataExport do
 
             it "from evidence check" do
               reference = application2.reference
-              data_row = data.find { |row| row.split(',')[1] == reference }
+              data_row = data.find { |row| row.split(',')[3] == reference }
               expect(data_row).to include('JK123456A,2021-01-03,N/A,no,No,N/A,No')
               expect(data_row).to include('ManualAfterHMRC,Yes,N/A,Yes,N/A,1515')
             end
@@ -236,7 +314,7 @@ RSpec.describe Views::Reports::HmrcOcmcDataExport do
 
           it "from evidence check" do
             reference = application1.reference
-            data_row = data.find { |row| row.split(',')[1] == reference }
+            data_row = data.find { |row| row.split(',')[3] == reference }
             expect(data_row).to include('JK123456A,2021-01-02,2020-11-01 00:00:00,yes,No,N/A,No')
             expect(data_row).to include('ABC123,false,false,0.0,89,1578,true,N/A,last_month')
             expect(data_row).to include('Manual NumberRule,N/A,N/A,N/A,N/A,1578')
@@ -249,7 +327,7 @@ RSpec.describe Views::Reports::HmrcOcmcDataExport do
 
           it "from evidence check" do
             reference = application1.reference
-            data_row = data.find { |row| row.split(',')[1] == reference }
+            data_row = data.find { |row| row.split(',')[3] == reference }
             expect(data_row).to include('1578,N/A,legal_representative,true,false,post_ucd')
           end
         end
@@ -268,7 +346,7 @@ RSpec.describe Views::Reports::HmrcOcmcDataExport do
             it 'returns Manual LowIncome evidence check type' do
               low_income_evidence_check
               reference = application1.reference
-              data_row = data.find { |row| row.split(',')[1] == reference }
+              data_row = data.find { |row| row.split(',')[3] == reference }
               expect(data_row).to include('Manual LowIncome')
             end
           end
@@ -279,7 +357,7 @@ RSpec.describe Views::Reports::HmrcOcmcDataExport do
             it 'returns HMRC LowIncome evidence check type' do
               low_income_evidence_check
               reference = application1.reference
-              data_row = data.find { |row| row.split(',')[1] == reference }
+              data_row = data.find { |row| row.split(',')[3] == reference }
               expect(data_row).to include('HMRC LowIncome')
             end
           end
@@ -292,7 +370,7 @@ RSpec.describe Views::Reports::HmrcOcmcDataExport do
               create(:hmrc_check, evidence_check: low_income_evidence_check,
                                   created_at: 1.day.ago, request_params: date_range)
               reference = application1.reference
-              data_row = data.find { |row| row.split(',')[1] == reference }
+              data_row = data.find { |row| row.split(',')[3] == reference }
               expect(data_row).to include('ManualAfterHMRC')
             end
           end
@@ -310,7 +388,7 @@ RSpec.describe Views::Reports::HmrcOcmcDataExport do
           application1.update(decision: 'full', decision_date:)
           application1.applicant.update(married: false)
           reference = application1.reference
-          data_row = data.find { |row| row.split(',')[1] == reference }
+          data_row = data.find { |row| row.split(',')[3] == reference }
           expect(data_row).to include('no,No,full,No,2021-01-02 00:00:00,N/A,N/A,N/A,N/A')
         }
 
@@ -320,7 +398,7 @@ RSpec.describe Views::Reports::HmrcOcmcDataExport do
             application1.update(decision: 'full', decision_date:, amount_to_pay: nil)
             application1.applicant.update(married: false)
             reference = application1.reference
-            data_row = data.find { |row| row.split(',')[1] == reference }
+            data_row = data.find { |row| row.split(',')[3] == reference }
             expect(data_row).to include('false,0.0,89')
           }
         end
@@ -331,7 +409,7 @@ RSpec.describe Views::Reports::HmrcOcmcDataExport do
             application1.update(decision: 'none', decision_date:, amount_to_pay: 75.5)
             application1.saving.update(passed: false, over_66: true)
             reference = application1.reference
-            data_row = data.find { |row| row.split(',')[1] == reference }
+            data_row = data.find { |row| row.split(',')[3] == reference }
             expect(data_row).to include('yes,Yes,none,Yes,2021-01-02 00:00:00,N/A,N/A,N/A,N/A')
             expect(data_row).to include('false,75.5,89')
           }
@@ -343,7 +421,7 @@ RSpec.describe Views::Reports::HmrcOcmcDataExport do
             application1.update(decision: 'full', decision_date:, state: 4)
             application1.saving.update(over_66: nil)
             reference = application1.reference
-            data_row = data.find { |row| row.split(',')[1] == reference }
+            data_row = data.find { |row| row.split(',')[3] == reference }
             expect(data_row).to include('yes,N/A,deleted,No,2021-01-02 00:00:00,N/A,N/A,N/A,N/A')
           }
         end
@@ -352,7 +430,7 @@ RSpec.describe Views::Reports::HmrcOcmcDataExport do
           it {
             application1.update(decision: nil, decision_date: nil, state: 2)
             reference = application1.reference
-            data_row = data.find { |row| row.split(',')[1] == reference }
+            data_row = data.find { |row| row.split(',')[3] == reference }
             expect(data_row).to include('yes,No,N/A,No,2021-01-02 00:00:00,N/A,N/A,N/A,N/A')
           }
         end
@@ -367,7 +445,7 @@ RSpec.describe Views::Reports::HmrcOcmcDataExport do
           evidence_check.update(completed_at: completed_date, income_check_type: 'paper')
 
           reference = application1.reference
-          data_row = data.find { |row| row.split(',')[1] == reference }
+          data_row = data.find { |row| row.split(',')[3] == reference }
           expect(data_row).to include('no,No,full,No,2021-01-02 00:00:00,2025-04-22 00:00:00,N/A,part,N/A')
         }
       end
@@ -383,7 +461,7 @@ RSpec.describe Views::Reports::HmrcOcmcDataExport do
         }
         it {
           reference = application1.reference
-          data_row = data.find { |row| row.split(',')[1] == reference }
+          data_row = data.find { |row| row.split(',')[3] == reference }
           expect(data_row).to include('no,No,full,No,2021-01-02 00:00:00,N/A,2025-04-22 00:00:00,part,full')
           expect(data_row).to include('paper,no,N/A,yes,')
         }
@@ -393,7 +471,7 @@ RSpec.describe Views::Reports::HmrcOcmcDataExport do
           decision_overrides
 
           reference = application1.reference
-          data_row = data.find { |row| row.split(',')[1] == reference }
+          data_row = data.find { |row| row.split(',')[3] == reference }
           # application source, decision granted, benefits granted, evidence checked
           expect(data_row).to include('paper,yes,Yes,yes,')
         }
@@ -406,7 +484,7 @@ RSpec.describe Views::Reports::HmrcOcmcDataExport do
             decision_overrides
 
             reference = application1.reference
-            data_row = data.find { |row| row.split(',')[1] == reference }
+            data_row = data.find { |row| row.split(',')[3] == reference }
             # application source, decision granted, benefits granted, evidence checked
             expect(data_row).to include('paper,yes,No,yes,')
           }

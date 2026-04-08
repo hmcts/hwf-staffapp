@@ -1,3 +1,4 @@
+
 # rubocop:disable Metrics/ClassLength
 module Views
   module Reports
@@ -41,6 +42,14 @@ module Views
       def sql_query
         "SELECT
         offices.name AS \"Office\",
+        applications.id AS \"Id\",
+        CASE WHEN applications.state = 0 THEN 'Unprocessed'
+             WHEN applications.state = 1 THEN 'Waiting for evidence'
+             WHEN applications.state = 2 THEN 'Waiting for part-payment'
+             WHEN applications.state = 3 THEN 'Completed'
+             WHEN applications.state = 4 THEN 'Deleted'
+             ELSE 'N/A'
+        END AS \"Status\",
         applications.reference as \"HwF reference number\",
         applications.created_at as \"Created at\",
         details.fee as \"Fee\",
@@ -173,7 +182,9 @@ module Views
         AND offices.name NOT IN ('Digital', 'HMCTS HQ Team')
         AND applications.created_at between '#{@date_from.to_fs(:db)}' AND '#{@date_to.to_fs(:db)}'
         AND (row_number = 1 OR row_number IS NULL)
-        AND applications.state != 0 ORDER BY applications.created_at DESC;"
+        AND (applications.state != 0
+          OR (applications.state = 0 AND details.date_received IS NOT NULL AND details.refund IS NOT NULL))
+        ORDER BY applications.created_at DESC;"
       end
 
       # rubocop:disable Metrics/AbcSize
