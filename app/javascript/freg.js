@@ -212,7 +212,7 @@ window.moj.Modules.JsonSearcherModule = (function() {
                 self.handleFixedFee(feeData);
                 break;
               case 'banded_flat':
-                self.handleBandedFee(feeData, false);
+                self.handleFixedFee(feeData);
                 break;
               case 'banded_percentage':
                 self.handleBandedFee(feeData, true);
