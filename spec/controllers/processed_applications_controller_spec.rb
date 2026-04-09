@@ -162,9 +162,9 @@ RSpec.describe ProcessedApplicationsController do
   describe 'DELETE #destroy' do
     context 'when the user is an admin' do
       let(:admin) { create(:admin_user) }
-
       before do
         sign_in admin
+        allow(application1).to receive(:digital?).and_return(true)
         allow(Application).to receive(:find).with(application1.id.to_s).and_return(application1)
       end
 

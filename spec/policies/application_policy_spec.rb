@@ -65,7 +65,18 @@ RSpec.describe ApplicationPolicy, type: :policy do
     it { is_expected.not_to permit_action(:create) }
     it { is_expected.to permit_action(:show) }
     it { is_expected.not_to permit_action(:update) }
-    it { is_expected.to permit_action(:destroy) }
+
+    context 'when the application is digital' do
+      let(:application) { build_stubbed(:application, office: office, medium: 'digital') }
+
+      it { is_expected.to permit_action(:destroy) }
+    end
+
+    context 'when the application is a paper application' do
+      let(:application) { build_stubbed(:application, office: office, medium: 'paper') }
+
+      it { is_expected.not_to permit_action(:destroy) }
+    end
   end
 
   context 'for an mi' do

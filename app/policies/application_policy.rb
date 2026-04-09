@@ -21,7 +21,7 @@ class ApplicationPolicy < BasePolicy
   end
 
   def destroy?
-    admin?
+    admin? && record.digital?
   end
 
   def approve?
