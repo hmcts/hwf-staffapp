@@ -159,6 +159,49 @@ RSpec.describe ProcessedApplicationsController do
     it_behaves_like 'renders correctly and assigns required variables'
   end
 
+  describe 'DELETE #destroy' do
+    context 'when the user is an admin' do
+      let(:admin) { create(:admin_user) }
+
+      before do
+        sign_in admin
+        allow(Application).to receive(:find).with(application1.id.to_s).and_return(application1)
+      end
+
+      it 'permanently destroys the application' do
+        allow(application1).to receive(:really_destroy!)
+        delete :destroy, params: { id: application1.id }
+        expect(application1).to have_received(:really_destroy!)
+      end
+
+      it 'redirects to the home page' do
+        allow(application1).to receive(:really_destroy!)
+        delete :destroy, params: { id: application1.id }
+        expect(response).to redirect_to(root_path)
+      end
+
+      it 'sets a flash notice' do
+        allow(application1).to receive(:really_destroy!)
+        delete :destroy, params: { id: application1.id }
+        expect(flash[:notice]).to eq('The application has been deleted')
+      end
+    end
+
+    context 'when the user is not an admin' do
+      before do
+        delete :destroy, params: { id: application1.id }
+      end
+
+      it 'redirects to root' do
+        expect(response).to redirect_to(root_path)
+      end
+
+      it 'sets an unauthorized flash alert' do
+        expect(flash[:alert]).to eq(I18n.t('unauthorized.flash'))
+      end
+    end
+  end
+
   describe 'PUT #update' do
     let(:expected_params) { { deleted_reason: 'REASON' } }
     let(:resolver) { instance_double(ResolverService, delete: true) }

@@ -8,7 +8,7 @@ window.moj.Modules.PermanentDelete = {
   bindEvents: function() {
     var self = this;
 
-    $('.permanent-delete-trigger').on('click', function(e) {
+    $('.permanent-delete-trigger button').on('click', function(e) {
       e.preventDefault();
       self.showConfirmation();
     });

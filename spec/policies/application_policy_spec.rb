@@ -11,6 +11,7 @@ RSpec.describe ApplicationPolicy, type: :policy do
 
     it { is_expected.to permit_action(:index) }
     it { is_expected.to permit_action(:new) }
+    it { is_expected.not_to permit_action(:destroy) }
 
     context 'when the application belongs to their office' do
       let(:user) { build_stubbed(:user, office: office) }
@@ -36,6 +37,7 @@ RSpec.describe ApplicationPolicy, type: :policy do
 
     it { is_expected.to permit_action(:index) }
     it { is_expected.to permit_action(:new) }
+    it { is_expected.not_to permit_action(:destroy) }
 
     context 'when the application belongs to their office' do
       let(:user) { build_stubbed(:manager, office: office) }
@@ -63,6 +65,7 @@ RSpec.describe ApplicationPolicy, type: :policy do
     it { is_expected.not_to permit_action(:create) }
     it { is_expected.to permit_action(:show) }
     it { is_expected.not_to permit_action(:update) }
+    it { is_expected.to permit_action(:destroy) }
   end
 
   context 'for an mi' do
@@ -73,6 +76,7 @@ RSpec.describe ApplicationPolicy, type: :policy do
     it { is_expected.not_to permit_action(:index) }
     it { is_expected.not_to permit_action(:show) }
     it { is_expected.not_to permit_action(:update) }
+    it { is_expected.not_to permit_action(:destroy) }
   end
 
   context 'for a reader' do
@@ -83,6 +87,7 @@ RSpec.describe ApplicationPolicy, type: :policy do
     it { is_expected.to permit_action(:index) }
     it { is_expected.not_to permit_action(:show) }
     it { is_expected.not_to permit_action(:update) }
+    it { is_expected.not_to permit_action(:destroy) }
 
     context 'when the application does not belong to their office' do
       let(:user) { build_stubbed(:reader, office: office) }

@@ -20,6 +20,10 @@ class ApplicationPolicy < BasePolicy
     staff_or_manager? && same_office?
   end
 
+  def destroy?
+    admin?
+  end
+
   def approve?
     staff_or_manager? && same_office?
   end
