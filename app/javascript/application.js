@@ -26,6 +26,7 @@ import './gtm_track_timestamps'
 import './error_class_loader'
 import './refund'
 import './date_received_online'
+import './permanent_delete'
 
 import "trix"
 import "@rails/actiontext"

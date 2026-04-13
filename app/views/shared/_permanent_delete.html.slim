@@ -1,0 +1,18 @@
+.permanent-delete-trigger
+  .govuk-button-group
+    button.govuk-button.govuk-button--warning(type="button" data-module="govuk-button")
+      | Delete application for reprocessing
+
+.permanent-delete-confirmation(style="display: none;")
+  .govuk-warning-text
+    span.govuk-warning-text__icon aria-hidden="true" !
+    strong.govuk-warning-text__text
+      span.govuk-visually-hidden Warning
+      | Are you sure you want to delete "#{@application.reference}"?
+
+  = form_tag processed_application_path(@application), method: :delete do
+    .govuk-button-group
+      button.govuk-button.govuk-button--warning(type="submit" data-module="govuk-button")
+        | Yes - delete application
+      button.govuk-button.govuk-button--secondary.permanent-delete-cancel(type="button" data-module="govuk-button")
+        | No - keep application
