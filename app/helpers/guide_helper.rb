@@ -9,7 +9,7 @@ module GuideHelper
   end
 
   def key_control_checks_url
-    'https://justiceuk.sharepoint.com/:w:/r/sites/knowledgecentral/_layouts/15/Doc.aspx?sourcedoc=%7BF13EB074-F2F7-4349-BC0A-BA191503BBE9%7D&file=Key%20Control%20Checks%20for%20Managers_word%20version.docx&action=default&mobileredirect=true'
+    'https://justiceuk.sharepoint.com/:w:/r/sites/knowledgecentral/_layouts/15/Doc.aspx?sourcedoc=%7B54EFC47F-AA97-440D-8FE8-825A3F1C9E76%7D&file=Help%20with%20fees%20KCCS%20(V6%20April%202026).docx&action=default&mobileredirect=true'
   end
 
   def staff_guidance_url

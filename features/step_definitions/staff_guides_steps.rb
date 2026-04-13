@@ -15,7 +15,7 @@ Then("I can view the training course") do
 end
 
 When("I can view key control checks guide") do
-  expect(guide_page.content.key_control_checks['href']).to include 'sourcedoc=%7BF13EB074-F2F7-4349-BC0A-BA191503BBE9%7D'
+  expect(guide_page.content.key_control_checks['href']).to include 'sourcedoc=%7B54EFC47F-AA97-440D-8FE8-825A3F1C9E76%7D'
 end
 
 When("I can view staff guidance") do

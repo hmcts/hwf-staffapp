@@ -11,7 +11,7 @@ RSpec.describe GuideHelper do
   end
 
   describe '#key_control_checks_url' do
-    it { expect(helper.key_control_checks_url).to include('sourcedoc=%7BF13EB074-F2F7-4349-BC0A-BA191503BBE9%7D') }
+    it { expect(helper.key_control_checks_url).to include('sourcedoc=%7B54EFC47F-AA97-440D-8FE8-825A3F1C9E76%7D') }
   end
 
   describe '#staff_guidance_url' do
