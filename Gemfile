@@ -57,7 +57,7 @@ gem 'sdoc', '>= 2', group: :doc
 gem 'logstasher', '~> 3.0'
 gem 'slim-rails'
 
-gem 'puma', '~> 7.0', '>= 7.0.1'
+gem 'puma'
 
 gem 'will_paginate'
 
