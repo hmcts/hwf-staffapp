@@ -61,5 +61,6 @@ storage/*
 
 /node_modules
 
+# Ignore AI generated files
 CLAUDE.md
 .claude/**
