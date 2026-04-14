@@ -64,8 +64,9 @@ withPipeline(type, product, component) {
 
       before('test') {
         sh script:"""
-            corepack enable
-          yarn install
+            corepack enable --install-directory ~/.local/bin
+            export PATH=~/.local/bin:\$PATH
+            yarn install
             docker inspect hmctsprod.azurecr.io/imported/postgres:16-alpine > /dev/null 2>&1 || docker pull hmctsprod.azurecr.io/imported/postgres:16-alpine
             docker stop hwf-test-postgres && docker rm hwf-test-postgres || echo 'Ignoring failure in stopping old postgres'
             docker run --rm --name hwf-test-postgres --publish 5421:5432 -e POSTGRES_PASSWORD=postgres -d hmctsprod.azurecr.io/imported/postgres:16-alpine
