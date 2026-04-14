@@ -46,7 +46,8 @@ RUN bundle install
 ENV PHUSION=true
 
 COPY . /home/app
-RUN yarn install
+ENV COREPACK_HOME=/home/app/.corepack
+RUN corepack install && yarn install
 
 CMD ["sh", "-c", "bundle exec rake assets:precompile RAILS_ENV=production SECRET_TOKEN=blah && \
      bundle exec rake static_pages:generate RAILS_ENV=production SECRET_TOKEN=blah && \
