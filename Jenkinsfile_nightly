@@ -64,6 +64,7 @@ withNightlyPipeline(type, product, component) {
 
     before('test') {
       sh script:"""
+          corepack enable
           yarn install
           docker inspect hmctsprod.azurecr.io/imported/postgres:16-alpine > /dev/null 2>&1 || docker pull hmctsprod.azurecr.io/imported/postgres:16-alpine
           docker stop hwf-test-postgres && docker rm hwf-test-postgres || echo 'Ignoring failure in stopping old postgres'
