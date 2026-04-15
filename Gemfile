@@ -27,8 +27,8 @@ gem 'azure-blob', '~> 0.8.0'
 gem 'hwf_hmrc_api', github: 'hmcts/hwf_hmrc_api', tag: 'v0.3.2'
 
 # DWP API
-gem 'hwf-dwp-api', path: '/Users/petrzaparka/projects/moj/hwf/hwf-dwp-api-gem'
-# gem 'hwf-dwp-api', github: 'hmcts/hwf-dwp-api', tag: '0.1.1'
+# gem 'hwf-dwp-api', path: '/Users/petrzaparka/projects/moj/hwf/hwf-dwp-api-gem'
+gem 'hwf-dwp-api', github: 'hmcts/hwf-dwp-api', tag: '0.1.1'
 
 # configuration
 gem 'config'
