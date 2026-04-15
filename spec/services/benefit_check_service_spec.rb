@@ -94,6 +94,31 @@ describe BenefitCheckService do
 
   end
 
+  context 'when dwp_api_enabled is true' do
+    let(:user) { create(:user) }
+    let(:check) { create(:benefit_check, user_id: user.id, date_of_birth: '19800101', ni_number: 'AB123456C', last_name: 'LAST_NAME') }
+    let(:dwp_client) { instance_double(BenefitCheckers::DwpApiClient) }
+
+    before do
+      allow(Settings.dwp_mock).to receive(:fake_api_enabled).and_return(false)
+      allow(Settings).to receive(:dwp_api_enabled).and_return(true)
+      allow(BenefitCheckers::DwpApiClient).to receive(:new).and_return(dwp_client)
+      allow(dwp_client).to receive(:check).and_return(
+        { 'benefit_checker_status' => 'Yes', 'confirmation_ref' => 'guid-123' }.with_indifferent_access
+      )
+    end
+
+    it 'uses the DwpApiClient' do
+      service = described_class.new(check)
+      expect(service.instance_variable_get(:@client)).to eq(dwp_client)
+    end
+
+    it 'sets the dwp_result from the API response' do
+      described_class.new(check)
+      expect(check.dwp_result).to eq('Yes')
+    end
+  end
+
   context 'called with invalid params' do
     let(:user) { create(:user) }
     let(:check) { create(:benefit_check, user_id: user.id, date_of_birth: '19800101', ni_number: ni_number, last_name: 'LAST_NAME') }
