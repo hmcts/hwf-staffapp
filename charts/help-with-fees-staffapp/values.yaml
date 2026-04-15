@@ -40,6 +40,8 @@ base:
     NEW_LEGISLATION_ACTIVE_DATE: '27-10-2023'
     AZURE_STORAGE_CONTAINER: 'private'
     AZURE_STORAGE_ACCOUNT: 'helpwithfeessademo'
+    DWP_CONTEXT: 'hmcts-hwf'
+    DWP_POLICY_ID: 'hwf-policy'
   keyVaults:
     help-with-fees:
       secrets:
@@ -89,3 +91,13 @@ base:
           alias: AZURE_STORAGE_ACCESS_KEY
         - name: test-loading-env-v1
           alias: TEST_ENV_ID
+        - name: dwp-client-cert
+          alias: DWP_CLIENT_CERT
+        - name: dwp-client-key
+          alias: DWP_CLIENT_KEY
+        - name: dwp-ca-bundle
+          alias: DWP_CA_BUNDLE
+        - name: dwp-client-id
+          alias: DWP_CLIENT_ID
+        - name: dwp-client-secret
+          alias: DWP_CLIENT_SECRET
