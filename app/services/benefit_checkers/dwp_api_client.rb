@@ -3,7 +3,8 @@ module BenefitCheckers
     include DwpApiParamFormatter
     include DwpApiErrorHandler
 
-    # TODO - store the auth token in a cache and reuse until it expires, instead of requesting a new one for every check
+    # TODO: - store the auth token in a cache and reuse until it expires,
+    # instead of requesting a new one for every check
 
     def initialize(benefit_check = nil)
       @benefit_check = benefit_check
