@@ -7,10 +7,10 @@ GIT
 
 GIT
   remote: https://github.com/hmcts/hwf-dwp-api.git
-  revision: 40f7c3e3a4549edb9465538aa393ef3373caf589
-  tag: 0.1.1
+  revision: da74281947c2dd084cf7b422ab5a0a12c46ce737
+  tag: 0.2.1
   specs:
-    hwf-dwp-api (0.1.1)
+    hwf-dwp-api (0.2.1)
       httparty (~> 0.24.0)
 
 GIT

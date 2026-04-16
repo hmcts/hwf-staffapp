@@ -3,11 +3,13 @@ module BenefitCheckers
     include DwpApiParamFormatter
     include DwpApiErrorHandler
 
-    CACHE_KEY = 'dwp_api_oauth_token'.freeze
-
     def initialize(benefit_check = nil)
       @benefit_check = benefit_check
       connect!
+    end
+
+    def self.clear_token_cache
+      @cached_token = nil
     end
 
     def check(params)
@@ -30,7 +32,7 @@ module BenefitCheckers
     end
 
     def cached_token_attributes
-      cached = Rails.cache.read(CACHE_KEY)
+      cached = self.class.instance_variable_get(:@cached_token)
       return {} unless cached
 
       { access_token: cached[:access_token], expires_in: cached[:expires_in] }
@@ -38,8 +40,8 @@ module BenefitCheckers
 
     def cache_token
       auth = @connection.authentication
-      Rails.cache.write(
-        CACHE_KEY,
+      self.class.instance_variable_set(
+        :@cached_token,
         access_token: auth.access_token,
         expires_in: auth.expires_in
       )
