@@ -1,7 +1,8 @@
 require 'rails_helper'
 
 RSpec.describe BenefitCheckers::DwpApiClient, type: :service do
-  let(:connection) { instance_double(HwfDwpApi::Connection) }
+  let(:authentication) { instance_double(HwfDwpApi::Authentication, access_token: 'cached-token', expires_in: 1.hour.from_now) }
+  let(:connection) { instance_double(HwfDwpApi::Connection, authentication: authentication) }
   let(:params) do
     {
       id: 'petr@260326103618.503',
@@ -458,6 +459,48 @@ RSpec.describe BenefitCheckers::DwpApiClient, type: :service do
       it 'does not store any DwpApiCall records' do
         expect { client.check(params) }.not_to change(DwpApiCall, :count)
       end
+    end
+  end
+
+  describe 'token caching' do
+    subject(:client) { described_class.new }
+
+    let(:citizen_guid) { 'abc-123-guid' }
+    let(:match_response) { { 'data' => { 'id' => citizen_guid } } }
+    let(:claims_response) do
+      { 'data' => [{ 'attributes' => { 'status' => 'in_payment' } }] }
+    end
+    let(:memory_store) { ActiveSupport::Cache::MemoryStore.new }
+
+    before do
+      allow(Rails).to receive(:cache).and_return(memory_store)
+      allow(connection).to receive_messages(match_citizen: match_response, get_claims: claims_response)
+    end
+
+    it 'caches the token after connecting' do
+      client.check(params)
+      cached = Rails.cache.read(described_class::CACHE_KEY)
+      expect(cached[:access_token]).to eq('cached-token')
+      expect(cached[:expires_in]).to be_a(Time)
+    end
+
+    it 'passes cached token to HwfDwpApi on subsequent calls' do
+      Rails.cache.write(
+        described_class::CACHE_KEY,
+        access_token: 'previously-cached-token',
+        expires_in: 1.hour.from_now
+      )
+
+      client.check(params)
+      expect(HwfDwpApi).to have_received(:new).with(
+        hash_including(access_token: 'previously-cached-token')
+      )
+    end
+
+    it 'passes empty hash when no cached token exists' do
+      Rails.cache.delete(described_class::CACHE_KEY)
+      client.check(params)
+      expect(HwfDwpApi).to have_received(:new).with({})
     end
   end
 end
