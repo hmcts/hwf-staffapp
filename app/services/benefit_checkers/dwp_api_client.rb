@@ -7,10 +7,10 @@ module BenefitCheckers
 
     def initialize(benefit_check = nil)
       @benefit_check = benefit_check
+      connect!
     end
 
     def check(params)
-      connect!
       response = dwp_api_match(params)
 
       if guid_present?(response)
