@@ -470,36 +470,38 @@ RSpec.describe BenefitCheckers::DwpApiClient, type: :service do
     let(:claims_response) do
       { 'data' => [{ 'attributes' => { 'status' => 'in_payment' } }] }
     end
-    let(:memory_store) { ActiveSupport::Cache::MemoryStore.new }
 
     before do
-      allow(Rails).to receive(:cache).and_return(memory_store)
+      described_class.clear_token_cache
       allow(connection).to receive_messages(match_citizen: match_response, get_claims: claims_response)
     end
 
+    after do
+      described_class.clear_token_cache
+    end
+
     it 'caches the token after connecting' do
-      client.check(params)
-      cached = Rails.cache.read(described_class::CACHE_KEY)
+      client
+      cached = described_class.instance_variable_get(:@cached_token)
       expect(cached[:access_token]).to eq('cached-token')
       expect(cached[:expires_in]).to be_a(Time)
     end
 
     it 'passes cached token to HwfDwpApi on subsequent calls' do
-      Rails.cache.write(
-        described_class::CACHE_KEY,
+      described_class.instance_variable_set(
+        :@cached_token,
         access_token: 'previously-cached-token',
         expires_in: 1.hour.from_now
       )
 
-      client.check(params)
+      client
       expect(HwfDwpApi).to have_received(:new).with(
         hash_including(access_token: 'previously-cached-token')
       )
     end
 
     it 'passes empty hash when no cached token exists' do
-      Rails.cache.delete(described_class::CACHE_KEY)
-      client.check(params)
+      client
       expect(HwfDwpApi).to have_received(:new).with({})
     end
   end
