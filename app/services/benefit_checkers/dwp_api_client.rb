@@ -3,8 +3,7 @@ module BenefitCheckers
     include DwpApiParamFormatter
     include DwpApiErrorHandler
 
-    # TODO: - store the auth token in a cache and reuse until it expires,
-    # instead of requesting a new one for every check
+    CACHE_KEY = 'dwp_api_oauth_token'.freeze
 
     def initialize(benefit_check = nil)
       @benefit_check = benefit_check
@@ -24,9 +23,26 @@ module BenefitCheckers
     private
 
     def connect!
-      @connection = ::HwfDwpApi.new
+      @connection = ::HwfDwpApi.new(cached_token_attributes)
+      cache_token
     rescue ::HwfDwpApiError => e
       raise_mapped_error(e)
+    end
+
+    def cached_token_attributes
+      cached = Rails.cache.read(CACHE_KEY)
+      return {} unless cached
+
+      { access_token: cached[:access_token], expires_in: cached[:expires_in] }
+    end
+
+    def cache_token
+      auth = @connection.authentication
+      Rails.cache.write(
+        CACHE_KEY,
+        access_token: auth.access_token,
+        expires_in: auth.expires_in
+      )
     end
 
     def dwp_api_match(params)
