@@ -47,6 +47,7 @@ ENV PHUSION=true
 
 COPY . /home/app
 ENV COREPACK_HOME=/home/app/.corepack
+ENV HOME=/home/app
 RUN corepack install && yarn install
 
 CMD ["sh", "-c", "bundle exec rake assets:precompile RAILS_ENV=production SECRET_TOKEN=blah && \
