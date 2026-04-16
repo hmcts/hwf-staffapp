@@ -25,7 +25,7 @@ RSpec.describe BenefitCheckers::DwpApiClient, type: :service do
   end
 
   describe '#initialize' do
-    it 'creates a client without connecting' do
+    it 'creates a client' do
       client = described_class.new
       expect(client).to be_a(described_class)
     end
@@ -36,9 +36,9 @@ RSpec.describe BenefitCheckers::DwpApiClient, type: :service do
       expect(client).to be_a(described_class)
     end
 
-    it 'does not connect to the DWP API' do
+    it 'connects to the DWP API' do
       described_class.new
-      expect(HwfDwpApi).not_to have_received(:new)
+      expect(HwfDwpApi).to have_received(:new)
     end
   end
 
