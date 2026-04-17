@@ -67,7 +67,7 @@ withPipeline(type, product, component) {
             mkdir -p ~/.local/bin
             corepack enable --install-directory ~/.local/bin
             export PATH=~/.local/bin:\$PATH
-            az acr login --name hmctsprod --subscription DCD-CNP-PROD
+            env AZURE_CONFIG_DIR=/opt/jenkins/.azure-nonprod az acr login --name hmctsprod --subscription DCD-CNP-PROD
             yarn install
             docker inspect hmctsprod.azurecr.io/imported/postgres:16-alpine > /dev/null 2>&1 || docker pull hmctsprod.azurecr.io/imported/postgres:16-alpine
             docker stop hwf-test-postgres && docker rm hwf-test-postgres || echo 'Ignoring failure in stopping old postgres'
