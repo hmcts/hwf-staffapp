@@ -36,7 +36,7 @@ base:
     NOTIFY_DWP_DOWN_TEMPLATE_ID: "22025e7a-1bdd-450b-bb8f-a35f7493bd7c"
     NOTIFY_USER_INVITE_TEMPLATE_ID: "9e7bb557-8512-4913-9f91-f181487f4fe3"
     NOTIFY_RAW_DATA_READY_TEMPLATE_ID: "9025a651-90ac-4d31-8448-0b295f02a81a"
-    TRIGGER: Base-1
+    TRIGGER: Base-2
     NEW_LEGISLATION_ACTIVE_DATE: '27-10-2023'
     AZURE_STORAGE_CONTAINER: 'private'
     AZURE_STORAGE_ACCOUNT: 'helpwithfeessademo'
@@ -89,3 +89,13 @@ base:
           alias: AZURE_STORAGE_ACCESS_KEY
         - name: test-loading-env-v1
           alias: TEST_ENV_ID
+        - name: dwp-client-cert
+          alias: DWP_CLIENT_CERT
+        - name: dwp-client-key
+          alias: DWP_CLIENT_KEY
+        - name: dwp-ca-bundle
+          alias: DWP_CA_BUNDLE
+        - name: dwp-client-id
+          alias: DWP_CLIENT_ID
+        - name: dwp-client-secret
+          alias: DWP_CLIENT_SECRET
