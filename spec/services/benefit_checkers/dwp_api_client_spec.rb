@@ -505,4 +505,61 @@ RSpec.describe BenefitCheckers::DwpApiClient, type: :service do
       expect(HwfDwpApi).to have_received(:new).with({})
     end
   end
+
+  describe 'applicant extras' do
+    let(:citizen_guid) { 'abc-123-guid' }
+    let(:match_response) { { 'data' => { 'id' => citizen_guid } } }
+    let(:claims_response) do
+      { 'data' => [{ 'attributes' => { 'status' => 'in_payment' } }] }
+    end
+
+    before do
+      allow(connection).to receive_messages(match_citizen: match_response, get_claims: claims_response)
+    end
+
+    context 'when benefit_check has an application with applicant' do
+      let(:application) { create(:application_full_remission) }
+      let(:benefit_check) { create(:benefit_check, applicationable: application) }
+
+      subject(:client) { described_class.new(benefit_check) }
+
+      it 'includes first_name in match_citizen params' do
+        client.check(params)
+        expect(connection).to have_received(:match_citizen).with(
+          hash_including(first_name: application.applicant.first_name)
+        )
+      end
+    end
+
+    context 'when benefit_check has an online application with postcode' do
+      let(:online_application) { create(:online_application) }
+      let(:application) { create(:application_full_remission, online_application: online_application) }
+      let(:benefit_check) { create(:benefit_check, applicationable: application) }
+
+      subject(:client) { described_class.new(benefit_check) }
+
+      it 'includes postcode in match_citizen params' do
+        client.check(params)
+        expect(connection).to have_received(:match_citizen).with(
+          hash_including(postcode: online_application.postcode)
+        )
+      end
+    end
+
+    context 'when applicant has no first_name and no online_application' do
+      let(:application) { create(:application_full_remission) }
+      let(:benefit_check) { create(:benefit_check, applicationable: application) }
+
+      subject(:client) { described_class.new(benefit_check) }
+
+      before do
+        application.applicant.update(first_name: nil)
+      end
+
+      it 'does not include first_name or postcode' do
+        client.check(params)
+        expect(connection).to have_received(:match_citizen).with(expected_citizen_params)
+      end
+    end
+  end
 end

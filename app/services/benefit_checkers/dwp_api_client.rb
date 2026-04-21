@@ -48,7 +48,7 @@ module BenefitCheckers
     end
 
     def dwp_api_match(params)
-      transformed = citizen_params(params)
+      transformed = citizen_params(params).merge(applicant_extras)
       response = @connection.match_citizen(transformed)
       store_api_call('match_citizen', transformed, response)
       response
@@ -96,6 +96,16 @@ module BenefitCheckers
         'benefit_checker_status' => 'No',
         'confirmation_ref' => @guid
       }.with_indifferent_access
+    end
+
+    def applicant_extras
+      application = @benefit_check&.applicationable
+      return {} unless application
+
+      {
+        first_name: application.applicant&.first_name,
+        postcode: application.online_application&.postcode
+      }.compact_blank
     end
 
     def store_api_call(endpoint_name, request_params, response_data)
