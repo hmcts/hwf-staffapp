@@ -40,6 +40,8 @@ module PaperEvidenceHelper
       'no_record'
     when 'server unavailable', 'unspecified error', 'badrequest', 'technical fault'
       'technical_error'
+    when 'rate limited'
+      'rate_limit_error'
     end
   end
 end

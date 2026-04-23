@@ -274,6 +274,22 @@ RSpec.describe BenefitCheckers::DwpApiClient, type: :service do
       end
     end
 
+    context 'when match_citizen raises a rate_limited error' do
+      let(:rate_limit_message) do
+        { 'errors' => [{ 'status' => '429', 'detail' => 'API rate limit exceeded' }] }.to_json
+      end
+
+      before do
+        allow(connection).to receive(:match_citizen).and_raise(
+          HwfDwpApiError.new(rate_limit_message, :rate_limited)
+        )
+      end
+
+      it 'raises DwpRateLimitError' do
+        expect { client.check(params) }.to raise_error(Exceptions::DwpRateLimitError)
+      end
+    end
+
     context 'when claims data is empty' do
       let(:empty_claims_response) { { 'data' => [] } }
 
