@@ -36,6 +36,11 @@ RSpec.describe BenefitCheckers::DwpApiErrorHandler do
       expect { handler.raise_mapped_error(error) }.to raise_error(BenefitCheckers::BadRequestError)
     end
 
+    it 'raises DwpRateLimitError for rate_limited' do
+      error = HwfDwpApiError.new('API rate limit exceeded', :rate_limited)
+      expect { handler.raise_mapped_error(error) }.to raise_error(Exceptions::DwpRateLimitError, 'API rate limit exceeded')
+    end
+
     it 'raises StandardError for unknown error types' do
       error = HwfDwpApiError.new('Unknown', :something_else)
       expect { handler.raise_mapped_error(error) }.to raise_error(StandardError, 'Unknown')

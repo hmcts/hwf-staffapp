@@ -153,4 +153,30 @@ describe BenefitCheckService do
       end
     end
   end
+
+  context 'when the DWP API client raises a rate limit error' do
+    let(:user) { create(:user) }
+    let(:check) { create(:benefit_check, user_id: user.id, date_of_birth: '19800101', ni_number: 'AB123456C', last_name: 'LAST_NAME') }
+    let(:dwp_client) { instance_double(BenefitCheckers::DwpApiClient) }
+
+    before do
+      allow(Settings.dwp_mock).to receive(:fake_api_enabled).and_return(false)
+      allow(Settings).to receive(:dwp_api_enabled).and_return(true)
+      allow(BenefitCheckers::DwpApiClient).to receive(:new).and_return(dwp_client)
+      allow(dwp_client).to receive(:check).and_raise(Exceptions::DwpRateLimitError, 'API rate limit exceeded')
+      described_class.new(check)
+    end
+
+    it 'records the dwp_result as Rate limited' do
+      expect(check.dwp_result).to eq('Rate limited')
+    end
+
+    it 'saves the rate limited user message' do
+      expect(check.error_message).to eq(I18n.t('error_messages.benefit_checker.rate_limited'))
+    end
+
+    it 'marks benefits as invalid' do
+      expect(check.benefits_valid).to be false
+    end
+  end
 end
