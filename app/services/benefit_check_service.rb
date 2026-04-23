@@ -35,12 +35,16 @@ class BenefitCheckService
     query_proxy_api
   rescue BenefitCheckers::BadRequestError => e
     log_error JSON.parse(e.message)['error'], 'BadRequest'
-  rescue Exceptions::TechnicalFaultDwpCheck
-    log_error I18n.t('error_messages.benefit_checker.unavailable'), 'Technical fault'
-  rescue Errno::ECONNREFUSED
-    log_error I18n.t('error_messages.benefit_checker.unavailable'), 'Server unavailable'
+  rescue Exceptions::TechnicalFaultDwpCheck, Errno::ECONNREFUSED => e
+    log_error I18n.t('error_messages.benefit_checker.unavailable'), unavailable_result(e)
+  rescue Exceptions::DwpRateLimitError
+    log_error I18n.t('error_messages.benefit_checker.rate_limited'), 'Rate limited'
   rescue StandardError => e
     log_error(e.message, 'Unspecified error')
+  end
+
+  def unavailable_result(error)
+    error.is_a?(Errno::ECONNREFUSED) ? 'Server unavailable' : 'Technical fault'
   end
 
   def query_proxy_api

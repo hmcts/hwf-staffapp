@@ -67,6 +67,11 @@ RSpec.describe PaperEvidenceHelper do
           let(:dwp_result) { 'technical fault' }
           it { expect(template).to eql('technical_error') }
         end
+
+        context 'Rate limited' do
+          let(:dwp_result) { 'rate limited' }
+          it { expect(template).to eql('rate_limit_error') }
+        end
       end
 
       context 'discretion granted' do
