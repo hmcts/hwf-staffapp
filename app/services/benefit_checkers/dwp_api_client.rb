@@ -3,6 +3,10 @@ module BenefitCheckers
     include DwpApiParamFormatter
     include DwpApiErrorHandler
 
+    ON_BENEFITS_STATUSES = ['active', 'in_payment', 'ongoing_award'].freeze
+
+    attr_reader :connection
+
     def initialize(benefit_check = nil)
       @benefit_check = benefit_check
       connect!
@@ -81,7 +85,7 @@ module BenefitCheckers
 
     def user_on_benefits?(claims)
       status = claims&.dig('data', 0, 'attributes', 'status')
-      status == 'in_payment'
+      ON_BENEFITS_STATUSES.include?(status)
     end
 
     def on_benefits_response

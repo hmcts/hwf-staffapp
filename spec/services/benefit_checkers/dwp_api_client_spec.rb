@@ -115,6 +115,33 @@ RSpec.describe BenefitCheckers::DwpApiClient, type: :service do
       end
     end
 
+    context 'with other on-benefits statuses' do
+      let(:claims_response) do
+        { 'data' => [{ 'id' => 'claim_0', 'type' => 'Claim', 'attributes' => { 'guid' => citizen_guid, 'status' => status } }] }
+      end
+
+      before do
+        allow(connection).to receive(:match_citizen).with(expected_citizen_params).and_return(match_response)
+        allow(connection).to receive(:get_claims).with(citizen_guid).and_return(claims_response)
+      end
+
+      context 'when status is active' do
+        let(:status) { 'active' }
+
+        it 'returns Yes status' do
+          expect(client.check(params)['benefit_checker_status']).to eq('Yes')
+        end
+      end
+
+      context 'when status is ongoing_award' do
+        let(:status) { 'ongoing_award' }
+
+        it 'returns Yes status' do
+          expect(client.check(params)['benefit_checker_status']).to eq('Yes')
+        end
+      end
+    end
+
     context 'when citizen is matched but has no claims' do
       let(:not_found_error_message) do
         { 'errors' => [{ 'id' => 'some-id', 'status' => '404', 'title' => 'No Resource Found',
