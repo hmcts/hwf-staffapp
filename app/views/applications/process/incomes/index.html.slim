@@ -20,7 +20,7 @@
 
         .field-wrapper
           span.prefix £
-          = f.text_field :income, { value: @form.income ? @form.income.to_i : '', class: 'govuk-input', type: 'number' }
+          = f.text_field :income, { value: @form.income ? @form.income.to_i : '', class: 'govuk-input', inputmode: 'decimal', pattern: '[0-9]*\\.?[0-9]*' }
 
       .govuk-form-group
         - if @form.errors[:income_period].present?

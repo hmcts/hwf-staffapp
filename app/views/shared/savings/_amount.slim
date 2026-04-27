@@ -10,4 +10,4 @@
 
   .field-wrapper
     span.prefix £
-    = f.text_field :amount, { class: 'govuk-input', value: amount_value(@form.amount), type: 'number' }
+    = f.text_field :amount, { class: 'govuk-input', value: amount_value(@form.amount), inputmode: 'decimal', pattern: '[0-9]*\\.?[0-9]*' }
