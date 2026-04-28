@@ -16,6 +16,13 @@ class OnlineApplicationBenefitsController < OnlineApplicationsController
     end
   end
 
+  def retry
+    return head :forbidden unless Settings.dwp_retry_button_enabled
+
+    OnlineBenefitCheckRunner.new(online_application).run
+    redirect_to benefits_online_application_path(online_application)
+  end
+
   private
 
   def decide_redirection

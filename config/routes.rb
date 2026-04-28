@@ -39,6 +39,8 @@ Rails.application.routes.draw do
     get 'benefit_override/paper_evidence', to: 'benefit_overrides#paper_evidence'
     post 'benefit_override/paper_evidence_save', to: 'benefit_overrides#paper_evidence_save'
 
+    post 'benefit_check_retry', to: 'applications/process/benefits#retry'
+
     get 'income_result', to: 'applications/process#income_result', as: :income_result
     get ':type/confirmation', to: 'applications/process/confirmation#index', as: :confirmation,
                               defaults: { type: 'paper' }
@@ -73,6 +75,7 @@ Rails.application.routes.draw do
       put 'approve', to: 'online_applications#approve_save'
       get 'benefits', to: 'online_application_benefits#edit'
       put 'benefits', to: 'online_application_benefits#update'
+      post 'benefit_check_retry', to: 'online_application_benefits#retry'
     end
   end
 
