@@ -212,6 +212,7 @@ en-GB:
       technical_error: "This could be due to a system error and/or the applicant not being found from the details provided."
       no_record: "This could be due to a system error and/or the applicant not being found from the details provided."
       out_of_time: "Fees paid more than 3 months ago can’t be checked with the DWP. The applicant must provide paper evidence to show they were receiving eligible benefits on the date they paid."
+      rate_limit_error: "The benefits checker is temporarily busy. Please wait a minute and try again."
   shared:
     forms:
       approve:
@@ -309,6 +310,7 @@ en-GB:
     benefit_checker:
       unavailable: 'The benefits checker is not available at the moment. Please check again later.'
       undetermined: 'The details you’ve entered are incorrect, check and try again'
+      rate_limited: 'The benefits checker is temporarily busy. Please wait a minute and try again.'
     user:
       moved_offices: "%{user} moved to %{office}, you will need to contact %{contact} there if this was done in error"
     jurisdictions:

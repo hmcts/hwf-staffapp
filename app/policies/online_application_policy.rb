@@ -22,4 +22,8 @@ class OnlineApplicationPolicy < BasePolicy
   def approve_save?
     staff_or_manager?
   end
+
+  def retry?
+    staff_or_manager?
+  end
 end

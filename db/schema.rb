@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.1].define(version: 2025_11_20_104205) do
+ActiveRecord::Schema[8.1].define(version: 2026_03_26_141636) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
   enable_extension "pg_trgm"
@@ -217,6 +217,7 @@ ActiveRecord::Schema[8.1].define(version: 2025_11_20_104205) do
     t.integer "application_id", null: false
     t.string "calculation_scheme"
     t.string "case_number"
+    t.decimal "claim_amount"
     t.datetime "created_at", precision: nil, null: false
     t.date "date_fee_paid"
     t.date "date_of_death"
@@ -227,8 +228,10 @@ ActiveRecord::Schema[8.1].define(version: 2025_11_20_104205) do
     t.string "discretion_reason"
     t.string "emergency_reason"
     t.decimal "fee"
+    t.string "fee_code"
     t.string "fee_manager_firstname"
     t.string "fee_manager_lastname"
+    t.date "fee_version_valid_from"
     t.string "form_name"
     t.integer "jurisdiction_id"
     t.boolean "probate"
@@ -248,6 +251,17 @@ ActiveRecord::Schema[8.1].define(version: 2025_11_20_104205) do
     t.string "note"
     t.datetime "updated_at", null: false
     t.index ["notable_type", "notable_id"], name: "index_dev_notes_on_notable"
+  end
+
+  create_table "dwp_api_calls", force: :cascade do |t|
+    t.bigint "benefit_check_id", null: false
+    t.datetime "created_at", null: false
+    t.jsonb "data"
+    t.string "endpoint_name"
+    t.jsonb "request_params"
+    t.integer "response_status"
+    t.datetime "updated_at", null: false
+    t.index ["benefit_check_id"], name: "index_dwp_api_calls_on_benefit_check_id"
   end
 
   create_table "dwp_warnings", id: :serial, force: :cascade do |t|
@@ -567,6 +581,7 @@ ActiveRecord::Schema[8.1].define(version: 2025_11_20_104205) do
   add_foreign_key "decision_overrides", "users"
   add_foreign_key "details", "applications", on_update: :cascade
   add_foreign_key "details", "jurisdictions", on_update: :cascade
+  add_foreign_key "dwp_api_calls", "benefit_checks"
   add_foreign_key "evidence_checks", "applications", on_update: :cascade
   add_foreign_key "evidence_checks", "users", column: "completed_by_id", on_update: :cascade
   add_foreign_key "feedbacks", "offices", on_update: :cascade
