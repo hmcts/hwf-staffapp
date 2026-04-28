@@ -29,6 +29,40 @@ RSpec.describe OnlineApplicationBenefitsController do
     end
   end
 
+  describe 'POST #retry' do
+    let(:online_runner) { instance_double(OnlineBenefitCheckRunner, run: nil) }
+
+    before do
+      allow(OnlineBenefitCheckRunner).to receive(:new).with(online_application).and_return(online_runner)
+      allow(Settings).to receive(:dwp_retry_button_enabled).and_return(flag_enabled)
+      post :retry, params: { id: id }
+    end
+
+    context 'when the retry flag is enabled' do
+      let(:flag_enabled) { true }
+
+      it 'runs the online benefit check' do
+        expect(online_runner).to have_received(:run)
+      end
+
+      it 'redirects to the benefits edit page' do
+        expect(response).to redirect_to(benefits_online_application_path(online_application))
+      end
+    end
+
+    context 'when the retry flag is disabled' do
+      let(:flag_enabled) { false }
+
+      it 'does not run the benefit check' do
+        expect(online_runner).not_to have_received(:run)
+      end
+
+      it 'returns 403 forbidden' do
+        expect(response).to have_http_status(:forbidden)
+      end
+    end
+  end
+
   describe 'PUT #update' do
     let(:params) { { benefits_override: benefits_override.to_s, dwp_manual_decision: benefits_override.to_s } }
 
