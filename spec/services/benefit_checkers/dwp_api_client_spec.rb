@@ -589,6 +589,27 @@ RSpec.describe BenefitCheckers::DwpApiClient, type: :service do
       end
     end
 
+    context 'when applicationable is an OnlineApplication directly' do
+      let(:online_application) { create(:online_application) }
+      let(:benefit_check) { create(:benefit_check, applicationable: online_application) }
+
+      subject(:client) { described_class.new(benefit_check) }
+
+      it 'includes the online application postcode in match_citizen params' do
+        client.check(params)
+        expect(connection).to have_received(:match_citizen).with(
+          hash_including(postcode: online_application.postcode)
+        )
+      end
+
+      it 'includes the applicant first_name in match_citizen params' do
+        client.check(params)
+        expect(connection).to have_received(:match_citizen).with(
+          hash_including(first_name: online_application.first_name)
+        )
+      end
+    end
+
     context 'when applicant has no first_name and no online_application' do
       let(:application) { create(:application_full_remission) }
       let(:benefit_check) { create(:benefit_check, applicationable: application) }

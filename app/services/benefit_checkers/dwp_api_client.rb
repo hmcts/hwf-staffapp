@@ -108,8 +108,14 @@ module BenefitCheckers
 
       {
         first_name: application.applicant&.first_name,
-        postcode: application.online_application&.postcode
+        postcode: postcode_for(application)
       }.compact_blank
+    end
+
+    def postcode_for(application)
+      return application.postcode if application.is_a?(OnlineApplication)
+
+      application.online_application&.postcode
     end
 
     def store_api_call(endpoint_name, request_params, response_data)
