@@ -56,8 +56,8 @@ withPipeline(type, product, component) {
             set +x
             source /usr/local/rvm/scripts/rvm
             rvm get stable
-            rvm install ruby-4.0.2
-            rvm use ruby-4.0.2 --default
+            rvm install ruby-4.0.3
+            rvm use ruby-4.0.3 --default
         """, label: 'Ruby version install'
       }
 
