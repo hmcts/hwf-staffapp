@@ -2,7 +2,7 @@ source 'https://rubygems.org'
 
 git_source(:github) { |repo| "https://github.com/#{repo}.git" }
 
-ruby '4.0.2'
+ruby '4.0.3'
 
 gem 'application_insights', '~> 0.5.6'
 gem 'csv'

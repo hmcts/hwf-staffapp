@@ -112,7 +112,7 @@ GEM
     bcrypt (3.1.22)
     benchmark (0.5.0)
     bigdecimal (4.1.2)
-    bootsnap (1.24.0)
+    bootsnap (1.24.1)
       msgpack (~> 1.2)
     brakeman (8.0.4)
       racc
@@ -339,7 +339,7 @@ GEM
     net-smtp (0.5.1)
       net-protocol
     nio4r (2.7.5)
-    nokogiri (1.19.2)
+    nokogiri (1.19.3)
       mini_portile2 (~> 2.8.2)
       racc (~> 1.4)
     notifications-ruby-client (6.3.0)
@@ -688,7 +688,7 @@ DEPENDENCIES
   will_paginate
 
 RUBY VERSION
-  ruby 4.0.2
+  ruby 4.0.3
 
 BUNDLED WITH
-  4.0.3
+  4.0.10
