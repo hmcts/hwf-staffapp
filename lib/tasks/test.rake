@@ -13,8 +13,7 @@ end
 namespace :test do
   task smoke: :environment do
     ENV['RUN_SMOKE_TESTS'] = 'true'
-    if system "bundle exec cucumber -p smoke"
-    else
+    unless system "bundle exec cucumber -p smoke"
       raise "Smoke tests failed"
     end
   end
