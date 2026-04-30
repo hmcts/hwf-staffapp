@@ -120,11 +120,7 @@ GEM
     bcrypt (3.1.22)
     benchmark (0.5.0)
     bigdecimal (4.1.2)
-<<<<<<< HEAD
     bootsnap (1.24.1)
-=======
-    bootsnap (1.23.0)
->>>>>>> 62732e7a (Using main branch so  I don’t have to deploy every time the gem changes)
       msgpack (~> 1.2)
     brakeman (8.0.4)
       racc
