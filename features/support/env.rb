@@ -47,29 +47,32 @@ Capybara::Screenshot.prune_strategy = :keep_last_run
 
 After do |scenario|
   if scenario.failed?
-    add_screenshot
+    add_screenshot(scenario)
     add_browser_logs
   end
 end
 
-def add_screenshot
-  file_path = 'features/cucumber-report/screenshot.png'
+def add_screenshot(scenario)
+  slug = "#{Time.zone.now.strftime('%Y%m%d-%H%M%S')}-#{scenario.name.parameterize}"
+  dir = 'features/cucumber-report/failures'
+  FileUtils.mkdir_p(dir)
 
-  # Ensure directory exists
-  FileUtils.mkdir_p(File.dirname(file_path))
+  png_path = "#{dir}/#{slug}.png"
+  html_path = "#{dir}/#{slug}.html"
 
-  # Take screenshot based on driver type
   if page.driver.is_a?(Capybara::Cuprite::Driver)
-    page.driver.save_screenshot(file_path, full: true)
+    page.driver.save_screenshot(png_path)
   else
-    page.driver.browser.save_screenshot(file_path)
+    page.driver.browser.save_screenshot(png_path)
   end
 
-  if File.exist?(file_path)
-    image = File.open(file_path, 'rb', &:read)
-    encoded_image = Base64.encode64(image)
+  if File.exist?(png_path)
+    encoded_image = Base64.encode64(File.binread(png_path))
     attach(encoded_image, 'image/png;base64')
   end
+
+  File.write(html_path, page.html)
+  attach("URL at failure: #{Capybara.current_url}", 'text/plain')
 end
 
 def add_browser_logs
