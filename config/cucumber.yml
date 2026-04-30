@@ -10,4 +10,4 @@ wip: --tags @wip:3 --wip features
 rerun: <%= rerun_opts %> --format rerun --out rerun.txt --strict --tags 'not @wip'
 report: <%= std_opts %> <%= create_json_opts %> features
 parallel: --format progress --tags 'not @smoke and not @wip'
-smoke: --format pretty --strict --tags @smoke features
+smoke: --format pretty --format html --out features/cucumber-report/smoke.html --format json --out features/cucumber-report/smoke.json --strict --tags @smoke features
