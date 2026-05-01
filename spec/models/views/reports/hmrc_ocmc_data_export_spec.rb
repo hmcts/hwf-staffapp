@@ -719,4 +719,69 @@ RSpec.describe Views::Reports::HmrcOcmcDataExport do
     end
   end
 
+  describe 'online applications without a linked paper Application' do
+    context 'when date_received is filled in' do
+      before do
+        travel_to(date_from + 1.day) do
+          create(:online_application,
+                 reference: 'HWF-B82-KPQ',
+                 date_received: Date.parse('2021-01-02'))
+        end
+      end
+
+      let(:row) { CSV.parse(ocmc_export.to_csv, headers: true).find { |r| r['HwF reference number'] == 'HWF-B82-KPQ' } }
+
+      it 'appears in the report' do
+        expect(row).not_to be_nil
+      end
+
+      it 'shows the queried office name in the Office column' do
+        expect(row['Office']).to eq(office.name)
+      end
+
+      it 'sets Source to digital' do
+        expect(row['Source']).to eq('digital')
+      end
+
+      it "fills paper-only columns with 'N/A'" do
+        aggregate_failures do
+          expect(row['Application processed date']).to eq('N/A')
+          expect(row['EV check outcome']).to eq('N/A')
+          expect(row['HMRC total income']).to eq('N/A')
+          expect(row['Evidence check type']).to eq('N/A')
+        end
+      end
+    end
+
+    context 'when date_received is nil' do
+      before do
+        travel_to(date_from + 1.day) do
+          create(:online_application, reference: 'HWF-C13-LRS', date_received: nil)
+        end
+      end
+
+      it 'does not appear in the report' do
+        references = CSV.parse(ocmc_export.to_csv, headers: true)['HwF reference number']
+        expect(references).not_to include('HWF-C13-LRS')
+      end
+    end
+  end
+
+  describe 'online application that has been linked to a paper Application' do
+    let(:linked_online) { create(:online_application, reference: 'HWF-D24-MTU', date_received: Date.parse('2021-01-02')) }
+
+    before do
+      travel_to(date_from + 1.day) do
+        create(:application, :processed_state,
+               office: office,
+               online_application: linked_online,
+               reference: 'HWF-D24-MTU')
+      end
+    end
+
+    it 'appears exactly once (via the paper Application, not the online one)' do
+      references = CSV.parse(ocmc_export.to_csv, headers: true)['HwF reference number']
+      expect(references.count('HWF-D24-MTU')).to eq(1)
+    end
+  end
 end

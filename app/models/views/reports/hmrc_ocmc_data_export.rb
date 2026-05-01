@@ -38,8 +38,16 @@ module Views
 
       private
 
-      # rubocop:disable Metrics/MethodLength
       def sql_query
+        "(#{paper_applications_select}) UNION ALL (#{online_only_select}) ORDER BY \"Created at\" DESC;"
+      end
+
+      def queried_office_name
+        Office.find(@office_id).name.gsub("'", "''")
+      end
+
+      # rubocop:disable Metrics/MethodLength
+      def paper_applications_select
         "SELECT
         offices.name AS \"Office\",
         applications.id AS \"Id\",
@@ -184,10 +192,86 @@ module Views
         AND (row_number = 1 OR row_number IS NULL)
         AND (applications.state != 0
           OR (applications.state = 0 AND details.date_received IS NOT NULL AND details.refund IS NOT NULL))
-        ORDER BY applications.created_at DESC;"
+        ORDER BY applications.created_at DESC"
       end
+      # rubocop:enable Metrics/MethodLength
 
-      # rubocop:disable Metrics/AbcSize
+      # rubocop:disable Metrics/MethodLength
+      def online_only_select
+        "SELECT
+        '#{queried_office_name}' AS \"Office\",
+        online_applications.id AS \"Id\",
+        NULL AS \"Status\",
+        online_applications.reference AS \"HwF reference number\",
+        online_applications.created_at AS \"Created at\",
+        online_applications.fee AS \"Fee\",
+        jurisdictions.name AS \"Jurisdiction\",
+        NULL AS \"Application type\",
+        online_applications.form_name AS \"Form\",
+        online_applications.refund AS \"Refund\",
+        CASE WHEN online_applications.emergency_reason IS NULL THEN false ELSE true END AS \"Emergency\",
+        NULL AS \"Applicant pays estimate\",
+        online_applications.income AS \"Pre evidence income\",
+        NULL AS \"Post evidence income\",
+        CASE WHEN online_applications.income < 101 THEN 'true' ELSE 'false' END AS \"Low income declared\",
+        NULL AS \"Decision date\",
+        online_applications.income_period AS \"Income period\",
+        online_applications.children AS \"Children\",
+        online_applications.children_age_band AS \"Age band under 14\",
+        online_applications.children_age_band AS \"Age band 14+\",
+        NULL AS \"Applicant pays\",
+        NULL AS \"Departmental cost estimate\",
+        NULL AS \"Departmental cost\",
+        'digital' AS \"Source\",
+        NULL AS \"Granted?\",
+        NULL AS \"Benefits granted?\",
+        'no' AS \"Evidence checked?\",
+        NULL AS \"Capital band\",
+        online_applications.amount AS \"Saving and Investments\",
+        online_applications.case_number AS \"Case number\",
+        online_applications.date_received AS \"Date received\",
+        online_applications.created_at AS \"Date submitted online\",
+        CASE WHEN online_applications.married = TRUE THEN 'yes' ELSE 'no' END AS \"Married\",
+        NULL AS \"Pension age\",
+        NULL AS \"Decision\",
+        NULL AS \"Failed on savings\",
+        NULL AS \"Application processed date\",
+        NULL AS \"Manual evidence processed date\",
+        NULL AS \"Processed date\",
+        NULL AS \"EV check outcome\",
+        NULL AS \"PP outcome\",
+        online_applications.income_kind AS \"Declared income sources\",
+        NULL AS \"DB evidence check type\",
+        NULL AS \"DB income check type\",
+        NULL AS \"HMRC total income\",
+        NULL AS \"Evidence check type\",
+        NULL AS \"HMRC response?\",
+        NULL AS \"HMRC errors\",
+        NULL AS \"Complete processing?\",
+        NULL AS \"Additional income\",
+        online_applications.income AS \"Income processed\",
+        NULL AS \"HMRC request date range\",
+        online_applications.statement_signed_by AS \"Statement signed by\",
+        CASE WHEN online_applications.partner_ni_number IS NULL THEN 'false'
+             WHEN online_applications.partner_ni_number = '' THEN 'false'
+             WHEN online_applications.partner_ni_number IS NOT NULL THEN 'true'
+        END AS \"Partner NI entered\",
+        CASE WHEN online_applications.partner_last_name IS NULL THEN 'false'
+             WHEN online_applications.partner_last_name IS NOT NULL THEN 'true'
+        END AS \"Partner name entered\",
+        online_applications.calculation_scheme AS \"HwF Scheme\",
+        NULL AS \"Deletion Reason\",
+        NULL AS \"Reason Description\"
+        FROM online_applications
+        LEFT JOIN applications ON applications.online_application_id = online_applications.id
+        LEFT JOIN jurisdictions ON jurisdictions.id = online_applications.jurisdiction_id
+        WHERE applications.id IS NULL
+        AND online_applications.date_received IS NOT NULL
+        AND online_applications.created_at BETWEEN '#{@date_from.to_fs(:db)}' AND '#{@date_to.to_fs(:db)}'"
+      end
+      # rubocop:enable Metrics/MethodLength
+
+      # rubocop:disable Metrics/AbcSize, Metrics/MethodLength
       def process_row(row)
         csv_row = row
 
@@ -209,8 +293,7 @@ module Views
         csv_row
       end
 
-      # rubocop:enable Metrics/AbcSize
-      # rubocop:enable Metrics/MethodLength
+      # rubocop:enable Metrics/AbcSize, Metrics/MethodLength
       def numberic_values_check(value, field)
         if value.nil?
           NUMERIC_FIELDS.include?(field) ? 0 : 'N/A'
