@@ -179,17 +179,20 @@ module Views
         LEFT JOIN benefit_overrides beo ON beo.application_id = applications.id
         LEFT JOIN online_applications oa ON oa.id = applications.online_application_id
         LEFT JOIN (
-         SELECT id as \"hc_id\", income as \"hc_income\", request_params, tax_credit, additional_income,
-            error_response, evidence_check_id, created_at, row_number() over
-            (partition by evidence_check_id order by created_at desc)
-            as row_number from hmrc_checks) hc ON ec.id = hc.evidence_check_id
+          SELECT DISTINCT ON (h.evidence_check_id)
+            h.id AS hc_id, h.request_params, h.additional_income, h.error_response, h.evidence_check_id
+          FROM hmrc_checks h
+          INNER JOIN evidence_checks ec_inner ON ec_inner.id = h.evidence_check_id
+          INNER JOIN applications a_inner ON a_inner.id = ec_inner.application_id
+          WHERE a_inner.created_at BETWEEN '#{@date_from.to_fs(:db)}' AND '#{@date_to.to_fs(:db)}'
+          ORDER BY h.evidence_check_id, h.created_at DESC
+        ) hc ON ec.id = hc.evidence_check_id
         INNER JOIN \"applicants\" ON \"applicants\".\"application_id\" = \"applications\".\"id\"
         INNER JOIN \"details\" ON \"details\".\"application_id\" = \"applications\".\"id\"
         LEFT JOIN jurisdictions ON jurisdictions.id = details.jurisdiction_id
         WHERE applications.office_id = #{@office_id}
         AND offices.name NOT IN ('Digital', 'HMCTS HQ Team')
         AND applications.created_at between '#{@date_from.to_fs(:db)}' AND '#{@date_to.to_fs(:db)}'
-        AND (row_number = 1 OR row_number IS NULL)
         AND (applications.state != 0
           OR (applications.state = 0 AND details.date_received IS NOT NULL AND details.refund IS NOT NULL))
         ORDER BY applications.created_at DESC"
