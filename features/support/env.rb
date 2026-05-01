@@ -54,7 +54,7 @@ end
 
 def add_screenshot(scenario)
   slug = "#{Time.zone.now.strftime('%Y%m%d-%H%M%S')}-#{scenario.name.parameterize}"
-  dir = 'features/cucumber-report/failures'
+  dir = 'tmp/cucumber-report/failures'
   FileUtils.mkdir_p(dir)
 
   png_path = "#{dir}/#{slug}.png"
