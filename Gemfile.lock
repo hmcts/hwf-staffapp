@@ -515,7 +515,7 @@ GEM
     ruby-vips (2.3.0)
       ffi (~> 1.12)
       logger
-    rubyzip (3.2.2)
+    rubyzip (3.3.0)
     sdoc (2.6.5)
       rdoc (>= 5.0)
     securerandom (0.4.1)
