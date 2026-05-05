@@ -1,0 +1,27 @@
+h2.govuk-heading-m Fee search box:
+ul.govuk-list.govuk-list--bullet
+  li Enter the details of the fee you are looking for.
+    <b>Please note:</b> Do not enter the form name but use details of the fee instead (such as a fee code or fee name).
+    Select the correct fee code from the fees list and this will auto populate the fee amount box
+  li Remember to check that you have selected the correct fee and that the value is correct, particularly when fees have recently changed
+  li If you are looking for a fee for which you need to enter a specific value (rateable fee) you may need to select the relevant fee code from the fees list in order to be able to enter a value in the claim amount box.
+     You can then select the ‘Look up fee’ button to auto populate the fee amount box with the correct fee value
+  li
+    p
+      strong PLEASE REMEMBER:
+      br
+      | that not all fees are eligible for Help with Fees.
+      |  Please ensure you are only selecting fees which are eligible for Help with Fees- you can find details of excluded fees on the #{staff_policy_guide_link}
+    p To complete the form number the application relates to, you may need to correct the form number provided on the application
+    p
+      | To tick the appropriate box under ‘Case Detail’ if the application is for an emergency or probate case.
+      |  You will also need to enter the appropriate date for a probate case when prompted
+- if show_refund_section?
+  h2.govuk-heading-m Refunds
+  h3.govuk-heading-s Check the refund:
+  ul.govuk-list.govuk-list--bullet
+    li is for a fee paid less than 3 months ago
+    li hasn't already been refunded
+  p = link_to 'What to do if the fee was paid more than 3 months ago', guide_process_application_path(anchor: 'refunds'), target: 'blank'
+
+

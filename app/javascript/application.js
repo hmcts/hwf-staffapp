@@ -27,6 +27,8 @@ import './error_class_loader'
 import './refund'
 import './date_received_online'
 import './permanent_delete'
+import './freg'
+import './fee_codes'
 
 import "trix"
 import "@rails/actiontext"

@@ -68,6 +68,7 @@ en-GB:
     form_name: Form number
     case_number: Case number
     fee: Fee
+    fee_code: Fee code
     part_payment: Part-payment
     emergency: Reason for emergency
     other: Other
@@ -541,6 +542,7 @@ en-GB:
         status: Status
       views/overview/details:
         fee: Fee
+        fee_code: Fee code
         jurisdiction: Jurisdiction
         date_received: Date received
         form_name: Form number

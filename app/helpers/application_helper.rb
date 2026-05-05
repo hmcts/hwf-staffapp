@@ -66,7 +66,25 @@ module ApplicationHelper
     path_storage.path_back
   end
 
+  def preview_environment?
+    request.host.include?('.preview.platform.hmcts.net')
+  end
+
+  mattr_accessor :fee_search_enabled, default: nil
+
+  def fee_search_available?
+    return fee_search_enabled unless fee_search_enabled.nil?
+
+    !Rails.env.test? && !preview_environment?
+  end
+
   def date_hint
     Time.current.strftime("%d %m %Y")
   end
+
+  # rubocop:disable Metrics/lineLength
+  def staff_policy_guide_link
+    link_to 'staff policy guide', 'https://justiceuk.sharepoint.com/sites/knowledgecentral/Shared%20Documents/Cross-Jurisdiction/Help%20with%20Fees/Guidance%20For%20Staff%20and%20Managers/policy-guide%20_word%20version.docx?web=1', target: '_blank', rel: 'noopener'
+  end
+  # rubocop:enable Metrics/lineLength
 end

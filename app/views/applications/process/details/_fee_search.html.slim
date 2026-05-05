@@ -1,0 +1,38 @@
+.govuk-form-group.group-level
+  fieldset.govuk-fieldset
+    legend.govuk-fieldset__legend.govuk-visually-hidden Fee search
+    = label_tag :fee_search, 'Fee search (Fee amount, jurisdiction, service type, event type)', class: 'govuk-label'
+    = text_field_tag :fee_search, @fee_search_term, class: 'govuk-input govuk-input--width-10', data: { date_received: @form.date_received&.strftime('%Y-%m-%d') }
+    p.govuk-body
+      | Search results:
+      span.search_result_count 0
+
+= f.hidden_field :fee_search_has_results, value: 'false', id: 'fee_search_has_results'
+
+.fee-search-results-block.govuk-inset-text.govuk-visually-hidden style="max-height: 250px; overflow-y: auto;"
+  ul#fee-search-results.govuk-list.govuk-list--bullet
+    li= 'no records'
+
+#no-results-message.govuk-error-message.govuk-visually-hidden
+  | No fee code found. Search for another fee by the fee code, amount or description
+
+#selected-fee-display.govuk-inset-text.govuk-visually-hidden
+  p.govuk-body
+    strong Selected fee:&nbsp;
+    span#selected-fee-text
+
+#claim-value-error.govuk-error-message.govuk-visually-hidden
+  span#claim-value-error-text
+
+#rateable-fee-warning.govuk-warning-text.govuk-visually-hidden
+  span.govuk-warning-text__icon aria-hidden="true" !
+  strong.govuk-warning-text__text
+    span.govuk-visually-hidden Warning
+    |  This is a rateable fee with a zero amount. Please enter the court or tribunal fee.
+
+.govuk-form-group.group-level#percentage-amount-input.govuk-visually-hidden
+  = label_tag :percentage_base_amount, 'Enter the claim amount', class: 'govuk-label', id: 'claim-amount-label'
+  .field-wrapper
+    span.prefix £
+    = text_field_tag :percentage_base_amount, nil, class: 'govuk-input', type: 'number', step: '0.01', id: 'percentage_base_amount'
+  = button_tag 'Look up fee', type: 'button', class: 'govuk-button govuk-button--secondary', id: 'calculate-percentage-fee'
