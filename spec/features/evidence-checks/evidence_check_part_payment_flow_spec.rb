@@ -30,7 +30,7 @@ RSpec.feature 'Part payment application with evidence check for refund' do
 
     click_button 'Complete processing'
 
-    expect(page).to have_content "#{application.reference} - For HMRC income checking"
+    expect(page).to have_text "#{application.reference} - For HMRC income checking"
 
     application = Application.last
 
@@ -44,20 +44,20 @@ RSpec.feature 'Part payment application with evidence check for refund' do
       click_link application.reload.reference
     end
 
-    expect(page).to have_content("#{application.reference} - Waiting for evidence")
+    expect(page).to have_text("#{application.reference} - Waiting for evidence")
     click_link 'Start now'
 
-    expect(page).to have_content 'Is the evidence ready to process?'
+    expect(page).to have_text 'Is the evidence ready to process?'
     choose "Yes, the evidence is for the correct applicant and covers the correct time period"
     click_button 'Next'
 
     fill_in 'evidence_income', with: 3951
     click_button 'Next'
 
-    expect(page).to have_content 'The amount to be refunded should be £3965'
+    expect(page).to have_text 'The amount to be refunded should be £3965'
     click_link 'Next'
 
-    expect(page).to have_content 'Check details'
+    expect(page).to have_text 'Check details'
     click_button 'Complete processing'
 
     expect(application.reload.state).to eql('processed')

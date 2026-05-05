@@ -86,32 +86,32 @@ RSpec.feature 'Staff can complete processing of an online application' do
   end
 
   def then_they_get_successful_benefit_based_outcome
-    expect(page).to have_content('Benefits✓ Passed')
-    expect(page).to have_content('Eligible for help with fees')
+    expect(page).to have_text('Benefits✓ Passed')
+    expect(page).to have_text('Eligible for help with fees')
   end
 
   def then_they_get_failed_benefit_based_outcome
-    expect(page).to have_content('Benefits✗ Failed')
-    expect(page).to have_content('Not eligible for help with fees')
+    expect(page).to have_text('Benefits✗ Failed')
+    expect(page).to have_text('Not eligible for help with fees')
   end
 
   def then_they_get_failed_savings_outcome
-    expect(page).to have_content('Not eligible for help with fees')
+    expect(page).to have_text('Not eligible for help with fees')
   end
 
   def then_they_get_failed_income_outcome
-    expect(page).to have_content('Income✗ Failed')
-    expect(page).to have_content('Not eligible for help with fees')
+    expect(page).to have_text('Income✗ Failed')
+    expect(page).to have_text('Not eligible for help with fees')
   end
 
   def then_they_get_part_payment_income_outcome
-    expect(page).to have_content('IncomeWaiting for part-payment')
-    expect(page).to have_content('The applicant must pay £65 towards the fee')
+    expect(page).to have_text('IncomeWaiting for part-payment')
+    expect(page).to have_text('The applicant must pay £65 towards the fee')
   end
 
   def then_they_get_successful_income_outcome
-    expect(page).to have_content('Income✓ Passed')
-    expect(page).to have_content('Eligible for help with fees')
+    expect(page).to have_text('Income✓ Passed')
+    expect(page).to have_text('Eligible for help with fees')
   end
 end
 # rubocop:enable RSpec/NoExpectationExample

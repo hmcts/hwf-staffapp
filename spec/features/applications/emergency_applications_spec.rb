@@ -28,7 +28,7 @@ RSpec.feature 'Emergency application' do
 
   context 'when on application details page' do
     scenario 'there will be emergency application option' do
-      expect(page).to have_content 'This is an emergency case'
+      expect(page).to have_text 'This is an emergency case'
     end
 
     context 'when the emergency case option is chosen' do
@@ -36,7 +36,7 @@ RSpec.feature 'Emergency application' do
       label_text = 'Reason for emergency'
 
       scenario 'there will be a way to add the explanation for emergency reason' do
-        expect(page).to have_content label_text
+        expect(page).to have_text label_text
         fill_in 'application_emergency_reason', with: reason
         expect(page).to have_field('Reason for emergency', with: reason)
       end
@@ -51,7 +51,7 @@ RSpec.feature 'Emergency application' do
     scenario 'there will be the reason for emergency application' do
       ['Application details',
        reason].each do |content|
-        expect(page).to have_content content
+        expect(page).to have_text content
       end
     end
   end

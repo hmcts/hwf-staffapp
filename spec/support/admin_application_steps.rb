@@ -241,7 +241,7 @@ def fill_in_date_fee_paid(date_fee_paid)
 end
 
 def fill_declaration
-  expect(page).to have_content('Declaration and statement of truth')
+  expect(page).to have_text('Declaration and statement of truth')
   choose 'Applicant'
   click_button 'Next'
 end

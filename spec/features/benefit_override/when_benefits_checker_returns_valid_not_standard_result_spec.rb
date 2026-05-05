@@ -64,7 +64,7 @@ RSpec.feature 'When benefits checker result is valid but not standard response' 
   scenario 'let user to override benefits page' do
     drive_to_the_benefits_page_undetermined
     expect(page).to have_xpath('//h1', text: 'Evidence of benefits')
-    expect(page).to have_content('This could be due to a system error and/or the applicant not being found from the details provided')
+    expect(page).to have_text('This could be due to a system error and/or the applicant not being found from the details provided')
     choose 'benefit_override_evidence_false'
     click_button 'Next'
     expect(page).to have_xpath('//h1', text: 'Check details')
@@ -73,10 +73,10 @@ RSpec.feature 'When benefits checker result is valid but not standard response' 
   scenario 'redirect for no evidence from benefits override page' do
     drive_to_the_benefits_page_technical_fault
     expect(page).to have_xpath('//h1', text: 'Evidence of benefits')
-    expect(page).to have_content('This could be due to a system error and/or the applicant not being found from the details provided')
+    expect(page).to have_text('This could be due to a system error and/or the applicant not being found from the details provided')
     choose 'benefit_override_evidence_false'
     click_button 'Next'
     expect(page).to have_xpath('//h1', text: 'Find an application')
-    expect(page).to have_content('Processing benefit applications without paper evidence is not working at the moment. Try again later when the DWP checker is available.')
+    expect(page).to have_text('Processing benefit applications without paper evidence is not working at the moment. Try again later when the DWP checker is available.')
   end
 end

@@ -259,7 +259,7 @@ RSpec/Dialect:
 RSpec/IndexedLet:
   Enabled: false
 
-Capybara/CurrentPathExpectation:
+Capybara/RSpec/CurrentPathExpectation:
   Enabled: false
 
 Capybara/ClickLinkOrButtonStyle:
@@ -352,7 +352,7 @@ Style/OptionalBooleanParameter:
 Performance/CollectionLiteralInLoop:
   Enabled: false
 
-Capybara/NegationMatcherAfterVisit:
+Capybara/RSpec/NegationMatcherAfterVisit:
   Enabled: false
 
 Capybara/SpecificFinders:

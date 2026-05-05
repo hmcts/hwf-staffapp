@@ -75,5 +75,5 @@ When("I click on the accessibility link in the footer") do
 end
 
 Then("I am on the accessibility statement page") do
-  expect(page).to have_content 'Accessibility statement for Help with Fees (staff service)'
+  expect(page).to have_text 'Accessibility statement for Help with Fees (staff service)'
 end

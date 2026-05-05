@@ -38,8 +38,8 @@ RSpec.feature 'Application is not evidence check when income is above threshold'
       fill_benefits(false)
       fill_income(false)
       click_button 'Complete processing'
-      expect(page).to have_content('- For HMRC income checking')
-      expect(page).to have_no_content('✓ Eligible for help with fees')
+      expect(page).to have_text('- For HMRC income checking')
+      expect(page).to have_no_text('✓ Eligible for help with fees')
 
       visit home_index_url
 
@@ -50,8 +50,8 @@ RSpec.feature 'Application is not evidence check when income is above threshold'
       fill_benefits(false)
       fill_income(false)
       click_button 'Complete processing'
-      expect(page).to have_content('- For HMRC income checking')
-      expect(page).to have_no_content('✓ Eligible for help with fees')
+      expect(page).to have_text('- For HMRC income checking')
+      expect(page).to have_no_text('✓ Eligible for help with fees')
     end
   end
 
@@ -69,8 +69,8 @@ RSpec.feature 'Application is not evidence check when income is above threshold'
     scenario 'finishing EV check and creating new application with same NINO' do
       visit evidence_checks_path
       within(:css, '.waiting-for-evidence') do
-        expect(page).to have_content(application1.reference)
-        expect(page).to have_content(application2.reference)
+        expect(page).to have_text(application1.reference)
+        expect(page).to have_text(application2.reference)
       end
 
       click_link application1.reference
@@ -85,12 +85,12 @@ RSpec.feature 'Application is not evidence check when income is above threshold'
       click_link 'Next'
       click_button 'Complete processing'
 
-      expect(page).to have_content('Application complete')
+      expect(page).to have_text('Application complete')
 
       visit evidence_checks_path
       within(:css, '.waiting-for-evidence') do
-        expect(page).to have_no_content(application1.reference)
-        expect(page).to have_content(application2.reference)
+        expect(page).to have_no_text(application1.reference)
+        expect(page).to have_text(application2.reference)
       end
 
       visit home_index_path
@@ -103,8 +103,8 @@ RSpec.feature 'Application is not evidence check when income is above threshold'
       fill_income(false)
       click_button 'Complete processing'
 
-      expect(page).to have_no_content('Evidence of income needs to be checked')
-      expect(page).to have_content('✓ Eligible for help with fees')
+      expect(page).to have_no_text('Evidence of income needs to be checked')
+      expect(page).to have_text('✓ Eligible for help with fees')
     end
   end
 
@@ -125,8 +125,8 @@ RSpec.feature 'Application is not evidence check when income is above threshold'
       fill_income(false)
       expect(page).to have_text 'Check details'
       click_button 'Complete processing'
-      expect(page).to have_no_content('Evidence of income needs to be checked')
-      expect(page).to have_content('✓ Eligible for help with fees')
+      expect(page).to have_no_text('Evidence of income needs to be checked')
+      expect(page).to have_text('✓ Eligible for help with fees')
 
       visit home_index_url
       create_flag_check('SN987654D')
@@ -138,8 +138,8 @@ RSpec.feature 'Application is not evidence check when income is above threshold'
       fill_benefits(false)
       fill_income(false)
       click_button 'Complete processing'
-      expect(page).to have_content('- For HMRC income checking')
-      expect(page).to have_no_content('✓ Eligible for help with fees')
+      expect(page).to have_text('- For HMRC income checking')
+      expect(page).to have_no_text('✓ Eligible for help with fees')
 
       start_new_application
       fill_personal_details
@@ -148,8 +148,8 @@ RSpec.feature 'Application is not evidence check when income is above threshold'
       fill_benefits(false)
       fill_income(false)
       click_button 'Complete processing'
-      expect(page).to have_content('- For HMRC income checking')
-      expect(page).to have_no_content('✓ Eligible for help with fees')
+      expect(page).to have_text('- For HMRC income checking')
+      expect(page).to have_no_text('✓ Eligible for help with fees')
     end
   end
 end

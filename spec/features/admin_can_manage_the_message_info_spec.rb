@@ -16,13 +16,13 @@ RSpec.feature 'Admin can manage message info' do
     scenario 'can edit and view the message', :js do
       visit '/'
       click_link 'Edit banner'
-      expect(page).to have_content 'Edit Notifications Message'
+      expect(page).to have_text 'Edit Notifications Message'
       page.find(:css, 'trix-editor#notification_message').set('This is message from admin, hear, hear.')
       check 'Show on admin homepage'
       click_button 'Save changes'
-      expect(page).to have_content 'Your changes have been saved'
+      expect(page).to have_text 'Your changes have been saved'
       visit '/'
-      expect(page).to have_content 'This is message from admin, hear, hear.'
+      expect(page).to have_text 'This is message from admin, hear, hear.'
     end
   end
 
@@ -34,8 +34,8 @@ RSpec.feature 'Admin can manage message info' do
 
     scenario 'can view the message' do
       visit '/'
-      expect(page).to have_no_content 'Edit banner'
-      expect(page).to have_content 'This is message from admin, hear, hear.'
+      expect(page).to have_no_text 'Edit banner'
+      expect(page).to have_text 'This is message from admin, hear, hear.'
     end
   end
 
@@ -46,8 +46,8 @@ RSpec.feature 'Admin can manage message info' do
 
     scenario 'can view the message' do
       visit '/'
-      expect(page).to have_content 'You need to sign in before continuing.'
-      expect(page).to have_content 'This is message from admin, hear, hear.'
+      expect(page).to have_text 'You need to sign in before continuing.'
+      expect(page).to have_text 'This is message from admin, hear, hear.'
     end
   end
 end

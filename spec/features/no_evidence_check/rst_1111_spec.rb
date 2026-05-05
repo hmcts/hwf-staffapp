@@ -33,8 +33,8 @@ RSpec.feature 'EV Skipped for All Benefit Application' do
 
       click_button 'Complete processing'
 
-      expect(page).to have_no_content('Evidence of income needs to be checked')
-      expect(page).to have_content('✓ Eligible for help with fees')
+      expect(page).to have_no_text('Evidence of income needs to be checked')
+      expect(page).to have_text('✓ Eligible for help with fees')
     end
 
     it_behaves_like 'duplicated NINO for failed DWP'
@@ -57,8 +57,8 @@ RSpec.feature 'EV Skipped for All Benefit Application' do
       fill_declaration
 
       click_button 'Complete processing'
-      expect(page).to have_no_content('Evidence of income needs to be checked')
-      expect(page).to have_content('✓ Eligible for help with fees')
+      expect(page).to have_no_text('Evidence of income needs to be checked')
+      expect(page).to have_text('✓ Eligible for help with fees')
     end
 
     it_behaves_like 'duplicated NINO for successfull DWP'
@@ -82,8 +82,8 @@ RSpec.feature 'EV Skipped for All Benefit Application' do
 
       click_button 'Complete processing'
 
-      expect(page).to have_no_content('Evidence of income needs to be checked')
-      expect(page).to have_content('✓ Eligible for help with fees')
+      expect(page).to have_no_text('Evidence of income needs to be checked')
+      expect(page).to have_text('✓ Eligible for help with fees')
     end
   end
 
@@ -106,8 +106,8 @@ RSpec.feature 'EV Skipped for All Benefit Application' do
 
       click_button 'Complete processing'
 
-      expect(page).to have_no_content('Evidence of income needs to be checked')
-      expect(page).to have_content('✗   Not eligible for help with fees')
+      expect(page).to have_no_text('Evidence of income needs to be checked')
+      expect(page).to have_text('✗   Not eligible for help with fees')
     end
 
     it_behaves_like 'duplicated NINO for failed DWP'
@@ -131,8 +131,8 @@ RSpec.feature 'EV Skipped for All Benefit Application' do
 
       click_button 'Complete processing'
 
-      expect(page).to have_no_content('Evidence of income needs to be checked')
-      expect(page).to have_content('✓ Eligible for help with fees')
+      expect(page).to have_no_text('Evidence of income needs to be checked')
+      expect(page).to have_text('✓ Eligible for help with fees')
     end
   end
 end

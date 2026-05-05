@@ -31,8 +31,8 @@ RSpec.feature 'Application is evidence checked when 1 in X' do
 
       click_button 'Complete processing'
 
-      expect(page).to have_no_content('Evidence of income needs to be checked')
-      expect(page).to have_content('✓ Eligible for help with fees')
+      expect(page).to have_no_text('Evidence of income needs to be checked')
+      expect(page).to have_text('✓ Eligible for help with fees')
     end
   end
 
@@ -53,8 +53,8 @@ RSpec.feature 'Application is evidence checked when 1 in X' do
       fill_benefit_evidence(paper_provided: false)
 
       click_button 'Complete processing'
-      expect(page).to have_no_content('Evidence of income needs to be checked')
-      expect(page).to have_content('✗   Not eligible for help with fees')
+      expect(page).to have_no_text('Evidence of income needs to be checked')
+      expect(page).to have_text('✗   Not eligible for help with fees')
     end
   end
 
@@ -76,8 +76,8 @@ RSpec.feature 'Application is evidence checked when 1 in X' do
 
       click_button 'Complete processing'
 
-      expect(page).to have_no_content('Evidence of income needs to be checked')
-      expect(page).to have_content('✓ Eligible for help with fees')
+      expect(page).to have_no_text('Evidence of income needs to be checked')
+      expect(page).to have_text('✓ Eligible for help with fees')
     end
   end
 
@@ -99,8 +99,8 @@ RSpec.feature 'Application is evidence checked when 1 in X' do
 
       click_button 'Complete processing'
 
-      expect(page).to have_no_content('Evidence of income needs to be checked')
-      expect(page).to have_content('✗   Not eligible for help with fees')
+      expect(page).to have_no_text('Evidence of income needs to be checked')
+      expect(page).to have_text('✗   Not eligible for help with fees')
     end
   end
 
@@ -121,8 +121,8 @@ RSpec.feature 'Application is evidence checked when 1 in X' do
       fill_income(false)
 
       click_button 'Complete processing'
-      expect(page).to have_content('Evidence of income needs to be checked')
-      expect(page).to have_no_content('✓ Eligible for help with fees')
+      expect(page).to have_text('Evidence of income needs to be checked')
+      expect(page).to have_no_text('✓ Eligible for help with fees')
     end
   end
 
@@ -143,8 +143,8 @@ RSpec.feature 'Application is evidence checked when 1 in X' do
       fill_income(false)
 
       click_button 'Complete processing'
-      expect(page).to have_content("- For HMRC income checking")
-      expect(page).to have_no_content('✓ Eligible for help with fees')
+      expect(page).to have_text("- For HMRC income checking")
+      expect(page).to have_no_text('✓ Eligible for help with fees')
     end
   end
 end

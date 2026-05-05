@@ -26,7 +26,7 @@ end
 
 Then("I should see instructions with a deadline to submit the evidence") do
   expires_at = @application.evidence_check.expires_at.strftime("%Y-%m-%d")
-  expect(evidence_page.content.evidence_deadline.text).to have_content "Evidence needs to arrive by #{expires_at}"
+  expect(evidence_page.content.evidence_deadline.text).to have_text "Evidence needs to arrive by #{expires_at}"
 end
 
 Then("I should see the applicants personal details") do

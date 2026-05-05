@@ -29,13 +29,13 @@ RSpec.feature 'Evidence check flow' do
 
     headings.each do |heading_title|
       it "has a heading titled #{heading_title}" do
-        expect(page).to have_content heading_title
+        expect(page).to have_text heading_title
       end
     end
 
     scenario 'when clicked on "Start now", goes to the next page' do
       click_link 'Start now'
-      expect(page).to have_content 'Is the evidence ready to process?'
+      expect(page).to have_text 'Is the evidence ready to process?'
     end
   end
 
@@ -46,36 +46,36 @@ RSpec.feature 'Evidence check flow' do
       before { click_button 'Next' }
 
       it 're-renders the page' do
-        expect(page).to have_content 'Is the evidence ready to process?'
+        expect(page).to have_text 'Is the evidence ready to process?'
       end
     end
 
     it 'displays the title of the page' do
-      expect(page).to have_content 'Evidence'
+      expect(page).to have_text 'Evidence'
     end
 
     it 'displays the form label' do
-      expect(page).to have_content 'Is the evidence ready to process?'
+      expect(page).to have_text 'Is the evidence ready to process?'
     end
 
     scenario 'confirming the evidence is correct redirects to the income page' do
       choose 'evidence_correct_true'
       click_button 'Next'
-      expect(page).to have_content 'Total monthly income from evidence'
+      expect(page).to have_text 'Total monthly income from evidence'
     end
 
     scenario 'rejecting the evidence redirects to the summary page' do
       choose 'evidence_correct_false'
       click_button 'Next'
 
-      expect(page).to have_content 'What is the reason for rejecting the evidence?'
+      expect(page).to have_text 'What is the reason for rejecting the evidence?'
       check 'Requested sources not provided'
       check 'Wrong type provided'
       click_button 'Next'
 
-      expect(page).to have_content 'Check details'
-      expect(page).to have_content 'Requested sources not provided'
-      expect(page).to have_content 'Wrong type provided'
+      expect(page).to have_text 'Check details'
+      expect(page).to have_text 'Requested sources not provided'
+      expect(page).to have_text 'Wrong type provided'
     end
   end
 
@@ -83,7 +83,7 @@ RSpec.feature 'Evidence check flow' do
     before { visit income_evidence_path(id: evidence.id) }
 
     it 'fill in the income form takes me to the next page' do
-      expect(page).to have_content 'Total monthly income from evidence'
+      expect(page).to have_text 'Total monthly income from evidence'
       fill_in 'evidence_income', with: 500
       click_button 'Next'
     end
@@ -93,7 +93,7 @@ RSpec.feature 'Evidence check flow' do
     before { visit result_evidence_path(id: evidence.id) }
 
     it 'displays the title of the page' do
-      expect(page).to have_content('Income')
+      expect(page).to have_text('Income')
     end
 
     it 'displays a result block' do
@@ -107,7 +107,7 @@ RSpec.feature 'Evidence check flow' do
 
       it 'clicking the Next button redirects to the summary page' do
         click_link_or_button 'Next'
-        expect(page).to have_content('Check details')
+        expect(page).to have_text('Check details')
       end
     end
 
@@ -119,7 +119,7 @@ RSpec.feature 'Evidence check flow' do
 
       it 'clicking the Next button redirects to the summary page' do
         click_link_or_button 'Next'
-        expect(page).to have_content('Check details')
+        expect(page).to have_text('Check details')
       end
     end
 
@@ -130,7 +130,7 @@ RSpec.feature 'Evidence check flow' do
 
       it 'clicking the Complete processing button redirects to the summary page' do
         click_link_or_button 'Next'
-        expect(page).to have_content('Check details')
+        expect(page).to have_text('Check details')
       end
     end
   end
@@ -156,7 +156,7 @@ RSpec.feature 'Evidence check flow' do
 
       it 'clicking the Complete processing button redirects to the confirmation page' do
         click_link_or_button 'Complete processing'
-        expect(page).to have_content('Application complete')
+        expect(page).to have_text('Application complete')
       end
     end
 
@@ -183,7 +183,7 @@ RSpec.feature 'Evidence check flow' do
         end
 
         it 'redirects to the confirmation page' do
-          expect(page).to have_content('Application complete')
+          expect(page).to have_text('Application complete')
         end
       end
     end
@@ -206,15 +206,15 @@ RSpec.feature 'Evidence check flow' do
 
       it 'clicking the Next button redirects to the confirmation page' do
         click_link_or_button 'Complete processing'
-        expect(page).to have_content('Application complete')
+        expect(page).to have_text('Application complete')
       end
     end
 
     # rubocop:disable Metrics/AbcSize
     def page_expectation(outcome, fields = [])
-      expect(page).to have_content(outcome)
+      expect(page).to have_text(outcome)
       fields.each do |field|
-        expect(page).to have_content("#{field[:title]}#{field[:value]}")
+        expect(page).to have_text("#{field[:title]}#{field[:value]}")
         expect(page).to have_link("Change#{field[:title]}", href: field[:url])
       end
     end
@@ -227,7 +227,7 @@ RSpec.feature 'Evidence check flow' do
       visit confirmation_evidence_path(id: evidence.id)
     }
     let(:outcome) { 'full' }
-    it { expect(page).to have_content 'Eligible for help with fees' }
+    it { expect(page).to have_text 'Eligible for help with fees' }
 
     context 'when the reference_date is passed' do
       let(:outcome) { 'full' }
@@ -238,7 +238,7 @@ RSpec.feature 'Evidence check flow' do
       end
 
       scenario 'the remission register right hand guidance is not shown' do
-        expect(page).to have_no_content 'remission register'
+        expect(page).to have_no_text 'remission register'
       end
     end
 
@@ -246,7 +246,7 @@ RSpec.feature 'Evidence check flow' do
       context 'full' do
         let(:outcome) { 'full' }
 
-        it { expect(page).to have_no_content(/(not\ correct\|part-fee)/) }
+        it { expect(page).to have_no_text(/(not\ correct\|part-fee)/) }
       end
 
       context 'part' do
@@ -255,15 +255,15 @@ RSpec.feature 'Evidence check flow' do
         let(:pay_by_date) { application.part_payment.expires_at.strftime('%-d %B %Y') }
         let(:state) { 2 }
 
-        it { expect(page).to have_content "You’re eligible to get some money taken off the full fee of £410." }
+        it { expect(page).to have_text "You’re eligible to get some money taken off the full fee of £410." }
 
-        it { expect(page).to have_content "You need to pay £300 towards the fee by #{pay_by_date}." }
+        it { expect(page).to have_text "You need to pay £300 towards the fee by #{pay_by_date}." }
 
-        it { expect(page).to have_content(evidence.application.applicant.full_name) }
+        it { expect(page).to have_text(evidence.application.applicant.full_name) }
 
-        it { expect(page).to have_content(user.name) }
+        it { expect(page).to have_text(user.name) }
 
-        it { expect(page).to have_content(amount) }
+        it { expect(page).to have_text(amount) }
       end
 
       context 'rejected' do
@@ -272,15 +272,15 @@ RSpec.feature 'Evidence check flow' do
         let(:amount) { application.detail.fee.to_i }
         let(:paid_by) { evidence.expires_at.strftime(Date::DATE_FORMATS[:gov_uk_long]) }
 
-        it { expect(page).to have_content 'This is because the applicant has more than the maximum amount of income allowed.' }
+        it { expect(page).to have_text 'This is because the applicant has more than the maximum amount of income allowed.' }
 
-        it { expect(page).to have_content(evidence.application.applicant.full_name) }
+        it { expect(page).to have_text(evidence.application.applicant.full_name) }
 
-        it { expect(page).to have_content(user.name) }
+        it { expect(page).to have_text(user.name) }
 
-        it { expect(page).to have_content "The full fee amount of £#{amount} needs to be paid by #{paid_by}." }
+        it { expect(page).to have_text "The full fee amount of £#{amount} needs to be paid by #{paid_by}." }
 
-        it { expect(page).to have_no_content 'Maximum amount of income allowed: £5,490' }
+        it { expect(page).to have_no_text 'Maximum amount of income allowed: £5,490' }
 
       end
     end
