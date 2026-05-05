@@ -720,12 +720,15 @@ RSpec.describe Views::Reports::HmrcOcmcDataExport do
   end
 
   describe 'online applications without a linked paper Application' do
+    let(:receiving_user) { create(:user, office: office) }
+
     context 'when date_received is filled in' do
       before do
         travel_to(date_from + 1.day) do
           create(:online_application,
                  reference: 'HWF-B82-KPQ',
-                 date_received: Date.parse('2021-01-02'))
+                 date_received: Date.parse('2021-01-02'),
+                 user_id: receiving_user.id)
         end
       end
 
@@ -735,7 +738,7 @@ RSpec.describe Views::Reports::HmrcOcmcDataExport do
         expect(row).not_to be_nil
       end
 
-      it 'shows the queried office name in the Office column' do
+      it "shows the receiving user's office name in the Office column" do
         expect(row['Office']).to eq(office.name)
       end
 
@@ -756,13 +759,126 @@ RSpec.describe Views::Reports::HmrcOcmcDataExport do
     context 'when date_received is nil' do
       before do
         travel_to(date_from + 1.day) do
-          create(:online_application, reference: 'HWF-C13-LRS', date_received: nil)
+          create(:online_application,
+                 reference: 'HWF-C13-LRS',
+                 date_received: nil,
+                 user_id: receiving_user.id)
         end
       end
 
       it 'does not appear in the report' do
         references = CSV.parse(ocmc_export.to_csv, headers: true)['HwF reference number']
         expect(references).not_to include('HWF-C13-LRS')
+      end
+    end
+
+    context "when receiving user belongs to a different office (single-office mode)" do
+      let(:other_office) { create(:office, name: 'Manchester') }
+      let(:other_user) { create(:user, office: other_office) }
+
+      before do
+        travel_to(date_from + 1.day) do
+          create(:online_application,
+                 reference: 'HWF-OTH-001',
+                 date_received: Date.parse('2021-01-02'),
+                 user_id: other_user.id)
+        end
+      end
+
+      it 'is excluded from the report' do
+        references = CSV.parse(ocmc_export.to_csv, headers: true)['HwF reference number']
+        expect(references).not_to include('HWF-OTH-001')
+      end
+    end
+
+    context 'when receiving user belongs to Digital or HMCTS HQ Team' do
+      let(:digital_user) { create(:user, office: digital_office) }
+      let(:hq_user) { create(:user, office: hmcts_hq_office) }
+
+      before do
+        travel_to(date_from + 1.day) do
+          create(:online_application,
+                 reference: 'HWF-DIG-001',
+                 date_received: Date.parse('2021-01-02'),
+                 user_id: digital_user.id)
+          create(:online_application,
+                 reference: 'HWF-HQ-001',
+                 date_received: Date.parse('2021-01-02'),
+                 user_id: hq_user.id)
+        end
+      end
+
+      it 'excludes both rows' do
+        references = CSV.parse(ocmc_export.to_csv, headers: true)['HwF reference number']
+        aggregate_failures do
+          expect(references).not_to include('HWF-DIG-001')
+          expect(references).not_to include('HWF-HQ-001')
+        end
+      end
+    end
+
+    context 'when user_id is nil (defensive)' do
+      before do
+        travel_to(date_from + 1.day) do
+          create(:online_application,
+                 reference: 'HWF-NIL-001',
+                 date_received: Date.parse('2021-01-02'),
+                 user_id: nil)
+        end
+      end
+
+      it 'is excluded from the report (cannot determine office)' do
+        references = CSV.parse(ocmc_export.to_csv, headers: true)['HwF reference number']
+        expect(references).not_to include('HWF-NIL-001')
+      end
+    end
+  end
+
+  describe 'all_offices: true with online applications' do
+    subject(:ocmc_export) { described_class.new(from_date, to_date, office_id, all_offices: true) }
+
+    let(:bristol_user) { create(:user, office: bristol_office) }
+    let(:cardiff_user) { create(:user, office: cardiff_office) }
+    let(:digital_user) { create(:user, office: digital_office) }
+    let(:hq_user)      { create(:user, office: hmcts_hq_office) }
+
+    before do
+      travel_to(date_from + 1.day) do
+        create(:online_application, reference: 'HWF-AO-BR1', date_received: Date.parse('2021-01-02'), user_id: bristol_user.id)
+        create(:online_application, reference: 'HWF-AO-CD1', date_received: Date.parse('2021-01-02'), user_id: cardiff_user.id)
+        create(:online_application, reference: 'HWF-AO-DG1', date_received: Date.parse('2021-01-02'), user_id: digital_user.id)
+        create(:online_application, reference: 'HWF-AO-HQ1', date_received: Date.parse('2021-01-02'), user_id: hq_user.id)
+      end
+    end
+
+    context 'with a specific office_id present' do
+      let(:office_id) { bristol_office.id }
+
+      it 'includes online apps from non-excluded offices and excludes Digital / HMCTS HQ Team' do
+        csv = CSV.parse(ocmc_export.to_csv, headers: true)
+        rows = csv.map { |r| [r['HwF reference number'], r['Office']] }
+
+        aggregate_failures do
+          expect(rows).to include(['HWF-AO-BR1', 'Bristol'])
+          expect(rows).to include(['HWF-AO-CD1', 'Cardiff'])
+          expect(rows.map(&:first)).not_to include('HWF-AO-DG1')
+          expect(rows.map(&:first)).not_to include('HWF-AO-HQ1')
+        end
+      end
+    end
+
+    context 'with nil office_id (regression: must not raise)' do
+      let(:office_id) { nil }
+
+      it 'does not raise and still produces the all-offices report' do
+        expect { ocmc_export.to_csv }.not_to raise_error
+        csv = CSV.parse(ocmc_export.to_csv, headers: true)
+        rows = csv.map { |r| [r['HwF reference number'], r['Office']] }
+
+        aggregate_failures do
+          expect(rows).to include(['HWF-AO-BR1', 'Bristol'])
+          expect(rows).to include(['HWF-AO-CD1', 'Cardiff'])
+        end
       end
     end
   end

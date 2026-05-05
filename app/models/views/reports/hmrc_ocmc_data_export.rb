@@ -42,10 +42,6 @@ module Views
         "(#{paper_applications_select}) UNION ALL (#{online_only_select}) ORDER BY \"Created at\" DESC;"
       end
 
-      def queried_office_name
-        Office.find(@office_id).name.gsub("'", "''")
-      end
-
       # rubocop:disable Metrics/MethodLength
       def paper_applications_select
         "SELECT
@@ -202,7 +198,7 @@ module Views
       # rubocop:disable Metrics/MethodLength
       def online_only_select
         "SELECT
-        '#{queried_office_name}' AS \"Office\",
+        offices.name AS \"Office\",
         online_applications.id AS \"Id\",
         NULL AS \"Status\",
         online_applications.reference AS \"HwF reference number\",
@@ -266,13 +262,22 @@ module Views
         NULL AS \"Deletion Reason\",
         NULL AS \"Reason Description\"
         FROM online_applications
+        INNER JOIN users ON users.id = online_applications.user_id
+        INNER JOIN offices ON offices.id = users.office_id
         LEFT JOIN applications ON applications.online_application_id = online_applications.id
         LEFT JOIN jurisdictions ON jurisdictions.id = online_applications.jurisdiction_id
         WHERE applications.id IS NULL
         AND online_applications.date_received IS NOT NULL
-        AND online_applications.created_at BETWEEN '#{@date_from.to_fs(:db)}' AND '#{@date_to.to_fs(:db)}'"
+        AND online_applications.created_at BETWEEN '#{@date_from.to_fs(:db)}' AND '#{@date_to.to_fs(:db)}'
+        AND offices.name NOT IN ('Digital', 'HMCTS HQ Team')
+        #{online_office_filter}"
       end
       # rubocop:enable Metrics/MethodLength
+
+      def online_office_filter
+        return '' if selected?(@all_offices)
+        "AND users.office_id = #{@office_id}"
+      end
 
       # rubocop:disable Metrics/AbcSize, Metrics/MethodLength
       def process_row(row)
