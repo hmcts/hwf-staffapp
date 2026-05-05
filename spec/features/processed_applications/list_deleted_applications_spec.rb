@@ -27,7 +27,7 @@ RSpec.feature 'List deleted applications' do
   scenario 'User lists all deleted applications with pagination' do
     visit '/'
 
-    expect(page).to have_content('Deleted applications')
+    expect(page).to have_text('Deleted applications')
 
     within '.completed-applications' do
       click_link 'Deleted applications'
@@ -36,8 +36,8 @@ RSpec.feature 'List deleted applications' do
     expect(page.current_path).to eql('/deleted_applications')
 
     within 'table.deleted-applications tbody' do
-      expect(page).to have_content(application1.applicant.full_name)
-      expect(page).to have_content(application4.applicant.full_name)
+      expect(page).to have_text(application1.applicant.full_name)
+      expect(page).to have_text(application4.applicant.full_name)
     end
 
     within('#processed_application_pagination', match: :first) do
@@ -45,8 +45,8 @@ RSpec.feature 'List deleted applications' do
     end
 
     within 'table.deleted-applications tbody' do
-      expect(page).to have_content(application2.applicant.full_name)
-      expect(page).to have_content(application5.applicant.full_name)
+      expect(page).to have_text(application2.applicant.full_name)
+      expect(page).to have_text(application5.applicant.full_name)
     end
 
     within('#processed_application_pagination', match: :first) do
@@ -54,8 +54,8 @@ RSpec.feature 'List deleted applications' do
     end
 
     within 'table.deleted-applications tbody' do
-      expect(page).to have_content(application1.applicant.full_name)
-      expect(page).to have_content(application4.applicant.full_name)
+      expect(page).to have_text(application1.applicant.full_name)
+      expect(page).to have_text(application4.applicant.full_name)
     end
   end
 
@@ -66,8 +66,8 @@ RSpec.feature 'List deleted applications' do
 
     expect(page.current_path).to eql("/deleted_applications/#{application1.id}")
 
-    expect(page).to have_content('Deleted application')
-    expect(page).to have_content("Full name#{application1.applicant.full_name}")
-    expect(page).to have_content("Application deleted19 May 2016BobReason for deletion: \"#{application1.deleted_reasons_list}: #{application1.deleted_reason}\"")
+    expect(page).to have_text('Deleted application')
+    expect(page).to have_text("Full name#{application1.applicant.full_name}")
+    expect(page).to have_text("Application deleted19 May 2016BobReason for deletion: \"#{application1.deleted_reasons_list}: #{application1.deleted_reason}\"")
   end
 end

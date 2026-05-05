@@ -26,7 +26,7 @@ RSpec.feature 'List processed applications' do
   scenario 'User lists all processed applications with pagination and in correct order' do
     visit '/'
 
-    expect(page).to have_content('Processed applications')
+    expect(page).to have_text('Processed applications')
 
     within '.completed-applications' do
       click_link 'Processed applications'
@@ -35,8 +35,8 @@ RSpec.feature 'List processed applications' do
     expect(page.current_path).to eql('/processed_applications')
 
     within 'table.processed-applications tbody' do
-      expect(page).to have_content(application1.applicant.full_name)
-      expect(page).to have_content(application4.applicant.full_name)
+      expect(page).to have_text(application1.applicant.full_name)
+      expect(page).to have_text(application4.applicant.full_name)
     end
 
     within('#processed_application_pagination', match: :first) do
@@ -44,8 +44,8 @@ RSpec.feature 'List processed applications' do
     end
 
     within 'table.processed-applications tbody' do
-      expect(page).to have_content(application5.applicant.full_name)
-      expect(page).to have_content(application2.applicant.full_name)
+      expect(page).to have_text(application5.applicant.full_name)
+      expect(page).to have_text(application2.applicant.full_name)
     end
 
     within('#processed_application_pagination', match: :first) do
@@ -53,8 +53,8 @@ RSpec.feature 'List processed applications' do
     end
 
     within 'table.processed-applications tbody' do
-      expect(page).to have_content(application1.applicant.full_name)
-      expect(page).to have_content(application4.applicant.full_name)
+      expect(page).to have_text(application1.applicant.full_name)
+      expect(page).to have_text(application4.applicant.full_name)
     end
     expect(page).to have_link('Top of page')
   end
@@ -66,8 +66,8 @@ RSpec.feature 'List processed applications' do
 
     expect(page.current_path).to eql("/processed_applications/#{application1.id}")
 
-    expect(page).to have_content('Processed application')
-    expect(page).to have_content("Full name#{application1.applicant.full_name}")
+    expect(page).to have_text('Processed application')
+    expect(page).to have_text("Full name#{application1.applicant.full_name}")
   end
 
   scenario 'User displays detail of one processed part-payment application' do
@@ -79,8 +79,8 @@ RSpec.feature 'List processed applications' do
 
     click_link application5.reference
 
-    expect(page).to have_content('Processed application')
-    expect(page).to have_content('The applicant has paid £100 towards the fee')
+    expect(page).to have_text('Processed application')
+    expect(page).to have_text('The applicant has paid £100 towards the fee')
   end
 
   context 'with evidence check' do
@@ -94,7 +94,7 @@ RSpec.feature 'List processed applications' do
 
       click_link application5.reference
 
-      expect(page).to have_content('Processed application')
+      expect(page).to have_text('Processed application')
       expect(page).to have_text('Total income£2000')
       expect(page).to have_text('Income from evidence£100')
     end
@@ -109,7 +109,7 @@ RSpec.feature 'List processed applications' do
 
       click_link application5.reference
 
-      expect(page).to have_content('Processed application')
+      expect(page).to have_text('Processed application')
       expect(page).to have_text('Total income£2000')
       expect(page).to have_no_text('Income from Evidence')
     end

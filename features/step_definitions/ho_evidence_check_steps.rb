@@ -25,11 +25,11 @@ When("a second application is processed with the same home office number") do
 end
 
 Then("the first application will be waiting") do
-  expect(ho_evidence_check_page.content.your_last_application[2].text).to have_content 'waiting_for_evidence Mr John Christopher Smith'
+  expect(ho_evidence_check_page.content.your_last_application[2].text).to have_text 'waiting_for_evidence Mr John Christopher Smith'
 end
 
 But("the second application will require evidence") do
-  expect(ho_evidence_check_page.content.your_last_application[1].text).to have_content 'waiting_for_evidence John Christopher Smith'
+  expect(ho_evidence_check_page.content.your_last_application[1].text).to have_text 'waiting_for_evidence John Christopher Smith'
 end
 
 Given("I process applications with waiting evidence check where the applicant has a home office number") do

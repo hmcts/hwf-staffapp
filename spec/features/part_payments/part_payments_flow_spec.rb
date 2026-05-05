@@ -27,7 +27,7 @@ RSpec.feature 'Part Payments flow' do
 
     headings.each do |heading_title|
       it "has a heading titled #{heading_title}" do
-        expect(page).to have_content heading_title
+        expect(page).to have_text heading_title
       end
     end
   end
@@ -36,13 +36,13 @@ RSpec.feature 'Part Payments flow' do
     before { visit accuracy_part_payment_path(id: part_payment.id) }
 
     it 'displays the title of the page' do
-      expect(page).to have_content 'Is the part-payment ready to process?'
+      expect(page).to have_text 'Is the part-payment ready to process?'
     end
 
     scenario 'it re-renders the page when the page is submitted without anything filled in' do
       click_button 'Next'
 
-      expect(page).to have_content 'Is the part-payment ready to process?'
+      expect(page).to have_text 'Is the part-payment ready to process?'
     end
 
     describe 'confirming the payment is correct' do
@@ -52,9 +52,9 @@ RSpec.feature 'Part Payments flow' do
       end
 
       scenario 'it redirects to the summary page and displays correct details' do
-        expect(page).to have_content 'Check details'
-        expect(page).to have_content 'Part paymentPassed'
-        expect(page).to have_content 'The applicant has paid £25 towards the fee'
+        expect(page).to have_text 'Check details'
+        expect(page).to have_text 'Part paymentPassed'
+        expect(page).to have_text 'The applicant has paid £25 towards the fee'
       end
 
       describe 'clicking on the Complete processing button' do
@@ -63,8 +63,8 @@ RSpec.feature 'Part Payments flow' do
         end
 
         scenario 'redirects to the confirmation page with the correct content' do
-          expect(page).to have_content 'Processing complete'
-          expect(page).to have_no_content 'We have received your payment however it was not correct'
+          expect(page).to have_text 'Processing complete'
+          expect(page).to have_no_text 'We have received your payment however it was not correct'
         end
       end
     end
@@ -77,10 +77,10 @@ RSpec.feature 'Part Payments flow' do
       end
 
       scenario 'it redirects to the summary page and displays correct details' do
-        expect(page).to have_content 'Check details'
-        expect(page).to have_content 'Part paymentFailed'
-        expect(page).to have_content 'ReasonREASON'
-        expect(page).to have_content 'The applicant will need to make a new application'
+        expect(page).to have_text 'Check details'
+        expect(page).to have_text 'Part paymentFailed'
+        expect(page).to have_text 'ReasonREASON'
+        expect(page).to have_text 'The applicant will need to make a new application'
       end
 
       describe 'clicking on the Complete processing button' do
@@ -89,8 +89,8 @@ RSpec.feature 'Part Payments flow' do
         end
 
         scenario 'redirects to the confirmation page with the correct content' do
-          expect(page).to have_content 'Processing complete'
-          expect(page).to have_content 'We have received the part-payment towards the fee. However, we are unable to accept it because:'
+          expect(page).to have_text 'Processing complete'
+          expect(page).to have_text 'We have received the part-payment towards the fee. However, we are unable to accept it because:'
         end
       end
 
@@ -99,7 +99,7 @@ RSpec.feature 'Part Payments flow' do
         before { visit confirmation_part_payment_path(id: part_payment.id) }
 
         scenario 'the remission register right hand guidance is not shown' do
-          expect(page).to have_no_content 'remission register'
+          expect(page).to have_no_text 'remission register'
         end
       end
     end

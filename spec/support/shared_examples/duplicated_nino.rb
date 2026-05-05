@@ -14,8 +14,8 @@ RSpec.shared_examples "duplicated NINO for failed DWP" do
     fill_benefit_evidence(paper_provided: false)
 
     click_button 'Complete processing'
-    expect(page).to have_no_content('Evidence of income needs to be checked')
-    expect(page).to have_content('✗   Not eligible for help with fees')
+    expect(page).to have_no_text('Evidence of income needs to be checked')
+    expect(page).to have_text('✗   Not eligible for help with fees')
   end
 end
 
@@ -35,7 +35,7 @@ RSpec.shared_examples "duplicated NINO for successfull DWP" do
     fill_declaration
 
     click_button 'Complete processing'
-    expect(page).to have_no_content('Evidence of income needs to be checked')
-    expect(page).to have_content('✓ Eligible for help with fees')
+    expect(page).to have_no_text('Evidence of income needs to be checked')
+    expect(page).to have_text('✓ Eligible for help with fees')
   end
 end

@@ -23,16 +23,16 @@ RSpec.feature 'When evidence checkable applications are returned' do
 
     scenario 'shows the applications that should be checked for evidence' do
       within '.waiting-for-evidence' do
-        expect(page).to have_content(application1.reference)
-        expect(page).to have_content(application2.reference)
+        expect(page).to have_text(application1.reference)
+        expect(page).to have_text(application2.reference)
       end
     end
 
     scenario 'shows "Return application" button' do
       click_link application1.reference
-      expect(page).to have_content 'Process evidence'
-      expect(page).to have_content application1.applicant.full_name
-      expect(page).to have_content "What to do if evidence hasn't arrived"
+      expect(page).to have_text 'Process evidence'
+      expect(page).to have_text application1.applicant.full_name
+      expect(page).to have_text "What to do if evidence hasn't arrived"
       expect(page).to have_link 'Return application', visible: :hidden
     end
 
@@ -40,15 +40,15 @@ RSpec.feature 'When evidence checkable applications are returned' do
       click_link application1.reference
       click_link 'Return application', visible: false
 
-      expect(page).to have_content 'What is the problem?'
+      expect(page).to have_text 'What is the problem?'
       choose 'Citizen not proceeding'
       click_button 'Next'
-      expect(page).to have_content 'Processing complete'
+      expect(page).to have_text 'Processing complete'
       expect(application1.reload.state).to eq 'processed'
 
       click_link 'Back to start'
       expect(page).to have_button 'Start now'
-      expect(page).to have_no_content application1.reference
+      expect(page).to have_no_text application1.reference
     end
   end
 end

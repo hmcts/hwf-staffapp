@@ -27,9 +27,9 @@ RSpec.feature 'Applications awaiting evidence are displayed on dashboard' do
     visit evidence_checks_path
 
     within '.waiting-for-evidence' do
-      expect(page).to have_content(application1.reference)
-      expect(page).to have_content(application2.reference)
-      expect(page).to have_no_content(other_application.reference)
+      expect(page).to have_text(application1.reference)
+      expect(page).to have_text(application2.reference)
+      expect(page).to have_no_text(other_application.reference)
     end
   end
 
@@ -37,7 +37,7 @@ RSpec.feature 'Applications awaiting evidence are displayed on dashboard' do
     visit evidence_checks_path
 
     within '.waiting-for-evidence' do
-      expect(page).to have_content(application3.reference)
+      expect(page).to have_text(application3.reference)
     end
   end
 end

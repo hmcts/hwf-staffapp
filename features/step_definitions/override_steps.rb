@@ -28,11 +28,11 @@ When("I click Update application without selecting an option") do
 end
 
 Then("I should see an error telling me to select an option") do
-  expect(confirmation_page).to have_content(/Please select a reason for granting help with fees/)
+  expect(confirmation_page).to have_text(/Please select a reason for granting help with fees/)
 end
 
 Then("I should see an error telling me to enter a reason for granting help with fees") do
-  expect(confirmation_page).to have_content(/Please enter a reason for granting help with fees/)
+  expect(confirmation_page).to have_text(/Please enter a reason for granting help with fees/)
 end
 
 When("I check the Other option") do

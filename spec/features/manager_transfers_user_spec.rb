@@ -26,7 +26,7 @@ RSpec.feature 'Manager transfers user' do
       click_button 'Save changes'
 
       alert = page.find('.govuk-error-summary__body')
-      expect(alert).to have_content("#{user.name} moved to #{another_office.name}")
+      expect(alert).to have_text("#{user.name} moved to #{another_office.name}")
       expect(alert).to have_link(another_manager.name, href: "mailto:#{another_manager.email}")
     end
   end

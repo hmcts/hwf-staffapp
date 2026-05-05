@@ -26,5 +26,5 @@ end
 
 Then("I should not see the notification on my homepage") do
   navigation_page.go_to_homepage
-  page.should have_no_content('This is a test staff notification message')
+  page.should have_no_text('This is a test staff notification message')
 end

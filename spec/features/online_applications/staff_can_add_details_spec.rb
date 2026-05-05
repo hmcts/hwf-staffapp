@@ -63,9 +63,9 @@ RSpec.feature 'Staff can search for online application' do
   end
 
   def then_the_summary_page_is_displayed
-    expect(page).to have_content 'Check details'
-    expect(page).to have_content 'Fee£200'
-    expect(page).to have_content 'Date received10 October 2015'
+    expect(page).to have_text 'Check details'
+    expect(page).to have_text 'Fee£200'
+    expect(page).to have_text 'Date received10 October 2015'
   end
 
   def when_they_do_not_fill_in_all_required_fields
@@ -73,12 +73,12 @@ RSpec.feature 'Staff can search for online application' do
   end
 
   def then_the_application_fails_to_save
-    expect(page).to have_content 'Enter a court or tribunal fee'
-    expect(page).to have_content 'You must select a jurisdiction'
+    expect(page).to have_text 'Enter a court or tribunal fee'
+    expect(page).to have_text 'You must select a jurisdiction'
   end
 
   def they_see_all_partner_details
-    expect(page).to have_content 'Jane Doe'
+    expect(page).to have_text 'Jane Doe'
   end
 end
 # rubocop:enable RSpec/NoExpectationExample

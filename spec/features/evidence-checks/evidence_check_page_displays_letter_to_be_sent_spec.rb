@@ -20,10 +20,10 @@ RSpec.feature 'Evidence check page displays letter to be sent' do
     visit evidence_check_path(evidence_check)
 
     within '.confirmation-letter' do
-      expect(page).to have_content(application.reference)
-      expect(page).to have_content(application.applicant.full_name)
-      expect(page).to have_content(user.name)
-      expect(page).to have_content('28 days')
+      expect(page).to have_text(application.reference)
+      expect(page).to have_text(application.applicant.full_name)
+      expect(page).to have_text(user.name)
+      expect(page).to have_text('28 days')
     end
   end
 end

@@ -194,9 +194,9 @@ Then("On selecting the link I should see the paper-based application I was just 
 
   dwp_failed_applications_rows = dwp_failed_applications_page.table_rows
   expect(dwp_failed_applications_rows.size).to eq(1)
-  expect(dwp_failed_applications_rows[0]).to have_content('created')
-  expect(dwp_failed_applications_rows[0]).to have_content('John Christopher Smith')
-  expect(dwp_failed_applications_rows[0]).to have_content('Not ready to process')
+  expect(dwp_failed_applications_rows[0]).to have_text('created')
+  expect(dwp_failed_applications_rows[0]).to have_text('John Christopher Smith')
+  expect(dwp_failed_applications_rows[0]).to have_text('Not ready to process')
 end
 
 Then("On selecting the link I should see the online application I was just processing in a list") do
@@ -204,9 +204,9 @@ Then("On selecting the link I should see the online application I was just proce
   expect(dwp_failed_applications_page.content).to have_page_header
   dwp_failed_applications_rows = dwp_failed_applications_page.table_rows
   expect(dwp_failed_applications_rows.size).to eq(1)
-  expect(dwp_failed_applications_rows[0]).to have_content('created')
-  expect(dwp_failed_applications_rows[0]).to have_content('Peter Smith')
-  expect(dwp_failed_applications_rows[0]).to have_content('Not ready to process')
+  expect(dwp_failed_applications_rows[0]).to have_text('created')
+  expect(dwp_failed_applications_rows[0]).to have_text('Peter Smith')
+  expect(dwp_failed_applications_rows[0]).to have_text('Not ready to process')
 end
 
 Then("I should be on the result page with the application status set to processed") do
@@ -265,9 +265,9 @@ Then("I should only see the application for my office in the pending list") do
   dwp_failed_applications_rows = dwp_failed_applications_page.table_rows
 
   expect(dwp_failed_applications_rows.size).to eq(1)
-  expect(dwp_failed_applications_rows[0]).to have_content('created')
-  expect(dwp_failed_applications_rows[0]).to have_content("#{@applicant.title} #{@applicant.first_name} #{@applicant.last_name}")
-  expect(dwp_failed_applications_rows[0]).to have_content('Ready to process')
+  expect(dwp_failed_applications_rows[0]).to have_text('created')
+  expect(dwp_failed_applications_rows[0]).to have_text("#{@applicant.title} #{@applicant.first_name} #{@applicant.last_name}")
+  expect(dwp_failed_applications_rows[0]).to have_text('Ready to process')
 end
 
 Then("There should be no heading 'Process when DWP is back online'") do
@@ -295,7 +295,7 @@ end
 Then("I should see one application pending") do
   dwp_failed_applications_rows = dwp_failed_applications_page.table_rows
   expect(dwp_failed_applications_rows.size).to eq(1)
-  expect(dwp_failed_applications_rows[0]).to have_content("#{@applicant.title} #{@applicant.first_name} #{@applicant.last_name}")
+  expect(dwp_failed_applications_rows[0]).to have_text("#{@applicant.title} #{@applicant.first_name} #{@applicant.last_name}")
 end
 
 When("the applicant has not provided Evidence of benefits") do
