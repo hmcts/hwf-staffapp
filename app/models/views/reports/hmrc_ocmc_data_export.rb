@@ -205,7 +205,7 @@ module Views
         online_applications.created_at AS \"Created at\",
         online_applications.fee AS \"Fee\",
         jurisdictions.name AS \"Jurisdiction\",
-        NULL AS \"Application type\",
+        CASE WHEN online_applications.benefits THEN 'benefit' ELSE 'income' END AS \"Application type\",
         online_applications.form_name AS \"Form\",
         online_applications.refund AS \"Refund\",
         CASE WHEN online_applications.emergency_reason IS NULL THEN false ELSE true END AS \"Emergency\",

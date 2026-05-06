@@ -750,6 +750,34 @@ RSpec.describe Views::Reports::HmrcOcmcDataExport do
         expect(row['Status']).to eq('Unprocessed')
       end
 
+      it "sets Application type to 'benefit' when benefits is true" do
+        expect(row['Application type']).to eq('benefit')
+      end
+
+      describe 'Application type based on benefits value' do
+        let(:income_row) { CSV.parse(ocmc_export.to_csv, headers: true).find { |r| r['HwF reference number'] == 'HWF-INC-001' } }
+
+        before do
+          travel_to(date_from + 1.day) do
+            create(:online_application,
+                   reference: 'HWF-INC-001',
+                   date_received: Date.parse('2021-01-02'),
+                   user_id: receiving_user.id,
+                   benefits: benefits)
+          end
+        end
+
+        context 'when benefits is false' do
+          let(:benefits) { false }
+          it { expect(income_row['Application type']).to eq('income') }
+        end
+
+        context 'when benefits is true' do
+          let(:benefits) { true }
+          it { expect(income_row['Application type']).to eq('benefit') }
+        end
+      end
+
       it "fills paper-only columns with 'N/A'" do
         aggregate_failures do
           expect(row['Application processed date']).to eq('N/A')
