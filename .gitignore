@@ -61,5 +61,8 @@ storage/*
 
 /node_modules
 
+# Yarn 4
+.yarn/install-state.gz
+
 CLAUDE.md
 .claude/**

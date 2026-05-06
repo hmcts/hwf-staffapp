@@ -24,6 +24,13 @@ module Applications
         end
       end
 
+      def retry
+        return head :forbidden unless Settings.dwp_retry_button_enabled
+
+        BenefitCheckRunner.new(application).run
+        redirect_to application_benefit_override_paper_evidence_path(application)
+      end
+
       private
 
       def benefit_check_runner
