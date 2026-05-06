@@ -746,6 +746,10 @@ RSpec.describe Views::Reports::HmrcOcmcDataExport do
         expect(row['Source']).to eq('digital')
       end
 
+      it "sets Status to 'Unprocessed' (matches paper app state = 0)" do
+        expect(row['Status']).to eq('Unprocessed')
+      end
+
       it "fills paper-only columns with 'N/A'" do
         aggregate_failures do
           expect(row['Application processed date']).to eq('N/A')

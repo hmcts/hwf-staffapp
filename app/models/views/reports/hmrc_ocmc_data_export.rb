@@ -200,7 +200,7 @@ module Views
         "SELECT
         offices.name AS \"Office\",
         online_applications.id AS \"Id\",
-        NULL AS \"Status\",
+        'Unprocessed' AS \"Status\",
         online_applications.reference AS \"HwF reference number\",
         online_applications.created_at AS \"Created at\",
         online_applications.fee AS \"Fee\",
