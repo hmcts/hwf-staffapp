@@ -67,7 +67,10 @@ module Views
         ec.income as \"Post evidence income\",
         CASE WHEN applications.income < 101 THEN 'true' ELSE 'false' END AS \"Low income declared\",
         applications.decision_date as \"Decision date\",
-        applications.income_period as \"Income period\",
+        CASE WHEN COALESCE(applications.income_period, '') = ''
+             THEN NULL
+             ELSE applications.income_period
+        END AS \"Income period\",
         applications.children as \"Children\",
         applications.children_age_band as \"Age band under 14\",
         applications.children_age_band as \"Age band 14+\",
@@ -214,7 +217,7 @@ module Views
         NULL AS \"Post evidence income\",
         CASE WHEN online_applications.income < 101 THEN 'true' ELSE 'false' END AS \"Low income declared\",
         NULL AS \"Decision date\",
-        CASE WHEN online_applications.benefits AND COALESCE(online_applications.income_period, '') = ''
+        CASE WHEN COALESCE(online_applications.income_period, '') = ''
              THEN NULL
              ELSE online_applications.income_period
         END AS \"Income period\",

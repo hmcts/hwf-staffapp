@@ -194,6 +194,32 @@ RSpec.describe Views::Reports::HmrcOcmcDataExport do
       end
     end
 
+    describe 'paper Income period' do
+      let(:scoped_row) { CSV.parse(ocmc_export.to_csv, headers: true).find { |r| r['HwF reference number'] == 'PAPER-IP-1' } }
+
+      before do
+        travel_to(date_from + 5.days) do
+          create(:application, :processed_state,
+                 office: office, reference: 'PAPER-IP-1', income_period: income_period)
+        end
+      end
+
+      context 'when income_period is nil' do
+        let(:income_period) { nil }
+        it { expect(scoped_row['Income period']).to eq('N/A') }
+      end
+
+      context 'when income_period is empty string' do
+        let(:income_period) { '' }
+        it { expect(scoped_row['Income period']).to eq('N/A') }
+      end
+
+      context 'when income_period is set' do
+        let(:income_period) { 'last_month' }
+        it { expect(scoped_row['Income period']).to eq('last_month') }
+      end
+    end
+
     context 'data fields' do
       let(:application2) {
         create(:application, :waiting_for_evidence_state,
@@ -796,37 +822,23 @@ RSpec.describe Views::Reports::HmrcOcmcDataExport do
                    reference: 'HWF-IP-001',
                    date_received: Date.parse('2021-01-02'),
                    user_id: receiving_user.id,
-                   benefits: benefits,
                    income_period: income_period)
           end
         end
 
-        context 'when benefits is true and income_period is nil' do
-          let(:benefits) { true }
+        context 'when income_period is nil' do
           let(:income_period) { nil }
           it { expect(scoped_row['Income period']).to eq('N/A') }
         end
 
-        context 'when benefits is true and income_period is empty string' do
-          let(:benefits) { true }
+        context 'when income_period is empty string' do
           let(:income_period) { '' }
           it { expect(scoped_row['Income period']).to eq('N/A') }
         end
 
-        context 'when benefits is true and income_period is set' do
-          let(:benefits) { true }
+        context 'when income_period is set' do
           let(:income_period) { 'last_month' }
-          it 'preserves the value' do
-            expect(scoped_row['Income period']).to eq('last_month')
-          end
-        end
-
-        context 'when benefits is false and income_period is set' do
-          let(:benefits) { false }
-          let(:income_period) { 'average' }
-          it 'preserves the value' do
-            expect(scoped_row['Income period']).to eq('average')
-          end
+          it { expect(scoped_row['Income period']).to eq('last_month') }
         end
       end
     end
