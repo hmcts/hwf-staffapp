@@ -155,6 +155,46 @@ RSpec.describe ApplicationSearch do
           expect(service_completed).to match_array([application_office_1, application_office_2])
         end
       end
+
+      context 'full-name match across first and last name (concat branch)' do
+        let(:reference) { 'John Smith' }
+        let(:application) { create(:application, :processed_state, office: user.office) }
+        let(:non_matching_application) { create(:application, :processed_state, office: user.office) }
+
+        before do
+          create(:applicant, first_name: 'John', last_name: 'Smith', application: application)
+          create(:applicant, first_name: 'Mary', last_name: 'Jones', application: non_matching_application)
+        end
+
+        it 'matches via the concatenated first + last name' do
+          expect(service_completed).to eq([application])
+        end
+      end
+
+      context 'first-name substring match' do
+        let(:reference) { 'ohn' }
+        let(:application) { create(:application, :processed_state, office: user.office) }
+
+        before do
+          create(:applicant, first_name: 'John', last_name: 'Smith', application: application)
+        end
+
+        it 'matches an applicant whose first_name contains the substring' do
+          expect(service_completed).to eq([application])
+        end
+      end
+
+      context 'when matching applicant belongs to a purged application' do
+        let(:application) { create(:application, :processed_state, office: user.office, purged: true) }
+
+        before do
+          create(:applicant, first_name: 'John', last_name: 'Smith', application: application)
+        end
+
+        it 'does not return the purged application' do
+          expect(service_completed).to be_nil
+        end
+      end
     end
 
     context 'when searching for purged applications' do
