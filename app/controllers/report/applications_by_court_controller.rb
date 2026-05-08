@@ -1,11 +1,11 @@
 module Report
-  class OcmcController < ReportsController
-    before_action :authorise_ocmc_data
+  class ApplicationsByCourtController < ReportsController
+    before_action :authorise_applications_by_court_data
 
     def show
       @form = Forms::FinanceReport.new
 
-      render 'reports/ocmc_report'
+      render 'reports/applications_by_court_report'
     end
 
     # rubocop:disable Metrics/MethodLength
@@ -19,18 +19,18 @@ module Report
 
           redirect_to reports_path
         else
-          build_and_return_data(extract_ocmc_data, export_file_prefix)
+          build_and_return_data(extract_applications_by_court_data, export_file_prefix)
         end
       else
-        render 'reports/ocmc_report'
+        render 'reports/applications_by_court_report'
       end
     end
     # rubocop:enable Metrics/MethodLength
 
     private
 
-    def extract_ocmc_data
-      Views::Reports::HmrcOcmcDataExport.new(date_from(report_params), date_to(report_params), court_id).to_csv
+    def extract_applications_by_court_data
+      Views::Reports::ApplicationsByCourtExport.new(date_from(report_params), date_to(report_params), court_id).to_csv
     end
 
     def delay_job_export
@@ -39,11 +39,11 @@ module Report
       user_id = current_user.id
       all_offices = report_params[:all_offices]
 
-      OcmcExportJob.perform_later(from: from_date, to: to_date, court_id:, user_id:, all_offices:)
+      ApplicationsByCourtExportJob.perform_later(from: from_date, to: to_date, court_id:, user_id:, all_offices:)
     end
 
-    def authorise_ocmc_data
-      authorize :report, :ocmc_report?
+    def authorise_applications_by_court_data
+      authorize :report, :applications_by_court_report?
     end
 
     def court_id
@@ -55,7 +55,7 @@ module Report
     end
 
     def flash_message
-      I18n.t('.forms/report/ocmc.notice')
+      I18n.t('.forms/report/applications_by_court.notice')
     end
   end
 end

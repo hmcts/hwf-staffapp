@@ -6,8 +6,8 @@ require 'test_prof/recipes/rspec/let_it_be'
 
 require 'csv'
 
-RSpec.describe Views::Reports::HmrcOcmcDataExport do
-  subject(:ocmc_export) { described_class.new(from_date, to_date, office_id) }
+RSpec.describe Views::Reports::ApplicationsByCourtExport do
+  subject(:export) { described_class.new(from_date, to_date, office_id) }
   let(:from_date) { { day: date_from.day, month: date_from.month, year: date_from.year } }
   let(:to_date) { { day: date_to.day, month: date_to.month, year: date_to.year } }
   let(:office_id) { office.id }
@@ -30,7 +30,7 @@ RSpec.describe Views::Reports::HmrcOcmcDataExport do
       end
 
       it 'returns no results' do
-        expect(ocmc_export.to_csv).to eq('no results')
+        expect(export.to_csv).to eq('no results')
       end
     end
 
@@ -44,8 +44,8 @@ RSpec.describe Views::Reports::HmrcOcmcDataExport do
       end
 
       it 'returns no results' do
-        expect(ocmc_export.to_csv).not_to eq('no results')
-        expect(ocmc_export.to_csv).to include('BR123456A')
+        expect(export.to_csv).not_to eq('no results')
+        expect(export.to_csv).to include('BR123456A')
       end
     end
   end
@@ -103,7 +103,7 @@ RSpec.describe Views::Reports::HmrcOcmcDataExport do
     let(:decision_overrides) { create(:decision_override, application: application1) }
     let(:benefits_override_correct) { true }
 
-    subject(:data) { ocmc_export.to_csv.split("\n") }
+    subject(:data) { export.to_csv.split("\n") }
 
     before do
       travel_to(date_from + 2.days) { application2 }
@@ -195,7 +195,7 @@ RSpec.describe Views::Reports::HmrcOcmcDataExport do
     end
 
     describe 'paper Income period' do
-      let(:scoped_row) { CSV.parse(ocmc_export.to_csv, headers: true).find { |r| r['HwF reference number'] == 'PAPER-IP-1' } }
+      let(:scoped_row) { CSV.parse(export.to_csv, headers: true).find { |r| r['HwF reference number'] == 'PAPER-IP-1' } }
 
       before do
         travel_to(date_from + 5.days) do
@@ -567,14 +567,14 @@ RSpec.describe Views::Reports::HmrcOcmcDataExport do
     before { travel_to(date_from + 1.day) { create(:application, :processed_state, office: office) } }
 
     it 'has the 58 expected columns in the expected order' do
-      csv = CSV.parse(ocmc_export.to_csv, headers: true)
+      csv = CSV.parse(export.to_csv, headers: true)
 
       expect(csv.headers).to eq(expected_headers)
     end
   end
 
   describe 'all_offices: true' do
-    subject(:ocmc_export) { described_class.new(from_date, to_date, office_id, all_offices: true) }
+    subject(:export) { described_class.new(from_date, to_date, office_id, all_offices: true) }
 
     let(:office_id) { bristol_office.id }
 
@@ -588,7 +588,7 @@ RSpec.describe Views::Reports::HmrcOcmcDataExport do
     end
 
     it 'includes both eligible offices and excludes Digital / HMCTS HQ Team' do
-      offices = CSV.parse(ocmc_export.to_csv, headers: true)['Office']
+      offices = CSV.parse(export.to_csv, headers: true)['Office']
 
       aggregate_failures do
         expect(offices).to include('Bristol', 'Cardiff')
@@ -658,7 +658,7 @@ RSpec.describe Views::Reports::HmrcOcmcDataExport do
 
     let(:row) do
       [application, evidence_check, hmrc_check, part_payment, decision_override, benefit_override].each(&:itself)
-      CSV.parse(ocmc_export.to_csv, headers: true).first
+      CSV.parse(export.to_csv, headers: true).first
     end
 
     it 'fills every column with the expected value' do
@@ -734,7 +734,7 @@ RSpec.describe Views::Reports::HmrcOcmcDataExport do
     end
 
     it 'flags HWF-prefixed references as digital and others as paper' do
-      csv = CSV.parse(ocmc_export.to_csv, headers: true)
+      csv = CSV.parse(export.to_csv, headers: true)
       digital_row = csv.find { |row| row['HwF reference number'] == 'HWF-A79-JMN' }
       paper_row = csv.find { |row| row['HwF reference number'] == 'PA21-0123456' }
 
@@ -758,7 +758,7 @@ RSpec.describe Views::Reports::HmrcOcmcDataExport do
         end
       end
 
-      let(:row) { CSV.parse(ocmc_export.to_csv, headers: true).find { |r| r['HwF reference number'] == 'HWF-B82-KPQ' } }
+      let(:row) { CSV.parse(export.to_csv, headers: true).find { |r| r['HwF reference number'] == 'HWF-B82-KPQ' } }
 
       it 'appears in the report' do
         expect(row).not_to be_nil
@@ -781,7 +781,7 @@ RSpec.describe Views::Reports::HmrcOcmcDataExport do
       end
 
       describe 'Application type based on benefits value' do
-        let(:income_row) { CSV.parse(ocmc_export.to_csv, headers: true).find { |r| r['HwF reference number'] == 'HWF-INC-001' } }
+        let(:income_row) { CSV.parse(export.to_csv, headers: true).find { |r| r['HwF reference number'] == 'HWF-INC-001' } }
 
         before do
           travel_to(date_from + 1.day) do
@@ -814,7 +814,7 @@ RSpec.describe Views::Reports::HmrcOcmcDataExport do
       end
 
       describe 'Income period' do
-        let(:scoped_row) { CSV.parse(ocmc_export.to_csv, headers: true).find { |r| r['HwF reference number'] == 'HWF-IP-001' } }
+        let(:scoped_row) { CSV.parse(export.to_csv, headers: true).find { |r| r['HwF reference number'] == 'HWF-IP-001' } }
 
         before do
           travel_to(date_from + 1.day) do
@@ -854,7 +854,7 @@ RSpec.describe Views::Reports::HmrcOcmcDataExport do
       end
 
       it 'does not appear in the report' do
-        references = CSV.parse(ocmc_export.to_csv, headers: true)['HwF reference number']
+        references = CSV.parse(export.to_csv, headers: true)['HwF reference number']
         expect(references).not_to include('HWF-C13-LRS')
       end
     end
@@ -873,7 +873,7 @@ RSpec.describe Views::Reports::HmrcOcmcDataExport do
       end
 
       it 'is excluded from the report' do
-        references = CSV.parse(ocmc_export.to_csv, headers: true)['HwF reference number']
+        references = CSV.parse(export.to_csv, headers: true)['HwF reference number']
         expect(references).not_to include('HWF-OTH-001')
       end
     end
@@ -896,7 +896,7 @@ RSpec.describe Views::Reports::HmrcOcmcDataExport do
       end
 
       it 'excludes both rows' do
-        references = CSV.parse(ocmc_export.to_csv, headers: true)['HwF reference number']
+        references = CSV.parse(export.to_csv, headers: true)['HwF reference number']
         aggregate_failures do
           expect(references).not_to include('HWF-DIG-001')
           expect(references).not_to include('HWF-HQ-001')
@@ -915,14 +915,14 @@ RSpec.describe Views::Reports::HmrcOcmcDataExport do
       end
 
       it 'is excluded from the report (cannot determine office)' do
-        references = CSV.parse(ocmc_export.to_csv, headers: true)['HwF reference number']
+        references = CSV.parse(export.to_csv, headers: true)['HwF reference number']
         expect(references).not_to include('HWF-NIL-001')
       end
     end
   end
 
   describe 'all_offices: true with online applications' do
-    subject(:ocmc_export) { described_class.new(from_date, to_date, office_id, all_offices: true) }
+    subject(:export) { described_class.new(from_date, to_date, office_id, all_offices: true) }
 
     let(:bristol_user) { create(:user, office: bristol_office) }
     let(:cardiff_user) { create(:user, office: cardiff_office) }
@@ -942,7 +942,7 @@ RSpec.describe Views::Reports::HmrcOcmcDataExport do
       let(:office_id) { bristol_office.id }
 
       it 'includes online apps from non-excluded offices and excludes Digital / HMCTS HQ Team' do
-        csv = CSV.parse(ocmc_export.to_csv, headers: true)
+        csv = CSV.parse(export.to_csv, headers: true)
         rows = csv.map { |r| [r['HwF reference number'], r['Office']] }
 
         aggregate_failures do
@@ -958,8 +958,8 @@ RSpec.describe Views::Reports::HmrcOcmcDataExport do
       let(:office_id) { nil }
 
       it 'does not raise and still produces the all-offices report' do
-        expect { ocmc_export.to_csv }.not_to raise_error
-        csv = CSV.parse(ocmc_export.to_csv, headers: true)
+        expect { export.to_csv }.not_to raise_error
+        csv = CSV.parse(export.to_csv, headers: true)
         rows = csv.map { |r| [r['HwF reference number'], r['Office']] }
 
         aggregate_failures do
@@ -983,7 +983,7 @@ RSpec.describe Views::Reports::HmrcOcmcDataExport do
     end
 
     it 'appears exactly once (via the paper Application, not the online one)' do
-      references = CSV.parse(ocmc_export.to_csv, headers: true)['HwF reference number']
+      references = CSV.parse(export.to_csv, headers: true)['HwF reference number']
       expect(references.count('HWF-D24-MTU')).to eq(1)
     end
   end

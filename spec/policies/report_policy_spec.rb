@@ -15,7 +15,7 @@ RSpec.describe ReportPolicy, type: :policy do
     it { is_expected.to permit_action(:letter) }
     it { is_expected.not_to permit_action(:raw_data) }
     it { is_expected.not_to permit_action(:power_bi) }
-    it { is_expected.not_to permit_action(:ocmc_report) }
+    it { is_expected.not_to permit_action(:applications_by_court_report) }
     it { is_expected.not_to permit_action(:hmrc_purged) }
     it { is_expected.not_to permit_action(:purge_audit) }
   end
@@ -30,7 +30,7 @@ RSpec.describe ReportPolicy, type: :policy do
     it { is_expected.to permit_action(:letter) }
     it { is_expected.not_to permit_action(:raw_data) }
     it { is_expected.not_to permit_action(:power_bi) }
-    it { is_expected.not_to permit_action(:ocmc_report) }
+    it { is_expected.not_to permit_action(:applications_by_court_report) }
     it { is_expected.not_to permit_action(:hmrc_purged) }
     it { is_expected.not_to permit_action(:purge_audit) }
   end
@@ -45,7 +45,7 @@ RSpec.describe ReportPolicy, type: :policy do
     it { is_expected.to permit_action(:letter) }
     it { is_expected.not_to permit_action(:raw_data) }
     it { is_expected.not_to permit_action(:power_bi) }
-    it { is_expected.not_to permit_action(:ocmc_report) }
+    it { is_expected.not_to permit_action(:applications_by_court_report) }
     it { is_expected.not_to permit_action(:hmrc_purged) }
     it { is_expected.not_to permit_action(:purge_audit) }
   end
@@ -59,7 +59,7 @@ RSpec.describe ReportPolicy, type: :policy do
     it { is_expected.to permit_action(:public) }
     it { is_expected.to permit_action(:letter) }
     it { is_expected.to permit_action(:raw_data) }
-    it { is_expected.to permit_action(:ocmc_report) }
+    it { is_expected.to permit_action(:applications_by_court_report) }
     it { is_expected.to permit_action(:hmrc_purged) }
     it { is_expected.to permit_action(:purge_audit) }
   end
@@ -73,7 +73,7 @@ RSpec.describe ReportPolicy, type: :policy do
     it { is_expected.to permit_action(:letter) }
     it { is_expected.to permit_action(:raw_data) }
     it { is_expected.not_to permit_action(:power_bi) }
-    it { is_expected.not_to permit_action(:ocmc_report) }
+    it { is_expected.not_to permit_action(:applications_by_court_report) }
     it { is_expected.to permit_action(:hmrc_purged) }
     it { is_expected.to permit_action(:purge_audit) }
   end

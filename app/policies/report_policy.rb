@@ -23,7 +23,7 @@ class ReportPolicy < BasePolicy
     admin_or_mi?
   end
 
-  def ocmc_report?
+  def applications_by_court_report?
     admin?
   end
 
