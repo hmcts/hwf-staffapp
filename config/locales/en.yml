@@ -1238,6 +1238,6 @@ en-GB:
     notice: 'Raw data export in progress. You should receive an email with a download link in a few minutes. If not received, please contact technical support.'
   forms/report/fi_transactional:
     notice: 'Finance transactional export in progress. You should receive an email with a download link in a few minutes. If not please contact technical support.'
-  forms/report/ocmc:
+  forms/report/applications_by_court:
     notice: 'Applications for all offices in progress. You should receive an email with a download link in a few minutes. If not please contact technical support.'
     datashare_notice: 'Applications for all Datashare offices in progress. You should receive an email with a download link in a few minutes. If not please contact technical support.'

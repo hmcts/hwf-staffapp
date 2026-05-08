@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe Report::OcmcController do
+RSpec.describe Report::ApplicationsByCourtController do
 
   let(:admin)     { create(:admin_user) }
   let(:date_from) { { day: "01", month: "01", year: "2015" } }
@@ -38,7 +38,7 @@ RSpec.describe Report::OcmcController do
 
         it { is_expected.to have_http_status(:success) }
 
-        it { is_expected.to render_template 'reports/ocmc_report' }
+        it { is_expected.to render_template 'reports/applications_by_court_report' }
       end
 
       context 'income claims builder' do
@@ -52,16 +52,16 @@ RSpec.describe Report::OcmcController do
             entity_code: office.id }
         }
         it 'does something' do
-          allow(Views::Reports::HmrcOcmcDataExport).to receive(:new).and_return([])
+          allow(Views::Reports::ApplicationsByCourtExport).to receive(:new).and_return([])
           put :data_export, params: { forms_finance_report: dates }
-          expect(Views::Reports::HmrcOcmcDataExport).to have_received(:new).with(date_from, date_to, office.id.to_s)
+          expect(Views::Reports::ApplicationsByCourtExport).to have_received(:new).with(date_from, date_to, office.id.to_s)
         end
       end
 
       context 'HMRC export with valid data - both from and to dates' do
         let(:entity_code) { hmrc_office.id }
         before {
-          allow(Views::Reports::HmrcOcmcDataExport).to receive(:new).and_return([])
+          allow(Views::Reports::ApplicationsByCourtExport).to receive(:new).and_return([])
           put :data_export, params: { forms_finance_report: dates }
         }
 
@@ -70,7 +70,7 @@ RSpec.describe Report::OcmcController do
       end
       context 'with valid data - both from and to dates' do
         before {
-          allow(Views::Reports::HmrcOcmcDataExport).to receive(:new).and_return([])
+          allow(Views::Reports::ApplicationsByCourtExport).to receive(:new).and_return([])
           put :data_export, params: { forms_finance_report: dates }
         }
 
@@ -90,7 +90,7 @@ RSpec.describe Report::OcmcController do
 
     context 'with valid data - both from and to dates' do
       before {
-        allow(OcmcExportJob).to receive(:perform_later)
+        allow(ApplicationsByCourtExportJob).to receive(:perform_later)
         put :data_export, params: { forms_finance_report: dates }
       }
 
@@ -110,7 +110,7 @@ RSpec.describe Report::OcmcController do
       it "run export in delayed job" do
         from = { day: "01", month: "01", year: "2020" }
         to = { day: "31", month: "12", year: "2022" }
-        expect(OcmcExportJob).to have_received(:perform_later).with(from: from, to: to, user_id: admin.id, court_id: office.id.to_s, all_offices: "true")
+        expect(ApplicationsByCourtExportJob).to have_received(:perform_later).with(from: from, to: to, user_id: admin.id, court_id: office.id.to_s, all_offices: "true")
       end
     end
   end

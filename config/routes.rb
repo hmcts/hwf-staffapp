@@ -21,8 +21,10 @@ Rails.application.routes.draw do
     put 'power_bi' => 'power_bi#data_export'
     get 'raw_data' => 'raw_data#show'
     put 'raw_data' => 'raw_data#data_export'
-    get 'ocmc' => 'ocmc#show'
-    put 'ocmc' => 'ocmc#data_export'
+    get 'applications_by_court' => 'applications_by_court#show'
+    put 'applications_by_court' => 'applications_by_court#data_export'
+    # Backward-compatibility redirect for the previous '/report/ocmc' URL.
+    get 'ocmc', to: redirect('/report/applications_by_court')
     get 'hmrc' => 'hmrc#show'
     put 'hmrc' => 'hmrc#data_export'
     get 'purge_audit' => 'purge_audit#show'
