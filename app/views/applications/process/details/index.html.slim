@@ -201,11 +201,7 @@
 
     aside.govuk-grid-column-one-third
       .guidance
-        - if show_ucd_changes?(@application.detail.calculation_scheme)
-          = render 'post_ucd_guide'
-        - else
-          = render 'pre_ucd_guide'
-
+        = render 'guide'
 
         h3.govuk-heading-m Emergency cases
         p An emergency case is one where delay risks harm to the applicant or to the applicant’s case.

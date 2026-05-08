@@ -82,9 +82,9 @@ module ApplicationHelper
     Time.current.strftime("%d %m %Y")
   end
 
-  # rubocop:disable Metrics/lineLength
+  # rubocop:disable Layout/LineLength
   def staff_policy_guide_link
     link_to 'staff policy guide', 'https://justiceuk.sharepoint.com/sites/knowledgecentral/Shared%20Documents/Cross-Jurisdiction/Help%20with%20Fees/Guidance%20For%20Staff%20and%20Managers/policy-guide%20_word%20version.docx?web=1', target: '_blank', rel: 'noopener'
   end
-  # rubocop:enable Metrics/lineLength
+  # rubocop:enable Layout/LineLength
 end
