@@ -2,9 +2,9 @@
 # rubocop:disable Metrics/ClassLength
 module Views
   module Reports
-    class HmrcOcmcDataExport < ReportBase
+    class ApplicationsByCourtExport < ReportBase
       require 'csv'
-      include OcmcExportHelper
+      include ApplicationsByCourtExportHelper
 
       NUMERIC_FIELDS = [
         'Applicant pays estimate', 'Applicant pays'
@@ -16,7 +16,7 @@ module Views
         @office_id = office_id
         @all_offices = all_offices
 
-        @csv_file_name = "help-with-fees-datashare-applications-by-court-extract-" \
+        @csv_file_name = "help-with-fees-applications-by-court-extract-" \
                          "#{start_date[:day]}-#{start_date[:month]}-#{start_date[:year]}-" \
                          "#{end_date[:day]}-#{end_date[:month]}-#{end_date[:year]}.csv"
         @zipfile_path = "tmp/#{@csv_file_name}.zip"

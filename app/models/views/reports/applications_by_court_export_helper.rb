@@ -1,6 +1,6 @@
 module Views
   module Reports
-    module OcmcExportHelper
+    module ApplicationsByCourtExportHelper
 
       def data
         @data ||= build_data
