@@ -43,7 +43,7 @@ RSpec.describe GuideHelper do
   end
 
   describe '#datashare_url' do
-    it { expect(helper.datashare_url).to include('sourcedoc=%7BD130FF65-E19C-4A4D-9F02-5E2FF579B229%7D') }
+    it { expect(helper.datashare_url).to include('sourcedoc=%7BB23D0CC3-7CF7-47B8-A12A-B79AAA0146FC%7D') }
   end
 
   describe '#faq_url' do
