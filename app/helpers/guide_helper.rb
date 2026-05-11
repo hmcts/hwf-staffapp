@@ -49,7 +49,7 @@ module GuideHelper
   end
 
   def datashare_url
-    'https://justiceuk.sharepoint.com/:w:/r/sites/knowledgecentral/_layouts/15/Doc.aspx?sourcedoc=%7BD130FF65-E19C-4A4D-9F02-5E2FF579B229%7D&file=HMRC-datashare-step-by-step-user-guide.docx&action=default&mobileredirect=true'
+    'https://justiceuk.sharepoint.com/:w:/r/sites/knowledgecentral/_layouts/15/Doc.aspx?sourcedoc=%7BB23D0CC3-7CF7-47B8-A12A-B79AAA0146FC%7D&file=updated_23March2026_HMRC-datashare-step-by-st_Loren%20Barrow.docx'
   end
 
   def faq_url

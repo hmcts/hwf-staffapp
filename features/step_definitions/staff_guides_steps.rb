@@ -47,7 +47,7 @@ Then("I can view RRDS") do
 end
 
 Then("I can view HMRC Datashare") do
-  expect(guide_page.content.hmrc_datashare['href']).to include 'sourcedoc=%7BD130FF65-E19C-4A4D-9F02-5E2FF579B229%7D'
+  expect(guide_page.content.hmrc_datashare['href']).to include 'sourcedoc=%7BB23D0CC3-7CF7-47B8-A12A-B79AAA0146FC%7D'
 end
 
 Then("I can view Staff guides link on footer") do
