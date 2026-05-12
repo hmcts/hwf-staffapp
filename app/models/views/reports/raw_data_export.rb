@@ -61,7 +61,11 @@ module Views
         complete_processing: 'complete processing?',
         additional_income: 'additional income',
         income_processed: 'income processed',
-        hmrc_request_date_range: 'HMRC request date range'
+        hmrc_request_date_range: 'HMRC request date range',
+        fee_code: 'fee code',
+        fee_version_valid_from: 'fee version valid from',
+        claim_amount: 'claim amount',
+        fee_population: 'fee population'
       }.freeze
 
       HEADERS = FIELDS.values
@@ -93,11 +97,11 @@ module Views
       # rubocop:disable Metrics/PerceivedComplexity
       def process_row(row, attr)
         if [:estimated_cost, :estimated_amount_to_pay, :reg_number,
-            :final_amount_to_pay].include?(attr)
+            :final_amount_to_pay, :fee_population].include?(attr)
           send(attr, row)
         elsif [:date_received, :decision_date, :date_fee_paid, :date_of_birth,
                :date_submitted_online, :manual_process_date, :processed_date,
-               :application_processed_date].include?(attr)
+               :application_processed_date, :fee_version_valid_from].include?(attr)
           date_value = row[attr.to_s]
           if date_value.present?
             date_value.respond_to?(:to_fs) ? date_value.to_fs(:default) : Date.parse(date_value.to_s).to_fs(:default)
@@ -256,7 +260,11 @@ module Views
               WHEN ec.completed_at IS NOT NULL then ec.income
               ELSE NULL
             END as income_processed,
-            hc.request_params as hmrc_request_date_range
+            hc.request_params as hmrc_request_date_range,
+            details.fee_code,
+            details.fee_version_valid_from,
+            details.claim_amount,
+            details.fee_entry_method
           FROM applications
           INNER JOIN applicants ON applicants.application_id = applications.id
           INNER JOIN business_entities ON business_entities.id = applications.business_entity_id
@@ -296,6 +304,14 @@ module Views
         return row['fee'] if row['pp_outcome'].present? && row['pp_outcome'] != 'part'
         ec_amount = row['evidence_check_amount_to_pay']
         ec_amount || row['amount_to_pay'] || 0
+      end
+
+      def fee_population(row)
+        case row['fee_entry_method']
+        when 'auto' then 'auto populate'
+        when 'manual' then 'entered'
+        else 'N/A'
+        end
       end
 
       def reg_number(row)

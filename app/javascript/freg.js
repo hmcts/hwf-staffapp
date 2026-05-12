@@ -106,6 +106,7 @@ window.moj.Modules.JsonSearcherModule = (function() {
       $('#application_fee_code').val('');
       $('#application_claim_amount').val('');
       $('#application_fee_version_valid_from').val('');
+      $('#application_fee_entry_method').val('');
       $('#fee_search_has_results').val('false');
       $('input[id="application_fee"]').val('');
       this.setFeeReadonly(true);
@@ -210,15 +211,19 @@ window.moj.Modules.JsonSearcherModule = (function() {
             switch (feeData.classified_type) {
               case 'fixed':
                 self.handleFixedFee(feeData);
+                $('#application_fee_entry_method').val('auto');
                 break;
               case 'banded_flat':
                 self.handleFixedFee(feeData);
+                $('#application_fee_entry_method').val('auto');
                 break;
               case 'banded_percentage':
                 self.handleBandedFee(feeData, true);
+                $('#application_fee_entry_method').val('auto');
                 break;
               case 'rateable':
                 self.handleRateableFee();
+                $('#application_fee_entry_method').val('manual');
                 break;
             }
           });
@@ -375,6 +380,7 @@ window.moj.Modules.JsonSearcherModule = (function() {
               $('#application_claim_amount').val(baseAmount);
               self.selectedFeeCode = self.originalFeeCode;
               $('#application_fee_code').val(self.originalFeeCode);
+              $('#application_fee_entry_method').val('auto');
               $('#selected-fee-text').text(self.originalDisplayText);
             }
           }
