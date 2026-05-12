@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.1].define(version: 2026_05_07_100000) do
+ActiveRecord::Schema[8.1].define(version: 2026_05_12_100000) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
   enable_extension "pg_trgm"
@@ -230,6 +230,7 @@ ActiveRecord::Schema[8.1].define(version: 2026_05_07_100000) do
     t.string "emergency_reason"
     t.decimal "fee"
     t.string "fee_code"
+    t.string "fee_entry_method"
     t.string "fee_manager_firstname"
     t.string "fee_manager_lastname"
     t.date "fee_version_valid_from"

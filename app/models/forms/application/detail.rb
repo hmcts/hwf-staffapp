@@ -36,6 +36,7 @@ module Forms
           fee_code: :string,
           claim_amount: :decimal,
           fee_version_valid_from: :string,
+          fee_entry_method: :string,
           fee_search_has_results: :string }
       end
       # rubocop:enable Metrics/MethodLength

@@ -11,7 +11,7 @@ RSpec.describe Forms::Application::Detail do
                  :case_number, :emergency, :emergency_reason, :discretion_applied,
                  :discretion_manager_name, :discretion_reason, :statement_signed_by,
                  :fee_code, :claim_amount, :fee_version_valid_from,
-                 :fee_search_has_results]
+                 :fee_entry_method, :fee_search_has_results]
 
   let(:detail) { attributes_for(:detail) }
 
