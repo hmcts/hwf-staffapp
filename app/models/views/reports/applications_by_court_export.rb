@@ -168,7 +168,14 @@ module Views
              END AS \"Partner name entered\",
         details.calculation_scheme as \"HwF Scheme\",
         applications.deleted_reasons_list as \"Deletion Reason\",
-        applications.deleted_reason as \"Reason Description\"
+        applications.deleted_reason as \"Reason Description\",
+        details.fee_code AS \"Fee code\",
+        details.fee_version_valid_from AS \"Fee version valid from\",
+        details.claim_amount AS \"Claim amount\",
+        CASE WHEN details.fee_entry_method = 'auto' THEN 'auto populate'
+             WHEN details.fee_entry_method = 'manual' THEN 'entered'
+             ELSE NULL
+        END AS \"Fee population\"
 
         FROM \"applications\" LEFT JOIN offices ON offices.id = applications.office_id
         LEFT JOIN evidence_checks ec ON ec.application_id = applications.id
@@ -266,7 +273,11 @@ module Views
         END AS \"Partner name entered\",
         online_applications.calculation_scheme AS \"HwF Scheme\",
         NULL AS \"Deletion Reason\",
-        NULL AS \"Reason Description\"
+        NULL AS \"Reason Description\",
+        NULL AS \"Fee code\",
+        NULL AS \"Fee version valid from\",
+        NULL AS \"Claim amount\",
+        NULL AS \"Fee population\"
         FROM online_applications
         INNER JOIN users ON users.id = online_applications.user_id
         INNER JOIN offices ON offices.id = users.office_id
