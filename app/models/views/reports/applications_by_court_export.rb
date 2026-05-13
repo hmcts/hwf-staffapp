@@ -170,7 +170,6 @@ module Views
         applications.deleted_reasons_list as \"Deletion Reason\",
         applications.deleted_reason as \"Reason Description\",
         details.fee_code AS \"Fee code\",
-        details.fee_version_valid_from AS \"Fee version valid from\",
         details.claim_amount AS \"Claim amount\",
         CASE WHEN details.fee_entry_method = 'auto' THEN 'auto populate'
              WHEN details.fee_entry_method = 'manual' THEN 'entered'
@@ -275,7 +274,6 @@ module Views
         NULL AS \"Deletion Reason\",
         NULL AS \"Reason Description\",
         NULL AS \"Fee code\",
-        NULL AS \"Fee version valid from\",
         NULL AS \"Claim amount\",
         NULL AS \"Fee population\"
         FROM online_applications

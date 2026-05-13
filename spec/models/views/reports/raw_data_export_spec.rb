@@ -552,48 +552,48 @@ RSpec.describe Views::Reports::RawDataExport do
     context 'when fee_entry_method is auto (FREG provided the fee)' do
       let(:detail) {
         create(:complete_detail, :applicant, fee: 205, jurisdiction: business_entity.jurisdiction,
-                                             fee_code: 'FEE0202', fee_version_valid_from: Date.parse('2024-04-09'),
+                                             fee_code: 'FEE0202',
                                              claim_amount: 1500.50, fee_entry_method: 'auto')
       }
 
       it 'reports auto populate with the fee details' do
         application
         export = data.to_csv
-        expect(export).to include('FEE0202,09/04/2024,1500.5,auto populate')
+        expect(export).to include('FEE0202,1500.5,auto populate')
       end
     end
 
     context 'when fee_entry_method is manual (rateable fee, user typed value)' do
       let(:detail) {
         create(:complete_detail, :applicant, fee: 205, jurisdiction: business_entity.jurisdiction,
-                                             fee_code: 'FEE0203', fee_version_valid_from: Date.parse('2024-04-09'),
+                                             fee_code: 'FEE0203',
                                              claim_amount: nil, fee_entry_method: 'manual')
       }
 
       it 'reports entered even though a fee_code was selected' do
         application
         export = data.to_csv
-        expect(export).to include('FEE0203,09/04/2024,N/A,entered')
+        expect(export).to include('FEE0203,N/A,entered')
       end
     end
 
     context 'when fee_entry_method is blank (legacy data, pre-column)' do
       let(:detail) {
         create(:complete_detail, :applicant, fee: 205, jurisdiction: business_entity.jurisdiction,
-                                             fee_code: nil, fee_version_valid_from: nil,
+                                             fee_code: nil,
                                              claim_amount: nil, fee_entry_method: nil)
       }
 
       it 'reports N/A so legacy rows are not misclassified' do
         application
         export = data.to_csv
-        expect(export).to include('N/A,N/A,N/A,N/A')
+        expect(export).to include('N/A,N/A,N/A')
       end
     end
 
     it 'includes the new columns in the header row' do
       export = data.to_csv.split("\n").first
-      expect(export).to include('fee code', 'fee version valid from', 'claim amount', 'fee population')
+      expect(export).to include('fee code', 'claim amount', 'fee population')
     end
   end
 
