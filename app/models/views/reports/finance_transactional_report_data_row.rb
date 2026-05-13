@@ -3,7 +3,8 @@ module Views
     class FinanceTransactionalReportDataRow
 
       attr_accessor :month_year, :entity_code, :sop_code, :office_name, :jurisdiction_name, :remission_amount,
-                    :refund, :decision, :application_type, :application_id, :reference, :decision_date, :fee
+                    :refund, :decision, :application_type, :application_id, :reference, :decision_date, :fee,
+                    :fee_code, :claim_amount, :fee_population
 
       def initialize(app)
         @month_year = app.decision_date.strftime("%m-%Y")
@@ -12,6 +13,8 @@ module Views
         assign_jurisdiction_attrs(app)
         assign_details_attrs(app)
       end
+
+      FEE_POPULATION_MAP = { 'auto' => 'auto populate', 'manual' => 'entered' }.freeze
 
       def assign_application_attrs(app)
         @remission_amount = app.decision_cost
@@ -36,6 +39,9 @@ module Views
       def assign_details_attrs(app)
         @refund = app.detail.refund
         @fee = app.detail.fee
+        @fee_code = app.detail.fee_code
+        @claim_amount = app.detail.claim_amount
+        @fee_population = FEE_POPULATION_MAP[app.detail.fee_entry_method]
       end
     end
   end
