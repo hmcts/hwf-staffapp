@@ -567,15 +567,148 @@ RSpec.describe Views::Reports::ApplicationsByCourtExport do
        'HMRC response?', 'HMRC errors', 'Complete processing?',
        'Additional income', 'Income processed', 'HMRC request date range',
        'Statement signed by', 'Partner NI entered', 'Partner name entered',
-       'HwF Scheme', 'Deletion Reason', 'Reason Description']
+       'HwF Scheme', 'Deletion Reason', 'Reason Description',
+       'Fee code', 'Fee version valid from', 'Claim amount', 'Fee population']
     end
 
     before { travel_to(date_from + 1.day) { create(:application, :processed_state, office: office) } }
 
-    it 'has the 58 expected columns in the expected order' do
+    it 'has the 62 expected columns in the expected order' do
       csv = CSV.parse(export.to_csv, headers: true)
 
       expect(csv.headers).to eq(expected_headers)
+    end
+  end
+
+  describe 'Fee population (FREG)' do
+    let(:office_id) { cardiff_office.id }
+
+    context 'paper application with fee_entry_method = auto' do
+      let(:detail) {
+        create(:complete_detail, :applicant,
+               fee_code: 'FEE0202',
+               fee_version_valid_from: Date.parse('2024-04-09'),
+               claim_amount: 1500.50,
+               fee_entry_method: 'auto')
+      }
+      before do
+        travel_to(date_from + 1.day) do
+          create(:application, :processed_state, office: cardiff_office,
+                                                 reference: 'FEE-AUTO-1', detail: detail)
+        end
+      end
+
+      let(:row) { CSV.parse(export.to_csv, headers: true).find { |r| r['HwF reference number'] == 'FEE-AUTO-1' } }
+
+      it 'reports the fee details and Fee population = "auto populate"' do
+        aggregate_failures do
+          expect(row['Fee code']).to eq('FEE0202')
+          expect(row['Fee version valid from']).to eq('2024-04-09')
+          expect(row['Claim amount']).to eq('1500.5')
+          expect(row['Fee population']).to eq('auto populate')
+        end
+      end
+    end
+
+    context 'paper application with fee_entry_method = manual (rateable)' do
+      let(:detail) {
+        create(:complete_detail, :applicant,
+               fee_code: 'FEE0203',
+               fee_version_valid_from: Date.parse('2024-04-09'),
+               claim_amount: nil,
+               fee_entry_method: 'manual')
+      }
+      before do
+        travel_to(date_from + 1.day) do
+          create(:application, :processed_state, office: cardiff_office,
+                                                 reference: 'FEE-MAN-1', detail: detail)
+        end
+      end
+
+      let(:row) { CSV.parse(export.to_csv, headers: true).find { |r| r['HwF reference number'] == 'FEE-MAN-1' } }
+
+      it 'reports Fee population = "entered" with N/A for the blank claim amount' do
+        aggregate_failures do
+          expect(row['Fee code']).to eq('FEE0203')
+          expect(row['Fee version valid from']).to eq('2024-04-09')
+          expect(row['Claim amount']).to eq('N/A')
+          expect(row['Fee population']).to eq('entered')
+        end
+      end
+    end
+
+    context 'paper application with only claim_amount missing (fixed fee scenario)' do
+      let(:detail) {
+        create(:complete_detail, :applicant,
+               fee_code: 'FEE0202',
+               fee_version_valid_from: Date.parse('2024-04-09'),
+               claim_amount: nil,
+               fee_entry_method: 'auto')
+      }
+      before do
+        travel_to(date_from + 1.day) do
+          create(:application, :processed_state, office: cardiff_office,
+                                                 reference: 'FEE-FIX-1', detail: detail)
+        end
+      end
+
+      let(:row) { CSV.parse(export.to_csv, headers: true).find { |r| r['HwF reference number'] == 'FEE-FIX-1' } }
+
+      it 'reports N/A for claim amount and populated values for the others' do
+        aggregate_failures do
+          expect(row['Fee code']).to eq('FEE0202')
+          expect(row['Fee version valid from']).to eq('2024-04-09')
+          expect(row['Claim amount']).to eq('N/A')
+          expect(row['Fee population']).to eq('auto populate')
+        end
+      end
+    end
+
+    context 'paper application with all fee columns nil (legacy)' do
+      let(:detail) {
+        create(:complete_detail, :applicant,
+               fee_code: nil, fee_version_valid_from: nil,
+               claim_amount: nil, fee_entry_method: nil)
+      }
+      before do
+        travel_to(date_from + 1.day) do
+          create(:application, :processed_state, office: cardiff_office,
+                                                 reference: 'FEE-LEG-1', detail: detail)
+        end
+      end
+
+      let(:row) { CSV.parse(export.to_csv, headers: true).find { |r| r['HwF reference number'] == 'FEE-LEG-1' } }
+
+      it 'reports N/A for every fee column' do
+        aggregate_failures do
+          expect(row['Fee code']).to eq('N/A')
+          expect(row['Fee version valid from']).to eq('N/A')
+          expect(row['Claim amount']).to eq('N/A')
+          expect(row['Fee population']).to eq('N/A')
+        end
+      end
+    end
+
+    context 'online-only application (no linked paper Application)' do
+      let(:receiving_user) { create(:user, office: cardiff_office) }
+      before do
+        travel_to(date_from + 1.day) do
+          create(:online_application, reference: 'FEE-ONL-1',
+                                      date_received: Date.parse('2021-01-02'),
+                                      user_id: receiving_user.id)
+        end
+      end
+
+      let(:row) { CSV.parse(export.to_csv, headers: true).find { |r| r['HwF reference number'] == 'FEE-ONL-1' } }
+
+      it 'reports N/A for every fee column' do
+        aggregate_failures do
+          expect(row['Fee code']).to eq('N/A')
+          expect(row['Fee version valid from']).to eq('N/A')
+          expect(row['Claim amount']).to eq('N/A')
+          expect(row['Fee population']).to eq('N/A')
+        end
+      end
     end
   end
 
