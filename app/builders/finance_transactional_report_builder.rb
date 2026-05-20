@@ -12,7 +12,10 @@ class FinanceTransactionalReportBuilder < ReportBase
     application_id: 'Application ID',
     reference: 'HwF Reference',
     decision_date: 'Decision Date',
-    fee: 'Fee Amount'
+    fee: 'Fee Amount',
+    fee_code: 'Fee code',
+    claim_amount: 'Claim amount',
+    fee_population: 'Fee population'
   }.freeze
 
   def initialize(start_date, end_date, filters = {})

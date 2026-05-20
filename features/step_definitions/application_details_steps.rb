@@ -41,7 +41,7 @@ Then(/^I should see error message telling me that the fee needs to be below £20
 end
 
 When(/^I submit the form with a fee £20,000 or over$/) do
-  fill_in 'How much is the court or tribunal fee?', with: '20000'
+  application_details_page.content.fee_input.set '20001'
   application_details_page.click_next
 end
 

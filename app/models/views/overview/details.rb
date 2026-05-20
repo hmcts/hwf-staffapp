@@ -3,7 +3,8 @@ module Views
     class Details
       include ActionView::Helpers::NumberHelper
 
-      delegate(:form_name, :case_number, :deceased_name, :emergency_reason, :calculation_scheme, :probate, to: :detail)
+      delegate(:form_name, :case_number, :deceased_name, :emergency_reason, :calculation_scheme, :probate,
+               :fee_code, to: :detail)
 
       def initialize(application)
         @application = application
@@ -76,8 +77,8 @@ module Views
 
       def pre_ucd_change_fields
         [
-          'fee', 'jurisdiction', 'date_received', 'form_name', 'case_number', 'deceased_name', 'date_of_death',
-          'refund_request', 'date_fee_paid', 'discretion_applied',
+          'fee', 'jurisdiction', 'date_received', 'form_name', 'case_number',
+          'deceased_name', 'date_of_death', 'refund_request', 'date_fee_paid', 'discretion_applied',
           'discretion_manager_name', 'discretion_reason', 'emergency_reason'
         ]
       end
@@ -89,14 +90,14 @@ module Views
 
       def online_application_fields
         [
-          'fee', 'jurisdiction', 'form_name', 'case_number',
+          'fee', 'fee_code', 'jurisdiction', 'form_name', 'case_number',
           'discretion_applied', 'deceased_name', 'date_of_death', 'emergency_reason'
         ]
       end
 
       def paper_application_fields
         [
-          'fee', 'jurisdiction', 'form_name', 'case_number',
+          'fee', 'fee_code', 'jurisdiction', 'form_name', 'case_number',
           'deceased_name', 'date_of_death', 'emergency_reason'
         ]
       end

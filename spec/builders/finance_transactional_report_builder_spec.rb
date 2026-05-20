@@ -43,7 +43,7 @@ RSpec.describe FinanceTransactionalReportBuilder do
     end
 
     it 'contains headers' do
-      is_expected.to include('Month-Year,SOP,Office Name,Jurisdiction Name,Remission Amount,Refund,Decision,Application Type,Application ID,HwF Reference,Decision Date,Fee Amount')
+      is_expected.to include('Month-Year,SOP,Office Name,Jurisdiction Name,Remission Amount,Refund,Decision,Application Type,Application ID,HwF Reference,Decision Date,Fee Amount,Fee code,Claim amount,Fee population')
     end
 
     it 'contains the transactional data' do
@@ -54,6 +54,59 @@ RSpec.describe FinanceTransactionalReportBuilder do
       sop_code = application.business_entity.sop_code
       line = "01-2018,#{sop_code},#{office_name},#{jurisdiction_name},N/A,false,full,income,#{application.id},#{reference},05/01/2018,500.0"
       is_expected.to include(line)
+    end
+
+    context 'Fee population (FREG)' do
+      let(:detail) {
+        create(:complete_detail, :applicant,
+               fee: 500, jurisdiction: business_entity1.jurisdiction,
+               fee_code: fee_code,
+               claim_amount: claim_amount, fee_entry_method: fee_entry_method)
+      }
+      let(:application) {
+        create(:application_full_remission, :with_office, :processed_state,
+               business_entity: business_entity1, detail: detail,
+               decision: 'full', decision_date: start_date + 10.seconds)
+      }
+
+      context 'fee_entry_method = auto' do
+        let(:fee_code) { 'FEE0202' }
+        let(:claim_amount) { 1500.50 }
+        let(:fee_entry_method) { 'auto' }
+
+        it 'renders fee details and "auto populate"' do
+          application
+          csv = travel_to(current_time) { frb.to_csv }
+          row = csv.split("\n").find { |line| line.include?(application.reference) }
+          expect(row).to include('FEE0202,1500.5,auto populate')
+        end
+      end
+
+      context 'fee_entry_method = manual with blank claim amount' do
+        let(:fee_code) { 'FEE0203' }
+        let(:claim_amount) { nil }
+        let(:fee_entry_method) { 'manual' }
+
+        it 'renders "entered" and N/A for the blank claim amount' do
+          application
+          csv = travel_to(current_time) { frb.to_csv }
+          row = csv.split("\n").find { |line| line.include?(application.reference) }
+          expect(row).to include('FEE0203,N/A,entered')
+        end
+      end
+
+      context 'all fields blank (legacy)' do
+        let(:fee_code) { nil }
+        let(:claim_amount) { nil }
+        let(:fee_entry_method) { nil }
+
+        it 'renders N/A for every fee column' do
+          application
+          csv = travel_to(current_time) { frb.to_csv }
+          row = csv.split("\n").find { |line| line.include?(application.reference) }
+          expect(row).to include('N/A,N/A,N/A')
+        end
+      end
     end
 
     context 'filters' do
