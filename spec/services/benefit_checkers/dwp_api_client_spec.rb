@@ -9,6 +9,14 @@ RSpec.describe BenefitCheckers::DwpApiClient, type: :service do
   let(:applicant_no_partner) { build(:applicant_with_all_details) }
   let(:applicant_with_partner) { build(:applicant_with_all_details, :married) }
 
+  # OnlineApplication keeps applicant + partner data on its own row; there is
+  # no separate Applicant record. `OnlineApplication#applicant` returns a
+  # transient Applicant carrying only the applicant fields, NOT the partner
+  # ones — so the partner retry has to read them from the online_application
+  # itself.
+  let(:online_application_no_partner) { build(:online_application) }
+  let(:online_application_with_partner) { build(:online_application, :partner) }
+
   let(:params) do
     {
       id: 'petr@260326103618.503',
@@ -751,7 +759,7 @@ RSpec.describe BenefitCheckers::DwpApiClient, type: :service do
     end
 
     context 'when applicant IS matched and is married (no partner retry needed)' do
-      let(:application) { create(:application_full_remission, applicant_traits: [:married]) }
+      let(:application) { build(:application, applicant: applicant_with_partner) }
       let(:applicant_guid) { 'applicant-guid' }
       let(:applicant_match_response) { { 'data' => { 'id' => applicant_guid } } }
 
@@ -763,6 +771,76 @@ RSpec.describe BenefitCheckers::DwpApiClient, type: :service do
       it 'does not call match_citizen with the partner identity' do
         client.check(params)
         expect(connection).not_to have_received(:match_citizen).with(expected_partner_params)
+      end
+    end
+
+    context 'when applicationable is an OnlineApplication' do
+      # Partner fields live directly on the OnlineApplication row, NOT on a
+      # separate Applicant record (OnlineApplication#applicant only exposes
+      # applicant-side fields).
+      let(:online_application) { online_application_with_partner }
+      let(:application) { online_application }
+
+      let(:expected_online_partner_params) do
+        hash_including(
+          first_name: online_application.partner_first_name,
+          last_name: online_application.partner_last_name,
+          date_of_birth: online_application.partner_date_of_birth.strftime('%Y-%m-%d'),
+          nino_fragment: online_application.partner_ni_number.gsub(/[A-Za-z]/, '').last(4)
+        )
+      end
+
+      context 'and the online_application is married and partner is on benefits' do
+        before do
+          stub_match_citizen(applicant_response: no_match_response, partner_response: partner_match_response)
+          allow(connection).to receive(:get_claims).with(partner_guid).and_return(partner_on_benefits)
+        end
+
+        it 'reads partner identity from the OnlineApplication directly (not via .applicant)' do
+          client.check(params)
+          expect(connection).to have_received(:match_citizen).with(expected_online_partner_params)
+        end
+
+        it 'returns Yes' do
+          expect(client.check(params)['benefit_checker_status']).to eq('Yes')
+        end
+
+        it 'returns the partner guid as confirmation_ref' do
+          expect(client.check(params)['confirmation_ref']).to eq(partner_guid)
+        end
+      end
+
+      context 'and the online_application is married but partner is not matched' do
+        before do
+          stub_match_citizen(applicant_response: no_match_response, partner_response: no_match_response)
+        end
+
+        it 'returns No' do
+          expect(client.check(params)['benefit_checker_status']).to eq('No')
+        end
+
+        it 'does not call get_claims' do
+          allow(connection).to receive(:get_claims)
+          client.check(params)
+          expect(connection).not_to have_received(:get_claims)
+        end
+      end
+
+      context 'and the online_application is not married' do
+        let(:online_application) { online_application_no_partner }
+
+        before do
+          stub_match_citizen(applicant_response: no_match_response)
+        end
+
+        it 'does not retry match_citizen' do
+          client.check(params)
+          expect(connection).to have_received(:match_citizen).once
+        end
+
+        it 'returns No' do
+          expect(client.check(params)['benefit_checker_status']).to eq('No')
+        end
       end
     end
   end

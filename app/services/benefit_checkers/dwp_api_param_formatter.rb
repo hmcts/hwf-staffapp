@@ -12,12 +12,15 @@ module BenefitCheckers
 
     def partner_params
       application = @benefit_check.applicationable
-      applicant = application.applicant
+      # Paper applications keep partner data on the associated Applicant.
+      # OnlineApplication carries it on its own row — OnlineApplication#applicant
+      # only exposes applicant-side fields, not the partner_* columns.
+      partner_source = application.is_a?(OnlineApplication) ? application : application.applicant
       {
-        first_name: applicant.partner_first_name,
-        last_name: applicant.partner_last_name,
-        date_of_birth: format_date(applicant.partner_date_of_birth),
-        nino_fragment: extract_nino_fragment(applicant.partner_ni_number),
+        first_name: partner_source.partner_first_name,
+        last_name: partner_source.partner_last_name,
+        date_of_birth: format_date(partner_source.partner_date_of_birth),
+        nino_fragment: extract_nino_fragment(partner_source.partner_ni_number),
         postcode: postcode_for(application)
       }.compact
     end
