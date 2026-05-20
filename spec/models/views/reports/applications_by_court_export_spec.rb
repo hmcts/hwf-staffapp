@@ -546,6 +546,7 @@ RSpec.describe Views::Reports::ApplicationsByCourtExport do
   describe 'CSV header shape' do
     let(:expected_headers) do
       ['Office', 'Id', 'Status', 'HwF reference number', 'Created at', 'Fee',
+       'Fee code', 'Claim amount', 'Fee population',
        'Jurisdiction', 'Application type', 'Form', 'Refund', 'Emergency',
        'Applicant pays estimate', 'Pre evidence income', 'Post evidence income',
        'Low income declared', 'Decision date', 'Income period', 'Children',
@@ -561,8 +562,7 @@ RSpec.describe Views::Reports::ApplicationsByCourtExport do
        'HMRC response?', 'HMRC errors', 'Complete processing?',
        'Additional income', 'Income processed', 'HMRC request date range',
        'Statement signed by', 'Partner NI entered', 'Partner name entered',
-       'HwF Scheme', 'Deletion Reason', 'Reason Description',
-       'Fee code', 'Claim amount', 'Fee population']
+       'HwF Scheme', 'Deletion Reason', 'Reason Description']
     end
 
     before { travel_to(date_from + 1.day) { create(:application, :processed_state, office: office) } }
@@ -571,6 +571,13 @@ RSpec.describe Views::Reports::ApplicationsByCourtExport do
       csv = CSV.parse(export.to_csv, headers: true)
 
       expect(csv.headers).to eq(expected_headers)
+    end
+
+    it 'places Fee code, Claim amount and Fee population immediately after Fee' do
+      headers = CSV.parse(export.to_csv, headers: true).headers
+      fee_index = headers.index('Fee')
+
+      expect(headers[fee_index, 5]).to eq(['Fee', 'Fee code', 'Claim amount', 'Fee population', 'Jurisdiction'])
     end
   end
 
