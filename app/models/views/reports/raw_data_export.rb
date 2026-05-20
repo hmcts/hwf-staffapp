@@ -10,6 +10,9 @@ module Views
         jurisdiction: 'jurisdiction',
         sop_code: 'SOP code',
         fee: 'fee',
+        fee_code: 'fee code',
+        claim_amount: 'claim amount',
+        fee_population: 'fee population',
         estimated_amount_to_pay: 'estimated applicant pay',
         estimated_cost: 'estimated cost',
         application_type: 'application type',
@@ -61,10 +64,7 @@ module Views
         complete_processing: 'complete processing?',
         additional_income: 'additional income',
         income_processed: 'income processed',
-        hmrc_request_date_range: 'HMRC request date range',
-        fee_code: 'fee code',
-        claim_amount: 'claim amount',
-        fee_population: 'fee population'
+        hmrc_request_date_range: 'HMRC request date range'
       }.freeze
 
       HEADERS = FIELDS.values
