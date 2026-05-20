@@ -44,6 +44,6 @@ RSpec.feature 'Fee search on application details page', :js do
 
   scenario 'searching with no matches shows no results message' do
     fill_in 'fee_search', with: 'NONEXISTENT'
-    expect(page).to have_content('Search results:0')
+    expect(page).to have_text('Search results:0')
   end
 end
