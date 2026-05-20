@@ -68,7 +68,7 @@ RSpec.describe Views::Reports::ApplicationsByCourtExport do
 
       it 'has headings' do
         data_row = data[0]
-        expect(data_row).to include('Office,Id,Status,HwF reference number,Created at,Fee,Jurisdiction,Application type')
+        expect(data_row).to include('Office,Id,Status,HwF reference number,Created at,Fee,Fee code,Claim amount,Fee population,Jurisdiction,Application type')
       end
 
       it 'uses the test office' do
