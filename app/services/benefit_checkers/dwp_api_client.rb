@@ -19,7 +19,7 @@ module BenefitCheckers
     def check(params)
       response = dwp_api_match(params)
 
-      if guid_present?(response)
+      if applicant_guid_present?(response) || partner_guid_present?
         fetch_claims(@guid)
       else
         no_user_found_response
@@ -51,8 +51,9 @@ module BenefitCheckers
       )
     end
 
-    def dwp_api_match(params)
-      transformed = citizen_params(params).merge(applicant_extras)
+    def dwp_api_match(params, partner: false)
+      transformed = transformed_params(params, partner: partner)
+
       response = @connection.match_citizen(transformed)
       store_api_call('match_citizen', transformed, response)
       response
@@ -79,6 +80,16 @@ module BenefitCheckers
       @guid.present?
     end
 
+    def applicant_guid_present?(response)
+      guid_present?(response)
+    end
+
+    def partner_guid_present?
+      return false unless @benefit_check.applicationable&.applicant&.married?
+      response = dwp_api_match(partner_params, partner: true)
+      guid_present?(response)
+    end
+
     def benefits_result(claims)
       user_on_benefits?(claims) ? on_benefits_response : no_user_found_response
     end
@@ -100,16 +111,6 @@ module BenefitCheckers
         'benefit_checker_status' => 'No',
         'confirmation_ref' => @guid
       }.with_indifferent_access
-    end
-
-    def applicant_extras
-      application = @benefit_check&.applicationable
-      return {} unless application
-
-      {
-        first_name: application.applicant&.first_name,
-        postcode: postcode_for(application)
-      }.compact_blank
     end
 
     def postcode_for(application)
