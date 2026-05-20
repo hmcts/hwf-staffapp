@@ -57,6 +57,12 @@ module Views
         applications.reference as \"HwF reference number\",
         applications.created_at as \"Created at\",
         details.fee as \"Fee\",
+        details.fee_code AS \"Fee code\",
+        details.claim_amount AS \"Claim amount\",
+        CASE WHEN details.fee_entry_method = 'auto' THEN 'auto populate'
+             WHEN details.fee_entry_method = 'manual' THEN 'entered'
+             ELSE NULL
+        END AS \"Fee population\",
         jurisdictions.name AS \"Jurisdiction\",
         applications.application_type as \"Application type\",
         details.form_name as \"Form\",
@@ -168,13 +174,7 @@ module Views
              END AS \"Partner name entered\",
         details.calculation_scheme as \"HwF Scheme\",
         applications.deleted_reasons_list as \"Deletion Reason\",
-        applications.deleted_reason as \"Reason Description\",
-        details.fee_code AS \"Fee code\",
-        details.claim_amount AS \"Claim amount\",
-        CASE WHEN details.fee_entry_method = 'auto' THEN 'auto populate'
-             WHEN details.fee_entry_method = 'manual' THEN 'entered'
-             ELSE NULL
-        END AS \"Fee population\"
+        applications.deleted_reason as \"Reason Description\"
 
         FROM \"applications\" LEFT JOIN offices ON offices.id = applications.office_id
         LEFT JOIN evidence_checks ec ON ec.application_id = applications.id
@@ -213,6 +213,9 @@ module Views
         online_applications.reference AS \"HwF reference number\",
         online_applications.created_at AS \"Created at\",
         online_applications.fee AS \"Fee\",
+        NULL AS \"Fee code\",
+        NULL AS \"Claim amount\",
+        NULL AS \"Fee population\",
         jurisdictions.name AS \"Jurisdiction\",
         CASE WHEN online_applications.benefits THEN 'benefit' ELSE 'income' END AS \"Application type\",
         online_applications.form_name AS \"Form\",
@@ -272,10 +275,7 @@ module Views
         END AS \"Partner name entered\",
         online_applications.calculation_scheme AS \"HwF Scheme\",
         NULL AS \"Deletion Reason\",
-        NULL AS \"Reason Description\",
-        NULL AS \"Fee code\",
-        NULL AS \"Claim amount\",
-        NULL AS \"Fee population\"
+        NULL AS \"Reason Description\"
         FROM online_applications
         INNER JOIN users ON users.id = online_applications.user_id
         INNER JOIN offices ON offices.id = users.office_id
