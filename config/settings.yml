@@ -61,6 +61,8 @@ personal_data_purge:
 legislation_work:
   active_date: <%= ENV['NEW_LEGISLATION_ACTIVE_DATE'] || '27-10-2023' %>
 redis_url: <%= ENV["REDIS_URL"] || "redis://localhost:6379/1" %>
+dwp_api_enabled: <%= ENV['DWP_API_ENABLED'].present? && ['1', 'true'].include?(ENV['DWP_API_ENABLED']) %>
+dwp_retry_button_enabled: <%= ENV['DWP_RETRY_BUTTON_ENABLED'].present? && ['1', 'true'].include?(ENV['DWP_RETRY_BUTTON_ENABLED']) %>
 dwp_mock:
   ni_number_yes: ['SN789654A', 'JR054008D']
   ni_number_no: ['SN789654B', 'AB123456C']

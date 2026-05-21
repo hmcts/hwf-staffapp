@@ -6,6 +6,14 @@ GIT
     azure_env_secrets (1.0.1)
 
 GIT
+  remote: https://github.com/hmcts/hwf-dwp-api.git
+  revision: 711ffb4faa8d188fb9628c4c5d1975db27ae8010
+  tag: 0.3.3
+  specs:
+    hwf-dwp-api (0.3.3)
+      httparty (~> 0.24.0)
+
+GIT
   remote: https://github.com/hmcts/hwf_hmrc_api.git
   revision: fc8135dd572f0560b680547ecc22a6ac707a5d6b
   tag: v0.3.2
@@ -634,6 +642,7 @@ DEPENDENCIES
   govuk_notify_rails
   groupdate
   gtm_on_rails
+  hwf-dwp-api!
   hwf_hmrc_api!
   i18n
   image_processing (~> 1.14)
