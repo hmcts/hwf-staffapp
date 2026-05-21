@@ -6,7 +6,9 @@ module BenefitCheckers
     def raise_mapped_error(error)
       case error.error_type
       when :connection_error then raise Errno::ECONNREFUSED, error.message
-      when :certificate_error, :validation, :invalid_token then raise Exceptions::TechnicalFaultDwpCheck, error.message
+      when :certificate_error, :validation, :invalid_token,
+           :forbidden, :method_not_allowed, :precondition_failed, :service_unavailable
+        raise Exceptions::TechnicalFaultDwpCheck, error.message
       when :invalid_request then raise BenefitCheckers::BadRequestError, bad_request_message(error)
       when :rate_limited then raise Exceptions::DwpRateLimitError, error.message
       else raise StandardError, error.message
