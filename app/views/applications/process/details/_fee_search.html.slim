@@ -7,13 +7,7 @@
       | Search results:
       span.search_result_count 0
 
-/ Paper applications bind this to the Detail form (used by validation). The
-/ online application has no such attribute yet (front end only), so fall back
-/ to a plain tag the JS can still write to.
-- if f.object.respond_to?(:fee_search_has_results)
-  = f.hidden_field :fee_search_has_results, value: 'false', id: 'fee_search_has_results'
-- else
-  = hidden_field_tag :fee_search_has_results, 'false', id: 'fee_search_has_results'
+= f.hidden_field :fee_search_has_results, value: 'false', id: 'fee_search_has_results'
 
 .fee-search-results-block.govuk-inset-text.govuk-visually-hidden style="max-height: 250px; overflow-y: auto;"
   ul#fee-search-results.govuk-list.govuk-list--bullet
