@@ -1,0 +1,59 @@
+require 'rails_helper'
+
+RSpec.feature 'FREG fee search on the online application details page' do
+  include Warden::Test::Helpers
+
+  Warden.test_mode!
+
+  let(:jurisdictions) { create_list(:jurisdiction, 2) }
+  let(:office) { create(:office, jurisdictions: jurisdictions) }
+  let(:user) { create(:staff, office: office) }
+  let(:online_application) { create(:online_application, :with_reference) }
+
+  before { login_as user }
+
+  after { ApplicationHelper.fee_search_enabled = nil }
+
+  context 'when fee search is enabled' do
+    before do
+      ApplicationHelper.fee_search_enabled = true
+      visit "/online_applications/#{online_application.id}/edit"
+    end
+
+    scenario 'renders the fee search field the JS binds to' do
+      expect(page).to have_field('fee_search')
+    end
+
+    scenario 'gives the fee input the id freg.js expects' do
+      expect(page).to have_field('application_fee')
+    end
+
+    scenario 'renders the hidden fields the JS populates' do
+      aggregate_failures do
+        expect(page).to have_css('#application_fee_code', visible: :all)
+        expect(page).to have_css('#application_claim_amount', visible: :all)
+        expect(page).to have_css('#application_fee_version_valid_from', visible: :all)
+        expect(page).to have_css('#application_fee_entry_method', visible: :all)
+        expect(page).to have_css('#fee_search_has_results', visible: :all)
+      end
+    end
+  end
+
+  context 'when fee search is disabled' do
+    before do
+      ApplicationHelper.fee_search_enabled = false
+      visit "/online_applications/#{online_application.id}/edit"
+    end
+
+    scenario 'does not render the fee search field' do
+      expect(page).to have_no_field('fee_search')
+    end
+
+    scenario 'leaves the fee input with its default id' do
+      aggregate_failures do
+        expect(page).to have_field('online_application_fee')
+        expect(page).to have_no_field('application_fee')
+      end
+    end
+  end
+end
