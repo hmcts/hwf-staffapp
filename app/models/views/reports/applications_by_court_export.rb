@@ -221,9 +221,12 @@ module Views
         online_applications.reference AS \"HwF reference number\",
         online_applications.created_at AS \"Created at\",
         online_applications.fee AS \"Fee\",
-        NULL AS \"Fee code\",
-        NULL AS \"Claim amount\",
-        NULL AS \"Fee population\",
+        online_applications.fee_code AS \"Fee code\",
+        online_applications.claim_amount AS \"Claim amount\",
+        CASE WHEN online_applications.fee_entry_method = 'auto' THEN 'auto populate'
+             WHEN online_applications.fee_entry_method = 'manual' THEN 'entered'
+             ELSE NULL
+        END AS \"Fee population\",
         jurisdictions.name AS \"Jurisdiction\",
         CASE WHEN online_applications.benefits THEN 'benefit' ELSE 'income' END AS \"Application type\",
         online_applications.form_name AS \"Form\",

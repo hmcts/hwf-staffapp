@@ -691,21 +691,56 @@ RSpec.describe Views::Reports::ApplicationsByCourtExport do
 
     context 'online-only application (no linked paper Application)' do
       let(:receiving_user) { create(:user, office: cardiff_office) }
+      let(:row) { CSV.parse(export.to_csv, headers: true).find { |r| r['HwF reference number'] == 'FEE-ONL-1' } }
+
       before do
         travel_to(date_from + 1.day) do
           create(:online_application, reference: 'FEE-ONL-1',
                                       date_received: Date.parse('2021-01-02'),
-                                      user_id: receiving_user.id)
+                                      user_id: receiving_user.id,
+                                      fee_code: fee_code, claim_amount: claim_amount, fee_entry_method: fee_entry_method)
         end
       end
 
-      let(:row) { CSV.parse(export.to_csv, headers: true).find { |r| r['HwF reference number'] == 'FEE-ONL-1' } }
+      context 'with fee_entry_method = auto (FREG provided the fee)' do
+        let(:fee_code) { 'FEE0303' }
+        let(:claim_amount) { 1200.75 }
+        let(:fee_entry_method) { 'auto' }
 
-      it 'reports N/A for every fee column' do
-        aggregate_failures do
-          expect(row['Fee code']).to eq('N/A')
-          expect(row['Claim amount']).to eq('N/A')
-          expect(row['Fee population']).to eq('N/A')
+        it 'reports the online fee details and Fee population = "auto populate"' do
+          aggregate_failures do
+            expect(row['Fee code']).to eq('FEE0303')
+            expect(row['Claim amount']).to eq('1200.75')
+            expect(row['Fee population']).to eq('auto populate')
+          end
+        end
+      end
+
+      context 'with fee_entry_method = manual (rateable)' do
+        let(:fee_code) { 'FEE0304' }
+        let(:claim_amount) { nil }
+        let(:fee_entry_method) { 'manual' }
+
+        it 'reports Fee population = "entered" with N/A for the blank claim amount' do
+          aggregate_failures do
+            expect(row['Fee code']).to eq('FEE0304')
+            expect(row['Claim amount']).to eq('N/A')
+            expect(row['Fee population']).to eq('entered')
+          end
+        end
+      end
+
+      context 'with no FREG data (legacy / not captured)' do
+        let(:fee_code) { nil }
+        let(:claim_amount) { nil }
+        let(:fee_entry_method) { nil }
+
+        it 'reports N/A for every fee column' do
+          aggregate_failures do
+            expect(row['Fee code']).to eq('N/A')
+            expect(row['Claim amount']).to eq('N/A')
+            expect(row['Fee population']).to eq('N/A')
+          end
         end
       end
     end
