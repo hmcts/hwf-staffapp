@@ -306,7 +306,7 @@ module Views
 
       def fee_population(row)
         case row['fee_entry_method']
-        when 'auto' then 'auto populate'
+        when 'auto' then 'auto populated'
         when 'manual' then 'entered'
         else 'N/A'
         end

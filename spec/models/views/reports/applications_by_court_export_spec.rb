@@ -606,11 +606,11 @@ RSpec.describe Views::Reports::ApplicationsByCourtExport do
 
       let(:row) { CSV.parse(export.to_csv, headers: true).find { |r| r['HwF reference number'] == 'FEE-AUTO-1' } }
 
-      it 'reports the fee details and Fee population = "auto populate"' do
+      it 'reports the fee details and Fee population = "auto populated"' do
         aggregate_failures do
           expect(row['Fee code']).to eq('FEE0202')
           expect(row['Claim amount']).to eq('1500.5')
-          expect(row['Fee population']).to eq('auto populate')
+          expect(row['Fee population']).to eq('auto populated')
         end
       end
     end
@@ -660,7 +660,7 @@ RSpec.describe Views::Reports::ApplicationsByCourtExport do
         aggregate_failures do
           expect(row['Fee code']).to eq('FEE0202')
           expect(row['Claim amount']).to eq('N/A')
-          expect(row['Fee population']).to eq('auto populate')
+          expect(row['Fee population']).to eq('auto populated')
         end
       end
     end
@@ -707,11 +707,11 @@ RSpec.describe Views::Reports::ApplicationsByCourtExport do
         let(:claim_amount) { 1200.75 }
         let(:fee_entry_method) { 'auto' }
 
-        it 'reports the online fee details and Fee population = "auto populate"' do
+        it 'reports the online fee details and Fee population = "auto populated"' do
           aggregate_failures do
             expect(row['Fee code']).to eq('FEE0303')
             expect(row['Claim amount']).to eq('1200.75')
-            expect(row['Fee population']).to eq('auto populate')
+            expect(row['Fee population']).to eq('auto populated')
           end
         end
       end

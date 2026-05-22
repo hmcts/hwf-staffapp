@@ -14,7 +14,7 @@ module Views
         assign_details_attrs(app)
       end
 
-      FEE_POPULATION_MAP = { 'auto' => 'auto populate', 'manual' => 'entered' }.freeze
+      FEE_POPULATION_MAP = { 'auto' => 'auto populated', 'manual' => 'entered' }.freeze
 
       def assign_application_attrs(app)
         @remission_amount = app.decision_cost

@@ -59,7 +59,7 @@ module Views
         details.fee as \"Fee\",
         details.fee_code AS \"Fee code\",
         details.claim_amount AS \"Claim amount\",
-        CASE WHEN details.fee_entry_method = 'auto' THEN 'auto populate'
+        CASE WHEN details.fee_entry_method = 'auto' THEN 'auto populated'
              WHEN details.fee_entry_method = 'manual' THEN 'entered'
              ELSE NULL
         END AS \"Fee population\",
@@ -223,7 +223,7 @@ module Views
         online_applications.fee AS \"Fee\",
         online_applications.fee_code AS \"Fee code\",
         online_applications.claim_amount AS \"Claim amount\",
-        CASE WHEN online_applications.fee_entry_method = 'auto' THEN 'auto populate'
+        CASE WHEN online_applications.fee_entry_method = 'auto' THEN 'auto populated'
              WHEN online_applications.fee_entry_method = 'manual' THEN 'entered'
              ELSE NULL
         END AS \"Fee population\",

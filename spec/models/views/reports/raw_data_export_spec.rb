@@ -556,10 +556,10 @@ RSpec.describe Views::Reports::RawDataExport do
                                              claim_amount: 1500.50, fee_entry_method: 'auto')
       }
 
-      it 'reports auto populate with the fee details' do
+      it 'reports auto populated with the fee details' do
         application
         export = data.to_csv
-        expect(export).to include('FEE0202,1500.5,auto populate')
+        expect(export).to include('FEE0202,1500.5,auto populated')
       end
     end
 

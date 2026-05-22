@@ -97,11 +97,11 @@ RSpec.describe Views::Reports::FinanceTransactionalReportDataRow do
       let(:claim_amount) { 1500.50 }
       let(:fee_entry_method) { 'auto' }
 
-      it 'mirrors the detail fields and maps fee_population to "auto populate"' do
+      it 'mirrors the detail fields and maps fee_population to "auto populated"' do
         aggregate_failures do
           expect(data.fee_code).to eq('FEE0202')
           expect(data.claim_amount).to eq(1500.50)
-          expect(data.fee_population).to eq('auto populate')
+          expect(data.fee_population).to eq('auto populated')
         end
       end
     end

@@ -74,11 +74,11 @@ RSpec.describe FinanceTransactionalReportBuilder do
         let(:claim_amount) { 1500.50 }
         let(:fee_entry_method) { 'auto' }
 
-        it 'renders fee details and "auto populate"' do
+        it 'renders fee details and "auto populated"' do
           application
           csv = travel_to(current_time) { frb.to_csv }
           row = csv.split("\n").find { |line| line.include?(application.reference) }
-          expect(row).to include('FEE0202,1500.5,auto populate')
+          expect(row).to include('FEE0202,1500.5,auto populated')
         end
       end
 
