@@ -195,12 +195,20 @@ module Views
         INNER JOIN \"applicants\" ON \"applicants\".\"application_id\" = \"applications\".\"id\"
         INNER JOIN \"details\" ON \"details\".\"application_id\" = \"applications\".\"id\"
         LEFT JOIN jurisdictions ON jurisdictions.id = details.jurisdiction_id
-        WHERE applications.office_id = #{@office_id}
-        AND offices.name NOT IN ('Digital', 'HMCTS HQ Team')
+        WHERE offices.name NOT IN ('Digital', 'HMCTS HQ Team')
+        #{paper_office_filter}
         AND applications.created_at between '#{@date_from.to_fs(:db)}' AND '#{@date_to.to_fs(:db)}'
         AND (applications.state != 0
           OR (applications.state = 0 AND details.date_received IS NOT NULL AND details.refund IS NOT NULL))
         ORDER BY applications.created_at DESC"
+      end
+
+      # No office filter when reporting on all offices or when none was chosen
+      # (a blank office_id would otherwise produce `office_id = ` and break the SQL).
+      def paper_office_filter
+        return '' if selected?(@all_offices) || @office_id.blank?
+
+        "AND applications.office_id = #{@office_id}"
       end
       # rubocop:enable Metrics/MethodLength
 
@@ -290,7 +298,7 @@ module Views
       # rubocop:enable Metrics/MethodLength
 
       def online_office_filter
-        return '' if selected?(@all_offices)
+        return '' if selected?(@all_offices) || @office_id.blank?
         "AND users.office_id = #{@office_id}"
       end
 

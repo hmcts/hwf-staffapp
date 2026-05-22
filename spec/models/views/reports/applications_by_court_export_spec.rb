@@ -735,6 +735,44 @@ RSpec.describe Views::Reports::ApplicationsByCourtExport do
     end
   end
 
+  describe 'no office chosen (blank office_id)' do
+    subject(:export) { described_class.new(from_date, to_date, office_id) }
+
+    let(:office_id) { nil }
+
+    before do
+      travel_to(date_from + 1.day) do
+        create(:application, :processed_state, office: bristol_office, reference: 'BR111111A')
+        create(:application, :processed_state, office: cardiff_office, reference: 'CD222222B')
+        create(:application, :processed_state, office: digital_office, reference: 'DG333333C')
+        create(:application, :processed_state, office: hmcts_hq_office, reference: 'HQ444444D')
+      end
+    end
+
+    # Regression: a blank office_id used to render `WHERE applications.office_id = `
+    # with a dangling AND, raising PG::SyntaxError.
+    it 'does not raise a SQL syntax error' do
+      expect { export.to_csv }.not_to raise_error
+    end
+
+    it 'returns all eligible offices and excludes Digital / HMCTS HQ Team' do
+      offices = CSV.parse(export.to_csv, headers: true)['Office']
+
+      aggregate_failures do
+        expect(offices).to include('Bristol', 'Cardiff')
+        expect(offices).not_to include('Digital', 'HMCTS HQ Team')
+      end
+    end
+
+    context 'when office_id is a blank string' do
+      let(:office_id) { '' }
+
+      it 'does not raise a SQL syntax error' do
+        expect { export.to_csv }.not_to raise_error
+      end
+    end
+  end
+
   describe 'golden row (fully populated application)' do
     let(:office_id) { cardiff_office.id }
     let(:jurisdiction) { create(:jurisdiction, name: 'County Court') }
