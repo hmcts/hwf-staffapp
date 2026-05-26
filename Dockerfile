@@ -1,4 +1,3 @@
-# syntax=docker/dockerfile:1.4
 FROM hmctsprod.azurecr.io/imported/library/ruby:4.0.5-alpine3.23
 
 # Adding argument support for ping.json
@@ -38,12 +37,10 @@ COPY Gemfile Gemfile.lock /home/app/
 RUN gem install bundler -v 4.0.10 \
  && bundle config set --local without 'test development' \
  && bundle config set --local force_ruby_platform true
-RUN --mount=type=cache,target=/usr/local/bundle/cache \
-    bundle install
+RUN bundle install
 
 COPY package.json yarn.lock /home/app/
-RUN --mount=type=cache,target=/usr/local/share/.cache/yarn \
-    yarn install --check-files --frozen-lockfile
+RUN yarn install --check-files --frozen-lockfile
 
 # running app as a servive
 ENV PHUSION=true
