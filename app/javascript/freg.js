@@ -82,6 +82,10 @@ window.moj.Modules.JsonSearcherModule = (function() {
       });
 
       $('input[id$="day_date_received"], input[id$="month_date_received"], input[id$="year_date_received"]').on('change blur', function() {
+        // Preserve an already-selected fee. findMatches() begins with
+        // resetSelection(), which would otherwise wipe the fee the user just
+        // picked when they edit the date_received fields afterwards.
+        if (self.feeSelected) return;
         var currentSearchTerm = $('input[id="fee_search"]').val();
         if (currentSearchTerm && currentSearchTerm.length >= 2) {
           self.findMatches(currentSearchTerm);
