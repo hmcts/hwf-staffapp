@@ -22,10 +22,10 @@ ENV NOTIFY_DWP_DOWN_TEMPLATE_ID=replace_this_at_build_time
 # fix to address http://tzinfo.github.io/datasourcenotfound - PET ONLY
 ARG DEBIAN_FRONTEND=noninteractive
 
-RUN apk update && apk add --no-cache libc6-compat && \
-    apk add --no-cache --virtual .build-tools git build-base curl-dev nodejs yarn libpq-dev postgresql-client tzdata && \
-    apk add --no-cache xvfb fluxbox x11vnc st yaml-dev libffi-dev
-
+RUN apk add --no-cache \
+        libc6-compat \
+        git build-base curl-dev nodejs yarn libpq-dev postgresql-client tzdata \
+        xvfb fluxbox x11vnc st yaml-dev libffi-dev
 
 ENV UNICORN_PORT=3000
 EXPOSE $UNICORN_PORT
@@ -33,22 +33,20 @@ EXPOSE $UNICORN_PORT
 RUN mkdir -p /home/app
 WORKDIR /home/app
 
-COPY Gemfile /home/app
-COPY Gemfile.lock /home/app
-RUN gem install bundler -v 4.0.10
-
-RUN bundle config set --local without 'test development'
-RUN bundle config set force_ruby_platform true
+COPY Gemfile Gemfile.lock /home/app/
+RUN gem install bundler -v 4.0.10 \
+ && bundle config set --local without 'test development' \
+ && bundle config set --local force_ruby_platform true
 RUN bundle install
+
+COPY package.json yarn.lock /home/app/
+RUN yarn install --check-files --frozen-lockfile
 
 # running app as a servive
 ENV PHUSION=true
 
 COPY . /home/app
-RUN yarn install --check-files
 
 CMD ["sh", "-c", "bundle exec rake assets:precompile RAILS_ENV=production SECRET_TOKEN=blah && \
      bundle exec rake static_pages:generate RAILS_ENV=production SECRET_TOKEN=blah && \
      sh ./run.sh"]
-
-

@@ -17,3 +17,13 @@ Dockerfile*
 yarn-error.log
 docker
 vendor/bundle
+public/assets
+public/packs
+public/packs-test
+.DS_Store
+*.swp
+*.swo
+.idea
+.vscode
+README*
+CHANGELOG*
