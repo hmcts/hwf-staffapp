@@ -37,6 +37,22 @@ RSpec.feature 'FREG fee search on the online application details page' do
         expect(page).to have_css('#fee_search_has_results', visible: :all)
       end
     end
+
+    scenario 'error summary fee link points to the fee search box' do
+      click_button 'Next'
+      expect(page).to have_css('.govuk-error-summary')
+      expect(page).to have_link('Enter a court or tribunal fee', href: '#fee_search')
+    end
+
+    scenario 'error summary non-fee links use the online_application prefix' do
+      click_button 'Next'
+      expect(page).to have_link('You must select a jurisdiction', href: '#online_application_jurisdiction_id')
+    end
+
+    scenario 'error summary date_received link points to the day input' do
+      click_button 'Next'
+      expect(page).to have_link(href: '#online_application_day_date_received')
+    end
   end
 
   context 'when fee search is disabled' do

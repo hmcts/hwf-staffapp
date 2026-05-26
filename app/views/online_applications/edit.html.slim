@@ -1,6 +1,16 @@
 - content_for :page_title
   = "Application details"
 
+- if @form.errors.any?
+  div role="alert" class='govuk-!-static-margin-top-4'
+    .govuk-error-summary tabindex="-1" data-module="govuk-error-summary"
+      h2.govuk-error-summary__title =t('error_block.heading')
+      .govuk-error-summary__body
+        ul.govuk-list.govuk-error-summary__list
+          - @form.errors.each do |error|
+            li
+              = link_to error.message, online_application_error_anchor(error.attribute), class: 'error-link', data: { id: "##{error.attribute}" }
+
 = form_for @form, as: :online_application, url: online_application_path, method: :put, html: { autocomplete: 'off' } do |f|
 
   .govuk-grid-row

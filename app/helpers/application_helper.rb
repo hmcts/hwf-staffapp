@@ -78,6 +78,17 @@ module ApplicationHelper
     !Rails.env.test? && !preview_environment?
   end
 
+  def online_application_error_anchor(attribute)
+    case attribute
+    when :fee
+      fee_search_available? ? '#fee_search' : '#online_application_fee'
+    when :date_received
+      '#online_application_day_date_received'
+    else
+      "#online_application_#{attribute}"
+    end
+  end
+
   def date_hint
     Time.current.strftime("%d %m %Y")
   end
