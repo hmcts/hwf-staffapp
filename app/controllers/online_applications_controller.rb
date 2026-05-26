@@ -27,6 +27,7 @@ class OnlineApplicationsController < ApplicationController
       decide_next_step(@form)
     else
       assign_jurisdictions
+      @fee_search_term = params[:fee_search]
       render :edit
     end
   end
