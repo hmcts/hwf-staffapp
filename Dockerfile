@@ -1,4 +1,4 @@
-FROM hmctsprod.azurecr.io/imported/library/ruby:4.0.3-alpine3.23
+FROM hmctsprod.azurecr.io/imported/library/ruby:4.0.5-alpine3.23
 
 # Adding argument support for ping.json
 ARG APPVERSION=unknown

@@ -16,3 +16,4 @@ docker-compose*
 Dockerfile*
 yarn-error.log
 docker
+vendor/bundle
