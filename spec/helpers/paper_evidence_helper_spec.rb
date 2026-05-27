@@ -67,6 +67,11 @@ RSpec.describe PaperEvidenceHelper do
           let(:dwp_result) { 'technical fault' }
           it { expect(template).to eql('technical_error') }
         end
+
+        context 'Rate limited' do
+          let(:dwp_result) { 'rate limited' }
+          it { expect(template).to eql('rate_limit_error') }
+        end
       end
 
       context 'discretion granted' do
@@ -133,6 +138,45 @@ RSpec.describe PaperEvidenceHelper do
         end
       end
 
+    end
+  end
+
+  describe '#show_dwp_retry_button?' do
+    let(:last_benefit_check) { instance_double(BenefitCheck, dwp_result: dwp_result) }
+
+    before do
+      allow(application).to receive(:last_benefit_check).and_return(last_benefit_check)
+      allow(Settings).to receive(:dwp_retry_button_enabled).and_return(flag_enabled)
+    end
+
+    context 'when flag is enabled and dwp_result is Rate limited' do
+      let(:flag_enabled) { true }
+      let(:dwp_result) { 'Rate limited' }
+
+      it { expect(helper.show_dwp_retry_button?(application)).to be true }
+    end
+
+    context 'when flag is enabled but dwp_result is something else' do
+      let(:flag_enabled) { true }
+      let(:dwp_result) { 'Server unavailable' }
+
+      it { expect(helper.show_dwp_retry_button?(application)).to be false }
+    end
+
+    context 'when flag is disabled' do
+      let(:flag_enabled) { false }
+      let(:dwp_result) { 'Rate limited' }
+
+      it { expect(helper.show_dwp_retry_button?(application)).to be false }
+    end
+
+    context 'when there is no last_benefit_check' do
+      let(:flag_enabled) { true }
+      let(:dwp_result) { nil }
+
+      before { allow(application).to receive(:last_benefit_check).and_return(nil) }
+
+      it { expect(helper.show_dwp_retry_button?(application)).to be false }
     end
   end
 end

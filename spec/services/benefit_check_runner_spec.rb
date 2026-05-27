@@ -126,6 +126,38 @@ RSpec.describe BenefitCheckRunner do
 
       it { is_expected.to be false }
     end
+
+    context 'when DWP API is enabled' do
+      before do
+        allow(Settings).to receive(:dwp_api_enabled).and_return(true)
+      end
+
+      context 'when ni_number is missing but other details are present' do
+        let(:applicant) { build(:applicant_with_all_details, ni_number: nil) }
+
+        it { is_expected.to be true }
+      end
+
+      context 'when ni_number is present' do
+        it { is_expected.to be true }
+      end
+    end
+
+    context 'when DWP API is not enabled' do
+      before do
+        allow(Settings).to receive(:dwp_api_enabled).and_return(false)
+      end
+
+      context 'when ni_number is missing' do
+        let(:applicant) { build(:applicant_with_all_details, ni_number: nil) }
+
+        it { is_expected.to be false }
+      end
+
+      context 'when ni_number is present' do
+        it { is_expected.to be true }
+      end
+    end
   end
 
   describe '#run' do

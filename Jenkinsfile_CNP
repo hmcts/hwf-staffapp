@@ -49,6 +49,7 @@ withPipeline(type, product, component) {
     env.SENTRY_DSN=''
     env.SENTRY_SSL_VERIFICATION=''
     env.NEW_LEGISLATION_ACTIVE_DATE='27-10-2023'
+    env.DWP_API_ENABLED='false'
 
 
       before('build') {
@@ -63,8 +64,12 @@ withPipeline(type, product, component) {
 
       before('test') {
         sh script:"""
+            mkdir -p ~/.local/bin
+            corepack enable --install-directory ~/.local/bin
+            export PATH=~/.local/bin:\$PATH
             env AZURE_CONFIG_DIR=/opt/jenkins/.azure-nonprod az acr login --name hmctsprod --subscription DCD-CNP-PROD
             yarn install
+
             docker inspect hmctsprod.azurecr.io/imported/postgres:16-alpine > /dev/null 2>&1 || docker pull hmctsprod.azurecr.io/imported/postgres:16-alpine
             docker stop hwf-test-postgres && docker rm hwf-test-postgres || echo 'Ignoring failure in stopping old postgres'
             docker run --rm --name hwf-test-postgres --publish 5421:5432 -e POSTGRES_PASSWORD=postgres -d hmctsprod.azurecr.io/imported/postgres:16-alpine

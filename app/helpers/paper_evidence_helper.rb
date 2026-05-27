@@ -4,6 +4,10 @@ module PaperEvidenceHelper
     @error_message_partial ||= benefit_check_error_message(application)
   end
 
+  def show_dwp_retry_button?(application)
+    Settings.dwp_retry_button_enabled && application.last_benefit_check.try(:dwp_result) == 'Rate limited'
+  end
+
   private
 
   def benefit_check_error_message(application)
@@ -40,6 +44,8 @@ module PaperEvidenceHelper
       'no_record'
     when 'server unavailable', 'unspecified error', 'badrequest', 'technical fault'
       'technical_error'
+    when 'rate limited'
+      'rate_limit_error'
     end
   end
 end
