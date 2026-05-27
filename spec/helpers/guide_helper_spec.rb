@@ -18,6 +18,14 @@ RSpec.describe GuideHelper do
     it { expect(helper.staff_guidance_url).to include('sourcedoc=%7BDD4BE471-9B43-43D4-9E71-0FB28A9B41EE%7D') }
   end
 
+  describe '#old_process_application_url' do
+    it { expect(helper.old_process_application_url).to include('processing-a-help-with-fees-application.docx') }
+  end
+
+  describe '#old_evidence_checks_url' do
+    it { expect(helper.old_evidence_checks_url).to include('help-with-fees-processing-evidence-job-card.pdf') }
+  end
+
   describe '#new_process_application_url' do
     it { expect(helper.new_process_application_url).to include('sourcedoc=%7BB62AF5DB-DF50-4415-A261-A4598E61B298%7D') }
   end

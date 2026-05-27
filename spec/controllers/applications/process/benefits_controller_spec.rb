@@ -158,6 +158,49 @@ RSpec.describe Applications::Process::BenefitsController do
             expect(response).to redirect_to(application_dependents_path(application))
           end
         end
+
+        context 'when the application has a stale benefit_override' do
+          let(:benefit_override) { instance_double(BenefitOverride, destroy: true) }
+
+          before do
+            allow(application).to receive(:benefit_override).and_return(benefit_override)
+            post :create, params: { application_id: application.id, application: expected_params }
+          end
+
+          it 'destroys the stale benefit_override' do
+            expect(benefit_override).to have_received(:destroy)
+          end
+
+          it 'redirects to the dependents page' do
+            expect(response).to redirect_to(application_dependents_path(application))
+          end
+        end
+      end
+
+      context 'when DWP is down and the applicant says they are not on benefits' do
+        let(:user_says_on_benefits) { false }
+        let(:dwp_warning_check_state) { 'offline' }
+
+        it 'does not run the benefit check' do
+          expect(benefit_check_runner).not_to have_received(:run)
+        end
+
+        it 'redirects to the dependents page' do
+          expect(response).to redirect_to(application_dependents_path(application))
+        end
+
+        context 'when the application has a stale benefit_override' do
+          let(:benefit_override) { instance_double(BenefitOverride, destroy: true) }
+
+          before do
+            allow(application).to receive(:benefit_override).and_return(benefit_override)
+            post :create, params: { application_id: application.id, application: expected_params }
+          end
+
+          it 'destroys the stale benefit_override' do
+            expect(benefit_override).to have_received(:destroy)
+          end
+        end
       end
     end
 

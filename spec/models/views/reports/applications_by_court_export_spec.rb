@@ -297,6 +297,12 @@ RSpec.describe Views::Reports::ApplicationsByCourtExport do
         end
       end
 
+      context 'income_kind with a value that cannot be YAML-parsed' do
+        it 'returns "N/A" when YAML.parse raises TypeError' do
+          expect(export.send(:income_kind, 1234)).to eq('N/A')
+        end
+      end
+
       context 'signed by values and partner data' do
         it {
           expect(data[5]).to include('legal_representative,true,false,post_ucd')
