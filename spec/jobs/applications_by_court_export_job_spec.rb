@@ -36,5 +36,48 @@ RSpec.describe ApplicationsByCourtExportJob do
       it { expect(app_insight).to have_received(:track_event).with("Sending ApplicationsByCourtExport email notification at #{Time.zone.now.to_fs(:db)}") }
     end
 
+    it 'forwards a specific court_id to the export' do
+      described_class.perform_now(court_id: 42, from: '1', to: '2', user_id: user.id)
+      expect(Views::Reports::ApplicationsByCourtExport).to have_received(:new).with('1', '2', 42, { all_offices: nil })
+    end
+
+    it 'attaches the zip with the expected filename' do
+      described_class.perform_now(from: '1', to: '2', user_id: user.id)
+      expect(export_file).to have_received(:attach).with(hash_including(filename: 'ApplicationsByCourt.zip'))
+    end
+
+    context 'when the export raises' do
+      let(:boom) { StandardError.new('boom') }
+
+      let(:sentry_scope) { instance_double(Sentry::Scope, set_tags: true).as_null_object }
+
+      before do
+        allow(export).to receive(:to_zip).and_raise(boom)
+        allow(Sentry).to receive(:with_scope).and_yield(sentry_scope)
+        allow(Sentry).to receive(:capture_message)
+        allow(Rails.logger).to receive(:debug)
+        described_class.perform_now(from: '1', to: '2', user_id: user.id)
+      end
+
+      it 'reports the error to Sentry' do
+        expect(Sentry).to have_received(:capture_message).with('boom')
+      end
+
+      it 'does not send an email notification' do
+        expect(mailer).not_to have_received(:deliver_now)
+      end
+
+      it 'still logs the end event' do
+        expect(app_insight).to have_received(:track_event).with("Running ApplicationsByCourtExport end at #{Time.zone.now.to_fs(:db)}")
+      end
+    end
+
+    context 'when the user does not exist' do
+      it 'raises RecordNotFound' do
+        expect {
+          described_class.perform_now(from: '1', to: '2', user_id: 0)
+        }.to raise_error(ActiveRecord::RecordNotFound)
+      end
+    end
   end
 end

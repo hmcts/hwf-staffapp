@@ -20,6 +20,15 @@ RSpec.describe Report::ApplicationsByCourtController do
 
   context 'as an admin' do
     before { sign_in admin }
+
+    describe 'GET #show' do
+      before { get :show }
+
+      it { expect(response).to have_http_status(:success) }
+      it { expect(response).to render_template('reports/applications_by_court_report') }
+      it { expect(assigns(:form)).to be_a(Forms::FinanceReport) }
+    end
+
     describe 'PUT #data_export' do
 
       subject { response }
