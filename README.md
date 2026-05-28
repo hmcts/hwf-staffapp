@@ -194,4 +194,4 @@ if ENV['TEST_URL'] && ENV['RUN_SMOKE_TESTS'] == 'true'
 else
 ```
 
-Deployment versions trigger: 1
+Deployment versions trigger: 2
