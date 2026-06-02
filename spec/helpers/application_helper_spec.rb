@@ -116,6 +116,18 @@ RSpec.describe ApplicationHelper do
     end
   end
 
+  describe 'fee_search_available?' do
+    it 'returns true when Settings.freg_enabled is true' do
+      allow(Settings).to receive(:freg_enabled).and_return(true)
+      expect(helper.fee_search_available?).to be true
+    end
+
+    it 'returns false when Settings.freg_enabled is false' do
+      allow(Settings).to receive(:freg_enabled).and_return(false)
+      expect(helper.fee_search_available?).to be false
+    end
+  end
+
   describe 'show_ucd_changes?' do
     before {
       allow(FeatureSwitching).to receive(:active?).with(:band_calculation).and_return true

@@ -12,11 +12,9 @@ RSpec.feature 'FREG fee search on the online application details page' do
 
   before { login_as user }
 
-  after { ApplicationHelper.fee_search_enabled = nil }
-
   context 'when fee search is enabled' do
     before do
-      ApplicationHelper.fee_search_enabled = true
+      allow(Settings).to receive(:freg_enabled).and_return(true)
       visit "/online_applications/#{online_application.id}/edit"
     end
 
@@ -57,7 +55,7 @@ RSpec.feature 'FREG fee search on the online application details page' do
 
   context 'when fee search is disabled' do
     before do
-      ApplicationHelper.fee_search_enabled = false
+      allow(Settings).to receive(:freg_enabled).and_return(false)
       visit "/online_applications/#{online_application.id}/edit"
     end
 

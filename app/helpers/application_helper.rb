@@ -70,12 +70,8 @@ module ApplicationHelper
     request.host.include?('.preview.platform.hmcts.net')
   end
 
-  mattr_accessor :fee_search_enabled, default: nil
-
   def fee_search_available?
-    return fee_search_enabled unless fee_search_enabled.nil?
-
-    !Rails.env.test? && !preview_environment?
+    Settings.freg_enabled
   end
 
   def online_application_error_anchor(attribute)
