@@ -525,7 +525,7 @@ RSpec.describe Views::Reports::PowerBiNewExport do
 
       report.export3
       csv_content = read_csv_from_zip
-      online_app_row = csv_content.find { |r| r['id'].to_i == online_application.id }
+      online_app_row = csv_content.find { |r| r['reference'] == 'HWF-REUSE-TEST' }
 
       expect(online_app_row).to be_nil
       expect(csv_content.size).to eq(1)
