@@ -79,7 +79,8 @@ class ApplicationBuilder
     fields = [
       :fee, :jurisdiction, :date_received, :form_name, :case_number, :probate, :deceased_name,
       :date_of_death, :refund, :date_fee_paid, :emergency_reason, :fee_manager_firstname,
-      :fee_manager_lastname, :calculation_scheme, :statement_signed_by
+      :fee_manager_lastname, :calculation_scheme, :statement_signed_by,
+      :fee_code, :claim_amount, :fee_version_valid_from, :fee_entry_method
     ]
     prepare_attributes(fields, online_application)
   end

@@ -66,7 +66,32 @@ module ApplicationHelper
     path_storage.path_back
   end
 
+  def preview_environment?
+    request.host.include?('.preview.platform.hmcts.net')
+  end
+
+  def fee_search_available?
+    Settings.freg_enabled
+  end
+
+  def online_application_error_anchor(attribute)
+    case attribute
+    when :fee
+      fee_search_available? ? '#fee_search' : '#online_application_fee'
+    when :date_received
+      '#online_application_day_date_received'
+    else
+      "#online_application_#{attribute}"
+    end
+  end
+
   def date_hint
     Time.current.strftime("%d %m %Y")
   end
+
+  # rubocop:disable Layout/LineLength
+  def staff_policy_guide_link
+    link_to 'staff policy guide', 'https://justiceuk.sharepoint.com/sites/knowledgecentral/Shared%20Documents/Cross-Jurisdiction/Help%20with%20Fees/Guidance%20For%20Staff%20and%20Managers/policy-guide%20_word%20version.docx?web=1', target: '_blank', rel: 'noopener'
+  end
+  # rubocop:enable Layout/LineLength
 end

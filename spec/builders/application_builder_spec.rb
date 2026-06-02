@@ -70,7 +70,8 @@ RSpec.describe ApplicationBuilder do
 
     let(:online_application) {
       build_stubbed(:online_application_with_all_details,
-                    :with_reference, :completed, :with_fee_manager_approval, income_kind: { applicant: ['Wages'] }, income_period: 'average')
+                    :with_reference, :completed, :with_fee_manager_approval, income_kind: { applicant: ['Wages'] }, income_period: 'average',
+                                                                             fee_code: 'FEE0202', claim_amount: 1500.50, fee_version_valid_from: Date.new(2024, 4, 1), fee_entry_method: 'auto')
     }
 
     describe 'builds and returns non persisted Application' do
@@ -221,7 +222,8 @@ RSpec.describe ApplicationBuilder do
 
         [:fee, :jurisdiction, :date_received, :form_name, :case_number,
          :probate, :deceased_name, :date_of_death, :refund, :date_fee_paid,
-         :emergency_reason, :fee_manager_firstname, :fee_manager_lastname, :statement_signed_by].each do |column|
+         :emergency_reason, :fee_manager_firstname, :fee_manager_lastname, :statement_signed_by,
+         :fee_code, :claim_amount, :fee_version_valid_from, :fee_entry_method].each do |column|
           it "has #{column} assigned" do
             expect(built_detail.public_send(column)).to eql(online_application.public_send(column))
           end

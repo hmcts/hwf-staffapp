@@ -57,6 +57,12 @@ module Views
         applications.reference as \"HwF reference number\",
         applications.created_at as \"Created at\",
         details.fee as \"Fee\",
+        details.fee_code AS \"Fee code\",
+        details.claim_amount AS \"Claim amount\",
+        CASE WHEN details.fee_entry_method = 'auto' THEN 'auto populated'
+             WHEN details.fee_entry_method = 'manual' THEN 'entered'
+             ELSE NULL
+        END AS \"Fee population\",
         jurisdictions.name AS \"Jurisdiction\",
         applications.application_type as \"Application type\",
         details.form_name as \"Form\",
@@ -189,12 +195,20 @@ module Views
         INNER JOIN \"applicants\" ON \"applicants\".\"application_id\" = \"applications\".\"id\"
         INNER JOIN \"details\" ON \"details\".\"application_id\" = \"applications\".\"id\"
         LEFT JOIN jurisdictions ON jurisdictions.id = details.jurisdiction_id
-        WHERE applications.office_id = #{@office_id}
-        AND offices.name NOT IN ('Digital', 'HMCTS HQ Team')
+        WHERE offices.name NOT IN ('Digital', 'HMCTS HQ Team')
+        #{paper_office_filter}
         AND applications.created_at between '#{@date_from.to_fs(:db)}' AND '#{@date_to.to_fs(:db)}'
         AND (applications.state != 0
           OR (applications.state = 0 AND details.date_received IS NOT NULL AND details.refund IS NOT NULL))
         ORDER BY applications.created_at DESC"
+      end
+
+      # No office filter when reporting on all offices or when none was chosen
+      # (a blank office_id would otherwise produce `office_id = ` and break the SQL).
+      def paper_office_filter
+        return '' if selected?(@all_offices) || @office_id.blank?
+
+        "AND applications.office_id = #{@office_id}"
       end
       # rubocop:enable Metrics/MethodLength
 
@@ -207,6 +221,12 @@ module Views
         online_applications.reference AS \"HwF reference number\",
         online_applications.created_at AS \"Created at\",
         online_applications.fee AS \"Fee\",
+        online_applications.fee_code AS \"Fee code\",
+        online_applications.claim_amount AS \"Claim amount\",
+        CASE WHEN online_applications.fee_entry_method = 'auto' THEN 'auto populated'
+             WHEN online_applications.fee_entry_method = 'manual' THEN 'entered'
+             ELSE NULL
+        END AS \"Fee population\",
         jurisdictions.name AS \"Jurisdiction\",
         CASE WHEN online_applications.benefits THEN 'benefit' ELSE 'income' END AS \"Application type\",
         online_applications.form_name AS \"Form\",
@@ -281,7 +301,7 @@ module Views
       # rubocop:enable Metrics/MethodLength
 
       def online_office_filter
-        return '' if selected?(@all_offices)
+        return '' if selected?(@all_offices) || @office_id.blank?
         "AND users.office_id = #{@office_id}"
       end
 

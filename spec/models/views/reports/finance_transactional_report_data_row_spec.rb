@@ -21,6 +21,9 @@ RSpec.describe Views::Reports::FinanceTransactionalReportDataRow do
     it { is_expected.to respond_to :reference }
     it { is_expected.to respond_to :decision_date }
     it { is_expected.to respond_to :fee }
+    it { is_expected.to respond_to :fee_code }
+    it { is_expected.to respond_to :claim_amount }
+    it { is_expected.to respond_to :fee_population }
   end
 
   describe 'when initialised with valid data' do
@@ -74,6 +77,60 @@ RSpec.describe Views::Reports::FinanceTransactionalReportDataRow do
 
     it 'sets the fee' do
       expect(data.fee).to eq(application.detail.fee)
+    end
+  end
+
+  describe 'Fee population (FREG) attributes' do
+    let(:detail) {
+      create(:complete_detail, :applicant,
+             fee_code: fee_code,
+             claim_amount: claim_amount, fee_entry_method: fee_entry_method)
+    }
+    let(:application) {
+      create(:application_full_remission, :with_office, :with_business_entity, :processed_state,
+             fee: 500, decision: 'full', decision_date: Time.zone.parse('2018-12-01'),
+             detail: detail)
+    }
+
+    context 'auto-populated from FREG' do
+      let(:fee_code) { 'FEE0202' }
+      let(:claim_amount) { 1500.50 }
+      let(:fee_entry_method) { 'auto' }
+
+      it 'mirrors the detail fields and maps fee_population to "auto populated"' do
+        aggregate_failures do
+          expect(data.fee_code).to eq('FEE0202')
+          expect(data.claim_amount).to eq(1500.50)
+          expect(data.fee_population).to eq('auto populated')
+        end
+      end
+    end
+
+    context 'manually entered (rateable)' do
+      let(:fee_code) { 'FEE0203' }
+      let(:claim_amount) { nil }
+      let(:fee_entry_method) { 'manual' }
+
+      it 'maps fee_population to "entered" and leaves claim_amount nil' do
+        aggregate_failures do
+          expect(data.claim_amount).to be_nil
+          expect(data.fee_population).to eq('entered')
+        end
+      end
+    end
+
+    context 'legacy row (all blank)' do
+      let(:fee_code) { nil }
+      let(:claim_amount) { nil }
+      let(:fee_entry_method) { nil }
+
+      it 'leaves every fee attribute nil so the builder renders N/A' do
+        aggregate_failures do
+          expect(data.fee_code).to be_nil
+          expect(data.claim_amount).to be_nil
+          expect(data.fee_population).to be_nil
+        end
+      end
     end
   end
 

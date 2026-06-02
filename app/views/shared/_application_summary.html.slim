@@ -135,6 +135,16 @@ dl.govuk-summary-list
           = 'Change'
           span.govuk-visually-hidden=t('summary.fee')
 
+  - if @details.fee_code.present?
+    .govuk-summary-list__row
+      dt.govuk-summary-list__key =t('summary.fee_code')
+      dd.govuk-summary-list__value =@details.fee_code
+      - if show_links
+        dd.govuk-summary-list__actions
+          =link_to application_details_path(@application) do
+            = 'Change'
+            span.govuk-visually-hidden=t('summary.fee_code')
+
   .govuk-summary-list__row
     dt.govuk-summary-list__key =t('summary.jurisdiction')
     dd.govuk-summary-list__value =@details.jurisdiction

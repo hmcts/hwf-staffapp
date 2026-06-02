@@ -292,6 +292,16 @@ RSpec.describe OnlineApplicationsController do
         it 'assigns the user\'s office jurisdictions' do
           expect(assigns(:jurisdictions)).to eq(user.office.jurisdictions)
         end
+
+        context 'when fee_search is present in params' do
+          before do
+            put :update, params: { id: id, online_application: params, fee_search: 'FEE0001' }
+          end
+
+          it 'assigns the fee search term so the input is re-rendered' do
+            expect(assigns(:fee_search_term)).to eq('FEE0001')
+          end
+        end
       end
     end
   end

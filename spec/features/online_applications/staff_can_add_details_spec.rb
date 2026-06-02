@@ -75,6 +75,8 @@ RSpec.feature 'Staff can search for online application' do
   def then_the_application_fails_to_save
     expect(page).to have_text 'Enter a court or tribunal fee'
     expect(page).to have_text 'You must select a jurisdiction'
+    expect(page).to have_css('.govuk-error-summary')
+    expect(page).to have_text 'There is a problem'
   end
 
   def they_see_all_partner_details

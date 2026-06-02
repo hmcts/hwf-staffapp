@@ -552,6 +552,7 @@ RSpec.describe Views::Reports::ApplicationsByCourtExport do
   describe 'CSV header shape' do
     let(:expected_headers) do
       ['Office', 'Id', 'Status', 'HwF reference number', 'Created at', 'Fee',
+       'Fee code', 'Claim amount', 'Fee population',
        'Jurisdiction', 'Application type', 'Form', 'Refund', 'Emergency',
        'Applicant pays estimate', 'Pre evidence income', 'Post evidence income',
        'Low income declared', 'Decision date', 'Income period', 'Children',
@@ -572,10 +573,176 @@ RSpec.describe Views::Reports::ApplicationsByCourtExport do
 
     before { travel_to(date_from + 1.day) { create(:application, :processed_state, office: office) } }
 
-    it 'has the 58 expected columns in the expected order' do
+    it 'has the 61 expected columns in the expected order' do
       csv = CSV.parse(export.to_csv, headers: true)
 
       expect(csv.headers).to eq(expected_headers)
+    end
+
+    it 'places Fee code, Claim amount and Fee population immediately after Fee' do
+      headers = CSV.parse(export.to_csv, headers: true).headers
+      fee_index = headers.index('Fee')
+
+      expect(headers[fee_index, 5]).to eq(['Fee', 'Fee code', 'Claim amount', 'Fee population', 'Jurisdiction'])
+    end
+  end
+
+  describe 'Fee population (FREG)' do
+    let(:office_id) { cardiff_office.id }
+
+    context 'paper application with fee_entry_method = auto' do
+      let(:detail) {
+        create(:complete_detail, :applicant,
+               fee_code: 'FEE0202',
+               claim_amount: 1500.50,
+               fee_entry_method: 'auto')
+      }
+      before do
+        travel_to(date_from + 1.day) do
+          create(:application, :processed_state, office: cardiff_office,
+                                                 reference: 'FEE-AUTO-1', detail: detail)
+        end
+      end
+
+      let(:row) { CSV.parse(export.to_csv, headers: true).find { |r| r['HwF reference number'] == 'FEE-AUTO-1' } }
+
+      it 'reports the fee details and Fee population = "auto populated"' do
+        aggregate_failures do
+          expect(row['Fee code']).to eq('FEE0202')
+          expect(row['Claim amount']).to eq('1500.5')
+          expect(row['Fee population']).to eq('auto populated')
+        end
+      end
+    end
+
+    context 'paper application with fee_entry_method = manual (rateable)' do
+      let(:detail) {
+        create(:complete_detail, :applicant,
+               fee_code: 'FEE0203',
+               claim_amount: nil,
+               fee_entry_method: 'manual')
+      }
+      before do
+        travel_to(date_from + 1.day) do
+          create(:application, :processed_state, office: cardiff_office,
+                                                 reference: 'FEE-MAN-1', detail: detail)
+        end
+      end
+
+      let(:row) { CSV.parse(export.to_csv, headers: true).find { |r| r['HwF reference number'] == 'FEE-MAN-1' } }
+
+      it 'reports Fee population = "entered" with N/A for the blank claim amount' do
+        aggregate_failures do
+          expect(row['Fee code']).to eq('FEE0203')
+          expect(row['Claim amount']).to eq('N/A')
+          expect(row['Fee population']).to eq('entered')
+        end
+      end
+    end
+
+    context 'paper application with only claim_amount missing (fixed fee scenario)' do
+      let(:detail) {
+        create(:complete_detail, :applicant,
+               fee_code: 'FEE0202',
+               claim_amount: nil,
+               fee_entry_method: 'auto')
+      }
+      before do
+        travel_to(date_from + 1.day) do
+          create(:application, :processed_state, office: cardiff_office,
+                                                 reference: 'FEE-FIX-1', detail: detail)
+        end
+      end
+
+      let(:row) { CSV.parse(export.to_csv, headers: true).find { |r| r['HwF reference number'] == 'FEE-FIX-1' } }
+
+      it 'reports N/A for claim amount and populated values for the others' do
+        aggregate_failures do
+          expect(row['Fee code']).to eq('FEE0202')
+          expect(row['Claim amount']).to eq('N/A')
+          expect(row['Fee population']).to eq('auto populated')
+        end
+      end
+    end
+
+    context 'paper application with all fee columns nil (legacy)' do
+      let(:detail) {
+        create(:complete_detail, :applicant,
+               fee_code: nil,
+               claim_amount: nil, fee_entry_method: nil)
+      }
+      before do
+        travel_to(date_from + 1.day) do
+          create(:application, :processed_state, office: cardiff_office,
+                                                 reference: 'FEE-LEG-1', detail: detail)
+        end
+      end
+
+      let(:row) { CSV.parse(export.to_csv, headers: true).find { |r| r['HwF reference number'] == 'FEE-LEG-1' } }
+
+      it 'reports N/A for every fee column' do
+        aggregate_failures do
+          expect(row['Fee code']).to eq('N/A')
+          expect(row['Claim amount']).to eq('N/A')
+          expect(row['Fee population']).to eq('N/A')
+        end
+      end
+    end
+
+    context 'online-only application (no linked paper Application)' do
+      let(:receiving_user) { create(:user, office: cardiff_office) }
+      let(:row) { CSV.parse(export.to_csv, headers: true).find { |r| r['HwF reference number'] == 'FEE-ONL-1' } }
+
+      before do
+        travel_to(date_from + 1.day) do
+          create(:online_application, reference: 'FEE-ONL-1',
+                                      date_received: Date.parse('2021-01-02'),
+                                      user_id: receiving_user.id,
+                                      fee_code: fee_code, claim_amount: claim_amount, fee_entry_method: fee_entry_method)
+        end
+      end
+
+      context 'with fee_entry_method = auto (FREG provided the fee)' do
+        let(:fee_code) { 'FEE0303' }
+        let(:claim_amount) { 1200.75 }
+        let(:fee_entry_method) { 'auto' }
+
+        it 'reports the online fee details and Fee population = "auto populated"' do
+          aggregate_failures do
+            expect(row['Fee code']).to eq('FEE0303')
+            expect(row['Claim amount']).to eq('1200.75')
+            expect(row['Fee population']).to eq('auto populated')
+          end
+        end
+      end
+
+      context 'with fee_entry_method = manual (rateable)' do
+        let(:fee_code) { 'FEE0304' }
+        let(:claim_amount) { nil }
+        let(:fee_entry_method) { 'manual' }
+
+        it 'reports Fee population = "entered" with N/A for the blank claim amount' do
+          aggregate_failures do
+            expect(row['Fee code']).to eq('FEE0304')
+            expect(row['Claim amount']).to eq('N/A')
+            expect(row['Fee population']).to eq('entered')
+          end
+        end
+      end
+
+      context 'with no FREG data (legacy / not captured)' do
+        let(:fee_code) { nil }
+        let(:claim_amount) { nil }
+        let(:fee_entry_method) { nil }
+
+        it 'reports N/A for every fee column' do
+          aggregate_failures do
+            expect(row['Fee code']).to eq('N/A')
+            expect(row['Claim amount']).to eq('N/A')
+            expect(row['Fee population']).to eq('N/A')
+          end
+        end
+      end
     end
   end
 
@@ -599,6 +766,44 @@ RSpec.describe Views::Reports::ApplicationsByCourtExport do
       aggregate_failures do
         expect(offices).to include('Bristol', 'Cardiff')
         expect(offices).not_to include('Digital', 'HMCTS HQ Team')
+      end
+    end
+  end
+
+  describe 'no office chosen (blank office_id)' do
+    subject(:export) { described_class.new(from_date, to_date, office_id) }
+
+    let(:office_id) { nil }
+
+    before do
+      travel_to(date_from + 1.day) do
+        create(:application, :processed_state, office: bristol_office, reference: 'BR111111A')
+        create(:application, :processed_state, office: cardiff_office, reference: 'CD222222B')
+        create(:application, :processed_state, office: digital_office, reference: 'DG333333C')
+        create(:application, :processed_state, office: hmcts_hq_office, reference: 'HQ444444D')
+      end
+    end
+
+    # Regression: a blank office_id used to render `WHERE applications.office_id = `
+    # with a dangling AND, raising PG::SyntaxError.
+    it 'does not raise a SQL syntax error' do
+      expect { export.to_csv }.not_to raise_error
+    end
+
+    it 'returns all eligible offices and excludes Digital / HMCTS HQ Team' do
+      offices = CSV.parse(export.to_csv, headers: true)['Office']
+
+      aggregate_failures do
+        expect(offices).to include('Bristol', 'Cardiff')
+        expect(offices).not_to include('Digital', 'HMCTS HQ Team')
+      end
+    end
+
+    context 'when office_id is a blank string' do
+      let(:office_id) { '' }
+
+      it 'does not raise a SQL syntax error' do
+        expect { export.to_csv }.not_to raise_error
       end
     end
   end

@@ -4,7 +4,8 @@ RSpec.describe Forms::OnlineApplication do
   subject(:form) { described_class.new(online_application) }
 
   params_list = [:fee, :jurisdiction_id, :benefits_override, :date_received, :day_date_received, :case_number,
-                 :month_date_received, :year_date_received, :form_name, :emergency, :emergency_reason, :user_id, :discretion_applied, :dwp_manual_decision]
+                 :month_date_received, :year_date_received, :form_name, :emergency, :emergency_reason, :user_id, :discretion_applied, :dwp_manual_decision,
+                 :fee_code, :claim_amount, :fee_version_valid_from, :fee_entry_method, :fee_search_has_results]
 
   let(:online_application) { build_stubbed(:online_application) }
 
@@ -295,6 +296,64 @@ RSpec.describe Forms::OnlineApplication do
         it 'clears the emergency reason' do
           expect(reloaded_application.emergency_reason).to be_nil
         end
+      end
+
+      describe 'FREG fee fields' do
+        let(:params) do
+          {
+            fee: 205,
+            jurisdiction_id: jurisdiction.id,
+            date_received: Time.zone.today,
+            form_name: 'E45',
+            user_id: 2,
+            fee_code: 'FEE0202',
+            claim_amount: 1500.50,
+            fee_version_valid_from: '2024-04-01',
+            fee_entry_method: 'auto',
+            fee_search_has_results: 'true'
+          }
+        end
+
+        it 'stores the fee_code' do
+          expect(reloaded_application.fee_code).to eq('FEE0202')
+        end
+
+        it 'stores the claim_amount' do
+          expect(reloaded_application.claim_amount).to eq(1500.50)
+        end
+
+        it 'stores the fee_version_valid_from as a date' do
+          expect(reloaded_application.fee_version_valid_from).to eq(Date.parse('2024-04-01'))
+        end
+
+        it 'stores the fee_entry_method' do
+          expect(reloaded_application.fee_entry_method).to eq('auto')
+        end
+
+        it 'does not store fee_search_has_results (validation helper only)' do
+          expect(OnlineApplication.column_names).not_to include('fee_search_has_results')
+        end
+      end
+    end
+
+    context 'when the fee search returned results but no fee was selected' do
+      let(:params) do
+        {
+          jurisdiction_id: jurisdiction.id,
+          date_received: Time.zone.today,
+          form_name: 'E45',
+          user_id: 2,
+          fee: '',
+          fee_search_has_results: 'true'
+        }
+      end
+
+      it { is_expected.to be false }
+
+      it 'adds the select-an-entry error to fee' do
+        form.update(params)
+        form.valid?
+        expect(form.errors[:fee]).to include('Select an entry from the search results list')
       end
     end
 
