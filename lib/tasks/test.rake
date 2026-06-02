@@ -8,6 +8,10 @@ task test: :environment do
   unless system("rspec --format RspecJunitFormatter --out tmp/test/rspec.xml")
     raise "Rspec testing failed #{$?}"
   end
+
+  unless system("yarn test:ci")
+    raise "Jest testing failed #{$?}"
+  end
 end
 
 namespace :test do
