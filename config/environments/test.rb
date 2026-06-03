@@ -56,6 +56,10 @@ Rails.application.configure do
   # Raises error for missing translations.
   # config.i18n.raise_on_missing_translations = true
 
+  # Fall back to the default locale (en-GB) when a key is missing under the
+  # active locale — matches the production setting.
+  config.i18n.fallbacks = true
+
   # Annotate rendered view with file names.
   # config.action_view.annotate_rendered_view_with_filenames = true
 
