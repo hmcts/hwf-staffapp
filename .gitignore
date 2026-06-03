@@ -58,6 +58,7 @@ features/cucumber-report/screenshot.png
 storage/*
 /app/assets/builds/*
 !/app/assets/builds/.keep
+features/cucumber-report/
 
 /node_modules
 
