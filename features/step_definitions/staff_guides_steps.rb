@@ -15,7 +15,7 @@ Then("I can view the training course") do
 end
 
 When("I can view key control checks guide") do
-  expect(guide_page.content.key_control_checks['href']).to include 'sourcedoc=%7B54EFC47F-AA97-440D-8FE8-825A3F1C9E76%7D'
+  expect(guide_page.content.key_control_checks['href']).to include 'key-control-check-sheets/cross-jurisdiction-kccs/'
 end
 
 When("I can view staff guidance") do
@@ -39,7 +39,7 @@ Then("I can view part payments") do
 end
 
 Then("I can view fraud awareness guide") do
-  expect(guide_page.content.fraud_awareness['href']).to include 'sourcedoc=%7B03E83158-CD55-45F0-9D99-FC7B02BF2343%7D'
+  expect(guide_page.content.fraud_awareness['href']).to include 'sourcedoc=%7BAB40BF95-B160-4B92-8A5C-337F977ED643%7D&file=updatedMay2026'
 end
 
 Then("I can view RRDS") do
