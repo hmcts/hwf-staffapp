@@ -29,14 +29,21 @@ module NotifyMailerHelper # rubocop:disable Metrics/ModuleLength
     }
 
     data.each_with_object({}) do |(key, value), result|
-      clean_value = value.nil? || value == 'N/A' ? '' : value
-      result[key] = clean_value
+      result[key] = clean_value(value)
       result[:"has_#{key}"] = notify_boolean(value.present? && value != 'N/A')
     end
   end
   # rubocop:enable Metrics/MethodLength, Metrics/AbcSize
 
   private
+
+  def clean_value(value)
+    if value.nil? || value == 'N/A' || value.to_s.include?('Translation missing')
+      ''
+    else
+      value
+    end
+  end
 
   def income_period_text(application)
     return if application.income_period.nil?
