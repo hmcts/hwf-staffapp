@@ -11,7 +11,7 @@ RSpec.describe GuideHelper do
   end
 
   describe '#key_control_checks_url' do
-    it { expect(helper.key_control_checks_url).to include('sourcedoc=%7B54EFC47F-AA97-440D-8FE8-825A3F1C9E76%7D') }
+    it { expect(helper.key_control_checks_url).to include('key-control-check-sheets/cross-jurisdiction-kccs/') }
   end
 
   describe '#staff_guidance_url' do
@@ -43,7 +43,7 @@ RSpec.describe GuideHelper do
   end
 
   describe '#fraud_awareness_url' do
-    it { expect(helper.fraud_awareness_url).to include('sourcedoc=%7B03E83158-CD55-45F0-9D99-FC7B02BF2343%7D') }
+    it { expect(helper.fraud_awareness_url).to include('sourcedoc=%7BAB40BF95-B160-4B92-8A5C-337F977ED643%7D&file=updatedMay2026') }
   end
 
   describe '#rrds_url' do

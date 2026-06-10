@@ -9,7 +9,7 @@ module GuideHelper
   end
 
   def key_control_checks_url
-    'https://justiceuk.sharepoint.com/:w:/r/sites/knowledgecentral/_layouts/15/Doc.aspx?sourcedoc=%7B54EFC47F-AA97-440D-8FE8-825A3F1C9E76%7D&file=Help%20with%20fees%20KCCS%20(V6%20April%202026).docx&action=default&mobileredirect=true'
+    'https://intranet.justice.gov.uk/my-work/soc-standard-operating-controls-self-assessment/key-control-check-sheets/cross-jurisdiction-kccs/'
   end
 
   def staff_guidance_url
@@ -41,7 +41,7 @@ module GuideHelper
   end
 
   def fraud_awareness_url
-    'https://justiceuk.sharepoint.com/:w:/r/sites/knowledgecentral/_layouts/15/Doc.aspx?sourcedoc=%7B03E83158-CD55-45F0-9D99-FC7B02BF2343%7D&file=Fraud-awareness-word%20version.docx&action=default&mobileredirect=true'
+    'https://justiceuk.sharepoint.com/:w:/r/sites/knowledgecentral/_layouts/15/doc2.aspx?sourcedoc=%7BAB40BF95-B160-4B92-8A5C-337F977ED643%7D&file=updatedMay2026_Fraud-awareness-word%20version_Alessandra%20Valle%20Met.docx&action=default&mobileredirect=true'
   end
 
   def rrds_url
