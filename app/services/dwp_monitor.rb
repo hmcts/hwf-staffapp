@@ -1,4 +1,11 @@
 class DwpMonitor
+  VALID_RESULTS = %w[Yes No].freeze
+
+  VALIDATION_ERROR_PATTERNS = [
+    'is invalid',
+    'is not valid',
+    'is missing'
+  ].freeze
 
   def initialize
     dwp_results
@@ -22,35 +29,27 @@ class DwpMonitor
 
   def percent
     return 0 unless @checks.any?
-    # When DWP is offline it returns 400 Bad Request
-    # maybe extend to search for x00 as first 3 chars to check for 500 errors too
     total = @checks.count.to_f
-    (error_total / total) * 100.0
+    (error_count / total) * 100.0
   end
 
-  def error_total
-    internal_server_error = @checks.flatten.count('500 Internal Server Error').to_f
-    bad_request = bad_request_count.to_f
-    server_broke = @checks.flatten.count('Server broke connection').to_f
-    bad_request + server_broke + internal_server_error
+  def error_count
+    @checks.count { |check| error?(check) }.to_f
   end
 
-  def bad_request_count
-    @checks.count do |check|
-      next if check[0] != 'BadRequest' && check[0] != 'Server unavailable' && check[1].blank?
-      matching_error_message?(check[1]).blank? ? nil : true
-    end
+  def error?(check)
+    dwp_result = check[0]
+    error_message = check[1]
+
+    return false if VALID_RESULTS.include?(dwp_result)
+    return false if dwp_result == 'BadRequest' && validation_error?(error_message)
+
+    true
   end
 
-  def dwp_message(message)
-    message.nil? ? '' : message
-  end
+  def validation_error?(error_message)
+    return true if error_message.blank?
 
-  def matching_error_message?(check)
-    ['LSCBC', 'Service unavailable', 'The benefits checker is not available at the moment',
-     'Timed out reading data from server', 'Connection reset by peer'].select do |message|
-      dwp_message(check).include?(message)
-    end
+    VALIDATION_ERROR_PATTERNS.any? { |pattern| error_message.include?(pattern) }
   end
-
 end
