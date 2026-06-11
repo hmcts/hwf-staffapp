@@ -1,20 +1,17 @@
 module LoadApplications
 
+  # Both methods return an ActiveRecord relation so callers can paginate
+  # before any records are loaded.
+
   # rubocop:disable Metrics/ParameterLists
   def self.waiting_for_evidence(user, filter = {}, order = {}, show_form_name = false, show_court_fee = false)
-    waiting_for_evidence_query = Query::WaitingForEvidence.new(user).find(show_form_name, show_court_fee,
-                                                                          filter, order['order_choice'])
-    waiting_for_evidence_query.map do |application|
-      Views::ApplicationList.new(application.evidence_check)
-    end
+    Query::WaitingForEvidence.new(user).find(show_form_name, show_court_fee,
+                                             filter, order['order_choice'])
   end
 
   def self.waiting_for_part_payment(user, filter = {}, order = {}, show_form_name = false, show_court_fee = false)
-    waiting_for_part_payment_query = Query::WaitingForPartPayment.new(user).find(show_form_name, show_court_fee,
-                                                                                 filter, order['order_choice'])
-    waiting_for_part_payment_query.map do |application|
-      Views::ApplicationList.new(application.part_payment)
-    end
+    Query::WaitingForPartPayment.new(user).find(show_form_name, show_court_fee,
+                                                filter, order['order_choice'])
   end
   # rubocop:enable Metrics/ParameterLists
 

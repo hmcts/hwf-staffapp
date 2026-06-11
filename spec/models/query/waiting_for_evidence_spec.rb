@@ -74,5 +74,43 @@ RSpec.describe Query::WaitingForEvidence do
         expect(query.find(false, false, nil)).to match_array([application1, application2, application3])
       end
     end
+
+    context 'with a jurisdiction filter' do
+      let(:other_jurisdiction) { create(:jurisdiction) }
+      let(:application_other_jurisdiction) do
+        create(:application, :waiting_for_evidence_state,
+               office_id: user1.office_id,
+               completed_at: Time.zone.now,
+               detail: create(:detail, jurisdiction: other_jurisdiction))
+      end
+
+      before do
+        application1
+        application_other_jurisdiction
+      end
+
+      it 'returns only applications for that jurisdiction' do
+        filter = { jurisdiction_id: other_jurisdiction.id }
+        expect(query.find(false, false, filter)).to eq([application_other_jurisdiction])
+      end
+    end
+
+    describe 'return type and eager loading' do
+      before do
+        application1
+      end
+
+      it 'returns an ActiveRecord relation so callers can paginate' do
+        expect(query.find(false, false)).to be_a(ActiveRecord::Relation)
+      end
+
+      it 'preloads the associations used by the list page' do
+        loaded_application = query.find(false, false).to_a.first
+
+        [:detail, :applicant, :evidence_check, :completed_by].each do |association|
+          expect(loaded_application.association(association)).to be_loaded
+        end
+      end
+    end
   end
 end

@@ -13,8 +13,12 @@ class PartPaymentsController < ApplicationController
   include FilterApplicationHelper
 
   def index
-    @waiting_for_part_payment = LoadApplications.waiting_for_part_payment(current_user, filter, order,
-                                                                          show_form_name, show_court_fee)
+    waiting_for_part_payment = LoadApplications.waiting_for_part_payment(current_user, filter, order,
+                                                                         show_form_name, show_court_fee)
+    @paginate = paginate(waiting_for_part_payment)
+    @waiting_for_part_payment = @paginate.map do |application|
+      Views::ApplicationList.new(application.part_payment)
+    end
     @show_form_name = show_form_name
     @show_court_fee = show_court_fee
   end

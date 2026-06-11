@@ -33,6 +33,7 @@ h1.govuk-heading-xl =t("#{type}.dashboard.heading")
 
 
 - if list.present?
+
   table *{class: "govuk-table waiting-for-#{type}"}
     caption.visuallyhidden.govuk-table__caption =t("#{type}.dashboard.caption")
     thead.govuk-table__head
@@ -52,5 +53,13 @@ h1.govuk-heading-xl =t("#{type}.dashboard.heading")
           td.govuk-table__cell =record.fee
           td.govuk-table__cell =record.processed_by
           td.govuk-table__cell =record.processed_on
+
+  .govuk-grid-row
+    .govuk-grid-column-full
+      .pagination
+        p.govuk-body Page #{page} of #{total_pages}
+    .govuk-grid-column-full
+      = will_paginate @paginate, container: true
+
 - else
   p =t("#{type}.dashboard.no_records")

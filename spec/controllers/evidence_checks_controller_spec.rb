@@ -11,8 +11,17 @@ RSpec.describe EvidenceChecksController do
   end
 
   describe 'GET #index' do
+    let(:application1) do
+      create(:application, :waiting_for_evidence_state, office: office, completed_at: 1.day.ago)
+    end
+    let(:application2) do
+      create(:application, :waiting_for_evidence_state, office: office, completed_at: 2.days.ago)
+    end
+
     before do
-      allow(LoadApplications).to receive(:waiting_for_evidence).with(user, filter, order, false, false).and_return ['waiting apps']
+      application1
+      application2
+      allow(LoadApplications).to receive(:waiting_for_evidence).and_call_original
       get :index, params: { filter_applications: filter }
     end
 
@@ -25,8 +34,13 @@ RSpec.describe EvidenceChecksController do
     end
 
     describe 'assigns the view models' do
-      it 'loads waiting_for_part_payment application for current user' do
-        expect(assigns(:waiting_for_evidence)).to eql(['waiting apps'])
+      it 'wraps the waiting applications in ApplicationList views' do
+        expect(assigns(:waiting_for_evidence)).to all(be_a(Views::ApplicationList))
+      end
+
+      it 'loads the evidence checks for the waiting applications' do
+        evidence_checks = assigns(:waiting_for_evidence).map(&:evidence_or_part_payment)
+        expect(evidence_checks).to eq([application1.evidence_check, application2.evidence_check])
       end
     end
 
@@ -35,6 +49,32 @@ RSpec.describe EvidenceChecksController do
       it {
         expect(LoadApplications).to have_received(:waiting_for_evidence).with(user, filter, order, false, false)
       }
+    end
+
+    context 'pagination' do
+      before do
+        get :index, params: { filter_applications: filter, page: 2, per_page: 1 }
+      end
+
+      it 'shows only the requested page of applications' do
+        evidence_checks = assigns(:waiting_for_evidence).map(&:evidence_or_part_payment)
+        expect(evidence_checks).to eq([application2.evidence_check])
+      end
+
+      it 'exposes the paginated collection for the view' do
+        expect(assigns(:paginate).total_entries).to eq(2)
+      end
+    end
+
+    context 'pagination combined with form_name sorting' do
+      before do
+        get :index, params: { filter_applications: filter.merge(application_details: 'form_name'),
+                              page: 1, per_page: 1 }
+      end
+
+      it 'paginates the sorted list without errors' do
+        expect(assigns(:waiting_for_evidence).size).to eq(1)
+      end
     end
   end
 end

@@ -9,10 +9,12 @@ module Query
     def find(show_form_name, show_court_fee, filter = {}, order = {})
       list = @user.office.applications.
              waiting_for_evidence.
-             includes(:evidence_check, :completed_by, :applicant).
+             includes(:evidence_check, :completed_by, :applicant, :detail).
              joins(:detail)
 
-      list = list.where(detail: filter) if filter && filter[:jurisdiction_id].present?
+      if filter && filter[:jurisdiction_id].present?
+        list = list.where(detail: { jurisdiction_id: filter[:jurisdiction_id] })
+      end
 
       select_order(list, show_form_name, show_court_fee, order)
     end
