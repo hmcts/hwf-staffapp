@@ -67,35 +67,35 @@ office  = Office.find_by!(name: 'Bristol')
 entity  = BusinessEntity.find_by!(office: office)
 
 base = { user: owner, completed_by: owner, office: office, business_entity: entity }
-
+jurisdiction = Jurisdiction.find_by!(name: 'County')
 # state=0 created — applicant + detail + saving (no EC, no PP)
 3000.times do
-  FactoryBot.create(:application, :uncompleted, :with_reference, **base)
+  FactoryBot.create(:application, :uncompleted, :with_reference, jurisdiction: jurisdiction, **base)
 end
 
 # state=1 waiting_for_evidence — EC linked via trait
 3000.times do
-  FactoryBot.create(:application, :waiting_for_evidence_state, **base)
+  FactoryBot.create(:application, :waiting_for_evidence_state, jurisdiction: jurisdiction, **base)
 end
 
 # state=2 waiting_for_part_payment — PP linked explicitly
 3000.times do
-  app = FactoryBot.create(:application, :waiting_for_part_payment_state, **base)
+  app = FactoryBot.create(:application, :waiting_for_part_payment_state, jurisdiction: jurisdiction, **base)
   FactoryBot.create(:part_payment, application: app)
 end
 
 # state=3 processed (direct decision path, no EC)
 3000.times do
-  FactoryBot.create(:application, :processed_state, outcome: 'full', **base)
+  FactoryBot.create(:application, :processed_state, outcome: 'full', jurisdiction: jurisdiction, **base)
 end
 
 # state=3 processed (went through evidence check, EC completed)
 3000.times do
-  app = FactoryBot.create(:application, :processed_state, outcome: 'full', **base)
+  app = FactoryBot.create(:application, :processed_state, outcome: 'full', jurisdiction: jurisdiction, **base)
   FactoryBot.create(:evidence_check_full_outcome, :completed, application: app)
 end
 
 # state=4 deleted
 200.times do
-  FactoryBot.create(:application, :deleted_state, outcome: 'full', **base)
+  FactoryBot.create(:application, :deleted_state, outcome: 'full', jurisdiction: jurisdiction, **base)
 end
