@@ -9,6 +9,47 @@ describe DwpMonitor do
     describe '.state' do
       subject { service.state }
 
+      context 'error list' do
+        let(:list_of_errors) {
+          ["400 Bad Request",
+           "500 Internal Server Error",
+           "502 Bad Gateway",
+           "Connection reset by peer",
+           "end of file reached",
+           "{\"error\":\"Connection failed: Connection reset by peer\"}",
+           "{\"error\":\"Connection failed: Failed to open TCP connection to laa-benefit-checker.service.justice.gov.uk:443 (getaddrinfo(3): Try again)\"}",
+           "{\"error\":\"LSCBC998: Service unavailable.\"}",
+           "Failed to open TCP connection to hwf-benefit-checker-api.helpwithfees:3000 (getaddrinfo: Temporary failure in name resolution)",
+           "LSCBC252: Invalid request credentials.",
+           "LSCBC959: Service unavailable",
+           "LSCBC959: Service unavailable.",
+           "LSCBC998: Service unavailable.",
+           "Net::ReadTimeout with #<TCPSocket:(closed)>",
+           "Request Timeout",
+           "Server broke connection",
+           "The benefits checker is not available at the moment. Please check again later.",
+           "the server responded with status 500 for POST http://help-with-fees-benefit-checke",
+           "Timed out connecting to server",
+           "Timed out reading data from server"]
+        }
+
+        it 'check against real errors with non Bad Request result' do
+          list_of_errors.each do |error_message|
+            list = create_list(:benefit_check, 10, dwp_result: 'something', error_message: error_message)
+            is_expected.to eql 'offline'
+            list.each(&:destroy) # clean up the test data before the next iteration
+          end
+        end
+
+        it 'check against real errors with empty result' do
+          list_of_errors.each do |error_message|
+            list = create_list(:benefit_check, 10, dwp_result: '', error_message: error_message)
+            is_expected.to eql 'offline'
+            list.each(&:destroy) # clean up the test data before the next iteration
+          end
+        end
+      end
+
       context 'when more than 50% of the last dwp_results are "400 Bad Request"' do
         before { build_dwp_checks_with_bad_requests }
 
