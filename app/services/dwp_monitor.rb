@@ -1,5 +1,5 @@
 class DwpMonitor
-  VALID_RESULTS = %w[Yes No].freeze
+  VALID_RESULTS = ['Yes', 'No'].freeze
 
   VALIDATION_ERROR_PATTERNS = [
     'is invalid',
