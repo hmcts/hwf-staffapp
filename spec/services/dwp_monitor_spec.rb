@@ -47,6 +47,15 @@ describe DwpMonitor do
         it { is_expected.to eql 'online' }
       end
 
+      context 'when more than 50% are "No" results' do
+        before do
+          create_list(:benefit_check, 4, :yes_result)
+          create_list(:benefit_check, 6, :no_result)
+        end
+
+        it { is_expected.to eql 'online' }
+      end
+
       context 'when more than 50% are "Technical fault"' do
         before do
           create_list(:benefit_check, 4, :yes_result)
@@ -76,11 +85,31 @@ describe DwpMonitor do
         it { is_expected.to eql 'offline' }
       end
 
-      context 'when more than 50% are "Undetermined"' do
+      context 'when more than 50% are "Undetermined" applicant data problems' do
         before do
           create_list(:benefit_check, 4, :yes_result)
           create_list(:benefit_check, 6, dwp_result: 'Undetermined',
                                          error_message: I18n.t('error_messages.benefit_checker.undetermined'))
+        end
+
+        # the applicant data failed validation before DWP was even called,
+        # so this is not evidence of an outage
+        it { is_expected.to eql 'online' }
+      end
+
+      context 'when more than 50% are "Undetermined" with an unexpected error message' do
+        before do
+          create_list(:benefit_check, 4, :yes_result)
+          create_list(:benefit_check, 6, dwp_result: 'Undetermined', error_message: 'something else broke')
+        end
+
+        it { is_expected.to eql 'offline' }
+      end
+
+      context 'when more than 50% are "Undetermined" without any error message' do
+        before do
+          create_list(:benefit_check, 4, :yes_result)
+          create_list(:benefit_check, 6, dwp_result: 'Undetermined', error_message: nil)
         end
 
         it { is_expected.to eql 'offline' }
@@ -119,6 +148,42 @@ describe DwpMonitor do
         end
 
         it { is_expected.to eql 'offline' }
+      end
+
+      context 'when more than 50% are "BadRequest" without any error message' do
+        before do
+          create_list(:benefit_check, 4, :yes_result)
+          create_list(:benefit_check, 6, dwp_result: 'BadRequest', error_message: nil)
+        end
+
+        it { is_expected.to eql 'offline' }
+      end
+
+      context 'when more than 50% have no dwp_result recorded at all' do
+        before do
+          create_list(:benefit_check, 4, :yes_result)
+          create_list(:benefit_check, 6, dwp_result: nil, error_message: nil)
+        end
+
+        it { is_expected.to eql 'offline' }
+      end
+
+      context 'when more than 50% have a blank dwp_result' do
+        before do
+          create_list(:benefit_check, 4, :yes_result)
+          create_list(:benefit_check, 6, dwp_result: '', error_message: nil)
+        end
+
+        it { is_expected.to eql 'offline' }
+      end
+
+      context 'when results come back with unexpected casing or whitespace' do
+        before do
+          create_list(:benefit_check, 5, dwp_result: 'YES')
+          create_list(:benefit_check, 5, dwp_result: 'no ')
+        end
+
+        it { is_expected.to eql 'online' }
       end
     end
   end
