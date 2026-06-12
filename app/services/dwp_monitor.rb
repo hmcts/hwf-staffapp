@@ -1,7 +1,7 @@
 class DwpMonitor
   VALID_RESULTS = ['Yes', 'No'].freeze
 
-  VALIDATION_ERROR_PATTERNS = [
+  VALID_ERROR_PATTERNS = [
     'is invalid',
     'is not valid',
     'is missing'
@@ -58,7 +58,7 @@ class DwpMonitor
   def validation_error?(error_message)
     return false if error_message.blank?
 
-    VALIDATION_ERROR_PATTERNS.any? { |pattern| error_message.include?(pattern) }
+    VALID_ERROR_PATTERNS.any? { |pattern| error_message.include?(pattern) }
   end
 
   # 'Undetermined' with our own 'details incorrect' message means the applicant
