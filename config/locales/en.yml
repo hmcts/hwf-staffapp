@@ -241,9 +241,11 @@ en-GB:
       no_records: There are no applications waiting for evidence
       filter: Filter
       table_header:
+        jurisdiction: Jurisdiction
         reference: Reference
         applicant: Applicant
         form_name: Form name
+        case_number: Case number
         court_fee: Court fee
         processed_by: Processed by
         processed_on: Date processed
@@ -265,9 +267,11 @@ en-GB:
       no_records: There are no applications waiting for part-payment
       filter: Filter
       table_header:
+        jurisdiction: Jurisdiction
         reference: Reference
         applicant: Applicant
         form_name: Form name
+        case_number: Case number
         court_fee: Court fee
         processed_by: Processed by
         processed_on: Date processed

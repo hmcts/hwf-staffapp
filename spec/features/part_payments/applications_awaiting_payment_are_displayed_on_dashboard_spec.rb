@@ -40,4 +40,23 @@ RSpec.feature 'Applications awaiting payment are displayed on dashboard' do
       expect(page).to have_text(application4.reference)
     end
   end
+
+  scenario 'jurisdiction is the first column and case number follows form name' do
+    visit part_payments_path
+
+    within '.waiting-for-part_payment thead' do
+      headers = page.all('th').map(&:text)
+      expect(headers).to eq(['Jurisdiction', 'Reference', 'Applicant', 'Form name',
+                             'Case number', 'Court fee', 'Processed by', 'Date processed'])
+    end
+  end
+
+  scenario 'jurisdiction name and case number are shown for each application' do
+    visit part_payments_path
+
+    within '.waiting-for-part_payment' do
+      expect(page).to have_text(application1.detail.jurisdiction.name)
+      expect(page).to have_text(application1.detail.case_number)
+    end
+  end
 end
