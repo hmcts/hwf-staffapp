@@ -17,7 +17,15 @@ RSpec.feature 'Admin can manage message info' do
       visit '/'
       click_link 'Edit banner'
       expect(page).to have_text 'Edit Notifications Message'
-      page.find(:css, 'trix-editor#notification_message').set('This is message from admin, hear, hear.')
+
+      # wait for Trix to initialise before typing, otherwise the typed text
+      # is wiped or never synced into the hidden form input
+      expect(page).to have_css('trix-toolbar')
+      editor = page.find(:css, 'trix-editor#notification_message')
+      editor.set('This is message from admin, hear, hear.')
+      expect(editor).to have_text('This is message from admin, hear, hear.')
+      expect(page).to have_field('notification[message]', type: 'hidden', with: /hear, hear/)
+
       check 'Show on admin homepage'
       click_button 'Save changes'
       expect(page).to have_text 'Your changes have been saved'
