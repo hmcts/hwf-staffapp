@@ -1,4 +1,11 @@
 class DwpMonitor
+  VALID_RESULTS = ['Yes', 'No'].freeze
+
+  VALID_ERROR_PATTERNS = [
+    'is invalid',
+    'is not valid',
+    'is missing'
+  ].freeze
 
   def initialize
     dwp_results
@@ -22,35 +29,42 @@ class DwpMonitor
 
   def percent
     return 0 unless @checks.any?
-    # When DWP is offline it returns 400 Bad Request
-    # maybe extend to search for x00 as first 3 chars to check for 500 errors too
     total = @checks.count.to_f
-    (error_total / total) * 100.0
+    (error_count / total) * 100.0
   end
 
-  def error_total
-    internal_server_error = @checks.flatten.count('500 Internal Server Error').to_f
-    bad_request = bad_request_count.to_f
-    server_broke = @checks.flatten.count('Server broke connection').to_f
-    bad_request + server_broke + internal_server_error
+  def error_count
+    @checks.count { |check| error?(check) }.to_f
   end
 
-  def bad_request_count
-    @checks.count do |check|
-      next if check[0] != 'BadRequest' && check[0] != 'Server unavailable' && check[1].blank?
-      matching_error_message?(check[1]).blank? ? nil : true
-    end
+  def error?(check)
+    dwp_result = check[0].to_s.strip
+    error_message = check[1]
+
+    return false if valid_result?(dwp_result)
+    return false if dwp_result == 'BadRequest' && validation_error?(error_message)
+    return false if dwp_result == 'Undetermined' && applicant_data_problem?(error_message)
+
+    true
   end
 
-  def dwp_message(message)
-    message.nil? ? '' : message
+  def valid_result?(dwp_result)
+    VALID_RESULTS.any? { |valid| dwp_result.casecmp?(valid) }
   end
 
-  def matching_error_message?(check)
-    ['LSCBC', 'Service unavailable', 'The benefits checker is not available at the moment',
-     'Timed out reading data from server', 'Connection reset by peer'].select do |message|
-      dwp_message(check).include?(message)
-    end
+  # A BadRequest caused by invalid input data is the applicant's data problem,
+  # not a DWP outage. A BadRequest without any explanation is treated as
+  # a failure - if DWP did not tell us why, we assume it is not healthy.
+  def validation_error?(error_message)
+    return false if error_message.blank?
+
+    VALID_ERROR_PATTERNS.any? { |pattern| error_message.include?(pattern) }
   end
 
+  # 'Undetermined' with our own 'details incorrect' message means the applicant
+  # data failed validation before DWP was called, so it is not evidence of
+  # an outage. Any other 'Undetermined' is treated as a failure.
+  def applicant_data_problem?(error_message)
+    error_message == I18n.t('error_messages.benefit_checker.undetermined')
+  end
 end
