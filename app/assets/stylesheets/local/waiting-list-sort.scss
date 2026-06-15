@@ -6,12 +6,47 @@
   .waiting-sort-controls {
     display: flex;
     flex-wrap: wrap;
-    align-items: flex-end;
-    column-gap: 40px;
+    align-items: center;
+    column-gap: 20px;
+    row-gap: 10px;
 
+    // Spacing between rows comes from row-gap, so every flex item is a tight
+    // box with no bottom margin - that lets align-items: center line them up
+    // exactly on one horizontal line.
     .govuk-form-group,
-    .govuk-button-group {
-      margin-bottom: 10px;
+    .govuk-button-group,
+    .govuk-radios,
+    .waiting-sort-controls__label {
+      margin-bottom: 0;
+    }
+  }
+
+  // Visible 'Primary sort: Date processed' label, sitting on the row.
+  .waiting-sort-controls__label {
+    white-space: nowrap;
+  }
+  .govuk-radios__label {
+    white-space: nowrap;
+  }
+
+  // 'Then by' select with its label sitting to the left rather than above.
+  .waiting-sort-then-by {
+    display: flex;
+    align-items: center;
+
+    .govuk-label {
+      margin-bottom: 0;
+      margin-right: 10px;
+      white-space: nowrap;
+    }
+  }
+
+  // Keep the Apply and Reset buttons centred on the same line.
+  .govuk-button-group {
+    align-items: center;
+
+    .govuk-button {
+      margin-bottom: 0;
     }
   }
 

@@ -20,10 +20,12 @@ h1.govuk-heading-xl =t("#{type}.dashboard.heading")
     = form_tag request.path, method: :get do
       = hidden_field_tag 'filter_applications[jurisdiction_id]', selected_jurisdiction
       = hidden_field_tag 'filter_applications[sort_to]', current_sort_to
+      p class="govuk-body govuk-!-font-weight-bold waiting-sort-controls__label"
+        = t('waiting_list.sorting.primary_label')
       .waiting-sort-controls
         .govuk-form-group
           fieldset.govuk-fieldset
-            legend.govuk-fieldset__legend.govuk-fieldset__legend--s
+            legend.govuk-fieldset__legend.govuk-visually-hidden
               = t('waiting_list.sorting.primary_label')
             .govuk-radios.govuk-radios--inline.govuk-radios--small data-module="govuk-radios"
               .govuk-radios__item
@@ -34,13 +36,13 @@ h1.govuk-heading-xl =t("#{type}.dashboard.heading")
                 = radio_button_tag 'filter_applications[order_choice]', 'Ascending', oldest_first?, class: 'govuk-radios__input', id: 'order_choice_ascending'
                 label.govuk-label.govuk-radios__label for="order_choice_ascending"
                   = t('waiting_list.sorting.oldest_first')
-        .govuk-form-group
+        .govuk-form-group.waiting-sort-then-by
           label.govuk-label for="sort_by"
             = t('waiting_list.sorting.then_by')
           = select_tag 'filter_applications[sort_by]', options_for_select(secondary_sort_options, current_sort_by), include_blank: t('waiting_list.sorting.none'), id: 'sort_by', class: 'govuk-select'
         .govuk-button-group
-          = submit_tag t('waiting_list.sorting.apply'), class: 'govuk-button govuk-button--secondary', name: nil
-          = link_to t('waiting_list.sorting.reset'), reset_sort_path, class: 'govuk-link'
+          = submit_tag t('waiting_list.sorting.apply'), class: 'govuk-button', name: nil
+          = link_to t('waiting_list.sorting.reset'), reset_sort_path, class: 'govuk-button govuk-button--secondary', role: 'button'
 
   .govuk-grid-column-full
     .govuk-inset-text.waiting-sort-state = sort_state_sentence
