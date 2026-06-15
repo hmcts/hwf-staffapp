@@ -12,7 +12,7 @@ RSpec.describe Query::WaitingForPartPayment do
              office_id: user1.office_id,
              completed_at: 3.days.ago,
              jurisdiction: user1.jurisdiction,
-             detail: create(:detail, form_name: 'AA', fee: 100))
+             detail: create(:detail, form_name: 'AA', fee: 100, case_number: 'CN200'))
     end
 
     let(:application2) do
@@ -20,7 +20,7 @@ RSpec.describe Query::WaitingForPartPayment do
              office_id: user1.office_id,
              completed_at: 1.day.ago,
              jurisdiction: user1.jurisdiction,
-             detail: create(:detail, form_name: 'BB', fee: 50))
+             detail: create(:detail, form_name: 'BB', fee: 50, case_number: 'CN300'))
     end
 
     let(:application3) do
@@ -28,50 +28,68 @@ RSpec.describe Query::WaitingForPartPayment do
              office_id: user1.office_id,
              completed_at: 2.days.ago,
              jurisdiction: user1.jurisdiction,
-             detail: create(:detail, form_name: 'AA', fee: 200))
+             detail: create(:detail, form_name: 'AA', fee: 200, case_number: 'CN100'))
     end
 
-    context 'default sorting by completed_at DESC' do
+    before do
+      application1
+      application2
+      application3
+    end
+
+    context 'with no sorting chosen' do
       it 'returns applications ordered by completed_at descending' do
-        expect(query.find(false, false)).to eq([application2, application3, application1])
+        expect(query.find).to eq([application2, application3, application1])
       end
     end
 
-    context 'sorting by completed_at ASC' do
+    context 'with primary sorting set to oldest first' do
       it 'returns applications ordered by completed_at ascending' do
-        expect(query.find(false, false, {}, 'Ascending')).to eq([application1, application3, application2])
+        expect(query.find(sort: { 'order_choice' => 'Ascending' })).to eq(
+          [application1, application3, application2]
+        )
       end
     end
 
-    context 'sorting by form_name' do
-      it 'orders by form_name DESC then completed_at DESC' do
-        expect(query.find(true, false)).to eq([application2, application3, application1])
+    context 'with a secondary sort within the same processed date' do
+      let(:morning_zz) do
+        create(:application, :waiting_for_part_payment_state,
+               office_id: user1.office_id,
+               completed_at: Time.zone.yesterday.midday - 3.hours,
+               detail: create(:detail, form_name: 'ZZ', fee: 500, case_number: 'CN999'))
+      end
+      let(:afternoon_aa) do
+        create(:application, :waiting_for_part_payment_state,
+               office_id: user1.office_id,
+               completed_at: Time.zone.yesterday.midday + 3.hours,
+               detail: create(:detail, form_name: 'AA', fee: 900, case_number: 'CN111'))
       end
 
-      it 'orders by form_name ASC then completed_at ASC' do
-        expect(query.find(true, false, {}, 'Ascending')).to eq([application1, application3, application2])
-      end
-    end
-
-    context 'sorting by fee' do
-      it 'orders by fee DESC then completed_at DESC' do
-        expect(query.find(false, true)).to eq([application3, application1, application2])
+      before do
+        Application.where.not(id: [morning_zz.id, afternoon_aa.id]).destroy_all
       end
 
-      it 'orders by fee ASC then completed_at ASC' do
-        expect(query.find(false, true, {}, 'Ascending')).to eq([application2, application1, application3])
+      it 'sorts by the secondary field ascending within the date' do
+        sort = { 'sort_by' => 'form_name', 'sort_to' => 'asc' }
+        expect(query.find(sort: sort)).to eq([afternoon_aa, morning_zz])
+      end
+
+      it 'sorts by case number descending within the date' do
+        sort = { 'sort_by' => 'case_number', 'sort_to' => 'desc' }
+        expect(query.find(sort: sort)).to eq([morning_zz, afternoon_aa])
+      end
+
+      it 'sorts by court fee ascending within the date' do
+        sort = { 'sort_by' => 'court_fee', 'sort_to' => 'asc' }
+        expect(query.find(sort: sort)).to eq([morning_zz, afternoon_aa])
       end
     end
 
     context 'with empty jurisdiction filter' do
       it 'ignores the filter and returns all' do
-        expect(query.find(false, false, { jurisdiction_id: '' })).to match_array([application1, application2, application3])
-      end
-    end
-
-    context 'with nil filter' do
-      it 'returns all applications without filtering' do
-        expect(query.find(false, false, nil)).to match_array([application1, application2, application3])
+        expect(query.find(filter: { jurisdiction_id: '' })).to match_array(
+          [application1, application2, application3]
+        )
       end
     end
 
@@ -84,28 +102,21 @@ RSpec.describe Query::WaitingForPartPayment do
                detail: create(:detail, jurisdiction: other_jurisdiction))
       end
 
-      before do
-        application1
-        application_other_jurisdiction
-      end
+      before { application_other_jurisdiction }
 
       it 'returns only applications for that jurisdiction' do
         filter = { jurisdiction_id: other_jurisdiction.id }
-        expect(query.find(false, false, filter)).to eq([application_other_jurisdiction])
+        expect(query.find(filter: filter)).to eq([application_other_jurisdiction])
       end
     end
 
     describe 'return type and eager loading' do
-      before do
-        application1
-      end
-
       it 'returns an ActiveRecord relation so callers can paginate' do
-        expect(query.find(false, false)).to be_a(ActiveRecord::Relation)
+        expect(query.find).to be_a(ActiveRecord::Relation)
       end
 
       it 'preloads the associations used by the list page' do
-        loaded_application = query.find(false, false).to_a.first
+        loaded_application = query.find.to_a.first
 
         [:detail, :applicant, :part_payment, :completed_by].each do |association|
           expect(loaded_application.association(association)).to be_loaded

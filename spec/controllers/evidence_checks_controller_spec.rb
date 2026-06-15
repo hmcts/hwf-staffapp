@@ -4,7 +4,7 @@ RSpec.describe EvidenceChecksController do
   let(:office) { create(:office) }
   let(:user) { create(:staff, office: office) }
   let(:filter) { { jurisdiction_id: '' } }
-  let(:order) { {} }
+  let(:sort) { {} }
 
   before do
     sign_in user
@@ -47,8 +47,24 @@ RSpec.describe EvidenceChecksController do
     context 'filter' do
       let(:filter) { { jurisdiction_id: '2' } }
       it {
-        expect(LoadApplications).to have_received(:waiting_for_evidence).with(user, filter, order, false, false)
+        expect(LoadApplications).to have_received(:waiting_for_evidence).with(user, filter, sort)
       }
+    end
+
+    context 'sorting params' do
+      before do
+        get :index, params: { filter_applications: { jurisdiction_id: '',
+                                                     order_choice: 'Ascending',
+                                                     sort_by: 'case_number',
+                                                     sort_to: 'desc' } }
+      end
+
+      it 'passes the sort options to the loader' do
+        expect(LoadApplications).to have_received(:waiting_for_evidence).with(
+          user, { jurisdiction_id: '' },
+          { order_choice: 'Ascending', sort_by: 'case_number', sort_to: 'desc' }
+        )
+      end
     end
 
     context 'pagination' do
@@ -66,9 +82,9 @@ RSpec.describe EvidenceChecksController do
       end
     end
 
-    context 'pagination combined with form_name sorting' do
+    context 'pagination combined with secondary sorting' do
       before do
-        get :index, params: { filter_applications: filter.merge(application_details: 'form_name'),
+        get :index, params: { filter_applications: filter.merge(sort_by: 'form_name', sort_to: 'asc'),
                               page: 1, per_page: 1 }
       end
 

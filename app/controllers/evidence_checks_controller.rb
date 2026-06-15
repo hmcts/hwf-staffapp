@@ -5,14 +5,11 @@ class EvidenceChecksController < ApplicationController
   skip_after_action :verify_authorized, only: :index
 
   def index
-    waiting_for_evidence = LoadApplications.waiting_for_evidence(current_user, filter, order,
-                                                                 show_form_name, show_court_fee)
+    waiting_for_evidence = LoadApplications.waiting_for_evidence(current_user, filter, sort)
     @paginate = paginate(waiting_for_evidence)
     @waiting_for_evidence = @paginate.map do |application|
       Views::ApplicationList.new(application.evidence_check)
     end
-    @show_form_name = show_form_name
-    @show_court_fee = show_court_fee
   end
 
   def show

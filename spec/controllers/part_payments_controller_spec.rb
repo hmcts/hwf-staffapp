@@ -16,7 +16,7 @@ RSpec.describe PartPaymentsController do
   let(:accuracy_form) { double }
   let(:part_payment_result) { double }
   let(:filter) { { jurisdiction_id: '' } }
-  let(:order) { {} }
+  let(:sort) { {} }
 
   before do
     sign_in user
@@ -68,8 +68,24 @@ RSpec.describe PartPaymentsController do
     context 'filter' do
       let(:filter) { { jurisdiction_id: '2' } }
       it {
-        expect(LoadApplications).to have_received(:waiting_for_part_payment).with(user, filter, order, false, false)
+        expect(LoadApplications).to have_received(:waiting_for_part_payment).with(user, filter, sort)
       }
+    end
+
+    context 'sorting params' do
+      before do
+        get :index, params: { filter_applications: { jurisdiction_id: '',
+                                                     order_choice: 'Ascending',
+                                                     sort_by: 'court_fee',
+                                                     sort_to: 'desc' } }
+      end
+
+      it 'passes the sort options to the loader' do
+        expect(LoadApplications).to have_received(:waiting_for_part_payment).with(
+          user, { jurisdiction_id: '' },
+          { order_choice: 'Ascending', sort_by: 'court_fee', sort_to: 'desc' }
+        )
+      end
     end
 
     context 'pagination' do

@@ -45,7 +45,8 @@ RSpec.feature 'Applications awaiting payment are displayed on dashboard' do
     visit part_payments_path
 
     within '.waiting-for-part_payment thead' do
-      headers = page.all('th').map(&:text)
+      # strip the trailing sort arrows/priority indicators so only the label remains
+      headers = page.all('th').map { |th| th.text.sub(/[\s▲▼0-9]*\z/, '') }
       expect(headers).to eq(['Jurisdiction', 'Reference', 'Applicant', 'Form name',
                              'Case number', 'Court fee', 'Processed by', 'Date processed'])
     end

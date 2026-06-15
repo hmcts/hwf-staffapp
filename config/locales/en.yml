@@ -278,6 +278,25 @@ en-GB:
     result:
       'yes': The applicant has paid %{amount_to_pay} towards the fee
       'no': The applicant will need to make a new application
+  waiting_list:
+    sorting:
+      primary_label: 'Primary sort: Date processed'
+      oldest_first: Oldest first
+      newest_first: Newest first
+      then_by: Then by
+      none: None
+      apply: Apply
+      reset: Reset sorting
+      sorted_by: 'Sorted by Date processed, %{direction}'
+      then_by_sentence: ', then by %{field} (%{direction})'
+      oldest: oldest first
+      newest: newest first
+      ascending: ascending
+      descending: descending
+      fields:
+        form_name: Form name
+        case_number: Case number
+        court_fee: Court fee
   functions:
     feedback: 'Give feedback'
     staff_guide: See the guides

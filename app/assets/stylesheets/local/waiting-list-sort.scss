@@ -1,0 +1,41 @@
+// Sorting toolbar and header indicators for the 'Waiting for evidence'
+// and 'Waiting for part-payments' lists. Built from GOV.UK Design System
+// components (inline radios, select, button group, inset text).
+
+.waiting-sort-toolbar {
+  .waiting-sort-controls {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: flex-end;
+    column-gap: 40px;
+
+    .govuk-form-group,
+    .govuk-button-group {
+      margin-bottom: 10px;
+    }
+  }
+
+  .waiting-sort-state {
+    margin-top: 10px;
+  }
+}
+
+.waiting-list-table {
+  th a {
+    color: #0b0c0c;
+    text-decoration: none;
+
+    &:focus {
+      color: #0b0c0c;
+    }
+  }
+
+  th.sort-active a {
+    color: #1d70b8;
+  }
+
+  .waiting-sort-arrows {
+    font-size: 0.7em;
+    margin-left: 4px;
+  }
+}
