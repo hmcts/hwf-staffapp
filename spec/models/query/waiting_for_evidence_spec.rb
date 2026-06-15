@@ -80,6 +80,45 @@ RSpec.describe Query::WaitingForEvidence do
       end
     end
 
+    context 'with blank secondary sort values' do
+      let(:with_value) do
+        create(:application, :waiting_for_evidence_state,
+               office_id: user1.office_id,
+               completed_at: Time.zone.yesterday.midday + 1.hour,
+               detail: create(:detail, form_name: 'AA', case_number: 'CN100'))
+      end
+      let(:nil_value) do
+        create(:application, :waiting_for_evidence_state,
+               office_id: user1.office_id,
+               completed_at: Time.zone.yesterday.midday + 2.hours,
+               detail: create(:detail, form_name: nil, case_number: nil))
+      end
+      let(:empty_value) do
+        create(:application, :waiting_for_evidence_state,
+               office_id: user1.office_id,
+               completed_at: Time.zone.yesterday.midday + 3.hours,
+               detail: create(:detail, form_name: '', case_number: ''))
+      end
+
+      before do
+        Application.where.not(id: [with_value.id, nil_value.id, empty_value.id]).destroy_all
+      end
+
+      it 'puts blank values last when sorting ascending' do
+        sort = { 'sort_by' => 'form_name', 'sort_to' => 'asc' }
+        result = query.find(sort: sort).to_a
+        expect(result.first).to eq(with_value)
+        expect(result.last(2)).to match_array([nil_value, empty_value])
+      end
+
+      it 'still puts blank values last when sorting descending' do
+        sort = { 'sort_by' => 'form_name', 'sort_to' => 'desc' }
+        result = query.find(sort: sort).to_a
+        expect(result.first).to eq(with_value)
+        expect(result.last(2)).to match_array([nil_value, empty_value])
+      end
+    end
+
     context 'sorting by form name across dates' do
       it 'sorts by date first, then form name ascending' do
         sort = { 'sort_by' => 'form_name', 'sort_to' => 'asc' }
