@@ -104,18 +104,25 @@ RSpec.describe Query::WaitingForEvidence do
         Application.where.not(id: [with_value.id, nil_value.id, empty_value.id]).destroy_all
       end
 
-      it 'puts blank values last when sorting ascending' do
+      it 'puts blank values first when sorting ascending' do
         sort = { 'sort_by' => 'form_name', 'sort_to' => 'asc' }
+        result = query.find(sort: sort).to_a
+        expect(result.first(2)).to match_array([nil_value, empty_value])
+        expect(result.last).to eq(with_value)
+      end
+
+      it 'puts blank values last when sorting descending' do
+        sort = { 'sort_by' => 'form_name', 'sort_to' => 'desc' }
         result = query.find(sort: sort).to_a
         expect(result.first).to eq(with_value)
         expect(result.last(2)).to match_array([nil_value, empty_value])
       end
 
-      it 'still puts blank values last when sorting descending' do
-        sort = { 'sort_by' => 'form_name', 'sort_to' => 'desc' }
-        result = query.find(sort: sort).to_a
-        expect(result.first).to eq(with_value)
-        expect(result.last(2)).to match_array([nil_value, empty_value])
+      it 'treats NULL and empty string identically' do
+        ascending = query.find(sort: { 'sort_by' => 'form_name', 'sort_to' => 'asc' }).to_a
+        descending = query.find(sort: { 'sort_by' => 'form_name', 'sort_to' => 'desc' }).to_a
+        expect(ascending.first(2)).to match_array([nil_value, empty_value])
+        expect(descending.last(2)).to match_array([nil_value, empty_value])
       end
     end
 

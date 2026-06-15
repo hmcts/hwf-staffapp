@@ -1,12 +1,13 @@
 module FilterOrder
 
-  # Each secondary column is wrapped so that blank values always sort to the
-  # bottom: NULLIF(..., '') turns empty strings into NULL, and the order clause
-  # appends NULLS LAST so missing values stay last in both directions.
+  # Each secondary column is wrapped in COALESCE so a NULL is treated the same
+  # as an empty value - both become the "smallest" value and sort together.
+  # That gives natural ordering: blanks first when ascending, last when
+  # descending, with no NULL/empty-string inconsistency.
   SECONDARY_SORT_COLUMNS = {
-    'form_name' => "NULLIF(details.form_name, '')",
-    'case_number' => "NULLIF(details.case_number, '')",
-    'court_fee' => 'details.fee'
+    'form_name' => "COALESCE(details.form_name, '')",
+    'case_number' => "COALESCE(details.case_number, '')",
+    'court_fee' => 'COALESCE(details.fee, 0)'
   }.freeze
 
   # Primary sort is always the processed date - newest first by default.
@@ -18,14 +19,13 @@ module FilterOrder
     secondary_column = SECONDARY_SORT_COLUMNS[sort['sort_by']]
 
     if secondary_column
-      # The DATE() truncation and NULLS LAST can't be expressed with the hash
-      # form, so this branch needs raw SQL. It is safe to wrap in Arel.sql
-      # because the column comes from the SECONDARY_SORT_COLUMNS allow-list and
-      # the directions are always the literal 'ASC'/'DESC' - no user input
-      # reaches the string.
+      # The DATE() truncation can't be expressed with the hash form, so this
+      # branch needs raw SQL. It is safe to wrap in Arel.sql because the column
+      # comes from the SECONDARY_SORT_COLUMNS allow-list and the directions are
+      # always the literal 'ASC'/'DESC' - no user input reaches the string.
       list.order(Arel.sql(
                    "DATE(applications.completed_at) #{primary_direction(sort).to_s.upcase}, " \
-                   "#{secondary_column} #{secondary_direction(sort).to_s.upcase} NULLS LAST"
+                   "#{secondary_column} #{secondary_direction(sort).to_s.upcase}"
                  ))
     else
       list.order(completed_at: primary_direction(sort))
