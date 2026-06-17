@@ -6,15 +6,17 @@ module Query
       @user = user
     end
 
-    def find(show_form_name, show_court_fee, filter = {}, order = {})
+    def find(filter: {}, sort: {})
       list = @user.office.applications.
              waiting_for_part_payment.
-             includes(:part_payment, :completed_by, :applicant).
-             joins(:detail)
+             includes(:part_payment, :completed_by, :applicant, detail: :jurisdiction).
+             references(:detail)
 
-      list = list.where(detail: filter) if filter && filter[:jurisdiction_id].present?
+      if filter && filter[:jurisdiction_id].present?
+        list = list.where(details: { jurisdiction_id: filter[:jurisdiction_id] })
+      end
 
-      select_order(list, show_form_name, show_court_fee, order)
+      select_order(list, sort)
     end
   end
 end

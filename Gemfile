@@ -100,6 +100,7 @@ group :development, :test do
   gem 'byebug'
   gem 'climate_control'
   gem 'factory_bot_rails'
+  gem 'faker'
   gem 'listen'
   gem 'parallel_tests'
   gem 'pry-rails'
@@ -124,7 +125,6 @@ group :test do
   gem 'cucumber', require: false
   gem 'cucumber-rails', require: false
   gem 'database_cleaner-active_record'
-  gem 'faker'
   gem 'launchy'
   gem 'mock_redis'
   gem 'rails-controller-testing'

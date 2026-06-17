@@ -93,13 +93,11 @@ module HomeHelper
   end
 
   def waiting_for_evidence_path(application)
-    record = Views::ApplicationList.new(application.evidence_check)
-    evidence_path(record.evidence_or_part_payment)
+    evidence_path(application.evidence_check)
   end
 
   def waiting_for_part_payment(application)
-    record = Views::ApplicationList.new(application.part_payment)
-    part_payment_path(record.evidence_or_part_payment)
+    part_payment_path(application.part_payment)
   end
 
   def hmrc_evidence_check_link(application)

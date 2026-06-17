@@ -53,14 +53,6 @@ class HomeController < ApplicationController
     @last_failed_dwp_applications ||= LoadApplications.load_users_last_dwp_failed_applications(current_user)
   end
 
-  def assign_waiting_for_evidence
-    @waiting_for_evidence = LoadApplications.waiting_for_evidence(current_user)
-  end
-
-  def assign_waiting_for_part_payment
-    @waiting_for_part_payment = LoadApplications.waiting_for_part_payment(current_user)
-  end
-
   def search_params(type)
     params.require(:"#{type}_search").permit(:reference)
   end

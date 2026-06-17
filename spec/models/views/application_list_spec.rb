@@ -85,6 +85,36 @@ RSpec.describe Views::ApplicationList do
       end
     end
 
+    describe '#case_number' do
+      subject { view.case_number }
+
+      let(:detail) { build(:detail, case_number: 'CN123456') }
+
+      it 'returns the case number from the detail' do
+        is_expected.to eql('CN123456')
+      end
+    end
+
+    describe '#jurisdiction' do
+      subject { view.jurisdiction }
+
+      context 'when the detail has a jurisdiction' do
+        let(:detail) { build(:detail, jurisdiction: build(:jurisdiction, name: 'County')) }
+
+        it 'returns the jurisdiction name' do
+          is_expected.to eql('County')
+        end
+      end
+
+      context 'when the detail has no jurisdiction' do
+        let(:detail) { build(:detail, jurisdiction: nil) }
+
+        it 'returns nil' do
+          is_expected.to be_nil
+        end
+      end
+    end
+
     describe '#fee' do
       subject { view.fee }
 
