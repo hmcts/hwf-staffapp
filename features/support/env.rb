@@ -19,6 +19,14 @@ require 'fileutils'
 include WebMock::API
 require 'mock_redis'
 
+# Smoke tests run against a deployed environment with no local database, on a
+# CI agent that has none. cucumber-rails registers its own DatabaseCleaner
+# Before/After hooks (DatabaseCleaner.start/clean) which would connect to that
+# absent database, so turn them off for smoke runs.
+if ENV['RUN_SMOKE_TESTS'] == 'true'
+  Cucumber::Rails::Database.autorun_database_cleaner = false
+end
+
 Dir[File.dirname(__FILE__) + '/page_objects/**/*.rb'].each { |f| require f }
 
 # Capybara defaults to CSS3 selectors rather than XPath.
@@ -142,8 +150,14 @@ Before do
   allow(app_insight).to receive(:track_event)
 end
 
+# Smoke tests run against a deployed environment and have no local database,
+# so anything that touches the database must be skipped for them.
+def smoke_test_run?
+  ENV['RUN_SMOKE_TESTS'] == 'true'
+end
+
 Before do
-  DatabaseCleaner.clean
+  DatabaseCleaner.clean unless smoke_test_run?
 end
 
 Before do
@@ -151,5 +165,5 @@ Before do
 end
 
 Before do
-  enable_feature_switch('band_calculation')
+  enable_feature_switch('band_calculation') unless smoke_test_run?
 end

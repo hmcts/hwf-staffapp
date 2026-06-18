@@ -6,6 +6,11 @@
 Rails.application.configure do
   # Settings specified here will take precedence over those in config/application.rb.
 
+  # Smoke tests run against a deployed environment (TEST_URL) and only act as an
+  # HTTP client - they never use a local database, and run on a CI agent that
+  # has none. So booting Rails for a smoke run must not connect to a database.
+  smoke_tests = ENV['RUN_SMOKE_TESTS'] == 'true'
+
   # While tests run files are not watched, reloading is not necessary.
   config.enable_reloading = false
 
@@ -14,6 +19,10 @@ Rails.application.configure do
   # recommended that you enable it in continuous integration systems to ensure eager
   # loading is working properly before deploying your code.
   config.eager_load = ENV["CI"].present?
+
+  # cucumber-rails maintains the test schema on load (via rails/test_help), which
+  # opens a database connection. Smoke runs have no database, so disable it.
+  config.active_record.maintain_test_schema = !smoke_tests
 
   # Configure public file server for tests with Cache-Control for performance.
   config.public_file_server.headers = { "Cache-Control" => "public, max-age=#{1.hour.to_i}" }
