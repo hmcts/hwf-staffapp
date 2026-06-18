@@ -11,7 +11,17 @@ task test: :environment do
 end
 
 namespace :test do
+  # Smoke tests run against the deployed environment in TEST_URL. We only run
+  # them against PR preview environments; they are skipped on AAT (and anything
+  # that is not a preview) so they don't block the master-to-production deploy.
   task smoke: :environment do
+    test_url = ENV['TEST_URL'].to_s
+
+    unless test_url.include?('preview')
+      puts "Skipping smoke tests - TEST_URL (#{test_url.empty? ? 'unset' : test_url}) is not a preview environment"
+      next
+    end
+
     ENV['RUN_SMOKE_TESTS'] = 'true'
     unless system "bundle exec cucumber -p smoke"
       raise "Smoke tests failed"
