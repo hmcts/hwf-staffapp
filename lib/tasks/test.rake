@@ -9,6 +9,7 @@ task test: :environment do
     raise "Rspec testing failed #{$?}"
   end
 
+  puts "Running JS tests..."
   unless system("yarn test:ci")
     raise "Jest testing failed #{$?}"
   end
