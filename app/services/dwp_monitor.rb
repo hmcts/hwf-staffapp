@@ -1,12 +1,4 @@
 class DwpMonitor
-  VALID_RESULTS = ['Yes', 'No'].freeze
-
-  VALID_ERROR_PATTERNS = [
-    'is invalid',
-    'is not valid',
-    'is missing'
-  ].freeze
-
   def initialize
     dwp_results
   end
@@ -20,8 +12,6 @@ class DwpMonitor
       'online'
     end
   end
-
-  private
 
   def dwp_results
     @checks = BenefitCheck.order('id desc').limit(10).pluck(:dwp_result, :error_message)
@@ -37,34 +27,9 @@ class DwpMonitor
     @checks.count { |check| error?(check) }.to_f
   end
 
+  # Shares its definition of a failure with the rerun job via BenefitCheck, so
+  # what the dashboard counts as 'offline' and what gets re-run stay in step.
   def error?(check)
-    dwp_result = check[0].to_s.strip
-    error_message = check[1]
-
-    return false if valid_result?(dwp_result)
-    return false if dwp_result == 'BadRequest' && validation_error?(error_message)
-    return false if dwp_result == 'Undetermined' && applicant_data_problem?(error_message)
-
-    true
-  end
-
-  def valid_result?(dwp_result)
-    VALID_RESULTS.any? { |valid| dwp_result.casecmp?(valid) }
-  end
-
-  # A BadRequest caused by invalid input data is the applicant's data problem,
-  # not a DWP outage. A BadRequest without any explanation is treated as
-  # a failure - if DWP did not tell us why, we assume it is not healthy.
-  def validation_error?(error_message)
-    return false if error_message.blank?
-
-    VALID_ERROR_PATTERNS.any? { |pattern| error_message.include?(pattern) }
-  end
-
-  # 'Undetermined' with our own 'details incorrect' message means the applicant
-  # data failed validation before DWP was called, so it is not evidence of
-  # an outage. Any other 'Undetermined' is treated as a failure.
-  def applicant_data_problem?(error_message)
-    error_message == I18n.t('error_messages.benefit_checker.undetermined')
+    BenefitCheck.dwp_outage_failure?(check[0], check[1])
   end
 end
