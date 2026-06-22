@@ -24,8 +24,15 @@ ARG DEBIAN_FRONTEND=noninteractive
 
 RUN apk add --no-cache \
         libc6-compat \
-        git build-base curl-dev nodejs yarn libpq-dev postgresql-client tzdata \
+        git build-base curl-dev nodejs npm libpq-dev postgresql-client tzdata \
         xvfb fluxbox x11vnc st yaml-dev libffi-dev
+
+# Yarn 4 (Berry) is provisioned via Corepack, pinned by the "packageManager"
+# field in package.json. Alpine's nodejs package does not bundle Corepack and
+# its yarn package is the legacy 1.x classic, so install Corepack explicitly.
+ENV COREPACK_ENABLE_DOWNLOAD_PROMPT=0
+RUN npm install -g corepack \
+ && corepack enable
 
 ENV UNICORN_PORT=3000
 EXPOSE $UNICORN_PORT
@@ -39,8 +46,8 @@ RUN gem install bundler -v 4.0.10 \
  && bundle config set --local force_ruby_platform true
 RUN bundle install
 
-COPY package.json yarn.lock /home/app/
-RUN yarn install --check-files --frozen-lockfile
+COPY package.json yarn.lock .yarnrc.yml /home/app/
+RUN yarn install --immutable
 
 # running app as a servive
 ENV PHUSION=true
