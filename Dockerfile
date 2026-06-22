@@ -46,8 +46,15 @@ RUN gem install bundler -v 4.0.10 \
  && bundle config set --local force_ruby_platform true
 RUN bundle install
 
+# Match master: HOME points at the app dir so Corepack's cache is writable by
+# the non-root runtime user, and the Yarn binary provisioned here is reused at
+# runtime. corepack install provisions the Yarn version from package.json.
+ENV HOME=/home/app
+ENV COREPACK_HOME=/home/app/.corepack
+
 COPY package.json yarn.lock .yarnrc.yml /home/app/
-RUN yarn install --immutable
+RUN corepack install \
+ && yarn install --immutable
 
 # running app as a servive
 ENV PHUSION=true
