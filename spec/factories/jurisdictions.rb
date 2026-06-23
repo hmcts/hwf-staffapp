@@ -1,7 +1,10 @@
 FactoryBot.define do
   factory :jurisdiction do
-    sequence(:name)   { "#{Faker::Company.name.gsub(/\W/, '')}#{Random.rand(1000)}" }
-    sequence(:abbr)   { "#{Random.rand(1000)} #{Faker::Hacker.abbreviation} #{Random.rand(1000)}" }
+    # rails_helper calls FactoryBot.reload before
+    # each example, which resets sequences and would collide with records that
+    # outlive a single example (e.g. let_it_be).
+    name { "#{Faker::Company.name.gsub(/\W/, '')}#{SecureRandom.hex(8)}" }
+    abbr { "#{Faker::Hacker.abbreviation}#{SecureRandom.hex(8)}" }
     active { true }
     factory :invalid_jurisdiction do
       name { nil }
