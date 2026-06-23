@@ -1,5 +1,4 @@
 class DwpMonitor
-
   def initialize
     dwp_results
   end
@@ -14,43 +13,23 @@ class DwpMonitor
     end
   end
 
-  private
-
   def dwp_results
     @checks = BenefitCheck.order('id desc').limit(10).pluck(:dwp_result, :error_message)
   end
 
   def percent
     return 0 unless @checks.any?
-    # When DWP is offline it returns 400 Bad Request
-    # maybe extend to search for x00 as first 3 chars to check for 500 errors too
     total = @checks.count.to_f
-    (error_total / total) * 100.0
+    (error_count / total) * 100.0
   end
 
-  def error_total
-    internal_server_error = @checks.flatten.count('500 Internal Server Error').to_f
-    bad_request = bad_request_count.to_f
-    server_broke = @checks.flatten.count('Server broke connection').to_f
-    bad_request + server_broke + internal_server_error
+  def error_count
+    @checks.count { |check| error?(check) }.to_f
   end
 
-  def bad_request_count
-    @checks.count do |check|
-      next if check[0] != 'BadRequest' && check[0] != 'Server unavailable' && check[1].blank?
-      matching_error_message?(check[1]).blank? ? nil : true
-    end
+  # Shares its definition of a failure with the rerun job via BenefitCheck, so
+  # what the dashboard counts as 'offline' and what gets re-run stay in step.
+  def error?(check)
+    BenefitCheck.dwp_outage_failure?(check[0], check[1])
   end
-
-  def dwp_message(message)
-    message.nil? ? '' : message
-  end
-
-  def matching_error_message?(check)
-    ['LSCBC', 'Service unavailable', 'The benefits checker is not available at the moment',
-     'Timed out reading data from server', 'Connection reset by peer'].select do |message|
-      dwp_message(check).include?(message)
-    end
-  end
-
 end

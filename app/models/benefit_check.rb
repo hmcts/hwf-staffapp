@@ -5,7 +5,40 @@ class BenefitCheck < ActiveRecord::Base
   has_many :dwp_api_calls, dependent: :destroy
   BENEFIT_CHECK_NO_VALUES = ['No', 'Undetermined', 'Deceased', 'Deleted', 'Superseded', ''].freeze
 
+  # A valid DWP answer - needs no rerun and is not an outage.
+  VALID_DWP_RESULTS = ['Yes', 'No'].freeze
+
+  # BadRequest messages naming a field as invalid/missing are the applicant's
+  # data problem, not a DWP outage - a rerun cannot fix them.
+  DWP_VALIDATION_ERROR_PATTERNS = ['is invalid', 'is not valid', 'is missing'].freeze
+
   include CommonScopes
+
+  # True when a check failed because of DWP itself (an outage), as opposed to a
+  # valid Yes/No answer or an applicant-data problem. The DWP monitor counts
+  # these and the rerun job retries them, so both share this single definition.
+  def self.dwp_outage_failure?(dwp_result, error_message)
+    result = dwp_result.to_s.strip
+    return false if VALID_DWP_RESULTS.any? { |valid| result.casecmp?(valid) }
+    return false if result == 'BadRequest' && dwp_validation_error?(error_message)
+    return false if result == 'Undetermined' && applicant_data_problem?(error_message)
+
+    true
+  end
+
+  def self.dwp_validation_error?(error_message)
+    return false if error_message.blank?
+
+    DWP_VALIDATION_ERROR_PATTERNS.any? { |pattern| error_message.include?(pattern) }
+  end
+
+  def self.applicant_data_problem?(error_message)
+    error_message == I18n.t('error_messages.benefit_checker.undetermined')
+  end
+
+  def dwp_outage_failure?
+    self.class.dwp_outage_failure?(dwp_result, error_message)
+  end
 
   scope :by_office, lambda { |office_id|
     joins('LEFT JOIN applications ON benefit_checks.applicationable_id = applications.id').
