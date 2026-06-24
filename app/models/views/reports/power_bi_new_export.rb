@@ -109,6 +109,21 @@ module Views
         run_export('export3')
       end
 
+      # Export 2 variant pulled on created_at (instead of date_received) across
+      # all states. Same fields and online-application union as export2, but the
+      # date filter - on both applications and unlinked online applications -
+      # uses created_at. Used by Views::Reports::PowerBiExport2.
+      def export2_by_created_at
+        reset_export_options
+        @export_type = :all
+        @date_field = 'applications.created_at'
+        @online_date_field = 'oa2.created_at'
+        @state_filter = nil
+        @include_online_applications = true
+        @filter_description = "all states by created_at"
+        run_export('export2')
+      end
+
       def total_count
         @total_count ||= 0
       end
@@ -118,6 +133,7 @@ module Views
       def reset_export_options
         @export_type = nil
         @date_field = nil
+        @online_date_field = 'oa2.date_received'
         @state_filter = nil
         @require_date_received = false
         @include_online_applications = false
@@ -393,9 +409,9 @@ module Views
       def online_applications_where_sql
         <<~SQL.squish
           WHERE app2.id IS NULL
-            AND oa2.date_received IS NOT NULL
-            AND oa2.date_received >= '#{@date_from.strftime('%Y-%m-%d %H:%M:%S')}'
-            AND oa2.date_received <= '#{@date_to.strftime('%Y-%m-%d %H:%M:%S')}'
+            AND #{@online_date_field} IS NOT NULL
+            AND #{@online_date_field} >= '#{@date_from.strftime('%Y-%m-%d %H:%M:%S')}'
+            AND #{@online_date_field} <= '#{@date_to.strftime('%Y-%m-%d %H:%M:%S')}'
         SQL
       end
 

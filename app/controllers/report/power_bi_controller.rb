@@ -14,7 +14,7 @@ module Report
     private
 
     def power_bi_data_file
-      power_bi = Views::Reports::PowerBiExport1.new
+      power_bi = power_bi_export
       power_bi.to_zip
       power_bi.zipfile_path
     rescue StandardError => e
@@ -23,6 +23,13 @@ module Report
         Sentry.capture_message(e.message)
       end
       Rails.logger.debug { "Error in power_bi export task: #{e.message}" }
+    end
+
+    def power_bi_export
+      case params[:export_type]
+      when '2' then Views::Reports::PowerBiExport2.new
+      else Views::Reports::PowerBiExport1.new
+      end
     end
 
   end
