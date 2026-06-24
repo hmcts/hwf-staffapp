@@ -39,6 +39,7 @@ RSpec.describe Report::PowerBiController do
       subject { response }
       let(:export1) { instance_double(Views::Reports::PowerBiExport1) }
       let(:export2) { instance_double(Views::Reports::PowerBiExport2) }
+      let(:export3) { instance_double(Views::Reports::PowerBiExport3) }
       let(:temp_file) { Tempfile.new('foo') }
 
       before {
@@ -48,6 +49,9 @@ RSpec.describe Report::PowerBiController do
         allow(export2).to receive(:to_zip)
         allow(export2).to receive(:zipfile_path).and_return temp_file.path
         allow(Views::Reports::PowerBiExport2).to receive(:new).and_return export2
+        allow(export3).to receive(:to_zip)
+        allow(export3).to receive(:zipfile_path).and_return temp_file.path
+        allow(Views::Reports::PowerBiExport3).to receive(:new).and_return export3
       }
 
       context 'when no export is chosen' do
@@ -75,6 +79,16 @@ RSpec.describe Report::PowerBiController do
 
         it 'generates export 2' do
           expect(export2).to have_received(:zipfile_path)
+        end
+      end
+
+      context 'when export 3 is chosen' do
+        before { put :data_export, params: { export_type: '3' } }
+
+        it { is_expected.to have_http_status(:success) }
+
+        it 'generates export 3' do
+          expect(export3).to have_received(:zipfile_path)
         end
       end
     end

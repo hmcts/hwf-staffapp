@@ -28,6 +28,7 @@ module Report
     def power_bi_export
       case params[:export_type]
       when '2' then Views::Reports::PowerBiExport2.new
+      when '3' then Views::Reports::PowerBiExport3.new
       else Views::Reports::PowerBiExport1.new
       end
     end
