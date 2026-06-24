@@ -22,6 +22,14 @@ RSpec.describe Views::Reports::PowerBiExport3 do
         expect(power_bi_export.zipfile_path).to eq 'tmp/power_bi_export_3-1-12-2025-31-12-2025.csv.zip'
       end
     end
+
+    context 'when given a specific month' do
+      subject(:power_bi_export) { described_class.new(Date.new(2025, 11, 9)) }
+
+      it 'exports the whole of that month' do
+        expect(power_bi_export.zipfile_path).to eq 'tmp/power_bi_export_3-1-11-2025-30-11-2025.csv.zip'
+      end
+    end
   end
 
   describe 'fields' do

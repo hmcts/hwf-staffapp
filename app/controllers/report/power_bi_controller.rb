@@ -26,11 +26,19 @@ module Report
     end
 
     def power_bi_export
+      month = selected_month
       case params[:export_type]
-      when '2' then Views::Reports::PowerBiExport2.new
-      when '3' then Views::Reports::PowerBiExport3.new
-      else Views::Reports::PowerBiExport1.new
+      when '2' then Views::Reports::PowerBiExport2.new(month)
+      when '3' then Views::Reports::PowerBiExport3.new(month)
+      else Views::Reports::PowerBiExport1.new(month)
       end
+    end
+
+    # Parse the chosen "YYYY-MM" month, falling back to the previous month.
+    def selected_month
+      Date.strptime(params[:month], '%Y-%m').beginning_of_month
+    rescue ArgumentError, TypeError
+      Time.zone.today.prev_month.beginning_of_month
     end
 
   end

@@ -34,6 +34,20 @@ RSpec.describe Views::Reports::PowerBiExport2 do
         expect(new_export).to have_received(:export2_by_created_at)
       end
     end
+
+    context 'when given a specific month' do
+      subject(:power_bi_export) { described_class.new(Date.new(2025, 11, 9)) }
+
+      it 'builds that whole month pulled on created_at' do
+        new_export = instance_double(Views::Reports::PowerBiNewExport, export2_by_created_at: 'tmp/export2.zip')
+        allow(Views::Reports::PowerBiNewExport).to receive(:new).
+          with(Date.new(2025, 11, 1), Date.new(2025, 11, 30)).and_return(new_export)
+
+        power_bi_export.to_zip
+
+        expect(new_export).to have_received(:export2_by_created_at)
+      end
+    end
   end
 
   describe 'output' do

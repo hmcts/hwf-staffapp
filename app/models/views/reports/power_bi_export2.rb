@@ -4,15 +4,15 @@ module Views
     #
     # Same fields as PowerBiNewExport's export2 (all states, including unlinked
     # online applications), but pulled on created_at instead of date_received and
-    # fixed to the whole of the previous calendar month. Run in May it exports
-    # April, run in March it exports February, and so on.
+    # for the whole of a single calendar month. Defaults to the previous month
+    # (run in May it exports April), but any month can be passed in.
     class PowerBiExport2
       require 'fileutils'
 
       attr_reader :zipfile_path
 
-      def initialize
-        @export = PowerBiNewExport.new(previous_month.beginning_of_month, previous_month.end_of_month)
+      def initialize(month = Time.zone.today.prev_month)
+        @export = PowerBiNewExport.new(month.beginning_of_month, month.end_of_month)
       end
 
       def to_zip
@@ -21,12 +21,6 @@ module Views
 
       def tidy_up
         FileUtils.rm_f(zipfile_path)
-      end
-
-      private
-
-      def previous_month
-        Time.zone.today.prev_month
       end
     end
   end
