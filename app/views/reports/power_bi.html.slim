@@ -10,5 +10,9 @@ h1.govuk-heading-xl = "Power BI export"
     = f.select :export_type, options_for_select([['Power BI export 1', '1'], ['Power BI export 2', '2'], ['Power BI export 3', '3']], '1'), {}, class: 'govuk-select'
 
   .govuk-form-group.group-level
+    = f.label :month, 'Select month', class: 'govuk-label'
+    = f.select :month, options_for_select(power_bi_month_options, power_bi_default_month), {}, class: 'govuk-select'
+
+  .govuk-form-group.group-level
     = f.submit 'Generate report', class: 'govuk-button'
 

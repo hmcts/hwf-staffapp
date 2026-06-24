@@ -91,6 +91,22 @@ RSpec.describe Report::PowerBiController do
           expect(export3).to have_received(:zipfile_path)
         end
       end
+
+      context 'when a specific month is chosen' do
+        before { put :data_export, params: { export_type: '1', month: '2025-11' } }
+
+        it 'builds the export for that month' do
+          expect(Views::Reports::PowerBiExport1).to have_received(:new).with(Date.new(2025, 11, 1))
+        end
+      end
+
+      context 'when no month is chosen' do
+        before { travel_to(Date.new(2026, 5, 15)) { put :data_export, params: { export_type: '1' } } }
+
+        it 'defaults to the previous month (April)' do
+          expect(Views::Reports::PowerBiExport1).to have_received(:new).with(Date.new(2026, 4, 1))
+        end
+      end
     end
   end
 end

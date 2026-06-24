@@ -3,8 +3,9 @@ module Views
     # Power BI export 3
     #
     # Replication of the applications by court export (ApplicationsByCourtExport),
-    # across all offices, fixed to the whole of the previous calendar month (by
-    # created_at). Run in May it exports April, run in March it exports February.
+    # across all offices, for the whole of a single calendar month (by
+    # created_at). Defaults to the previous month (run in May it exports April),
+    # but any month can be passed in.
     #
     # It drops three columns the court export carries (Fee code, Claim amount and
     # Fee population); every other field is identical, in the same order.
@@ -13,9 +14,9 @@ module Views
 
       EXCLUDED_COLUMNS = ['Fee code', 'Claim amount', 'Fee population'].freeze
 
-      def initialize
-        start_date = date_hash(previous_month.beginning_of_month)
-        end_date = date_hash(previous_month.end_of_month)
+      def initialize(month = Time.zone.today.prev_month)
+        start_date = date_hash(month.beginning_of_month)
+        end_date = date_hash(month.end_of_month)
 
         super(start_date, end_date, nil, all_offices: true)
 
@@ -40,10 +41,6 @@ module Views
       end
 
       private
-
-      def previous_month
-        Time.zone.today.prev_month
-      end
 
       def date_hash(date)
         { day: date.day, month: date.month, year: date.year }
