@@ -48,14 +48,10 @@ RSpec.describe Views::Reports::PowerBiExport3 do
                created_at: Date.new(2026, 4, 15))
       end
 
-      it 'omits Fee code, Claim amount and Fee population' do
+      it 'uses the court export columns as they are' do
         headers = CSV.parse(power_bi_export.to_csv, headers: true).headers
-        expect(headers).not_to include('Fee code', 'Claim amount', 'Fee population')
-      end
-
-      it 'keeps the surrounding fields (Fee, Jurisdiction)' do
-        headers = CSV.parse(power_bi_export.to_csv, headers: true).headers
-        expect(headers).to include('Office', 'Fee', 'Jurisdiction', 'Reason Description')
+        expect(headers).to include('Office', 'Fee', 'Fee code', 'Claim amount',
+                                   'Fee population', 'Jurisdiction', 'Reason Description')
       end
     end
   end
