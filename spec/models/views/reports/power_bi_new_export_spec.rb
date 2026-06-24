@@ -202,6 +202,55 @@ RSpec.describe Views::Reports::PowerBiNewExport do
     end
   end
 
+  describe '#export2_by_created_at (all states by created_at)' do
+    context 'with a created application that has no date_received' do
+      let!(:application) do
+        create(:application_full_remission,
+               office: office, business_entity: business_entity, created_at: Time.zone.now)
+      end
+
+      before { application.detail.update!(date_received: nil) }
+
+      it 'includes it (filtered on created_at, all states, date_received not required)' do
+        report.export2_by_created_at
+        row = read_csv_from_zip.find { |r| r['id'].to_i == application.id }
+
+        expect(row).to be_present
+      end
+    end
+
+    context 'with an application created outside the range but received inside it' do
+      let!(:application) do
+        app = create(:application_full_remission, :processed_state,
+                     office: office, business_entity: business_entity, created_at: 6.months.ago)
+        app.detail.update!(date_received: 1.week.ago)
+        app
+      end
+
+      it 'excludes it (created_at is the filter, not date_received)' do
+        report.export2_by_created_at
+        row = read_csv_from_zip.find { |r| r['id'].to_i == application.id }
+
+        expect(row).to be_nil
+      end
+    end
+
+    context 'with an unlinked online_application created in range without date_received' do
+      let!(:online_application) do
+        create(:online_application, date_received: nil, created_at: Time.zone.now,
+                                    fee: 300, form_name: 'EX160', reference: 'HWF-OA2-TEST')
+      end
+
+      it 'includes the online application by its created_at' do
+        report.export2_by_created_at
+        row = read_csv_from_zip.find { |r| r['id'].to_i == online_application.id }
+
+        expect(row).to be_present
+        expect(row['reference']).to eq('HWF-OA2-TEST')
+      end
+    end
+  end
+
   describe '#export3 (waiting states only by date_received)' do
     context 'with waiting_for_evidence application' do
       let!(:application) do

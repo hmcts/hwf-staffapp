@@ -37,22 +37,46 @@ RSpec.describe Report::PowerBiController do
 
     describe 'PUT #power_bi_export' do
       subject { response }
-      let(:power_bi_export_class) { instance_double(Views::Reports::PowerBiExport1) }
+      let(:export1) { instance_double(Views::Reports::PowerBiExport1) }
+      let(:export2) { instance_double(Views::Reports::PowerBiExport2) }
       let(:temp_file) { Tempfile.new('foo') }
 
       before {
-        allow(power_bi_export_class).to receive(:to_zip)
-        allow(power_bi_export_class).to receive(:zipfile_path).and_return temp_file.path
-        allow(Views::Reports::PowerBiExport1).to receive(:new).and_return power_bi_export_class
-        put :data_export
+        allow(export1).to receive(:to_zip)
+        allow(export1).to receive(:zipfile_path).and_return temp_file.path
+        allow(Views::Reports::PowerBiExport1).to receive(:new).and_return export1
+        allow(export2).to receive(:to_zip)
+        allow(export2).to receive(:zipfile_path).and_return temp_file.path
+        allow(Views::Reports::PowerBiExport2).to receive(:new).and_return export2
       }
 
-      it { is_expected.to have_http_status(:success) }
+      context 'when no export is chosen' do
+        before { put :data_export }
 
-      it 'sets the file type' do
-        expect(power_bi_export_class).to have_received(:zipfile_path)
+        it { is_expected.to have_http_status(:success) }
+
+        it 'defaults to export 1' do
+          expect(export1).to have_received(:zipfile_path)
+        end
       end
 
+      context 'when export 1 is chosen' do
+        before { put :data_export, params: { export_type: '1' } }
+
+        it 'generates export 1' do
+          expect(export1).to have_received(:zipfile_path)
+        end
+      end
+
+      context 'when export 2 is chosen' do
+        before { put :data_export, params: { export_type: '2' } }
+
+        it { is_expected.to have_http_status(:success) }
+
+        it 'generates export 2' do
+          expect(export2).to have_received(:zipfile_path)
+        end
+      end
     end
   end
 end
