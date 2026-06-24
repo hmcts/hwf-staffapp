@@ -14,7 +14,8 @@ module Report
     private
 
     def power_bi_data_file
-      power_bi = Views::Reports::PowerBiExport.new
+      power_bi = Views::Reports::PowerBiExport1.new
+      power_bi.to_zip
       power_bi.zipfile_path
     rescue StandardError => e
       Sentry.with_scope do |scope|
