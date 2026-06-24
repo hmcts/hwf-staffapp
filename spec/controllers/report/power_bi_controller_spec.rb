@@ -37,12 +37,13 @@ RSpec.describe Report::PowerBiController do
 
     describe 'PUT #power_bi_export' do
       subject { response }
-      let(:power_bi_export_class) { instance_double(Views::Reports::PowerBiExport) }
+      let(:power_bi_export_class) { instance_double(Views::Reports::PowerBiExport1) }
       let(:temp_file) { Tempfile.new('foo') }
 
       before {
+        allow(power_bi_export_class).to receive(:to_zip)
         allow(power_bi_export_class).to receive(:zipfile_path).and_return temp_file.path
-        allow(Views::Reports::PowerBiExport).to receive(:new).and_return power_bi_export_class
+        allow(Views::Reports::PowerBiExport1).to receive(:new).and_return power_bi_export_class
         put :data_export
       }
 
