@@ -3,13 +3,13 @@ module Views
     # Power BI export 1
     #
     # Produces the same data as the raw data extract (RawDataExport) - same
-    # fields, SQL and formatting - but for a fixed time frame: the whole of the
-    # previous calendar month. Run in May it exports April, run in March it
-    # exports February, and so on.
+    # fields, SQL and formatting - but for the whole of a single calendar month.
+    # Defaults to the previous month (run in May it exports April), but any month
+    # can be passed in.
     class PowerBiExport1 < RawDataExport
-      def initialize
-        start_date = date_hash(previous_month.beginning_of_month)
-        end_date = date_hash(previous_month.end_of_month)
+      def initialize(month = Time.zone.today.prev_month)
+        start_date = date_hash(month.beginning_of_month)
+        end_date = date_hash(month.end_of_month)
 
         super(start_date, end_date)
 
@@ -18,10 +18,6 @@ module Views
       end
 
       private
-
-      def previous_month
-        Time.zone.today.prev_month
-      end
 
       def date_hash(date)
         { day: date.day, month: date.month, year: date.year }
