@@ -1,6 +1,18 @@
 require 'rails_helper'
 
 RSpec.describe PowerBiHelper do
+  describe '#power_bi_export_title' do
+    it 'titles the export by its number' do
+      expect(helper.power_bi_export_title('2')).to eq('Power BI export two')
+    end
+  end
+
+  describe '#power_bi_export_description' do
+    it 'returns the description for the export' do
+      expect(helper.power_bi_export_description('3')).to eq('Applications by court export (all processing states) for dashboard reporting')
+    end
+  end
+
   describe '#power_bi_month_options' do
     before { travel_to(Date.new(2026, 5, 15)) }
 
