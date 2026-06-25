@@ -3,7 +3,7 @@ require 'rails_helper'
 RSpec.describe PowerBiHelper do
   describe '#power_bi_export_title' do
     it 'titles the export by its number' do
-      expect(helper.power_bi_export_title('2')).to eq('Power BI export two')
+      expect(helper.power_bi_export_title('2')).to eq('Power BI extract two')
     end
   end
 
