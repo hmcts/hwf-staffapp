@@ -6,15 +6,22 @@ RSpec.describe Report::PowerBiController do
     let(:mi) { create(:mi) }
     before { sign_in mi }
 
-    describe 'GET #power_bi' do
-      before { get :show }
+    describe 'GET #index' do
+      before { get :index }
 
       subject { response }
       it { is_expected.to have_http_status(:redirect) }
     end
 
-    describe 'PUT #power_bi' do
-      before { put :data_export }
+    describe 'GET #show' do
+      before { get :show, params: { export_type: '1' } }
+
+      subject { response }
+      it { is_expected.to have_http_status(:redirect) }
+    end
+
+    describe 'PUT #data_export' do
+      before { put :data_export, params: { export_type: '1' } }
 
       subject { response }
       it { is_expected.to have_http_status(:redirect) }
@@ -25,17 +32,25 @@ RSpec.describe Report::PowerBiController do
     let(:admin) { create(:admin_user) }
     before { sign_in admin }
 
-    describe 'GET #power_bi' do
-      before { get :show }
+    describe 'GET #index' do
+      before { get :index }
 
       subject { response }
 
       it { is_expected.to have_http_status(:success) }
-
-      it { is_expected.to render_template :power_bi }
+      it { is_expected.to render_template 'reports/power_bi/index' }
     end
 
-    describe 'PUT #power_bi_export' do
+    describe 'GET #show' do
+      before { get :show, params: { export_type: '2' } }
+
+      subject { response }
+
+      it { is_expected.to have_http_status(:success) }
+      it { is_expected.to render_template 'reports/power_bi/show' }
+    end
+
+    describe 'PUT #data_export' do
       subject { response }
       let(:export1) { instance_double(Views::Reports::PowerBiExport1) }
       let(:export2) { instance_double(Views::Reports::PowerBiExport2) }
@@ -54,38 +69,26 @@ RSpec.describe Report::PowerBiController do
         allow(Views::Reports::PowerBiExport3).to receive(:new).and_return export3
       }
 
-      context 'when no export is chosen' do
-        before { put :data_export }
+      context 'when export 1 is requested' do
+        before { put :data_export, params: { export_type: '1' } }
 
         it { is_expected.to have_http_status(:success) }
-
-        it 'defaults to export 1' do
-          expect(export1).to have_received(:zipfile_path)
-        end
-      end
-
-      context 'when export 1 is chosen' do
-        before { put :data_export, params: { export_type: '1' } }
 
         it 'generates export 1' do
           expect(export1).to have_received(:zipfile_path)
         end
       end
 
-      context 'when export 2 is chosen' do
+      context 'when export 2 is requested' do
         before { put :data_export, params: { export_type: '2' } }
-
-        it { is_expected.to have_http_status(:success) }
 
         it 'generates export 2' do
           expect(export2).to have_received(:zipfile_path)
         end
       end
 
-      context 'when export 3 is chosen' do
+      context 'when export 3 is requested' do
         before { put :data_export, params: { export_type: '3' } }
-
-        it { is_expected.to have_http_status(:success) }
 
         it 'generates export 3' do
           expect(export3).to have_received(:zipfile_path)
