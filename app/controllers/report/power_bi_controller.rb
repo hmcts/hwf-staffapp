@@ -1,9 +1,14 @@
 module Report
   class PowerBiController < ReportsController
 
+    def index
+      authorize :report, :power_bi?
+      render 'reports/power_bi/index'
+    end
+
     def show
       authorize :report, :power_bi?
-      render 'reports/power_bi'
+      render 'reports/power_bi/show'
     end
 
     def data_export
