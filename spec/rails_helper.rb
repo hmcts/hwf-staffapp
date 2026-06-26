@@ -27,6 +27,10 @@ require 'webmock/rspec'
 require 'capybara/apparition'
 require 'mock_redis'
 
+# Opt-in performance profiling (off by default, zero impact on normal runs).
+# Enable via `bundle exec rake test:profile` or e.g. FPROF=1 bundle exec rspec.
+require 'test_prof' if ENV['TEST_PROF'] || ENV['FPROF'] || ENV['EVENT_PROF']
+
 
 # Add additional requires below this line. Rails is not loaded until this point!
 
