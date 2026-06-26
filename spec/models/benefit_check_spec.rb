@@ -198,11 +198,18 @@ RSpec.describe BenefitCheck do
       it { is_expected.to be false }
     end
 
+    context 'with an Undetermined returned by DWP (no message)' do
+      let(:dwp_result) { 'Undetermined' }
+      let(:error_message) { nil }
+
+      it { is_expected.to be false }
+    end
+
     context 'with an Undetermined and an unexpected message' do
       let(:dwp_result) { 'Undetermined' }
       let(:error_message) { 'something else broke' }
 
-      it { is_expected.to be true }
+      it { is_expected.to be false }
     end
 
     context 'with a server-side outage error' do

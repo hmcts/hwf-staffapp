@@ -56,6 +56,7 @@ RSpec.describe BenefitCheckRerunJob do
       context 'with errors the old list did not match' do
         let(:timed_out_application) { create(:application, :benefit_type) }
         let(:applicant_data_application) { create(:application, :benefit_type) }
+        let(:undetermined_application) { create(:application, :benefit_type) }
 
         before do
           # make the monitor offline
@@ -66,6 +67,9 @@ RSpec.describe BenefitCheckRerunJob do
           # an applicant-data problem that must NOT be re-run
           create(:benefit_check, applicationable: applicant_data_application,
                                  dwp_result: 'BadRequest', error_message: 'surname is invalid')
+          # a genuine DWP answer that must NOT be re-run
+          create(:benefit_check, applicationable: undetermined_application,
+                                 dwp_result: 'Undetermined', error_message: nil)
         end
 
         it 're-runs a failure that the old list missed' do
@@ -76,6 +80,11 @@ RSpec.describe BenefitCheckRerunJob do
         it 'does not re-run an applicant-data problem' do
           described_class.perform_now
           expect(BenefitCheckRunner).not_to have_received(:new).with(applicant_data_application)
+        end
+
+        it 'does not re-run an Undetermined result' do
+          described_class.perform_now
+          expect(BenefitCheckRunner).not_to have_received(:new).with(undetermined_application)
         end
       end
 
