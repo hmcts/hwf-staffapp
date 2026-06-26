@@ -9,7 +9,7 @@ module PowerBiHelper
   EXPORT_NUMBER_WORDS = { '1' => 'one', '2' => 'two', '3' => 'three' }.freeze
 
   def power_bi_export_title(export_type)
-    "Power BI extract #{EXPORT_NUMBER_WORDS.fetch(export_type, export_type)}"
+    "PowerBI extract #{EXPORT_NUMBER_WORDS.fetch(export_type, export_type)}"
   end
 
   def power_bi_export_description(export_type)
