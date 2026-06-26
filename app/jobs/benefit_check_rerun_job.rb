@@ -27,16 +27,16 @@ class BenefitCheckRerunJob < ApplicationJob
   end
 
   # Reruns the checks that DwpMonitor counts as DWP failures (see
-  # BenefitCheck.dwp_outage_failure?). The SQL narrows to non-valid results so
-  # the limit applies to candidate failures; the predicate then excludes
-  # applicant-data problems, which a rerun cannot fix.
+  # BenefitCheck.dwp_outage_failure?). The SQL excludes genuine DWP answers
+  # (Yes/No/Undetermined) so the limit applies to candidate failures; the
+  # predicate then excludes applicant-data problems, which a rerun cannot fix.
   def load_failed_checks
     recent_unresolved_checks.select(&:dwp_outage_failure?)
   end
 
   def recent_unresolved_checks
     BenefitCheck.where('benefit_checks.created_at between ? AND ?', 3.days.ago, Time.zone.now).
-      where('dwp_result IS NULL OR dwp_result NOT IN (?)', BenefitCheck::VALID_DWP_RESULTS).
+      where('dwp_result IS NULL OR dwp_result NOT IN (?)', BenefitCheck::NON_OUTAGE_RESULTS).
       select('distinct on (applicationable_id, applicationable_type) *').order(:applicationable_id).limit(100)
   end
 

@@ -8,6 +8,11 @@ class BenefitCheck < ActiveRecord::Base
   # A valid DWP answer - needs no rerun and is not an outage.
   VALID_DWP_RESULTS = ['Yes', 'No'].freeze
 
+  # Genuine DWP answers that are never an outage and never a rerun candidate.
+  # Undetermined means DWP responded but couldn't determine entitlement, so a
+  # rerun cannot change it - it is excluded up front in SQL and by the predicate.
+  NON_OUTAGE_RESULTS = (VALID_DWP_RESULTS + ['Undetermined']).freeze
+
   # BadRequest messages naming a field as invalid/missing are the applicant's
   # data problem, not a DWP outage - a rerun cannot fix them.
   DWP_VALIDATION_ERROR_PATTERNS = ['is invalid', 'is not valid', 'is missing'].freeze
@@ -15,13 +20,14 @@ class BenefitCheck < ActiveRecord::Base
   include CommonScopes
 
   # True when a check failed because of DWP itself (an outage), as opposed to a
-  # valid Yes/No answer or an applicant-data problem. The DWP monitor counts
-  # these and the rerun job retries them, so both share this single definition.
+  # genuine DWP answer (Yes/No/Undetermined) or an applicant-data problem. The
+  # DWP monitor counts these and the rerun job retries them, so both share this
+  # single definition. Undetermined is a valid DWP answer (it couldn't determine
+  # entitlement), not an outage, so it never counts.
   def self.dwp_outage_failure?(dwp_result, error_message)
     result = dwp_result.to_s.strip
-    return false if VALID_DWP_RESULTS.any? { |valid| result.casecmp?(valid) }
+    return false if NON_OUTAGE_RESULTS.any? { |answer| result.casecmp?(answer) }
     return false if result == 'BadRequest' && dwp_validation_error?(error_message)
-    return false if result == 'Undetermined' && applicant_data_problem?(error_message)
 
     true
   end
@@ -30,10 +36,6 @@ class BenefitCheck < ActiveRecord::Base
     return false if error_message.blank?
 
     DWP_VALIDATION_ERROR_PATTERNS.any? { |pattern| error_message.include?(pattern) }
-  end
-
-  def self.applicant_data_problem?(error_message)
-    error_message == I18n.t('error_messages.benefit_checker.undetermined')
   end
 
   def dwp_outage_failure?

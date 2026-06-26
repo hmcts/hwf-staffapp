@@ -144,7 +144,8 @@ describe DwpMonitor do
           create_list(:benefit_check, 6, dwp_result: 'Undetermined', error_message: 'something else broke')
         end
 
-        it { is_expected.to eql 'offline' }
+        # Undetermined is a valid DWP answer, not an outage
+        it { is_expected.to eql 'online' }
       end
 
       context 'when more than 50% are "Undetermined" without any error message' do
@@ -153,7 +154,8 @@ describe DwpMonitor do
           create_list(:benefit_check, 6, dwp_result: 'Undetermined', error_message: nil)
         end
 
-        it { is_expected.to eql 'offline' }
+        # Undetermined returned directly by DWP is a valid answer, not an outage
+        it { is_expected.to eql 'online' }
       end
 
       context 'when there is a mix of different error types' do
