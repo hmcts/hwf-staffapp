@@ -3,8 +3,20 @@ require 'selenium/webdriver'
 Selenium::WebDriver.logger.level = :error
 
 Capybara.configure do |config|
-  driver = ENV['DRIVER']&.to_sym || :cuprite
-  config.default_driver = driver
+  # Default to the in-process rack_test driver (no browser) - it is ~5-13x
+  # faster than driving real Chrome. Scenarios that genuinely need JavaScript
+  # (show/hide sections, execute_script) are tagged @javascript and run under
+  # the cuprite headless-Chrome driver instead (see Capybara.javascript_driver).
+  # Smoke tests run against a remote TEST_URL with no in-process server, so they
+  # need a real browser - keep cuprite for those.
+  config.default_driver =
+    if ENV['DRIVER']
+      ENV['DRIVER'].to_sym
+    elsif ENV['RUN_SMOKE_TESTS'] == 'true'
+      :cuprite
+    else
+      :rack_test
+    end
   config.default_max_wait_time = 10
   config.default_normalize_ws = true
   config.match = :prefer_exact
@@ -74,7 +86,7 @@ Capybara::Screenshot.register_filename_prefix_formatter(:cucumber) do |scenario|
 end
 
 Capybara.always_include_port = true
-Capybara.javascript_driver = Capybara.default_driver
+Capybara.javascript_driver = :cuprite
 
 # Uncomment and set to your test URL to run tests against localhost
 # ENV['TEST_URL'] = 'http://localhost:3000/'

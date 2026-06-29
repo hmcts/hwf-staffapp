@@ -36,4 +36,16 @@ namespace :test do
       raise "Functional tests failed"
     end
   end
+
+  # Local-only deep profiling to find what makes the RSpec suite slow. Combines
+  # RSpec's --profile (slowest examples/groups) with test-prof's FactoryProf
+  # (which factories cost the most time - usually the biggest offender). Pass a
+  # path to scope it, e.g. bundle exec rake test:profile[spec/features]
+  desc 'Profile the RSpec suite locally (slowest examples + factory usage)'
+  task :profile, [:path] => :environment do |_task, args|
+    path = args[:path] || 'spec'
+    ENV['TEST_PROF'] = '1'
+    ENV['FPROF'] = '1'
+    system("bundle exec rspec #{path} --profile 25")
+  end
 end
