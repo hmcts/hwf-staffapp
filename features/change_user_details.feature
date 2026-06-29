@@ -10,6 +10,7 @@ Feature: Change user details
     When I click on change details of a user
     Then I can change the user to a user, manager, admin, mi, reader
 
+  @javascript
   Scenario: User profile is saved
     Given I am admin on the staff page
     When I click on change details of a user

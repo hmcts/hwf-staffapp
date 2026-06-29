@@ -57,6 +57,7 @@ Feature: Find an application
     When I search leaving the input box blank
     Then I get the cannot be blank error message
   
+  @javascript
   Scenario: Pagination
     Given I have more than 20 search results
     Then I see that it is paginated by 20 results per page

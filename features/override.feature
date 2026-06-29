@@ -20,6 +20,7 @@ Feature: Override
     And The application should remain ineligible
     And I should not see a message telling me the application passed by manager's decision
 
+  @javascript
   Scenario: Paper evidence gives reason to override income decision
     Given I have completed an ineligible paper application - income too high
     When I click on Grant help with fees
@@ -36,6 +37,7 @@ Feature: Override
     Then I should see a message telling me the application passed by manager's decision
     And The application should become eligible
 
+  @javascript
   Scenario: Your delivery manager has allowed discretion with this application
     Given I have completed an ineligible paper application - income too high
     When I click on Grant help with fees
@@ -44,6 +46,7 @@ Feature: Override
     Then I should see a message telling me the application passed by manager's decision
     And The application should become eligible
 
+  @javascript
   Scenario: You want to check if the applicant is receiving benefits using the DWP checker
     Given I have completed an ineligible paper application - income too high
     When I click on Grant help with fees

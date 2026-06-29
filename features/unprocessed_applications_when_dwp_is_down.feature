@@ -37,6 +37,7 @@ Feature: Unprocessed applications when DWP is down
     And I complete processing the application
     Then I should be on the result page with the application status set to processed
 
+  @javascript
   Scenario: View an application on the pending list
     Given There is an application pending
     And I am a staff member at the home page
@@ -60,11 +61,13 @@ Feature: Unprocessed applications when DWP is down
     Then I should see 'Not ready to process' in red text
     And the 'Id' should still be selectable as a link
 
+  @javascript
   Scenario: The only applications visible on the list are within an office
     Given There are 2 applications that have been submitted and pending for different offices
     And I am a staff member at the 'Pending benefit applications' page with the DWP checker online
     Then I should only see the application for my office in the pending list
 
+  @javascript
   Scenario: Logged in as an admin after DWP outage and can view pending application
     Given I am logged in as an admin and there is an application pending
     And there is a heading 'Process when DWP is back online'
