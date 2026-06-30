@@ -58,4 +58,8 @@ module GuideHelper
       '%20Fees%2FHWF%5FFAQ%20%5FOriginal%5FVersion1%2E0%5F28%2E10%2E2025%2Epdf' \
       '&parent=%2Fsites%2Fknowledgecentral%2FShared%20Documents%2FCross%2DJurisdiction%2FHelp%20with%20Fees'
   end
+
+  def processing_paper_applications_job_card_url
+    'https://justiceuk.sharepoint.com/:w:/r/sites/knowledgecentral/_layouts/15/Doc.aspx?sourcedoc=%7BB62AF5DB-DF50-4415-A261-A4598E61B298%7D&file=Process%20a%20paper%20HWF%20application%20-%20Jobcard_word%20version.docx&action=default&mobileredirect=true'
+  end
 end
