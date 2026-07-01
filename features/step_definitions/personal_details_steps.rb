@@ -100,7 +100,6 @@ Then("I see that I should look for a national insurance number") do
   expect(personal_details_page.content.guidance.guidance_header[1].text).to eq 'National Insurance Number (NI) / Home Office Reference (HO)'
   expect(personal_details_page.content.guidance.guidance_sub_heading[3].text).to eq 'If a NI number or HO Reference isn’t provided:'
   expect(personal_details_page.content.guidance.guidance_list[3].text).to have_text "check if a valid reason for not providing an NI number or HO reference has been given. You must not process the application without a valid reason"
-  # expect(personal_details_page.content.guidance.guidance_text[3].text).to eq 'What to do if you’re unable to obtain the NI number'
   expect(personal_details_page.content.guidance.guidance_link[2]['href']).to eq processing_paper_applications_job_card_url
 end
 
