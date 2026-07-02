@@ -91,6 +91,7 @@ gem 'uri', '>= 1.0.3'
 gem 'cgi', '~> 0.5.1'
 # GovUK Notify
 gem 'govuk_notify_rails'
+gem "image_processing"
 
 group :development, :test do
   gem 'mutex_m'
@@ -135,5 +136,3 @@ group :test do
   gem 'webmock'
   gem 'selenium-webdriver', '~> 4.14'
 end
-
-gem "image_processing", "~> 1.14"
