@@ -30,10 +30,10 @@ RSpec.describe Views::Reports::PowerBiNewExport do
       it 'includes processed applications with reference' do
         report.export1
         csv_content = read_csv_from_zip
-        row = csv_content.find { |r| r['id'].to_i == application.id }
+        row = csv_content.find { |r| r['Id'].to_i == application.id }
 
         expect(row).to be_present
-        expect(row['reference']).to eq(application.reference)
+        expect(row['HwF reference number']).to eq(application.reference)
       end
     end
 
@@ -78,7 +78,7 @@ RSpec.describe Views::Reports::PowerBiNewExport do
       it 'includes processed applications' do
         report.export2
         csv_content = read_csv_from_zip
-        row = csv_content.find { |r| r['id'].to_i == application.id }
+        row = csv_content.find { |r| r['Id'].to_i == application.id }
 
         expect(row).to be_present
       end
@@ -95,7 +95,7 @@ RSpec.describe Views::Reports::PowerBiNewExport do
       it 'includes waiting_for_evidence applications' do
         report.export2
         csv_content = read_csv_from_zip
-        row = csv_content.find { |r| r['id'].to_i == application.id }
+        row = csv_content.find { |r| r['Id'].to_i == application.id }
 
         expect(row).to be_present
       end
@@ -110,7 +110,7 @@ RSpec.describe Views::Reports::PowerBiNewExport do
       it 'includes waiting_for_part_payment applications' do
         report.export2
         csv_content = read_csv_from_zip
-        row = csv_content.find { |r| r['id'].to_i == application.id }
+        row = csv_content.find { |r| r['Id'].to_i == application.id }
 
         expect(row).to be_present
       end
@@ -125,7 +125,7 @@ RSpec.describe Views::Reports::PowerBiNewExport do
       it 'includes created applications' do
         report.export2
         csv_content = read_csv_from_zip
-        row = csv_content.find { |r| r['id'].to_i == application.id }
+        row = csv_content.find { |r| r['Id'].to_i == application.id }
 
         expect(row).to be_present
       end
@@ -144,7 +144,7 @@ RSpec.describe Views::Reports::PowerBiNewExport do
       it 'excludes the application' do
         report.export2
         csv_content = read_csv_from_zip
-        row = csv_content.find { |r| r['id'].to_i == application.id }
+        row = csv_content.find { |r| r['Id'].to_i == application.id }
 
         expect(row).to be_nil
       end
@@ -160,11 +160,11 @@ RSpec.describe Views::Reports::PowerBiNewExport do
       it 'includes the online application with reference' do
         report.export2
         csv_content = read_csv_from_zip
-        row = csv_content.find { |r| r['id'].to_i == online_application.id }
+        row = csv_content.find { |r| r['Id'].to_i == online_application.id }
 
         expect(row).to be_present
-        expect(row['reference']).to eq('HWF-OA1-TEST')
-        expect(row['source']).to eq('digital')
+        expect(row['HwF reference number']).to eq('HWF-OA1-TEST')
+        expect(row['Source']).to eq('digital')
       end
     end
 
@@ -197,7 +197,7 @@ RSpec.describe Views::Reports::PowerBiNewExport do
         csv_content = read_csv_from_zip
 
         expect(csv_content.size).to eq(1)
-        expect(csv_content.first['id'].to_i).to eq(application.id)
+        expect(csv_content.first['Id'].to_i).to eq(application.id)
       end
     end
   end
@@ -213,7 +213,7 @@ RSpec.describe Views::Reports::PowerBiNewExport do
 
       it 'includes it (filtered on created_at, all states, date_received not required)' do
         report.export2_by_created_at
-        row = read_csv_from_zip.find { |r| r['id'].to_i == application.id }
+        row = read_csv_from_zip.find { |r| r['Id'].to_i == application.id }
 
         expect(row).to be_present
       end
@@ -229,7 +229,7 @@ RSpec.describe Views::Reports::PowerBiNewExport do
 
       it 'excludes it (created_at is the filter, not date_received)' do
         report.export2_by_created_at
-        row = read_csv_from_zip.find { |r| r['id'].to_i == application.id }
+        row = read_csv_from_zip.find { |r| r['Id'].to_i == application.id }
 
         expect(row).to be_nil
       end
@@ -243,10 +243,10 @@ RSpec.describe Views::Reports::PowerBiNewExport do
 
       it 'includes the online application by its created_at' do
         report.export2_by_created_at
-        row = read_csv_from_zip.find { |r| r['id'].to_i == online_application.id }
+        row = read_csv_from_zip.find { |r| r['Id'].to_i == online_application.id }
 
         expect(row).to be_present
-        expect(row['reference']).to eq('HWF-OA2-TEST')
+        expect(row['HwF reference number']).to eq('HWF-OA2-TEST')
       end
     end
   end
@@ -268,7 +268,7 @@ RSpec.describe Views::Reports::PowerBiNewExport do
       it 'includes waiting_for_evidence applications' do
         report.export3
         csv_content = read_csv_from_zip
-        row = csv_content.find { |r| r['id'].to_i == application.id }
+        row = csv_content.find { |r| r['Id'].to_i == application.id }
 
         expect(row).to be_present
       end
@@ -285,7 +285,7 @@ RSpec.describe Views::Reports::PowerBiNewExport do
       it 'includes waiting_for_part_payment applications' do
         report.export3
         csv_content = read_csv_from_zip
-        row = csv_content.find { |r| r['id'].to_i == application.id }
+        row = csv_content.find { |r| r['Id'].to_i == application.id }
 
         expect(row).to be_present
       end
@@ -384,23 +384,23 @@ RSpec.describe Views::Reports::PowerBiNewExport do
     it 'includes evidence check income as post evidence income' do
       report.export2
       csv_content = read_csv_from_zip
-      row = csv_content.find { |r| r['id'].to_i == application.id }
+      row = csv_content.find { |r| r['Id'].to_i == application.id }
 
-      expect(row['post evidence income']).to eq('1200')
+      expect(row['Post evidence income']).to eq('1200')
     end
 
     it 'includes evidence check outcome' do
       report.export2
       csv_content = read_csv_from_zip
-      row = csv_content.find { |r| r['id'].to_i == application.id }
+      row = csv_content.find { |r| r['Id'].to_i == application.id }
 
-      expect(row['evidence check outcome']).to eq('part')
+      expect(row['Evidence check outcome']).to eq('part')
     end
 
     it 'includes DB evidence check type' do
       report.export2
       csv_content = read_csv_from_zip
-      row = csv_content.find { |r| r['id'].to_i == application.id }
+      row = csv_content.find { |r| r['Id'].to_i == application.id }
 
       expect(row['DB evidence check type']).to eq('random')
     end
@@ -408,7 +408,7 @@ RSpec.describe Views::Reports::PowerBiNewExport do
     it 'includes DB income check type' do
       report.export2
       csv_content = read_csv_from_zip
-      row = csv_content.find { |r| r['id'].to_i == application.id }
+      row = csv_content.find { |r| r['Id'].to_i == application.id }
 
       expect(row['DB income check type']).to eq('hmrc')
     end
@@ -416,7 +416,7 @@ RSpec.describe Views::Reports::PowerBiNewExport do
     it 'includes HMRC total income' do
       report.export2
       csv_content = read_csv_from_zip
-      row = csv_content.find { |r| r['id'].to_i == application.id }
+      row = csv_content.find { |r| r['Id'].to_i == application.id }
 
       expect(row['HMRC total income']).to eq('1150.5')
     end
@@ -424,9 +424,9 @@ RSpec.describe Views::Reports::PowerBiNewExport do
     it 'marks evidence checked as yes' do
       report.export2
       csv_content = read_csv_from_zip
-      row = csv_content.find { |r| r['id'].to_i == application.id }
+      row = csv_content.find { |r| r['Id'].to_i == application.id }
 
-      expect(row['evidence checked?']).to eq('yes')
+      expect(row['Evidence checked?']).to eq('yes')
     end
   end
 
@@ -441,9 +441,9 @@ RSpec.describe Views::Reports::PowerBiNewExport do
       it 'returns Completed' do
         report.export1
         csv_content = read_csv_from_zip
-        row = csv_content.find { |r| r['id'].to_i == application.id }
+        row = csv_content.find { |r| r['Id'].to_i == application.id }
 
-        expect(row['status']).to eq('Completed')
+        expect(row['Status']).to eq('Completed')
       end
     end
 
@@ -456,9 +456,9 @@ RSpec.describe Views::Reports::PowerBiNewExport do
       it 'returns Waiting for evidence' do
         report.export2
         csv_content = read_csv_from_zip
-        row = csv_content.find { |r| r['id'].to_i == application.id }
+        row = csv_content.find { |r| r['Id'].to_i == application.id }
 
-        expect(row['status']).to eq('Waiting for evidence')
+        expect(row['Status']).to eq('Waiting for evidence')
       end
     end
 
@@ -471,9 +471,9 @@ RSpec.describe Views::Reports::PowerBiNewExport do
       it 'returns Waiting for part-payment' do
         report.export3
         csv_content = read_csv_from_zip
-        row = csv_content.find { |r| r['id'].to_i == application.id }
+        row = csv_content.find { |r| r['Id'].to_i == application.id }
 
-        expect(row['status']).to eq('Waiting for part-payment')
+        expect(row['Status']).to eq('Waiting for part-payment')
       end
     end
 
@@ -486,9 +486,9 @@ RSpec.describe Views::Reports::PowerBiNewExport do
       it 'returns Deleted' do
         report.export2
         csv_content = read_csv_from_zip
-        row = csv_content.find { |r| r['id'].to_i == application.id }
+        row = csv_content.find { |r| r['Id'].to_i == application.id }
 
-        expect(row['status']).to eq('Deleted')
+        expect(row['Status']).to eq('Deleted')
       end
     end
 
@@ -514,9 +514,9 @@ RSpec.describe Views::Reports::PowerBiNewExport do
       it 'returns Unprocessed (falls back to online_application refund)' do
         report.export2
         csv_content = read_csv_from_zip
-        row = csv_content.find { |r| r['id'].to_i == application.id }
+        row = csv_content.find { |r| r['Id'].to_i == application.id }
 
-        expect(row['status']).to eq('Unprocessed')
+        expect(row['Status']).to eq('Unprocessed')
       end
     end
 
@@ -534,9 +534,9 @@ RSpec.describe Views::Reports::PowerBiNewExport do
       it 'does not return Unprocessed' do
         report.export2
         csv_content = read_csv_from_zip
-        row = csv_content.find { |r| r['id'].to_i == application.id }
+        row = csv_content.find { |r| r['Id'].to_i == application.id }
 
-        expect(row['status']).not_to eq('Unprocessed')
+        expect(row['Status']).not_to eq('Unprocessed')
       end
     end
 
@@ -550,9 +550,9 @@ RSpec.describe Views::Reports::PowerBiNewExport do
       it 'returns Unprocessed' do
         report.export2
         csv_content = read_csv_from_zip
-        row = csv_content.find { |r| r['id'].to_i == online_application.id }
+        row = csv_content.find { |r| r['Id'].to_i == online_application.id }
 
-        expect(row['status']).to eq('Unprocessed')
+        expect(row['Status']).to eq('Unprocessed')
       end
     end
   end
@@ -574,11 +574,11 @@ RSpec.describe Views::Reports::PowerBiNewExport do
 
       report.export3
       csv_content = read_csv_from_zip
-      online_app_row = csv_content.find { |r| r['reference'] == 'HWF-REUSE-TEST' }
+      online_app_row = csv_content.find { |r| r['HwF reference number'] == 'HWF-REUSE-TEST' }
 
       expect(online_app_row).to be_nil
       expect(csv_content.size).to eq(1)
-      expect(csv_content.first['id'].to_i).to eq(application.id)
+      expect(csv_content.first['Id'].to_i).to eq(application.id)
     end
   end
 
@@ -598,7 +598,7 @@ RSpec.describe Views::Reports::PowerBiNewExport do
       it 'returns applications ordered by decision_date' do
         report.export1
         csv_content = read_csv_from_zip
-        ids = csv_content.map { |r| r['id'].to_i }
+        ids = csv_content.map { |r| r['Id'].to_i }
 
         expect(ids).to eq([older_app.id, newer_app.id])
       end
@@ -621,7 +621,7 @@ RSpec.describe Views::Reports::PowerBiNewExport do
       it 'returns applications ordered by date_received not created_at' do
         report.export2
         csv_content = read_csv_from_zip
-        ids = csv_content.map { |r| r['id'].to_i }
+        ids = csv_content.map { |r| r['Id'].to_i }
 
         expect(ids).to eq([older_app.id, newer_app.id])
       end
@@ -644,7 +644,7 @@ RSpec.describe Views::Reports::PowerBiNewExport do
       it 'returns applications ordered by date_received not created_at' do
         report.export3
         csv_content = read_csv_from_zip
-        ids = csv_content.map { |r| r['id'].to_i }
+        ids = csv_content.map { |r| r['Id'].to_i }
 
         expect(ids).to eq([older_app.id, newer_app.id])
       end
@@ -663,7 +663,7 @@ RSpec.describe Views::Reports::PowerBiNewExport do
     it 'includes part payment outcome' do
       report.export3
       csv_content = read_csv_from_zip
-      row = csv_content.find { |r| r['id'].to_i == application.id }
+      row = csv_content.find { |r| r['Id'].to_i == application.id }
 
       expect(row['PP outcome']).to eq('part')
     end

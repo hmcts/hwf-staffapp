@@ -17,52 +17,24 @@ module Views
 
       attr_reader :zipfile_path
 
-      HEADERS = [
-        'id',
-        'reference',
-        'status',
-        'office',
-        'jurisdiction',
-        'fee',
-        'estimated applicant pay',
-        'estimated cost',
-        'application type',
-        'form',
-        'refund',
-        'pre evidence income',
-        'post evidence income',
-        'income period',
-        'married',
-        'pension age',
-        'decision',
-        'failed on savings',
-        'final applicant pays',
-        'departmental cost',
-        'source',
-        'benefits granted?',
-        'evidence checked?',
-        'savings and investments amount',
-        'PP outcome',
-        'low income declared',
-        'date received',
-        'decision date',
-        'date paid',
-        'application processed date',
-        'manual evidence processed date',
-        'date submitted online',
-        'statement signed by',
-        'DB evidence check type',
-        'DB income check type',
-        'HMRC total income',
-        'evidence check outcome',
-        'evidence check type',
-        'HMRC response?',
-        'HMRC errors',
-        'complete processing?',
-        'additional income',
-        'income processed',
-        'HMRC request date range'
+      # Column order for this export. Labels come from the single source of
+      # truth (ColumnLabels), so spellings match every other export.
+      HEADER_KEYS = [
+        :id, :reference, :status, :office, :jurisdiction, :fee,
+        :estimated_amount_to_pay, :estimated_cost, :application_type, :form,
+        :refund, :pre_evidence_income, :post_evidence_income, :income_period,
+        :married, :pension_age, :decision, :failed_on_savings,
+        :final_amount_to_pay, :departmental_cost, :source, :benefits_granted,
+        :evidence_checked, :savings_and_investments, :pp_outcome,
+        :low_income_declared, :date_received, :decision_date, :date_paid,
+        :application_processed_date, :manual_evidence_processed_date,
+        :date_submitted_online, :statement_signed_by, :db_evidence_check_type,
+        :db_income_check_type, :hmrc_total_income, :evidence_check_outcome,
+        :evidence_check_type, :hmrc_response, :hmrc_errors, :complete_processing,
+        :additional_income, :income_processed, :hmrc_request_date_range
       ].freeze
+
+      HEADERS = ColumnLabels.for(HEADER_KEYS).freeze
 
       EXCLUDED_OFFICES = "('Digital', 'HMCTS HQ Team')"
 

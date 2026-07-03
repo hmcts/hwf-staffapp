@@ -42,7 +42,7 @@ RSpec.describe YearlyRawDataExporter do
 
     it 'contains headers' do
       expect(csv_content).to include(
-        'id,office,reference,jurisdiction,SOP code,fee,fee code,claim amount,fee population,estimated applicant pay,estimated cost'
+        'Id,Office,HwF reference number,Jurisdiction,SOP code,Fee,Fee code,Claim amount,Fee population,Applicant pays estimate,Departmental cost estimate'
       )
     end
 
