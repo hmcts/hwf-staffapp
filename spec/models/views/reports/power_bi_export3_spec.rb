@@ -51,7 +51,7 @@ RSpec.describe Views::Reports::PowerBiExport3 do
       it 'uses the court export columns as they are' do
         headers = CSV.parse(power_bi_export.to_csv, headers: true).headers
         expect(headers).to include('Office', 'Fee', 'Fee code', 'Claim amount',
-                                   'Fee population', 'Jurisdiction', 'Reason Description')
+                                   'Fee population', 'Jurisdiction', 'Reason description')
       end
     end
   end
