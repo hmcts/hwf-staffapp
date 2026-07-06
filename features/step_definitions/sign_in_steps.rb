@@ -12,7 +12,7 @@ When("I am redirected to the sign in page") do
 end
 
 When("I successfully sign in as a user") do
-  # sign_in_as_user
+  sign_in_as_user
   expect(dashboard_page.content).to have_find_an_application_heading
 end
 
