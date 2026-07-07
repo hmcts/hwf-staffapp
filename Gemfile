@@ -91,6 +91,7 @@ gem 'uri', '>= 1.0.3'
 gem 'cgi', '~> 0.5.1'
 # GovUK Notify
 gem 'govuk_notify_rails'
+gem "image_processing"
 
 group :development, :test do
   gem 'mutex_m'
@@ -118,7 +119,6 @@ end
 
 group :test do
   gem 'apparition', github: 'twalpole/apparition', ref: 'ca86be4d54af835d531dbcd2b86e7b2c77f85f34'
-  gem 'cuprite'
   gem 'brakeman'
   gem 'capybara'
   gem 'capybara-screenshot'
@@ -135,5 +135,3 @@ group :test do
   gem 'webmock'
   gem 'selenium-webdriver', '~> 4.14'
 end
-
-gem "image_processing", "~> 1.14"
