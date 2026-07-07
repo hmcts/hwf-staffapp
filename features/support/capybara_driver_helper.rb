@@ -2,6 +2,19 @@ require 'selenium/webdriver'
 
 Selenium::WebDriver.logger.level = :error
 
+# Chrome/CDP intermittently raises a generic UnknownError -
+# "Node with given id does not belong to the document" - when the
+# govuk-frontend JavaScript re-initialises the DOM at the moment Capybara
+# interacts with an element (e.g. clicking a radio label). Treat it as a
+# transient invalid-element error so Capybara re-finds the element and retries
+# within its normal wait window instead of failing the scenario outright.
+module SeleniumTransientNodeErrors
+  def invalid_element_errors
+    super + [::Selenium::WebDriver::Error::UnknownError]
+  end
+end
+Capybara::Selenium::Driver.prepend(SeleniumTransientNodeErrors)
+
 Capybara.configure do |config|
   # Default to the in-process rack_test driver (no browser) - it is ~5-13x
   # faster than driving real Chrome. Scenarios that genuinely need JavaScript
