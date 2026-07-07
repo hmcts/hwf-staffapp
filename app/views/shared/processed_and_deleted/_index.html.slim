@@ -8,7 +8,7 @@ h1.govuk-heading-xl =t("#{state}_applications.index.title")
     .govuk-grid-column-one-third
       .govuk-form-group
         = f.label :jurisdiction_id, class: 'govuk-label'
-        = f.collection_select :jurisdiction_id, Jurisdiction.all, :id, :name, { class: 'govuk-select', include_blank: 'All', selected: selected_jurisdiction}
+        = f.collection_select :jurisdiction_id, Jurisdiction.all, :id, :name, { include_blank: 'All', selected: selected_jurisdiction }, class: 'govuk-select'
         = f.submit 'Filter', class: 'govuk-button govuk-!-margin-top-1'
 
   - unless @applications.empty?
