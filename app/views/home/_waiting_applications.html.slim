@@ -8,7 +8,7 @@ h1.govuk-heading-xl =t("#{type}.dashboard.heading")
     .govuk-grid-column-one-third
       .govuk-form-group
         = f.label :jurisdiction_id, class: 'govuk-label'
-        = f.collection_select :jurisdiction_id, Jurisdiction.all, :id, :name, { class: 'govuk-select', include_blank: 'All', selected: selected_jurisdiction }
+        = f.collection_select :jurisdiction_id, Jurisdiction.all, :id, :name, { include_blank: 'All', selected: selected_jurisdiction }, class: 'govuk-select'
         = f.hidden_field :order_choice, value: current_order_choice
         - if current_sort_by
           = f.hidden_field :sort_by, value: current_sort_by

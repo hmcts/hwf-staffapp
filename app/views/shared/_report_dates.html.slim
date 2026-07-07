@@ -71,7 +71,7 @@ h1.govuk-heading-xl = header
 
         .govuk-form-group
           = f.label :jurisdiction_id, class: 'govuk-label', for: "#{form_name}_jurisdiction_id"
-          = f.collection_select :jurisdiction_id, Jurisdiction.all, :id, :name, { class: 'govuk-select', include_blank: true }
+          = f.collection_select :jurisdiction_id, Jurisdiction.all, :id, :name, { include_blank: true }, class: 'govuk-select'
 
         .govuk-form-group
           .govuk-checkboxes.govuk-checkboxes--small
