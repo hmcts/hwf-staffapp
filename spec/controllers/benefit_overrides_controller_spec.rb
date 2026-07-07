@@ -29,6 +29,19 @@ RSpec.describe BenefitOverridesController do
     end
   end
 
+  describe 'GET #paper_evidence step-back navigation' do
+    let(:path_storage) { instance_spy(PathStorage) }
+
+    before do
+      allow(PathStorage).to receive(:new).with(user).and_return(path_storage)
+      get :paper_evidence, params: { application_id: application.id }
+    end
+
+    it 'stores the page url so the back link can return to it' do
+      expect(path_storage).to have_received(:navigation).with(%r{/benefit_override/paper_evidence})
+    end
+  end
+
   describe 'POST #paper_evidence_save' do
     subject(:post_save) { post :paper_evidence_save, params: params }
 
