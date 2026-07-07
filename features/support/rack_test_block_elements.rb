@@ -1,5 +1,5 @@
 # Capybara's rack_test driver extracts visible text without processing CSS, so
-# it spaces text differently from a real browser (cuprite). Two cases bite the
+# it spaces text differently from a real browser (headless Chrome). Two cases bite the
 # GOV.UK markup and make browser-passing feature specs fail purely on spacing:
 #
 #  1. rack_test only inserts whitespace around a subset of block elements (see

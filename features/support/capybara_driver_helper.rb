@@ -6,14 +6,14 @@ Capybara.configure do |config|
   # Default to the in-process rack_test driver (no browser) - it is ~5-13x
   # faster than driving real Chrome. Scenarios that genuinely need JavaScript
   # (show/hide sections, execute_script) are tagged @javascript and run under
-  # the cuprite headless-Chrome driver instead (see Capybara.javascript_driver).
+  # the selenium headless-Chrome driver instead (see Capybara.javascript_driver).
   # Smoke tests run against a remote TEST_URL with no in-process server, so they
-  # need a real browser - keep cuprite for those.
+  # need a real browser - keep chrome_headless for those.
   config.default_driver =
     if ENV['DRIVER']
       ENV['DRIVER'].to_sym
     elsif ENV['RUN_SMOKE_TESTS'] == 'true'
-      :cuprite
+      :chrome_headless
     else
       :rack_test
     end
@@ -43,16 +43,16 @@ Capybara.register_driver :apparition do |app|
   Capybara::Apparition::Driver.new(app, { js_errors: false })
 end
 
-Capybara.register_driver :cuprite do |app|
-  Capybara::Cuprite::Driver.new(app, {
-                                  js_errors: false,
-                                  window_size: [1920, 1080],
-                                  browser_options: {
-                                    'no-sandbox': nil,
-                                    'disable-gpu': nil,
-                                    'disable-dev-shm-usage': nil
-                                  }
-                                })
+Capybara.register_driver :chrome_headless do |app|
+  options = Selenium::WebDriver::Chrome::Options.new
+  options.add_argument('--headless=new')
+  options.add_argument('--no-sandbox')
+  options.add_argument('--disable-gpu')
+  options.add_argument('--disable-dev-shm-usage')
+  options.add_argument('--window-size=1920,1080')
+  # Capture browser console logs (used by add_browser_logs on failure).
+  options.add_option('goog:loggingPrefs', { browser: 'ALL' })
+  Capybara::Selenium::Driver.new(app, browser: :chrome, options: options)
 end
 
 Capybara.register_driver :chrome do |app|
@@ -63,8 +63,8 @@ Capybara::Screenshot.register_driver(:chrome) do |driver, path|
   driver.browser.save_screenshot(path)
 end
 
-Capybara::Screenshot.register_driver(:cuprite) do |driver, path|
-  driver.save_screenshot(path, full: true)
+Capybara::Screenshot.register_driver(:chrome_headless) do |driver, path|
+  driver.browser.save_screenshot(path)
 end
 
 Capybara.register_driver :saucelabs do |app|
@@ -86,7 +86,7 @@ Capybara::Screenshot.register_filename_prefix_formatter(:cucumber) do |scenario|
 end
 
 Capybara.always_include_port = true
-Capybara.javascript_driver = :cuprite
+Capybara.javascript_driver = :chrome_headless
 
 # Uncomment and set to your test URL to run tests against localhost
 # ENV['TEST_URL'] = 'http://localhost:3000/'
