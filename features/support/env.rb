@@ -7,7 +7,6 @@
 require 'cucumber/rails'
 require_relative './page_objects/base_page'
 require 'capybara/apparition'
-require 'capybara/cuprite'
 require 'cucumber/rspec/doubles'
 require 'database_cleaner/active_record'
 require 'capybara/cucumber'
@@ -60,11 +59,7 @@ def add_screenshot(scenario)
   png_path = "#{dir}/#{slug}.png"
   html_path = "#{dir}/#{slug}.html"
 
-  if page.driver.is_a?(Capybara::Cuprite::Driver)
-    page.driver.save_screenshot(png_path)
-  else
-    page.driver.browser.save_screenshot(png_path)
-  end
+  page.driver.browser.save_screenshot(png_path)
 
   if File.exist?(png_path)
     encoded_image = Base64.encode64(File.binread(png_path))
@@ -83,13 +78,8 @@ def add_browser_logs
   # Gather browser logs based on driver type
   logs = []
   begin
-    if page.driver.is_a?(Capybara::Cuprite::Driver)
-      # Cuprite doesn't have the same logs API, but we can get console messages
-      logs = page.driver.console_messages.map { |msg| [msg[:level], msg[:text]] }
-    else
-      # For Selenium-based drivers
-      logs = page.driver.browser.manage.logs.get(:browser).map {|line| [line.level, line.message]}
-    end
+    # For Selenium-based drivers
+    logs = page.driver.browser.manage.logs.get(:browser).map {|line| [line.level, line.message]}
 
     # Remove warnings and info messages
     logs.reject! { |line| ['WARNING', 'INFO'].include?(line.first) }
