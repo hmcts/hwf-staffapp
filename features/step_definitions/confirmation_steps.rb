@@ -45,8 +45,9 @@ end
 
 Then("I should see a help with fees reference number") do
   expect(confirmation_page.content).to have_reference_number_is
-  reference_number = "#{reference_prefix}-000001"
-  expect(confirmation_page.content.reference_number.text).to eql(reference_number)
+  # The reference is generated (random, confusable-free suffix), so assert the
+  # format rather than a fixed sequential value.
+  expect(confirmation_page.content.reference_number.text).to match(/\A#{reference_prefix}-[A-HJ-NP-RT-Z346789]{6}\z/)
 end
 
 Then("I should see the next steps") do
