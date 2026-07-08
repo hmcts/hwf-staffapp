@@ -2,6 +2,7 @@ class BenefitOverridesController < ApplicationController
   before_action :authorize_benefit_override_create
 
   def paper_evidence
+    store_path
     @form = Forms::BenefitsEvidence.new(benefit_override)
   end
 
