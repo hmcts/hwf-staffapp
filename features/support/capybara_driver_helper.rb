@@ -80,11 +80,6 @@ Capybara::Screenshot.register_driver(:chrome_headless) do |driver, path|
   driver.browser.save_screenshot(path)
 end
 
-Capybara.register_driver :saucelabs do |app|
-  browser = Settings.saucelabs.browsers.send(Settings.saucelabs.browser).to_h
-  Capybara::Selenium::Driver.new(app, browser: :remote, url: Settings.saucelabs.url, desired_capabilities: browser)
-end
-
 if ENV.key?('CIRCLE_ARTIFACTS')
   Capybara.save_and_open_page_path = ENV['CIRCLE_ARTIFACTS']
 end
