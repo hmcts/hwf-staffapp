@@ -10,7 +10,9 @@
   },
   "scripts": {
     "build:css": "sass ./app/assets/stylesheets/application.sass.scss:./app/assets/builds/application.css --no-source-map --load-path=node_modules",
-    "build": "webpack --config webpack.config.js"
+    "build": "webpack --config webpack.config.js",
+    "test": "jest",
+    "test:ci": "jest --ci"
   },
   "engineStrict": true,
   "dependencies": {
@@ -39,6 +41,9 @@
   "author": "",
   "license": "ISC",
   "devDependencies": {
+    "jest": "^29.7.0",
+    "jest-environment-jsdom": "^29.7.0",
+    "jest-junit": "^16.0.0",
     "sass": "^1.101.0",
     "webpack": "^5.108.3",
     "webpack-cli": "^7.1.0"

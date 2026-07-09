@@ -1,5 +1,7 @@
 'use strict';
 
+const FregHelpers = require('./freg_helpers');
+
 window.moj.Modules.JsonSearcherModule = (function() {
   let codes = [];
 
@@ -28,42 +30,6 @@ window.moj.Modules.JsonSearcherModule = (function() {
         return dataDateReceived;
       }
       return null;
-    },
-
-    getFeeVersionForDate: function(feeCode, dateReceived) {
-      if (!dateReceived || !feeCode.fee_versions) {
-        return feeCode.current_version;
-      }
-
-      const receivedDate = new Date(dateReceived);
-
-      for (let version of feeCode.fee_versions) {
-        const validFrom = new Date(version.valid_from);
-        const validTo = version.valid_to ? new Date(version.valid_to) : null;
-        if (receivedDate >= validFrom && (!validTo || receivedDate <= validTo)) {
-          return version;
-        }
-      }
-
-      return feeCode.current_version;
-    },
-
-    classifyFeeType: function(feeCode, feeVersion) {
-      var hasFlatAmount = feeVersion.flat_amount && typeof feeVersion.flat_amount.amount === 'number';
-      var hasPercentage = feeVersion.percentage_amount && typeof feeVersion.percentage_amount.percentage === 'number';
-      var isRanged = feeCode.fee_type === 'ranged';
-      var isZeroAmount = hasFlatAmount && feeVersion.flat_amount.amount === 0;
-
-      if (isZeroAmount || feeCode.unspecified_claim_amount) {
-        return 'rateable';
-      }
-      if (isRanged && hasPercentage) {
-        return 'banded_percentage';
-      }
-      if (isRanged && hasFlatAmount) {
-        return 'banded_flat';
-      }
-      return 'fixed';
     },
 
     bindEvents: function() {
@@ -121,7 +87,7 @@ window.moj.Modules.JsonSearcherModule = (function() {
       const dateReceived = this.getDateReceived();
 
       var matches = codes.filter(item => {
-        const relevantVersion = this.getFeeVersionForDate(item, dateReceived);
+        const relevantVersion = FregHelpers.getFeeVersionForDate(item, dateReceived);
         if (!relevantVersion) {
           return false;
         }
@@ -173,8 +139,8 @@ window.moj.Modules.JsonSearcherModule = (function() {
           if (index === 0) resultsList.innerHTML = '';
 
           const li = document.createElement('li');
-          const relevantVersion = self.getFeeVersionForDate(fee, dateReceived);
-          const classifiedType = self.classifyFeeType(fee, relevantVersion);
+          const relevantVersion = FregHelpers.getFeeVersionForDate(fee, dateReceived);
+          const classifiedType = FregHelpers.classifyFeeType(fee, relevantVersion);
           const isPercentageFee = relevantVersion.percentage_amount !== undefined;
 
           var displayText, feeValueText;
