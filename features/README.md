@@ -45,7 +45,11 @@ By default, only Rack and Headless Selenium Chrome are used for the feature test
 
 For cross-browser and device feature testing we use [Playwright](https://github.com/microsoft/playwright) and the [capybara-playwright-driver gem](https://github.com/YusukeIwaki/capybara-playwright-driver).
 
-To begin, install the required browsers:
+To begin, install yarn:
+
+`$ yarn install`
+
+Then install the required browsers:
 
 `$ yarn playwright install --with-deps`
 
