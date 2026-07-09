@@ -31,14 +31,6 @@ To run in a specific browser:
 `$ DRIVER=firefox CAPYBARA_JS_DRIVER=firefox bundle exec cucumber`
 Please note: Firefox with macOS 10.15 “Catalina”, please refer to [macOS notarization](https://firefox-source-docs.mozilla.org/testing/geckodriver/Notarization.html)
 
-## Smoke testing
-
-Smoke tests verify core functionalities before comprehensive testing.
-
-To run the smoke tests, use:
-
-`$ bundle exec cucumber --tags @hwf_submit_application`
-
 ## Cross-browser and device testing with 🎭 Playwright
 
 By default, only Rack and Headless Selenium Chrome are used for the feature tests.
@@ -53,9 +45,9 @@ Then install the required browsers:
 
 `$ yarn playwright install --with-deps`
 
-Then run the test suite using the rack command:
+Then run the test suite using the rake command:
 
-`$ bundle exec rack test:cross_browser_device`
+`$ bundle exec rake test:cross_browser_device`
 
 This will run `@javascript` tagged feature tests on Desktop Chrome, Desktop Edge, Desktop Firefox, Desktop WebKit, Mobile Chrome, and Mobile WebKit.
 
