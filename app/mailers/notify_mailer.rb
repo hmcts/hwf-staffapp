@@ -1,6 +1,10 @@
 class NotifyMailer < GovukNotifyRails::Mailer
   include NotifyMailerHelper
 
+  # GOV.UK Notify rejects invalid recipient addresses at delivery time. Send the
+  # application id/reference to Sentry so the failure can be tracked down.
+  rescue_from Notifications::Client::BadRequestError, with: :report_notify_bad_request
+
   def submission_confirmation_online(application, locale)
     @application = application
     I18n.with_locale(locale) do
@@ -80,6 +84,12 @@ class NotifyMailer < GovukNotifyRails::Mailer
   end
 
   private
+
+  def report_notify_bad_request(_exception)
+    Sentry.capture_message(
+      "Notify BadRequestError - application id: #{@application&.id}, reference: #{@application&.reference}"
+    )
+  end
 
   def template(locale, method_name)
     GOVUK_NOTIFY_TEMPLATES.dig(language(locale), method_name)

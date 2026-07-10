@@ -178,6 +178,33 @@ RSpec.describe NotifyMailer do
 
   end
 
+  describe 'when GOV.UK Notify rejects the email at delivery' do
+    let(:application) { build_stubbed(:online_application_with_all_details, :with_reference) }
+    let(:delivery) { described_class.submission_confirmation_online(application, 'en') }
+
+    let(:error) do
+      response = Struct.new(:code, :body).new(400, { errors: [{ error: 'ValidationError', message: 'email_address Not a valid email address' }] }.to_json)
+      Notifications::Client::BadRequestError.new(response)
+    end
+
+    before do
+      allow(Sentry).to receive(:capture_message)
+      allow(delivery.message).to receive(:deliver).and_raise(error)
+    end
+
+    it 'sends the application id and reference to Sentry' do
+      delivery.deliver_now
+
+      expect(Sentry).to have_received(:capture_message).with(
+        a_string_including(application.id.to_s, application.reference)
+      )
+    end
+
+    it 'does not re-raise the error' do
+      expect { delivery.deliver_now }.not_to raise_error
+    end
+  end
+
   describe '#confirmation_instructions' do
     let(:user) { create(:user, unconfirmed_email: 'new_email@test.com') }
     let(:mail) { described_class.confirmation_instructions(user, 'token123') }
