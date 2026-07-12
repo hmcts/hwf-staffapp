@@ -48,5 +48,5 @@
     "webpack": "^5.108.3",
     "webpack-cli": "^7.1.0"
   },
-  "packageManager": "yarn@4.17.0"
+  "packageManager": "yarn@4.17.1"
 }
