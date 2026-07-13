@@ -24,12 +24,30 @@ window.moj.Modules.JsonSearcherModule = (function() {
     },
 
     getDateReceived: function() {
+      // The online application page has the date received fields on the same
+      // screen, so read them live - the data attribute is stamped at render
+      // time and would be blank until the form is saved.
+      if (this.isOnlineApplicationPage()) {
+        return this.onlineDateReceived();
+      }
       const feeSearchField = $('input[id="fee_search"]');
       const dataDateReceived = feeSearchField.data('date-received');
       if (dataDateReceived) {
         return dataDateReceived;
       }
       return null;
+    },
+
+    isOnlineApplicationPage: function() {
+      return $('input[id="online_application_day_date_received"]').length > 0;
+    },
+
+    onlineDateReceived: function() {
+      const day = $('input[id="online_application_day_date_received"]').val();
+      const month = $('input[id="online_application_month_date_received"]').val();
+      const year = $('input[id="online_application_year_date_received"]').val();
+      if (!day || !month || !year) return null;
+      return year + '-' + String(month).padStart(2, '0') + '-' + String(day).padStart(2, '0');
     },
 
     bindEvents: function() {
@@ -85,6 +103,11 @@ window.moj.Modules.JsonSearcherModule = (function() {
     findMatches: function (term) {
       this.resetSelection();
       const dateReceived = this.getDateReceived();
+
+      if (this.isOnlineApplicationPage() && !dateReceived) {
+        this.showDateReceivedRequired();
+        return;
+      }
 
       var matches = codes.filter(item => {
         const relevantVersion = FregHelpers.getFeeVersionForDate(item, dateReceived);
@@ -245,7 +268,14 @@ window.moj.Modules.JsonSearcherModule = (function() {
       }
     },
 
+    showDateReceivedRequired: function() {
+      $('span.search_result_count').text(0);
+      $('div.fee-search-results-block.govuk-inset-text').addClass('govuk-visually-hidden');
+      $('#date-received-required-message').removeClass('govuk-visually-hidden');
+    },
+
     clearMessages: function() {
+      $('#date-received-required-message').addClass('govuk-visually-hidden');
       $('#claim-value-error').addClass('govuk-visually-hidden');
       $('#rateable-fee-warning').addClass('govuk-visually-hidden');
       $('#no-results-message').addClass('govuk-visually-hidden');
