@@ -235,10 +235,9 @@ describe ResolverService do
         create(:application, reference: "#{reference_prefix}000001")
       }
 
-      it "generates a unique, correctly formatted reference" do
+      it "generate another reference" do
         complete
-        expect(application.reference).to match(/\APA\d{2}-[A-HJ-NP-RT-Z346789]{6}\z/)
-        expect(application.reference).not_to eq("#{reference_prefix}000001")
+        expect(application.reference).to eq("#{reference_prefix}000004")
       end
     end
 
