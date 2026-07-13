@@ -3,83 +3,80 @@ require 'rails_helper'
 RSpec.describe ReferenceGenerator, type: :service do
   subject(:generator) { described_class.new(application) }
 
-  let(:application) { create(:application, reference: nil) }
-  # Letters A-Z minus I, O, S and digits minus 0, 1, 2, 5.
-  let(:safe_suffix) { /\A[A-HJ-NP-RT-Z346789]{6}\z/ }
+  let!(:office) { create(:office) }
+  let!(:jurisdiction) { create(:jurisdiction) }
+  let!(:business_entity) { create(:business_entity, office: office, jurisdiction: jurisdiction, be_code: 'AB987', sop_code: '987654321') }
+
+  before { Settings.reference.date = '2016-06-30' }
 
   describe '#attributes' do
-    subject(:reference) do
-      travel_to(Time.zone.local(2026, 6, 30)) { generator.attributes[:reference] }
-    end
 
-    it 'is prefixed with PA and the two-digit year' do
-      expect(reference).to start_with('PA26-')
-    end
-
-    it 'keeps the PA<yy>-XXXXXX shape and 11-character length' do
-      expect(reference).to match(/\APA\d{2}-[A-HJ-NP-RT-Z346789]{6}\z/)
-      expect(reference.length).to eq(11)
-    end
-
-    it 'generates a suffix with no confusable characters' do
-      suffix = reference.split('-').last
-      expect(suffix).to match(safe_suffix)
-      expect(suffix).not_to match(/[IOS0125]/)
-    end
-  end
-
-  describe 'uniqueness' do
-    # rubocop:disable RSpec/SubjectStub
-    it 'regenerates when the first candidate already exists' do
-      travel_to(Time.zone.local(2026, 6, 30)) do
-        create(:application, :processed_state, reference: 'PA26-AAAAAA')
-        allow(generator).to receive(:random_suffix).and_return('AAAAAA', 'BBBBBB')
-
-        expect(generator.attributes[:reference]).to eq('PA26-BBBBBB')
+    context 'when the current date is after the new SOP reference date' do
+      subject(:attributes) do
+        travel_to(current_time) do
+          generator.attributes
+        end
       end
-    end
-    # rubocop:enable RSpec/SubjectStub
 
-    it 'avoids a reference already used by a purged application' do
-      travel_to(Time.zone.local(2026, 6, 30)) do
-        purged = create(:application, :processed_state, reference: 'PA26-CCCCCC')
-        purged.update(purged: true, purged_at: Time.zone.now) # acts_as_paranoid soft-delete
+      let(:current_time) { Time.zone.parse(Settings.reference.date) }
+      let(:application) { create(:application, office: office, jurisdiction: jurisdiction, business_entity: nil, reference: nil) }
 
-        # rubocop:disable RSpec/SubjectStub
-        allow(generator).to receive(:random_suffix).and_return('CCCCCC', 'DDDDDD')
-        # rubocop:enable RSpec/SubjectStub
-
-        expect(generator.attributes[:reference]).to eq('PA26-DDDDDD')
+      context 'when there is no existing reference number for the same entity code' do
+        it 'returns hash with the new reference' do
+          expect(attributes[:reference]).to eql('PA16-000001')
+        end
       end
-    end
 
-    it 'avoids a reference already used by a state-deleted application' do
-      travel_to(Time.zone.local(2026, 6, 30)) do
-        create(:application, :deleted_state, reference: 'PA26-EEEEEE')
+      context 'when there is an existing reference number for the same entity code' do
+        let(:existing_application1) { create(:application, :processed_state, reference: 'PA16-000018') }
+        let(:existing_application2) { create(:application, :processed_state, reference: 'PA16-000019') }
 
-        # rubocop:disable RSpec/SubjectStub
-        allow(generator).to receive(:random_suffix).and_return('EEEEEE', 'FFFFFF')
-        # rubocop:enable RSpec/SubjectStub
+        before do
+          existing_application2
+          existing_application1
+          application
+        end
 
-        expect(generator.attributes[:reference]).to eq('PA26-FFFFFF')
+        it 'returns hash with the reference next in sequence' do
+          expect(attributes[:reference]).to eql('PA16-000020')
+        end
+
+        context 'no sql caching for this' do
+          it 'returns hash with the reference next in sequence' do
+            travel_to(current_time) do
+              if generator.attributes[:reference] == 'PA16-000020'
+                existing_application2.update(reference: 'PA16-000020')
+              end
+              expect(generator.attributes[:reference]).to eql('PA16-000021')
+            end
+          end
+        end
       end
-    end
 
-    it 'checks uniqueness with an indexed lookup, not by scanning every reference' do
-      allow(Application).to receive(:unscoped).and_call_original
-      allow(Application).to receive(:pluck).and_call_original
+      context 'when there is an existing reference number in wrong format' do
+        let(:existing_application1) { create(:application, :processed_state, reference: 'PA16-000018') }
+        let(:existing_application2) { create(:application, :processed_state, reference: 'PA16-NLJDJZ') }
 
-      travel_to(Time.zone.local(2026, 6, 30)) { generator.attributes }
+        before do
+          existing_application2
+          existing_application1
+          application
+        end
 
-      expect(Application).to have_received(:unscoped).at_least(:once)
-      expect(Application).not_to have_received(:pluck)
-    end
-  end
+        it 'returns hash with the reference next in sequence' do
+          expect(attributes[:reference]).to eql('PA16-000019')
+        end
+      end
 
-  describe '#random_suffix' do
-    it 'only ever emits safe characters across many draws' do
-      1000.times do
-        expect(generator.send(:random_suffix)).to match(safe_suffix)
+      context 'when there are two business entities for the same jurisdiction' do
+        before do
+          create(:business_entity, office: office, jurisdiction: jurisdiction, be_code: 'CB975', sop_code: '123456789')
+          business_entity.update(valid_to: Time.zone.now)
+        end
+
+        it 'it no-longer makes a difference' do
+          expect(attributes[:reference]).to eql('PA16-000001')
+        end
       end
     end
   end
