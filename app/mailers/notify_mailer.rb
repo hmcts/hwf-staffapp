@@ -38,7 +38,7 @@ class NotifyMailer < GovukNotifyRails::Mailer
   def dwp_is_down_notifier
     set_template(ENV.fetch('NOTIFY_DWP_DOWN_TEMPLATE_ID', nil))
     set_personalisation(
-      environment: ENV.fetch('ENV', 'test')
+      environment: ENV.fetch('ENV', 'unknown')
     )
     mail(to: Settings.mail.dwp_notification_alert)
   end
