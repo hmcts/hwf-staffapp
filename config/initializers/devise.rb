@@ -191,6 +191,9 @@ Devise.setup do |config|
   # ==> Configuration for :timeoutable
   # The time you want to timeout the user session without activity. After this
   # time the user will be asked for credentials again. Default is 30 minutes.
+  # Keep in sync with expire_after in config/initializers/session_store.rb -
+  # the Redis session key must outlive this inactivity window, otherwise the
+  # session vanishes while Devise still considers the user logged in.
   config.timeout_in = 1.hour
 
   # If true, expires auth token on session timeout.

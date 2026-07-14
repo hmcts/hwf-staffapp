@@ -6,10 +6,18 @@
 #
 # This uses Rails' own cache-backed session store with a dedicated Redis cache
 # (rather than a third-party session gem), so it does not touch the app's global
-# Rails.cache. expire_after matches Devise's config.timeout_in so the Redis key is
-# reclaimed on the same schedule the user is timed out. If Redis is unreachable
-# the error_handler reports to Sentry and the request degrades to no session
-# rather than raising.
+# Rails.cache. If Redis is unreachable the error_handler reports to Sentry and
+# the request degrades to no session rather than raising.
+#
+# expire_after is a rolling inactivity window, NOT a hard cap from login: every
+# request that touches the session rewrites the Redis key with a fresh TTL and
+# re-sends the cookie with a new expiry (rack-session always re-sets the cookie
+# when :expires is present). Active users are therefore never logged out; the
+# session only expires after a full hour without any request.
+#
+# Keep in sync with Devise's config.timeout_in (config/initializers/devise.rb),
+# which is refreshed on the same requests - so the Redis key is reclaimed on
+# the same schedule the user is timed out for inactivity.
 session_cache = ActiveSupport::Cache::RedisCacheStore.new(
   url: Settings.redis_url,
   namespace: 'session',
