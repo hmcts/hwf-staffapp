@@ -66,10 +66,14 @@ window.moj.Modules.JsonSearcherModule = (function() {
       });
 
       $('input[id$="day_date_received"], input[id$="month_date_received"], input[id$="year_date_received"]').on('change blur', function() {
-        // Preserve an already-selected fee. findMatches() begins with
-        // resetSelection(), which would otherwise wipe the fee the user just
-        // picked when they edit the date_received fields afterwards.
-        if (self.feeSelected) return;
+        // On the online application page the search date comes from these
+        // fields, so changing them resets the search and any selected fee.
+        // On the paper page the search date is fixed at render time, so
+        // preserve the fee the user picked.
+        if (self.feeSelected) {
+          if (!self.isOnlineApplicationPage()) return;
+          self.resetSelection();
+        }
         var currentSearchTerm = $('input[id="fee_search"]').val();
         if (currentSearchTerm && currentSearchTerm.length >= 2) {
           self.findMatches(currentSearchTerm);
@@ -97,6 +101,8 @@ window.moj.Modules.JsonSearcherModule = (function() {
       $('#application_fee_entry_method').val('');
       $('#fee_search_has_results').val('false');
       $('input[id="application_fee"]').val('');
+      $('#percentage_base_amount').val('');
+      $('#calculate-percentage-fee').removeData('fee');
       this.setFeeReadonly(true);
     },
 
