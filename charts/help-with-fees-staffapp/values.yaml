@@ -8,7 +8,6 @@ base:
   memoryLimits: "3Gi"
   cpuLimits: "1000m"
   environment:
-    ENV: '{{ .Values.global.environment }}'
     RAILS_ENV: 'production'
     SECRETS_PATH: "/mnt/secrets/help-with-fees"
     SERVICE_NOW_EMAIL: "DCD-HWFSupportServiceDeskDEV@HMCTS.NET"

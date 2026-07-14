@@ -27,7 +27,7 @@ RSpec.describe NotifyMailer do
     context 'when the ENV variable is set' do
       before {
         allow(ENV).to receive(:fetch).and_call_original
-        allow(ENV).to receive(:fetch).with('ENV', 'unknown').and_return('aat')
+        allow(ENV).to receive(:fetch).with('EMAIL_ENV', 'unknown').and_return('aat')
       }
 
       it 'sends the environment name' do
@@ -41,7 +41,7 @@ RSpec.describe NotifyMailer do
     context 'when the ENV variable is not set' do
       before {
         allow(ENV).to receive(:fetch).and_call_original
-        allow(ENV).to receive(:fetch).with('ENV', 'unknown') { |_name, default| default }
+        allow(ENV).to receive(:fetch).with('EMAIL_ENV', 'unknown') { |_name, default| default }
       }
 
       it 'sends unknown instead of a misleading environment name' do
