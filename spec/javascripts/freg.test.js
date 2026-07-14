@@ -71,6 +71,25 @@ function setupDom(dateReceived) {
   `;
 }
 
+// The online application edit page has the date received fields on the same
+// screen as the fee search, under the online_application_* ids.
+function setupOnlineDom() {
+  setupDom();
+  $('#application_day_date_received, #application_month_date_received, #application_year_date_received').remove();
+  document.getElementById('fee_search').insertAdjacentHTML('afterend', `
+    <p id="date-received-required-message" class="govuk-error-message govuk-visually-hidden"></p>
+    <input id="online_application_day_date_received" />
+    <input id="online_application_month_date_received" />
+    <input id="online_application_year_date_received" />
+  `);
+}
+
+function fillOnlineDate(day, month, year) {
+  $('#online_application_day_date_received').val(day);
+  $('#online_application_month_date_received').val(month);
+  $('#online_application_year_date_received').val(year);
+}
+
 let mod;
 
 function loadModule() {
@@ -130,6 +149,94 @@ describe('getDateReceived', () => {
 
   it('returns null when no date is set', () => {
     expect(mod.getDateReceived()).toBeNull();
+  });
+});
+
+describe('online application page', () => {
+  beforeEach(() => {
+    setupOnlineDom();
+    loadModule();
+    mod.init();
+  });
+
+  it('blocks the search and shows a message when the date received is not filled in', () => {
+    mod.findMatches('FEE100');
+    expect($('#date-received-required-message').hasClass('govuk-visually-hidden')).toBe(false);
+    expect(liFor('FEE100')).toBeFalsy();
+    expect($('span.search_result_count').text()).toBe('0');
+    expect($('div.fee-search-results-block').hasClass('govuk-visually-hidden')).toBe(true);
+  });
+
+  it('blocks the search when the date received is only partially filled in', () => {
+    fillOnlineDate('1', '6', '');
+    mod.findMatches('FEE100');
+    expect($('#date-received-required-message').hasClass('govuk-visually-hidden')).toBe(false);
+    expect(liFor('FEE100')).toBeFalsy();
+  });
+
+  it('searches with the date from the fields once they are filled in', () => {
+    fillOnlineDate('1', '6', '2021');
+    mod.findMatches('FEE200');
+    expect($('#date-received-required-message').hasClass('govuk-visually-hidden')).toBe(true);
+    // 2021-06-01 falls in FEE200 v1, not the current version
+    expect(liFor('FEE200').textContent).toContain('Valid from: 2020-01-01');
+  });
+
+  it('reads the live fields over the render-time data attribute', () => {
+    fillOnlineDate('1', '6', '2021');
+    expect(mod.getDateReceived()).toBe('2021-06-01');
+  });
+
+  it('resets the search and all fee fields when the date received changes', () => {
+    fillOnlineDate('1', '6', '2024');
+    $('#fee_search').val('FEE100');
+    mod.findMatches('FEE100');
+    liFor('FEE100').click();
+    expect(mod.feeSelected).toBe(true);
+    expect($('#application_fee').val()).toBe('100');
+
+    $('#percentage_base_amount').val('5000');
+    $('#calculate-percentage-fee').data('fee', { code: 'FEE100' });
+
+    fillOnlineDate('1', '6', '2021');
+    $('#online_application_day_date_received').trigger('change');
+
+    expect(mod.feeSelected).toBe(false);
+    expect($('#application_fee').val()).toBe('');
+    expect($('#application_fee_code').val()).toBe('');
+    expect($('#application_claim_amount').val()).toBe('');
+    expect($('#application_fee_version_valid_from').val()).toBe('');
+    expect($('#application_fee_entry_method').val()).toBe('');
+    expect($('#percentage_base_amount').val()).toBe('');
+    expect($('#calculate-percentage-fee').data('fee')).toBeUndefined();
+    expect($('#selected-fee-display').hasClass('govuk-visually-hidden')).toBe(true);
+    expect($('#percentage-amount-input').hasClass('govuk-visually-hidden')).toBe(true);
+    // the search re-ran against the new date
+    expect(liFor('FEE100')).toBeTruthy();
+  });
+
+  it('resets the selected fee on date change even when the search box was cleared', () => {
+    fillOnlineDate('1', '6', '2024');
+    $('#fee_search').val('FEE100');
+    mod.findMatches('FEE100');
+    liFor('FEE100').click();
+
+    $('#fee_search').val('');
+    $('#online_application_day_date_received').trigger('change');
+
+    expect(mod.feeSelected).toBe(false);
+    expect($('#application_fee').val()).toBe('');
+  });
+
+  it('shows results when the date is completed after a blocked search', () => {
+    $('#fee_search').val('FEE100');
+    $('#online_application_day_date_received').trigger('change');
+    expect(liFor('FEE100')).toBeFalsy();
+
+    fillOnlineDate('1', '6', '2024');
+    $('#online_application_year_date_received').trigger('change');
+    expect($('#date-received-required-message').hasClass('govuk-visually-hidden')).toBe(true);
+    expect(liFor('FEE100')).toBeTruthy();
   });
 });
 

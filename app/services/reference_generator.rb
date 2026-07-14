@@ -10,11 +10,6 @@ class ReferenceGenerator
 
   private
 
-  def business_entity
-    @business_entity ||=
-      BusinessEntity.current_for(@application.office, @application.detail.jurisdiction)
-  end
-
   def reference_prefix
     "PA#{Time.zone.now.strftime('%y')}-"
   end
@@ -26,7 +21,7 @@ class ReferenceGenerator
 
   def last_reference
     Application.uncached do
-      @references = Application.where('reference LIKE ?', "#{reference_prefix}%").pluck(:reference)
+      @references = Application.where('reference ~ ?', "^#{reference_prefix}\\d{6}$").pluck(:reference)
     end
     @references.max
   end
