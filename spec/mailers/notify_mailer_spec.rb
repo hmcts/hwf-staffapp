@@ -24,13 +24,32 @@ RSpec.describe NotifyMailer do
 
     it_behaves_like 'a Notify mail', template_id: ENV.fetch('NOTIFY_DWP_DOWN_TEMPLATE_ID', nil)
 
-    it 'has the right values' do
-      expect(mail.govuk_notify_personalisation).to eq({
-                                                        environment: 'test'
-                                                      })
-      expect(mail.to).to eq(['dan@test.com', 'petr@test.gov.uk'])
+    context 'when the ENV variable is set' do
+      before {
+        allow(ENV).to receive(:fetch).and_call_original
+        allow(ENV).to receive(:fetch).with('EMAIL_ENV', 'unknown').and_return('aat')
+      }
+
+      it 'sends the environment name' do
+        expect(mail.govuk_notify_personalisation).to eq({
+                                                          environment: 'aat'
+                                                        })
+        expect(mail.to).to eq(['dan@test.com', 'petr@test.gov.uk'])
+      end
     end
 
+    context 'when the ENV variable is not set' do
+      before {
+        allow(ENV).to receive(:fetch).and_call_original
+        allow(ENV).to receive(:fetch).with('EMAIL_ENV', 'unknown') { |_name, default| default }
+      }
+
+      it 'sends unknown instead of a misleading environment name' do
+        expect(mail.govuk_notify_personalisation).to eq({
+                                                          environment: 'unknown'
+                                                        })
+      end
+    end
   end
 
   describe '#user_invite' do
