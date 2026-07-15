@@ -10,7 +10,7 @@ def rubyBuilder = new uk.gov.hmcts.contino.RubyBuilder(this)
 def yarnBuilder = new uk.gov.hmcts.contino.YarnBuilder(this)
 
 withPipeline(type, product, component) {
-    env.TRIGGER='2'
+    env.TRIGGER='3'
     env.RAILS_ENV = 'test'
     env.RACK_ENV = 'test'
     env.DB_HOST = 'localhost'
