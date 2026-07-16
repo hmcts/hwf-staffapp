@@ -24,13 +24,6 @@ To run a particular scenario using line number:
 
 `$ bundle exec cucumber features/landing_page.feature:10`
 
-To run in a specific browser:
-
-`$ DRIVER=chrome CAPYBARA_JS_DRIVER=chrome bundle exec cucumber`
-
-`$ DRIVER=firefox CAPYBARA_JS_DRIVER=firefox bundle exec cucumber`
-Please note: Firefox with macOS 10.15 “Catalina”, please refer to [macOS notarization](https://firefox-source-docs.mozilla.org/testing/geckodriver/Notarization.html)
-
 ## Cross-browser and device testing with 🎭 Playwright
 
 By default, only Rack and Headless Selenium Chrome are used for the feature tests.
@@ -41,9 +34,15 @@ To begin, install yarn:
 
 `$ yarn install`
 
-Then install the required browsers:
+Next, install playwright:
 
 `$ yarn playwright install --with-deps`
+
+Then, install the branded browsers:
+
+`$ yarn playwright install chrome`
+
+`$ yarn playwright install msedge`
 
 Then run the test suite using the rake command:
 
@@ -53,9 +52,9 @@ This will run `@javascript` tagged feature tests on Desktop Chrome, Desktop Edge
 
 Mobile device emulation is based on an iPhone 15, configuration can be viewed at [/config/playwright.yml](/config/playwright.yml).
 
-To run one of the drivers individually, e.g. Desktop Webkit run:
+To run one of the drivers individually, e.g. Desktop Firefox run:
 
-`$ DRIVER=playwright_webkit CAPYBARA_JS_DRIVER=playwright_webkit bundle exec cucumber`
+`$ DRIVER=playwright_firefox CAPYBARA_JS_DRIVER=playwright_firefox bundle exec cucumber`
 
 All of the playwright drivers can be viewed in [support/playwright_driver_helper.rb](support/playwright_driver_helper.rb).
 
