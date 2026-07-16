@@ -1,21 +1,28 @@
 'use strict';
 
-function getFeeVersionForDate(feeCode, dateReceived) {
-  if (!dateReceived || !feeCode.fee_versions) {
-    return feeCode.current_version;
-  }
+// Strict lookup: returns the version whose valid_from/valid_to range covers
+// the date, or null when none does. Used for refunds, where falling back to
+// the current version would quote the wrong (current) fee amount.
+function findFeeVersionForDate(feeCode, date) {
+  if (!date) return null;
 
-  const receivedDate = new Date(dateReceived);
+  const versions = feeCode.fee_versions ||
+    (feeCode.current_version ? [feeCode.current_version] : []);
+  const targetDate = new Date(date);
 
-  for (let version of feeCode.fee_versions) {
+  for (let version of versions) {
     const validFrom = new Date(version.valid_from);
     const validTo = version.valid_to ? new Date(version.valid_to) : null;
-    if (receivedDate >= validFrom && (!validTo || receivedDate <= validTo)) {
+    if (targetDate >= validFrom && (!validTo || targetDate <= validTo)) {
       return version;
     }
   }
 
-  return feeCode.current_version;
+  return null;
+}
+
+function getFeeVersionForDate(feeCode, date) {
+  return findFeeVersionForDate(feeCode, date) || feeCode.current_version;
 }
 
 function classifyFeeType(feeCode, feeVersion) {
@@ -36,4 +43,4 @@ function classifyFeeType(feeCode, feeVersion) {
   return 'fixed';
 }
 
-module.exports = { getFeeVersionForDate, classifyFeeType };
+module.exports = { getFeeVersionForDate, findFeeVersionForDate, classifyFeeType };
