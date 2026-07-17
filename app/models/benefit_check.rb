@@ -32,11 +32,13 @@ class BenefitCheck < ActiveRecord::Base
     true
   end
 
+  # rubocop:disable Style/ArrayIntersect
   def self.dwp_validation_error?(error_message)
     return false if error_message.blank?
 
     DWP_VALIDATION_ERROR_PATTERNS.any? { |pattern| error_message.include?(pattern) }
   end
+  # rubocop:enable Style/ArrayIntersect
 
   def dwp_outage_failure?
     self.class.dwp_outage_failure?(dwp_result, error_message)
