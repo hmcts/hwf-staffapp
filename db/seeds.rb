@@ -30,7 +30,9 @@ OfficeJurisdiction.all.each_with_index do |oj, index|
   end
 end
 
-if Rails.env.production?
+# Real deployments stop here. Local docker runs (docker-compose.yml sets
+# LOCAL_DOCKER) use the production environment but still need login accounts.
+if Rails.env.production? && ENV['LOCAL_DOCKER'] != 'true'
   return
 end
 
@@ -57,6 +59,9 @@ end
 # Sample applications — one per state with every relation linked.
 # Skipped if any applications already exist, so re-running the seed never
 # duplicates and never collides with an imported dataset.
+# FactoryBot comes from the test gem group, which production bundles
+# (including the docker image) do not install, so local docker stops here.
+return if Rails.env.production?
 return if Application.exists?
 
 require 'factory_bot_rails'

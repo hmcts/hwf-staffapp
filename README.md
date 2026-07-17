@@ -146,6 +146,23 @@ to
 FROM ruby:4.0.5-alpine3.23
 ```
 
+### Run the image locally
+
+`docker-compose.yml` wires the production image up with a throwaway Postgres and
+dummy secrets, so no Azure/Notify/DWP configuration is needed:
+
+```
+docker compose up --build
+```
+
+Then open http://localhost:3000 and log in with one of the seeded accounts
+from `db/seeds.rb`, e.g. `fee-remission@digital.justice.gov.uk` / `1234567890`.
+
+The `LOCAL_DOCKER=true` env var set by compose is what makes a production-mode
+container runnable locally: it switches off `force_ssl` (no TLS proxy on
+localhost) and lets `db:seed` create the login accounts. The database persists
+in a named volume; `docker compose down -v` resets it.
+
 ### Docker image on Jenkins/Azure
 In theory when there is a new ruby available and the local image build works
 you should be ablet to push it to with new path to ecr. Jenkins should pull the image from original and then

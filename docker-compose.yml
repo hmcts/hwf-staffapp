@@ -1,0 +1,49 @@
+# Local-only convenience: build and run the production image with a throwaway
+# Postgres, no Azure/Notify/DWP secrets needed. Not used by any deployment.
+#
+#   docker compose up --build
+#   open http://localhost:3000
+#
+# Log in with the seeded accounts from db/seeds.rb, e.g.
+# fee-remission@digital.justice.gov.uk / 1234567890
+services:
+  db:
+    image: postgres:16-alpine
+    environment:
+      POSTGRES_PASSWORD: postgres
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres"]
+      interval: 2s
+      timeout: 3s
+      retries: 30
+    volumes:
+      - db-data:/var/lib/postgresql/data
+
+  app:
+    build: .
+    ports:
+      - "3000:3000"
+    depends_on:
+      db:
+        condition: service_healthy
+    environment:
+      RAILS_ENV: production
+      RACK_ENV: production
+      # Marks this as a local run: disables force_ssl and seeds login users.
+      LOCAL_DOCKER: "true"
+      # run.sh: create + migrate + seed the database on boot (idempotent).
+      DOCKER_STATE: create
+      # Rails reads SECRET_KEY_BASE during boot (devise.rb runs before the
+      # secret_token.rb initializer); real deployments get it from the key vault.
+      SECRET_KEY_BASE: local-docker-secret-key-base-not-for-production
+      SECRET_TOKEN: local-docker-secret-token-not-for-production
+      DB_HOST: db
+      DB_USERNAME: postgres
+      DB_PASSWORD: postgres
+      DB_NAME: hwf_staffapp_local
+      RAILS_SERVE_STATIC_FILES: "true"
+      RAILS_LOG_TO_STDOUT: "true"
+      WEB_CONCURRENCY: "1"
+
+volumes:
+  db-data:

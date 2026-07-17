@@ -48,7 +48,10 @@ Rails.application.configure do
   # config.assume_ssl = true
 
   # Force all access to the app over SSL, use Strict-Transport-Security, and use secure cookies.
-  config.force_ssl = true
+  # Local docker runs (docker-compose.yml sets LOCAL_DOCKER) have no TLS proxy,
+  # so plain-http localhost would redirect forever and secure cookies would
+  # break login - skip the SSL enforcement there.
+  config.force_ssl = ENV['LOCAL_DOCKER'] != 'true'
 
   # Skip http-to-https redirect for the default health check endpoint.
   config.ssl_options = { redirect: false }
