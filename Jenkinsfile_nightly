@@ -1,5 +1,10 @@
 #!groovy
 
+properties([
+    // H allow predefined but random minute see https://en.wikipedia.org/wiki/Cron#Non-standard_characters
+    pipelineTriggers([cron('35 13 * * 1-5')])
+])
+
 @Library("Infrastructure")
 
 def type = "ruby"
