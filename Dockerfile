@@ -56,6 +56,12 @@ COPY package.json yarn.lock .yarnrc.yml /home/app/
 RUN corepack install \
  && yarn install --immutable
 
+# Dependencies are baked in above; skip the cssbundling/jsbundling yarn install
+# that assets:precompile would otherwise run at container start. Yarn 4.17.1+
+# rewrites .yarn/install-state.gz on every install (even a no-op), which fails
+# with EACCES because /home/app is root-owned and the pod user is not.
+ENV SKIP_YARN_INSTALL=1
+
 # running app as a servive
 ENV PHUSION=true
 
