@@ -2,7 +2,7 @@
 
 properties([
     // H allow predefined but random minute see https://en.wikipedia.org/wiki/Cron#Non-standard_characters
-    pipelineTriggers([cron('17 14 * * 1-5')])
+    pipelineTriggers([cron('07 16 * * 1-5')])
 ])
 
 @Library("Infrastructure")
@@ -55,6 +55,7 @@ withNightlyPipeline(type, product, component) {
     env.SENTRY_SSL_VERIFICATION=''
     env.NEW_LEGISLATION_ACTIVE_DATE='27-10-2023'
 
+    enableSlackNotifications('#pet-nightly')
     enableFortifyScan()
 
     before('build') {
