@@ -2,7 +2,7 @@
 
 properties([
     // H allow predefined but random minute see https://en.wikipedia.org/wiki/Cron#Non-standard_characters
-    pipelineTriggers([cron('48 12 * * 1-5')])
+    pipelineTriggers([cron('00 14 * * 1-5')])
 ])
 
 @Library("Infrastructure")
@@ -87,5 +87,9 @@ withNightlyPipeline(type, product, component) {
     afterAlways('smokeTest') {
         sh script: "docker stop hwf-test-postgres && docker rm hwf-test-postgres || echo 'Ignoring failure in stopping postgres'",
             label: "docker stop hwf-test-postgres"
+    }
+
+    afterAlways('fortifyScan') {
+        error('Test error for fortify scan')
     }
 }
