@@ -52,7 +52,7 @@ RSpec.feature 'Processing refund application with valid date received date' do
       visit '/'
       fill_in :online_search_reference, with: online_application_1.reference
       click_button 'Look up'
-      expect(page).to have_content "Application details"
+      expect(page).to have_text "Application details"
       choose jurisdiction.name
       day = find(:xpath, './/input[@id="online_application_day_date_received"]').value
       month = find(:xpath, './/input[@id="online_application_month_date_received"]').value
@@ -62,19 +62,19 @@ RSpec.feature 'Processing refund application with valid date received date' do
 
       click_button 'Next'
 
-      expect(page).to have_content "Check details"
+      expect(page).to have_text "Check details"
       click_button 'Complete processing'
 
-      expect(page).to have_content 'Savings and investments✓ Passed'
-      expect(page).to have_content 'Benefits✓ Passed'
-      expect(page).to have_content 'Eligible for help with fees'
+      expect(page).to have_text 'Savings and investments✓ Passed'
+      expect(page).to have_text 'Benefits✓ Passed'
+      expect(page).to have_text 'Eligible for help with fees'
     end
 
     it "ignore date_received date because it was already validated" do
       visit '/'
       fill_in :online_search_reference, with: online_application_2.reference
       click_button 'Look up'
-      expect(page).to have_content "Application details"
+      expect(page).to have_text "Application details"
       choose jurisdiction.name
       day = find(:xpath, './/input[@id="online_application_day_date_received"]').value
       month = find(:xpath, './/input[@id="online_application_month_date_received"]').value
@@ -84,12 +84,12 @@ RSpec.feature 'Processing refund application with valid date received date' do
 
       click_button 'Next'
 
-      expect(page).to have_content "Check details"
+      expect(page).to have_text "Check details"
       click_button 'Complete processing'
 
-      expect(page).to have_content 'Savings and investments✓ Passed'
-      expect(page).to have_content 'Benefits✓ Passed'
-      expect(page).to have_content 'Eligible for help with fees'
+      expect(page).to have_text 'Savings and investments✓ Passed'
+      expect(page).to have_text 'Benefits✓ Passed'
+      expect(page).to have_text 'Eligible for help with fees'
     end
 
   end
@@ -104,10 +104,10 @@ RSpec.feature 'Processing refund application with valid date received date' do
         it "valid date" do
           visit '/'
           click_button 'Start now'
-          expect(page).to have_content "Personal details"
+          expect(page).to have_text "Personal details"
           complete_page_as 'personal_information', application, true
 
-          expect(page).to have_content "Application details"
+          expect(page).to have_text "Application details"
           complete_page_as 'application_details', application, false
           check "This is a refund case"
           date_fee_paid = 10.days.ago
@@ -120,20 +120,20 @@ RSpec.feature 'Processing refund application with valid date received date' do
           fill_in 'application_amount', with: 0
           click_button 'Next'
 
-          expect(page).to have_content "Does the applicant receive benefits?"
+          expect(page).to have_text "Does the applicant receive benefits?"
           choose 'Yes'
           click_button 'Next'
 
-          expect(page).to have_content "Declaration and statement of truth"
+          expect(page).to have_text "Declaration and statement of truth"
           choose 'Applicant'
           click_button 'Next'
 
-          expect(page).to have_content "Check details"
+          expect(page).to have_text "Check details"
           click_button 'Complete processing'
 
-          expect(page).to have_content 'Savings and investments✓ Passed'
-          expect(page).to have_content 'Benefits✓ Passed'
-          expect(page).to have_content 'Eligible for help with fees'
+          expect(page).to have_text 'Savings and investments✓ Passed'
+          expect(page).to have_text 'Benefits✓ Passed'
+          expect(page).to have_text 'Eligible for help with fees'
         end
 
       end
@@ -143,10 +143,10 @@ RSpec.feature 'Processing refund application with valid date received date' do
         it "failed paper evidence" do
           visit '/'
           click_button 'Start now'
-          expect(page).to have_content "Personal details"
+          expect(page).to have_text "Personal details"
           complete_page_as 'personal_information', application, true
 
-          expect(page).to have_content "Application details"
+          expect(page).to have_text "Application details"
           complete_page_as 'application_details', application, false
           check "This is a refund case"
           date_fee_paid = 10.days.ago
@@ -159,22 +159,22 @@ RSpec.feature 'Processing refund application with valid date received date' do
           choose 'Less than £3,000'
           click_button 'Next'
 
-          expect(page).to have_content "Does the applicant receive benefits?"
+          expect(page).to have_text "Does the applicant receive benefits?"
           choose 'Yes'
           click_button 'Next'
 
-          expect(page).to have_content "Has the applicant provided the correct supporting evidence of benefits received for the period they have declared on their application?"
+          expect(page).to have_text "Has the applicant provided the correct supporting evidence of benefits received for the period they have declared on their application?"
           choose 'No'
           click_button 'Next'
 
-          expect(page).to have_content "Check details"
-          expect(page).to have_content "Benefits declared in applicationYes"
-          expect(page).to have_content "Correct evidence providedNo"
+          expect(page).to have_text "Check details"
+          expect(page).to have_text "Benefits declared in applicationYes"
+          expect(page).to have_text "Correct evidence providedNo"
           click_button 'Complete processing'
 
-          expect(page).to have_content 'Savings and investments✓ Passed'
-          expect(page).to have_content 'Benefits✗ Failed'
-          expect(page).to have_content 'Not eligible for help with fees'
+          expect(page).to have_text 'Savings and investments✓ Passed'
+          expect(page).to have_text 'Benefits✗ Failed'
+          expect(page).to have_text 'Not eligible for help with fees'
         end
       end
 
@@ -182,10 +182,10 @@ RSpec.feature 'Processing refund application with valid date received date' do
         it "discretion denied" do
           visit '/'
           click_button 'Start now'
-          expect(page).to have_content "Personal details"
+          expect(page).to have_text "Personal details"
           complete_page_as 'personal_information', application, true
 
-          expect(page).to have_content "Application details"
+          expect(page).to have_text "Application details"
           complete_page_as 'application_details', application, false
           check "This is a refund case"
           date_fee_paid = 4.months.ago
@@ -194,22 +194,22 @@ RSpec.feature 'Processing refund application with valid date received date' do
           fill_in "application_year_date_fee_paid", with: date_fee_paid.year.to_fs(:db)
 
           click_button 'Next'
-          expect(page).to have_content("This fee was paid more than 3 months from the date received. Delivery Manager discretion must be applied to progress this application")
+          expect(page).to have_text("This fee was paid more than 3 months from the date received. Delivery Manager discretion must be applied to progress this application")
 
           within(:xpath, './/fieldset[@class="discretion_applied start-hidden"]') do
             choose 'No'
           end
           click_button 'Next'
 
-          expect(page).to have_content "Check details"
-          expect(page).to have_content "Delivery Manager discretion appliedNo"
-          expect(page).to have_no_content "Savings and investments"
+          expect(page).to have_text "Check details"
+          expect(page).to have_text "Delivery Manager discretion appliedNo"
+          expect(page).to have_no_text "Savings and investments"
 
           click_button 'Complete processing'
 
-          expect(page).to have_content 'Not eligible for help with fees'
-          expect(page).to have_content 'Delivery Manager Discretion✗ Failed'
-          expect(page).to have_no_content 'Savings and investments'
+          expect(page).to have_text 'Not eligible for help with fees'
+          expect(page).to have_text 'Delivery Manager Discretion✗ Failed'
+          expect(page).to have_no_text 'Savings and investments'
           expect(Application.last.application_type).not_to be_nil
         end
 
@@ -219,10 +219,10 @@ RSpec.feature 'Processing refund application with valid date received date' do
           it "discretion granted" do
             visit '/'
             click_button 'Start now'
-            expect(page).to have_content "Personal details"
+            expect(page).to have_text "Personal details"
             complete_page_as 'personal_information', application, true
 
-            expect(page).to have_content "Application details"
+            expect(page).to have_text "Application details"
             complete_page_as 'application_details', application, false
             check "This is a refund case"
             date_fee_paid = 4.months.ago
@@ -231,15 +231,15 @@ RSpec.feature 'Processing refund application with valid date received date' do
             fill_in "application_year_date_fee_paid", with: date_fee_paid.year.to_fs(:db)
 
             click_button 'Next'
-            expect(page).to have_content("This fee was paid more than 3 months from the date received. Delivery Manager discretion must be applied to progress this application")
+            expect(page).to have_text("This fee was paid more than 3 months from the date received. Delivery Manager discretion must be applied to progress this application")
 
             within(:xpath, './/fieldset[@class="discretion_applied start-hidden"]') do
               choose 'Yes'
             end
             click_button 'Next'
 
-            expect(page).to have_content("Enter Delivery Manager name")
-            expect(page).to have_content("Enter Discretionary reason")
+            expect(page).to have_text("Enter Delivery Manager name")
+            expect(page).to have_text("Enter Discretionary reason")
 
             within(:xpath, './/fieldset[@class="discretion_applied start-hidden"]') do
               fill_in 'Delivery Manager name', with: 'Dan'
@@ -251,28 +251,28 @@ RSpec.feature 'Processing refund application with valid date received date' do
             fill_in 'application_amount', with: 0
             click_button 'Next'
 
-            expect(page).to have_content "Does the applicant receive benefits?"
+            expect(page).to have_text "Does the applicant receive benefits?"
             choose 'Yes'
             click_button 'Next'
-            expect(page).to have_no_content('This could be due to a system error and/or the applicant not being found from the details provided.')
+            expect(page).to have_no_text('This could be due to a system error and/or the applicant not being found from the details provided.')
 
-            expect(page).to have_content('Has the applicant provided the correct supporting evidence of benefits received for the period they have declared on their application?')
+            expect(page).to have_text('Has the applicant provided the correct supporting evidence of benefits received for the period they have declared on their application?')
             choose('Yes, by selecting this option, the applicant will be issued with a full remission')
             click_button 'Next'
 
-            expect(page).to have_content "Check details"
+            expect(page).to have_text "Check details"
 
-            expect(page).to have_content "Delivery Manager discretion appliedYes"
-            expect(page).to have_content "Correct evidence providedYes"
-            expect(page).to have_no_content "Benefits letter checkedNo"
-            expect(page).to have_content "Savings and investments"
+            expect(page).to have_text "Delivery Manager discretion appliedYes"
+            expect(page).to have_text "Correct evidence providedYes"
+            expect(page).to have_no_text "Benefits letter checkedNo"
+            expect(page).to have_text "Savings and investments"
 
             click_button 'Complete processing'
 
-            expect(page).to have_content 'Benefits✓ Passed'
-            expect(page).to have_content 'Eligible for help with fees'
-            expect(page).to have_content 'Delivery Manager Discretion✓ Passed'
-            expect(page).to have_content 'Savings and investments✓ Passed'
+            expect(page).to have_text 'Benefits✓ Passed'
+            expect(page).to have_text 'Eligible for help with fees'
+            expect(page).to have_text 'Delivery Manager Discretion✓ Passed'
+            expect(page).to have_text 'Savings and investments✓ Passed'
           end
         end
       end
@@ -282,10 +282,10 @@ RSpec.feature 'Processing refund application with valid date received date' do
       it "valid date" do
         visit '/'
         click_button 'Start now'
-        expect(page).to have_content "Personal details"
+        expect(page).to have_text "Personal details"
         complete_page_as 'personal_information', application, true
 
-        expect(page).to have_content "Application details"
+        expect(page).to have_text "Application details"
         complete_page_as 'application_details', application, false
         check "This is a refund case"
 
@@ -300,29 +300,29 @@ RSpec.feature 'Processing refund application with valid date received date' do
         fill_in 'application_amount', with: 0
         click_button 'Next'
 
-        expect(page).to have_content "Does the applicant receive benefits?"
+        expect(page).to have_text "Does the applicant receive benefits?"
         choose 'No'
         click_button 'Next'
 
-        expect(page).to have_content "In questions 10 and 11, does the applicant financially support any children?"
+        expect(page).to have_text "In questions 10 and 11, does the applicant financially support any children?"
         choose 'No'
         fill_in 'application_income', with: 1000
         click_button 'Next'
 
-        expect(page).to have_content "Check details"
+        expect(page).to have_text "Check details"
         click_button 'Complete processing'
 
-        expect(page).to have_content 'Savings and investments✓ Passed'
-        expect(page).to have_content 'Eligible for help with fees'
+        expect(page).to have_text 'Savings and investments✓ Passed'
+        expect(page).to have_text 'Eligible for help with fees'
       end
 
       it "invalid date discretion granted" do
         visit '/'
         click_button 'Start now'
-        expect(page).to have_content "Personal details"
+        expect(page).to have_text "Personal details"
         complete_page_as 'personal_information', application, true
 
-        expect(page).to have_content "Application details"
+        expect(page).to have_text "Application details"
         complete_page_as 'application_details', application, false
         check "This is a refund case"
 
@@ -332,15 +332,15 @@ RSpec.feature 'Processing refund application with valid date received date' do
         fill_in "application_year_date_fee_paid", with: date_fee_paid.year.to_fs(:db)
 
         click_button 'Next'
-        expect(page).to have_content("This fee was paid more than 3 months from the date received. Delivery Manager discretion must be applied to progress this application")
+        expect(page).to have_text("This fee was paid more than 3 months from the date received. Delivery Manager discretion must be applied to progress this application")
 
         within(:xpath, './/fieldset[@class="discretion_applied start-hidden"]') do
           choose 'Yes'
         end
         click_button 'Next'
 
-        expect(page).to have_content("Enter Delivery Manager name")
-        expect(page).to have_content("Enter Discretionary reason")
+        expect(page).to have_text("Enter Delivery Manager name")
+        expect(page).to have_text("Enter Discretionary reason")
 
         within(:xpath, './/fieldset[@class="discretion_applied start-hidden"]') do
           fill_in 'Delivery Manager name', with: 'Dan'
@@ -352,20 +352,20 @@ RSpec.feature 'Processing refund application with valid date received date' do
         fill_in 'application_amount', with: 0
         click_button 'Next'
 
-        expect(page).to have_content "Does the applicant receive benefits?"
+        expect(page).to have_text "Does the applicant receive benefits?"
         choose 'No'
         click_button 'Next'
 
-        expect(page).to have_content "In questions 10 and 11, does the applicant financially support any children?"
+        expect(page).to have_text "In questions 10 and 11, does the applicant financially support any children?"
         choose 'No'
         fill_in 'application_income', with: 1000
         click_button 'Next'
 
-        expect(page).to have_content "Check details"
+        expect(page).to have_text "Check details"
         click_button 'Complete processing'
 
-        expect(page).to have_content 'Savings and investments✓ Passed'
-        expect(page).to have_content 'Eligible for help with fees'
+        expect(page).to have_text 'Savings and investments✓ Passed'
+        expect(page).to have_text 'Eligible for help with fees'
       end
     end
   end

@@ -31,7 +31,7 @@ RSpec.feature 'Staff are prevented from processing online applications' do
   end
 
   def they_are_shown_a_warning
-    expect(page).to have_content(I18n.t('activemodel.errors.models.forms/search.attributes.reference.income_error'))
+    expect(page).to have_text(I18n.t('activemodel.errors.models.forms/search.attributes.reference.income_error'))
   end
 end
 # rubocop:enable RSpec/NoExpectationExample

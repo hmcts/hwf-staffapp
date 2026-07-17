@@ -58,8 +58,12 @@ features/cucumber-report/screenshot.png
 storage/*
 /app/assets/builds/*
 !/app/assets/builds/.keep
+features/cucumber-report/
 
 /node_modules
+
+# Yarn 4
+.yarn/install-state.gz
 
 CLAUDE.md
 .claude/**

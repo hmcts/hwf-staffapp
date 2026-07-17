@@ -14,6 +14,7 @@ Feature: Override results Discretionary pass
     Then I should see a confirmation letter
     And I should see that the application fails because of income
 
+  @javascript
   Scenario: High income - after granting hwf
     Given I input low savings and no benefits but 5000 income and then complete processing
     When I grant help with fees by choosing delivery manager discretion

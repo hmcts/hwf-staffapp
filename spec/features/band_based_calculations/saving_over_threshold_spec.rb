@@ -62,7 +62,7 @@ RSpec.feature 'Application stores correct data' do
       click_button 'Next'
 
       click_button 'Complete processing'
-      expect(page).to have_content('Not eligible for help with fee')
+      expect(page).to have_text('Not eligible for help with fee')
       reference = find(:css, 'strong.reference-number').text
       application = Application.find_by(reference: reference)
       expect(application.outcome).to eq('none')
@@ -98,7 +98,7 @@ RSpec.feature 'Application stores correct data' do
       click_button 'Next'
 
       click_button 'Complete processing'
-      expect(page).to have_content('Not eligible for help with fee')
+      expect(page).to have_text('Not eligible for help with fee')
       reference = find(:css, 'strong.reference-number').text
       application = Application.find_by(reference: reference)
       expect(application.outcome).to eq('none')
@@ -151,7 +151,7 @@ RSpec.feature 'Application stores correct data' do
       click_button 'Next'
 
       click_button 'Complete processing'
-      expect(page).to have_content('Not eligible for help with fee')
+      expect(page).to have_text('Not eligible for help with fee')
       reference = find(:css, 'strong.reference-number').text
       application = Application.find_by(reference: reference)
       expect(application.outcome).to eq('none')
@@ -175,7 +175,7 @@ RSpec.feature 'Application stores correct data' do
       click_button 'Next'
 
       click_button 'Complete processing'
-      expect(page).to have_content('Not eligible for help with fee')
+      expect(page).to have_text('Not eligible for help with fee')
 
       application = Application.find_by(reference: reference)
       expect(application.outcome).to eq('none')

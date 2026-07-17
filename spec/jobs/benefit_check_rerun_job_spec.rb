@@ -53,6 +53,41 @@ RSpec.describe BenefitCheckRerunJob do
 
       end
 
+      context 'with errors the old list did not match' do
+        let(:timed_out_application) { create(:application, :benefit_type) }
+        let(:applicant_data_application) { create(:application, :benefit_type) }
+        let(:undetermined_application) { create(:application, :benefit_type) }
+
+        before do
+          # make the monitor offline
+          create_list(:benefit_check, 6, dwp_result: 'Unspecified error', error_message: '502 Bad Gateway')
+          # DWP failure that the old hardcoded list did not include
+          create(:benefit_check, applicationable: timed_out_application,
+                                 dwp_result: 'Unspecified error', error_message: 'Timed out reading data from server')
+          # an applicant-data problem that must NOT be re-run
+          create(:benefit_check, applicationable: applicant_data_application,
+                                 dwp_result: 'BadRequest', error_message: 'surname is invalid')
+          # a genuine DWP answer that must NOT be re-run
+          create(:benefit_check, applicationable: undetermined_application,
+                                 dwp_result: 'Undetermined', error_message: nil)
+        end
+
+        it 're-runs a failure that the old list missed' do
+          described_class.perform_now
+          expect(BenefitCheckRunner).to have_received(:new).with(timed_out_application)
+        end
+
+        it 'does not re-run an applicant-data problem' do
+          described_class.perform_now
+          expect(BenefitCheckRunner).not_to have_received(:new).with(applicant_data_application)
+        end
+
+        it 'does not re-run an Undetermined result' do
+          described_class.perform_now
+          expect(BenefitCheckRunner).not_to have_received(:new).with(undetermined_application)
+        end
+      end
+
       context 'offline' do
         let(:dwp_result) { 'BadRequest' }
         before { benefit_check }

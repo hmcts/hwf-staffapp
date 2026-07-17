@@ -2,9 +2,34 @@ require 'selenium/webdriver'
 
 Selenium::WebDriver.logger.level = :error
 
+# Chrome/CDP intermittently raises a generic UnknownError -
+# "Node with given id does not belong to the document" - when the
+# govuk-frontend JavaScript re-initialises the DOM at the moment Capybara
+# interacts with an element (e.g. clicking a radio label). Treat it as a
+# transient invalid-element error so Capybara re-finds the element and retries
+# within its normal wait window instead of failing the scenario outright.
+module SeleniumTransientNodeErrors
+  def invalid_element_errors
+    super + [::Selenium::WebDriver::Error::UnknownError]
+  end
+end
+Capybara::Selenium::Driver.prepend(SeleniumTransientNodeErrors)
+
 Capybara.configure do |config|
-  driver = ENV['DRIVER']&.to_sym || :cuprite
-  config.default_driver = driver
+  # Default to the in-process rack_test driver (no browser) - it is ~5-13x
+  # faster than driving real Chrome. Scenarios that genuinely need JavaScript
+  # (show/hide sections, execute_script) are tagged @javascript and run under
+  # the selenium headless-Chrome driver instead (see Capybara.javascript_driver).
+  # Smoke tests run against a remote TEST_URL with no in-process server, so they
+  # need a real browser - keep chrome_headless for those.
+  config.default_driver =
+    if ENV['DRIVER']
+      ENV['DRIVER'].to_sym
+    elsif ENV['RUN_SMOKE_TESTS'] == 'true'
+      :chrome_headless
+    else
+      :rack_test
+    end
   config.default_max_wait_time = 10
   config.default_normalize_ws = true
   config.match = :prefer_exact
@@ -31,16 +56,16 @@ Capybara.register_driver :apparition do |app|
   Capybara::Apparition::Driver.new(app, { js_errors: false })
 end
 
-Capybara.register_driver :cuprite do |app|
-  Capybara::Cuprite::Driver.new(app, {
-                                  js_errors: false,
-                                  window_size: [1920, 1080],
-                                  browser_options: {
-                                    'no-sandbox': nil,
-                                    'disable-gpu': nil,
-                                    'disable-dev-shm-usage': nil
-                                  }
-                                })
+Capybara.register_driver :chrome_headless do |app|
+  options = Selenium::WebDriver::Chrome::Options.new
+  options.add_argument('--headless=new')
+  options.add_argument('--no-sandbox')
+  options.add_argument('--disable-gpu')
+  options.add_argument('--disable-dev-shm-usage')
+  options.add_argument('--window-size=1920,1080')
+  # Capture browser console logs (used by add_browser_logs on failure).
+  options.add_option('goog:loggingPrefs', { browser: 'ALL' })
+  Capybara::Selenium::Driver.new(app, browser: :chrome, options: options)
 end
 
 Capybara.register_driver :chrome do |app|
@@ -51,8 +76,8 @@ Capybara::Screenshot.register_driver(:chrome) do |driver, path|
   driver.browser.save_screenshot(path)
 end
 
-Capybara::Screenshot.register_driver(:cuprite) do |driver, path|
-  driver.save_screenshot(path, full: true)
+Capybara::Screenshot.register_driver(:chrome_headless) do |driver, path|
+  driver.browser.save_screenshot(path)
 end
 
 Capybara.register_driver :saucelabs do |app|
@@ -74,7 +99,7 @@ Capybara::Screenshot.register_filename_prefix_formatter(:cucumber) do |scenario|
 end
 
 Capybara.always_include_port = true
-Capybara.javascript_driver = Capybara.default_driver
+Capybara.javascript_driver = :chrome_headless
 
 # Uncomment and set to your test URL to run tests against localhost
 # ENV['TEST_URL'] = 'http://localhost:3000/'

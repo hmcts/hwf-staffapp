@@ -27,8 +27,8 @@ RSpec.feature 'Application is not evidence check when income is above threshold'
       fill_benefits(false)
       fill_income_above_threshold
       click_button 'Complete processing'
-      expect(page).to have_no_content('Evidence of income needs to be checked')
-      expect(page).to have_content('✗   Not eligible for help with fees')
+      expect(page).to have_no_text('Evidence of income needs to be checked')
+      expect(page).to have_text('✗   Not eligible for help with fees')
     end
   end
 
@@ -47,8 +47,8 @@ RSpec.feature 'Application is not evidence check when income is above threshold'
       fill_benefits(false)
       fill_income_above_threshold
       click_button 'Complete processing'
-      expect(page).to have_no_content('Evidence of income needs to be checked')
-      expect(page).to have_content('✗   Not eligible for help with fees')
+      expect(page).to have_no_text('Evidence of income needs to be checked')
+      expect(page).to have_text('✗   Not eligible for help with fees')
     end
 
     context 'Duplicate NINO with previous evidence checked' do
@@ -73,8 +73,8 @@ RSpec.feature 'Application is not evidence check when income is above threshold'
         fill_benefits(false)
         fill_income_above_threshold
         click_button 'Complete processing'
-        expect(page).to have_no_content('Evidence of income needs to be checked')
-        expect(page).to have_content('✗   Not eligible for help with fees')
+        expect(page).to have_no_text('Evidence of income needs to be checked')
+        expect(page).to have_text('✗   Not eligible for help with fees')
 
       end
     end

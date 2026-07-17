@@ -17,7 +17,7 @@ RSpec.feature 'Application is evidence checked when 1 in X' do
     let(:application) { create(:application_full_remission) }
 
     before do
-      create_list(:application_full_remission, 9)
+      create_list(:application_full_remission, 9, office: user.office)
     end
 
     scenario 'Every 10th application is not evidence check when a benefit application' do
@@ -31,8 +31,8 @@ RSpec.feature 'Application is evidence checked when 1 in X' do
 
       click_button 'Complete processing'
 
-      expect(page).to have_no_content('Evidence of income needs to be checked')
-      expect(page).to have_content('✓ Eligible for help with fees')
+      expect(page).to have_no_text('Evidence of income needs to be checked')
+      expect(page).to have_text('✓ Eligible for help with fees')
     end
   end
 
@@ -40,7 +40,7 @@ RSpec.feature 'Application is evidence checked when 1 in X' do
     let(:application) { create(:application_full_remission) }
 
     before do
-      create_list(:application_full_remission, 9)
+      create_list(:application_full_remission, 9, office: user.office)
     end
 
     scenario 'Every 10th application is not evidence check when a benefit application paper check is false' do
@@ -53,8 +53,8 @@ RSpec.feature 'Application is evidence checked when 1 in X' do
       fill_benefit_evidence(paper_provided: false)
 
       click_button 'Complete processing'
-      expect(page).to have_no_content('Evidence of income needs to be checked')
-      expect(page).to have_content('✗   Not eligible for help with fees')
+      expect(page).to have_no_text('Evidence of income needs to be checked')
+      expect(page).to have_text('✗   Not eligible for help with fees')
     end
   end
 
@@ -62,7 +62,7 @@ RSpec.feature 'Application is evidence checked when 1 in X' do
     let(:application) { create(:application_full_remission, :refund) }
 
     before do
-      create_list(:application_full_remission, 1, :refund)
+      create_list(:application_full_remission, 1, :refund, office: user.office)
     end
 
     scenario 'Every 2nd application is not evidence check when Benefit Application' do
@@ -76,8 +76,8 @@ RSpec.feature 'Application is evidence checked when 1 in X' do
 
       click_button 'Complete processing'
 
-      expect(page).to have_no_content('Evidence of income needs to be checked')
-      expect(page).to have_content('✓ Eligible for help with fees')
+      expect(page).to have_no_text('Evidence of income needs to be checked')
+      expect(page).to have_text('✓ Eligible for help with fees')
     end
   end
 
@@ -85,7 +85,7 @@ RSpec.feature 'Application is evidence checked when 1 in X' do
     let(:application) { create(:application_full_remission, :refund) }
 
     before do
-      create_list(:application_full_remission, 1, :refund)
+      create_list(:application_full_remission, 1, :refund, office: user.office)
     end
 
     scenario 'Every 2nd application is not evidence check when paper evidence is false on Benefit Application' do
@@ -99,8 +99,8 @@ RSpec.feature 'Application is evidence checked when 1 in X' do
 
       click_button 'Complete processing'
 
-      expect(page).to have_no_content('Evidence of income needs to be checked')
-      expect(page).to have_content('✗   Not eligible for help with fees')
+      expect(page).to have_no_text('Evidence of income needs to be checked')
+      expect(page).to have_text('✗   Not eligible for help with fees')
     end
   end
 
@@ -108,8 +108,8 @@ RSpec.feature 'Application is evidence checked when 1 in X' do
     let(:application) { create(:application_full_remission, :refund) }
 
     before do
-      create(:application_full_remission_ev, :refund)
-      create(:application_full_remission, :refund)
+      create(:application_full_remission_ev, :refund, office: user.office)
+      create(:application_full_remission, :refund, office: user.office)
     end
 
     scenario 'Every 2nd application is evidence check when application is within 3 month of application date' do
@@ -121,8 +121,8 @@ RSpec.feature 'Application is evidence checked when 1 in X' do
       fill_income(false)
 
       click_button 'Complete processing'
-      expect(page).to have_content('Evidence of income needs to be checked')
-      expect(page).to have_no_content('✓ Eligible for help with fees')
+      expect(page).to have_text('Evidence of income needs to be checked')
+      expect(page).to have_no_text('✓ Eligible for help with fees')
     end
   end
 
@@ -130,8 +130,8 @@ RSpec.feature 'Application is evidence checked when 1 in X' do
     let(:application) { create(:application_full_remission, :refund) }
 
     before do
-      create(:application_full_remission_ev, :refund)
-      create(:application_full_remission, :refund)
+      create(:application_full_remission_ev, :refund, office: user.office)
+      create(:application_full_remission, :refund, office: user.office)
     end
 
     scenario 'Every 2nd application is evidence check when 3 month application date exceeded and discretion is yes' do
@@ -143,8 +143,8 @@ RSpec.feature 'Application is evidence checked when 1 in X' do
       fill_income(false)
 
       click_button 'Complete processing'
-      expect(page).to have_content("- For HMRC income checking")
-      expect(page).to have_no_content('✓ Eligible for help with fees')
+      expect(page).to have_text("- For HMRC income checking")
+      expect(page).to have_no_text('✓ Eligible for help with fees')
     end
   end
 end

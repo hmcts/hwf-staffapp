@@ -14,7 +14,7 @@ end
 
 Then("I should see the result for that full name") do
   expect(find_application_page.content).to have_search_results_header
-  expect(find_application_page.content.search_results_group.found_application.text).to have_content 'John Christopher Smith'
+  expect(find_application_page.content.search_results_group.found_application.text).to have_text 'John Christopher Smith'
 end
 
 When("I search for an application using a last name") do
@@ -79,7 +79,7 @@ Then("I should see there is a single result for that national insurance number")
 end
 
 Then("the national insurance number is not displayed in the list of results") do
-  expect(find_application_page.content.search_results_group).to have_no_content(Settings.dwp_mock.ni_number_yes.last)
+  expect(find_application_page.content.search_results_group).to have_no_text(Settings.dwp_mock.ni_number_yes.last)
 end
 
 When("my search is invalid") do

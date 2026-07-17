@@ -37,13 +37,13 @@ RSpec.describe "home/index" do
       let(:report_index?) { true }
 
       it 'is rendered' do
-        is_expected.to have_content 'Generate reports'
+        is_expected.to have_text 'Generate reports'
       end
     end
 
     context 'when user does not have permissions to generate reports' do
       it 'are not rendered' do
-        is_expected.to have_no_content 'Generate reports'
+        is_expected.to have_no_text 'Generate reports'
       end
     end
   end
@@ -53,13 +53,13 @@ RSpec.describe "home/index" do
       let(:office_index?) { true }
 
       it 'is rendered' do
-        is_expected.to have_content 'View offices'
+        is_expected.to have_text 'View offices'
       end
     end
 
     context 'when user does not have permissions to list offices' do
       it 'are not rendered' do
-        is_expected.to have_no_content 'View offices'
+        is_expected.to have_no_text 'View offices'
       end
     end
   end
@@ -108,14 +108,14 @@ RSpec.describe "home/index" do
       let(:application_index?) { true }
 
       it 'are rendered' do
-        is_expected.to have_content 'Waiting for evidence'
-        is_expected.to have_content 'Waiting for part-payment'
+        is_expected.to have_text 'Waiting for evidence'
+        is_expected.to have_text 'Waiting for part-payment'
       end
     end
     context 'when user does not have permissions to list applications' do
       it 'are not rendered' do
-        is_expected.to have_no_content 'Waiting for evidence'
-        is_expected.to have_no_content 'Waiting for part-payment'
+        is_expected.to have_no_text 'Waiting for evidence'
+        is_expected.to have_no_text 'Waiting for part-payment'
       end
     end
   end
@@ -125,7 +125,7 @@ RSpec.describe "home/index" do
       let(:application_index?) { true }
 
       it 'are rendered' do
-        is_expected.to have_content 'Completed'
+        is_expected.to have_text 'Completed'
         is_expected.to have_link 'Processed applications', href: processed_applications_path
         is_expected.to have_link 'Deleted applications', href: deleted_applications_path
       end
@@ -133,7 +133,7 @@ RSpec.describe "home/index" do
 
     context 'when user does not have permissions to list applications' do
       it 'are not rendered' do
-        is_expected.to have_no_content 'Completed'
+        is_expected.to have_no_text 'Completed'
         is_expected.to have_no_link 'Processed applications', href: processed_applications_path
         is_expected.to have_no_link 'Deleted applications', href: deleted_applications_path
       end
@@ -160,7 +160,7 @@ RSpec.describe "home/index" do
     context 'when the dwp maintenance is on' do
       let(:dwp_maintenance) { true }
 
-      it { is_expected.to have_content I18n.t('error_messages.dwp_maintenance') }
+      it { is_expected.to have_text I18n.t('error_messages.dwp_maintenance') }
     end
   end
 end

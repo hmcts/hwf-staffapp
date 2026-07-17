@@ -1,0 +1,76 @@
+// Sorting toolbar and header indicators for the 'Waiting for evidence'
+// and 'Waiting for part-payments' lists. Built from GOV.UK Design System
+// components (inline radios, select, button group, inset text).
+
+.waiting-sort-toolbar {
+  .waiting-sort-controls {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    column-gap: 20px;
+    row-gap: 10px;
+
+    // Spacing between rows comes from row-gap, so every flex item is a tight
+    // box with no bottom margin - that lets align-items: center line them up
+    // exactly on one horizontal line.
+    .govuk-form-group,
+    .govuk-button-group,
+    .govuk-radios,
+    .waiting-sort-controls__label {
+      margin-bottom: 0;
+    }
+  }
+
+  // Visible 'Primary sort: Date processed' label, sitting on the row.
+  .waiting-sort-controls__label {
+    white-space: nowrap;
+  }
+  .govuk-radios__label {
+    white-space: nowrap;
+  }
+
+  // 'Then by' select with its label sitting to the left rather than above.
+  .waiting-sort-then-by {
+    display: flex;
+    align-items: center;
+
+    .govuk-label {
+      margin-bottom: 0;
+      margin-right: 10px;
+      white-space: nowrap;
+    }
+  }
+
+  // Keep the Apply and Reset buttons centred on the same line.
+  .govuk-button-group {
+    align-items: center;
+
+    .govuk-button {
+      margin-bottom: 0;
+    }
+  }
+
+  .waiting-sort-state {
+    margin-top: 10px;
+  }
+}
+
+.waiting-list-table {
+  th a {
+    color: #0b0c0c;
+    text-decoration: none;
+
+    &:focus {
+      color: #0b0c0c;
+    }
+  }
+
+  th.sort-active a {
+    color: #1d70b8;
+  }
+
+  .waiting-sort-arrows {
+    font-size: 0.7em;
+    margin-left: 4px;
+  }
+}

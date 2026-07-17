@@ -15,7 +15,7 @@ Then("I can view the training course") do
 end
 
 When("I can view key control checks guide") do
-  expect(guide_page.content.key_control_checks['href']).to include 'sourcedoc=%7BF13EB074-F2F7-4349-BC0A-BA191503BBE9%7D'
+  expect(guide_page.content.key_control_checks['href']).to include 'key-control-check-sheets/cross-jurisdiction-kccs/'
 end
 
 When("I can view staff guidance") do
@@ -39,7 +39,7 @@ Then("I can view part payments") do
 end
 
 Then("I can view fraud awareness guide") do
-  expect(guide_page.content.fraud_awareness['href']).to include 'sourcedoc=%7B03E83158-CD55-45F0-9D99-FC7B02BF2343%7D'
+  expect(guide_page.content.fraud_awareness['href']).to include 'sourcedoc=%7BAB40BF95-B160-4B92-8A5C-337F977ED643%7D&file=updatedMay2026'
 end
 
 Then("I can view RRDS") do
@@ -47,7 +47,7 @@ Then("I can view RRDS") do
 end
 
 Then("I can view HMRC Datashare") do
-  expect(guide_page.content.hmrc_datashare['href']).to include 'sourcedoc=%7BD130FF65-E19C-4A4D-9F02-5E2FF579B229%7D'
+  expect(guide_page.content.hmrc_datashare['href']).to include 'sourcedoc=%7BB23D0CC3-7CF7-47B8-A12A-B79AAA0146FC%7D'
 end
 
 Then("I can view Staff guides link on footer") do
@@ -75,5 +75,5 @@ When("I click on the accessibility link in the footer") do
 end
 
 Then("I am on the accessibility statement page") do
-  expect(page).to have_content 'Accessibility statement for Help with Fees (staff service)'
+  expect(page).to have_text 'Accessibility statement for Help with Fees (staff service)'
 end

@@ -24,7 +24,7 @@ When("I filter by office") do
 end
 
 Then("I see all the results for that office") do
-  expect(staff_page.content.result_row[1].text).to have_content Office.last.name
+  expect(staff_page.content.result_row[1].text).to have_text Office.last.name
 end
 
 When("I filter by activity") do
@@ -44,14 +44,14 @@ end
 
 Then("I can see that the user is a reader") do
   expect(staff_page.content).to have_reader_role
-  expect(staff_page).to have_content("User updated.")
+  expect(staff_page).to have_text("User updated.")
 end
 
 And("I change the jurisdiction") do
   user = User.find(current_path.match('\d+').to_s)
   jurisdiction = user.office.jurisdictions.first
   change_user_details_page.content.wait_until_header_visible
-  expect(change_user_details_page.content.radio[6].text).to have_content jurisdiction.name
+  expect(change_user_details_page.content.radio[6].text).to have_text jurisdiction.name
   find(:element, id: "user_jurisdiction_id_#{jurisdiction.id}", visible: false).click
   change_user_details_page.content.save_changes_button.click
   expect(staff_details_page.content).to have_header
@@ -71,7 +71,7 @@ When("I click on add staff") do
 end
 
 Then("I am taken to the send invitation page") do
-  expect(page).to have_content 'Send invitation'
+  expect(page).to have_text 'Send invitation'
 end
 
 When("I click on deleted staff") do

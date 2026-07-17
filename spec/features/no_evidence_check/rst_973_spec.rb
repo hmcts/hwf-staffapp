@@ -28,8 +28,8 @@ RSpec.feature 'Application is not evidence check when an emergency app' do
       fill_income(false)
       click_button 'Complete processing'
 
-      expect(page).to have_no_content('Evidence of income needs to be checked')
-      expect(page).to have_content('✓ Eligible for help with fees')
+      expect(page).to have_no_text('Evidence of income needs to be checked')
+      expect(page).to have_text('✓ Eligible for help with fees')
     end
   end
 
@@ -51,8 +51,8 @@ RSpec.feature 'Application is not evidence check when an emergency app' do
       fill_income(false)
       click_button 'Complete processing'
 
-      expect(page).to have_no_content('Evidence of income needs to be checked')
-      expect(page).to have_content('✓ Eligible for help with fees')
+      expect(page).to have_no_text('Evidence of income needs to be checked')
+      expect(page).to have_text('✓ Eligible for help with fees')
     end
 
     context 'Duplicate NINO emergency appliation' do
@@ -82,8 +82,8 @@ RSpec.feature 'Application is not evidence check when an emergency app' do
         fill_income(false)
         click_button 'Complete processing'
 
-        expect(page).to have_no_content('Evidence of income needs to be checked')
-        expect(page).to have_content('✓ Eligible for help with fees')
+        expect(page).to have_no_text('Evidence of income needs to be checked')
+        expect(page).to have_text('✓ Eligible for help with fees')
 
       end
     end
@@ -114,8 +114,8 @@ RSpec.feature 'Application is not evidence check when an emergency app' do
         fill_income(false)
         click_button 'Complete processing'
 
-        expect(page).to have_no_content('Evidence of income needs to be checked')
-        expect(page).to have_content('✓ Eligible for help with fees')
+        expect(page).to have_no_text('Evidence of income needs to be checked')
+        expect(page).to have_text('✓ Eligible for help with fees')
 
       end
     end

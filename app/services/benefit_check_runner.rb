@@ -8,7 +8,7 @@ class BenefitCheckRunner < BaseBenefitCheckRunner
   def can_run?
     applicant.last_name.present? &&
       applicant.date_of_birth.present? &&
-      applicant.ni_number.present? &&
+      valid_if_ni_mandatory &&
       benefit_check_date.present?
   end
 
@@ -99,5 +99,13 @@ class BenefitCheckRunner < BaseBenefitCheckRunner
 
   def allow_benefit_check_call?
     can_run? && should_run? && checks_allowed?
+  end
+
+  # mandatory for LAA check
+  # not mandatory for DWP API check
+  def valid_if_ni_mandatory
+    return true if applicant.ni_number.present?
+
+    Settings.dwp_api_enabled == true
   end
 end

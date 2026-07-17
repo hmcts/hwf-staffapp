@@ -121,21 +121,18 @@
           - else
             p = link_to 'What to do if the fee is one of these', how_to_url, target: 'blank'
 
-        h2.govuk-heading-m National Insurance number
-        h3.govuk-heading-s If NI number isn't provided:
+        h2.govuk-heading-m National Insurance Number (NI) / Home Office Reference (HO)
+
+        h3.govuk-heading-s If a NI number or HO Reference isn’t provided:
         ul.govuk-list.govuk-list--bullet
-          - if show_ucd_changes?(@application.detail.calculation_scheme)
-            li check answer to question 10
-          - else
-            li check answer to question 9
-          li if 'No', continue to process without NI number
-          li if 'Yes', don't process and contact applicant by phone to ask for their NI number
-        - if show_ucd_changes?(@application.detail.calculation_scheme)
-          p = link_to 'What to do if you’re unable to obtain the NI number', new_process_application_url, target: 'blank'
-        - else
-          p = link_to 'What to do if you’re unable to obtain the NI number', how_to_url, target: 'blank'
+          li check if a valid reason for not providing an NI number or HO reference has been given. You must not process the application without a <strong>valid</strong> reason. Valid reasons include (but are not limited to): the applicant being a child, the applicant is in the process of applying for an NI or HO number and has not yet received it or the applicant is a foreign national
+          li a NI number is essential for a benefit application - you <strong>must not</strong> process the application without this and should instead return it
+          li
+            | More information can be found in the
+            = link_to " processing paper applications job card", processing_paper_applications_job_card_url, target: 'blank'
+
         h2.govuk-heading-m Home Office reference number
-        p A Home Office reference number may be provided if the applicant is subject to immigration control
+        p A Home Office reference number may be provided for an income-based application if the applicant is subject to immigration control
         p An applicant can find their Home Office reference number on any correspondence received from the Home Office.
         h2.govuk-heading-m Status
         p If the applicant is part of a couple but their case concerns their partner, eg divorce, dissolution or domestic violence, select 'Single'.

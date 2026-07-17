@@ -69,11 +69,11 @@ When("I process a part payment paper application where fee has been paid to the 
 end
 
 Then("There will be a row under the Application details section labelled Refund request Yes") do
-  expect(summary_page.content.summary_section[0].text).to have_content("Refund request Yes")
+  expect(summary_page.content.summary_section[0].text).to have_text("Refund request Yes")
 end
 
 Then("There will be a row under the Application details section labelled Refund request No") do
-  expect(summary_page.content.summary_section[0].text).to have_content("Refund request No")
+  expect(summary_page.content.summary_section[0].text).to have_text("Refund request No")
 end
 
 When("I go to the waiting for evidence application") do

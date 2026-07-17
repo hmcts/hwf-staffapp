@@ -1,6 +1,16 @@
 - content_for :page_title
   = "Application details"
 
+- if @form.errors.any?
+  div role="alert" class='govuk-!-static-margin-top-4'
+    .govuk-error-summary tabindex="-1" data-module="govuk-error-summary"
+      h2.govuk-error-summary__title =t('error_block.heading')
+      .govuk-error-summary__body
+        ul.govuk-list.govuk-error-summary__list
+          - @form.errors.each do |error|
+            li
+              = link_to error.message, online_application_error_anchor(error.attribute), class: 'error-link', data: { id: "##{error.attribute}" }
+
 = form_for @form, as: :online_application, url: online_application_path, method: :put, html: { autocomplete: 'off' } do |f|
 
   .govuk-grid-row
@@ -14,13 +24,23 @@
         p.util_mb-0 Partner's Full name
         p = @online_application.partner_full_name
 
+      - fee_field_id = fee_search_available? ? 'application_fee' : 'online_application_fee'
+
+      - if fee_search_available?
+        = render 'applications/process/details/fee_search', f: f
+
       .govuk-form-group.group-level
-        = f.label :fee, class: 'govuk-label'
+        = f.label :fee, class: 'govuk-label', for: fee_field_id
         span.govuk-error-message
-          = f.label :fee, @form.errors[:fee].join(', '), class: 'error' if @form.errors[:fee].present?
+          = f.label :fee, @form.errors[:fee].join(', '), class: 'error', for: fee_field_id if @form.errors[:fee].present?
         .field-wrapper
           span.prefix £
-          = f.text_field :fee, { value: @form.fee ? '%.2f' % @form.fee.to_f : '', class: 'govuk-input', type: 'number', step: '0.01' }
+          = f.text_field :fee, { id: fee_field_id, value: @form.fee ? '%.2f' % @form.fee.to_f : '', class: 'govuk-input', inputmode: 'decimal', pattern: '[0-9]*\\.?[0-9]*' }
+          - if fee_search_available?
+            = f.hidden_field :fee_code, id: 'application_fee_code'
+            = f.hidden_field :claim_amount, id: 'application_claim_amount'
+            = f.hidden_field :fee_version_valid_from, id: 'application_fee_version_valid_from'
+            = f.hidden_field :fee_entry_method, value: (@form.fee_entry_method.presence || 'manual'), id: 'application_fee_entry_method'
 
       .govuk-form-group.group-level
         fieldset.govuk-fieldset
@@ -128,6 +148,27 @@
           li was not processed through the money claim online (MCOL)
           li is not for a search or request for duplicate documents (unless the applicant did not receive the originals or had no fixed address when an order was made)
         p = link_to 'What to do if the fee is one of these', new_process_application_url, target: 'blank'
+
+        - if fee_search_available?
+          h2.govuk-heading-m Fee search box:
+          ul.govuk-list.govuk-list--bullet
+            li Enter the details of the fee you are looking for.
+              <b>Please note:</b> Do not enter the form name but use details of the fee instead (such as a fee code or fee name).
+              Select the correct fee code from the fees list and this will auto populate the fee amount box
+            li Remember to check that you have selected the correct fee and that the value is correct, particularly when fees have recently changed
+            li If you are looking for a fee for which you need to enter a specific value (rateable fee) you may need to select the relevant fee code from the fees list in order to be able to enter a value in the claim amount box.
+              You can then select the ‘Look up fee’ button to auto populate the fee amount box with the correct fee value
+            li
+              p
+                strong PLEASE REMEMBER:
+                br
+                | that not all fees are eligible for Help with Fees.
+                |  Please ensure you are only selecting fees which are eligible for Help with Fees- you can find details of excluded fees on the #{staff_policy_guide_link}
+              p To complete the form number the application relates to, you may need to correct the form number provided on the application
+              p
+                | To tick the appropriate box under ‘Case Detail’ if the application is for an emergency or probate case.
+                |  You will also need to enter the appropriate date for a probate case when prompted
+
         h3.govuk-heading-s Remember:
         ul.govuk-list.govuk-list--bullet
           li If County is the jurisdiction for a new issue application, you will need to select which claim type the N1 form relates to from the drop-down list provided

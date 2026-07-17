@@ -25,7 +25,7 @@ RSpec.feature 'Evidence check page displayed instead of confirmation' do
 
       click_button 'Complete processing'
 
-      expect(page).to have_content "#{application.reference} - For HMRC income checking"
+      expect(page).to have_text "#{application.reference} - For HMRC income checking"
 
       expect(evidence_check_rendered?).to be true
     end
@@ -42,7 +42,7 @@ RSpec.feature 'Evidence check page displayed instead of confirmation' do
 
       click_button 'Complete processing'
 
-      expect(page).to have_content "#{application.reference} - For HMRC income checking"
+      expect(page).to have_text "#{application.reference} - For HMRC income checking"
 
       expect(evidence_check_rendered?).to be true
     end

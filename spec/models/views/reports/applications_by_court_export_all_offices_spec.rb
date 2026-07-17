@@ -2,8 +2,8 @@
 
 require 'rails_helper'
 
-RSpec.describe Views::Reports::HmrcOcmcDataExport do
-  subject(:ocmc_export) { described_class.new(from_date, to_date, office.id, all_offices: all_offices) }
+RSpec.describe Views::Reports::ApplicationsByCourtExport do
+  subject(:export) { described_class.new(from_date, to_date, office.id, all_offices: all_offices) }
   let(:from_date) { { day: date_from.day, month: date_from.month, year: date_from.year } }
   let(:to_date) { { day: date_to.day, month: date_to.month, year: date_to.year } }
 
@@ -36,7 +36,7 @@ RSpec.describe Views::Reports::HmrcOcmcDataExport do
 
     let(:entity_codes) { ['ABC123', 'ABC456'] }
 
-    subject(:data) { ocmc_export.to_csv.split("\n") }
+    subject(:data) { export.to_csv.split("\n") }
 
     before do
       travel_to(date_from + 1.day) { application1 }
@@ -68,7 +68,7 @@ RSpec.describe Views::Reports::HmrcOcmcDataExport do
 
       it 'has headings' do
         data_row = data[0]
-        expect(data_row).to include('Office,HwF reference number,Created at,Fee,Jurisdiction,Application type')
+        expect(data_row).to include('Office,Id,Status,HwF reference number,Created at,Fee,Fee code,Claim amount,Fee population,Jurisdiction,Application type')
       end
 
       it 'uses the test office' do

@@ -12,10 +12,10 @@ RSpec.describe CCMCCEvidenceCheckRules do
   describe 'CCMCC rule_applies?' do
     it { expect(ccmcc_check_rules.rule_applies?).to be true }
 
-    context 'not ccmcc application' do
+    context 'all offices apply' do
       before { ccmcc }
       let(:application) { create(:application, office: digital, fee: 5000, amount_to_pay: 0) }
-      it { expect(ccmcc_check_rules.rule_applies?).to be false }
+      it { expect(ccmcc_check_rules.rule_applies?).to be true }
     end
 
     context 'ccbc application with blank amount_to_pay' do
@@ -30,21 +30,9 @@ RSpec.describe CCMCCEvidenceCheckRules do
       it { expect(ccmcc_check_rules.rule_applies?).to be true }
     end
 
-    context 'birkenhead application' do
-      before { birkenhead }
-      let(:application) { build(:application, office: birkenhead, fee: 5000, amount_to_pay: 0) }
-      it { expect(ccmcc_check_rules.rule_applies?).to be true }
-    end
-
-    context 'fees_office application' do
-      before { fees_office }
-      let(:application) { build(:application, office: fees_office, fee: 5000, amount_to_pay: 0) }
-      it { expect(ccmcc_check_rules.rule_applies?).to be true }
-    end
-
     context 'digital application' do
       let(:application) { build(:application, office: digital, fee: 5000, amount_to_pay: 0) }
-      it { expect(ccmcc_check_rules.rule_applies?).to be false }
+      it { expect(ccmcc_check_rules.rule_applies?).to be true }
     end
 
     context 'refund application' do

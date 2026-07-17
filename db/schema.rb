@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.1].define(version: 2025_11_20_104205) do
+ActiveRecord::Schema[8.1].define(version: 2026_05_22_120000) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
   enable_extension "pg_trgm"
@@ -71,6 +71,7 @@ ActiveRecord::Schema[8.1].define(version: 2025_11_20_104205) do
     t.string "partner_ni_number"
     t.string "title"
     t.datetime "updated_at", precision: nil, null: false
+    t.index "((((first_name)::text || ' '::text) || (last_name)::text)) gin_trgm_ops", name: "index_applicants_on_full_name_trgm", using: :gin
     t.index "lower((((first_name)::text || ' '::text) || (last_name)::text))", name: "index_applicants_on_full_name_lower"
     t.index ["application_id"], name: "index_applicants_on_application_id"
     t.index ["first_name"], name: "index_applicants_on_first_name"
@@ -217,6 +218,7 @@ ActiveRecord::Schema[8.1].define(version: 2025_11_20_104205) do
     t.integer "application_id", null: false
     t.string "calculation_scheme"
     t.string "case_number"
+    t.decimal "claim_amount"
     t.datetime "created_at", precision: nil, null: false
     t.date "date_fee_paid"
     t.date "date_of_death"
@@ -227,8 +229,11 @@ ActiveRecord::Schema[8.1].define(version: 2025_11_20_104205) do
     t.string "discretion_reason"
     t.string "emergency_reason"
     t.decimal "fee"
+    t.string "fee_code"
+    t.string "fee_entry_method"
     t.string "fee_manager_firstname"
     t.string "fee_manager_lastname"
+    t.date "fee_version_valid_from"
     t.string "form_name"
     t.integer "jurisdiction_id"
     t.boolean "probate"
@@ -248,6 +253,17 @@ ActiveRecord::Schema[8.1].define(version: 2025_11_20_104205) do
     t.string "note"
     t.datetime "updated_at", null: false
     t.index ["notable_type", "notable_id"], name: "index_dev_notes_on_notable"
+  end
+
+  create_table "dwp_api_calls", force: :cascade do |t|
+    t.bigint "benefit_check_id", null: false
+    t.datetime "created_at", null: false
+    t.jsonb "data"
+    t.string "endpoint_name"
+    t.jsonb "request_params"
+    t.integer "response_status"
+    t.datetime "updated_at", null: false
+    t.index ["benefit_check_id"], name: "index_dwp_api_calls_on_benefit_check_id"
   end
 
   create_table "dwp_warnings", id: :serial, force: :cascade do |t|
@@ -389,6 +405,7 @@ ActiveRecord::Schema[8.1].define(version: 2025_11_20_104205) do
     t.string "case_number"
     t.integer "children"
     t.string "children_age_band"
+    t.decimal "claim_amount"
     t.datetime "created_at", precision: nil, null: false
     t.date "date_fee_paid"
     t.date "date_of_birth", null: false
@@ -401,8 +418,11 @@ ActiveRecord::Schema[8.1].define(version: 2025_11_20_104205) do
     t.boolean "email_contact", null: false
     t.text "emergency_reason"
     t.decimal "fee"
+    t.string "fee_code"
+    t.string "fee_entry_method"
     t.string "fee_manager_firstname"
     t.string "fee_manager_lastname"
+    t.date "fee_version_valid_from"
     t.boolean "feedback_opt_in", null: false
     t.string "first_name", null: false
     t.string "form_name"
@@ -567,6 +587,7 @@ ActiveRecord::Schema[8.1].define(version: 2025_11_20_104205) do
   add_foreign_key "decision_overrides", "users"
   add_foreign_key "details", "applications", on_update: :cascade
   add_foreign_key "details", "jurisdictions", on_update: :cascade
+  add_foreign_key "dwp_api_calls", "benefit_checks"
   add_foreign_key "evidence_checks", "applications", on_update: :cascade
   add_foreign_key "evidence_checks", "users", column: "completed_by_id", on_update: :cascade
   add_foreign_key "feedbacks", "offices", on_update: :cascade

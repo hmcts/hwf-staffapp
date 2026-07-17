@@ -23,7 +23,7 @@ RSpec.feature 'Business entity management:' do
       before { visit edit_office_path(office) }
 
       scenario 'is shown a link to edit business entities' do
-        expect(page).to have_no_content 'Edit the business entities'
+        expect(page).to have_no_text 'Edit the business entities'
       end
     end
   end
@@ -33,7 +33,7 @@ RSpec.feature 'Business entity management:' do
       before { visit office_path(office) }
 
       scenario 'is shown a link to edit business entities' do
-        expect(page).to have_content 'Edit the business entities'
+        expect(page).to have_text 'Edit the business entities'
       end
     end
 
@@ -70,8 +70,8 @@ RSpec.feature 'Business entity management:' do
         end
 
         scenario 'the index page reflects the update' do
-          expect(page).to have_content new_description
-          expect(page).to have_content new_sop_code
+          expect(page).to have_text new_description
+          expect(page).to have_text new_sop_code
         end
 
         scenario 'original business_entity has been deactivated' do
@@ -91,8 +91,8 @@ RSpec.feature 'Business entity management:' do
         end
 
         scenario 'the index page reflects the update' do
-          expect(page).to have_content new_description
-          expect(page).to have_content new_sop_code
+          expect(page).to have_text new_description
+          expect(page).to have_text new_sop_code
         end
 
         scenario 'only 4 jurisdictions can be added now' do

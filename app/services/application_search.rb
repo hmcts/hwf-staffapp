@@ -56,8 +56,7 @@ class ApplicationSearch
   end
 
   def name_search_query
-    sql = build_name_search_sql
-    execute_search_query(sql)
+    name_search_relation
   end
 
   def name_search?(query)

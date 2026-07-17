@@ -51,14 +51,14 @@ RSpec.describe UsersController do
         end
 
         it 'has delete user link' do
-          expect(response.body).to have_content 'Remove staff member'
+          expect(response.body).to have_text 'Remove staff member'
         end
       end
 
       context 'for themselves' do
         before { get :show, params: { id: admin_user } }
         it 'does not have a delete user link' do
-          expect(response.body).to have_no_content 'Remove staff member'
+          expect(response.body).to have_no_text 'Remove staff member'
         end
       end
 

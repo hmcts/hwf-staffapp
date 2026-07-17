@@ -80,6 +80,31 @@ RSpec.describe Query::LastDwpFailedApplications do
       end
     end
 
+    context 'with several online applications (no N+1 on the linked lookup)' do
+      before do
+        3.times do |i|
+          online = create(:online_application, :benefits, user: user, reference: "ONLINEQ#{i}")
+          create(:benefit_check, dwp_result: 'Server unavailable',
+                                 error_message: 'The benefits checker is not available at the moment.',
+                                 applicationable: online, user: user)
+        end
+      end
+
+      it 'looks up all linked paper applications in a single query' do
+        reference_lookups = 0
+        counter = lambda do |*args|
+          payload = args.last
+          next if payload[:name] == 'CACHE'
+          sql = payload[:sql]
+          reference_lookups += 1 if sql.include?('FROM "applications"') && sql.include?('reference')
+        end
+
+        ActiveSupport::Notifications.subscribed(counter, 'sql.active_record') { query.find }
+
+        expect(reference_lookups).to be <= 1
+      end
+    end
+
     context 'same office' do
       let(:user2) { create(:user, office: office1) }
       subject(:query) { described_class.new(user2) }

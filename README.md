@@ -131,6 +131,27 @@ rake "reports:raw_data_extract[2021-01-01, 2022-12-31]"
 ```
 this will generate a zip file raw_data-1-1-2021-31-12-2022.csv.zip
 
+## Docker image on local
+
+To be able to pull the image locally you either have to log in via
+```az acr login --name hmctsprod --subscription DCD-CNP-PROD```
+
+or you can just remove the path from the image line ie:
+
+```
+FROM hmctsprod.azurecr.io/imported/library/ruby:4.0.5-alpine3.23
+```
+to
+```
+FROM ruby:4.0.5-alpine3.23
+```
+
+### Docker image on Jenkins/Azure
+In theory when there is a new ruby available and the local image build works
+you should be ablet to push it to with new path to ecr. Jenkins should pull the image from original and then
+store/cache it.
+
+
 ## Testing
 ### Benefit Check mock call
 I added mock benefit check call. It's not mocking the call itself; it's just using a different library To generate request/response.
@@ -194,4 +215,10 @@ if ENV['TEST_URL'] && ENV['RUN_SMOKE_TESTS'] == 'true'
 else
 ```
 
-Deployment versions trigger: 7
+### Fee codes loading / test
+- "100" → should find FEE0001
+- "250" → should find FEE0002
+- "5" or "FEE0003" → should find the percentage fee
+- "family" → should find FEE0004
+
+Deployment versions trigger: 2

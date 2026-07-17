@@ -68,6 +68,7 @@ en-GB:
     form_name: Form number
     case_number: Case number
     fee: Fee
+    fee_code: Fee code
     part_payment: Part-payment
     emergency: Reason for emergency
     other: Other
@@ -212,6 +213,7 @@ en-GB:
       technical_error: "This could be due to a system error and/or the applicant not being found from the details provided."
       no_record: "This could be due to a system error and/or the applicant not being found from the details provided."
       out_of_time: "Fees paid more than 3 months ago can’t be checked with the DWP. The applicant must provide paper evidence to show they were receiving eligible benefits on the date they paid."
+      rate_limit_error: "The benefits checker is temporarily busy. Please wait a minute and try again."
   shared:
     forms:
       approve:
@@ -239,9 +241,11 @@ en-GB:
       no_records: There are no applications waiting for evidence
       filter: Filter
       table_header:
+        jurisdiction: Jurisdiction
         reference: Reference
         applicant: Applicant
         form_name: Form name
+        case_number: Case number
         court_fee: Court fee
         processed_by: Processed by
         processed_on: Date processed
@@ -263,15 +267,36 @@ en-GB:
       no_records: There are no applications waiting for part-payment
       filter: Filter
       table_header:
+        jurisdiction: Jurisdiction
         reference: Reference
         applicant: Applicant
         form_name: Form name
+        case_number: Case number
         court_fee: Court fee
         processed_by: Processed by
         processed_on: Date processed
     result:
       'yes': The applicant has paid %{amount_to_pay} towards the fee
       'no': The applicant will need to make a new application
+  waiting_list:
+    sorting:
+      primary_label: 'Primary sort: Date processed'
+      oldest_first: Oldest first
+      newest_first: Newest first
+      then_by: Then by
+      none: None
+      apply: Apply
+      reset: Reset sorting
+      sorted_by: 'Sorted by Date processed, %{direction}'
+      then_by_sentence: ', then by %{field} (%{direction})'
+      oldest: oldest first
+      newest: newest first
+      ascending: ascending
+      descending: descending
+      fields:
+        form_name: Form name
+        case_number: Case number
+        court_fee: Court fee
   functions:
     feedback: 'Give feedback'
     staff_guide: See the guides
@@ -309,6 +334,7 @@ en-GB:
     benefit_checker:
       unavailable: 'The benefits checker is not available at the moment. Please check again later.'
       undetermined: 'The details you’ve entered are incorrect, check and try again'
+      rate_limited: 'The benefits checker is temporarily busy. Please wait a minute and try again.'
     user:
       moved_offices: "%{user} moved to %{office}, you will need to contact %{contact} there if this was done in error"
     jurisdictions:
@@ -541,6 +567,7 @@ en-GB:
         status: Status
       views/overview/details:
         fee: Fee
+        fee_code: Fee code
         jurisdiction: Jurisdiction
         date_received: Date received
         form_name: Form number
@@ -1238,6 +1265,6 @@ en-GB:
     notice: 'Raw data export in progress. You should receive an email with a download link in a few minutes. If not received, please contact technical support.'
   forms/report/fi_transactional:
     notice: 'Finance transactional export in progress. You should receive an email with a download link in a few minutes. If not please contact technical support.'
-  forms/report/ocmc:
+  forms/report/applications_by_court:
     notice: 'Applications for all offices in progress. You should receive an email with a download link in a few minutes. If not please contact technical support.'
     datashare_notice: 'Applications for all Datashare offices in progress. You should receive an email with a download link in a few minutes. If not please contact technical support.'

@@ -18,6 +18,10 @@ RSpec.describe HwfReferenceGenerator, type: :service do
       it 'is 11 characters long' do
         expect(reference.length).to eq 11
       end
+
+      it 'contains no confusable characters' do
+        expect(reference).not_to match(/[IOS0125]/)
+      end
     end
 
     # rubocop:disable RSpec/SubjectStub

@@ -114,6 +114,22 @@ RSpec.describe Views::Overview::OnlineApplicationView do
     end
   end
 
+  describe '#fee_code' do
+    before do
+      allow(online_application).to receive(:fee_code).and_return(fee_code)
+    end
+
+    context 'when set' do
+      let(:fee_code) { 'FEE0001' }
+      it { expect(online_app_view.fee_code).to eq('FEE0001') }
+    end
+
+    context 'when blank' do
+      let(:fee_code) { nil }
+      it { expect(online_app_view.fee_code).to be_nil }
+    end
+  end
+
   describe '#children' do
     before do
       allow(online_application).to receive(:children).and_return(children)

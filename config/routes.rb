@@ -4,6 +4,9 @@ Rails.application.routes.draw do
   resource :dwp_warnings, only: [:edit, :update]
 
   post 'api/submissions' => 'api/submissions#create'
+  post 'api/calculate_percentage_fee' => 'api/fee_calculator#calculate_percentage_fee'
+  post 'api/calculate_fee' => 'api/fee_calculator#calculate_fee'
+  get 'api/fee_codes' => 'api/fee_codes#index'
   get 'reports' => 'reports#index'
   get 'reports/public' => 'reports#public'
   get 'reports/finance_report' => 'reports#finance_report'
@@ -21,8 +24,10 @@ Rails.application.routes.draw do
     put 'power_bi' => 'power_bi#data_export'
     get 'raw_data' => 'raw_data#show'
     put 'raw_data' => 'raw_data#data_export'
-    get 'ocmc' => 'ocmc#show'
-    put 'ocmc' => 'ocmc#data_export'
+    get 'applications_by_court' => 'applications_by_court#show'
+    put 'applications_by_court' => 'applications_by_court#data_export'
+    # Backward-compatibility redirect for the previous '/report/ocmc' URL.
+    get 'ocmc', to: redirect('/report/applications_by_court')
     get 'hmrc' => 'hmrc#show'
     put 'hmrc' => 'hmrc#data_export'
     get 'purge_audit' => 'purge_audit#show'
@@ -38,6 +43,8 @@ Rails.application.routes.draw do
 
     get 'benefit_override/paper_evidence', to: 'benefit_overrides#paper_evidence'
     post 'benefit_override/paper_evidence_save', to: 'benefit_overrides#paper_evidence_save'
+
+    post 'benefit_check_retry', to: 'applications/process/benefits#retry'
 
     get 'income_result', to: 'applications/process#income_result', as: :income_result
     get ':type/confirmation', to: 'applications/process/confirmation#index', as: :confirmation,
@@ -73,6 +80,7 @@ Rails.application.routes.draw do
       put 'approve', to: 'online_applications#approve_save'
       get 'benefits', to: 'online_application_benefits#edit'
       put 'benefits', to: 'online_application_benefits#update'
+      post 'benefit_check_retry', to: 'online_application_benefits#retry'
     end
   end
 
@@ -117,7 +125,7 @@ Rails.application.routes.draw do
     end
   end
 
-  resources :processed_applications, only: [:index, :show, :update]
+  resources :processed_applications, only: [:index, :show, :update, :destroy]
   resources :deleted_applications, only: [:index, :show]
   resources :dwp_failed_applications, only: [:index]
 

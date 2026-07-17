@@ -20,12 +20,12 @@ RSpec.feature 'User list shows emails' do
     end
 
     scenario 'email address heading' do
-      expect(page).to have_content 'Email'
+      expect(page).to have_text 'Email'
     end
 
     scenario 'there are links to email addresses' do
       emails.each do |email|
-        expect(page).to have_content email
+        expect(page).to have_text email
       end
     end
   end

@@ -1,6 +1,6 @@
 module Views
   module Reports
-    module OcmcExportHelper
+    module ApplicationsByCourtExportHelper
 
       def data
         @data ||= build_data
@@ -37,21 +37,13 @@ module Views
         value == true || value.to_s == '1'
       end
 
+      # Office scoping is handled in the SELECT (see paper_office_filter /
+      # online_office_filter); here we only switch the sort to office name when
+      # the report spans all offices.
       def build_query
         return sql_query unless selected?(@all_offices)
 
-        sql_query.
-          sub("ORDER BY applications.created_at DESC", "ORDER BY offices.name ASC").
-          sub("WHERE applications.office_id = #{@office_id}",
-              "WHERE applications.office_id IN (#{office_ids.join(', ')})")
-      end
-
-      def office_ids
-        if selected?(@all_offices)
-          Office.pluck(:id)
-        else
-          []
-        end
+        sql_query.sub("ORDER BY applications.created_at DESC", "ORDER BY offices.name ASC")
       end
     end
   end

@@ -11,11 +11,19 @@ RSpec.describe GuideHelper do
   end
 
   describe '#key_control_checks_url' do
-    it { expect(helper.key_control_checks_url).to include('sourcedoc=%7BF13EB074-F2F7-4349-BC0A-BA191503BBE9%7D') }
+    it { expect(helper.key_control_checks_url).to include('key-control-check-sheets/cross-jurisdiction-kccs/') }
   end
 
   describe '#staff_guidance_url' do
     it { expect(helper.staff_guidance_url).to include('sourcedoc=%7BDD4BE471-9B43-43D4-9E71-0FB28A9B41EE%7D') }
+  end
+
+  describe '#old_process_application_url' do
+    it { expect(helper.old_process_application_url).to include('processing-a-help-with-fees-application.docx') }
+  end
+
+  describe '#old_evidence_checks_url' do
+    it { expect(helper.old_evidence_checks_url).to include('help-with-fees-processing-evidence-job-card.pdf') }
   end
 
   describe '#new_process_application_url' do
@@ -35,7 +43,7 @@ RSpec.describe GuideHelper do
   end
 
   describe '#fraud_awareness_url' do
-    it { expect(helper.fraud_awareness_url).to include('sourcedoc=%7B03E83158-CD55-45F0-9D99-FC7B02BF2343%7D') }
+    it { expect(helper.fraud_awareness_url).to include('sourcedoc=%7BAB40BF95-B160-4B92-8A5C-337F977ED643%7D&file=updatedMay2026') }
   end
 
   describe '#rrds_url' do
@@ -43,7 +51,7 @@ RSpec.describe GuideHelper do
   end
 
   describe '#datashare_url' do
-    it { expect(helper.datashare_url).to include('sourcedoc=%7BD130FF65-E19C-4A4D-9F02-5E2FF579B229%7D') }
+    it { expect(helper.datashare_url).to include('sourcedoc=%7BB23D0CC3-7CF7-47B8-A12A-B79AAA0146FC%7D') }
   end
 
   describe '#faq_url' do

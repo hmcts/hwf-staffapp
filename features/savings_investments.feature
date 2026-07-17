@@ -35,6 +35,7 @@ Feature: Savings and investments page
     When I click on more than £16000
     Then My application gets no remission
 
+  @javascript
   Scenario: I press Next without selecting any radio button
     Given I am on the savings and investments part of the application
     When I click next without selecting a savings and investments option

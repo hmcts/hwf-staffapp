@@ -1,5 +1,5 @@
 module ReportHelper
-  def ocmc_courts
+  def applications_by_court_offices
     Office.sorted.non_digital
   end
 

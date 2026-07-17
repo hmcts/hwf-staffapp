@@ -22,8 +22,8 @@ RSpec.feature 'When part-payment applications are returned' do
 
     scenario 'shows the applications that are waiting for part-payment' do
       within '.waiting-for-part_payment' do
-        expect(page).to have_content(application1.reference)
-        expect(page).to have_content(application2.reference)
+        expect(page).to have_text(application1.reference)
+        expect(page).to have_text(application2.reference)
       end
     end
 
@@ -31,18 +31,18 @@ RSpec.feature 'When part-payment applications are returned' do
       before { click_link application1.reference }
 
       scenario 'shows the application data' do
-        expect(page).to have_content 'Process part-payment'
-        expect(page).to have_content application1.applicant.full_name
+        expect(page).to have_text 'Process part-payment'
+        expect(page).to have_text application1.applicant.full_name
         expect(page).to have_link 'Start now'
         click_button 'Return application', visible: false
-        expect(page).to have_content 'Processing complete'
+        expect(page).to have_text 'Processing complete'
         expect(application1.reload.state).to eq 'processed'
         expect(page).to have_link 'Back to start'
         click_link 'Back to start'
         expect(page).to have_button 'Start now'
         click_link 'Waiting for part-payment'
         within '.waiting-for-part_payment' do
-          expect(page).to have_no_content(application1.reference)
+          expect(page).to have_no_text(application1.reference)
         end
       end
     end

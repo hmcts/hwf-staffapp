@@ -26,11 +26,11 @@ RSpec.feature 'Delete processed applications' do
       fill_in 'application_deleted_reason', with: 'Reason', visible: false
       click_button 'Delete application', visible: false
 
-      expect(page).to have_content('Processed applications')
-      expect(page).to have_content('The application has been deleted')
+      expect(page).to have_text('Processed applications')
+      expect(page).to have_text('The application has been deleted')
       within 'table.processed-applications tbody' do
-        expect(page).to have_no_content(application1.applicant.full_name)
-        expect(page).to have_content(application2.applicant.full_name)
+        expect(page).to have_no_text(application1.applicant.full_name)
+        expect(page).to have_text(application2.applicant.full_name)
       end
     end
 
@@ -38,10 +38,10 @@ RSpec.feature 'Delete processed applications' do
       select text: 'Other error made by office processing application', from: 'application_deleted_reasons_list'
       click_button 'Delete application', visible: false
 
-      expect(page).to have_content('Processed application')
-      expect(page).to have_content("Full name#{application1.applicant.full_name}")
+      expect(page).to have_text('Processed application')
+      expect(page).to have_text("Full name#{application1.applicant.full_name}")
       within '.delete-form' do
-        expect(page).to have_content('Enter the description')
+        expect(page).to have_text('Enter the description')
       end
     end
   end

@@ -4,53 +4,99 @@
 h1.govuk-heading-xl =t("#{type}.dashboard.heading")
 
 = form_for :filter_applications, method: :get do |f|
-
   .govuk-grid-row
     .govuk-grid-column-one-third
-      details.govuk-details
-        summary.govuk-details__summary
-          span.govuk-details__summary-text
-            = 'Filter'
-        .govuk-details__text class='govuk-!-padding-bottom-1'
-          .govuk-form-group class='govuk-!-margin-bottom-3'
-            = f.collection_select :order_choice, %w[Descending Ascending], :to_s, :to_s, { class: 'govuk-select', selected: selected_order }
-          = 'Selected Filters'
-          .govuk-form-group class='govuk-!-margin-top-3'
-            .govuk-form-group class='govuk-!-margin-bottom-0'
-              = f.label :jurisdiction_id, class: 'govuk-label'
-              = f.collection_select :jurisdiction_id, Jurisdiction.all, :id, :name, { class: 'govuk-select', include_blank: 'All', selected: selected_jurisdiction }
-              fieldset.govuk-fieldset
-                .govuk-radios class='govuk-!-margin-bottom-3 govuk-!-margin-top-3'
-                  = f.label :application_details, class: 'govuk-label'
-                    .govuk-radios__item
-                      = f.radio_button :application_details, 'form_name', { class: 'govuk-radios__input' }
-                      = f.label t("#{type}.dashboard.table_header.form_name"), class: 'govuk-label govuk-radios__label', for: 'filter_applications_form_name_form_name'
-                    .govuk-radios__item
-                      = f.radio_button :application_details, 'court_fee', { class: 'govuk-radios__input' }
-                      = f.label t("#{type}.dashboard.table_header.court_fee"), class: 'govuk-label govuk-radios__label', for: 'filter_applications_court_fee_court_fee'
-              = f.submit t("#{type}.dashboard.filter"), class: 'govuk-button govuk-!-margin-top-3 govuk-!-margin-bottom-0'
+      .govuk-form-group
+        = f.label :jurisdiction_id, class: 'govuk-label'
+        = f.collection_select :jurisdiction_id, Jurisdiction.all, :id, :name, { include_blank: 'All', selected: selected_jurisdiction }, class: 'govuk-select'
+        = f.hidden_field :order_choice, value: current_order_choice
+        - if current_sort_by
+          = f.hidden_field :sort_by, value: current_sort_by
+          = f.hidden_field :sort_to, value: current_sort_to
+        = f.submit t("#{type}.dashboard.filter"), class: 'govuk-button govuk-!-margin-top-1'
 
+.govuk-grid-row.waiting-sort-toolbar
+  .govuk-grid-column-full
+    = form_tag request.path, method: :get do
+      = hidden_field_tag 'filter_applications[jurisdiction_id]', selected_jurisdiction
+      = hidden_field_tag 'filter_applications[sort_to]', current_sort_to
+      p class="govuk-body govuk-!-font-weight-bold waiting-sort-controls__label"
+        = t('waiting_list.sorting.primary_label')
+      .waiting-sort-controls
+        .govuk-form-group
+          fieldset.govuk-fieldset
+            legend.govuk-fieldset__legend.govuk-visually-hidden
+              = t('waiting_list.sorting.primary_label')
+            .govuk-radios.govuk-radios--inline.govuk-radios--small data-module="govuk-radios"
+              .govuk-radios__item
+                = radio_button_tag 'filter_applications[order_choice]', 'Descending', !oldest_first?, class: 'govuk-radios__input', id: 'order_choice_descending'
+                label.govuk-label.govuk-radios__label for="order_choice_descending"
+                  = t('waiting_list.sorting.newest_first')
+              .govuk-radios__item
+                = radio_button_tag 'filter_applications[order_choice]', 'Ascending', oldest_first?, class: 'govuk-radios__input', id: 'order_choice_ascending'
+                label.govuk-label.govuk-radios__label for="order_choice_ascending"
+                  = t('waiting_list.sorting.oldest_first')
+        .govuk-form-group.waiting-sort-then-by
+          label.govuk-label for="sort_by"
+            = t('waiting_list.sorting.then_by')
+          = select_tag 'filter_applications[sort_by]', options_for_select(secondary_sort_options, current_sort_by), include_blank: t('waiting_list.sorting.none'), id: 'sort_by', class: 'govuk-select'
+        .govuk-button-group
+          = submit_tag t('waiting_list.sorting.apply'), class: 'govuk-button', name: nil
+          = link_to t('waiting_list.sorting.reset'), reset_sort_path, class: 'govuk-button govuk-button--secondary', role: 'button'
 
+  .govuk-grid-column-full
+    .govuk-inset-text.waiting-sort-state = sort_state_sentence
 
 - if list.present?
-  table *{class: "govuk-table waiting-for-#{type}"}
+  table *{class: "govuk-table waiting-list-table waiting-for-#{type}"}
     caption.visuallyhidden.govuk-table__caption =t("#{type}.dashboard.caption")
     thead.govuk-table__head
       tr.govuk-table__row
+        th.govuk-table__header =t("#{type}.dashboard.table_header.jurisdiction")
         th.govuk-table__header =t("#{type}.dashboard.table_header.reference")
         th.govuk-table__header =t("#{type}.dashboard.table_header.applicant")
-        th.govuk-table__header =t("#{type}.dashboard.table_header.form_name")
-        th.govuk-table__header =t("#{type}.dashboard.table_header.court_fee")
+        th.govuk-table__header class=secondary_header_class('form_name') aria-sort=secondary_aria_sort('form_name')
+          = link_to secondary_sort_path('form_name')
+            = t("#{type}.dashboard.table_header.form_name")
+            span.waiting-sort-arrows< = secondary_sort_indicator('form_name')
+            - if current_sort_by == 'form_name'
+              sup 2
+        th.govuk-table__header class=secondary_header_class('case_number') aria-sort=secondary_aria_sort('case_number')
+          = link_to secondary_sort_path('case_number')
+            = t("#{type}.dashboard.table_header.case_number")
+            span.waiting-sort-arrows< = secondary_sort_indicator('case_number')
+            - if current_sort_by == 'case_number'
+              sup 2
+        th.govuk-table__header class=secondary_header_class('court_fee') aria-sort=secondary_aria_sort('court_fee')
+          = link_to secondary_sort_path('court_fee')
+            = t("#{type}.dashboard.table_header.court_fee")
+            span.waiting-sort-arrows< = secondary_sort_indicator('court_fee')
+            - if current_sort_by == 'court_fee'
+              sup 2
         th.govuk-table__header =t("#{type}.dashboard.table_header.processed_by")
-        th.govuk-table__header =t("#{type}.dashboard.table_header.processed_on")
+        th.govuk-table__header class=primary_header_class aria-sort=primary_aria_sort
+          = link_to primary_toggle_path
+            = t("#{type}.dashboard.table_header.processed_on")
+            span.waiting-sort-arrows< = primary_sort_indicator
+            - if current_sort_by
+              sup 1
     tbody.govuk-table__body
       - list.each do |record|
         tr.govuk-table__row
+          td.govuk-table__cell =record.jurisdiction
           td.govuk-table__cell =link_to(record.reference, path_for_application_based_on_state(record.application))
           td.govuk-table__cell =record.applicant
           td.govuk-table__cell =record.form_name
+          td.govuk-table__cell =record.case_number
           td.govuk-table__cell =record.fee
           td.govuk-table__cell =record.processed_by
           td.govuk-table__cell =record.processed_on
+
+  .govuk-grid-row
+    .govuk-grid-column-full
+      .pagination
+        p.govuk-body Page #{page} of #{total_pages}
+    .govuk-grid-column-full
+      = will_paginate @paginate, container: true
 - else
   p =t("#{type}.dashboard.no_records")

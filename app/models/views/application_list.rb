@@ -37,6 +37,14 @@ module Views
       @application.detail.form_name
     end
 
+    def case_number
+      @application.detail.case_number
+    end
+
+    def jurisdiction
+      @application.detail.jurisdiction&.name
+    end
+
     def fee
       number_to_currency(@application.detail.fee, unit: '£', precision: 2)
     end

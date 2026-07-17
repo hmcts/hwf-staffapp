@@ -146,4 +146,107 @@ RSpec.describe BenefitCheck do
     end
 
   end
+
+  describe '.dwp_outage_failure?' do
+    subject { described_class.dwp_outage_failure?(dwp_result, error_message) }
+
+    let(:error_message) { nil }
+
+    context 'with a valid Yes result' do
+      let(:dwp_result) { 'Yes' }
+
+      it { is_expected.to be false }
+    end
+
+    context 'with a valid No result' do
+      let(:dwp_result) { 'No' }
+
+      it { is_expected.to be false }
+    end
+
+    context 'with a valid result in unexpected casing or whitespace' do
+      let(:dwp_result) { 'no ' }
+
+      it { is_expected.to be false }
+    end
+
+    context 'with a BadRequest caused by invalid applicant data' do
+      let(:dwp_result) { 'BadRequest' }
+      let(:error_message) { 'surname is invalid' }
+
+      it { is_expected.to be false }
+    end
+
+    context 'with a BadRequest and no explanation' do
+      let(:dwp_result) { 'BadRequest' }
+      let(:error_message) { nil }
+
+      it { is_expected.to be true }
+    end
+
+    context 'with a BadRequest service-unavailable message' do
+      let(:dwp_result) { 'BadRequest' }
+      let(:error_message) { 'LSCBC998: Service unavailable.' }
+
+      it { is_expected.to be true }
+    end
+
+    context 'with an Undetermined applicant-data problem' do
+      let(:dwp_result) { 'Undetermined' }
+      let(:error_message) { I18n.t('error_messages.benefit_checker.undetermined') }
+
+      it { is_expected.to be false }
+    end
+
+    context 'with an Undetermined returned by DWP (no message)' do
+      let(:dwp_result) { 'Undetermined' }
+      let(:error_message) { nil }
+
+      it { is_expected.to be false }
+    end
+
+    context 'with an Undetermined and an unexpected message' do
+      let(:dwp_result) { 'Undetermined' }
+      let(:error_message) { 'something else broke' }
+
+      it { is_expected.to be false }
+    end
+
+    context 'with a server-side outage error' do
+      ['500 Internal Server Error', '502 Bad Gateway', 'Connection reset by peer',
+       'Timed out reading data from server', 'Net::ReadTimeout with #<TCPSocket:(closed)>',
+       'LSCBC959: Service unavailable', 'Server broke connection', 'lalala'].each do |message|
+        context "when the error is '#{message}'" do
+          let(:dwp_result) { 'Unspecified error' }
+          let(:error_message) { message }
+
+          it { is_expected.to be true }
+        end
+      end
+    end
+
+    context 'with a missing result' do
+      let(:dwp_result) { nil }
+
+      it { is_expected.to be true }
+    end
+
+    context 'with a blank result' do
+      let(:dwp_result) { '' }
+
+      it { is_expected.to be true }
+    end
+  end
+
+  describe '#dwp_outage_failure?' do
+    it 'delegates to the class method' do
+      check = build(:benefit_check, dwp_result: 'Unspecified error', error_message: '502 Bad Gateway')
+      expect(check.dwp_outage_failure?).to be true
+    end
+
+    it 'is false for a valid result' do
+      check = build(:benefit_check, dwp_result: 'No', error_message: nil)
+      expect(check.dwp_outage_failure?).to be false
+    end
+  end
 end

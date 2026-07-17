@@ -27,6 +27,13 @@ class ProcessedApplicationsController < ApplicationController
     save_and_respond_on_update
   end
 
+  def destroy
+    authorize application
+    application.really_destroy!
+    flash[:notice] = I18n.t('processed_applications.notice.deleted')
+    redirect_to root_path
+  end
+
   private
 
   def application

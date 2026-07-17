@@ -32,11 +32,11 @@ When("the application is completed") do
 end
 
 Then("I should see a row '16 and over' under the date of birth with Yes value") do
-  expect(summary_page.content.summary_section[0].list_row[2].text).to have_content 'Applicant over 16 Yes Change Applicant over 16'
+  expect(summary_page.content.summary_section[0].list_row[2].text).to have_text 'Applicant over 16 Yes Change Applicant over 16'
 end
 
 Then("I should see a row '16 and over' under the date of birth with No value") do
-  expect(summary_page.content.summary_section[0].list_row[2].text).to have_content 'Applicant over 16 No Change Applicant over 16'
+  expect(summary_page.content.summary_section[0].list_row[2].text).to have_text 'Applicant over 16 No Change Applicant over 16'
 end
 
 Then("the application will skip the evidence check") do
@@ -53,7 +53,7 @@ end
 # rubocop:disable Metrics/AbcSize
 def complete_application
   expect(application_details_page.content).to have_header
-  application_details_page.submit_fee_6000
+  application_details_page.submit_fee_600
   expect(savings_investments_page.content).to have_header
   savings_investments_page.submit_less_than
   expect(benefits_page.content).to have_header

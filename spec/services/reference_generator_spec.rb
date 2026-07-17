@@ -53,6 +53,21 @@ RSpec.describe ReferenceGenerator, type: :service do
         end
       end
 
+      context 'when there is an existing reference number in wrong format' do
+        let(:existing_application1) { create(:application, :processed_state, reference: 'PA16-000018') }
+        let(:existing_application2) { create(:application, :processed_state, reference: 'PA16-NLJDJZ') }
+
+        before do
+          existing_application2
+          existing_application1
+          application
+        end
+
+        it 'returns hash with the reference next in sequence' do
+          expect(attributes[:reference]).to eql('PA16-000019')
+        end
+      end
+
       context 'when there are two business entities for the same jurisdiction' do
         before do
           create(:business_entity, office: office, jurisdiction: jurisdiction, be_code: 'CB975', sop_code: '123456789')

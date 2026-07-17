@@ -9,7 +9,7 @@ module GuideHelper
   end
 
   def key_control_checks_url
-    'https://justiceuk.sharepoint.com/:w:/r/sites/knowledgecentral/_layouts/15/Doc.aspx?sourcedoc=%7BF13EB074-F2F7-4349-BC0A-BA191503BBE9%7D&file=Key%20Control%20Checks%20for%20Managers_word%20version.docx&action=default&mobileredirect=true'
+    'https://intranet.justice.gov.uk/my-work/soc-standard-operating-controls-self-assessment/key-control-check-sheets/cross-jurisdiction-kccs/'
   end
 
   def staff_guidance_url
@@ -41,7 +41,7 @@ module GuideHelper
   end
 
   def fraud_awareness_url
-    'https://justiceuk.sharepoint.com/:w:/r/sites/knowledgecentral/_layouts/15/Doc.aspx?sourcedoc=%7B03E83158-CD55-45F0-9D99-FC7B02BF2343%7D&file=Fraud-awareness-word%20version.docx&action=default&mobileredirect=true'
+    'https://justiceuk.sharepoint.com/:w:/r/sites/knowledgecentral/_layouts/15/doc2.aspx?sourcedoc=%7BAB40BF95-B160-4B92-8A5C-337F977ED643%7D&file=updatedMay2026_Fraud-awareness-word%20version_Alessandra%20Valle%20Met.docx&action=default&mobileredirect=true'
   end
 
   def rrds_url
@@ -49,7 +49,7 @@ module GuideHelper
   end
 
   def datashare_url
-    'https://justiceuk.sharepoint.com/:w:/r/sites/knowledgecentral/_layouts/15/Doc.aspx?sourcedoc=%7BD130FF65-E19C-4A4D-9F02-5E2FF579B229%7D&file=HMRC-datashare-step-by-step-user-guide.docx&action=default&mobileredirect=true'
+    'https://justiceuk.sharepoint.com/:w:/r/sites/knowledgecentral/_layouts/15/Doc.aspx?sourcedoc=%7BB23D0CC3-7CF7-47B8-A12A-B79AAA0146FC%7D&file=updated_23March2026_HMRC-datashare-step-by-st_Loren%20Barrow.docx'
   end
 
   def faq_url
@@ -57,5 +57,9 @@ module GuideHelper
       '?id=%2Fsites%2Fknowledgecentral%2FShared%20Documents%2FCross%2DJurisdiction%2FHelp%20with' \
       '%20Fees%2FHWF%5FFAQ%20%5FOriginal%5FVersion1%2E0%5F28%2E10%2E2025%2Epdf' \
       '&parent=%2Fsites%2Fknowledgecentral%2FShared%20Documents%2FCross%2DJurisdiction%2FHelp%20with%20Fees'
+  end
+
+  def processing_paper_applications_job_card_url
+    'https://justiceuk.sharepoint.com/:w:/r/sites/knowledgecentral/_layouts/15/Doc.aspx?sourcedoc=%7BB62AF5DB-DF50-4415-A261-A4598E61B298%7D&file=Process%20a%20paper%20HWF%20application%20-%20Jobcard_word%20version.docx&action=default&mobileredirect=true'
   end
 end

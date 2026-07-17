@@ -2,23 +2,22 @@ source 'https://rubygems.org'
 
 git_source(:github) { |repo| "https://github.com/#{repo}.git" }
 
-ruby '4.0.1'
+ruby '4.0.5'
 
 gem 'application_insights', '~> 0.5.6'
 gem 'csv'
 gem 'dotenv-rails', groups: [:development, :test] # this has to be here because of load order
 
-gem 'rails', '~> 8.1', '>= 8.1.2'
+gem 'rails', '~> 8.1', '>= 8.1.3'
 gem 'redis'
 
 # profiling in Sentry
 gem 'stackprof'
-gem 'sentry-rails', '~> 6.2'
-# Use postgresql as the database for Active Record
-gem 'i18n', '>= 1.10'
-gem 'parser', '>= 3.1.2.0'
-gem 'pg', '~> 1.2'
-gem 'rack', '~> 3.2', '>= 3.2.3'
+gem 'sentry-rails'
+gem 'i18n'
+gem 'parser'
+gem 'pg'
+gem 'rack'
 
 gem 'rails-i18n'
 
@@ -27,13 +26,17 @@ gem 'azure_env_secrets', github: 'hmcts/azure_env_secrets', tag: 'v1.0.1'
 gem 'azure-blob', '~> 0.8.0'
 gem 'hwf_hmrc_api', github: 'hmcts/hwf_hmrc_api', tag: 'v0.3.2'
 
+# DWP API
+# gem 'hwf-dwp-api', path: '/Users/petrzaparka/projects/moj/hwf/hwf-dwp-api/hwf-dwp-api-gem'
+gem 'hwf-dwp-api', github: 'hmcts/hwf-dwp-api', tag: '0.3.4'
+
 # configuration
 gem 'config'
 # speed up start
 gem 'bootsnap', require: false
 
 # authentication
-gem 'devise', '>= 4.9.3'
+gem 'devise'
 gem 'devise_invitable', '>= 2.0.9'
 gem 'devise-security', '~> 0.18.0'
 
@@ -58,7 +61,7 @@ gem 'sdoc', '>= 2', group: :doc
 gem 'logstasher', '~> 3.0'
 gem 'slim-rails'
 
-gem 'puma', '~> 7.0', '>= 7.0.1'
+gem 'puma'
 
 gem 'will_paginate'
 
@@ -79,6 +82,7 @@ gem 'groupdate'
 gem 'nokogiri'
 gem 'pg_search'
 gem 'faraday', '~> 2.14'
+gem 'faraday-retry', '~> 2.2'
 gem 'rubyzip', require: 'zip'
 
 # To pass vulnerability in 3.3.5
@@ -87,6 +91,7 @@ gem 'uri', '>= 1.0.3'
 gem 'cgi', '~> 0.5.1'
 # GovUK Notify
 gem 'govuk_notify_rails'
+gem "image_processing"
 
 group :development, :test do
   gem 'mutex_m'
@@ -96,6 +101,7 @@ group :development, :test do
   gem 'byebug'
   gem 'climate_control'
   gem 'factory_bot_rails'
+  gem 'faker'
   gem 'listen'
   gem 'parallel_tests'
   gem 'pry-rails'
@@ -113,14 +119,12 @@ end
 
 group :test do
   gem 'apparition', github: 'twalpole/apparition', ref: 'ca86be4d54af835d531dbcd2b86e7b2c77f85f34'
-  gem 'cuprite'
   gem 'brakeman'
   gem 'capybara'
   gem 'capybara-screenshot'
   gem 'cucumber', require: false
   gem 'cucumber-rails', require: false
   gem 'database_cleaner-active_record'
-  gem 'faker'
   gem 'launchy'
   gem 'mock_redis'
   gem 'rails-controller-testing'
@@ -131,5 +135,3 @@ group :test do
   gem 'webmock'
   gem 'selenium-webdriver', '~> 4.14'
 end
-
-gem "image_processing", "~> 1.14"

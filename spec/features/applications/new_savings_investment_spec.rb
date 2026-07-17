@@ -25,7 +25,7 @@ RSpec.feature 'savings and investments partner over 66 checkbox' do
         let(:application) { create(:single_applicant_under_66, office: user.office, jurisdiction: user.jurisdiction, saving: create(:saving_blank)) }
 
         scenario 'the amount field is displayed' do
-          expect(page).to have_content('How much do they have in savings and investments?')
+          expect(page).to have_text('How much do they have in savings and investments?')
         end
       end
 
@@ -33,7 +33,7 @@ RSpec.feature 'savings and investments partner over 66 checkbox' do
         let(:application) { create(:single_applicant_over_66, office: user.office, jurisdiction: user.jurisdiction, saving: create(:saving_blank)) }
 
         scenario 'the max threshold is displayed' do
-          expect(page).to have_content('In question 8, how much do they have?')
+          expect(page).to have_text('In question 8, how much do they have?')
         end
       end
 
@@ -41,14 +41,14 @@ RSpec.feature 'savings and investments partner over 66 checkbox' do
         let(:application) { create(:married_applicant_under_66, office: user.office, jurisdiction: user.jurisdiction, saving: create(:saving_blank)) }
 
         scenario 'the partners age question is displayed' do
-          expect(page).to have_content("Is the applicant or partner 66 years or over?")
+          expect(page).to have_text("Is the applicant or partner 66 years or over?")
         end
 
         context 'when the partner is under 66' do
           before { choose :application_over_66_false }
 
           scenario 'the amount field is displayed' do
-            expect(page).to have_content('How much do they have in savings and investments?')
+            expect(page).to have_text('How much do they have in savings and investments?')
           end
         end
 
@@ -56,7 +56,7 @@ RSpec.feature 'savings and investments partner over 66 checkbox' do
           before { choose :application_over_66_true }
 
           scenario 'the max threshold is displayed' do
-            expect(page).to have_content('In question 8, how much do they have?')
+            expect(page).to have_text('In question 8, how much do they have?')
           end
         end
       end
@@ -65,7 +65,7 @@ RSpec.feature 'savings and investments partner over 66 checkbox' do
         let(:application) { create(:married_applicant_over_66, office: user.office, jurisdiction: user.jurisdiction, saving: create(:saving_blank)) }
 
         scenario 'the max threshold is displayed' do
-          expect(page).to have_content('In question 8, how much do they have?')
+          expect(page).to have_text('In question 8, how much do they have?')
         end
       end
     end

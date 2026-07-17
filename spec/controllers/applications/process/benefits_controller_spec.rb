@@ -158,6 +158,49 @@ RSpec.describe Applications::Process::BenefitsController do
             expect(response).to redirect_to(application_dependents_path(application))
           end
         end
+
+        context 'when the application has a stale benefit_override' do
+          let(:benefit_override) { instance_double(BenefitOverride, destroy: true) }
+
+          before do
+            allow(application).to receive(:benefit_override).and_return(benefit_override)
+            post :create, params: { application_id: application.id, application: expected_params }
+          end
+
+          it 'destroys the stale benefit_override' do
+            expect(benefit_override).to have_received(:destroy)
+          end
+
+          it 'redirects to the dependents page' do
+            expect(response).to redirect_to(application_dependents_path(application))
+          end
+        end
+      end
+
+      context 'when DWP is down and the applicant says they are not on benefits' do
+        let(:user_says_on_benefits) { false }
+        let(:dwp_warning_check_state) { 'offline' }
+
+        it 'does not run the benefit check' do
+          expect(benefit_check_runner).not_to have_received(:run)
+        end
+
+        it 'redirects to the dependents page' do
+          expect(response).to redirect_to(application_dependents_path(application))
+        end
+
+        context 'when the application has a stale benefit_override' do
+          let(:benefit_override) { instance_double(BenefitOverride, destroy: true) }
+
+          before do
+            allow(application).to receive(:benefit_override).and_return(benefit_override)
+            post :create, params: { application_id: application.id, application: expected_params }
+          end
+
+          it 'destroys the stale benefit_override' do
+            expect(benefit_override).to have_received(:destroy)
+          end
+        end
       end
     end
 
@@ -170,6 +213,40 @@ RSpec.describe Applications::Process::BenefitsController do
 
       it 'assigns the benefits form' do
         expect(assigns(:form)).to eql(benefit_form)
+      end
+    end
+  end
+
+  describe 'POST #retry' do
+    let(:benefit_check_runner) { instance_double(BenefitCheckRunner, run: nil) }
+
+    before do
+      allow(BenefitCheckRunner).to receive(:new).with(application).and_return(benefit_check_runner)
+      allow(Settings).to receive(:dwp_retry_button_enabled).and_return(flag_enabled)
+      post :retry, params: { application_id: application.id }
+    end
+
+    context 'when the retry flag is enabled' do
+      let(:flag_enabled) { true }
+
+      it 'runs the benefit check' do
+        expect(benefit_check_runner).to have_received(:run)
+      end
+
+      it 'redirects to the benefit override paper evidence page' do
+        expect(response).to redirect_to(application_benefit_override_paper_evidence_path(application))
+      end
+    end
+
+    context 'when the retry flag is disabled' do
+      let(:flag_enabled) { false }
+
+      it 'does not run the benefit check' do
+        expect(benefit_check_runner).not_to have_received(:run)
+      end
+
+      it 'returns 403 forbidden' do
+        expect(response).to have_http_status(:forbidden)
       end
     end
   end

@@ -27,9 +27,9 @@ RSpec.feature 'Applications awaiting evidence are displayed on dashboard' do
     visit evidence_checks_path
 
     within '.waiting-for-evidence' do
-      expect(page).to have_content(application1.reference)
-      expect(page).to have_content(application2.reference)
-      expect(page).to have_no_content(other_application.reference)
+      expect(page).to have_text(application1.reference)
+      expect(page).to have_text(application2.reference)
+      expect(page).to have_no_text(other_application.reference)
     end
   end
 
@@ -37,7 +37,27 @@ RSpec.feature 'Applications awaiting evidence are displayed on dashboard' do
     visit evidence_checks_path
 
     within '.waiting-for-evidence' do
-      expect(page).to have_content(application3.reference)
+      expect(page).to have_text(application3.reference)
+    end
+  end
+
+  scenario 'jurisdiction is the first column and case number follows form name' do
+    visit evidence_checks_path
+
+    within '.waiting-for-evidence thead' do
+      # strip the trailing sort arrows/priority indicators so only the label remains
+      headers = page.all('th').map { |th| th.text.sub(/[\s▲▼0-9]*\z/, '') }
+      expect(headers).to eq(['Jurisdiction', 'Reference', 'Applicant', 'Form name',
+                             'Case number', 'Court fee', 'Processed by', 'Date processed'])
+    end
+  end
+
+  scenario 'jurisdiction name and case number are shown for each application' do
+    visit evidence_checks_path
+
+    within '.waiting-for-evidence' do
+      expect(page).to have_text(application1.detail.jurisdiction.name)
+      expect(page).to have_text(application1.detail.case_number)
     end
   end
 end

@@ -11,8 +11,8 @@ RSpec.feature 'Skip evidence check for 15 and under' do
   before do
     dwp_api_response ''
     login_as user
-    create(:application_full_remission_ev)
-    create_list(:application_part_remission, 9)
+    create(:application_full_remission_ev, office: user.office)
+    create_list(:application_part_remission, 9, office: user.office)
   end
 
   scenario "If the applicant is under 15, 'Applicant over 16' is displayed on the Summary page" do
@@ -24,9 +24,9 @@ RSpec.feature 'Skip evidence check for 15 and under' do
     fill_benefits(false)
     fill_income(false)
 
-    expect(page).to have_content('Applicant over 16No')
+    expect(page).to have_text('Applicant over 16No')
     click_button 'Complete processing'
-    expect(page).to have_content('✓ Eligible for help with fees')
+    expect(page).to have_text('✓ Eligible for help with fees')
   end
 
   scenario "If the applicant is under 16 and then over" do
@@ -38,7 +38,7 @@ RSpec.feature 'Skip evidence check for 15 and under' do
     fill_benefits(false)
     fill_income(false)
 
-    expect(page).to have_content('Applicant over 16No')
+    expect(page).to have_text('Applicant over 16No')
     click_link "ChangeDate of birth"
 
     fill_personal_details
@@ -47,11 +47,11 @@ RSpec.feature 'Skip evidence check for 15 and under' do
     fill_benefits(false)
     fill_income(false)
 
-    expect(page).to have_content('Applicant over 16Yes')
+    expect(page).to have_text('Applicant over 16Yes')
     click_button 'Complete processing'
 
-    expect(page).to have_content('For HMRC income checking')
-    expect(page).to have_no_content('✓ Eligible for help with fees')
+    expect(page).to have_text('For HMRC income checking')
+    expect(page).to have_no_text('✓ Eligible for help with fees')
   end
 
   scenario "If the applicant is over 16, 'Applicant over 16' is displayed on the Summary page" do
@@ -63,10 +63,10 @@ RSpec.feature 'Skip evidence check for 15 and under' do
     fill_benefits(false)
     fill_income(false)
 
-    expect(page).to have_content('Applicant over 16Yes')
+    expect(page).to have_text('Applicant over 16Yes')
     click_button 'Complete processing'
 
-    expect(page).to have_content('For HMRC income checking')
-    expect(page).to have_no_content('✓ Eligible for help with fees')
+    expect(page).to have_text('For HMRC income checking')
+    expect(page).to have_no_text('✓ Eligible for help with fees')
   end
 end

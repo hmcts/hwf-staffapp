@@ -13,8 +13,8 @@ RSpec.feature 'Evidence check' do
   before do
     login_as user
     dwp_api_response ''
-    create(:application_full_remission_ev)
-    create_list(:application_part_remission, 9)
+    create(:application_full_remission_ev, office: office)
+    create_list(:application_part_remission, 9, office: office)
   end
 
   scenario 'Processing benefit based application' do
@@ -96,8 +96,8 @@ RSpec.feature 'Evidence check' do
 
   context 'Processing refund based application' do
     before {
-      create(:application_full_remission_ev, :refund)
-      create(:application, :refund, :income_type, benefits: false, outcome: 'part')
+      create(:application_full_remission_ev, :refund, office: office)
+      create(:application, :refund, :income_type, benefits: false, outcome: 'part', office: office)
     }
 
     scenario 'evidence check ever 2nd application' do
