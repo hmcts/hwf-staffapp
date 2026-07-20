@@ -2,7 +2,7 @@
 
 properties([
     // H allow predefined but random minute see https://en.wikipedia.org/wiki/Cron#Non-standard_characters
-    pipelineTriggers([cron('10 16 * * 1-5')])
+    pipelineTriggers([cron('0 7 * * 1-5')])
 ])
 
 @Library("Infrastructure")
@@ -55,7 +55,7 @@ withNightlyPipeline(type, product, component) {
     env.SENTRY_SSL_VERIFICATION=''
     env.NEW_LEGISLATION_ACTIVE_DATE='27-10-2023'
 
-    enableSlackNotifications('#pet-devops')
+    enableSlackNotifications('#pet-nightly')
     enableFortifyScan()
 
     before('build') {
@@ -88,9 +88,5 @@ withNightlyPipeline(type, product, component) {
     afterAlways('smokeTest') {
         sh script: "docker stop hwf-test-postgres && docker rm hwf-test-postgres || echo 'Ignoring failure in stopping postgres'",
             label: "docker stop hwf-test-postgres"
-    }
-
-    afterAlways('fortify-scan') {
-        error('Test error for fortify scan')
     }
 }
