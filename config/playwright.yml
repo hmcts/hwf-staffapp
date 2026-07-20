@@ -1,0 +1,20 @@
+# Playwright configuration
+#
+# Mobile device configuration is based on iPhone 15
+# Sourced from [https://github.com/microsoft/playwright/blob/main/packages/isomorphic/deviceDescriptorsSource.json]
+
+base:
+  headless: true
+  playwright_cli_executable_path: './node_modules/.bin/playwright'
+
+mobile:
+  viewport:
+    width: 393
+    height: 659
+  screen:
+    width: 393
+    height: 852
+  isMobile: true
+  hasTouch: true
+  deviceScaleFactor: 3
+  userAgent: 'Mozilla/5.0 (iPhone; CPU iPhone OS 17_5 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/26.5 Mobile/15E148 Safari/604.1'

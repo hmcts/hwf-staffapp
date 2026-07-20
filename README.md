@@ -153,6 +153,10 @@ store/cache it.
 
 
 ## Testing
+### Feature tests
+
+See the [feature testing README](/features/README.md).
+
 ### Benefit Check mock call
 I added mock benefit check call. It's not mocking the call itself; it's just using a different library To generate request/response.
 This is for testing on demo environments, AAT, and preview. So we can test the normal benefit check flow without calling the actual benefit_checker.
