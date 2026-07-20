@@ -226,7 +226,6 @@ GEM
       actionmailer (>= 5.0)
       devise (>= 4.6)
     diff-lcs (1.6.2)
-    docile (1.4.1)
     dotenv (3.2.0)
     dotenv-rails (3.2.0)
       dotenv (= 3.2.0)
@@ -545,12 +544,7 @@ GEM
       activesupport (>= 7.2)
     simple_encryptable (0.1.1)
       activesupport (>= 4.2)
-    simplecov (0.22.0)
-      docile (~> 1.1)
-      simplecov-html (~> 0.11)
-      simplecov_json_formatter (~> 0.1)
-    simplecov-html (0.13.2)
-    simplecov_json_formatter (0.1.4)
+    simplecov (1.0.2)
     site_prism (6.0.1)
       addressable (~> 2.8, >= 2.8.4)
       base64 (~> 0.3.0)
@@ -688,7 +682,7 @@ DEPENDENCIES
   sentry-rails
   shoulda-matchers
   simple_encryptable
-  simplecov (~> 0.22.0)
+  simplecov (~> 1.0.0)
   site_prism
   slim-rails
   stackprof
