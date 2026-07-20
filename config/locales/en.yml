@@ -1122,6 +1122,7 @@ en-GB:
               not_a_date: 'Enter the date in this format DD/MM/YYYY'
               date_before: This date can't be in the future
               before_submit: This date can’t be before the application was received.
+              iac_before_submit: "The application's date received cannot be more than 365 days before the date submitted."
 
             emergency_reason:
               cant_have_emergency_reason_without_emergency: "Enter reason for emergency"

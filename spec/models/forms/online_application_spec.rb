@@ -112,6 +112,67 @@ RSpec.describe Forms::OnlineApplication do
 
       end
 
+      context 'when the jurisdiction is IAC' do
+        let(:iac_jurisdiction) { create(:jurisdiction, abbr: 'IAC') }
+
+        before do
+          online_application
+          form.jurisdiction_id = iac_jurisdiction.id
+        end
+
+        context 'received before submitted' do
+          before { form.date_received = 1.month.ago }
+
+          it { is_expected.to be_valid }
+        end
+
+        context 'received exactly 365 days before submitted' do
+          before { form.date_received = 365.days.ago }
+
+          it { is_expected.to be_valid }
+        end
+
+        context 'received more than 365 days before submitted' do
+          before { form.date_received = 366.days.ago }
+
+          it { is_expected.not_to be_valid }
+
+          it 'returns an error message' do
+            form.valid?
+            message = "The application's date received cannot be more than 365 days before the date submitted."
+            expect(form.errors[:date_received]).to eq [message]
+          end
+        end
+
+        context 'received same date as submitted' do
+          before { form.date_received = Time.zone.today }
+
+          it { is_expected.to be_valid }
+        end
+
+        context 'received tomorrow' do
+          before { form.date_received = Time.zone.tomorrow }
+
+          it { is_expected.not_to be_valid }
+        end
+
+        context 'received more than 3 months after submitted' do
+          let(:online_application) do
+            travel_to(4.months.ago) { build_stubbed(:online_application, :completed) }
+          end
+
+          before { form.date_received = Time.zone.now }
+
+          it { is_expected.not_to be_valid }
+
+          context 'discretion applied' do
+            before { form.discretion_applied = true }
+
+            it { is_expected.to be_valid }
+          end
+        end
+      end
+
       context 'when the application was created and received more the 3 months ago' do
         before do
           travel_to(5.months.ago) do
@@ -235,6 +296,36 @@ RSpec.describe Forms::OnlineApplication do
       end
     end
 
+  end
+
+  describe '#iac_jurisdiction?' do
+    context 'when the jurisdiction abbr is IAC' do
+      let(:iac_jurisdiction) { create(:jurisdiction, abbr: 'IAC') }
+
+      before { form.jurisdiction_id = iac_jurisdiction.id }
+
+      it { expect(form.iac_jurisdiction?).to be true }
+    end
+
+    context 'when the jurisdiction abbr is not IAC' do
+      let(:jurisdiction) { create(:jurisdiction) }
+
+      before { form.jurisdiction_id = jurisdiction.id }
+
+      it { expect(form.iac_jurisdiction?).to be false }
+    end
+
+    context 'when the jurisdiction_id is blank' do
+      before { form.jurisdiction_id = nil }
+
+      it { expect(form.iac_jurisdiction?).to be false }
+    end
+
+    context 'when the jurisdiction does not exist' do
+      before { form.jurisdiction_id = 999_999 }
+
+      it { expect(form.iac_jurisdiction?).to be false }
+    end
   end
 
   describe 'reset_date_received_data' do

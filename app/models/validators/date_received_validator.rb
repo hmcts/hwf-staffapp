@@ -17,10 +17,28 @@ module Validators
     def validate_ranges
       if before_tomorrow
         add_error(I18n.t("#{translation_prefix}.date_before"))
-      elsif after_or_equal_min_date
+      elsif iac_jurisdiction?
+        validate_iac_ranges
+      else
+        validate_standard_ranges
+      end
+    end
+
+    def validate_standard_ranges
+      if after_or_equal_min_date
         add_error(I18n.t("#{translation_prefix}.date_after_or_equal_to"))
       elsif before_or_equal_to_submitt_date
         add_error(I18n.t("#{translation_prefix}.before_submit"))
+      elsif three_months_check
+        add_error(I18n.t("#{translation_prefix}.three_months"))
+      end
+    end
+
+    # IAC applications may be received before they were submitted,
+    # but no more than 365 days before
+    def validate_iac_ranges
+      if more_than_year_before_submitted
+        add_error(I18n.t("#{translation_prefix}.iac_before_submit"))
       elsif three_months_check
         add_error(I18n.t("#{translation_prefix}.three_months"))
       end
@@ -64,6 +82,12 @@ module Validators
       return false if @validate_record.discretion_applied
       (@date_received_value - 3.months) > submitted_date
     end
+
+    def more_than_year_before_submitted
+      @date_received_value < (submitted_date - 365.days)
+    end
+
+    delegate :iac_jurisdiction?, to: :@validate_record
 
     def translation_prefix
       '.activemodel.errors.models.forms/online_application.attributes.date_received'

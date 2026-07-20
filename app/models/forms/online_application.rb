@@ -69,6 +69,11 @@ module Forms
       @object.update(discretion_applied: nil, date_received: nil)
     end
 
+    def iac_jurisdiction?
+      return false if jurisdiction_id.blank?
+      Jurisdiction.find_by(id: jurisdiction_id)&.abbr == 'IAC'
+    end
+
     private
 
     def persist!
