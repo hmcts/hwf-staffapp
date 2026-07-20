@@ -80,11 +80,6 @@ Capybara::Screenshot.register_driver(:chrome_headless) do |driver, path|
   driver.browser.save_screenshot(path)
 end
 
-Capybara.register_driver :saucelabs do |app|
-  browser = Settings.saucelabs.browsers.send(Settings.saucelabs.browser).to_h
-  Capybara::Selenium::Driver.new(app, browser: :remote, url: Settings.saucelabs.url, desired_capabilities: browser)
-end
-
 if ENV.key?('CIRCLE_ARTIFACTS')
   Capybara.save_and_open_page_path = ENV['CIRCLE_ARTIFACTS']
 end
@@ -99,7 +94,7 @@ Capybara::Screenshot.register_filename_prefix_formatter(:cucumber) do |scenario|
 end
 
 Capybara.always_include_port = true
-Capybara.javascript_driver = :chrome_headless
+Capybara.javascript_driver = ENV.fetch('CAPYBARA_JS_DRIVER', 'chrome_headless').to_sym
 
 # Uncomment and set to your test URL to run tests against localhost
 # ENV['TEST_URL'] = 'http://localhost:3000/'
