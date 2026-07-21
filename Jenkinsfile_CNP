@@ -84,4 +84,8 @@ withPipeline(type, product, component) {
         sh script: "docker stop hwf-test-postgres && docker rm hwf-test-postgres || echo 'Ignoring failure in stopping postgres'",
             label: "docker stop hwf-test-postgres"
     }
+
+    afterAlways('functionalTest:preview') {
+        junit testResults: 'tmp/test/cucumber-functional/*.xml', allowEmptyResults: true, skipPublishingChecks: false
+    }
 }
