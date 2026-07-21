@@ -82,6 +82,7 @@ withPipeline(type, product, component) {
 
       rubyBuilder.bundle("exec rails db:create db:schema:load")
       rubyBuilder.bundle("install")
+      sh script: 'chmod -R u+w vendor/bundle || true', label: 'Make bundle cache writable for stash'
       rubyBuilder.bundle("exec rake assets:precompile")
   }
 
