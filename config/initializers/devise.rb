@@ -284,6 +284,13 @@ Devise.setup do |config|
   #   manager.default_strategies(scope: :user).unshift :some_external_strategy
   # end
 
+  # Skip storing oversized return-to URLs that would overflow the session
+  # cookie. The lambda defers constant lookup so the autoloaded class is not
+  # referenced while the app is still booting.
+  config.warden do |manager|
+    manager.failure_app = ->(env) { SizeLimitedFailureApp.call(env) }
+  end
+
   # ==> Mountable engine configurations
   # When using Devise inside an engine, let's call it `MyEngine`, and this engine
   # is mountable, there are some extra configurations to be taken into account.
