@@ -18,12 +18,16 @@ class ApplicationController < ActionController::Base
   end
 
   def after_sign_in_path_for(resource)
+    # Always consume the URL Devise stored before the login redirect, even when
+    # it is not used - left behind, it stays in the session cookie for the whole
+    # logged-in session and can push it over the 4KB cookie limit.
+    stored_location = stored_location_for(resource)
     manager_setup = ManagerSetup.new(resource, session)
     if manager_setup.setup_profile?
       manager_setup.start!
       edit_user_path(current_user)
     else
-      root_path
+      stored_location || root_path
     end
   end
 
