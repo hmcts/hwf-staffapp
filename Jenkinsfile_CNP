@@ -52,10 +52,12 @@ withPipeline(type, product, component) {
     env.DWP_API_ENABLED='false'
 
 
+    // 'rvm get master' is required on Ubuntu 24.04 agents - see CHANGELOG.md
     def installRuby = {
       sh script:"""#!/bin/bash -l
         set +x
         source /usr/local/rvm/scripts/rvm
+        rvm get master
         rvm install ruby-4.0.5
         rvm use ruby-4.0.5 --default
         """, label: 'Ruby version install'

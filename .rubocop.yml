@@ -8,8 +8,7 @@ AllCops:
   # Exclude anything that isn't really part of our code.
   # rails_helper is excluded because it's full of solecisms, but it's mostly
   # generated code and copy-and-pasted snipets from READMEs.
-  # The Jenkinsfiles are Groovy - without the exclusion, editors that lint the
-  # open file by passing its path to rubocop report bogus Lint/Syntax errors.
+  # Jenkinsfiles are Groovy, not Ruby - see CHANGELOG.md
   Exclude:
     - 'Jenkinsfile_CNP'
     - 'Jenkinsfile_nightly'
