@@ -28,8 +28,8 @@ dl.govuk-summary-list
       dd.govuk-summary-list__value Extract raw data by date for Analytical Services
   - if policy(:report).power_bi?
     .govuk-summary-list__row
-      dt.govuk-summary-list__key =link_to 'Power BI export', report_power_bi_path
-      dd.govuk-summary-list__value Data export for Power BI software
+      dt.govuk-summary-list__key =link_to 'PowerBI exports', report_power_bi_path
+      dd.govuk-summary-list__value Data exports for PowerBI dashboard reporting
   - if policy(:report).power_bi?
     .govuk-summary-list__row
       dt.govuk-summary-list__key =link_to 'Applications by court', report_applications_by_court_path

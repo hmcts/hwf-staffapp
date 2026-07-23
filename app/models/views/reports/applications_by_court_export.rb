@@ -7,7 +7,7 @@ module Views
       include ApplicationsByCourtExportHelper
 
       NUMERIC_FIELDS = [
-        'Applicant pays estimate', 'Applicant pays'
+        'estimated_amount_to_pay', 'final_amount_to_pay'
       ].freeze
 
       def initialize(start_date, end_date, office_id, all_offices: false)
@@ -29,7 +29,9 @@ module Views
       def to_csv
         return "no results" unless data.first
         CSV.generate do |csv|
-          csv << data.first.keys
+          # The SQL aliases columns to snake_case keys; the header row uses the
+          # canonical labels from the single source of truth (ColumnLabels).
+          csv << ColumnLabels.for(data.first.keys.map(&:to_sym))
           data.each do |row|
             csv << process_row(row).values
           end
@@ -39,96 +41,96 @@ module Views
       private
 
       def sql_query
-        "(#{paper_applications_select}) UNION ALL (#{online_only_select}) ORDER BY \"Created at\" DESC;"
+        "(#{paper_applications_select}) UNION ALL (#{online_only_select}) ORDER BY created_at DESC;"
       end
 
       # rubocop:disable Metrics/MethodLength
       def paper_applications_select
         "SELECT
-        offices.name AS \"Office\",
-        applications.id AS \"Id\",
+        offices.name AS office,
+        applications.id AS id,
         CASE WHEN applications.state = 0 THEN 'Unprocessed'
              WHEN applications.state = 1 THEN 'Waiting for evidence'
              WHEN applications.state = 2 THEN 'Waiting for part-payment'
              WHEN applications.state = 3 THEN 'Completed'
              WHEN applications.state = 4 THEN 'Deleted'
              ELSE 'N/A'
-        END AS \"Status\",
-        applications.reference as \"HwF reference number\",
-        applications.created_at as \"Created at\",
-        details.fee as \"Fee\",
-        details.fee_code AS \"Fee code\",
-        details.claim_amount AS \"Claim amount\",
+        END AS status,
+        applications.reference as reference,
+        applications.created_at as created_at,
+        details.fee as fee,
+        details.fee_code AS fee_code,
+        details.claim_amount AS claim_amount,
         CASE WHEN details.fee_entry_method = 'auto' THEN 'auto populated'
              WHEN details.fee_entry_method = 'manual' THEN 'entered'
              ELSE NULL
-        END AS \"Fee population\",
-        jurisdictions.name AS \"Jurisdiction\",
-        applications.application_type as \"Application type\",
-        details.form_name as \"Form\",
-        details.refund as \"Refund\",
-        CASE WHEN details.emergency_reason IS NULL THEN false ELSE true END AS \"Emergency\",
-        COALESCE(applications.amount_to_pay, 0) as \"Applicant pays estimate\",
-        applications.income as \"Pre evidence income\",
-        ec.income as \"Post evidence income\",
-        CASE WHEN applications.income < 101 THEN 'true' ELSE 'false' END AS \"Low income declared\",
-        applications.decision_date as \"Decision date\",
+        END AS fee_population,
+        jurisdictions.name AS jurisdiction,
+        applications.application_type as application_type,
+        details.form_name as form,
+        details.refund as refund,
+        CASE WHEN details.emergency_reason IS NULL THEN false ELSE true END AS emergency,
+        COALESCE(applications.amount_to_pay, 0) as estimated_amount_to_pay,
+        applications.income as pre_evidence_income,
+        ec.income as post_evidence_income,
+        CASE WHEN applications.income < 101 THEN 'true' ELSE 'false' END AS low_income_declared,
+        applications.decision_date as decision_date,
         CASE WHEN COALESCE(applications.income_period, '') = ''
              THEN NULL
              ELSE applications.income_period
-        END AS \"Income period\",
-        applications.children as \"Children\",
-        applications.children_age_band as \"Age band under 14\",
-        applications.children_age_band as \"Age band 14+\",
+        END AS income_period,
+        applications.children as children,
+        applications.children_age_band as age_band_under_14,
+        applications.children_age_band as age_band_14_plus,
         CASE WHEN ec.id IS NULL THEN COALESCE(applications.amount_to_pay, 0)
-        ELSE COALESCE(ec.amount_to_pay, 0) END as \"Applicant pays\",
-        details.fee - COALESCE(applications.amount_to_pay, 0) as \"Departmental cost estimate\",
+        ELSE COALESCE(ec.amount_to_pay, 0) END as final_amount_to_pay,
+        details.fee - COALESCE(applications.amount_to_pay, 0) as estimated_cost,
         CASE WHEN ec.id IS NULL THEN details.fee - COALESCE(applications.amount_to_pay, 0)
         ELSE details.fee - COALESCE(ec.amount_to_pay, 0)
-          END as \"Departmental cost\",
-        CASE WHEN applications.reference LIKE 'HWF%' THEN 'digital' ELSE 'paper' END AS \"Source\",
-        CASE WHEN de.id IS NULL THEN 'no' ELSE 'yes' END AS \"Granted?\",
+          END as departmental_cost,
+        CASE WHEN applications.reference LIKE 'HWF%' THEN 'digital' ELSE 'paper' END AS source,
+        CASE WHEN de.id IS NULL THEN 'no' ELSE 'yes' END AS granted,
         CASE WHEN beo.id IS NULL THEN 'N/A'
                WHEN beo.correct = TRUE THEN 'Yes'
                WHEN beo.correct = FALSE THEN 'No'
-          END AS \"Benefits granted?\",
-        CASE WHEN ec.id IS NULL THEN 'no' ELSE 'yes' END AS \"Evidence checked?\",
+          END AS benefits_granted,
+        CASE WHEN ec.id IS NULL THEN 'no' ELSE 'yes' END AS evidence_checked,
         CASE WHEN savings.max_threshold_exceeded = TRUE then '16,000 or more'
              WHEN savings.max_threshold_exceeded = FALSE AND savings.min_threshold_exceeded = TRUE THEN '3,000 - 15,999'
              WHEN savings.max_threshold_exceeded = FALSE THEN '0 - 2,999'
              WHEN savings.max_threshold_exceeded IS NULL AND savings.min_threshold_exceeded = FALSE THEN '0 - 2,999'
              WHEN savings.max_threshold_exceeded IS NULL AND savings.min_threshold_exceeded = TRUE THEN '3000 or more'
              ELSE ''
-        END AS \"Capital band\",
-        savings.amount AS \"Saving and Investments\",
-        details.case_number AS \"Case number\",
-        details.date_received as \"Date received\",
-        oa.created_at AS \"Date submitted online\",
-        CASE WHEN applicants.married = TRUE THEN 'yes' ELSE 'no' END as \"Married\",
+        END AS capital_band,
+        savings.amount AS savings_and_investments,
+        details.case_number AS case_number,
+        details.date_received as date_received,
+        oa.created_at AS date_submitted_online,
+        CASE WHEN applicants.married = TRUE THEN 'yes' ELSE 'no' END as married,
         CASE
           WHEN savings.over_66 = TRUE THEN 'Yes'
           WHEN savings.over_66 = FALSE THEN 'No'
           ELSE 'N/A'
-        END AS \"Pension age\",
-        CASE WHEN applications.state = 4 THEN 'deleted' ELSE applications.decision END as \"Decision\",
+        END AS pension_age,
+        CASE WHEN applications.state = 4 THEN 'deleted' ELSE applications.decision END as decision,
         CASE WHEN savings.passed = FALSE then 'Yes'
              WHEN savings.passed = TRUE then 'No'
-             ELSE 'N/A' END as \"Failed on savings\",
-        applications.completed_at as \"Application processed date\",
+             ELSE 'N/A' END as failed_on_savings,
+        applications.completed_at as application_processed_date,
         CASE WHEN ec.income_check_type = 'paper' THEN ec.completed_at ELSE NULL
-        END as \"Manual evidence processed date\",
+        END as manual_evidence_processed_date,
         CASE
           WHEN pp.completed_at IS NOT NULL THEN pp.completed_at
           WHEN applications.decision_type = 'evidence_check'
             AND applications.decision_date IS NOT NULL THEN applications.decision_date
           ELSE NULL
-        END AS \"Processed date\",
-        ec.outcome as \"EV check outcome\",
-        pp.outcome as \"PP outcome\",
-        applications.income_kind as \"Declared income sources\",
-        ec.check_type as \"DB evidence check type\",
-        ec.income_check_type as \"DB income check type\",
-        ec.hmrc_income_used as \"HMRC total income\",
+        END AS processed_date,
+        ec.outcome as evidence_check_outcome,
+        pp.outcome as pp_outcome,
+        applications.income_kind as declared_income_sources,
+        ec.check_type as db_evidence_check_type,
+        ec.income_check_type as db_income_check_type,
+        ec.hmrc_income_used as hmrc_total_income,
         CASE WHEN ec.check_type = 'random' AND ec.income_check_type = 'paper' AND hc_id IS NULL then 'Manual NumberRule'
          WHEN ec.check_type = 'flag' AND ec.income_check_type = 'paper' AND hc_id IS NULL then 'Manual NIFlag'
          WHEN ec.check_type = 'ni_exist' AND ec.income_check_type = 'paper' AND hc_id IS NULL then 'Manual NIDuplicate'
@@ -141,40 +143,40 @@ module Views
          WHEN ec.check_type = 'random' AND ec.income_check_type = 'paper' AND hc_id IS NOT NULL then 'ManualAfterHMRC'
          WHEN ec.check_type = 'low_income' AND income_check_type = 'paper' AND hc_id IS NOT NULL THEN 'ManualAfterHMRC'
            ELSE NULL
-        END AS \"Evidence check type\",
+        END AS evidence_check_type,
         CASE WHEN hc_id IS NULL then NULL
            WHEN hc_id IS NOT NULL AND error_response IS NULL then 'Yes'
            WHEN hc_id IS NOT NULL AND error_response IS NOT NULL then 'No'
            ELSE NULL
-        END AS \"HMRC response?\",
-        error_response as \"HMRC errors\",
+        END AS hmrc_response,
+        error_response as hmrc_errors,
         CASE WHEN hc_id IS NULL then NULL
            WHEN hc_id IS NOT NULL AND ec.completed_at IS NOT NULL then 'Yes'
            WHEN hc_id IS NOT NULL AND ec.completed_at IS NULL then 'No'
            ELSE NULL
-        END AS \"Complete processing?\",
+        END AS complete_processing,
         CASE WHEN additional_income IS NULL then NULL
            WHEN additional_income IS NOT NULL AND ec.income_check_type = 'paper' then NULL
            WHEN additional_income IS NOT NULL AND ec.income_check_type = 'hmrc'
             AND additional_income > 0 then additional_income
            ELSE NULL
-        END as \"Additional income\",
+        END as additional_income,
         CASE WHEN ec.income IS NULL then applications.income
           WHEN ec.completed_at IS NOT NULL then ec.income
           ELSE NULL
-        END as \"Income processed\",
-        request_params as \"HMRC request date range\",
-        details.statement_signed_by as \"Statement signed by\",
+        END as income_processed,
+        request_params as hmrc_request_date_range,
+        details.statement_signed_by as statement_signed_by,
         CASE WHEN applicants.partner_ni_number IS NULL THEN 'false'
              WHEN applicants.partner_ni_number = '' THEN 'false'
              WHEN applicants.partner_ni_number IS NOT NULL THEN 'true'
-             END AS \"Partner NI entered\",
+             END AS partner_ni_entered,
         CASE WHEN applicants.partner_last_name IS NULL THEN 'false'
              WHEN applicants.partner_last_name IS NOT NULL THEN 'true'
-             END AS \"Partner name entered\",
-        details.calculation_scheme as \"HwF Scheme\",
-        applications.deleted_reasons_list as \"Deletion Reason\",
-        applications.deleted_reason as \"Reason Description\"
+             END AS partner_name_entered,
+        details.calculation_scheme as hwf_scheme,
+        applications.deleted_reasons_list as deletion_reason,
+        applications.deleted_reason as reason_description
 
         FROM \"applications\" LEFT JOIN offices ON offices.id = applications.office_id
         LEFT JOIN evidence_checks ec ON ec.application_id = applications.id
@@ -215,78 +217,78 @@ module Views
       # rubocop:disable Metrics/MethodLength
       def online_only_select
         "SELECT
-        offices.name AS \"Office\",
-        online_applications.id AS \"Id\",
-        'Unprocessed' AS \"Status\",
-        online_applications.reference AS \"HwF reference number\",
-        online_applications.created_at AS \"Created at\",
-        online_applications.fee AS \"Fee\",
-        online_applications.fee_code AS \"Fee code\",
-        online_applications.claim_amount AS \"Claim amount\",
+        offices.name AS office,
+        online_applications.id AS id,
+        'Unprocessed' AS status,
+        online_applications.reference AS reference,
+        online_applications.created_at AS created_at,
+        online_applications.fee AS fee,
+        online_applications.fee_code AS fee_code,
+        online_applications.claim_amount AS claim_amount,
         CASE WHEN online_applications.fee_entry_method = 'auto' THEN 'auto populated'
              WHEN online_applications.fee_entry_method = 'manual' THEN 'entered'
              ELSE NULL
-        END AS \"Fee population\",
-        jurisdictions.name AS \"Jurisdiction\",
-        CASE WHEN online_applications.benefits THEN 'benefit' ELSE 'income' END AS \"Application type\",
-        online_applications.form_name AS \"Form\",
-        online_applications.refund AS \"Refund\",
-        CASE WHEN online_applications.emergency_reason IS NULL THEN false ELSE true END AS \"Emergency\",
-        NULL AS \"Applicant pays estimate\",
-        online_applications.income AS \"Pre evidence income\",
-        NULL AS \"Post evidence income\",
-        CASE WHEN online_applications.income < 101 THEN 'true' ELSE 'false' END AS \"Low income declared\",
-        NULL AS \"Decision date\",
+        END AS fee_population,
+        jurisdictions.name AS jurisdiction,
+        CASE WHEN online_applications.benefits THEN 'benefit' ELSE 'income' END AS application_type,
+        online_applications.form_name AS form,
+        online_applications.refund AS refund,
+        CASE WHEN online_applications.emergency_reason IS NULL THEN false ELSE true END AS emergency,
+        NULL AS estimated_amount_to_pay,
+        online_applications.income AS pre_evidence_income,
+        NULL AS post_evidence_income,
+        CASE WHEN online_applications.income < 101 THEN 'true' ELSE 'false' END AS low_income_declared,
+        NULL AS decision_date,
         CASE WHEN COALESCE(online_applications.income_period, '') = ''
              THEN NULL
              ELSE online_applications.income_period
-        END AS \"Income period\",
-        online_applications.children AS \"Children\",
-        online_applications.children_age_band AS \"Age band under 14\",
-        online_applications.children_age_band AS \"Age band 14+\",
-        NULL AS \"Applicant pays\",
-        NULL AS \"Departmental cost estimate\",
-        NULL AS \"Departmental cost\",
-        'digital' AS \"Source\",
-        NULL AS \"Granted?\",
-        NULL AS \"Benefits granted?\",
-        'no' AS \"Evidence checked?\",
-        NULL AS \"Capital band\",
-        online_applications.amount AS \"Saving and Investments\",
-        online_applications.case_number AS \"Case number\",
-        online_applications.date_received AS \"Date received\",
-        online_applications.created_at AS \"Date submitted online\",
-        CASE WHEN online_applications.married = TRUE THEN 'yes' ELSE 'no' END AS \"Married\",
-        NULL AS \"Pension age\",
-        NULL AS \"Decision\",
-        NULL AS \"Failed on savings\",
-        NULL AS \"Application processed date\",
-        NULL AS \"Manual evidence processed date\",
-        NULL AS \"Processed date\",
-        NULL AS \"EV check outcome\",
-        NULL AS \"PP outcome\",
-        online_applications.income_kind AS \"Declared income sources\",
-        NULL AS \"DB evidence check type\",
-        NULL AS \"DB income check type\",
-        NULL AS \"HMRC total income\",
-        NULL AS \"Evidence check type\",
-        NULL AS \"HMRC response?\",
-        NULL AS \"HMRC errors\",
-        NULL AS \"Complete processing?\",
-        NULL AS \"Additional income\",
-        online_applications.income AS \"Income processed\",
-        NULL AS \"HMRC request date range\",
-        online_applications.statement_signed_by AS \"Statement signed by\",
+        END AS income_period,
+        online_applications.children AS children,
+        online_applications.children_age_band AS age_band_under_14,
+        online_applications.children_age_band AS age_band_14_plus,
+        NULL AS final_amount_to_pay,
+        NULL AS estimated_cost,
+        NULL AS departmental_cost,
+        'digital' AS source,
+        NULL AS granted,
+        NULL AS benefits_granted,
+        'no' AS evidence_checked,
+        NULL AS capital_band,
+        online_applications.amount AS savings_and_investments,
+        online_applications.case_number AS case_number,
+        online_applications.date_received AS date_received,
+        online_applications.created_at AS date_submitted_online,
+        CASE WHEN online_applications.married = TRUE THEN 'yes' ELSE 'no' END AS married,
+        NULL AS pension_age,
+        NULL AS decision,
+        NULL AS failed_on_savings,
+        NULL AS application_processed_date,
+        NULL AS manual_evidence_processed_date,
+        NULL AS processed_date,
+        NULL AS evidence_check_outcome,
+        NULL AS pp_outcome,
+        online_applications.income_kind AS declared_income_sources,
+        NULL AS db_evidence_check_type,
+        NULL AS db_income_check_type,
+        NULL AS hmrc_total_income,
+        NULL AS evidence_check_type,
+        NULL AS hmrc_response,
+        NULL AS hmrc_errors,
+        NULL AS complete_processing,
+        NULL AS additional_income,
+        online_applications.income AS income_processed,
+        NULL AS hmrc_request_date_range,
+        online_applications.statement_signed_by AS statement_signed_by,
         CASE WHEN online_applications.partner_ni_number IS NULL THEN 'false'
              WHEN online_applications.partner_ni_number = '' THEN 'false'
              WHEN online_applications.partner_ni_number IS NOT NULL THEN 'true'
-        END AS \"Partner NI entered\",
+        END AS partner_ni_entered,
         CASE WHEN online_applications.partner_last_name IS NULL THEN 'false'
              WHEN online_applications.partner_last_name IS NOT NULL THEN 'true'
-        END AS \"Partner name entered\",
-        online_applications.calculation_scheme AS \"HwF Scheme\",
-        NULL AS \"Deletion Reason\",
-        NULL AS \"Reason Description\"
+        END AS partner_name_entered,
+        online_applications.calculation_scheme AS hwf_scheme,
+        NULL AS deletion_reason,
+        NULL AS reason_description
         FROM online_applications
         INNER JOIN users ON users.id = online_applications.user_id
         INNER JOIN offices ON offices.id = users.office_id
@@ -309,16 +311,16 @@ module Views
       def process_row(row)
         csv_row = row
 
-        csv_row['Created at'] = csv_row['Created at'].to_fs(:db)
-        csv_row['Application processed date'] = csv_row['Application processed date']&.to_fs(:db)
-        csv_row['Manual evidence processed date'] = csv_row['Manual evidence processed date']&.to_fs(:db)
-        csv_row['Processed date'] = csv_row['Processed date']&.to_fs(:db)
-        csv_row['Decision date'] = csv_row['Decision date']&.to_fs(:db)
-        csv_row['Date submitted online'] = csv_row['Date submitted online']&.to_fs(:db)
-        csv_row['Declared income sources'] = income_kind(row['Declared income sources'])
-        csv_row['HMRC request date range'] = hmrc_date_range(row['HMRC request date range'])
-        csv_row['Age band under 14'] = children_age_band(row['Age band under 14'], :children_age_band_one)
-        csv_row['Age band 14+'] = children_age_band(row['Age band 14+'], :children_age_band_two)
+        csv_row['created_at'] = csv_row['created_at'].to_fs(:db)
+        csv_row['application_processed_date'] = csv_row['application_processed_date']&.to_fs(:db)
+        csv_row['manual_evidence_processed_date'] = csv_row['manual_evidence_processed_date']&.to_fs(:db)
+        csv_row['processed_date'] = csv_row['processed_date']&.to_fs(:db)
+        csv_row['decision_date'] = csv_row['decision_date']&.to_fs(:db)
+        csv_row['date_submitted_online'] = csv_row['date_submitted_online']&.to_fs(:db)
+        csv_row['declared_income_sources'] = income_kind(row['declared_income_sources'])
+        csv_row['hmrc_request_date_range'] = hmrc_date_range(row['hmrc_request_date_range'])
+        csv_row['age_band_under_14'] = children_age_band(row['age_band_under_14'], :children_age_band_one)
+        csv_row['age_band_14_plus'] = children_age_band(row['age_band_14_plus'], :children_age_band_two)
 
         row.each do |field, value|
           csv_row[field] = numberic_values_check(value, field)
