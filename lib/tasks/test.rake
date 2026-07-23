@@ -35,7 +35,7 @@ namespace :test do
 
   task functional: :environment do
     ENV['RUN_SMOKE_TESTS'] = 'false'
-    if system "bundle exec cucumber features/ --tags 'not @smoke'"
+    if system "bundle exec cucumber features/ --tags 'not @smoke and not @accessibility'"
       puts "Functional test passed"
     else
       raise "Functional tests failed"

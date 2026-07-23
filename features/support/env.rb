@@ -17,6 +17,7 @@ require 'selenium/webdriver'
 require 'fileutils'
 include WebMock::API
 require 'mock_redis'
+require 'axe-cucumber-steps'
 
 Dir[File.dirname(__FILE__) + '/page_objects/**/*.rb'].each { |f| require f }
 
