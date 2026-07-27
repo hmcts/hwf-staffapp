@@ -166,7 +166,7 @@ GEM
     crass (1.0.7)
     cssbundling-rails (1.4.3)
       railties (>= 6.0.0)
-    csv (3.3.5)
+    csv (3.3.6)
     cucumber (11.1.1)
       base64 (~> 0.2)
       builder (~> 3.2)
