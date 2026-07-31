@@ -319,6 +319,32 @@ RSpec.describe Forms::Application::Applicant do
       end
     end
 
+    describe 'Alternate HO format' do
+      before { personal_information[:ho_number] = 'GWF999999999' }
+
+      it { expect(created_applicant.valid?).to be true }
+
+      context 'multiple applicants' do
+        before { personal_information[:ho_number] = 'GWF999999999/1' }
+
+        it { expect(created_applicant.valid?).to be true }
+      end
+
+      context 'invalid' do
+        context 'not enought digits' do
+          before { personal_information[:ho_number] = 'GWF99999999' }
+
+          it { expect(created_applicant.valid?).to be false }
+        end
+
+        context 'letters mixed in' do
+          before { personal_information[:ho_number] = 'GWF99999999A' }
+
+          it { expect(created_applicant.valid?).to be false }
+        end
+      end
+    end
+
     context 'when NI not provided' do
       before { personal_information[:ho_number] = 'L1234561' }
 
