@@ -30,7 +30,7 @@ Capybara.register_driver(:playwright_mobile_webkit) do |app|
 end
 
 # Register all Playwright drivers for screenshots
-Capybara.drivers.keys.grep(/playwright/).each do |playwright_driver|
+Capybara.drivers.names.grep(/playwright/).each do |playwright_driver|
   Capybara::Screenshot.register_driver(playwright_driver) do |driver, path|
     driver.save_screenshot(path)
   end
