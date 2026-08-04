@@ -20,7 +20,7 @@ RSpec.feature 'Naviation links' do
         expect(page).to have_xpath(".//a[contains(.,'Old scheme templates')][@href='#{letter_templates_path}']")
         expect(page).to have_xpath(".//a[contains(.,'New scheme templates')][@href='#{new_letter_templates_path}']")
         expect(page).to have_xpath(".//a[contains(.,'Appeals letter templates')][@href='#{appeals_letter_templates_path}']")
-        expect(page).to have_xpath(".//a[contains(.,'Lord Chancellors Exceptional Power letter templates')][@href='#{lcep_letter_templates_path}']")
+        expect(page).to have_xpath(".//a[contains(.,'LCEP letter templates')][@href='#{lcep_letter_templates_path}']")
         expect(page).to have_xpath(".//a[contains(.,'Sign out')][@href='#{destroy_user_session_path}']")
       end
     end
@@ -40,7 +40,7 @@ RSpec.feature 'Naviation links' do
         expect(page).to have_xpath(".//a[contains(.,'Old scheme templates')][@href='#{letter_templates_path}']")
         expect(page).to have_xpath(".//a[contains(.,'New scheme templates')][@href='#{new_letter_templates_path}']")
         expect(page).to have_xpath(".//a[contains(.,'Appeals letter templates')][@href='#{appeals_letter_templates_path}']")
-        expect(page).to have_xpath(".//a[contains(.,'Lord Chancellors Exceptional Power letter templates')][@href='#{lcep_letter_templates_path}']")
+        expect(page).to have_xpath(".//a[contains(.,'LCEP letter templates')][@href='#{lcep_letter_templates_path}']")
         expect(page).to have_xpath(".//a[contains(.,'Sign out')][@href='#{destroy_user_session_path}']")
       end
     end
