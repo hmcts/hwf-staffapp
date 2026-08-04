@@ -1,0 +1,189 @@
+en-GB:
+  appeals_letters:
+    stage_one_on_issue_refused_html: |
+      <p>Dear <span class="red-text">[INSERT APPLICANT NAME]</span></p>
+      <p><strong>Help with Fees – On Issue: Stage 1 <span class="red-text">[Benefit/Income]</span> Appeal – <span class="red-text">[INSERT APPLICANT NAME &amp; HWF REFERENCE NUMBER]</span></strong></p>
+      <p>Thank you for your <span class="red-text">[letter/email]</span> dated <span class="red-text">[INSERT DATE]</span> appealing the decision to not <span class="red-text">[fully]</span> grant <span class="red-text">your/your client's</span> application for Help with Fees - reference number: <span class="red-text">[INSERT HWF REFERENCE NUMBER]</span>.</p>
+      <h3 class='govuk-heading-m'>Stage 1 <span class="red-text">[Benefit/Income]</span> Appeal Decision</h3>
+      <p>I have reviewed your evidence and reasons for appealing the decision made on your Help with Fees application <span class="red-text">[INSERT HWF REFERENCE NUMBER]</span>, and I have decided to refuse your appeal.</p>
+      <p>The reasons for refusing your appeal are:</p>
+      <p><span class="red-text">[INSERT REASONS HERE]</span></p>
+      <h3 class='govuk-heading-m'>Your next steps</h3>
+      <p><strong>Pay the <span class="red-text">[court/tribunal]</span> fee:</strong></p>
+      <p>You can pay the <span class="red-text">[full/partial] [court/tribunal]</span> fee based on the original Help with Fees decision made on <span class="red-text">[INSERT DATE]</span> in the sum of <span class="red-text">[INSERT FEE AMOUNT £X]</span>.</p>
+      <p>You can pay by:</p>
+      <ul class="govuk-list govuk-list--bullet">
+        <li>Calling <span class="red-text">&lt;add phone number&gt;</span> with your debit card details</li>
+        <li>Posting a cheque written out to 'HM Courts and Tribunals Service' to the address at the top of this letter</li>
+        <li><span class="red-text">[Providing your PBA number [DELETE IF NOT A LEGAL REP APPLYING]]</span></li>
+        <li><span class="red-text">[insert other payment method]</span></li>
+      </ul>
+      <p>Once payment has been received, your <span class="red-text">[INSERT APPLICATION NAME]</span> will then be processed accordingly. If payment is not received within 14 days ie. <span class="red-text">[INSERT DATE]</span>, your <span class="red-text">[INSERT APPLICATION NAME]</span> will not be processed.</p>
+      <h3 class='govuk-heading-m'>Stage 2 <span class="red-text">[Income/Benefit]</span> Appeal</h3>
+      <p>If you are not satisfied with my decision, you can appeal my decision by writing directly to <span class="red-text">[INSERT NAME OF STAGE 2 APPEAL HANDLER – i.e. must be one band/grade higher than stage 1 appeal handler] [or by emailing - INSERT EMAIL ADDRESS IF APPLICABLE]</span>. Your stage 2 appeal must be received by the <span class="red-text">[court/tribunal]</span> within 14 days i.e. <span class="red-text">[INSERT DATE – 14 calendar days from the day you send the reply]</span>.</p>
+      <p><span class="red-text">[INSERT NAME OF STAGE 2 APPEAL HANDLER – must be one band/grade higher than stage 1 appeal handler]</span> will endeavour to respond within 10 working days from receiving your stage 2 appeal request. Please make sure you state 'Help with Fees Stage 2 <span class="red-text">[Benefit/Income]</span> Appeal – [your name]' in your letter/email to avoid delays.</p>
+      <p>Your appeal must state the reasons you disagree with my decision and include the following:</p>
+      <ul class="govuk-list govuk-list--bullet">
+        <li>All previous evidence and applications submitted</li>
+        <li><span class="red-text">[ONLY INCLUDE IF APPLICABLE]</span> Evidence and explanations of the accounts/transactions listed in the reasons for not upholding your appeal</li>
+        <li>Any further supporting evidence</li>
+      </ul>
+      <p>The declaration section of the Help with Fees application makes clear the need for you to complete the application to the best of your knowledge. It goes on to state that the giving of false information or the failure to provide evidence if requested may result in a rejection of that application. When completing the document, the <span class="red-text">[court/tribunal]</span> expects applicants to have read the guidance provided to make sure that the completion of the form is as accurate as possible. You can find the guidance here: <a href="https://www.gov.uk/government/publications/how-to-apply-for-help-with-a-court-or-tribunal-fee-ex160a/how-to-apply-for-help-with-fees-ex160a" target="_blank">https://www.gov.uk/government/publications/how-to-apply-for-help-with-a-court-or-tribunal-fee-ex160a/how-to-apply-for-help-with-fees-ex160a</a></p>
+      <p><span class="red-text">[INSERT NAME OF STAGE 2 APPEAL HANDLER – must be one band/grade higher than stage 1 appeal handler]</span>'s decision is final and there is no further route of appeal after that.</p>
+      <p>Yours sincerely</p>
+      <p><span class="red-text">[Your Initial &amp; Surname]</span><br>Help with Fees Stage 1 Appeal Handler<br><span class="red-text">[Insert Court/Tribunal name]</span></p>
+    stage_one_refund_refused_html: |
+      <p>Dear <span class="red-text">[INSERT APPLICANT NAME]</span></p>
+      <p><strong>Help with Fees – Refund: Stage 1 <span class="red-text">[Benefit/Income]</span> Appeal – <span class="red-text">[INSERT APPLICANT NAME &amp; HWF REFERENCE NUMBER]</span></strong></p>
+      <p>Thank you for your <span class="red-text">[letter/email]</span> dated <span class="red-text">[INSERT DATE]</span> appealing the decision to not <span class="red-text">[fully]</span> grant <span class="red-text">your/your client's</span> application for Help with Fees - reference number: <span class="red-text">[INSERT HWF REFERENCE NUMBER]</span>.</p>
+      <h3 class='govuk-heading-m'>Stage 1 <span class="red-text">[Benefit/Income]</span> Appeal Decision</h3>
+      <p>I have reviewed your evidence and reasons for appealing the decision made on your Help with Fees application <span class="red-text">[INSERT HWF REFERENCE NUMBER]</span>, and I have decided to refuse your appeal.</p>
+      <p>The reasons for refusing your appeal are:</p>
+      <p><span class="red-text">[INSERT REASONS HERE]</span></p>
+      <h3 class='govuk-heading-m'>Your next steps</h3>
+      <p>Your <span class="red-text">[court/tribunal] [partial]</span> fee in the sum of <span class="red-text">[INSERT AMOUNT £X]</span> will not be refunded.</p>
+      <h3 class='govuk-heading-m'>Stage 2 <span class="red-text">[Income/Benefit]</span> Appeal</h3>
+      <p>If you are not satisfied with my decision, you can appeal my decision by writing directly to <span class="red-text">[INSERT NAME OF STAGE 2 APPEAL HANDLER – must be one band/grade higher than stage 1 appeal handler] [or by emailing - INSERT EMAIL ADDRESS IF APPLICABLE]</span>. Your stage 2 appeal must be received by the <span class="red-text">[court/tribunal]</span> within 14 days i.e. <span class="red-text">[INSERT DATE – 14 calendar days from the day you send the reply]</span>.</p>
+      <p><span class="red-text">[INSERT NAME OF STAGE 2 APPEAL HANDLER – must be one band/grade higher than stage 1 appeal handler]</span> will endeavour to respond within 10 working days from receiving your stage 2 appeal request.</p>
+      <p>Please make sure you state 'Help with Fees Stage 2 <span class="red-text">[Benefit/Income]</span> Appeal – [your name]' in your letter/email to avoid delays.</p>
+      <p>Your appeal must state the reasons you disagree with my decision and include the following:</p>
+      <ul class="govuk-list govuk-list--bullet">
+        <li>All previous evidence and applications submitted</li>
+        <li><span class="red-text">[ONLY INCLUDE IF APPLICABLE]</span> Evidence and explanations of the accounts/transactions listed in the reasons for not upholding your appeal</li>
+        <li>Any further supporting evidence</li>
+      </ul>
+      <p>The declaration section of the Help with Fees application makes clear the need for you to complete the application to the best of your knowledge. It goes on to state that the giving of false information or the failure to provide evidence if requested may result in a rejection of that application. When completing the document, the <span class="red-text">[court/tribunal]</span> expects applicants to have read the guidance provided to make sure that the completion of the form is as accurate as possible. You can find the guidance here: <a href="https://www.gov.uk/government/publications/how-to-apply-for-help-with-a-court-or-tribunal-fee-ex160a/how-to-apply-for-help-with-fees-ex160a" target="_blank">https://www.gov.uk/government/publications/how-to-apply-for-help-with-a-court-or-tribunal-fee-ex160a/how-to-apply-for-help-with-fees-ex160a</a></p>
+      <p><span class="red-text">[INSERT NAME OF STAGE 2 APPEAL HANDLER – must be one band/grade higher than stage 1 appeal handler]</span>'s decision is final and there is no further route of appeal after that.</p>
+      <p>Yours sincerely</p>
+      <p><span class="red-text">[Your Initial &amp; Surname]</span><br>Help with Fees Stage 1 Appeal Handler<br><span class="red-text">[Insert Court/Tribunal name]</span></p>
+    stage_one_on_issue_upheld_html: |
+      <p>Dear <span class="red-text">[INSERT APPLICANT NAME]</span></p>
+      <p><strong>Help with Fees – On Issue: Stage 1 <span class="red-text">[Benefit/Income]</span> Appeal – <span class="red-text">[INSERT APPLICANT'S NAME &amp; HWF REFERENCE NUMBER]</span></strong></p>
+      <p>Thank you for your <span class="red-text">[letter/email]</span> dated <span class="red-text">[INSERT DATE]</span> appealing the decision to not <span class="red-text">[fully]</span> grant <span class="red-text">your/your client's</span> application for Help with Fees – reference number: <span class="red-text">[INSERT HWF REFERENCE NUMBER]</span>.</p>
+      <h3 class='govuk-heading-m'>Stage 1 <span class="red-text">[Benefit/Income]</span> Appeal Decision</h3>
+      <p>I have reviewed your evidence and reasons for appealing the decision made on the Help with Fees application <span class="red-text">[INSERT HWF REFERENCE NUMBER]</span>, and I have decided to <span class="red-text">[partially]</span> uphold your appeal.</p>
+      <p><span class="red-text">[NOTE TO STAFF: CHOOSE APPROPRIATE SECTION BELOW BASED ON WHETHER PART PAYMENT IS ALSO REQUIRED:</span></p>
+      <p>The outcome of your Help with Fees application is that you will receive full help with your <span class="red-text">[court/tribunal]</span> fee in the sum of <span class="red-text">[INSERT AMOUNT £X]</span>.</p>
+      <p>Your <span class="red-text">[INSERT APPLICATION NAME]</span> will now be processed.</p>
+      <p><span class="red-text">OR</span></p>
+      <p>The outcome of your Help with Fees application is that you will receive partial help with your <span class="red-text">[court/tribunal]</span> fee in the sum of <span class="red-text">[INSERT AMOUNT £X]</span>. A contribution of <span class="red-text">[INSERT AMOUNT £X]</span> is payable towards the <span class="red-text">[court/tribunal]</span> fee.</p>
+      <p><span class="red-text">[FOR INCOME APPLICATIONS ONLY:</span> We have used your evidence to process a revised income of <span class="red-text">[INSERT FIGURE £X]</span> which leads to an updated partial remission of <span class="red-text">[INSERT UPDATED PARTIAL REMISSION FEE £X.]]</span></p>
+      <p>You can pay by:</p>
+      <ul class="govuk-list govuk-list--bullet">
+        <li>Calling <span class="red-text">&lt;add phone number&gt;</span> with your debit card details</li>
+        <li>Posting a cheque written out to 'HM Courts and Tribunals Service' to the address at the top of this letter</li>
+        <li><span class="red-text">[Providing your PBA number – DELETE IF NOT A LEGAL REP APPLYING]</span></li>
+        <li><span class="red-text">[insert other payment method]</span></li>
+      </ul>
+      <p>If payment is not received within 14 days i.e. <span class="red-text">[INSERT DATE]</span>, then your <span class="red-text">[INSERT APPLICATION NAME]</span> will not be processed.</p>
+      <h3 class='govuk-heading-m'>Stage 2 <span class="red-text">[Income/Benefit]</span> Appeal</h3>
+      <p>If you are not satisfied with my decision, you can appeal my decision by writing directly to <span class="red-text">[INSERT NAME OF STAGE 2 APPEAL HANDLER – must be one band/grade higher than stage 1 appeal handler] [or by emailing - INSERT EMAIL ADDRESS IF APPLICABLE]</span> Your stage 2 appeal must be received by the <span class="red-text">[court/tribunal]</span> within 14 days i.e. <span class="red-text">[INSERT DATE – 14 calendar days from the day you send the reply]</span>.</p>
+      <p><span class="red-text">[INSERT NAME OF STAGE 2 APPEAL HANDLER – must be one band/grade higher than stage 1 appeal handler]</span> will endeavour to respond within 10 working days from receiving your stage 2 appeal request.</p>
+      <p>Please make sure you state 'Help with Fees Stage 2 <span class="red-text">[Benefit/Income]</span> Appeal – [your name]' in your letter/email to avoid delays.</p>
+      <p>Your appeal must state the reasons you disagree with my decision and include the following:</p>
+      <ul class="govuk-list govuk-list--bullet">
+        <li>All previous evidence and applications submitted</li>
+        <li>Any further supporting evidence</li>
+      </ul>
+      <p>The declaration section of the Help with Fees application makes clear the need for you to complete the application to the best of your knowledge. It goes on to state that the giving of false information or the failure to provide evidence if requested may result in a rejection of that application. When completing the document, the <span class="red-text">[court/tribunal]</span> expects applicants to have read the guidance provided to make sure that the completion of the form is as accurate as possible. You can find the guidance here: <a href="https://www.gov.uk/government/publications/how-to-apply-for-help-with-a-court-or-tribunal-fee-ex160a/how-to-apply-for-help-with-fees-ex160a" target="_blank">https://www.gov.uk/government/publications/how-to-apply-for-help-with-a-court-or-tribunal-fee-ex160a/how-to-apply-for-help-with-fees-ex160a</a></p>
+      <p><span class="red-text">[INSERT NAME OF STAGE 2 APPEAL HANDLER – must be one band/grade higher than stage 1 appeal handler]</span>'s decision is final and there is no further route of appeal after that.<span class="red-text">]</span></p>
+      <p>Yours sincerely</p>
+      <p><span class="red-text">[Your Initial &amp; Surname]</span><br>Help with Fees Stage 1 Appeal Handler<br><span class="red-text">[Insert Court/Tribunal name]</span></p>
+    stage_one_refund_upheld_html: |
+      <p>Dear <span class="red-text">[INSERT APPLICANT NAME]</span></p>
+      <p><strong>Help with Fees – Refund: Stage 1 <span class="red-text">[Benefit/Income]</span> Appeal – <span class="red-text">[INSERT APPLICANT'S NAME &amp; HWF REFERENCE NUMBER]</span></strong></p>
+      <p>Thank you for your <span class="red-text">[letter/email]</span> dated <span class="red-text">[INSERT DATE]</span> appealing the decision to not <span class="red-text">[fully]</span> grant <span class="red-text">your/your client's</span> application for Help with Fees – reference number: <span class="red-text">[INSERT HWF REFERENCE NUMBER]</span>.</p>
+      <h3 class='govuk-heading-m'>Stage 1 <span class="red-text">[Benefit/Income]</span> Appeal Decision</h3>
+      <p>I have reviewed your evidence and reasons for appealing the decision made on the Help with Fees application <span class="red-text">[INSERT HWF REFERENCE NUMBER]</span>, and I have decided to <span class="red-text">[partially]</span> uphold your appeal.</p>
+      <p><span class="red-text">[NOTE TO STAFF: CHOOSE APPROPRIATE PARAGRAPH BELOW BASED ON WHETHER ONLY A PARTIAL REFUND HAS BEEN GRANTED:</span></p>
+      <p>The outcome of your Help with Fees application is that you will receive a full refund of your <span class="red-text">[court/tribunal]</span> fee in the sum of <span class="red-text">[INSERT AMOUNT £X]</span>.</p>
+      <p>This will be paid via <span class="red-text">[INSERT PAYMENT METHOD]</span> within the next 5-10 working days.</p>
+      <p><span class="red-text">OR</span></p>
+      <p>The outcome of your Help with Fees application is that you will receive a partial refund of your <span class="red-text">[court/tribunal]</span> fee in the sum of <span class="red-text">[INSERT AMOUNT £X]</span>.</p>
+      <p><span class="red-text">[FOR INCOME APPLICATIONS ONLY:</span> We have used your evidence to process a revised income of <span class="red-text">[INSERT FIGURE £X]</span> which leads to an updated partial remission of <span class="red-text">[INSERT UPDATED PARTIAL REMISSION FEE £X.]]</span></p>
+      <p>The refund will be paid via <span class="red-text">[INSERT PAYMENT METHOD]</span> within the next 5-10 working days.</p>
+      <h3 class='govuk-heading-m'>Stage 2 <span class="red-text">[Income/Benefit]</span> Appeal</h3>
+      <p>If you are not satisfied with my decision, you can appeal my decision by writing directly to <span class="red-text">[INSERT NAME OF STAGE 2 APPEAL HANDLER – must be one band/grade higher than stage 1 appeal handler] [or by emailing - INSERT EMAIL ADDRESS IF APPLICABLE]</span>. Your stage 2 appeal must be received by the <span class="red-text">[court/tribunal]</span> within 14 days i.e. <span class="red-text">[INSERT DATE – 14 calendar days from the day you send the reply]</span>.</p>
+      <p><span class="red-text">[INSERT NAME OF STAGE 2 APPEAL HANDLER – must be one band/grade higher than stage 1 appeal handler]</span> will endeavour to respond within 10 working days from receiving your stage 2 appeal request.</p>
+      <p>Please make sure you state 'Help with Fees Stage 2 <span class="red-text">[Benefit/Income]</span> Appeal – [your name]' in the letter/email to avoid delays.</p>
+      <p>Your appeal must state the reasons you disagree with my decision and include the following:</p>
+      <ul class="govuk-list govuk-list--bullet">
+        <li>All previous evidence and applications submitted</li>
+        <li>Any further supporting evidence</li>
+      </ul>
+      <p>The declaration section of the Help with Fees application makes clear the need for you to complete the application to the best of your knowledge. It goes on to state that the giving of false information or the failure to provide evidence if requested may result in a rejection of that application. When completing the document, the <span class="red-text">[court/tribunal]</span> expects applicants to have read the guidance provided to make sure that the completion of the form is as accurate as possible. You can find the guidance here: <a href="https://www.gov.uk/government/publications/how-to-apply-for-help-with-a-court-or-tribunal-fee-ex160a/how-to-apply-for-help-with-fees-ex160a" target="_blank">https://www.gov.uk/government/publications/how-to-apply-for-help-with-a-court-or-tribunal-fee-ex160a/how-to-apply-for-help-with-fees-ex160a</a></p>
+      <p><span class="red-text">[INSERT NAME OF STAGE 2 APPEAL HANDLER – must be one band/grade higher than stage 1 appeal handler]</span>'s decision is final and there is no further route of appeal after that.<span class="red-text">]</span></p>
+      <p>Yours sincerely</p>
+      <p><span class="red-text">[Your Initial &amp; Surname]</span><br>Help with Fees Stage 1 Appeal Handler<br><span class="red-text">[Insert Court/Tribunal name]</span></p>
+    stage_two_on_issue_refused_html: |
+      <p>Dear <span class="red-text">[INSERT APPLICANT NAME]</span></p>
+      <p><strong>Help with Fees – On Issue: Stage 2 <span class="red-text">[Benefit/Income]</span> Appeal – <span class="red-text">[INSERT APPLICANT NAME &amp; HWF REFERENCE NUMBER]</span> - Final Decision</strong></p>
+      <p>Thank you for your <span class="red-text">[letter/email]</span> dated <span class="red-text">[INSERT DATE]</span> appealing the decision to not <span class="red-text">[fully]</span> uphold <span class="red-text">your/your client's</span> Stage 1 <span class="red-text">[Benefit/Income]</span> Appeal.</p>
+      <h3 class='govuk-heading-m'>Stage 2 <span class="red-text">[Benefit/Income]</span> Appeal Decision</h3>
+      <p>I have reviewed all the documentation provided and I cannot overturn our previous decision to <span class="red-text">[partially]</span> refuse your appeal. This is for the following reasons:</p>
+      <p><span class="red-text">[INSERT REASONS HERE]</span></p>
+      <p>When completing a Help with Fees application, the <span class="red-text">[court/tribunal]</span> expects applicants to have read the guidance provided to make sure that the completion of the form is as accurate as possible. You can find the guidance here: <a href="https://www.gov.uk/government/publications/how-to-apply-for-help-with-a-court-or-tribunal-fee-ex160a/how-to-apply-for-help-with-fees-ex160a" target="_blank">https://www.gov.uk/government/publications/how-to-apply-for-help-with-a-court-or-tribunal-fee-ex160a/how-to-apply-for-help-with-fees-ex160a</a></p>
+      <p>If you still wish to proceed with your <span class="red-text">[INSERT APPLICATION NAME]</span>, you must pay the <span class="red-text">[partial]</span> fee of <span class="red-text">[INSERT FEE AMOUNT £X]</span>.</p>
+      <p>You can pay by:</p>
+      <ul class="govuk-list govuk-list--bullet">
+        <li>Calling <span class="red-text">&lt;add phone number&gt;</span> with your debit card details</li>
+        <li>Posting a cheque written out to 'HM Courts and Tribunals Service' to the address at the top of this letter</li>
+        <li><span class="red-text">[Providing your PBA number – DELETE IF NOT LEGAL REP APPLYING]</span></li>
+        <li><span class="red-text">[insert other payment method]</span></li>
+      </ul>
+      <p>If payment is not received within 14 days i.e. <span class="red-text">[INSERT DATE]</span>, then your <span class="red-text">[INSERT APPLICATION NAME]</span> will not be processed.</p>
+      <p>My decision is final and there is no further route of appeal.</p>
+      <p>Yours sincerely</p>
+      <p><span class="red-text">[Your Initial &amp; Surname]</span><br><span class="red-text">[insert your job role]</span><br>Help with Fees Stage 2 Appeal Handler<br><span class="red-text">[Insert Court/Tribunal name]</span></p>
+    stage_two_refund_refused_html: |
+      <p>Dear <span class="red-text">[INSERT APPLICANT NAME]</span></p>
+      <p><strong>Help with Fees – Refund: Stage 2 <span class="red-text">[Benefit/Income]</span> Appeal – <span class="red-text">[INSERT APPLICANT NAME &amp; HWF REFERENCE NUMBER]</span> - Final Decision</strong></p>
+      <p>Thank you for your <span class="red-text">[letter/email]</span> dated <span class="red-text">[INSERT DATE]</span> appealing the decision to not to <span class="red-text">[fully]</span> uphold <span class="red-text">your/your client's</span> Stage 1 <span class="red-text">[Benefit/Income]</span> Appeal.</p>
+      <h3 class='govuk-heading-m'>Stage 2 <span class="red-text">[Benefit/Income]</span> Appeal Decision</h3>
+      <p>I have reviewed all the documentation provided and I cannot overturn our previous decision to <span class="red-text">[partially]</span> refuse your appeal. This is for the following reasons:</p>
+      <p><span class="red-text">[INSERT REASONS HERE]</span></p>
+      <p>No <span class="red-text">[additional]</span> refund will be granted.</p>
+      <p>When completing a Help with Fees application, the <span class="red-text">[court/tribunal]</span> expects applicants to have read the guidance provided to make sure that the completion of the form is as accurate as possible. You can find the guidance here: <a href="https://www.gov.uk/government/publications/how-to-apply-for-help-with-a-court-or-tribunal-fee-ex160a/how-to-apply-for-help-with-fees-ex160a" target="_blank">https://www.gov.uk/government/publications/how-to-apply-for-help-with-a-court-or-tribunal-fee-ex160a/how-to-apply-for-help-with-fees-ex160a</a></p>
+      <p>My decision is final and there is no further route of appeal.</p>
+      <p>Yours sincerely</p>
+      <p><span class="red-text">[Your Initial &amp; Surname]</span><br><span class="red-text">[insert your job role]</span><br>Help with Fees Stage 2 Appeal Handler<br><span class="red-text">[Insert Court/Tribunal name]</span></p>
+    stage_two_on_issue_upheld_html: |
+      <p>Dear <span class="red-text">[INSERT APPLICANT NAME]</span></p>
+      <p><strong>Help with Fees – On Issue: Stage 2 <span class="red-text">[Benefit/Income]</span> Appeal – <span class="red-text">[INSERT APPLICANT NAME &amp; HWF REFERENCE NUMBER]</span> - Final Decision</strong></p>
+      <p>Thank you for your <span class="red-text">[letter/email]</span> dated <span class="red-text">[INSERT DATE]</span> appealing the decision to not to <span class="red-text">[fully]</span> uphold <span class="red-text">your/your client's</span> Stage 1 <span class="red-text">[Benefit/Income]</span> Appeal.</p>
+      <h3 class='govuk-heading-m'>Stage 2 <span class="red-text">[Benefit/Income]</span> Appeal Decision</h3>
+      <p>When completing a Help with Fees application, the <span class="red-text">[court/tribunal]</span> expects applicants to have read the guidance provided to make sure that the completion of the form is as accurate as possible. You can find the guidance here: <a href="https://www.gov.uk/government/publications/how-to-apply-for-help-with-a-court-or-tribunal-fee-ex160a/how-to-apply-for-help-with-fees-ex160a" target="_blank">https://www.gov.uk/government/publications/how-to-apply-for-help-with-a-court-or-tribunal-fee-ex160a/how-to-apply-for-help-with-fees-ex160a</a></p>
+      <p>Having reviewed your request and the evidence provided, I have decided to overturn the stage 1 <span class="red-text">[benefit/income]</span> appeal decision.</p>
+      <p><span class="red-text">[NOTE TO STAFF: CHOOSE APPROPRIATE PARAGRAPH BELOW BASED ON WHETHER PART PAYMENT IS ALSO REQUIRED:</span></p>
+      <p>The outcome of your application is that you will receive full help with this <span class="red-text">[court/tribunal]</span> fee in the sum of <span class="red-text">[INSERT AMOUNT £X]</span>.</p>
+      <p>Your <span class="red-text">[INSERT APPLICATION NAME]</span> application will now be processed.</p>
+      <p><span class="red-text">[OR]</span></p>
+      <p>The outcome of your Help with Fees application is that you will receive partial help with your <span class="red-text">[court/tribunal]</span> fee in the sum of <span class="red-text">[insert amount £x]</span>. A contribution of <span class="red-text">[insert amount £X]</span> is payable toward the <span class="red-text">[court/tribunal]</span> fee.</p>
+      <p><span class="red-text">[FOR INCOME APPLICATIONS ONLY:</span> We have used your evidence to process a revised income of <span class="red-text">[INSERT FIGURE £X]</span> which leads to an updated partial remission of <span class="red-text">[INSERT UPDATED PARTIAL REMISSION FEE £X.]]</span></p>
+      <p>If payment is not received within 14 days i.e. <span class="red-text">[INSERT DATE]</span>, then your <span class="red-text">[INSERT APPLICATION NAME]</span> will not be processed.</p>
+      <p>You can pay by:</p>
+      <ul class="govuk-list govuk-list--bullet">
+        <li>Calling <span class="red-text">&lt;add phone number&gt;</span> with your debit card details</li>
+        <li>Posting a cheque written out to 'HM Courts and Tribunals Service' to the address at the top of this letter</li>
+        <li><span class="red-text">[Providing your PBA number – DELETE IF NOT A LEGAL REP APPLYING]</span></li>
+        <li><span class="red-text">[insert other payment method]</span></li>
+      </ul>
+      <p>Once part payment is received, your <span class="red-text">[INSERT APPLICATION NAME]</span> will then be processed accordingly. <span class="red-text">]</span></p>
+      <p>Please note that this decision is only in relation to the above court/tribunal fee in relation to <span class="red-text">[INSERT APPLICATION NAME]</span>. You will need to either pay or make a brand-new Help with Fees application for any future court/tribunal fees payable.</p>
+      <p>My decision is final and there is no further route of appeal.</p>
+      <p>Yours sincerely</p>
+      <p><span class="red-text">[Your Initial &amp; Surname]</span><br><span class="red-text">[insert your job role]</span><br>Help with Fees Stage 2 Appeal Handler<br><span class="red-text">[Insert Court/Tribunal name]</span></p>
+    stage_two_refund_upheld_html: |
+      <p>Dear <span class="red-text">[INSERT APPLICANT NAME]</span></p>
+      <p><strong>Help with Fees – Refund: Stage 2 <span class="red-text">[Benefit/Income]</span> Appeal – <span class="red-text">[INSERT APPLICANT NAME &amp; HWF REFERENCE NUMBER]</span> - Final Decision</strong></p>
+      <p>Thank you for your <span class="red-text">[letter/email]</span> dated <span class="red-text">[INSERT DATE]</span> appealing the decision to not to <span class="red-text">[fully]</span> uphold <span class="red-text">your/your client's</span> Stage 1 <span class="red-text">[Benefit/Income]</span> Appeal.</p>
+      <h3 class='govuk-heading-m'>Stage 2 <span class="red-text">[Benefit/Income]</span> Appeal Decision</h3>
+      <p>When completing a Help with Fees application, the <span class="red-text">[court/tribunal]</span> expects applicants to have read the guidance provided to make sure that the completion of the form is as accurate as possible. You can find the guidance here: <a href="https://www.gov.uk/government/publications/how-to-apply-for-help-with-a-court-or-tribunal-fee-ex160a/how-to-apply-for-help-with-fees-ex160a" target="_blank">https://www.gov.uk/government/publications/how-to-apply-for-help-with-a-court-or-tribunal-fee-ex160a/how-to-apply-for-help-with-fees-ex160a</a></p>
+      <p>Having reviewed your request and the evidence provided, I have decided to overturn the stage 1 <span class="red-text">[benefit/income]</span> appeal decision.</p>
+      <p>The outcome of your application is that you will receive a <span class="red-text">[full/partial]</span> refund of this <span class="red-text">[court/tribunal]</span> fee in the sum of <span class="red-text">[INSERT AMOUNT £X]</span>.</p>
+      <p><span class="red-text">FOR INCOME APPLICATIONS ONLY WHERE A PARTIAL REFUND HAS BEEN GRANTED:</span> We have used your evidence to process a revised income of <span class="red-text">[INSERT FIGURE £X]</span> which leads to an updated partial remission of <span class="red-text">[INSERT UPDATED PARTIAL REMISSION FEE £X.]]</span></p>
+      <p>This will be paid via <span class="red-text">[INSERT PAYMENT METHOD]</span> within the next 5-10 working days.</p>
+      <p>Please note that this decision is only in relation to the above court/tribunal fee in relation to <span class="red-text">[INSERT APPLICATION NAME]</span>. You will need to either pay or make a brand-new Help with Fees application for any future court/tribunal fees payable.</p>
+      <p>My decision is final and there is no further route of appeal.</p>
+      <p>Yours sincerely</p>
+      <p><span class="red-text">[Your Initial &amp; Surname]</span><br><span class="red-text">[insert your job role]</span><br>Help with Fees Stage 2 Appeal Handler<br><span class="red-text">[Insert Court/Tribunal name]</span></p>

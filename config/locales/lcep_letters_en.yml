@@ -1,0 +1,142 @@
+en-GB:
+  lcep_letters:
+    initial_information_html: |
+      <p>Dear <span class="red-text">[INSERT APPLICANT NAME]</span></p>
+      <p><strong>Re: Inability to pay <span class="red-text">[court/tribunal]</span> fee <span class="red-text">[INSERT FEE AMOUNT £X]</span> for <span class="red-text">[INSERT APPLICATION NAME]</span></strong></p>
+      <p>Thank you for your <span class="red-text">[letter/email]</span> dated <span class="red-text">[INSERT DATE]</span>.</p>
+      <p>I note the contents of your <span class="red-text">[email/letter]</span> and your position regarding being unable to pay the <span class="red-text">[court/tribunal]</span> fee due to <span class="red-text">[INSERT REASONS GIVEN]</span>.</p>
+      <p><span class="red-text">[INSERT BRIEF BACKGROUND/CONTEXT: - i.e. have they tried to apply for HwF but that has failed? Have they appealed their HwF outcome, but their appeal grounds are not valid e.g. unable to afford the fee due to outgoings? Are they ineligible for HwF but they state they are unable to afford the fee due to exceptional circumstances? Have they been granted a partial fee remission but are stating they still can't afford that? Have they exhausted the HwF appeal route but are claiming they still can't pay?]</span></p>
+      <p><span class="red-text">[INCLUDE THIS PARAGRAPH IF THEY HAVE ALREADY APPLIED FOR HELP WITH FEES (WHICH HAS FAILED/PART REMISSION) AND ARE TRYING TO APPEAL ON THE BASIS THAT THEY CANNOT AFFORD THE FEE DUE TO THEIR EXPENSES/OUTGOINGS:</span> The Help with Fees scheme cannot take into account expenditure/outgoings so no appeals can be successfully made on this basis. Accordingly, you may instead wish to apply for help with this fee under the Lord Chancellor's Exceptional Power to remit fees, if you can provide evidence that the below applies to you.<span class="red-text">]</span></p>
+      <p>Based on the information you have provided, you may wish to apply for help with the <span class="red-text">[court/tribunal]</span> fee under the Lord Chancellor's Exceptional Power scheme.</p>
+      <p>Under the Lord Chancellor's Exceptional Power, a part or full fee remission may be granted if there is evidence to show 'exceptional hardship' or there are 'exceptional circumstances' which prevents an individual from being able to pay a court or tribunal fee. Your application and evidence will be considered by a Delivery Manager who will need to establish that you have made every effort to finance the fee and could not bring the application requiring a fee at a later date.</p>
+      <p>If you wish to apply under the Lord Chancellor's Exceptional Power, you will need to:</p>
+      <ul class="govuk-list govuk-list--bullet">
+        <li>Provide an explanation to the <span class="red-text">[court/tribunal]</span> with the reasons as to why your application <span class="red-text">[INSERT APPLICATION NAME]</span> needs to be made now and cannot be delayed until you may be able to finance the fee.</li>
+        <li>Demonstrate you have applied for Help with Fees and that you are not eligible for Help with Fees and have subsequently made every effort to finance the <span class="red-text">[court/tribunal]</span> fee i.e. what have you done to try and secure the fee of <span class="red-text">[INSERT FEE AMOUNT £X]</span></li>
+        <li>Provide evidence of why you are unable to pay the fee or what detriment paying will have. The type of evidence you would need to provide could include any notices or letters threatening legal action against you for non-payment of bills and accommodation costs etc. We also will need evidence you have exhausted sources of funds such as legal expenses insurance, loans and overdrafts and, in the case of immigration related matters, financial support from your sponsors.</li>
+        <li>Provide an explanation and evidence of the exceptional situation or misfortune that imposes sufficient pressure on you that makes you unable to pay the fee, if you wish to declare 'exceptional circumstances'.</li>
+      </ul>
+      <p>You will also need to include the copy of all the evidence you originally provided in your Help with Fees application and Help with Fees appeal to the <span class="red-text">[court/tribunal]</span> for your Help with Fees application, including bank statements.</p>
+      <p>You will need to provide the above to have your application assessed under the Lord Chancellor's Exceptional Power. The Delivery Manager will endeavour to respond within 10 working days from receiving your request. Please make sure you state 'Lord Chancellor's Exceptional Power application – [your name]' in the letter/email to avoid delays.</p>
+      <p>Alternatively, if you decide to pay the fee:</p>
+      <p>You need to pay the fee amount of <span class="red-text">[INSERT FEE AMOUNT £X]</span> to progress your <span class="red-text">[INSERT APPLICATION NAME]</span>.</p>
+      <p><span class="red-text">[INSERT IF APPLICABLE e.g. partial fee</span>: This figure is calculated based on <span class="red-text">[INSERT REASON] – eg. [the outcome of your Help with Fees application dated [INSERT DATE OF HwF APPLICATION] – reference number [INSERT HwF REFERENCE NUMBER]]</span></p>
+      <p>You can pay by:</p>
+      <ul class="govuk-list govuk-list--bullet">
+        <li>Calling <span class="red-text">&lt;add phone number&gt;</span> with your debit card details</li>
+        <li>Posting a cheque written out to 'HM Courts and Tribunals Service' to the address at the top of this letter</li>
+        <li><span class="red-text">[Providing your PBA number – DELETE IF NOT A LEGAL REP APPLYING]</span></li>
+        <li><span class="red-text">[insert other payment method]</span></li>
+      </ul>
+      <p>Once payment has been received, your <span class="red-text">[INSERT APPLICATION NAME]</span> will then be processed accordingly. If payment is not received within 14 days i.e. <span class="red-text">[INSERT DATE]</span>, your <span class="red-text">[INSERT APPLICATION NAME]</span> will not be processed.</p>
+      <p>Yours sincerely</p>
+      <p><span class="red-text">[Your Initial &amp; Surname]</span><br><span class="red-text">[Insert job role]</span><br><span class="red-text">[Insert Court/Tribunal name]</span></p>
+    stage_one_upheld_html: |
+      <p>Dear <span class="red-text">[INSERT APPLICANT NAME]</span></p>
+      <p><strong>Lord Chancellor's Exceptional Power Application - <span class="red-text">[INSERT APPLICANT'S NAME]</span></strong></p>
+      <p>Thank you for your <span class="red-text">[email/letter]</span> dated <span class="red-text">[INSERT DATE]</span> requesting a consideration of your application for fee remission under the Lord Chancellor's Exceptional Power.</p>
+      <p>I note the contents of your <span class="red-text">[email/letter]</span> and your position. Under the Lord Chancellor's exceptional power to remit a fee, you are required to provide evidence to support a declaration of suffering 'exceptional hardship' or there being 'exceptional circumstances'. I therefore need to establish that you have made every effort to finance the <span class="red-text">[court/tribunal]</span> fee.</p>
+      <h3 class='govuk-heading-m'>Decision</h3>
+      <p>Having reviewed your request and the evidence provided, I have decided to <span class="red-text">[partially]</span> uphold your request to waiver the <span class="red-text">[court/tribunal]</span> fee of <span class="red-text">[INSERT FEE AMOUNT £X]</span> in relation to <span class="red-text">[INSERT APPLICATION NAME]</span>, under the Lord Chancellor's Exceptional Power.</p>
+      <p>This is because I am satisfied that you have met the criteria for a <span class="red-text">[partial]</span> fee remission under the Lord Chancellor's Exceptional Power scheme.</p>
+      <p><span class="red-text">[CHOOSE APPROPRIATE PARAGRAPH BASED ON WHETHER PART PAYMENT IS STILL REQUIRED:</span></p>
+      <p>The outcome of your application is that you will receive full help with this <span class="red-text">[court/tribunal]</span> fee. Your <span class="red-text">[INSERT APPLICATION NAME]</span> will now be processed.</p>
+      <p>Please note that this decision is only in relation to the above <span class="red-text">[court/tribunal]</span> fee in relation to <span class="red-text">[INSERT APPLICATION NAME]</span>. You will need to either pay, <span class="red-text">[make a brand new Help with Fees application]</span> or make the appropriate Lord Chancellor's Exceptional Power application for any future court/tribunal fees payable.</p>
+      <p><span class="red-text">OR</span></p>
+      <p>The outcome of your application is that you will receive partial help with this <span class="red-text">[court/tribunal]</span> fee. This is because <span class="red-text">[INSERT REASONS]</span></p>
+      <p>This figure is calculated based on <span class="red-text">[INSERT REASON - [the outcome of your Help with Fees application dated [INSERT DATE OF HwF APPLICATION] – reference number [INSERT HwF REFERENCE NUMBER]]</span></p>
+      <p>You need to pay the remaining fee amount of <span class="red-text">[INSERT FEE AMOUNT £X]</span> to progress your <span class="red-text">[INSERT APPLICATION NAME.]</span></p>
+      <p>You can pay by:</p>
+      <ul class="govuk-list govuk-list--bullet">
+        <li>Calling <span class="red-text">&lt;add phone number&gt;</span> with your debit card details</li>
+        <li>Posting a cheque written out to 'HM Courts and Tribunals Service' to the address at the top of this letter</li>
+        <li><span class="red-text">[Providing your PBA number – DELETE IF NOT A LEGAL REP APPLYING]</span></li>
+        <li><span class="red-text">[insert other payment method]</span></li>
+      </ul>
+      <p>If payment is not received within 14 days ie. <span class="red-text">[INSERT DATE]</span>, your <span class="red-text">[INSERT APPLICATION NAME]</span> will not be processed.</p>
+      <p>Please note that this decision is only in relation to the above <span class="red-text">[court/tribunal]</span> fee in relation to <span class="red-text">[INSERT APPLICATION NAME]</span>. You will need to either pay, <span class="red-text">[make a brand new Help with Fees application]</span> or make the appropriate Lord Chancellor's Exceptional Power application for any future court/tribunal fees payable.</p>
+      <p>If you are not satisfied with my decision, you can appeal my decision by writing directly to <span class="red-text">[INSERT NAME OF SEO/ OPERATIONS MANAGER] [or by emailing - INSERT EMAIL ADDRESS IF APPLICABLE]</span>. Your stage 2 request must be received by the <span class="red-text">[court/tribunal]</span> within 14 days i.e. <span class="red-text">[INSERT DATE – 14 days from day you send response]</span>.</p>
+      <p><span class="red-text">[INSERT NAME OF SEO/ OPERATIONS MANAGER]</span> will endeavour to respond within 10 working days from receiving your stage 2 review request. Please make sure you state 'Lord Chancellor's Exceptional Power – Stage 2 review – [your name]' in your letter/email to avoid delays.</p>
+      <p>Your request must state the reasons you disagree with my decision and include all previous evidence and applications submitted and any further supporting evidence.</p>
+      <p><span class="red-text">[INSERT NAME OF SEO/ OPERATIONS MANAGER]</span>'s decision is final.<span class="red-text">]</span></p>
+      <p>Yours sincerely</p>
+      <p><span class="red-text">[Your Initial &amp; Surname]</span><br>Delivery Manager<br><span class="red-text">[Insert Court/Tribunal name]</span></p>
+    stage_one_refused_html: |
+      <p>Dear <span class="red-text">[INSERT APPLICANT NAME]</span></p>
+      <p><strong>Lord Chancellor's Exceptional Power Application - <span class="red-text">[INSERT APPLICANT'S NAME]</span></strong></p>
+      <p>Thank you for your <span class="red-text">[email/letter]</span> dated <span class="red-text">[INSERT DATE]</span> requesting a consideration of your application for fee remission under the Lord Chancellor's Exceptional Power.</p>
+      <p>I note the contents of your <span class="red-text">[email/letter]</span> and your position. Under the Lord Chancellor's exceptional power to remit a fee, you are required to provide evidence to support a declaration of suffering 'exceptional hardship' or there being 'exceptional circumstances'. I therefore need to establish that you have made every effort to finance the <span class="red-text">[court/tribunal]</span> fee.</p>
+      <h3 class='govuk-heading-m'>Decision</h3>
+      <p>Having reviewed your request and the evidence provided, I am not satisfied that there is sufficient evidence for me to waive your fee on this occasion and I am refusing your application.</p>
+      <p>This is because:</p>
+      <p><span class="red-text">[INSERT REASONS – here you can set out what is missing from the applicant's evidence or what would need to be provided in order to grant the application]</span></p>
+      <h3 class='govuk-heading-m'>What you can do next</h3>
+      <p>You can pay the <span class="red-text">[full/partial] [court/tribunal]</span> fee in the sum of <span class="red-text">[INSERT FEE AMOUNT £X]</span>.</p>
+      <p><span class="red-text">[INSERT IF APPLICABLE e.g. partial fee</span>: This figure is calculated based on <span class="red-text">eg. [the outcome of your Help with Fees application dated [INSERT DATE OF HwF APPLICATION] – reference number [INSERT HwF REFERENCE NUMBER]]</span></p>
+      <p>You can pay by:</p>
+      <ul class="govuk-list govuk-list--bullet">
+        <li>Calling <span class="red-text">&lt;add phone number&gt;</span> with your debit card details</li>
+        <li>Posting a cheque written out to 'HM Courts and Tribunals Service' to the address at the top of this letter</li>
+        <li><span class="red-text">[Providing your PBA number – DELETE IF NOT A LEGAL REP APPLYING]</span></li>
+        <li><span class="red-text">[insert other payment method]</span></li>
+      </ul>
+      <p>If payment is not received within 14 days ie. <span class="red-text">[INSERT DATE]</span>, your <span class="red-text">[INSERT APPLICATION NAME]</span> will not be processed.</p>
+      <p>If you are not satisfied with my decision, you can appeal my decision by writing directly to <span class="red-text">[INSERT NAME OF SEO/ OPERATIONS MANAGER] [or by emailing - INSERT EMAIL ADDRESS IF APPLICABLE]</span>. Your stage 2 request must be received by the <span class="red-text">[court/tribunal]</span> within 14 days i.e. <span class="red-text">[INSERT DATE – 14 days from day you send response]</span>.</p>
+      <p><span class="red-text">[INSERT NAME OF SEO/ OPERATIONS MANAGER]</span> will endeavour to respond within 10 working days from receiving your stage 2 review request. Please make sure you state 'Lord Chancellor's Exceptional Power – Stage 2 review – [your name]' in your letter/email to avoid delays.</p>
+      <p>Your request must state the reasons you disagree with my decision and provide the following information:</p>
+      <p><span class="red-text">[Example paragraphs below you may wish to use but ultimately the contents of this letter should be reviewed upon a case by case basis and all comments in the request should be addressed line by line:</span></p>
+      <p><span class="red-text">Providing an explanation to the [court/tribunal] with the reasonings as to why your [INSERT APPLICATION NAME] needs to be made in the [court/tribunal] urgently now, rather than a later date when you may be in a different financial position where you may be able to finance the fee.</span></p>
+      <p><span class="red-text">In considering exceptional circumstances the [court/tribunal] needs to establish that you have made every effort to finance the [court/tribunal] fee. Can you please expand on what you have done to secure the fee of [INSERT FEE AMOUNT £X]?</span></p>
+      <p><span class="red-text">Provide the [court/tribunal] with evidence of why you are unable to pay the fee or what detriment this will have by paying the fee. The type of evidence you would need to provide include any notices or threatening legal action against you for non-payment of bills and accommodation costs etc. We also will need evidence you have exhausted sources of funds such as legal expenses insurance, loans and overdrafts and, in the case of immigration related matters, financial support from your sponsors. ]</span></p>
+      <p><span class="red-text">[INSERT NAME OF SEO/ OPERATIONS MANAGER]</span>'s decision is final.</p>
+      <p>Yours sincerely</p>
+      <p><span class="red-text">[Your Initial &amp; Surname]</span><br>Delivery Manager<br><span class="red-text">[Insert Court/Tribunal name]</span></p>
+    stage_two_upheld_html: |
+      <p>Dear <span class="red-text">[INSERT APPLICANT NAME]</span></p>
+      <p><strong>Lord Chancellor's Exceptional Power Application - <span class="red-text">[INSERT APPLICANT'S NAME]</span> - Final Decision</strong></p>
+      <p>Thank you for your <span class="red-text">[email/letter]</span> dated <span class="red-text">[INSERT DATE]</span> requesting a second stage review of your application for fee remission under the Lord Chancellor's Exceptional Power.</p>
+      <p>I note the contents of your <span class="red-text">[email/letter]</span> and your position. Under the Lord Chancellor's exceptional power to remit a fee, you are required to provide evidence to support a declaration of suffering 'exceptional hardship' or there being 'exceptional circumstances'. I therefore need to establish that you have made every effort to finance the <span class="red-text">[court/tribunal]</span> fee.</p>
+      <h3 class='govuk-heading-m'>Decision</h3>
+      <p>Having reviewed your request and all the evidence provided, I have decided to <span class="red-text">[partially]</span> uphold your request to waiver the <span class="red-text">[court/tribunal]</span> fee of <span class="red-text">[INSERT FEE AMOUNT £X]</span> in relation to <span class="red-text">[INSERT APPLICATION NAME]</span>, under the Lord Chancellor's Exceptional Power.</p>
+      <p>This is because I am satisfied that you have met the criteria for a <span class="red-text">[partial]</span> fee remission under the Lord Chancellor's Exceptional Power scheme.</p>
+      <p><span class="red-text">[CHOOSE APPROPRIATE PARAGRAPH BASED ON WHETHER PART PAYMENT IS STILL REQUIRED:</span></p>
+      <p>The outcome of your application is that you will receive full help with this <span class="red-text">[court/tribunal]</span> fee. Your <span class="red-text">[INSERT APPLICATION NAME]</span> will now be processed.</p>
+      <p>Please note that this decision is only in relation to the above <span class="red-text">[court/tribunal]</span> fee in relation to <span class="red-text">[INSERT APPLICATION NAME]</span>. You will need to either pay, <span class="red-text">[make a brand new Help with Fees application]</span> or make the appropriate Lord Chancellor's Exceptional Power application for any future court/tribunal fees payable.</p>
+      <p><span class="red-text">OR</span></p>
+      <p>The outcome of your application is that you will receive partial help with this <span class="red-text">[court/tribunal]</span> fee. This figure is calculated based on <span class="red-text">[INSERT REASON - [the outcome of your Help with Fees application dated [INSERT DATE OF HwF APPLICATION] – reference number [INSERT HwF REFERENCE NUMBER]]</span></p>
+      <p>You need to pay the remaining fee amount of <span class="red-text">[INSERT FEE AMOUNT £X]</span> to progress your <span class="red-text">[INSERT APPLICATION NAME.]</span></p>
+      <p>You can pay by:</p>
+      <ul class="govuk-list govuk-list--bullet">
+        <li>Calling <span class="red-text">&lt;add phone number&gt;</span> with your debit card details</li>
+        <li>Posting a cheque written out to 'HM Courts and Tribunals Service' to the address at the top of this letter</li>
+        <li><span class="red-text">[Providing your PBA number – DELETE IF NOT A LEGAL REP APPLYING]</span></li>
+        <li><span class="red-text">[Insert any other payment method]</span></li>
+      </ul>
+      <p>If payment is not received within 14 days ie. <span class="red-text">[INSERT DATE]</span>, then your <span class="red-text">[INSERT APPLICATION NAME]</span> will not be processed.</p>
+      <p>Please note that this decision is only in relation to the above <span class="red-text">[court/tribunal]</span> fee in relation to <span class="red-text">[INSERT APPLICATION NAME]</span>. You will need to either pay, <span class="red-text">[make a brand new Help with Fees application]</span> or make the appropriate Lord Chancellor's Exceptional Power application for any future court/tribunal fees payable.</p>
+      <p>My decision on this is full and final.</p>
+      <p>Yours sincerely</p>
+      <p><span class="red-text">[Your Initial &amp; Surname]</span><br>Operations Manager<br><span class="red-text">[Insert Court/Tribunal name]</span></p>
+    stage_two_refused_html: |
+      <p>Dear <span class="red-text">[INSERT APPLICANT NAME]</span></p>
+      <p><strong>Lord Chancellor's Exceptional Power Application - <span class="red-text">[INSERT APPLICANT'S NAME]</span> - Final Decision</strong></p>
+      <p>Thank you for your <span class="red-text">[email/letter]</span> dated <span class="red-text">[INSERT DATE]</span> requesting a second stage review of your application for fee remission under the Lord Chancellor's Exceptional Power.</p>
+      <p>I note the contents of your <span class="red-text">[email/letter]</span> and your position. Under the Lord Chancellor's exceptional power to remit a fee, you are required to provide evidence to support a declaration of suffering 'exceptional hardship' or there being 'exceptional circumstances'. I therefore need to establish that you have made every effort to finance the <span class="red-text">[court/tribunal]</span> fee.</p>
+      <h3 class='govuk-heading-m'>Decision</h3>
+      <p>Having reviewed your request and all the evidence provided, I have decided to refuse your request to <span class="red-text">[partially]</span> waiver the <span class="red-text">[court/tribunal]</span> fee of <span class="red-text">[INSERT FEE AMOUNT £X]</span> in relation to <span class="red-text">[INSERT APPLICATION NAME]</span>, under the Lord Chancellor's Exceptional Power.</p>
+      <p>This is because:</p>
+      <p><span class="red-text">[INSERT REASONS]</span></p>
+      <h3 class='govuk-heading-m'>What you can do next</h3>
+      <p>You can pay the <span class="red-text">[full/partial] [court/tribunal]</span> fee in the sum of <span class="red-text">[INSERT FEE AMOUNT £X]. [FOR PARTIAL FEES ONLY:</span> This figure is calculated based on <span class="red-text">[INSERT REASON - [the outcome of your Help with Fees application dated [INSERT DATE OF HwF APPLICATION] – reference number [INSERT HwF REFERENCE NUMBER]]</span></p>
+      <p>You can pay by:</p>
+      <ul class="govuk-list govuk-list--bullet">
+        <li>Calling <span class="red-text">&lt;add phone number&gt;</span> with your debit card details</li>
+        <li>Posting a cheque written out to 'HM Courts and Tribunals Service' to the address at the top of this letter</li>
+        <li><span class="red-text">[Providing your PBA number – DELETE IF NOT A LEGAL REP APPLYING]</span></li>
+        <li><span class="red-text">[insert any other payment method]</span></li>
+      </ul>
+      <p>If payment is not received within 14 days ie. <span class="red-text">[INSERT DATE]</span>, your <span class="red-text">[INSERT APPLICATION NAME]</span> will not be processed.</p>
+      <p>Alternatively, you can bring your <span class="red-text">[INSERT APPLICATION NAME] [and a new Help with Fees application]</span> at a later date when you may be in a different financial position.</p>
+      <p>My decision on this is full and final.</p>
+      <p>Yours sincerely</p>
+      <p><span class="red-text">[Your Initial &amp; Surname]</span><br>Operations Manager<br><span class="red-text">[Insert Court/Tribunal name]</span></p>

@@ -230,5 +230,25 @@ RSpec.describe ReportsController do
       it { is_expected.to render_template :letters }
     end
 
+    describe 'GET #appeals_letters' do
+      before { get :appeals_letters }
+
+      subject { response }
+
+      it { is_expected.to have_http_status(:success) }
+
+      it { is_expected.to render_template :appeals_letters }
+    end
+
+    describe 'GET #lcep_letters' do
+      before { get :lcep_letters }
+
+      subject { response }
+
+      it { is_expected.to have_http_status(:success) }
+
+      it { is_expected.to render_template :lcep_letters }
+    end
+
   end
 end
