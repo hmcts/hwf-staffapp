@@ -115,7 +115,6 @@ group :development, :test do
   gem 'rubocop-factory_bot'
   gem 'rubocop-rspec_rails'
   gem 'simplecov', '~> 0.22.0'
-  gem "ruby-vips", "~> 2.0"
 end
 
 group :test do
