@@ -559,16 +559,16 @@ RSpec.describe Views::Reports::ApplicationsByCourtExport do
        'Age band under 14', 'Age band 14+', 'Applicant pays',
        'Departmental cost estimate', 'Departmental cost', 'Source', 'Granted?',
        'Benefits granted?', 'Evidence checked?', 'Capital band',
-       'Saving and Investments', 'Case number', 'Date received',
+       'Savings and investments amount', 'Case number', 'Date received',
        'Date submitted online', 'Married', 'Pension age', 'Decision',
        'Failed on savings', 'Application processed date',
-       'Manual evidence processed date', 'Processed date', 'EV check outcome',
+       'Manual evidence processed date', 'Processed date', 'Evidence check outcome',
        'PP outcome', 'Declared income sources', 'DB evidence check type',
        'DB income check type', 'HMRC total income', 'Evidence check type',
        'HMRC response?', 'HMRC errors', 'Complete processing?',
        'Additional income', 'Income processed', 'HMRC request date range',
        'Statement signed by', 'Partner NI entered', 'Partner name entered',
-       'HwF Scheme', 'Deletion Reason', 'Reason Description']
+       'HwF scheme', 'Deletion reason', 'Reason description']
     end
 
     before { travel_to(date_from + 1.day) { create(:application, :processed_state, office: office) } }
@@ -902,7 +902,7 @@ RSpec.describe Views::Reports::ApplicationsByCourtExport do
         expect(row['Benefits granted?']).to eq('Yes')
         expect(row['Evidence checked?']).to eq('yes')
         expect(row['Capital band']).to eq('0 - 2,999')
-        expect(row['Saving and Investments']).to eq('1500.0')
+        expect(row['Savings and investments amount']).to eq('1500.0')
         expect(row['Case number']).to eq('GOLD0001')
         expect(row['Date received']).to eq('2021-01-01')
         expect(row['Date submitted online']).to eq('2020-11-01 00:00:00')
@@ -913,7 +913,7 @@ RSpec.describe Views::Reports::ApplicationsByCourtExport do
         expect(row['Application processed date']).to eq('2021-01-03 00:00:00')
         expect(row['Manual evidence processed date']).to eq('N/A')
         expect(row['Processed date']).to eq('2021-01-03 00:00:00')
-        expect(row['EV check outcome']).to eq('full')
+        expect(row['Evidence check outcome']).to eq('full')
         expect(row['PP outcome']).to eq('part')
         expect(row['Declared income sources']).to eq('Wages before tax and National Insurance are taken off')
         expect(row['DB evidence check type']).to eq('random')
@@ -929,9 +929,9 @@ RSpec.describe Views::Reports::ApplicationsByCourtExport do
         expect(row['Statement signed by']).to eq('legal_representative')
         expect(row['Partner NI entered']).to eq('true')
         expect(row['Partner name entered']).to eq('true')
-        expect(row['HwF Scheme']).to eq('post_ucd')
-        expect(row['Deletion Reason']).to eq('N/A')
-        expect(row['Reason Description']).to eq('N/A')
+        expect(row['HwF scheme']).to eq('post_ucd')
+        expect(row['Deletion reason']).to eq('N/A')
+        expect(row['Reason description']).to eq('N/A')
       end
     end
   end
@@ -1018,7 +1018,7 @@ RSpec.describe Views::Reports::ApplicationsByCourtExport do
       it "fills paper-only columns with 'N/A'" do
         aggregate_failures do
           expect(row['Application processed date']).to eq('N/A')
-          expect(row['EV check outcome']).to eq('N/A')
+          expect(row['Evidence check outcome']).to eq('N/A')
           expect(row['HMRC total income']).to eq('N/A')
           expect(row['Evidence check type']).to eq('N/A')
         end

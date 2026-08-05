@@ -593,12 +593,12 @@ RSpec.describe Views::Reports::RawDataExport do
 
     it 'includes the new columns in the header row' do
       export = data.to_csv.split("\n").first
-      expect(export).to include('fee code', 'claim amount', 'fee population')
+      expect(export).to include('Fee code', 'Claim amount', 'Fee population')
     end
 
     it 'places fee code, claim amount and fee population immediately after fee' do
       headers = data.to_csv.split("\n").first
-      expect(headers).to include('fee,fee code,claim amount,fee population,estimated applicant pay')
+      expect(headers).to include('Fee,Fee code,Claim amount,Fee population,Applicant pays estimate')
     end
   end
 

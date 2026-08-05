@@ -1,0 +1,15 @@
+- content_for :page_title
+  = power_bi_export_title(params[:export_type])
+
+h1.govuk-heading-xl = power_bi_export_title(params[:export_type])
+
+p.govuk-body = power_bi_export_description(params[:export_type])
+
+= form_with url: report_power_bi_export_path(params[:export_type]), method: :put, html: { autocomplete: 'off' } do |f|
+
+  .govuk-form-group.group-level
+    = f.label :month, 'Select month', class: 'govuk-label'
+    = f.select :month, options_for_select(power_bi_month_options, power_bi_default_month), {}, class: 'govuk-select'
+
+  .govuk-form-group.group-level
+    = f.submit 'Generate extract', class: 'govuk-button'
