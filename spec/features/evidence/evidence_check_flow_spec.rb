@@ -39,6 +39,42 @@ RSpec.feature 'Evidence check flow' do
     end
   end
 
+  context 'when on "Evidence show" page for a post UCD application' do
+    let(:application) do
+      create(:application_full_remission, user: user, office: office, state: state, detail_traits: [:post_ucd])
+    end
+
+    before { visit evidence_path(id: evidence.id) }
+
+    context 'when evidence check data is filled in but application is still waiting for evidence' do
+      let(:state) { 1 }
+      let(:outcome) { 'part' }
+      let(:amount) { 100 }
+      let(:income) { 2000 }
+
+      it 'still displays the evidence check banner' do
+        expect(page).to have_text 'Evidence of income needs to be checked'
+      end
+
+      it 'does not display the part payment banner' do
+        expect(page).to have_no_text 'The applicant must pay'
+      end
+    end
+
+    context 'when the application is waiting for part payment' do
+      let(:state) { 2 }
+      let(:amount) { 100 }
+
+      it 'displays the part payment banner' do
+        expect(page).to have_text 'The applicant must pay £100 towards the fee'
+      end
+
+      it 'does not display the evidence check banner' do
+        expect(page).to have_no_text 'Evidence of income needs to be checked'
+      end
+    end
+  end
+
   context 'when on "Evidence accuracy" page' do
     before { visit accuracy_evidence_path(id: evidence.id) }
 
