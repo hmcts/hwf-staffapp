@@ -61,12 +61,23 @@ RSpec.feature 'Evidence check flow' do
       end
     end
 
-    context 'when the application is waiting for part payment' do
+    context 'when part payment data is filled in but application is still waiting for part payment' do
       let(:state) { 2 }
+      let(:outcome) { 'part' }
       let(:amount) { 100 }
+      let(:income) { 2000 }
 
-      it 'displays the part payment banner' do
+      before do
+        create(:part_payment_part_outcome, application: application)
+        visit evidence_path(id: evidence.id)
+      end
+
+      it 'still displays the part payment banner' do
         expect(page).to have_text 'The applicant must pay £100 towards the fee'
+      end
+
+      it 'does not display the part payment outcome banner' do
+        expect(page).to have_no_text 'The applicant has paid'
       end
 
       it 'does not display the evidence check banner' do
