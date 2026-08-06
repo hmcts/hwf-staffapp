@@ -57,4 +57,8 @@ RSpec.describe GuideHelper do
   describe '#faq_url' do
     it { expect(helper.faq_url).to include('HWF%5FFAQ%20%5FOriginal%5FVersion1%2E0%5F28%2E10%2E2025%2Epdf') }
   end
+
+  describe '#manager_guide_url' do
+    it { expect(helper.manager_guide_url).to include('knowledgecentral/IQBseyY-O1RLQK0W_lW_Q_22AYp2C_S0XNmU0jwaZ8-OifQ') }
+  end
 end

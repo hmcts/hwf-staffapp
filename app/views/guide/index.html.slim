@@ -39,22 +39,22 @@ p.govuk-body-l How to process an application, deal with evidence checks, part-pa
 .govuk-grid-row
   .govuk-grid-column-one-quarter.guide-cols
     = link_to new_process_application_url
-      span Process a paper application job card – new Legislation
+      span Process a paper application job card – new legislation
       = image_tag("icon-process.png", alt: 'New process application guide icon')
 
   .govuk-grid-column-one-quarter.guide-cols
     = link_to new_online_process_application_url
-      span Process an online application job card – new Legislation
+      span Process an online application job card – new legislation
       = image_tag("icon-process.png", alt: 'New process application guide icon')
 
   .govuk-grid-column-one-quarter.guide-cols
     = link_to new_evidence_checks_url
-      span Evidence checks - job card new legislation
+      span Evidence checks job card - new legislation
       = image_tag("icon-evidence.png", alt: 'New evidence checks guide icon')
 
   .govuk-grid-column-one-quarter.guide-cols
     = link_to part_payment_url
-      span Part-payments-job card
+      span Part-payments job card
       = image_tag("icon-part-fee.png", alt: 'Part-payments guide icon')
 
 .govuk-grid-row
@@ -74,5 +74,11 @@ p.govuk-body-l How to process an application, deal with evidence checks, part-pa
       = image_tag("icon-appeals.png", alt: 'HMRC Datashare guide icon')
   .govuk-grid-column-one-quarter.guide-cols
     = link_to faq_url
-      span HwF FAQ
-      = image_tag("icon-guidance.png", alt: 'HwF FAQ')
+      span HwF FAQs
+      = image_tag("icon-guidance.png", alt: 'HwF FAQs')
+
+.govuk-grid-row
+  .govuk-grid-column-one-quarter.guide-cols
+    = link_to manager_guide_url
+      span Manager Guide
+      = image_tag("icon-how-to.png", alt: 'Manager Guide icon')
