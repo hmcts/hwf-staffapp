@@ -232,7 +232,7 @@ GEM
       dotenv (= 3.2.0)
       railties (>= 6.1)
     drb (2.2.3)
-    erb (6.0.6)
+    erb (6.0.7)
     erubi (1.13.1)
     et-orbi (1.4.1)
       tzinfo
@@ -272,7 +272,7 @@ GEM
       multi_xml (>= 0.5.2)
     i18n (1.15.2)
       concurrent-ruby (~> 1.0)
-    image_processing (2.0.2)
+    image_processing (2.0.3)
     io-console (0.8.2)
     irb (1.18.0)
       pp (>= 0.6.0)
@@ -457,7 +457,7 @@ GEM
     redis-client (0.30.1)
       connection_pool
     regexp_parser (2.12.0)
-    reline (0.6.3)
+    reline (0.7.0)
       io-console (~> 0.5)
     request_store (1.7.0)
       rack (>= 1.4)
@@ -485,7 +485,7 @@ GEM
     rspec-support (3.13.7)
     rspec_junit_formatter (0.6.0)
       rspec-core (>= 2, < 4, != 2.12.0)
-    rubocop (1.88.2)
+    rubocop (1.89.0)
       json (~> 2.3)
       language_server-protocol (~> 3.17.0.2)
       lint_roller (~> 1.1.0)
@@ -534,10 +534,10 @@ GEM
       rexml (~> 3.2, >= 3.2.5)
       rubyzip (>= 1.2.2, < 4.0)
       websocket (~> 1.0)
-    sentry-rails (6.6.2)
+    sentry-rails (6.7.0)
       railties (>= 5.2.0)
-      sentry-ruby (~> 6.6.2)
-    sentry-ruby (6.6.2)
+      sentry-ruby (~> 6.7.0)
+    sentry-ruby (6.7.0)
       bigdecimal
       concurrent-ruby (~> 1.0, >= 1.0.2)
       logger
@@ -570,7 +570,7 @@ GEM
       ffi (~> 1.1)
       memoist3 (~> 1.0.0)
     systemu (2.6.5)
-    temple (0.10.4)
+    temple (0.10.6)
     test-prof (1.6.3)
       logger
     thor (1.5.0)
