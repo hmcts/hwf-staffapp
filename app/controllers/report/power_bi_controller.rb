@@ -1,9 +1,14 @@
 module Report
   class PowerBiController < ReportsController
 
+    def index
+      authorize :report, :power_bi?
+      render 'reports/power_bi/index'
+    end
+
     def show
       authorize :report, :power_bi?
-      render 'reports/power_bi'
+      render 'reports/power_bi/show'
     end
 
     def data_export
@@ -14,7 +19,8 @@ module Report
     private
 
     def power_bi_data_file
-      power_bi = Views::Reports::PowerBiExport.new
+      power_bi = power_bi_export
+      power_bi.to_zip
       power_bi.zipfile_path
     rescue StandardError => e
       Sentry.with_scope do |scope|
@@ -22,6 +28,22 @@ module Report
         Sentry.capture_message(e.message)
       end
       Rails.logger.debug { "Error in power_bi export task: #{e.message}" }
+    end
+
+    def power_bi_export
+      month = selected_month
+      case params[:export_type]
+      when '2' then Views::Reports::PowerBiExport2.new(month)
+      when '3' then Views::Reports::PowerBiExport3.new(month)
+      else Views::Reports::PowerBiExport1.new(month)
+      end
+    end
+
+    # Parse the chosen "YYYY-MM" month, falling back to the previous month.
+    def selected_month
+      Date.strptime(params[:month], '%Y-%m').beginning_of_month
+    rescue ArgumentError, TypeError
+      Time.zone.today.prev_month.beginning_of_month
     end
 
   end

@@ -1,6 +1,6 @@
 'use strict';
 
-const { getFeeVersionForDate, classifyFeeType } = require('../../app/javascript/freg_helpers');
+const { getFeeVersionForDate, findFeeVersionForDate, classifyFeeType } = require('../../app/javascript/freg_helpers');
 
 describe('getFeeVersionForDate', () => {
   const feeCode = {
@@ -31,6 +31,38 @@ describe('getFeeVersionForDate', () => {
 
   test('falls back to current_version when no version matches the date', () => {
     expect(getFeeVersionForDate(feeCode, '1999-01-01')).toEqual(feeCode.current_version);
+  });
+});
+
+describe('findFeeVersionForDate', () => {
+  const feeCode = {
+    current_version: { version: 'current', valid_from: '2024-01-01' },
+    fee_versions: [
+      { version: 'v1', valid_from: '2020-01-01', valid_to: '2022-12-31' },
+      { version: 'v2', valid_from: '2023-01-01', valid_to: '2024-12-31' }
+    ]
+  };
+
+  test('returns null when the date is missing', () => {
+    expect(findFeeVersionForDate(feeCode, null)).toBeNull();
+  });
+
+  test('returns the version whose range covers the date', () => {
+    expect(findFeeVersionForDate(feeCode, '2021-06-01').version).toBe('v1');
+  });
+
+  test('returns null when no version covers the date - no fallback', () => {
+    expect(findFeeVersionForDate(feeCode, '2019-01-01')).toBeNull();
+  });
+
+  test('checks the current_version range when the fee has no fee_versions list', () => {
+    const noVersions = { current_version: { version: 'current', valid_from: '2024-01-01' } };
+    expect(findFeeVersionForDate(noVersions, '2024-06-01').version).toBe('current');
+    expect(findFeeVersionForDate(noVersions, '2023-06-01')).toBeNull();
+  });
+
+  test('returns null when the fee has no versions at all', () => {
+    expect(findFeeVersionForDate({}, '2024-06-01')).toBeNull();
   });
 });
 

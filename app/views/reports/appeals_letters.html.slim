@@ -1,0 +1,53 @@
+- content_for :page_title
+  = "Appeals letter templates"
+
+h1.govuk-heading-l.util_mt-medium Appeals letter templates
+
+p.govuk-body
+  strong You must review the letter templates carefully and adjust them accordingly on a case-by-case basis.
+p.govuk-body
+  strong Please ensure any red text has been amended/removed, including any staff notes and brackets that are not applicable.
+
+ul.govuk-list.govuk-list--bullet
+  li = link_to 'Letter 1: Stage 1 HwF Appeal – On Issue Fee – Appeal Refused', '#stage-1-on-issue-refused', class: 'govuk-link'
+  li = link_to 'Letter 2: Stage 1 HwF Appeal – Refund Fee – Appeal Refused', '#stage-1-refund-refused', class: 'govuk-link'
+  li = link_to 'Letter 3: Stage 1 HwF Appeal – On Issue Fee – Appeal Upheld/Partially Upheld', '#stage-1-on-issue-upheld', class: 'govuk-link'
+  li = link_to 'Letter 4: Stage 1 HwF Appeal – Refund Fee – Appeal Upheld/Partially Upheld', '#stage-1-refund-upheld', class: 'govuk-link'
+  li = link_to 'Letter 5: Stage 2 HwF Appeal – On Issue Fee – Appeal Refused', '#stage-2-on-issue-refused', class: 'govuk-link'
+  li = link_to 'Letter 6: Stage 2 HwF Appeal – Refund Fee – Appeal Refused', '#stage-2-refund-refused', class: 'govuk-link'
+  li = link_to 'Letter 7: Stage 2 HwF Appeal – On Issue Fee – Appeal Upheld/Partially Upheld', '#stage-2-on-issue-upheld', class: 'govuk-link'
+  li = link_to 'Letter 8: Stage 2 HwF Appeal – Refund Fee – Appeal Upheld/Partially Upheld', '#stage-2-refund-upheld', class: 'govuk-link'
+
+br
+
+h2.govuk-heading-m id="stage-1-on-issue-refused" Letter 1: Stage 1 HwF Appeal – On Issue Fee – Appeal Refused
+.confirmation-letter
+  = t('appeals_letters.stage_one_on_issue_refused_html')
+
+h2.govuk-heading-m id="stage-1-refund-refused" Letter 2: Stage 1 HwF Appeal – Refund Fee – Appeal Refused
+.confirmation-letter
+  = t('appeals_letters.stage_one_refund_refused_html')
+
+h2.govuk-heading-m id="stage-1-on-issue-upheld" Letter 3: Stage 1 HwF Appeal – On Issue Fee – Appeal Upheld/Partially Upheld
+.confirmation-letter
+  = t('appeals_letters.stage_one_on_issue_upheld_html')
+
+h2.govuk-heading-m id="stage-1-refund-upheld" Letter 4: Stage 1 HwF Appeal – Refund Fee – Appeal Upheld/Partially Upheld
+.confirmation-letter
+  = t('appeals_letters.stage_one_refund_upheld_html')
+
+h2.govuk-heading-m id="stage-2-on-issue-refused" Letter 5: Stage 2 HwF Appeal – On Issue Fee – Appeal Refused
+.confirmation-letter
+  = t('appeals_letters.stage_two_on_issue_refused_html')
+
+h2.govuk-heading-m id="stage-2-refund-refused" Letter 6: Stage 2 HwF Appeal – Refund Fee – Appeal Refused
+.confirmation-letter
+  = t('appeals_letters.stage_two_refund_refused_html')
+
+h2.govuk-heading-m id="stage-2-on-issue-upheld" Letter 7: Stage 2 HwF Appeal – On Issue Fee – Appeal Upheld/Partially Upheld
+.confirmation-letter
+  = t('appeals_letters.stage_two_on_issue_upheld_html')
+
+h2.govuk-heading-m id="stage-2-refund-upheld" Letter 8: Stage 2 HwF Appeal – Refund Fee – Appeal Upheld/Partially Upheld
+.confirmation-letter
+  = t('appeals_letters.stage_two_refund_upheld_html')

@@ -22,6 +22,32 @@ RSpec.feature 'FREG fee search on the online application details page' do
       expect(page).to have_field('fee_search')
     end
 
+    scenario 'renders the message shown when no fee version covers the refund date' do
+      expect(page).to have_css('#fee-date-not-found-message', text: 'Fee for this date was not found', visible: :all)
+    end
+
+    context 'when the online application is a refund' do
+      let(:online_application) { create(:online_application, :with_reference, :with_refund) }
+
+      scenario 'stamps the refund flag and date fee paid for the fee search JS' do
+        search_field = page.find('#fee_search')
+        aggregate_failures do
+          expect(search_field['data-refund']).to eq('true')
+          expect(search_field['data-date-fee-paid']).to eq(online_application.date_fee_paid.strftime('%Y-%m-%d'))
+        end
+      end
+    end
+
+    context 'when the online application is not a refund' do
+      scenario 'stamps a false refund flag and no date fee paid' do
+        search_field = page.find('#fee_search')
+        aggregate_failures do
+          expect(search_field['data-refund']).to eq('false')
+          expect(search_field['data-date-fee-paid']).to be_nil
+        end
+      end
+    end
+
     scenario 'gives the fee input the id freg.js expects' do
       expect(page).to have_field('application_fee')
     end

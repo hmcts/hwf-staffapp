@@ -2,7 +2,7 @@
   fieldset.govuk-fieldset
     legend.govuk-fieldset__legend.govuk-visually-hidden Fee search
     = label_tag :fee_search, 'Fee search (Fee amount, jurisdiction, service type, event type)', class: 'govuk-label'
-    = text_field_tag :fee_search, @fee_search_term, class: 'govuk-input govuk-input--width-10', data: { date_received: @form.date_received&.strftime('%Y-%m-%d') }
+    = text_field_tag :fee_search, @fee_search_term, class: 'govuk-input govuk-input--width-10', data: { date_received: @form.date_received&.strftime('%Y-%m-%d'), refund: @form.refund, date_fee_paid: @form.date_fee_paid&.strftime('%Y-%m-%d') }
     p.govuk-body
       | Search results:
       span.search_result_count 0
@@ -15,6 +15,9 @@
 
 #no-results-message.govuk-error-message.govuk-visually-hidden
   | No fee code found. Search for another fee by the fee code, amount or description
+
+#fee-date-not-found-message.govuk-error-message.govuk-visually-hidden
+  | Fee for this date was not found
 
 #date-received-required-message.govuk-error-message.govuk-visually-hidden
   | Enter the date application received before searching for a fee

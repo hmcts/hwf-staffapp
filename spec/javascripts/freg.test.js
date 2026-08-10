@@ -40,11 +40,16 @@ const CODES = [
   { code: 'NOVER', service_type: { name: 'none' } }
 ];
 
-function setupDom(dateReceived) {
+function setupDom(dateReceived, refundData = {}) {
+  const dataAttrs = [
+    dateReceived ? `data-date-received="${dateReceived}"` : '',
+    refundData.refund !== undefined ? `data-refund="${refundData.refund}"` : '',
+    refundData.dateFeePaid ? `data-date-fee-paid="${refundData.dateFeePaid}"` : ''
+  ].join(' ');
   document.body.innerHTML = `
     <meta name="csrf-token" content="test-token">
     <form id="edit_application_1">
-      <input id="fee_search" ${dateReceived ? `data-date-received="${dateReceived}"` : ''} />
+      <input id="fee_search" ${dataAttrs} />
       <input id="application_day_date_received" />
       <input id="application_month_date_received" />
       <input id="application_year_date_received" />
@@ -52,6 +57,7 @@ function setupDom(dateReceived) {
       <div class="fee-search-results-block govuk-inset-text govuk-visually-hidden">
         <ul id="fee-search-results"></ul>
         <p id="no-results-message" class="govuk-visually-hidden"></p>
+        <p id="fee-date-not-found-message" class="govuk-visually-hidden"></p>
       </div>
       <input id="fee_search_has_results" value="false" />
       <div id="selected-fee-display" class="govuk-visually-hidden"><span id="selected-fee-text"></span></div>
@@ -269,6 +275,132 @@ describe('findMatches / displayFees', () => {
     mod.init();
     mod.findMatches('FEE100');
     expect(liFor('FEE100').textContent).toContain('Valid from:');
+  });
+});
+
+describe('refund applications', () => {
+  function setupRefundDom(refundData) {
+    setupDom('2024-06-01', refundData);
+    loadModule();
+    mod.init();
+  }
+
+  it('uses the date the fee was paid instead of the date received', () => {
+    setupRefundDom({ refund: true, dateFeePaid: '2021-06-01' });
+    mod.findMatches('FEE200');
+    // 2021-06-01 falls in FEE200 v1 (£200), while date received 2024-06-01 falls in v2 (£250)
+    expect(liFor('FEE200').textContent).toContain('\u00A3200');
+    expect(liFor('FEE200').textContent).toContain('Valid from: 2020-01-01');
+  });
+
+  it('keeps using the date received when the application is not a refund', () => {
+    setupRefundDom({ refund: false, dateFeePaid: '2021-06-01' });
+    mod.findMatches('FEE200');
+    expect(liFor('FEE200').textContent).toContain('\u00A3250');
+  });
+
+  it('shows the date-not-found message when no version covers the date fee paid', () => {
+    setupRefundDom({ refund: true, dateFeePaid: '2019-06-01' });
+    mod.findMatches('FEE200');
+    expect(liFor('FEE200')).toBeFalsy();
+    expect($('#fee_search_has_results').val()).toBe('false');
+    expect($('#fee-date-not-found-message').hasClass('govuk-visually-hidden')).toBe(false);
+    expect($('#no-results-message').hasClass('govuk-visually-hidden')).toBe(true);
+  });
+
+  it('still lists rateable fees when the date fee paid is out of range', () => {
+    setupRefundDom({ refund: true, dateFeePaid: '2019-06-01' });
+    mod.findMatches('FEE400');
+    expect(liFor('FEE400')).toBeTruthy();
+    expect($('#fee-date-not-found-message').hasClass('govuk-visually-hidden')).toBe(true);
+  });
+
+  it('does not show the date-not-found message when other fees still match', () => {
+    setupRefundDom({ refund: true, dateFeePaid: '2019-06-01' });
+    // FEE400 (rateable) survives the date filter, FEE100/FEE200/FEE300 do not
+    mod.findMatches('FEE');
+    expect(liFor('FEE400')).toBeTruthy();
+    expect(liFor('FEE200')).toBeFalsy();
+    expect($('#fee-date-not-found-message').hasClass('govuk-visually-hidden')).toBe(true);
+  });
+
+  it('shows the plain no-results message when the term matches nothing', () => {
+    setupRefundDom({ refund: true, dateFeePaid: '2019-06-01' });
+    mod.findMatches('ZZZ');
+    expect($('#no-results-message').hasClass('govuk-visually-hidden')).toBe(false);
+    expect($('#fee-date-not-found-message').hasClass('govuk-visually-hidden')).toBe(true);
+  });
+
+  it('falls back to the date received when a refund has no date fee paid', () => {
+    setupRefundDom({ refund: true });
+    mod.findMatches('FEE200');
+    expect(liFor('FEE200').textContent).toContain('\u00A3250');
+  });
+
+  it('hides the date-not-found message once a search succeeds', () => {
+    setupRefundDom({ refund: true, dateFeePaid: '2019-06-01' });
+    mod.findMatches('FEE200');
+    expect($('#fee-date-not-found-message').hasClass('govuk-visually-hidden')).toBe(false);
+    mod.findMatches('FEE400');
+    expect($('#fee-date-not-found-message').hasClass('govuk-visually-hidden')).toBe(true);
+  });
+});
+
+describe('refund fields on the same page (pre-UCD paper details)', () => {
+  function addLiveRefundFields() {
+    document.getElementById('fee_search').insertAdjacentHTML('afterend', `
+      <input type="checkbox" id="application_refund" />
+      <input id="application_day_date_fee_paid" />
+      <input id="application_month_date_fee_paid" />
+      <input id="application_year_date_fee_paid" />
+    `);
+  }
+
+  function fillDateFeePaid(day, month, year) {
+    $('#application_day_date_fee_paid').val(day);
+    $('#application_month_date_fee_paid').val(month);
+    $('#application_year_date_fee_paid').val(year);
+  }
+
+  beforeEach(() => {
+    setupDom('2024-06-01');
+    addLiveRefundFields();
+    loadModule();
+    mod.init();
+  });
+
+  it('reads the live refund checkbox and date fee paid fields', () => {
+    $('#application_refund').prop('checked', true);
+    fillDateFeePaid('1', '6', '2021');
+    mod.findMatches('FEE200');
+    expect(liFor('FEE200').textContent).toContain('\u00A3200');
+  });
+
+  it('ignores the date fee paid while the refund checkbox is unchecked', () => {
+    fillDateFeePaid('1', '6', '2021');
+    mod.findMatches('FEE200');
+    expect(liFor('FEE200').textContent).toContain('\u00A3250');
+  });
+
+  it('treats a partially filled date fee paid as missing', () => {
+    $('#application_refund').prop('checked', true);
+    fillDateFeePaid('1', '6', '');
+    mod.findMatches('FEE200');
+    expect(liFor('FEE200').textContent).toContain('\u00A3250');
+  });
+
+  it('re-runs the search when the refund fields change', () => {
+    $('#fee_search').val('FEE200');
+    mod.findMatches('FEE200');
+    liFor('FEE200').click();
+    expect(mod.feeSelected).toBe(true);
+
+    $('#application_refund').prop('checked', true);
+    fillDateFeePaid('1', '6', '2021');
+    $('#application_year_date_fee_paid').trigger('change');
+
+    expect(mod.feeSelected).toBe(false);
+    expect(liFor('FEE200').textContent).toContain('\u00A3200');
   });
 });
 

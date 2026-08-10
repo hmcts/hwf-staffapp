@@ -24,41 +24,6 @@
         p.util_mb-0 Partner's Full name
         p = @online_application.partner_full_name
 
-      - fee_field_id = fee_search_available? ? 'application_fee' : 'online_application_fee'
-
-      - if fee_search_available?
-        = render 'applications/process/details/fee_search', f: f
-
-      .govuk-form-group.group-level
-        = f.label :fee, class: 'govuk-label', for: fee_field_id
-        span.govuk-error-message
-          = f.label :fee, @form.errors[:fee].join(', '), class: 'error', for: fee_field_id if @form.errors[:fee].present?
-        .field-wrapper
-          span.prefix £
-          = f.text_field :fee, { id: fee_field_id, value: @form.fee ? '%.2f' % @form.fee.to_f : '', class: 'govuk-input', inputmode: 'decimal', pattern: '[0-9]*\\.?[0-9]*' }
-          - if fee_search_available?
-            = f.hidden_field :fee_code, id: 'application_fee_code'
-            = f.hidden_field :claim_amount, id: 'application_claim_amount'
-            = f.hidden_field :fee_version_valid_from, id: 'application_fee_version_valid_from'
-            = f.hidden_field :fee_entry_method, value: (@form.fee_entry_method.presence || 'manual'), id: 'application_fee_entry_method'
-
-      .govuk-form-group.group-level
-        fieldset.govuk-fieldset
-          legend.visuallyhidden Select jurisdiction
-          = f.label :jurisdiction_id, class: 'govuk-label'
-          span.govuk-error-message
-            = f.label :jurisdiction_id, @form.errors[:jurisdiction_id].join(', '), class: 'error' if @form.errors[:jurisdiction_id].present?
-          = f.hidden_field :jurisdiction_id, value: nil
-          - if @jurisdictions.present?
-            .govuk-radios.govuk-radios--small
-              =f.collection_radio_buttons(:jurisdiction_id, @jurisdictions, :id, :display_full, include_hidden: true) do |b|
-                .govuk-radios__item
-                  = b.radio_button(data: @form.jurisdiction_id, class: 'govuk-radios__input')
-                  = b.label(class: 'govuk-label govuk-radios__label')
-
-          - else
-            = t('error_messages.jurisdictions.none_in_office')
-
       .govuk-form-group.group-level
         p.util_mb-0 =t('date_submitted', scope: @form.i18n_scope)
         p: strong.date_sumitted= date_submitted(@online_application)
@@ -98,6 +63,41 @@
                     = f.radio_button :discretion_applied, 'true', { class: 'govuk-checkboxes__input show-hide-section', data: { section: 'discretion-applied-yes', show: 'true'} }
                     = f.label t('discretion_applied_true', scope: @form.i18n_scope), class: 'govuk-label govuk-checkboxes__label', for: 'online_application_discretion_applied_true'
 
+
+      - fee_field_id = fee_search_available? ? 'application_fee' : 'online_application_fee'
+
+      - if fee_search_available?
+        = render 'applications/process/details/fee_search', f: f
+
+      .govuk-form-group.group-level
+        = f.label :fee, class: 'govuk-label', for: fee_field_id
+        span.govuk-error-message
+          = f.label :fee, @form.errors[:fee].join(', '), class: 'error', for: fee_field_id if @form.errors[:fee].present?
+        .field-wrapper
+          span.prefix £
+          = f.text_field :fee, { id: fee_field_id, value: @form.fee ? '%.2f' % @form.fee.to_f : '', class: 'govuk-input', inputmode: 'decimal', pattern: '[0-9]*\\.?[0-9]*' }
+          - if fee_search_available?
+            = f.hidden_field :fee_code, id: 'application_fee_code'
+            = f.hidden_field :claim_amount, id: 'application_claim_amount'
+            = f.hidden_field :fee_version_valid_from, id: 'application_fee_version_valid_from'
+            = f.hidden_field :fee_entry_method, value: (@form.fee_entry_method.presence || 'manual'), id: 'application_fee_entry_method'
+
+      .govuk-form-group.group-level
+        fieldset.govuk-fieldset
+          legend.visuallyhidden Select jurisdiction
+          = f.label :jurisdiction_id, class: 'govuk-label'
+          span.govuk-error-message
+            = f.label :jurisdiction_id, @form.errors[:jurisdiction_id].join(', '), class: 'error' if @form.errors[:jurisdiction_id].present?
+          = f.hidden_field :jurisdiction_id, value: nil
+          - if @jurisdictions.present?
+            .govuk-radios.govuk-radios--small
+              =f.collection_radio_buttons(:jurisdiction_id, @jurisdictions, :id, :display_full, include_hidden: true) do |b|
+                .govuk-radios__item
+                  = b.radio_button(data: @form.jurisdiction_id, class: 'govuk-radios__input')
+                  = b.label(class: 'govuk-label govuk-radios__label')
+
+          - else
+            = t('error_messages.jurisdictions.none_in_office')
 
       .govuk-form-group.group-level
         = f.label :form_name, class: 'govuk-label'

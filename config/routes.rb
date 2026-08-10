@@ -16,12 +16,15 @@ Rails.application.routes.draw do
   put 'reports/finance_transactional_report' => 'reports#finance_transactional_report_generator'
   get 'letter_templates' => 'reports#letters'
   get 'new_letter_templates' => 'reports#new_letters'
+  get 'appeals_letter_templates' => 'reports#appeals_letters'
+  get 'lcep_letter_templates' => 'reports#lcep_letters'
 
   namespace :report do
     get 'ccmcc_data' => 'ccmcc_data#show'
     put 'ccmcc_data' => 'ccmcc_data#data_export'
-    get 'power_bi' => 'power_bi#show'
-    put 'power_bi' => 'power_bi#data_export'
+    get 'power_bi' => 'power_bi#index'
+    get 'power_bi/:export_type' => 'power_bi#show', as: :power_bi_export, constraints: { export_type: /[123]/ }
+    put 'power_bi/:export_type' => 'power_bi#data_export', constraints: { export_type: /[123]/ }
     get 'raw_data' => 'raw_data#show'
     put 'raw_data' => 'raw_data#data_export'
     get 'applications_by_court' => 'applications_by_court#show'

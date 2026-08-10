@@ -30,6 +30,16 @@
   @include govuk-responsive-margin(3, $direction: right);
 }
 
+// Keep the service name and the nav links on the same line: without this the
+// nav is one flex item sized to all links on a single line, so once the links
+// outgrow the row it wraps whole onto its own line below the service name.
+@include govuk-media-query($from: tablet) {
+  .govuk-service-navigation__wrapper {
+    flex: 1;
+    min-width: 0;
+  }
+}
+
 .govuk-notification-banner {
   margin-top: 10px;
 }

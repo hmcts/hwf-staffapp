@@ -35,6 +35,34 @@ RSpec.describe Forms::OnlineApplication do
     end
   end
 
+  describe '#refund and #date_fee_paid' do
+    # The fee search partial stamps these on the search field so the JS can
+    # pick the fee version by the date the fee was paid for refunds.
+    context 'when the online application is a refund' do
+      let(:online_application) { build_stubbed(:online_application, :with_refund) }
+
+      it 'exposes the refund flag from the online application' do
+        expect(form.refund).to be true
+      end
+
+      it 'exposes the date the fee was paid from the online application' do
+        expect(form.date_fee_paid).to eql(online_application.date_fee_paid)
+      end
+    end
+
+    context 'when the online application is not a refund' do
+      let(:online_application) { build_stubbed(:online_application, refund: false, date_fee_paid: nil) }
+
+      it 'exposes the refund flag from the online application' do
+        expect(form.refund).to be false
+      end
+
+      it 'has no date fee paid' do
+        expect(form.date_fee_paid).to be_nil
+      end
+    end
+  end
+
   describe '#enable_default_jurisdiction' do
     subject { form.jurisdiction_id }
 

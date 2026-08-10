@@ -5,6 +5,11 @@ const FregHelpers = require('./freg_helpers');
 window.moj.Modules.JsonSearcherModule = (function() {
   let codes = [];
 
+  function dateFromFields(day, month, year) {
+    if (!day || !month || !year) return null;
+    return year + '-' + String(month).padStart(2, '0') + '-' + String(day).padStart(2, '0');
+  }
+
   return {
     feeSelected: false,
     selectedFeeCode: null,
@@ -43,11 +48,34 @@ window.moj.Modules.JsonSearcherModule = (function() {
     },
 
     onlineDateReceived: function() {
-      const day = $('input[id="online_application_day_date_received"]').val();
-      const month = $('input[id="online_application_month_date_received"]').val();
-      const year = $('input[id="online_application_year_date_received"]').val();
-      if (!day || !month || !year) return null;
-      return year + '-' + String(month).padStart(2, '0') + '-' + String(day).padStart(2, '0');
+      return dateFromFields(
+        $('input[id="online_application_day_date_received"]').val(),
+        $('input[id="online_application_month_date_received"]').val(),
+        $('input[id="online_application_year_date_received"]').val()
+      );
+    },
+
+    isRefundApplication: function() {
+      // The pre-UCD paper details page has the refund checkbox on the same
+      // screen, so read it live. On other pages the flag is stamped on the
+      // fee search field at render time.
+      const refundCheckbox = $('input[id="application_refund"]');
+      if (refundCheckbox.length > 0) {
+        return refundCheckbox.is(':checked');
+      }
+      return String($('input[id="fee_search"]').data('refund')) === 'true';
+    },
+
+    getDateFeePaid: function() {
+      const dayField = $('input[id="application_day_date_fee_paid"]');
+      if (dayField.length > 0) {
+        return dateFromFields(
+          dayField.val(),
+          $('input[id="application_month_date_fee_paid"]').val(),
+          $('input[id="application_year_date_fee_paid"]').val()
+        );
+      }
+      return $('input[id="fee_search"]').data('date-fee-paid') || null;
     },
 
     bindEvents: function() {
@@ -72,6 +100,19 @@ window.moj.Modules.JsonSearcherModule = (function() {
         // preserve the fee the user picked.
         if (self.feeSelected) {
           if (!self.isOnlineApplicationPage()) return;
+          self.resetSelection();
+        }
+        var currentSearchTerm = $('input[id="fee_search"]').val();
+        if (currentSearchTerm && currentSearchTerm.length >= 2) {
+          self.findMatches(currentSearchTerm);
+        }
+      });
+
+      $('input[id="application_refund"], input[id$="_date_fee_paid"]').on('change blur', function() {
+        // Pre-UCD paper page only: the refund checkbox and date fee paid
+        // fields live on the same screen and drive the search date, so
+        // changing them invalidates any selected fee.
+        if (self.feeSelected) {
           self.resetSelection();
         }
         var currentSearchTerm = $('input[id="fee_search"]').val();
@@ -115,8 +156,15 @@ window.moj.Modules.JsonSearcherModule = (function() {
         return;
       }
 
+      // A refund is for a fee that was already paid, so the amount comes from
+      // the version in force on the date the fee was paid, not the date the
+      // application was received.
+      const refundDate = this.isRefundApplication() ? this.getDateFeePaid() : null;
+      const searchDate = refundDate || dateReceived;
+      let feeDroppedForRefundDate = false;
+
       var matches = codes.filter(item => {
-        const relevantVersion = FregHelpers.getFeeVersionForDate(item, dateReceived);
+        const relevantVersion = FregHelpers.getFeeVersionForDate(item, searchDate);
         if (!relevantVersion) {
           return false;
         }
@@ -128,7 +176,7 @@ window.moj.Modules.JsonSearcherModule = (function() {
           return false;
         }
 
-        return (
+        const matchesTerm = (
           (item.code && item.code.toLowerCase().includes(term.toLowerCase())) ||
           (item.jurisdiction2 && item.jurisdiction2.name && item.jurisdiction2.name.toLowerCase().includes(term.toLowerCase())) ||
           (hasFlatAmount && relevantVersion.flat_amount.amount.toString().includes(term)) ||
@@ -137,16 +185,31 @@ window.moj.Modules.JsonSearcherModule = (function() {
           (item.service_type && item.service_type.name && item.service_type.name.toLowerCase().includes(term.toLowerCase())) ||
           (relevantVersion && relevantVersion.description && relevantVersion.description.toLowerCase().includes(term.toLowerCase()))
         );
+        if (!matchesTerm) {
+          return false;
+        }
+
+        // For refunds there is no fallback to the current version: if no
+        // version covers the date the fee was paid, the fee cannot be
+        // offered. Rateable fees stay because their amount is entered
+        // manually, not read from FREG.
+        if (refundDate && !FregHelpers.findFeeVersionForDate(item, refundDate) &&
+            FregHelpers.classifyFeeType(item, relevantVersion) !== 'rateable') {
+          feeDroppedForRefundDate = true;
+          return false;
+        }
+
+        return true;
       });
 
       matches.sort(function(a, b) {
         return (a.code || '').localeCompare(b.code || '');
       });
 
-      this.displayFees(matches, dateReceived);
+      this.displayFees(matches, searchDate, feeDroppedForRefundDate);
     },
 
-    displayFees: function (fees, dateReceived) {
+    displayFees: function (fees, searchDate, feeDroppedForRefundDate) {
       var self = this;
       const resultsList = document.getElementById('fee-search-results');
       $('div.fee-search-results-block.govuk-inset-text').removeClass('govuk-visually-hidden');
@@ -155,7 +218,11 @@ window.moj.Modules.JsonSearcherModule = (function() {
         $('span.search_result_count').text(0);
         resultsList.innerHTML = '';
         $('#fee_search_has_results').val('false');
-        $('#no-results-message').removeClass('govuk-visually-hidden');
+        if (feeDroppedForRefundDate) {
+          $('#fee-date-not-found-message').removeClass('govuk-visually-hidden');
+        } else {
+          $('#no-results-message').removeClass('govuk-visually-hidden');
+        }
         return;
       }
 
@@ -168,7 +235,7 @@ window.moj.Modules.JsonSearcherModule = (function() {
           if (index === 0) resultsList.innerHTML = '';
 
           const li = document.createElement('li');
-          const relevantVersion = FregHelpers.getFeeVersionForDate(fee, dateReceived);
+          const relevantVersion = FregHelpers.getFeeVersionForDate(fee, searchDate);
           const classifiedType = FregHelpers.classifyFeeType(fee, relevantVersion);
           const isPercentageFee = relevantVersion.percentage_amount !== undefined;
 
@@ -181,7 +248,7 @@ window.moj.Modules.JsonSearcherModule = (function() {
           displayText = fee.service_type.name.toUpperCase() + ' - ' + fee.code + ' - ' + feeValueText;
 
           const descriptionText = relevantVersion.description;
-          const versionInfo = dateReceived ? ' (Valid from: ' + relevantVersion.valid_from + ')' : '';
+          const versionInfo = searchDate ? ' (Valid from: ' + relevantVersion.valid_from + ')' : '';
 
           li.textContent = displayText + ', Description: ' + descriptionText + versionInfo;
           li.style.cursor = 'pointer';
@@ -285,6 +352,7 @@ window.moj.Modules.JsonSearcherModule = (function() {
       $('#claim-value-error').addClass('govuk-visually-hidden');
       $('#rateable-fee-warning').addClass('govuk-visually-hidden');
       $('#no-results-message').addClass('govuk-visually-hidden');
+      $('#fee-date-not-found-message').addClass('govuk-visually-hidden');
       $('.band-change-error-item').remove();
       var summaryList = $('.govuk-error-summary__list');
       if (summaryList.length && summaryList.children().length === 0) {

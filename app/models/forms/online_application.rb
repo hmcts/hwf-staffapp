@@ -62,22 +62,32 @@ module Forms
     end
 
     def submitted_at
-      @object.created_at
+      online_application.created_at
     end
 
     def reset_date_received_data
-      @object.update(discretion_applied: nil, date_received: nil)
+      online_application.update(discretion_applied: nil, date_received: nil)
     end
 
     def iac_jurisdiction?
       return false if jurisdiction_id.blank?
       Jurisdiction.find_by(id: jurisdiction_id)&.abbr == 'IAC'
     end
+    # The fee search partial stamps these on the search field so the JS can
+    # pick the fee version by the date the fee was paid for refunds. They are
+    # fixed by the citizen's submission, so they are readers, not attributes.
+    delegate :refund, :date_fee_paid, to: :online_application
 
     private
 
+    # FormObject stores the record being edited in @object; give it a
+    # descriptive name for use in this class.
+    def online_application
+      @object
+    end
+
     def persist!
-      @object.update(fields_to_update)
+      online_application.update(fields_to_update)
     end
 
     def fields_to_update
@@ -119,7 +129,7 @@ module Forms
     end
 
     def refund?
-      @object.refund?
+      online_application.refund?
     end
   end
 end
