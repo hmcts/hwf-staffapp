@@ -225,4 +225,4 @@ else
 - "5" or "FEE0003" → should find the percentage fee
 - "family" → should find FEE0004
 
-Deployment versions trigger: 2
+Deployment versions trigger: 3
