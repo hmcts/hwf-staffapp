@@ -6,6 +6,20 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 
 ## [Unreleased]
 
+### Fixed
+
+- Dockerfile: moved `assets:precompile` and `static_pages:generate` from the container
+  CMD into the image build. Demo pods now run as a non-root user and `/home/app` is
+  root-owned, so the startup-time precompile crashed with
+  `Error reading app/assets/builds/application.css: permission denied` (the preceding
+  `` `/home/app` is not writable. `` line is only a Bundler warning with a /tmp
+  fallback). Master fails identically, confirming the environment, not a code change,
+  triggered it. Also pre-created world-writable `tmp/` and `log/` (puma mkdirs
+  `tmp/pids` at boot). Verified locally: the image, run as uid 1000 with no special
+  permissions, boots puma to `Listening on 0.0.0.0:3000`. Side benefits: startup no
+  longer runs yarn at all (the SKIP_YARN_INSTALL guard remains as defence in depth)
+  and pods start faster without per-boot precompilation.
+
 ### Changed
 
 - Updated erb 6.0.6 → 6.0.7
