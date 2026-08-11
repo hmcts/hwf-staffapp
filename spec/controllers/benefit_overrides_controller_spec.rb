@@ -9,6 +9,7 @@ RSpec.describe BenefitOverridesController do
   let(:benefits_evidence_form) { double }
   let(:calculation_scheme) { FeatureSwitching::CALCULATION_SCHEMAS[0] }
   let(:error_message) { 'just a test' }
+  let(:dwp_warning) { nil }
 
   before do
     allow(Application).to receive(:find).with(application.id.to_s).and_return(application)
@@ -52,6 +53,7 @@ RSpec.describe BenefitOverridesController do
     before do
       allow(benefits_evidence_form).to receive(:update).with(override_params)
       allow(application).to receive(:benefit_check_with_error_message?).and_return valid_for_paper_evidence
+      dwp_warning
       post_save
     end
 
@@ -96,6 +98,24 @@ RSpec.describe BenefitOverridesController do
 
           it 'Does not create save the form' do
             expect(benefits_evidence_form).not_to have_received(:save)
+          end
+        end
+
+        context 'and the answer is no but DWP is marked offline' do
+          let(:dwp_warning) { create(:dwp_warning, check_state: DwpWarning::STATES[:offline]) }
+          let(:override_params) { { evidence: 'false' } }
+          let(:calculation_scheme) { FeatureSwitching::CALCULATION_SCHEMAS[1] }
+
+          it 'processes the evidence form so the application can be completed' do
+            expect(benefits_evidence_form).to have_received(:save)
+          end
+
+          it 'redirects to the declaration page' do
+            expect(response).to redirect_to(application_declaration_path(application))
+          end
+
+          it 'does not set the alert flash message' do
+            expect(flash[:alert]).to be_nil
           end
         end
       end

@@ -4,6 +4,7 @@ module Views
       include ActionView::Helpers::NumberHelper
       include IncomePeriodHelper
       include OnlineSaving
+      include OnlineBenefitEvidence
 
       delegate :married, :form_name, :case_number, :probate, :deceased_name, :emergency_reason,
                :amount, :over_66, :benefits, :children, :legal_representative,

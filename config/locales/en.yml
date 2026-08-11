@@ -449,7 +449,7 @@ en-GB:
 
   online_application_benefits:
     edit:
-      message: Due to the benefits checker being down, you will only be able to process this application if you have supporting evidence that the applicant is receiving benefits.
+      message: You will only be able to process this application if you have supporting evidence that the applicant is receiving benefits.
 
   hmrc_summary:
     alert: "Undefined evidence check outcome, please contact support"

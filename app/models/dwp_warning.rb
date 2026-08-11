@@ -14,6 +14,10 @@ class DwpWarning < ActiveRecord::Base
     order(id: :desc).first.check_state
   end
 
+  def self.offline?
+    state == STATES[:offline]
+  end
+
   private
 
   def only_one_record_allowed
