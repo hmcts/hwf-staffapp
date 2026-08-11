@@ -1,5 +1,11 @@
 #!groovy
 
+properties([
+    // H allow predefined but random minute see https://en.wikipedia.org/wiki/Cron#Non-standard_characters
+    // Run every weekday between 7 and 8am
+    pipelineTriggers([cron('H 7 * * 1-5')])
+])
+
 @Library("Infrastructure")
 
 def type = "ruby"
@@ -50,19 +56,17 @@ withNightlyPipeline(type, product, component) {
     env.SENTRY_SSL_VERIFICATION=''
     env.NEW_LEGISLATION_ACTIVE_DATE='27-10-2023'
 
+    enableSlackNotifications('#pet-nightly')
     enableFortifyScan()
 
-  before('build') {
-    sh script:"""#!/bin/bash -l
+    def installRuby = {
+      sh script:"""#!/bin/bash -l
         set +x
         source /usr/local/rvm/scripts/rvm
-        rvm install ruby-4.0.1
-        rvm use ruby-4.0.1 --default
-    """, label: 'Ruby version install'
-  }
-
-    afterAlways('smokeTest') {
-        sh script: "docker stop hwf-test-postgres && docker rm hwf-test-postgres || echo 'Ignoring failure in stopping postgres'",
-            label: "docker stop hwf-test-postgres"
+        rvm install ruby-4.0.5
+        rvm use ruby-4.0.5 --default
+        """, label: 'Ruby version install'
     }
+
+    before('build') { installRuby() }
 }
