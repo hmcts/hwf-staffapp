@@ -363,9 +363,9 @@ GEM
       ast (~> 2.4.1)
       racc
     pg (1.6.3)
-    pg_search (2.3.7)
-      activerecord (>= 6.1)
-      activesupport (>= 6.1)
+    pg_search (2.3.8)
+      activerecord (>= 7.2)
+      activesupport (>= 7.2)
     playwright-ruby-client (1.62.0)
       base64
       concurrent-ruby (>= 1.1.6)
