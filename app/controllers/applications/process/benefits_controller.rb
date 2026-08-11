@@ -63,7 +63,7 @@ module Applications
       end
 
       def disable_benefit_calls?
-        DwpWarning.order(id: :desc).first&.check_state == DwpWarning::STATES[:offline]
+        DwpWarning.offline?
       end
 
       def redirect_to_override_or_dependents
