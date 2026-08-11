@@ -57,9 +57,7 @@ RUN corepack install \
  && yarn install --immutable
 
 # Dependencies are baked in above; skip the cssbundling/jsbundling yarn install
-# that assets:precompile would otherwise run at container start. Yarn 4.17.1+
-# rewrites .yarn/install-state.gz on every install (even a no-op), which fails
-# with EACCES because /home/app is root-owned and the pod user is not.
+# prerequisite of assets:precompile (see CHANGELOG.md).
 ENV SKIP_YARN_INSTALL=1
 
 # running app as a servive
@@ -67,6 +65,11 @@ ENV PHUSION=true
 
 COPY . /home/app
 
-CMD ["sh", "-c", "bundle exec rake assets:precompile RAILS_ENV=production SECRET_TOKEN=blah && \
-     bundle exec rake static_pages:generate RAILS_ENV=production SECRET_TOKEN=blah && \
-     sh ./run.sh"]
+# Precompile at build time — non-root pods cannot write /home/app (CHANGELOG.md).
+# The secret values are dummies; only asset digests and static pages are produced.
+RUN bundle exec rake assets:precompile static_pages:generate RAILS_ENV=production SECRET_TOKEN=blah SECRET_KEY_BASE=dummy_for_precompile
+
+# The only paths written at runtime; world-writable for the non-root pod user.
+RUN mkdir -p tmp/pids log && chmod -R 0777 tmp log
+
+CMD ["sh", "./run.sh"]
