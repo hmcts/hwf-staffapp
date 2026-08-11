@@ -46,7 +46,8 @@ namespace :fortify_scan do
       "-tc #{fod_tenant}",
       "-rid #{fod_release_id}",
       "-z source.zip",
-      "-ep SubscriptionOnly"
+      "-ep SubscriptionOnly",
+      "-inProgressScanActionType 2"
     ].join(" ")
 
     system(upload_cmd) || raise("Failed to upload to FoD")
