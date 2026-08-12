@@ -16,7 +16,7 @@ class ProcessApplication
       original_calculation_process(application)
     end
     return false if stop_processing?(application)
-    benefit_override(application) if online_application.benefits_override
+    store_benefit_override(application)
     ResolverService.new(application, current_user).complete
   end
 
@@ -41,11 +41,17 @@ class ProcessApplication
     end
   end
 
-  def benefit_override(application)
+  # Also records a manual "No" answered while DWP was offline (CHANGELOG.md)
+  def store_benefit_override(application)
+    return unless online_application.benefits_override || manual_no_decision?
     @benefit_override = BenefitOverride.find_or_initialize_by(application: application)
     return unless authorize @benefit_override, :create?
-    @benefit_override.update(correct: true, completed_by: current_user)
-    application.update(outcome: 'full')
+    @benefit_override.update(correct: online_application.benefits_override, completed_by: current_user)
+    application.update(outcome: 'full') if online_application.benefits_override
+  end
+
+  def manual_no_decision?
+    online_application.dwp_manual_decision == false
   end
 
   def stop_processing?(application)
