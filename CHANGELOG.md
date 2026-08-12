@@ -34,6 +34,13 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
   set — DWP offline or errored), otherwise the DWP check result; hidden when
   neither exists. A "Change" link back to the Evidence of benefits page appears
   only for manual answers. Logic lives in `Views::Overview::OnlineBenefitEvidence`.
+- `ProcessApplication` now persists the manual evidence decision when completing
+  an online application: previously a `BenefitOverride` was only created for
+  "Yes" answers, so a "No" recorded while DWP was offline left no trace on the
+  processed application. A manual "No" (`dwp_manual_decision: false`) now stores
+  `BenefitOverride(correct: false)`, matching the paper flow; outcome handling
+  is unchanged ("Yes" → full, "No" → none via the existing runner fallback).
+  `BenefitCheckRunner#checks_allowed?` now uses the shared `DwpWarning.offline?`.
 
 ### Fixed
 
