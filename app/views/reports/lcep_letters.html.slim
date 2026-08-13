@@ -1,0 +1,38 @@
+- content_for :page_title
+  = "Lord Chancellor's Exceptional Power letter templates"
+
+h1.govuk-heading-l.util_mt-medium Lord Chancellor's Exceptional Power letter templates
+
+p.govuk-body
+  strong You must review the letter templates carefully and adjust them accordingly on a case-by-case basis.
+p.govuk-body
+  strong Please ensure any red text has been amended/removed, including any staff notes and brackets that are not applicable.
+
+ul.govuk-list.govuk-list--bullet
+  li = link_to 'Letter 1: Initial information letter advising about the LCEP', '#initial-information', class: 'govuk-link'
+  li = link_to 'Letter 2: Stage 1 Request LCEP – Upheld/Partially Upheld', '#stage-1-upheld', class: 'govuk-link'
+  li = link_to 'Letter 3: Stage 1 Request LCEP - Refused', '#stage-1-refused', class: 'govuk-link'
+  li = link_to 'Letter 4: Stage 2 Request LCEP – Upheld/Partially Upheld', '#stage-2-upheld', class: 'govuk-link'
+  li = link_to 'Letter 5: Stage 2 Request LCEP - Refused', '#stage-2-refused', class: 'govuk-link'
+
+br
+
+h2.govuk-heading-m id="initial-information" Letter 1: Initial information letter advising about the LCEP
+.confirmation-letter
+  = t('lcep_letters.initial_information_html')
+
+h2.govuk-heading-m id="stage-1-upheld" Letter 2: Stage 1 Request LCEP – Upheld/Partially Upheld
+.confirmation-letter
+  = t('lcep_letters.stage_one_upheld_html')
+
+h2.govuk-heading-m id="stage-1-refused" Letter 3: Stage 1 Request LCEP - Refused
+.confirmation-letter
+  = t('lcep_letters.stage_one_refused_html')
+
+h2.govuk-heading-m id="stage-2-upheld" Letter 4: Stage 2 Request LCEP – Upheld/Partially Upheld
+.confirmation-letter
+  = t('lcep_letters.stage_two_upheld_html')
+
+h2.govuk-heading-m id="stage-2-refused" Letter 5: Stage 2 Request LCEP - Refused
+.confirmation-letter
+  = t('lcep_letters.stage_two_refused_html')

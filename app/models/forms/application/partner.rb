@@ -5,7 +5,6 @@ module Forms
       MINIMUM_AGE = 16
       MAXIMUM_AGE = 120
       NI_NUMBER_REGEXP = /\A(?!BG|GB|NK|KN|TN|NT|ZZ)[ABCEGHJ-PRSTW-Z][ABCEGHJ-NPRSTW-Z]\d{6}[A-D]\z/
-      HO_NUMBER_REGEXP = %r{\A([a-zA-Z]\d{7}|\d{4}-\d{4}-\d{4}-\d{4})(/\d{1,})?\z}
       include ActiveModel::Validations::Callbacks
 
       def self.permitted_attributes

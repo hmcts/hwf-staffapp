@@ -58,6 +58,9 @@ module FrStaffapp
     # Enable Gzip compression to improve performance of CSS & JS files.
     # config.middleware.use Rack::Deflater
 
+    # We only attach CSV exports, never image variants - the default :vips would demand ruby-vips at boot
+    config.active_storage.variant_processor = :disabled
+
   end
   WillPaginate.per_page = 20
 end
