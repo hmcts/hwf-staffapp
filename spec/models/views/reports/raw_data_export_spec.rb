@@ -290,7 +290,8 @@ RSpec.describe Views::Reports::RawDataExport do
         jurisdiction = full_ec.detail.jurisdiction.name
         row = "#{jurisdiction},135864,300.0,N/A,N/A,N/A,0.0,300.0,income,ABC123,false,false,10,222,last_month,NI number,1,N/A,N/A,true,No,full,No,0.0,300.0,paper"
         expect(export).to include(row)
-        expect(export).to include("random,N/A,0.0,full")
+        # pre-UCD evidence check with blank income_check_type now exports 'paper'
+        expect(export).to include("random,paper,0.0,full")
       end
     end
 
@@ -317,7 +318,8 @@ RSpec.describe Views::Reports::RawDataExport do
         jurisdiction = part_ec.detail.jurisdiction.name
         row = "#{jurisdiction},135864,300.0,N/A,N/A,N/A,50.0,250.0,income,ABC123,false,false,2000,1005,last_month,NI number,3,1,2,true,No,part,No,100.0,200.0,paper"
         expect(export).to include(row)
-        expect(export).to include("random,N/A,0.0,part")
+        # pre-UCD evidence check with blank income_check_type now exports 'paper'
+        expect(export).to include("random,paper,0.0,part")
       end
     end
   end
@@ -635,6 +637,41 @@ RSpec.describe Views::Reports::RawDataExport do
         row = "false,N/A,false,Medium,3500.0,N/A,N/A,N/A,JK123456A"
         expect(export).to include(row)
       end
+    end
+  end
+
+  describe 'DB income check type' do
+    subject(:row) do
+      CSV.parse(data.to_csv, headers: true).find { |r| r['HwF reference number'] == application.reference }
+    end
+
+    let(:application) do
+      create(:application_full_remission, :processed_state, shared_parameters.merge(detail_traits: detail_traits))
+    end
+    let(:detail_traits) { [] }
+
+    before do
+      create(:evidence_check, application: application, income_check_type: income_check_type,
+                              completed_at: decision_date)
+    end
+
+    context 'when the application is pre UCD and the income check type is blank' do
+      let(:income_check_type) { nil }
+
+      it { expect(row['DB income check type']).to eq 'paper' }
+    end
+
+    context 'when the application is post UCD and the income check type is blank' do
+      let(:detail_traits) { [:post_ucd] }
+      let(:income_check_type) { nil }
+
+      it { expect(row['DB income check type']).to eq 'N/A' }
+    end
+
+    context 'when the application is pre UCD with an hmrc income check type' do
+      let(:income_check_type) { 'hmrc' }
+
+      it { expect(row['DB income check type']).to eq 'hmrc' }
     end
   end
 end
