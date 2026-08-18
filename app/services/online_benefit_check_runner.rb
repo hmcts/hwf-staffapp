@@ -6,6 +6,7 @@ class OnlineBenefitCheckRunner < BaseBenefitCheckRunner
   end
 
   def run
+    return if DwpWarning.offline?
     if can_run?
       log_benefit_call
       BenefitCheckService.new(benefit_check)

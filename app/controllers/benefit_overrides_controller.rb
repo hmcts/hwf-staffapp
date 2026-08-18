@@ -8,7 +8,7 @@ class BenefitOverridesController < ApplicationController
 
   def paper_evidence_save
     @form = Forms::BenefitsEvidence.new(benefit_override)
-    if allow_benefit_override? && no_paper_evidence?
+    if dwp_blocks_processing?
       take_user_home
     else
       process_benefit_evidence
@@ -45,8 +45,10 @@ class BenefitOverridesController < ApplicationController
     end
   end
 
-  def allow_benefit_override?
-    application.benefit_check_with_error_message? || DwpWarning.order(id: :desc).first&.check_state == DwpWarning::STATES[:offline]
+  # When DWP is marked offline staff may process without paper evidence (CHANGELOG.md)
+  def dwp_blocks_processing?
+    return false if DwpWarning.offline?
+    application.benefit_check_with_error_message? && no_paper_evidence?
   end
 
   def no_paper_evidence?

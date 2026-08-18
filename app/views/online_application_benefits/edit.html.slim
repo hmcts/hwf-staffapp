@@ -7,11 +7,14 @@
     .govuk-grid-column-two-thirds
       h1.govuk-heading-xl.util_mb-small Evidence of benefits
 
-      - if DwpMonitor.new.state == 'offline'
+      - if dwp_checker_state == 'offline'
         .page-error.util_mb-medium.govuk-error-summary__body
+          h4.govuk-heading-s DWP evidence check is disabled
           = t('.message')
+        legend class= 'govuk-fieldset__legend govuk-!-font-weight-bold'
+          = t('evidence_override_hint_html', scope: 'activemodel.attributes.forms/benefits_evidence')
 
-      - if error_message_partial(@online_application)
+      - elsif error_message_partial(@online_application)
         .page-error.util_mb-medium.govuk-error-summary__body
           h4.govuk-heading-s DWP evidence check has failed
           = render('benefit_overrides/'+ error_message_partial(@online_application))

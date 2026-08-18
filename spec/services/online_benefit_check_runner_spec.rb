@@ -99,6 +99,23 @@ RSpec.describe OnlineBenefitCheckRunner do
         }
       end
     end
+
+    context 'when DWP is marked offline' do
+      let(:date_fee_paid) { 1.month.ago }
+      let(:date_received) { nil }
+
+      before { create(:dwp_warning, check_state: DwpWarning::STATES[:offline]) }
+
+      it 'does not call the benefit check service' do
+        service.run
+        expect(BenefitCheckService).not_to have_received(:new)
+      end
+
+      it 'does not create a benefit check record' do
+        service.run
+        expect(BenefitCheck).not_to have_received(:create)
+      end
+    end
   end
 
   describe 'online benefit check' do
