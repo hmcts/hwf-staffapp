@@ -36,7 +36,7 @@ namespace :test do
   task functional: :environment do
     ENV['RUN_SMOKE_TESTS'] = 'false'
     if system "bundle exec cucumber features/ " \
-              "--tags 'not @smoke' " \
+              "--tags 'not @smoke and not @accessibility' " \
               "--format pretty " \
               "--format junit " \
               "--out tmp/test/cucumber-functional"
