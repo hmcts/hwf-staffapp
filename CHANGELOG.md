@@ -2,7 +2,8 @@
 
 All notable changes to this project will be documented in this file.
 
-The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
+The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
+with entries grouped by branch and date rather than release version.
 
 ## 2026-08-18
 
@@ -30,6 +31,18 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 - simplecov held at ~> 0.22.0 deliberately (1.x breaks SonarQube coverage report).
 
 ## [Unreleased]
+## rst-8317-export-update — 2026-08-13
+
+### Changed
+
+- Exports: pre-UCD evidence checks predate the `income_check_type` field, so it is
+  blank on those rows even though every pre-UCD income check was done on paper. The
+  "DB income check type" column in the raw data, applications-by-court and Power BI
+  exports now reports `paper` when the application is pre-UCD (calculation scheme
+  blank or `prior_q4_23`) and the evidence check's `income_check_type` is NULL.
+  Rows without an evidence check, and post-UCD blanks, are unchanged.
+
+## rst-8490-frontend-updates — 2026-08-10
 
 ### Fixed
 
