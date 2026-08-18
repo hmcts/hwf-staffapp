@@ -8,6 +8,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 
 ### Changed
 
+- Updated Ruby 4.0.5 → 4.0.6 (.ruby-version, Gemfile, Dockerfile base image, Jenkinsfile_CNP, Jenkinsfile_nightly, README)
 - Updated @rails/actiontext 8.1.300 → 8.1.301 (npm; matches actiontext gem 8.1.3.1)
 - Updated bootsnap 1.24.6 → 1.25.0
 - Updated brakeman 8.0.5 → 8.0.6

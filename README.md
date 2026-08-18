@@ -139,11 +139,11 @@ To be able to pull the image locally you either have to log in via
 or you can just remove the path from the image line ie:
 
 ```
-FROM hmctsprod.azurecr.io/imported/library/ruby:4.0.5-alpine3.23
+FROM hmctsprod.azurecr.io/imported/library/ruby:4.0.6-alpine3.23
 ```
 to
 ```
-FROM ruby:4.0.5-alpine3.23
+FROM ruby:4.0.6-alpine3.23
 ```
 
 ### Docker image on Jenkins/Azure
