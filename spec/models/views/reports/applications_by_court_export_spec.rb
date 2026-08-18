@@ -20,6 +20,41 @@ RSpec.describe Views::Reports::ApplicationsByCourtExport do
   let(:date_from) { Date.parse('1/1/2021') }
   let(:date_to) { Date.parse('1/2/2021') }
 
+  describe 'DB income check type' do
+    subject(:row) do
+      CSV.parse(export.to_csv, headers: true).find { |r| r['HwF reference number'] == application.reference }
+    end
+
+    let(:application) { create(:application_full_remission, :processed_state, office: office, detail_traits: detail_traits) }
+    let(:detail_traits) { [] }
+
+    before do
+      travel_to(date_from + 1.day) do
+        create(:evidence_check, application: application, income_check_type: income_check_type,
+                                completed_at: Time.zone.now)
+      end
+    end
+
+    context 'when the application is pre UCD and the income check type is blank' do
+      let(:income_check_type) { nil }
+
+      it { expect(row['DB income check type']).to eq 'paper' }
+    end
+
+    context 'when the application is post UCD and the income check type is blank' do
+      let(:detail_traits) { [:post_ucd] }
+      let(:income_check_type) { nil }
+
+      it { expect(row['DB income check type']).to eq 'N/A' }
+    end
+
+    context 'when the application is pre UCD with an hmrc income check type' do
+      let(:income_check_type) { 'hmrc' }
+
+      it { expect(row['DB income check type']).to eq 'hmrc' }
+    end
+  end
+
   describe 'excluded offices' do
     context 'when office is Digital and HMCTS one' do
       before do

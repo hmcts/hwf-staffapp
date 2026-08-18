@@ -669,6 +669,42 @@ RSpec.describe Views::Reports::PowerBiNewExport do
     end
   end
 
+  describe '#export1 DB income check type' do
+    let!(:application) do
+      create(:application_full_remission, :processed_state,
+             office: office, business_entity: business_entity, decision_date: Time.zone.now,
+             detail_traits: detail_traits)
+    end
+    let(:detail_traits) { [] }
+
+    before do
+      create(:evidence_check, application: application, income_check_type: income_check_type,
+                              completed_at: Time.zone.now)
+      report.export1
+    end
+
+    subject(:row) { read_csv_from_zip.find { |r| r['Id'].to_i == application.id } }
+
+    context 'when the application is pre UCD and the income check type is blank' do
+      let(:income_check_type) { nil }
+
+      it { expect(row['DB income check type']).to eq 'paper' }
+    end
+
+    context 'when the application is post UCD and the income check type is blank' do
+      let(:detail_traits) { [:post_ucd] }
+      let(:income_check_type) { nil }
+
+      it { expect(row['DB income check type']).to be_nil }
+    end
+
+    context 'when the application is pre UCD with an hmrc income check type' do
+      let(:income_check_type) { 'hmrc' }
+
+      it { expect(row['DB income check type']).to eq 'hmrc' }
+    end
+  end
+
   private
 
   def read_csv_from_zip

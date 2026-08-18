@@ -227,7 +227,10 @@ module Views
                  WHEN applications.income > 101 THEN 'false'
                  ELSE 'N/A' END AS low_income_declared,
             ec.check_type as db_evidence_check_type,
-            ec.income_check_type as db_income_check_type,
+            CASE WHEN ec.id IS NOT NULL AND ec.income_check_type IS NULL
+                      AND (details.calculation_scheme IS NULL OR details.calculation_scheme = 'prior_q4_23')
+                 THEN 'paper'
+                 ELSE ec.income_check_type END as db_income_check_type,
             ec.hmrc_income_used as hmrc_total_income,
             CASE WHEN ec.check_type = 'random' AND ec.income_check_type = 'paper' AND hc.hc_id IS NULL then 'Manual NumberRule'
             WHEN ec.check_type = 'flag' AND ec.income_check_type = 'paper' AND hc.hc_id IS NULL then 'Manual NIFlag'
