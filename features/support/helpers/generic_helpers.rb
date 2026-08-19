@@ -9,6 +9,14 @@ def error_summary_page
   @error_summary_page ||= ErrorSummaryPage.new
 end
 
+def appeals_letter_template_page
+  @appeals_letter_template_page ||= AppealsLetterTemplatePage.new
+end
+
+def lcep_letter_template_page
+  @lcep_letter_template_page ||= LCEPLetterTemplatePage.new
+end
+
 def sign_in_page
   @sign_in_page ||= SignInPage.new
 end

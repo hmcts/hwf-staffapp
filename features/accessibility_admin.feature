@@ -79,3 +79,11 @@ Feature: Accessibility of admin pages
     And the "Old scheme letter templates" page should meet accessibility standards
     Then I can view new letter templates
     And the "New scheme letter templates" page should meet accessibility standards
+
+  Scenario: Appeals letter templates
+    Then I can view appeals letter templates
+    And the "Appeals letter templates" page should meet accessibility standards
+
+  Scenario: LCEP letter templates
+    Then I can view LCEP letter templates
+    And the "LCEP letter templates" page should meet accessibility standards
