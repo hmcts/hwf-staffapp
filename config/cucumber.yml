@@ -13,3 +13,4 @@ rerun: <%= rerun_opts %> --format rerun --out rerun.txt --strict --tags 'not @wi
 report: <%= std_opts %> <%= create_json_opts %> features
 parallel: --format progress --tags 'not @smoke and not @wip'
 smoke: --format pretty --format html --out tmp/cucumber-report/smoke.html --format json --out tmp/cucumber-report/smoke.json --strict --tags @smoke features
+accessibility: --format pretty --format html --out tmp/cucumber-report/accessibility.html --format json --out tmp/cucumber-report/accessibility.json --strict --tags @accessibility features
