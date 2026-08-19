@@ -68,3 +68,33 @@ When("I continue from the evidence result page") do
   evidence_result_page.click_next
   expect(summary_page.content).to have_header
 end
+
+When("I fill in the application details with a fee over the approval limit") do
+  expect(application_details_page.content).to have_header
+  application_details_page.submit_fee_10001
+end
+
+Then("I should be taken to the ask a manager page") do
+  expect(approve_page.content).to have_header
+end
+
+Given("the DWP benefit check will not respond") do
+  stub_dwp_response_as_bad_request
+end
+
+When("I submit my personal details with a National Insurance number") do
+  personal_details_page.submit_all_personal_details_ni_with_no_answer_for_benefits
+end
+
+When("I sign the declaration as a legal representative") do
+  declaration_page.sign_declaration_as_legal_representative
+end
+
+Then("I should be taken to the representative page") do
+  expect(representative_page.content).to have_header
+end
+
+When("I submit the representative details") do
+  representative_page.submit_representative_details
+end
+

@@ -17,6 +17,10 @@ def lcep_letter_template_page
   @lcep_letter_template_page ||= LCEPLetterTemplatePage.new
 end
 
+def representative_page
+  @representative_page ||= RepresentativePage.new
+end
+
 def sign_in_page
   @sign_in_page ||= SignInPage.new
 end

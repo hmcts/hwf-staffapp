@@ -7,39 +7,40 @@ Feature: Accessibility of staff pages
     Then I am taken to my user dashboard
     And the "Staff dashboard" page should meet accessibility standards
 
-  Scenario: Processing a paper application
+  Scenario: Processing a paper application - benefits, high fee, representative
     Given I successfully sign in as a user
+    And the DWP benefit check will not respond
     When I start to process a new paper application
     Then I am on the fee status page
     And the "Date received and fee status" page should meet accessibility standards
     When I am on the personal details part of the application
     Then the "Personal details" page should meet accessibility standards
-    When I successfully submit my required personal details
+    When I submit my personal details with a National Insurance number
     Then I should be taken to the application details page
     And the "Application details" page should meet accessibility standards
-    When I fill in the application details
+    When I fill in the application details with a fee over the approval limit
+    Then I should be taken to the ask a manager page
+    And the "Ask a manager" page should meet accessibility standards
+    When I successfully submit a manager name
     Then I should be taken to savings and investments page
     And the "Savings and investments" page should meet accessibility standards
     When I successfully submit less than £4250
     Then I should be taken to the benefits page
     And the "Benefits the applicant is receiving" page should meet accessibility standards
-    When I answer no to the benefits question
-    Then I should be taken to the children page
-    And the "Children" page should meet accessibility standards
-    When I choose no chilren
-    Then I should be taken to the incomes type page
-    And the "Type of income" page should meet accessibility standards
-    When I choose wages
-    Then I should be taken to the incomes page
-    And the "Income" page should meet accessibility standards
-    When I submit the last month income
-    Then I should be one the declaration page
+    When I answer yes to the benefits question
+    Then I should be asked about paper evidence
+    And the "Paper evidence of benefits" page should meet accessibility standards
+    When I successfully submit my required paper evidence details
+    Then I am on the declaration page
     And the "Declaration and statement of truth" page should meet accessibility standards
-    When I choose applicant and submit
+    When I sign the declaration as a legal representative
+    Then I should be taken to the representative page
+    And the "Representative details" page should meet accessibility standards
+    When I submit the representative details
     Then I am on the summary page
     And the "Check details" page should meet accessibility standards
     When I complete processing
-    And I should be on the paper application confirmation page
+    Then I should be on the paper application confirmation page
     And the "Paper application confirmation" page should meet accessibility standards
 
   Scenario: Processing an online application
