@@ -69,6 +69,26 @@ When("I continue from the evidence result page") do
   expect(summary_page.content).to have_header
 end
 
+When("I submit my personal details as a married applicant") do
+  personal_details_page.submit_all_personal_details_ni_married
+end
+
+Then("I should be taken to the partner details page") do
+  expect(partner_details_page.content).to have_header
+end
+
+When("I submit the partner details") do
+  partner_details_page.submit_partner_details
+end
+
+Then("I should be taken to the partner income type page") do
+  expect(income_kind_partner_page.content).to have_header
+end
+
+When("I choose wages for the partner") do
+  income_kind_partner_page.submit_wages
+end
+
 When("I fill in the application details with a fee over the approval limit") do
   expect(application_details_page.content).to have_header
   application_details_page.submit_fee_10001

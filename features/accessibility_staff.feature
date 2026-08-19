@@ -43,6 +43,34 @@ Feature: Accessibility of staff pages
     Then I should be on the paper application confirmation page
     And the "Paper application confirmation" page should meet accessibility standards
 
+  Scenario: Processing a paper application - income questions, married
+    Given I successfully sign in as a user
+    When I start to process a new paper application
+    Then I am on the fee status page
+    When I am on the personal details part of the application
+    And I submit my personal details as a married applicant
+    Then I should be taken to the partner details page
+    And the "Partner details" page should meet accessibility standards
+    When I submit the partner details
+    Then I should be taken to the application details page
+    When I fill in the application details
+    Then I should be taken to savings and investments page
+    When I successfully submit less than £4250
+    Then I should be taken to the benefits page
+    When I answer no to the benefits question
+    Then I should be taken to the children page
+    And the "Children details" page should meet accessibility standards
+    When I choose no chilren
+    Then I should be taken to the incomes type page
+    And the "Type of income" page should meet accessibility standards
+    When I choose wages
+    Then I should be taken to the partner income type page
+    And the "Type of income the partner is receiving" page should meet accessibility standards
+    When I choose wages for the partner
+    Then I should be taken to the incomes page
+    And the "Incomes" page should meet accessibility standards
+
+
   Scenario: Processing an online application
     Given I have looked up an online application with benefits
     When I see the application details

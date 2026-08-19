@@ -17,6 +17,14 @@ def lcep_letter_template_page
   @lcep_letter_template_page ||= LCEPLetterTemplatePage.new
 end
 
+def partner_details_page
+  @partner_details_page ||= PartnerDetailsPage.new
+end
+
+def income_kind_partner_page
+  @income_kind_partner_page ||= IncomeKindPartnerPage.new
+end
+
 def representative_page
   @representative_page ||= RepresentativePage.new
 end
