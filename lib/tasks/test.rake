@@ -69,7 +69,7 @@ namespace :test do
         "DRIVER" => browser,
         "CAPYBARA_JS_DRIVER" => browser
       }
-      results[browser] = system(env, "bundle exec cucumber features/ --tags @javascript not @accessibility")
+      results[browser] = system(env, "bundle exec cucumber features/ --tags '@javascript and not @accessibility'")
     end
 
     puts "\n\n"
