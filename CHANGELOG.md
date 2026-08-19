@@ -2,9 +2,47 @@
 
 All notable changes to this project will be documented in this file.
 
-The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
+The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
+with entries grouped by branch and date rather than release version.
+
+## 2026-08-18
+
+### Changed
+
+- Updated Ruby 4.0.5 → 4.0.6 (.ruby-version, Gemfile, Dockerfile base image, Jenkinsfile_CNP, Jenkinsfile_nightly, README)
+- Updated @rails/actiontext 8.1.300 → 8.1.301 (npm; matches actiontext gem 8.1.3.1)
+- Updated bootsnap 1.24.6 → 1.25.0
+- Updated brakeman 8.0.5 → 8.0.6
+- Updated io-console 0.8.2 → 0.9.2
+- Updated pg_search 2.3.7 → 2.3.8
+- Updated rack 3.2.6 → 3.2.7
+- Updated rbs 4.1.2 → 4.1.3
+- Updated rubocop-performance 1.26.1 → 1.27.0
+- Updated rubocop-rails 2.36.0 → 2.37.0
+- Updated selenium-webdriver 4.46.0 → 4.47.0
+- Updated temple 0.10.6 → 0.10.7
+- Updated tilt 2.8.0 → 2.9.0
+- Updated Yarn 4.17.1 → 4.18.0 (`packageManager` in package.json; Corepack picks it up)
+
+### Known issues
+
+- redis 6.0.0 not applied: `mock_redis` (latest 0.55.0) still requires `redis ~> 5`.
+- cucumber-* / diff-lcs / multi_test majors not applied: pinned by cucumber 11.1.1 (latest).
+- simplecov held at ~> 0.22.0 deliberately (1.x breaks SonarQube coverage report).
 
 ## [Unreleased]
+## rst-8317-export-update — 2026-08-13
+
+### Changed
+
+- Exports: pre-UCD evidence checks predate the `income_check_type` field, so it is
+  blank on those rows even though every pre-UCD income check was done on paper. The
+  "DB income check type" column in the raw data, applications-by-court and Power BI
+  exports now reports `paper` when the application is pre-UCD (calculation scheme
+  blank or `prior_q4_23`) and the evidence check's `income_check_type` is NULL.
+  Rows without an evidence check, and post-UCD blanks, are unchanged.
+
+## rst-8490-frontend-updates — 2026-08-10
 
 ### Fixed
 

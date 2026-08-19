@@ -265,7 +265,10 @@ module Views
             oa.created_at AS date_submitted_online,
             details.statement_signed_by,
             ec.check_type AS db_evidence_check_type,
-            ec.income_check_type AS db_income_check_type,
+            CASE WHEN ec.id IS NOT NULL AND ec.income_check_type IS NULL
+                      AND (details.calculation_scheme IS NULL OR details.calculation_scheme = 'prior_q4_23')
+                 THEN 'paper'
+                 ELSE ec.income_check_type END AS db_income_check_type,
             ec.hmrc_income_used AS hmrc_total_income,
             ec.outcome AS ev_check_outcome,
             #{evidence_check_type_case_sql},
