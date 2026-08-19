@@ -8,6 +8,7 @@ Feature: Accessibility of error states on forms
     Then I should see that I must fill in date received
     And I should have to enter refund information
     And the "Date received and fee status - with errors" page should meet accessibility standards
+    And the error summary on the "Date received and fee status - with errors" page should link to the fields in error
 
   Scenario: Personal details page with errors
     Given I have started an application
@@ -16,6 +17,7 @@ Feature: Accessibility of error states on forms
     Then I should see that I must fill in my last name
     And I should have to enter my date of birth
     And the "Personal details - with errors" page should meet accessibility standards
+    And the error summary on the "Personal details - with errors" page should link to the fields in error
 
   Scenario: Savings and investments page with errors
     Given I have started an application
@@ -23,6 +25,7 @@ Feature: Accessibility of error states on forms
     When I click next without selecting a savings and investments option
     Then I should see a 'Please answer the savings question' error
     And the "Savings and investments - with errors" page should meet accessibility standards
+    And the error summary on the "Savings and investments - with errors" page should link to the fields in error
 
   Scenario: Online application details page with errors
     Given I have looked up an online application with benefits
@@ -30,6 +33,7 @@ Feature: Accessibility of error states on forms
     And I click next without selecting a jurisdiction
     Then I should see that I must select a jurisdiction error message
     And the "Online application details - with errors" page should meet accessibility standards
+    And the error summary on the "Online application details - with errors" page should link to the fields in error
 
   Scenario: Evidence page with errors
     Given there is an application waiting for evidence

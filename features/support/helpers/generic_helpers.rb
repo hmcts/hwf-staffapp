@@ -5,6 +5,10 @@ def base_page
   @base_page ||= BasePage.new
 end
 
+def error_summary_page
+  @error_summary_page ||= ErrorSummaryPage.new
+end
+
 def sign_in_page
   @sign_in_page ||= SignInPage.new
 end

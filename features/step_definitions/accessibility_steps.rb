@@ -16,6 +16,17 @@ Then("the {string} page should meet accessibility standards excluding {string}")
   expect(page).to axe_clean_to_wcag_22_aa(exclude)
 end
 
+And("the error summary on the {string} page should link to the fields in error") do |_page_name|
+  expect(error_summary_page).to be_shown
+
+  field_ids = error_summary_page.linked_field_ids
+  expect(field_ids).to be_any
+
+  field_ids.each do |id|
+    expect(page).to have_css("##{id}", visible: :all)
+  end
+end
+
 When("I visit the dashboard page") do
   expect(dashboard_page).to be_displayed
 end
