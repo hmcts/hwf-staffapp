@@ -34,7 +34,7 @@ class BenefitCheckService
   def process_proxy_api_call
     query_proxy_api
   rescue BenefitCheckers::BadRequestError => e
-    log_error JSON.parse(e.message)['error'], 'BadRequest'
+    process_bad_request_error(e)
   rescue Exceptions::TechnicalFaultDwpCheck, Errno::ECONNREFUSED => e
     log_error I18n.t('error_messages.benefit_checker.unavailable'), unavailable_result(e)
   rescue Exceptions::DwpRateLimitError
@@ -82,5 +82,14 @@ class BenefitCheckService
     @check_item.api_response = @response.to_json if @response
     @check_item.update!(dwp_result: result)
     LogStuff.log @check_item.class.name.titleize.humanize, message
+  end
+
+  def process_bad_request_error(error)
+    message = JSON.parse(error.message)['error']
+    if message.include?('surname is invalid')
+      log_error message, 'InvalidRequest'
+    else
+      log_error message, 'BadRequest'
+    end
   end
 end

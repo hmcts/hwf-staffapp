@@ -41,6 +41,20 @@ describe BenefitCheckService do
         end
       end
 
+      context 'bad request for invalid surname' do
+        let(:ni_number) { Settings.dwp_mock.surname_dwp_error.first }
+
+        it 'uses the mock client' do
+          service = described_class.new(check)
+          expect(service.instance_variable_get(:@client)).to be_a(BenefitCheckers::MockApiClient)
+        end
+
+        it 'returns the expected mock response' do
+          described_class.new(check)
+          expect(check.dwp_result).to eql('InvalidRequest')
+        end
+      end
+
       before do
         described_class.new(check)
       end

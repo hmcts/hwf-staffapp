@@ -147,6 +147,22 @@ RSpec.describe BenefitCheck do
 
   end
 
+  describe '#invalid_request?' do
+    subject { check.invalid_request? }
+
+    context 'when dwp_result is InvalidRequest' do
+      let(:check) { build(:benefit_check, dwp_result: 'InvalidRequest', error_message: 'surname is invalid') }
+
+      it { is_expected.to be true }
+    end
+
+    context 'when dwp_result is BadRequest' do
+      let(:check) { build(:benefit_check, dwp_result: 'BadRequest', error_message: 'LSCBCxxx') }
+
+      it { is_expected.to be false }
+    end
+  end
+
   describe '.dwp_outage_failure?' do
     subject { described_class.dwp_outage_failure?(dwp_result, error_message) }
 
