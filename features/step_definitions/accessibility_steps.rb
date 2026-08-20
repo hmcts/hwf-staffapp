@@ -1,6 +1,7 @@
 require 'axe/matchers/be_axe_clean'
 
-# WCAG 2.2 AA
+# The Service Standard requires all services to meet level AA of the Web Content 
+# Accessibility Guidelines 2.2 (WCAG 2.2)
 # [https://www.gov.uk/service-manual/helping-people-to-use-your-service/testing-for-accessibility]
 WCAG_22_AA = ['wcag2a', 'wcag2aa', 'wcag21a', 'wcag21aa', 'wcag22aa'].freeze
 
