@@ -42,7 +42,7 @@ module PaperEvidenceHelper
     case last_benefit_check_result(application)
     when "no", "undetermined", "deceased", "deleted", "superseded"
       'no_record'
-    when 'server unavailable', 'unspecified error', 'badrequest', 'technical fault'
+    when 'server unavailable', 'unspecified error', 'badrequest', 'technical fault', 'invalidrequest'
       'technical_error'
     when 'rate limited'
       'rate_limit_error'

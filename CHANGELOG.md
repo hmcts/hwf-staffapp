@@ -5,6 +5,21 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 with entries grouped by branch and date rather than release version.
 
+## 2026-08-20 (rst-8513-bad-request)
+
+### Changed
+
+- DWP BadRequest responses whose message is "surname is invalid" are now stored
+  as `dwp_result: 'InvalidRequest'` and treated like Undetermined: DWP answered,
+  the applicant's data is the problem, so it is not an outage (no monitor count,
+  no rerun) and staff are not blocked. On the paper-evidence page, answering
+  "No evidence" for an InvalidRequest check now processes the application with
+  outcome "none" (continuing to summary/declaration) instead of redirecting to
+  the homepage with "cannot process application" — that redirect is meant for
+  outages, where retrying later could still succeed. Guard lives in
+  `BenefitOverridesController#allow_benefit_override?` via new
+  `BenefitCheck#invalid_request?`.
+
 ## 2026-08-18
 
 ### Changed

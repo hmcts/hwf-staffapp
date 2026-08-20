@@ -11,7 +11,7 @@ class BenefitCheck < ActiveRecord::Base
   # Genuine DWP answers that are never an outage and never a rerun candidate.
   # Undetermined means DWP responded but couldn't determine entitlement, so a
   # rerun cannot change it - it is excluded up front in SQL and by the predicate.
-  NON_OUTAGE_RESULTS = (VALID_DWP_RESULTS + ['Undetermined']).freeze
+  NON_OUTAGE_RESULTS = (VALID_DWP_RESULTS + ['Undetermined', 'InvalidRequest']).freeze
 
   # BadRequest messages naming a field as invalid/missing are the applicant's
   # data problem, not a DWP outage - a rerun cannot fix them.
@@ -71,6 +71,10 @@ class BenefitCheck < ActiveRecord::Base
   def bad_request?
     dwp_result == 'BadRequest' &&
       (error_message.include?('LSCBC') || error_message.include?('Service unavailable'))
+  end
+
+  def invalid_request?
+    dwp_result == 'InvalidRequest'
   end
 
   def benefit_check_unavailable?

@@ -45,7 +45,11 @@ class BenefitOverridesController < ApplicationController
     end
   end
 
+  # An InvalidRequest is DWP rejecting the applicant's data (e.g. "surname is
+  # invalid"), not an outage - treat it like Undetermined and let the "no
+  # evidence" answer process the application instead of blocking it.
   def allow_benefit_override?
+    return false if application.last_benefit_check&.invalid_request?
     application.benefit_check_with_error_message? || DwpWarning.order(id: :desc).first&.check_state == DwpWarning::STATES[:offline]
   end
 
