@@ -35,7 +35,7 @@ Feature: Accessibility of admin pages
     When I can view staff DWP warning message page
     Then the "Choose the DWP message" page should meet accessibility standards
 
-  Scenario: Feedback recieved
+  Scenario: Feedback received
     Given a user has left feedback
     When I can view feedback received
     Then I should see the feedback received

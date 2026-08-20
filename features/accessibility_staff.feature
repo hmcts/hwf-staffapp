@@ -59,7 +59,7 @@ Feature: Accessibility of staff pages
     Then I should be taken to the benefits page
     When I answer no to the benefits question
     Then I should be taken to the children page
-    And the "Children details" page should meet accessibility standards
+    And the "Children" page should meet accessibility standards
     When I choose no chilren
     Then I should be taken to the incomes type page
     And the "Type of income" page should meet accessibility standards
@@ -68,8 +68,7 @@ Feature: Accessibility of staff pages
     And the "Type of income the partner is receiving" page should meet accessibility standards
     When I choose wages for the partner
     Then I should be taken to the incomes page
-    And the "Incomes" page should meet accessibility standards
-
+    And the "Income" page should meet accessibility standards
 
   Scenario: Processing an online application
     Given I have looked up an online application with benefits
