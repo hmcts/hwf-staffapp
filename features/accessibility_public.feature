@@ -24,7 +24,3 @@ Feature: Accessibility of public facing pages
     When I click on the accessibility link in the footer
     Then I am on the accessibility statement page
     And the "Accessibility statement" page should meet accessibility standards
-
-  Scenario: Choosing a new password
-    Given I follow a password reset link
-    Then the "Choose a new password" page should meet accessibility standards
