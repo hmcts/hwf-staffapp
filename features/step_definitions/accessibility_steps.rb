@@ -41,7 +41,7 @@ Given("there are other members of staff") do
 end
 
 Given("a user has left feedback") do
-  FactoryBot.create(:feedback)
+  FactoryBot.create(:feedback, experience: 'Top quality experience', ideas: 'No it is perfect, well done', rating: 5)
 end
 
 When("I open the details of another member of staff") do
@@ -117,4 +117,3 @@ end
 When("I submit the representative details") do
   representative_page.submit_representative_details
 end
-

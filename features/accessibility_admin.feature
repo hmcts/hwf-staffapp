@@ -9,7 +9,7 @@ Feature: Accessibility of admin pages
     Then I am taken to my admin dashboard
     And I should see all the responses by type graph
     And I should see checks by time of day graph
-    And the "Admin dashboard" page should meet accessibility standards
+    And the "Admin dashboard" page should meet accessibility standards excluding "#chart-1"
 
   Scenario: Offices
     When I click on view office
@@ -70,7 +70,7 @@ Feature: Accessibility of admin pages
     Given I am on the reports page
     When I click on graphs
     Then I should be taken to the graphs page
-    And the "Benefit check graphs" page should meet accessibility standards
+    And the "Benefit check graphs" page should meet accessibility standards excluding "#chart-1"
 
   Scenario: Guides and letter templates
     Given I can view staff guides

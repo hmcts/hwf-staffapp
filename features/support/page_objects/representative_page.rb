@@ -8,7 +8,7 @@ class RepresentativePage < BasePage
     element :organisation, '#application_organisation'
     element :next, 'input[value="Next"]'
   end
-  
+
   def click_next
     content.wait_until_next_visible
     content.next.click

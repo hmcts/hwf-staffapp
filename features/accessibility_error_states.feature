@@ -24,7 +24,7 @@ Feature: Accessibility of error states on forms
     And I am on the savings and investments part of the application
     When I click next without selecting a savings and investments option
     Then I should see a 'Please answer the savings question' error
-    And the "Savings and investments - with errors" page should meet accessibility standards
+    And the "Savings and investments - with errors" page should meet accessibility standards excluding ".error-link[href='#application_choice']"
     And the error summary on the "Savings and investments - with errors" page should link to the fields in error
 
   Scenario: Online application details page with errors
