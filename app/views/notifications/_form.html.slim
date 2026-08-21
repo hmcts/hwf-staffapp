@@ -4,8 +4,8 @@
       h1.govuk-heading-xl Edit Notifications Message
 
     .govuk-form-group
-      = f.label :message, class: 'govuk-label'
-      = f.rich_textarea :message
+      = f.label :message, class: 'govuk-label', id: 'notification_message_label'
+      = f.rich_textarea :message, aria: { labelledby: 'notification_message_label' }
 
     .govuk-form-group
       .govuk-checkboxes.govuk-checkboxes--small

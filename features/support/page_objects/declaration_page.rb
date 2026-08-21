@@ -17,4 +17,8 @@ class DeclarationPage < BasePage
     content.next.click
   end
 
+  def sign_declaration_as_legal_representative
+    find('#application_statement_signed_by_legal_representative', visible: false).click
+    content.next.click
+  end
 end
