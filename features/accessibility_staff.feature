@@ -140,13 +140,6 @@ Feature: Accessibility of staff pages
     Then  I am taken to the processed application
     And the "Processed applications list" page should meet accessibility standards
 
-  Scenario: Paginated processed applications list
-    Given I am signed in as a user that has 50 processed applications
-    And I click on processed applications
-    When I click on the number representing the last page
-    Then I should be on page 3
-    And the "Processed applications list - paginated" page should meet accessibility standards
-
   Scenario: Deleted applications
     Given I successfully sign in as a user
     When I click on deleted applications

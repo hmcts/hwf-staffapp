@@ -34,7 +34,7 @@ class DashboardPage < BasePage
     element :process_a_paper_application_heading, 'h2', text: 'Process a paper application'
     element :process_an_online_application_heading, 'h2', text: 'Process an online application'
     element :find_an_application_heading, 'h1', text: 'Find an application'
-    element :search_results_heading, 'h3', text: 'Search results'
+    element :search_results_heading, 'h2', text: 'Search results'
   end
 
   def look_up_reference(reference)

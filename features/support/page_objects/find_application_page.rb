@@ -6,7 +6,7 @@ class FindApplicationPage < BasePage
     element :no_results_found_error, '.error', text: 'No results found', visible: false
     element :processed_by_another_office, '.error', text: 'This application has been processed by '
     element :cant_be_blank_error, '.error', text: 'Enter a search term'
-    element :search_results_header, 'h3', text: 'Search results', visible: false
+    element :search_results_header, 'h2', text: 'Search results', visible: false
     section :search_results_group, '.search-results' do
       element :sort_reference, 'a', text: 'Reference'
       element :sort_entered, 'a', text: 'Entered'

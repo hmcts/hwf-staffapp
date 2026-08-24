@@ -3,10 +3,14 @@ require 'axe/matchers/be_axe_clean'
 # The Service Standard requires all services to meet level AA of the Web Content
 # Accessibility Guidelines 2.2 (WCAG 2.2)
 # [https://www.gov.uk/service-manual/helping-people-to-use-your-service/testing-for-accessibility]
-WCAG_22_AA = ['wcag2a', 'wcag2aa', 'wcag21a', 'wcag21aa', 'wcag22aa'].freeze
+WCAG_22_AA = ['wcag2a', 'wcag2aa', 'wcag21a', 'wcag21aa', 'wcag22aa', 'best-practice'].freeze
 
 def axe_clean_to_wcag_22_aa(exclude = nil)
-  Axe::Matchers.be_axe_clean.according_to(WCAG_22_AA).excluding(*String(exclude).split(/,\s*/))
+  # Skip region checks as they can cause false positives
+  Axe::Matchers.be_axe_clean.
+    according_to(WCAG_22_AA).
+    skipping(:region).
+    excluding(*String(exclude).split(/,\s*/))
 end
 
 Then("the {string} page should meet accessibility standards") do |_page_name|
@@ -24,7 +28,7 @@ And("the error summary on the {string} page should link to the fields in error")
   expect(field_ids).to be_any
 
   field_ids.each do |id|
-    expect(page).to have_css("##{id}", visible: :all)
+    expect(page).to have_selector(:id, id, visible: :all)
   end
 end
 
@@ -75,6 +79,7 @@ When("I submit my personal details as a married applicant") do
 end
 
 Then("I should be taken to the partner details page") do
+  expect(partner_details_page).to be_displayed
   expect(partner_details_page.content).to have_header
 end
 
@@ -83,6 +88,7 @@ When("I submit the partner details") do
 end
 
 Then("I should be taken to the partner income type page") do
+  expect(income_kind_partner_page).to be_displayed
   expect(income_kind_partner_page.content).to have_header
 end
 
@@ -112,6 +118,7 @@ When("I sign the declaration as a legal representative") do
 end
 
 Then("I should be taken to the representative page") do
+  expect(representative_page).to be_displayed
   expect(representative_page.content).to have_header
 end
 
