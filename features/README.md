@@ -60,7 +60,7 @@ All of the playwright drivers can be viewed in [support/playwright_driver_helper
 
 ## Accessibility testing with Axe
 
-The [Service Standard](https://www.gov.uk/service-manual/helping-people-to-use-your-service/testing-for-accessibility) requires all services to meet level AA of the [Web Content Accessibility Guidelines 2.2](https://www.gov.uk/service-manual/helping-people-to-use-your-service/understanding-wcag) (WCAG 2.2) as a minimum. As part of this, code must be regularly tested using both manual and automated testing.
+The [Service Standard](https://www.gov.uk/service-manual/helping-people-to-use-your-service/testing-for-accessibility) requires all services to meet level AA of the [Web Content Accessibility Guidelines 2.2](https://www.gov.uk/service-manual/helping-people-to-use-your-service/understanding-wcag) (WCAG 2.2) as a minimum. As part of this, code must be regularly tested for accessiblity using both manual and automated testing.
 
 For automated accessibility testing we use [Axe](https://www.deque.com/axe/) and the [Axe Core gem](https://github.com/dequelabs/axe-core-gems).
 
@@ -76,7 +76,6 @@ The tests cover:
 - [features/accessibility_error_states.feature](accessibility_error_states.feature) testing form error states.
 
 The test configuration and step definitions can be viewed in [step_definitions/accessibility_steps.rb](step_definitions/accessibility_steps.rb).
-
 
 ## Brakeman
 
