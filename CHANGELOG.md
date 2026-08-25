@@ -5,6 +5,28 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 with entries grouped by branch and date rather than release version.
 
+## 2026-08-25 (rst-8497-benefit-override)
+
+### Fixed
+
+- The online benefits page was missing the rst-8513 InvalidRequest guard that
+  the paper flow already had: answering "No evidence" for an InvalidRequest
+  ("surname is invalid") check sent staff to the homepage with "cannot process
+  application" instead of proceeding to the summary like Undetermined.
+
+### Changed
+
+- Replaced the duplicated per-controller blocking logic
+  (`dwp_blocks_processing?` in `BenefitOverridesController` and
+  `OnlineApplicationBenefitsController`) with a shared
+  `BenefitOverrideRedirection` concern (app/controllers/concerns) providing
+  `benefit_override_allowed?(record, evidence_provided:)` and `take_user_home`.
+  Positive semantics: true means the staff answer can be recorded and the
+  application processed — DWP offline (admin warning), InvalidRequest, or
+  evidence provided all allow; only an outage-type error with no evidence
+  blocks. The duplication had already let the two flows drift once (the online
+  controller missed the InvalidRequest guard).
+
 ## 2026-08-20 (rst-8513-bad-request)
 
 ### Changed

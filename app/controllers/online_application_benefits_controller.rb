@@ -1,4 +1,5 @@
 class OnlineApplicationBenefitsController < OnlineApplicationsController
+  include BenefitOverrideRedirection
 
   def edit
     @form = Forms::OnlineApplication.new(online_application)
@@ -26,18 +27,11 @@ class OnlineApplicationBenefitsController < OnlineApplicationsController
   private
 
   def decide_redirection
-    if dwp_blocks_processing?
-      flash[:alert] = t('error_messages.benefit_check.cannot_process_application')
-      redirect_to root_url
-    else
+    if benefit_override_allowed?(online_application, evidence_provided: benefits_override?)
       redirect_to online_application_path(online_application)
+    else
+      take_user_home
     end
-  end
-
-  # When DWP is marked offline staff decide benefits manually (CHANGELOG.md)
-  def dwp_blocks_processing?
-    return false if DwpWarning.offline?
-    online_application.benefit_check_with_error_message? && !benefits_override?
   end
 
   def benefits_override?

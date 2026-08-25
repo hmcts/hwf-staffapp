@@ -1,4 +1,6 @@
 class BenefitOverridesController < ApplicationController
+  include BenefitOverrideRedirection
+
   before_action :authorize_benefit_override_create
 
   def paper_evidence
@@ -8,10 +10,10 @@ class BenefitOverridesController < ApplicationController
 
   def paper_evidence_save
     @form = Forms::BenefitsEvidence.new(benefit_override)
-    if dwp_blocks_processing?
-      take_user_home
-    else
+    if benefit_override_allowed?(application, evidence_provided: !no_paper_evidence?)
       process_benefit_evidence
+    else
+      take_user_home
     end
   end
 
@@ -45,24 +47,8 @@ class BenefitOverridesController < ApplicationController
     end
   end
 
-  # Only an outage-type DWP failure blocks processing, and only when the staff
-  # member has no paper evidence. When DWP is marked offline staff may process
-  # without paper evidence, and an InvalidRequest is DWP rejecting the
-  # applicant's data (e.g. "surname is invalid"), not an outage - treat it like
-  # Undetermined and let the "no evidence" answer process the application (CHANGELOG.md).
-  def dwp_blocks_processing?
-    return false if DwpWarning.offline?
-    return false if application.last_benefit_check&.invalid_request?
-    application.benefit_check_with_error_message? && no_paper_evidence?
-  end
-
   def no_paper_evidence?
     allowed_params[:evidence] == 'false'
-  end
-
-  def take_user_home
-    flash[:alert] = t('error_messages.benefit_check.cannot_process_application')
-    redirect_to root_url
   end
 
   def next_page_to_go
