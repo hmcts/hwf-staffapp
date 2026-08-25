@@ -65,6 +65,13 @@ RSpec.describe BenefitCheckers::MockApiClient, type: :service do
       end
     end
 
+    context 'raise BadRequest error for surname' do
+      let(:ni_number_for_test) { Settings.dwp_mock.surname_dwp_error.first }
+      it 'returns a successful response structure' do
+        expect { client.check(params) }.to raise_error(BenefitCheckers::BadRequestError)
+      end
+    end
+
     context 'raise BadRequestErrno::ECONNREFUSED error' do
       let(:ni_number_for_test) { Settings.dwp_mock.ni_number_connection_refused.first }
       it 'returns a successful response structure' do
