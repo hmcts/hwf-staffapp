@@ -154,8 +154,28 @@ RSpec.describe OnlineApplicationsController do
           context 'dwp is down' do
             let(:dwp_state) { 'offline' }
 
-            it 'redirects to the approval page' do
-              expect(response).to redirect_to(benefits_online_application_path(online_application))
+            context 'when the DwpWarning is set to default (monitor does not stop the check)' do
+              let(:dwp_warning_state) { DwpWarning::STATES[:default_checker] }
+
+              it 'runs the benefit check' do
+                expect(online_bc_runner).to have_received(:run)
+              end
+
+              context 'benefit check is successful' do
+                let(:benefits_valid) { true }
+
+                it 'redirects to the summary page' do
+                  expect(response).to redirect_to(online_application_path(online_application))
+                end
+              end
+
+              context 'benefit check is not successful' do
+                let(:benefits_valid) { false }
+
+                it 'redirects to the benefits evidence page' do
+                  expect(response).to redirect_to(benefits_online_application_path(online_application))
+                end
+              end
             end
 
             context 'when the DwpWarning is set to online' do
@@ -194,15 +214,11 @@ RSpec.describe OnlineApplicationsController do
             context 'when the DwpWarning is set to offline' do
               let(:dwp_warning_state) { DwpWarning::STATES[:offline] }
 
-              it 'redirects to the approval page' do
-                expect(response).to redirect_to(benefits_online_application_path(online_application))
+              it 'does not run the benefit check' do
+                expect(online_bc_runner).not_to have_received(:run)
               end
-            end
 
-            context 'when the DwpWarning is set to default' do
-              let(:dwp_warning_state) { DwpWarning::STATES[:default_checker] }
-
-              it 'redirects to the approval page' do
+              it 'redirects to the benefits evidence page' do
                 expect(response).to redirect_to(benefits_online_application_path(online_application))
               end
             end
@@ -251,6 +267,7 @@ RSpec.describe OnlineApplicationsController do
 
               context 'saving pass' do
                 let(:dwp_state) { 'offline' }
+                let(:dwp_warning_state) { DwpWarning::STATES[:offline] }
                 let(:saving_outcome) { true }
 
                 it 'renders the summary page' do

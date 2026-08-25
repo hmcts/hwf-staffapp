@@ -7,6 +7,20 @@ with entries grouped by branch and date rather than release version.
 
 ## 2026-08-25 (rst-8497-benefit-override)
 
+### Changed
+
+- The online flow no longer skips the benefit check when the `DwpMonitor`
+  computes offline (≥ 50% of the last 10 checks failed) while the admin
+  `DwpWarning` is on Auto/default. `display_paper_evidence_page?` previously
+  consulted the monitor directly and went straight to the Evidence of
+  benefits page, letting online applications be processed without evidence
+  during an auto-detected outage with no admin decision — and diverging from
+  the paper flow, which never consults the monitor. Both flows now behave
+  identically: only the admin-set DWP offline state skips the check
+  (`display_paper_evidence_page?` now mirrors the paper flow's
+  `disable_benefit_calls?` via `DwpWarning.offline?`); the monitor only
+  drives the warning banner. See docs/benefit_checker_flow.md.
+
 ### Fixed
 
 - The online benefits page was missing the rst-8513 InvalidRequest guard that
