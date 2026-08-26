@@ -11,9 +11,12 @@ module OnlineApplicationHelper
     end
   end
 
+  # Matches the paper flow (Applications::Process::BenefitsController): only
+  # the admin-set DWP offline state skips the benefit check - the DwpMonitor
+  # state never does, it only drives the warning banner.
   def display_paper_evidence_page?
     return false if online_application.benefits == false || savings_exceeded
-    return true if DwpMonitor.new.state == 'offline' && DwpWarning.state != DwpWarning::STATES[:online]
+    return true if DwpWarning.offline?
     !online_benefit_check
   end
 

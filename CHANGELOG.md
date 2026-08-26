@@ -5,6 +5,42 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 with entries grouped by branch and date rather than release version.
 
+## 2026-08-25 (rst-8497-benefit-override)
+
+### Changed
+
+- The online flow no longer skips the benefit check when the `DwpMonitor`
+  computes offline (≥ 50% of the last 10 checks failed) while the admin
+  `DwpWarning` is on Auto/default. `display_paper_evidence_page?` previously
+  consulted the monitor directly and went straight to the Evidence of
+  benefits page, letting online applications be processed without evidence
+  during an auto-detected outage with no admin decision — and diverging from
+  the paper flow, which never consults the monitor. Both flows now behave
+  identically: only the admin-set DWP offline state skips the check
+  (`display_paper_evidence_page?` now mirrors the paper flow's
+  `disable_benefit_calls?` via `DwpWarning.offline?`); the monitor only
+  drives the warning banner. See docs/benefit_checker_flow.md.
+
+### Fixed
+
+- The online benefits page was missing the rst-8513 InvalidRequest guard that
+  the paper flow already had: answering "No evidence" for an InvalidRequest
+  ("surname is invalid") check sent staff to the homepage with "cannot process
+  application" instead of proceeding to the summary like Undetermined.
+
+### Changed
+
+- Replaced the duplicated per-controller blocking logic
+  (`dwp_blocks_processing?` in `BenefitOverridesController` and
+  `OnlineApplicationBenefitsController`) with a shared
+  `BenefitOverrideRedirection` concern (app/controllers/concerns) providing
+  `benefit_override_allowed?(record, evidence_provided:)` and `take_user_home`.
+  Positive semantics: true means the staff answer can be recorded and the
+  application processed — DWP offline (admin warning), InvalidRequest, or
+  evidence provided all allow; only an outage-type error with no evidence
+  blocks. The duplication had already let the two flows drift once (the online
+  controller missed the InvalidRequest guard).
+
 ## 2026-08-20 (rst-8513-bad-request)
 
 ### Changed
@@ -58,6 +94,42 @@ with entries grouped by branch and date rather than release version.
   Rows without an evidence check, and post-UCD blanks, are unchanged.
 
 ## rst-8490-frontend-updates — 2026-08-10
+
+### Added
+
+- Re-introduced the DWP offline override, as used during the May–Nov 2025 DWP outage
+  (originally ebf92a09/574d8480/4e88da81, reversed by 6e758f19). When the admin-set
+  `DwpWarning` state is `offline`: no benefit checks are sent to DWP (paper flow
+  already skipped them; `OnlineBenefitCheckRunner` — including the rerun job — now
+  skips too), and staff are no longer blocked from processing: the paper-evidence
+  page processes even when the answer is "no evidence" (previously kicked back to
+  the homepage with "cannot process application"), and the online-application
+  benefits page proceeds to the summary instead of redirecting home. Staff decisions
+  are recorded via the existing `benefits_override`/`dwp_manual_decision` fields.
+  New `DwpWarning.offline?` replaces the duplicated
+  `DwpWarning.order(id: :desc).first&.check_state == …` checks.
+- The online "Evidence of benefits" page's outage banner ("Due to the benefits
+  checker being down…") now keys off `dwp_checker_state` (admin `DwpWarning`
+  override with `DwpMonitor` fallback) instead of raw `DwpMonitor`. Under the
+  offline override no checks are sent, so the monitor never trips and the banner
+  would not have shown; the paper benefits page already used `dwp_checker_state`.
+  `dwp_checker_state` is now exposed as a view helper. The banner is now a single
+  block — bold "DWP evidence check is disabled" heading plus the supporting-evidence
+  sentence — and suppresses the "DWP evidence check has failed" block while offline.
+  The "BEFORE PROCEEDING FURTHER…" evidence hint still renders below the banner.
+- The online application check-details page now shows "Correct evidence provided"
+  under "Benefits declared in application" (paper summaries already had it):
+  the staff member's manual answer when one was recorded (`dwp_manual_decision`
+  set — DWP offline or errored), otherwise the DWP check result; hidden when
+  neither exists. A "Change" link back to the Evidence of benefits page appears
+  only for manual answers. Logic lives in `Views::Overview::OnlineBenefitEvidence`.
+- `ProcessApplication` now persists the manual evidence decision when completing
+  an online application: previously a `BenefitOverride` was only created for
+  "Yes" answers, so a "No" recorded while DWP was offline left no trace on the
+  processed application. A manual "No" (`dwp_manual_decision: false`) now stores
+  `BenefitOverride(correct: false)`, matching the paper flow; outcome handling
+  is unchanged ("Yes" → full, "No" → none via the existing runner fallback).
+  `BenefitCheckRunner#checks_allowed?` now uses the shared `DwpWarning.offline?`.
 
 ### Fixed
 

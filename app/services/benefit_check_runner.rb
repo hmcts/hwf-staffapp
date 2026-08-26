@@ -94,7 +94,7 @@ class BenefitCheckRunner < BaseBenefitCheckRunner
   end
 
   def checks_allowed?
-    DwpWarning.order(id: :desc).first&.check_state != DwpWarning::STATES[:offline]
+    !DwpWarning.offline?
   end
 
   def allow_benefit_check_call?
