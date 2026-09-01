@@ -9,9 +9,7 @@ with entries grouped by branch and date rather than release version.
 
 ### Changed
 
-- Updated rubocop 1.89.0 → 1.90.0. Its new `Style/DirectiveScope` cop (which
-  rewrites single-statement `rubocop:disable`/`enable` pairs to `disable-next`)
-  is disabled in .rubocop.yml — we prefer the block form. Tightened
+- Updated rubocop 1.89.0 → 1.90.0. Tightened
   `Layout/ExtraSpacing` whitespace fixes applied in 4 spec files.
 - Updated rubyzip 3.4.1 → 3.5.0
 - Updated bullet 8.1.3 → 8.2.0
