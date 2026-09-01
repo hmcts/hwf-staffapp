@@ -151,4 +151,73 @@ RSpec.describe Views::Overview::OnlineApplicationView do
     end
   end
 
+  describe 'benefit evidence' do
+    let(:benefits) { true }
+    let(:dwp_manual_decision) { nil }
+    let(:benefits_override) { false }
+    let(:benefit_check) { nil }
+
+    before do
+      allow(online_application).to receive_messages(benefits: benefits, dwp_manual_decision: dwp_manual_decision,
+                                                    benefits_override: benefits_override,
+                                                    last_benefit_check: benefit_check)
+    end
+
+    describe '#evidence_provided' do
+      context 'when benefits were not declared in the application' do
+        let(:benefits) { false }
+
+        it { expect(online_app_view.evidence_provided).to be_nil }
+      end
+
+      context 'when staff answered the evidence question manually' do
+        context 'with correct evidence' do
+          let(:dwp_manual_decision) { true }
+          let(:benefits_override) { true }
+
+          it { expect(online_app_view.evidence_provided).to eq('Yes') }
+        end
+
+        context 'without correct evidence' do
+          let(:dwp_manual_decision) { false }
+          let(:benefits_override) { false }
+
+          it { expect(online_app_view.evidence_provided).to eq('No') }
+        end
+      end
+
+      context 'when there was no manual decision' do
+        context 'and the DWP check passed' do
+          let(:benefit_check) { instance_double(BenefitCheck, passed?: true) }
+
+          it { expect(online_app_view.evidence_provided).to eq('Yes') }
+        end
+
+        context 'and the DWP check did not pass' do
+          let(:benefit_check) { instance_double(BenefitCheck, passed?: false) }
+
+          it { expect(online_app_view.evidence_provided).to eq('No') }
+        end
+
+        context 'and no DWP check was run' do
+          it { expect(online_app_view.evidence_provided).to be_nil }
+        end
+      end
+    end
+
+    describe '#manual_evidence_decision?' do
+      context 'when staff answered the evidence question' do
+        let(:dwp_manual_decision) { false }
+
+        it { expect(online_app_view.manual_evidence_decision?).to be true }
+      end
+
+      context 'when the answer came from the DWP check' do
+        let(:dwp_manual_decision) { nil }
+
+        it { expect(online_app_view.manual_evidence_decision?).to be false }
+      end
+    end
+  end
+
 end

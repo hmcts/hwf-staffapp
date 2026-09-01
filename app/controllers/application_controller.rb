@@ -46,6 +46,7 @@ class ApplicationController < ActionController::Base
     return DwpMonitor.new.state if DwpWarning.use_default_check?
     DwpWarning.order(id: :desc).first.check_state
   end
+  helper_method :dwp_checker_state
 
   def add_datalayer_event(name, data)
     event = GtmOnRails::DataLayer::Event.new(name, **data)

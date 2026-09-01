@@ -29,6 +29,63 @@ RSpec.describe OnlineApplicationBenefitsController do
     end
   end
 
+  describe 'GET #edit offline banner' do
+    render_views
+
+    let(:form) { Forms::OnlineApplication.new(online_application) }
+    let(:banner_heading) { 'DWP evidence check is disabled' }
+    let(:banner_message) { 'You will only be able to process this application if you have supporting evidence' }
+    let(:benefit_check) { instance_double(BenefitCheck, dwp_result: 'Yes') }
+    let(:benefit_check_runner) { instance_double(BenefitCheckRunner, can_run?: true) }
+
+    before do
+      allow(BenefitCheckRunner).to receive(:new).with(online_application).and_return(benefit_check_runner)
+      dwp_warning
+      get :edit, params: { id: id }
+    end
+
+    context 'when the DWP Warning is set to offline' do
+      let(:dwp_warning_state) { DwpWarning::STATES[:offline] }
+
+      it 'shows the bold banner heading' do
+        expect(response.body).to include(banner_heading)
+      end
+
+      it 'explains supporting evidence is needed' do
+        expect(response.body).to include(banner_message)
+      end
+
+      it 'still shows the before proceeding hint below the banner' do
+        expect(response.body).to include('BEFORE PROCEEDING FURTHER')
+      end
+
+      context 'and the stored benefit check has an error' do
+        let(:benefit_check) { instance_double(BenefitCheck, dwp_result: nil) }
+
+        it 'shows only the disabled banner, not the failed check banner' do
+          expect(response.body).to include(banner_heading)
+          expect(response.body).not_to include('DWP evidence check has failed')
+        end
+      end
+    end
+
+    context 'when the DWP Warning is set to online' do
+      let(:dwp_warning_state) { DwpWarning::STATES[:online] }
+
+      it 'does not show the disabled banner' do
+        expect(response.body).not_to include(banner_heading)
+      end
+
+      context 'and the stored benefit check has an error' do
+        let(:benefit_check) { instance_double(BenefitCheck, dwp_result: nil) }
+
+        it 'shows the failed check banner' do
+          expect(response.body).to include('DWP evidence check has failed')
+        end
+      end
+    end
+  end
+
   describe 'POST #retry' do
     let(:online_runner) { instance_double(OnlineBenefitCheckRunner, run: nil) }
 
@@ -117,17 +174,43 @@ RSpec.describe OnlineApplicationBenefitsController do
         end
       end
 
+      context 'when the benefit check is an InvalidRequest (invalid applicant data)' do
+        let(:benefit_check) { instance_double(BenefitCheck, invalid_request?: true) }
+        let(:benefit_check_has_error) { true }
+        let(:benefits_override) { false }
+
+        it 'redirects to the summary page' do
+          expect(response).to redirect_to(online_application_path(online_application))
+        end
+
+        it 'does not set alert flash message' do
+          expect(flash[:alert]).to be_nil
+        end
+      end
+
       context 'when DWP Warning is offline' do
         let(:dwp_warning_state) { DwpWarning::STATES[:offline] }
         let(:benefits_override) { false }
         let(:benefit_check_has_error) { false }
 
-        it 'redirects to the home page' do
-          expect(response).to redirect_to(root_path)
+        it 'redirects to the summary page so staff can process the application' do
+          expect(response).to redirect_to(online_application_path(online_application))
         end
 
-        it 'sets the alert flash message' do
-          expect(flash[:alert]).to eql I18n.t('error_messages.benefit_check.cannot_process_application')
+        it 'does not set alert flash message' do
+          expect(flash[:alert]).to be_nil
+        end
+
+        context 'and the benefit check has an error message' do
+          let(:benefit_check_has_error) { true }
+
+          it 'still redirects to the summary page' do
+            expect(response).to redirect_to(online_application_path(online_application))
+          end
+
+          it 'does not set alert flash message' do
+            expect(flash[:alert]).to be_nil
+          end
         end
 
         context 'and paper evidence was provided' do
