@@ -9,8 +9,9 @@ with entries grouped by branch and date rather than release version.
 
 ### Changed
 
-- Updated rubocop 1.89.0 → 1.90.0. Tightened
-  `Layout/ExtraSpacing` whitespace fixes applied in 4 spec files.
+- Updated rubocop 1.89.0 → 1.90.0. Its tightened `Layout/ExtraSpacing` cop
+  led to whitespace fixes in 4 spec files; its new `Style/DirectiveScope` cop
+  is disabled in .rubocop.yml (we keep disable/enable pairs).
 - Updated rubyzip 3.4.1 → 3.5.0
 - Updated bullet 8.1.3 → 8.2.0
 - Updated webmock 3.26.2 → 3.26.4
@@ -23,6 +24,22 @@ with entries grouped by branch and date rather than release version.
 - Updated sass 1.102.0 → 1.103.1
 - Updated webpack 5.109.2 → 5.110.2
 - Updated webpack-cli 7.2.2 → 7.2.3
+- Header menu spacing (app/assets/stylesheets/local/navigation.scss): the nav
+  items' and service name's 15px vertical padding moved onto the container
+  from tablet up, with a 10px row-gap on the list — the menu block keeps its
+  outer spacing while the wrapped menu rows sit closer together. Side effect:
+  the active-page underline now sits snug under the link text instead of at
+  the bar's bottom edge (it hung off the item padding).
+
+### Fixed
+
+- Header layout regression from govuk-frontend 6.5.0: it added
+  `align-items: center` to `.govuk-service-navigation__container` (for its new
+  inline "end slot" feature), which vertically centered the "Help with fees"
+  service name between the two rows our long nav wraps into. Restored the
+  pre-6.5.0 alignment (`align-items: stretch` from tablet up) in
+  app/assets/stylesheets/local/navigation.scss, next to the existing wrapper
+  flex override that keeps the name and links on one line.
 
 ### Known issues
 
