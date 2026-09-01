@@ -18,7 +18,7 @@
   "dependencies": {
     "@rails/actiontext": "^8.1.301",
     "accessible-autocomplete": "^3.0.1",
-    "govuk-frontend": "^6.4.0",
+    "govuk-frontend": "^6.5.0",
     "jquery": "^4.0.0",
     "rails-ujs": "^5.2.8-1",
     "trix": "^2.1.19"
@@ -45,9 +45,9 @@
     "jest-environment-jsdom": "^30.4.1",
     "jest-junit": "^17.0.0",
     "playwright": "^1.62.1",
-    "sass": "^1.102.0",
-    "webpack": "^5.109.2",
-    "webpack-cli": "^7.2.2"
+    "sass": "^1.103.1",
+    "webpack": "^5.110.2",
+    "webpack-cli": "^7.2.3"
   },
   "packageManager": "yarn@4.18.0"
 }

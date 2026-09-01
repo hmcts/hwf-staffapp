@@ -12,7 +12,7 @@ RSpec.describe OfficesController do
     end
 
     it 'routes to #show' do
-      expect(get: '/offices/1').to route_to('offices#show', id:  '1')
+      expect(get: '/offices/1').to route_to('offices#show', id: '1')
     end
 
     it 'routes to #edit' do

@@ -5,6 +5,41 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 with entries grouped by branch and date rather than release version.
 
+## 2026-09-01
+
+### Changed
+
+- Updated rubocop 1.89.0 → 1.90.0. Its new `Style/DirectiveScope` cop (which
+  rewrites single-statement `rubocop:disable`/`enable` pairs to `disable-next`)
+  is disabled in .rubocop.yml — we prefer the block form. Tightened
+  `Layout/ExtraSpacing` whitespace fixes applied in 4 spec files.
+- Updated rubyzip 3.4.1 → 3.5.0
+- Updated bullet 8.1.3 → 8.2.0
+- Updated webmock 3.26.2 → 3.26.4
+- Updated selenium-webdriver 4.47.0 → 4.48.0
+- Updated responders 3.2.0 → 3.2.1 (transitive)
+- Updated net-protocol 0.2.2 → 0.3.0 (transitive)
+- Updated et-orbi 1.4.1 → 1.4.2 (transitive)
+- Updated rbs 4.1.3 → 4.2.0 (transitive)
+- Updated govuk-frontend 6.4.0 → 6.5.0
+- Updated sass 1.102.0 → 1.103.1
+- Updated webpack 5.109.2 → 5.110.2
+- Updated webpack-cli 7.2.2 → 7.2.3
+
+### Known issues
+
+- No open vulnerabilities: bundle-audit and yarn npm audit both clean before
+  and after this run.
+- redis 5.4.1 → 6.0.0 deferred — major version bump, to be done as its own change.
+- jest / jest-environment-jsdom 30.5.1 deferred — released the same day as this
+  run (supply-chain caution); pick up next run.
+- diff-lcs held at 1.6.2 — 2.0.0 approved but blocked by rspec-expectations
+  (`< 2.0`) and cucumber (`~> 1.5`) constraints.
+- simplecov held at `~> 0.22.0` — deliberate pin; 1.x breaks the SonarQube
+  coverage report.
+- cucumber-* family, marcel, multi_test newer majors exist but are transitive
+  and pinned by their parents (cucumber, activestorage).
+
 ## 2026-08-25 (rst-8497-benefit-override)
 
 ### Changed
