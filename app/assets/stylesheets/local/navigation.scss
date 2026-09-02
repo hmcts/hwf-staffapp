@@ -38,6 +38,32 @@
     flex: 1;
     min-width: 0;
   }
+
+  // Keep the service name on the first nav row when the links wrap
+  // (govuk-frontend 6.5.0 centers it between the rows) — see CHANGELOG.md.
+  .govuk-service-navigation__container {
+    align-items: stretch;
+  }
+
+  // govuk-frontend pads every item 15px top and bottom (a 60px bar), which
+  // reads as a large gap once the nav wraps onto two rows. Move that padding
+  // to the container instead: the block keeps its outer spacing but wrapped
+  // rows sit right under each other. See CHANGELOG.md.
+  .govuk-service-navigation__container {
+    padding-top: govuk-spacing(3);
+    padding-bottom: govuk-spacing(3);
+  }
+
+  .govuk-service-navigation__item,
+  .govuk-service-navigation__service-name {
+    padding-top: 0;
+    padding-bottom: 0;
+  }
+
+  // A little air between the wrapped menu rows
+  .govuk-service-navigation__list {
+    row-gap: govuk-spacing(2);
+  }
 }
 
 .govuk-notification-banner {
