@@ -23,13 +23,13 @@ class PersonalDataPurgeJob < ApplicationJob
   def online_applications
     years = Settings.personal_data_purge.years_ago.years.ago
 
-    @online_applications ||= OnlineApplication.where('created_at < ?', years).reject do |online_applicaiton|
+    @online_applications ||= OnlineApplication.where('updated_at < ?', years).reject do |online_applicaiton|
       online_applicaiton.linked_application.present?
     end
   end
 
   def old_personal_data
-    @applications ||= Application.where('created_at < ?', Settings.personal_data_purge.years_ago.years.ago)
+    @applications ||= Application.where('updated_at < ?', Settings.personal_data_purge.years_ago.years.ago)
   end
 
   def app_insights_log
