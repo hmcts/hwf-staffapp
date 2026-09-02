@@ -5,6 +5,20 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 with entries grouped by branch and date rather than release version.
 
+## 2026-09-02 (CI ruby version fix)
+
+### Fixed
+
+- .ruby-version now reads `ruby-4.0.6` (explicit rvm interpreter string)
+  instead of the bare `4.0.6`. The Jenkins smoke test stage runs in a fresh
+  shell where the agent's old rvm resolves the ruby from .ruby-version; it
+  cannot map a bare 4.x number to an interpreter ("Unknown ruby interpreter
+  version"), so no gemset was selected and bundler then failed to find the
+  azure_env_secrets git checkout ("is not yet checked out") — a symptom, not
+  a missing bundle install. The install step already used the explicit string
+  (Jenkinsfile_CNP), which is why only later stages failed. Gemfile's
+  `ruby '4.0.6'` is unaffected (it does not read the file).
+
 ## 2026-09-02 (FREG FEE0001 filter)
 
 ### Changed
