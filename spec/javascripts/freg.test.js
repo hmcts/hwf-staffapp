@@ -37,7 +37,13 @@ const CODES = [
     current_version: { version: 'current', valid_from: '2024-01-01', description: 'No amount' }
   },
   // Filtered out: no version at all (getFeeVersionForDate returns undefined).
-  { code: 'NOVER', service_type: { name: 'none' } }
+  { code: 'NOVER', service_type: { name: 'none' } },
+  // Filtered out: FREG's test fee, excluded by code even though it is valid.
+  {
+    code: 'FEE0001', fee_type: 'fixed',
+    service_type: { name: 'civil' }, jurisdiction2: { name: 'county court' },
+    current_version: { version: 'current', valid_from: '2020-01-01', flat_amount: { amount: 100 }, description: 'Test flat fee for development' }
+  }
 ];
 
 function setupDom(dateReceived, refundData = {}) {
@@ -267,6 +273,23 @@ describe('findMatches / displayFees', () => {
   it('matches on the fee amount as well as the code', () => {
     mod.findMatches('100');
     expect(liFor('FEE100')).toBeTruthy();
+  });
+
+  it('never returns the excluded FEE0001 test fee, even searched by exact code', () => {
+    mod.findMatches('FEE0001');
+    expect(liFor('FEE0001')).toBeFalsy();
+    expect($('#fee_search_has_results').val()).toBe('false');
+    expect($('#no-results-message').hasClass('govuk-visually-hidden')).toBe(false);
+  });
+
+  it('does not let FEE0001 into broader matches its fields would satisfy', () => {
+    mod.findMatches('FEE');
+    expect(liFor('FEE100')).toBeTruthy();
+    expect(liFor('FEE0001')).toBeFalsy();
+
+    mod.findMatches('county court');
+    expect(liFor('FEE100')).toBeTruthy();
+    expect(liFor('FEE0001')).toBeFalsy();
   });
 
   it('includes the valid_from note when a date received is set', () => {

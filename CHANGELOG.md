@@ -5,6 +5,16 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 with entries grouped by branch and date rather than release version.
 
+## 2026-09-02 (FREG FEE0001 filter)
+
+### Changed
+
+- The FREG fee search no longer returns FEE0001. It is FREG's test fee
+  ("Test flat fee for development"), so it must never be offered to staff,
+  yet it matched searches by code, amount, service or jurisdiction like any
+  real fee. `findMatches` in app/javascript/freg.js now drops codes listed in
+  `EXCLUDED_FEE_CODES` before any matching; add future codes there.
+
 ## 2026-09-01
 
 ### Changed
