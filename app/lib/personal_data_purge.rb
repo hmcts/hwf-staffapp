@@ -29,6 +29,7 @@ class PersonalDataPurge
       benefit_check_purge!(application)
       application_purge!(application)
       log_data_purge(application)
+      close_pending_applications(application)
     end
   end
 
@@ -76,9 +77,40 @@ class PersonalDataPurge
 
   # rubocop:enable Rails/SkipsModelValidations
 
+  def close_pending_applications(application)
+    if application.waiting_for_evidence?
+      close_evidence_check(application)
+    elsif application.waiting_for_part_payment?
+      close_part_payment(application)
+    end
+  end
+
   # Logging
   def log_data_purge(application)
     AuditPersonalDataPurge.create(purged_date: Time.zone.today, application_reference_number: application.reference)
+  end
+
+  # Replicates the staff return journey for evidence that never arrived or
+  # arrived too late (Evidence::AccuracyFailedReasonController): record the
+  # failed-accuracy answer on the evidence check, then resolve it as returned,
+  # which moves the application to processed.
+  def close_evidence_check(application)
+    evidence_check = application.evidence_check
+    return unless evidence_check
+
+    form = Forms::Evidence::Accuracy.new(evidence_check)
+    form.update(correct: false, incorrect_reason: 'not_arrived_or_late')
+    form.save
+    ResolverService.new(evidence_check, purge_user).return
+  end
+
+  def close_part_payment(application)
+    # TODO: close the pending part payment via the return journey, as the
+    # purge user (Settings.personal_data_purge.user_id)
+  end
+
+  def purge_user
+    @purge_user ||= User.find(Settings.personal_data_purge.user_id)
   end
 
 end

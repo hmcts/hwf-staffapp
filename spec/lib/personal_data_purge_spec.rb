@@ -47,8 +47,10 @@ RSpec.describe PersonalDataPurge do
     }
     let(:online_application) { create(:online_application_with_all_details, benefit_checks: [online_benefit_check1, online_benefit_check2]) }
     let(:audit_data) { AuditPersonalDataPurge.last }
+    let(:purge_user) { create(:user) }
 
     before {
+      allow(Settings.personal_data_purge).to receive(:user_id).and_return(purge_user.id)
       hmrc_checks
       purge
     }
@@ -153,6 +155,44 @@ RSpec.describe PersonalDataPurge do
       }
     end
 
+  end
+
+  # Purging a pending application also closes it, replicating the staff
+  # "evidence not arrived or too late" return journey.
+  describe 'close pending application waiting for evidence' do
+    subject(:purge_object) { described_class.new([application1]) }
+
+    let(:purge_user) { create(:user) }
+    let(:application1) {
+      create(:application, :waiting_for_evidence_state, completed_at: 8.years.ago)
+    }
+    let(:evidence_check) { application1.evidence_check }
+
+    before {
+      allow(Settings.personal_data_purge).to receive(:user_id).and_return(purge_user.id)
+      purge_object.purge!
+    }
+
+    it 'records the not-arrived accuracy answer and return outcome on the evidence check' do
+      evidence_check.reload
+      expect(evidence_check.correct).to be false
+      expect(evidence_check.incorrect_reason).to eq 'not_arrived_or_late'
+      expect(evidence_check.outcome).to eq 'return'
+    end
+
+    it 'completes the evidence check as the purge user' do
+      evidence_check.reload
+      expect(evidence_check.completed_by).to eq purge_user
+      expect(evidence_check.completed_at).not_to be_nil
+    end
+
+    it 'moves the application to processed with a return decision' do
+      application1.reload
+      expect(application1.state).to eq 'processed'
+      expect(application1.decision).to eq 'none'
+      expect(application1.decision_type).to eq 'evidence_check'
+      expect(application1.decision_date).not_to be_nil
+    end
   end
 
 end
