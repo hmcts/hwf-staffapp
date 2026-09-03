@@ -81,7 +81,7 @@ namespace :test do
 
   task accessibility: :environment do
     ENV['RUN_SMOKE_TESTS'] = 'false'
-    if system "bundle exec cucumber features/ -p accessibility"
+    if system "bundle exec cucumber accessibility/ -p accessibility"
       puts "Accessibility test passed"
     else
       raise "Accessibility tests failed"
