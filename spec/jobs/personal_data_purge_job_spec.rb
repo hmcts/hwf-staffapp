@@ -9,6 +9,7 @@ RSpec.describe PersonalDataPurgeJob do
     let(:application2) { create(:application) }
     let(:application3) { create(:application, :deleted_state) }
     let(:application4) { create(:application, :deleted_state, completed_at: 8.years.ago) }
+    let(:application5) { create(:application) }
 
     before do
       allow(PersonalDataPurge).to receive(:new).and_return purge_class
@@ -20,6 +21,12 @@ RSpec.describe PersonalDataPurgeJob do
         application1
         application3
       end
+      travel_to(8.years.ago) do
+        application5
+      end
+      # the purge selects on updated_at: an old application touched since the
+      # cutoff must be kept
+      application5.update!(updated_at: Time.zone.now)
       application4
       application2
       described_class.perform_now
@@ -33,9 +40,19 @@ RSpec.describe PersonalDataPurgeJob do
 
   describe 'online applicaitons only' do
     let(:application1) { create(:application, online_application: online_application1, created_at: 3.years.ago) }
-    let(:online_application1) { create(:online_application_with_all_details, :with_reference, created_at: 8.years.ago) }
-    let(:online_application2) { create(:online_application_with_all_details, :with_reference, created_at: 8.years.ago) }
-    let(:online_application3) { create(:online_application_with_all_details, :with_reference, created_at: 3.years.ago) }
+    let(:online_application1) {
+      # with linked applicaiton
+      create(:online_application_with_all_details, :with_reference, created_at: 8.years.ago, updated_at: 8.years.ago)
+    }
+    let(:online_application2) {
+      create(:online_application_with_all_details, :with_reference, created_at: 8.years.ago, updated_at: 8.years.ago)
+    }
+    let(:online_application3) {
+      create(:online_application_with_all_details, :with_reference, created_at: 8.years.ago, updated_at: 3.years.ago)
+    }
+    # created before the cutoff but updated since: the purge selects on
+    # updated_at, so it must be kept
+    let(:online_application4) { create(:online_application_with_all_details, :with_reference, created_at: 8.years.ago) }
 
     before do
       allow(PersonalDataPurge).to receive(:new).and_return purge_class
