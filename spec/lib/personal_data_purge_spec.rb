@@ -47,10 +47,10 @@ RSpec.describe PersonalDataPurge do
     }
     let(:online_application) { create(:online_application_with_all_details, benefit_checks: [online_benefit_check1, online_benefit_check2]) }
     let(:audit_data) { AuditPersonalDataPurge.last }
-    let(:purge_user) { create(:user) }
+    let(:closer) { instance_double(PendingApplicationCloser, close!: true) }
 
     before {
-      allow(Settings.personal_data_purge).to receive(:user_id).and_return(purge_user.id)
+      allow(PendingApplicationCloser).to receive(:new).and_return(closer)
       hmrc_checks
       purge
     }
@@ -60,6 +60,11 @@ RSpec.describe PersonalDataPurge do
     it { expect(online_application.reload.purged_at.to_fs(:db)).to eq Time.zone.today.to_fs(:db) }
     it { expect(audit_data.purged_date.to_fs(:db)).to eq Time.zone.today.to_fs(:db) }
     it { expect(audit_data.application_reference_number).to eq application1.reference }
+
+    it 'closes any pending application via PendingApplicationCloser' do
+      expect(PendingApplicationCloser).to have_received(:new).with(application1)
+      expect(closer).to have_received(:close!)
+    end
 
     context 'applicant' do
       let(:applicant) { application1.applicant }
@@ -155,44 +160,6 @@ RSpec.describe PersonalDataPurge do
       }
     end
 
-  end
-
-  # Purging a pending application also closes it, replicating the staff
-  # "evidence not arrived or too late" return journey.
-  describe 'close pending application waiting for evidence' do
-    subject(:purge_object) { described_class.new([application1]) }
-
-    let(:purge_user) { create(:user) }
-    let(:application1) {
-      create(:application, :waiting_for_evidence_state, completed_at: 8.years.ago)
-    }
-    let(:evidence_check) { application1.evidence_check }
-
-    before {
-      allow(Settings.personal_data_purge).to receive(:user_id).and_return(purge_user.id)
-      purge_object.purge!
-    }
-
-    it 'records the not-arrived accuracy answer and return outcome on the evidence check' do
-      evidence_check.reload
-      expect(evidence_check.correct).to be false
-      expect(evidence_check.incorrect_reason).to eq 'not_arrived_or_late'
-      expect(evidence_check.outcome).to eq 'return'
-    end
-
-    it 'completes the evidence check as the purge user' do
-      evidence_check.reload
-      expect(evidence_check.completed_by).to eq purge_user
-      expect(evidence_check.completed_at).not_to be_nil
-    end
-
-    it 'moves the application to processed with a return decision' do
-      application1.reload
-      expect(application1.state).to eq 'processed'
-      expect(application1.decision).to eq 'none'
-      expect(application1.decision_type).to eq 'evidence_check'
-      expect(application1.decision_date).not_to be_nil
-    end
   end
 
 end
