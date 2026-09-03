@@ -5,6 +5,35 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 with entries grouped by branch and date rather than release version.
 
+## 2026-09-03 (rst-8387-purge-update)
+
+### Changed
+
+- The personal data purge now selects applications (and standalone online
+  applications) by `updated_at` instead of `created_at`
+  (PersonalDataPurgeJob): any touch to a record restarts its 7-year purge
+  clock, so the purge keys off last activity rather than creation.
+- Purging a pending application now also closes it, so purged applications no
+  longer sit forever in the staff queues. New `PendingApplicationCloser`
+  (app/lib), called by `PersonalDataPurge` after purging, acts as the purge
+  user (new `PURGE_USER_ID` env var → `Settings.personal_data_purge.user_id`;
+  set in charts values and .env.development) and replicates the journey staff
+  would have taken:
+  - Waiting for evidence: the "evidence not arrived or too late" return
+    journey (as in Evidence::AccuracyFailedReasonController) — the evidence
+    check records `correct: false` / `incorrect_reason: 'not_arrived_or_late'`
+    and resolves with outcome `return`; the application moves to processed
+    with decision `none` (decision_type `evidence_check`).
+  - Waiting for part payment: the "Is the part-payment ready to process?" →
+    "No" flow (as in PartPaymentsController accuracy_save + summary_save) —
+    the part payment records `correct: false` with the closure reason
+    "Not processed in time at the time of data purge." and completes with
+    outcome `none`; the application moves to processed with decision `none`
+    (decision_type `part_payment`).
+  Closing happens as part of `purge!`; applications in any other state, or
+  pending ones without an evidence check / part payment record, are left
+  untouched.
+
 ## 2026-09-01
 
 ### Changed
