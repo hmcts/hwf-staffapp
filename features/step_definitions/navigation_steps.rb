@@ -52,3 +52,13 @@ Then("I can view staff DWP warning message page") do
   navigation_page.navigation_link.dwp_message.click
   expect(dwp_message_page.content).to have_header
 end
+
+Then("I can view appeals letter templates") do
+  navigation_page.navigation_link.appeals_letter_templates.click
+  expect(appeals_letter_template_page.content).to have_header
+end
+
+Then("I can view LCEP letter templates") do
+  navigation_page.navigation_link.lcep_letter_templates.click
+  expect(lcep_letter_template_page.content).to have_header
+end

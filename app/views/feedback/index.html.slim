@@ -18,10 +18,10 @@ div.table-scrollable-container
     tbody.govuk-table__body
       -@feedback.each do |f|
         tr.govuk-table__row
-          td.govuk-table__cell scope="row" =mail_to f.user.email, f.user.name, target: 'blank'
-          td.govuk-table__cell scope="row" =f.experience
-          td.govuk-table__cell scope="row" =f.ideas
-          td.govuk-table__cell scope="row" =f.rating
-          td.govuk-table__cell scope="row" =f.help
-          td.govuk-table__cell scope="row" =f.office.name
-          td.govuk-table__cell scope="row" =f.created_at.to_fs(:db)
+          td.govuk-table__cell =mail_to f.user.email, f.user.name, target: 'blank'
+          td.govuk-table__cell =f.experience
+          td.govuk-table__cell =f.ideas
+          td.govuk-table__cell =f.rating
+          td.govuk-table__cell =f.help
+          td.govuk-table__cell =f.office.name
+          td.govuk-table__cell =f.created_at.to_fs(:db)
