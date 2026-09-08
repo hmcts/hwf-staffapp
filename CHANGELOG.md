@@ -5,6 +5,42 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 with entries grouped by branch and date rather than release version.
 
+## 2026-09-07
+
+### Changed
+
+- Updated sentry-ruby and sentry-rails 6.7.0 → 7.0.0 (major; initializer
+  options in config/initializers/sentry.rb all still supported)
+- Updated rubyzip 3.5.0 → 3.6.0
+- Updated image_processing 2.0.3 → 2.1.0
+- Updated bootsnap 1.25.0 → 1.26.0
+- Updated parallel 2.1.0 → 2.2.0 (transitive)
+- Updated jest 30.4.2 → 30.5.1 and jest-environment-jsdom 30.4.1 → 30.5.1
+  (deferred from the 2026-09-01 run for soak time)
+- Updated webpack 5.110.2 → 5.110.3
+- Updated sass 1.103.1 → 1.104.0
+- Updated playwright 1.62.1 → 1.63.0
+
+### Known issues
+
+- No open vulnerabilities: bundle-audit and yarn npm audit both clean before
+  and after this run.
+- redis 6.0.0 approved but still blocked: mock_redis latest (0.55.0) requires
+  `redis ~> 5`; retry when mock_redis supports redis 6.
+- json 2.21.2 → 3.0.0 deferred — transitive major released the day of this
+  run, and confirmed breaking: it slipped into the lockfile via a dependency
+  unlock during this run and activesupport 8.1's `ActiveSupport::JSON.decode`
+  then failed with `ArgumentError: wrong number of arguments (given 2,
+  expected 1)` on `JSON.parse` (session cookie decoding — feature specs
+  caught it). Reverted to 2.21.2; do not take json 3.x until Rails supports
+  its new `JSON.parse` signature.
+- diff-lcs held at 1.6.2 — blocked by rspec-expectations (`< 2.0`) and
+  cucumber (`~> 1.5`).
+- simplecov held at `~> 0.22.0` — deliberate pin; 1.x breaks the SonarQube
+  coverage report.
+- cucumber-* family, marcel, multi_test newer majors remain pinned by their
+  parents (cucumber, activestorage).
+
 ## 2026-09-03 (rst-8387-purge-update)
 
 ### Changed
