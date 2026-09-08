@@ -35,6 +35,22 @@ RSpec.describe Views::Overview::Details do
     end
   end
 
+  describe '#skip_change_link' do
+    subject { view.skip_change_link }
+
+    context 'paper application' do
+      it { is_expected.to eql(['refund_request', 'date_fee_paid']) }
+    end
+
+    context 'online application' do
+      let(:application) { online_application }
+
+      it 'allows the Change link on date_fee_paid' do
+        is_expected.to eql(['refund_request'])
+      end
+    end
+  end
+
   describe '#fee' do
     subject { view.fee }
 

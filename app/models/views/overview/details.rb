@@ -23,6 +23,8 @@ module Views
       end
 
       def skip_change_link
+        return ['refund_request'] if @application.is_a?(OnlineApplication)
+
         ['refund_request', 'date_fee_paid']
       end
 
