@@ -24,7 +24,7 @@ class PersonalDetailsPage < BasePage
     element :martial_status_error, '.error', text: 'Select a marital status'
     element :martial_status_legend, 'legend', text: 'Select the applicant\'s marital status'
     element :status_single, 'label', text: 'Single'
-    element :status_married, 'label', text: 'Married or living with someone and sharing an income'
+    element :status_married, 'label', text: 'Married or living with someone'
     element :next, 'input[value="Next"]'
     section :guidance, '.guidance' do
       elements :guidance_header, 'h2'
@@ -172,6 +172,15 @@ class PersonalDetailsPage < BasePage
     valid_ni
     content.wait_until_status_single_visible
     content.status_single.click
+    click_next
+  end
+
+  def submit_all_personal_details_ni_married
+    full_name
+    valid_dob
+    valid_ni
+    content.wait_until_status_married_visible
+    content.status_married.click
     click_next
   end
 

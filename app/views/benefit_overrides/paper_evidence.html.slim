@@ -11,7 +11,7 @@
 
       - if error_message_partial(@application)
         .page-error.util_mb-medium.govuk-error-summary__body
-          h4.govuk-heading-s DWP evidence check has failed
+          h2.govuk-heading-s DWP evidence check has failed
           = render(error_message_partial(@application))
         legend class= 'govuk-fieldset__legend govuk-!-font-weight-bold'
           = t('evidence_override_hint_html', scope: @form.i18n_scope)

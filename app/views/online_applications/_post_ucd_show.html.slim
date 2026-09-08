@@ -73,43 +73,43 @@ dl.govuk-summary-list
     dt.govuk-summary-list__key =t('summary.fee')
     dd.govuk-summary-list__value =@online_application_view.fee
     dd.govuk-summary-list__actions
-    =link_to edit_online_application_path(@online_application) do
-      = 'Change'
-      span.govuk-visually-hidden=t('summary.fee')
+      =link_to edit_online_application_path(@online_application) do
+        = 'Change'
+        span.govuk-visually-hidden=t('summary.fee')
 
   - if @online_application_view.fee_code.present?
     .govuk-summary-list__row
       dt.govuk-summary-list__key =t('summary.fee_code')
       dd.govuk-summary-list__value =@online_application_view.fee_code
       dd.govuk-summary-list__actions
-      =link_to edit_online_application_path(@online_application) do
-        = 'Change'
-        span.govuk-visually-hidden=t('summary.fee_code')
+        =link_to edit_online_application_path(@online_application) do
+          = 'Change'
+          span.govuk-visually-hidden=t('summary.fee_code')
 
   .govuk-summary-list__row
     dt.govuk-summary-list__key =t('summary.jurisdiction')
     dd.govuk-summary-list__value =@online_application_view.jurisdiction
     dd.govuk-summary-list__actions
-    =link_to edit_online_application_path(@online_application) do
-      = 'Change'
-      span.govuk-visually-hidden=t('summary.jurisdiction')
+      =link_to edit_online_application_path(@online_application) do
+        = 'Change'
+        span.govuk-visually-hidden=t('summary.jurisdiction')
 
   .govuk-summary-list__row
     dt.govuk-summary-list__key =t('summary.form_name')
     dd.govuk-summary-list__value =@online_application_view.form_name
     dd.govuk-summary-list__actions
-    =link_to edit_online_application_path(@online_application) do
-      = 'Change'
-      span.govuk-visually-hidden=t('summary.form_name')
+      =link_to edit_online_application_path(@online_application) do
+        = 'Change'
+        span.govuk-visually-hidden=t('summary.form_name')
 
   - if @online_application_view.case_number.present?
     .govuk-summary-list__row
       dt.govuk-summary-list__key =t('summary.case_number')
       dd.govuk-summary-list__value =@online_application_view.case_number
       dd.govuk-summary-list__actions
-      =link_to edit_online_application_path(@online_application) do
-        = 'Change'
-        span.govuk-visually-hidden=t('summary.case_number')
+        =link_to edit_online_application_path(@online_application) do
+          = 'Change'
+          span.govuk-visually-hidden=t('summary.case_number')
 
   - if @online_application_view.probate
     .govuk-summary-list__row
@@ -125,9 +125,9 @@ dl.govuk-summary-list
       dt.govuk-summary-list__key =t('summary.emergency')
       dd.govuk-summary-list__value =@online_application_view.emergency_reason
       dd.govuk-summary-list__actions
-      =link_to edit_online_application_path(@online_application) do
-        = 'Change'
-        span.govuk-visually-hidden=t('summary.emergency')
+        =link_to edit_online_application_path(@online_application) do
+          = 'Change'
+          span.govuk-visually-hidden=t('summary.emergency')
 
 
 h2.govuk-heading-m Savings and investments

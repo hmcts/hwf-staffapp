@@ -5,6 +5,30 @@ def base_page
   @base_page ||= BasePage.new
 end
 
+def error_summary_page
+  @error_summary_page ||= ErrorSummaryPage.new
+end
+
+def appeals_letter_template_page
+  @appeals_letter_template_page ||= AppealsLetterTemplatePage.new
+end
+
+def lcep_letter_template_page
+  @lcep_letter_template_page ||= LCEPLetterTemplatePage.new
+end
+
+def partner_details_page
+  @partner_details_page ||= PartnerDetailsPage.new
+end
+
+def income_kind_partner_page
+  @income_kind_partner_page ||= IncomeKindPartnerPage.new
+end
+
+def representative_page
+  @representative_page ||= RepresentativePage.new
+end
+
 def sign_in_page
   @sign_in_page ||= SignInPage.new
 end

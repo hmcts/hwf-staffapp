@@ -9,6 +9,8 @@ class NavigationPage < BasePage
     element :letter_templates, 'a', text: 'Old scheme templates'
     element :old_letter_templates, 'a', text: 'Old scheme templates'
     element :new_letter_templates, 'a', text: 'New scheme templates'
+    element :appeals_letter_templates, 'a', text: 'Appeals letter templates'
+    element :lcep_letter_templates, 'a', text: 'LCEP letter templates'
     element :feedback, 'a', text: 'Feedback'
     element :sign_out, 'a', text: 'Sign out'
     element :home_page, '.govuk-service-navigation__link'
