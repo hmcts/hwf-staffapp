@@ -5,6 +5,22 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 with entries grouped by branch and date rather than release version.
 
+## 2026-09-08 (rst-8415-paid-date)
+
+### Changed
+
+- Online application refunds: the FREG fee search now picks the fee version
+  in force on the date the fee was paid, read live from the new date fee paid
+  fields on the edit page (e.g. paid 1/8/2026 with the current version valid
+  from 2/8/2026 selects the previous version). `getDateFeePaid` in
+  app/javascript/freg.js reads the on-screen `online_application_*` fields —
+  the value stamped on the search field at render time goes stale once staff
+  edit them; editing the date resets any selected fee and re-runs the search
+  (the existing change handler already matched the new field ids). Refunds
+  only: non-refund applications keep using the date received, and the
+  existing refund rules (no fallback to the current version, rateable fees
+  kept) apply unchanged.
+
 ## 2026-09-07
 
 ### Changed

@@ -427,6 +427,79 @@ describe('refund fields on the same page (pre-UCD paper details)', () => {
   });
 });
 
+describe('refund date fee paid fields on the online application page', () => {
+  function addOnlineDateFeePaidFields() {
+    document.getElementById('fee_search').insertAdjacentHTML('afterend', `
+      <input id="online_application_day_date_fee_paid" />
+      <input id="online_application_month_date_fee_paid" />
+      <input id="online_application_year_date_fee_paid" />
+    `);
+  }
+
+  function fillOnlineDateFeePaid(day, month, year) {
+    $('#online_application_day_date_fee_paid').val(day);
+    $('#online_application_month_date_fee_paid').val(month);
+    $('#online_application_year_date_fee_paid').val(year);
+  }
+
+  beforeEach(() => {
+    setupOnlineDom();
+    $('#fee_search').attr('data-refund', 'true');
+    addOnlineDateFeePaidFields();
+    loadModule();
+    mod.init();
+    fillOnlineDate('1', '6', '2024');
+  });
+
+  it('picks the fee version in force on the date the fee was paid', () => {
+    // 2021-06-01 falls in FEE200 v1 (\u00A3200); date received 2024-06-01 is in v2 (\u00A3250)
+    fillOnlineDateFeePaid('1', '6', '2021');
+    mod.findMatches('FEE200');
+    expect(liFor('FEE200').textContent).toContain('\u00A3200');
+    expect(liFor('FEE200').textContent).toContain('Valid from: 2020-01-01');
+  });
+
+  it('prefers the live fields over the value stamped on the search field at render time', () => {
+    $('#fee_search').attr('data-date-fee-paid', '2024-06-01');
+    fillOnlineDateFeePaid('1', '6', '2021');
+    mod.findMatches('FEE200');
+    expect(liFor('FEE200').textContent).toContain('\u00A3200');
+  });
+
+  it('falls back to the date received while the date fee paid is incomplete', () => {
+    fillOnlineDateFeePaid('1', '6', '');
+    mod.findMatches('FEE200');
+    expect(liFor('FEE200').textContent).toContain('\u00A3250');
+  });
+
+  it('shows the date-not-found message when no version covers the date fee paid', () => {
+    fillOnlineDateFeePaid('1', '6', '2019');
+    mod.findMatches('FEE200');
+    expect(liFor('FEE200')).toBeFalsy();
+    expect($('#fee-date-not-found-message').hasClass('govuk-visually-hidden')).toBe(false);
+  });
+
+  it('re-runs the search and resets the selected fee when the date fee paid changes', () => {
+    $('#fee_search').val('FEE200');
+    mod.findMatches('FEE200');
+    liFor('FEE200').click();
+    expect(mod.feeSelected).toBe(true);
+
+    fillOnlineDateFeePaid('1', '6', '2021');
+    $('#online_application_year_date_fee_paid').trigger('change');
+
+    expect(mod.feeSelected).toBe(false);
+    expect(liFor('FEE200').textContent).toContain('\u00A3200');
+  });
+
+  it('ignores the date fee paid when the online application is not a refund', () => {
+    $('#fee_search').attr('data-refund', 'false');
+    fillOnlineDateFeePaid('1', '6', '2021');
+    mod.findMatches('FEE200');
+    expect(liFor('FEE200').textContent).toContain('\u00A3250');
+  });
+});
+
 describe('selecting a fee (click) routes by classified type', () => {
   beforeEach(() => mod.init());
 
