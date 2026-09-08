@@ -26,7 +26,7 @@ RSpec.describe Feedback do
   end
 
   context 'when the user of the feedback' do
-    let(:user)  { create(:user) }
+    let(:user) { create(:user) }
     let(:office) { create(:office) }
 
     before do

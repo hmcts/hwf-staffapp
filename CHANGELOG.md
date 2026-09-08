@@ -5,6 +5,108 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 with entries grouped by branch and date rather than release version.
 
+## 2026-09-03 (rst-8387-purge-update)
+
+### Changed
+
+- The personal data purge now selects applications (and standalone online
+  applications) by `updated_at` instead of `created_at`
+  (PersonalDataPurgeJob): any touch to a record restarts its 7-year purge
+  clock, so the purge keys off last activity rather than creation.
+- Purging a pending application now also closes it, so purged applications no
+  longer sit forever in the staff queues. New `PendingApplicationCloser`
+  (app/lib), called by `PersonalDataPurge` after purging, acts as the purge
+  user (new `PURGE_USER_ID` env var → `Settings.personal_data_purge.user_id`;
+  set in charts values and .env.development) and replicates the journey staff
+  would have taken:
+  - Waiting for evidence: the "evidence not arrived or too late" return
+    journey (as in Evidence::AccuracyFailedReasonController) — the evidence
+    check records `correct: false` / `incorrect_reason: 'not_arrived_or_late'`
+    and resolves with outcome `return`; the application moves to processed
+    with decision `none` (decision_type `evidence_check`).
+  - Waiting for part payment: the "Is the part-payment ready to process?" →
+    "No" flow (as in PartPaymentsController accuracy_save + summary_save) —
+    the part payment records `correct: false` with the closure reason
+    "Not processed in time at the time of data purge." and completes with
+    outcome `none`; the application moves to processed with decision `none`
+    (decision_type `part_payment`).
+  Closing happens as part of `purge!`; applications in any other state, or
+  pending ones without an evidence check / part payment record, are left
+  untouched.
+## 2026-09-02 (CI ruby version fix)
+
+### Fixed
+
+- .ruby-version now reads `ruby-4.0.6` (explicit rvm interpreter string)
+  instead of the bare `4.0.6`. The Jenkins smoke test stage runs in a fresh
+  shell where the agent's old rvm resolves the ruby from .ruby-version; it
+  cannot map a bare 4.x number to an interpreter ("Unknown ruby interpreter
+  version"), so no gemset was selected and bundler then failed to find the
+  azure_env_secrets git checkout ("is not yet checked out") — a symptom, not
+  a missing bundle install. The install step already used the explicit string
+  (Jenkinsfile_CNP), which is why only later stages failed. Gemfile's
+  `ruby '4.0.6'` is unaffected (it does not read the file).
+
+## 2026-09-02 (FREG FEE0001 filter)
+
+### Changed
+
+- The FREG fee search no longer returns FEE0001. It is FREG's test fee
+  ("Test flat fee for development"), so it must never be offered to staff,
+  yet it matched searches by code, amount, service or jurisdiction like any
+  real fee. `findMatches` in app/javascript/freg.js now drops codes listed in
+  `EXCLUDED_FEE_CODES` before any matching; add future codes there.
+
+## 2026-09-01
+
+### Changed
+
+- Updated rubocop 1.89.0 → 1.90.0. Its tightened `Layout/ExtraSpacing` cop
+  led to whitespace fixes in 4 spec files; its new `Style/DirectiveScope` cop
+  is disabled in .rubocop.yml (we keep disable/enable pairs).
+- Updated rubyzip 3.4.1 → 3.5.0
+- Updated bullet 8.1.3 → 8.2.0
+- Updated webmock 3.26.2 → 3.26.4
+- Updated selenium-webdriver 4.47.0 → 4.48.0
+- Updated responders 3.2.0 → 3.2.1 (transitive)
+- Updated net-protocol 0.2.2 → 0.3.0 (transitive)
+- Updated et-orbi 1.4.1 → 1.4.2 (transitive)
+- Updated rbs 4.1.3 → 4.2.0 (transitive)
+- Updated govuk-frontend 6.4.0 → 6.5.0
+- Updated sass 1.102.0 → 1.103.1
+- Updated webpack 5.109.2 → 5.110.2
+- Updated webpack-cli 7.2.2 → 7.2.3
+- Header menu spacing (app/assets/stylesheets/local/navigation.scss): the nav
+  items' and service name's 15px vertical padding moved onto the container
+  from tablet up, with a 10px row-gap on the list — the menu block keeps its
+  outer spacing while the wrapped menu rows sit closer together. Side effect:
+  the active-page underline now sits snug under the link text instead of at
+  the bar's bottom edge (it hung off the item padding).
+
+### Fixed
+
+- Header layout regression from govuk-frontend 6.5.0: it added
+  `align-items: center` to `.govuk-service-navigation__container` (for its new
+  inline "end slot" feature), which vertically centered the "Help with fees"
+  service name between the two rows our long nav wraps into. Restored the
+  pre-6.5.0 alignment (`align-items: stretch` from tablet up) in
+  app/assets/stylesheets/local/navigation.scss, next to the existing wrapper
+  flex override that keeps the name and links on one line.
+
+### Known issues
+
+- No open vulnerabilities: bundle-audit and yarn npm audit both clean before
+  and after this run.
+- redis 5.4.1 → 6.0.0 deferred — major version bump, to be done as its own change.
+- jest / jest-environment-jsdom 30.5.1 deferred — released the same day as this
+  run (supply-chain caution); pick up next run.
+- diff-lcs held at 1.6.2 — 2.0.0 approved but blocked by rspec-expectations
+  (`< 2.0`) and cucumber (`~> 1.5`) constraints.
+- simplecov held at `~> 0.22.0` — deliberate pin; 1.x breaks the SonarQube
+  coverage report.
+- cucumber-* family, marcel, multi_test newer majors exist but are transitive
+  and pinned by their parents (cucumber, activestorage).
+
 ## 2026-08-25 (rst-8497-benefit-override)
 
 ### Changed

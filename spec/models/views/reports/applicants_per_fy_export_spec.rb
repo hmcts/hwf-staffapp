@@ -27,10 +27,10 @@ RSpec.describe Views::Reports::ApplicantsPerFyExport do
     let(:results) { instance_double(PG::Result) }
     let(:list) { [application1, application2, application3] }
 
-    let(:application1) { create(:application, :applicant_full, :processed_state,  outcome: 'part', jurisdiction: jurisdiction1) }
-    let(:application2) { create(:application, :applicant_full, :processed_state,  outcome: 'full', jurisdiction: jurisdiction1) }
-    let(:application3) { create(:application, :applicant_full, :processed_state,  outcome: 'part', jurisdiction: jurisdiction1) }
-    let(:application4) { create(:application, :applicant_full, :processed_state,  outcome: 'part', jurisdiction: jurisdiction2) }
+    let(:application1) { create(:application, :applicant_full, :processed_state, outcome: 'part', jurisdiction: jurisdiction1) }
+    let(:application2) { create(:application, :applicant_full, :processed_state, outcome: 'full', jurisdiction: jurisdiction1) }
+    let(:application3) { create(:application, :applicant_full, :processed_state, outcome: 'part', jurisdiction: jurisdiction1) }
+    let(:application4) { create(:application, :applicant_full, :processed_state, outcome: 'part', jurisdiction: jurisdiction2) }
     let(:jurisdiction1) { create(:jurisdiction, name: 'Jurisdiction 1') }
     let(:jurisdiction2) { create(:jurisdiction, name: 'Jurisdiction 2') }
     let(:fy_start) { 2019 }

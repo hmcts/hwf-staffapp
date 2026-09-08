@@ -47,8 +47,10 @@ RSpec.describe PersonalDataPurge do
     }
     let(:online_application) { create(:online_application_with_all_details, benefit_checks: [online_benefit_check1, online_benefit_check2]) }
     let(:audit_data) { AuditPersonalDataPurge.last }
+    let(:closer) { instance_double(PendingApplicationCloser, close!: true) }
 
     before {
+      allow(PendingApplicationCloser).to receive(:new).and_return(closer)
       hmrc_checks
       purge
     }
@@ -58,6 +60,11 @@ RSpec.describe PersonalDataPurge do
     it { expect(online_application.reload.purged_at.to_fs(:db)).to eq Time.zone.today.to_fs(:db) }
     it { expect(audit_data.purged_date.to_fs(:db)).to eq Time.zone.today.to_fs(:db) }
     it { expect(audit_data.application_reference_number).to eq application1.reference }
+
+    it 'closes any pending application via PendingApplicationCloser' do
+      expect(PendingApplicationCloser).to have_received(:new).with(application1)
+      expect(closer).to have_received(:close!)
+    end
 
     context 'applicant' do
       let(:applicant) { application1.applicant }

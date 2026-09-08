@@ -86,6 +86,10 @@ Style/CollectionMethods:
     detect: 'find'
     find_all: 'select'
 
+# We prefer disable/enable pairs over disable-next, even for one statement.
+Style/DirectiveScope:
+  Enabled: false
+
 # Chain methods with trailing dots.
 Layout/DotPosition:
   EnforcedStyle: trailing

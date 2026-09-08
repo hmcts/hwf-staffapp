@@ -5,6 +5,9 @@ const FregHelpers = require('./freg_helpers');
 window.moj.Modules.JsonSearcherModule = (function() {
   let codes = [];
 
+  // Fee codes never offered to staff, whatever the search - see CHANGELOG.md.
+  const EXCLUDED_FEE_CODES = ['FEE0001'];
+
   function dateFromFields(day, month, year) {
     if (!day || !month || !year) return null;
     return year + '-' + String(month).padStart(2, '0') + '-' + String(day).padStart(2, '0');
@@ -164,6 +167,10 @@ window.moj.Modules.JsonSearcherModule = (function() {
       let feeDroppedForRefundDate = false;
 
       var matches = codes.filter(item => {
+        if (EXCLUDED_FEE_CODES.includes(item.code)) {
+          return false;
+        }
+
         const relevantVersion = FregHelpers.getFeeVersionForDate(item, searchDate);
         if (!relevantVersion) {
           return false;

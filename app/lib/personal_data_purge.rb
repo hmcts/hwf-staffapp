@@ -29,6 +29,7 @@ class PersonalDataPurge
       benefit_check_purge!(application)
       application_purge!(application)
       log_data_purge(application)
+      PendingApplicationCloser.new(application).close!
     end
   end
 
