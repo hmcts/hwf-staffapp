@@ -39,6 +39,7 @@ module Views
         source: L.fetch(:source),
         granted: L.fetch(:granted),
         benefits_granted: L.fetch(:benefits_granted),
+        passed_on_reopening_benefits: L.fetch(:passed_on_reopening_benefits),
         evidence_checked: L.fetch(:evidence_checked),
         capital: L.fetch(:capital_band),
         savings_amount: L.fetch(:savings_and_investments),
@@ -183,6 +184,10 @@ module Views
                  WHEN beo.correct = TRUE THEN 'Yes'
                  WHEN beo.correct = FALSE THEN 'No'
             END AS benefits_granted,
+            CASE WHEN latest_appeal.application_id IS NULL THEN 'N/A'
+                 WHEN latest_appeal.correct = TRUE THEN 'true'
+                 ELSE 'false'
+            END AS passed_on_reopening_benefits,
             CASE WHEN ec.id IS NULL THEN false ELSE true END AS evidence_checked,
             CASE WHEN savings.max_threshold_exceeded = TRUE then 'High'
                  WHEN savings.max_threshold_exceeded = FALSE AND savings.min_threshold_exceeded = TRUE THEN 'Medium'
@@ -278,6 +283,10 @@ module Views
           LEFT JOIN offices ON offices.id = applications.office_id
           LEFT JOIN decision_overrides de ON de.application_id = applications.id
           LEFT JOIN benefit_overrides beo ON beo.application_id = applications.id
+          LEFT JOIN (
+            SELECT DISTINCT ON (application_id) application_id, correct
+            FROM appeals ORDER BY application_id, id DESC
+          ) latest_appeal ON latest_appeal.application_id = applications.id
           LEFT JOIN evidence_checks ec ON ec.application_id = applications.id
           LEFT JOIN online_applications oa ON oa.id = applications.online_application_id
           LEFT JOIN savings ON savings.application_id = applications.id

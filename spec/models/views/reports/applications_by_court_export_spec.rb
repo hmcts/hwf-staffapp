@@ -20,6 +20,39 @@ RSpec.describe Views::Reports::ApplicationsByCourtExport do
   let(:date_from) { Date.parse('1/1/2021') }
   let(:date_to) { Date.parse('1/2/2021') }
 
+  describe 'Passed on re-opening benefits' do
+    subject(:row) do
+      CSV.parse(export.to_csv, headers: true).find { |r| r['HwF reference number'] == application.reference }
+    end
+
+    let(:application) { create(:application_full_remission, :processed_state, office: office) }
+
+    before do
+      travel_to(date_from + 1.day) do
+        create(:evidence_check, application: application, income_check_type: 'paper', completed_at: Time.zone.now)
+      end
+    end
+
+    context 'when the benefit evidence has not been reviewed' do
+      it { expect(row['Passed on re-opening benefits']).to eq 'N/A' }
+    end
+
+    context 'when the latest review found the evidence correct' do
+      before do
+        create(:appeal, application: application, correct: false)
+        create(:appeal, application: application, correct: true)
+      end
+
+      it { expect(row['Passed on re-opening benefits']).to eq 'true' }
+    end
+
+    context 'when the latest review found the evidence not correct' do
+      before { create(:appeal, application: application, correct: false) }
+
+      it { expect(row['Passed on re-opening benefits']).to eq 'false' }
+    end
+  end
+
   describe 'DB income check type' do
     subject(:row) do
       CSV.parse(export.to_csv, headers: true).find { |r| r['HwF reference number'] == application.reference }
@@ -554,7 +587,7 @@ RSpec.describe Views::Reports::ApplicationsByCourtExport do
           reference = application1.reference
           data_row = data.find { |row| row.split(',')[3] == reference }
           expect(data_row).to include('no,No,full,No,2021-01-02 00:00:00,N/A,2025-04-22 00:00:00,part,full')
-          expect(data_row).to include('paper,no,N/A,yes,')
+          expect(data_row).to include('paper,no,N/A,N/A,yes,')
         }
 
         it {
@@ -564,7 +597,7 @@ RSpec.describe Views::Reports::ApplicationsByCourtExport do
           reference = application1.reference
           data_row = data.find { |row| row.split(',')[3] == reference }
           # application source, decision granted, benefits granted, evidence checked
-          expect(data_row).to include('paper,yes,Yes,yes,')
+          expect(data_row).to include('paper,yes,Yes,N/A,yes,')
         }
 
         context 'with incorrect override' do
@@ -577,7 +610,7 @@ RSpec.describe Views::Reports::ApplicationsByCourtExport do
             reference = application1.reference
             data_row = data.find { |row| row.split(',')[3] == reference }
             # application source, decision granted, benefits granted, evidence checked
-            expect(data_row).to include('paper,yes,No,yes,')
+            expect(data_row).to include('paper,yes,No,N/A,yes,')
           }
         end
       end
@@ -593,7 +626,7 @@ RSpec.describe Views::Reports::ApplicationsByCourtExport do
        'Low income declared', 'Decision date', 'Income period', 'Children',
        'Age band under 14', 'Age band 14+', 'Applicant pays',
        'Departmental cost estimate', 'Departmental cost', 'Source', 'Granted?',
-       'Benefits granted?', 'Evidence checked?', 'Capital band',
+       'Benefits granted?', 'Passed on re-opening benefits', 'Evidence checked?', 'Capital band',
        'Savings and investments amount', 'Case number', 'Date received',
        'Date submitted online', 'Married', 'Pension age', 'Decision',
        'Failed on savings', 'Application processed date',
@@ -608,7 +641,7 @@ RSpec.describe Views::Reports::ApplicationsByCourtExport do
 
     before { travel_to(date_from + 1.day) { create(:application, :processed_state, office: office) } }
 
-    it 'has the 61 expected columns in the expected order' do
+    it 'has the 62 expected columns in the expected order' do
       csv = CSV.parse(export.to_csv, headers: true)
 
       expect(csv.headers).to eq(expected_headers)
