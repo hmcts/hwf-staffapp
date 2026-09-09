@@ -101,17 +101,17 @@ module Views
         'granted'
       elsif part_payment_successful
         'paid'
-      elsif benefit_evidence_reprocessed?
+      elsif appealed?
         @application.decision
       else
         @application.outcome
       end
     end
 
-    # The outcome keeps the original decision after a failed benefit
-    # application is reprocessed with evidence, so show the decision instead.
-    def benefit_evidence_reprocessed?
-      @application.benefit_override&.reprocessed?
+    # The outcome keeps the original decision after benefit evidence has been
+    # reviewed, so show the decision instead.
+    def appealed?
+      @application.latest_appeal.present?
     end
 
     def part_payment_successful

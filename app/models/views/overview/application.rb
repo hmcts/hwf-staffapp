@@ -44,6 +44,12 @@ module Views
         format_locale(@application.benefit_override.correct)
       end
 
+      def benefits_evidence_received
+        appeal = @application.latest_appeal
+        return if appeal.blank?
+        format_locale("benefits_evidence_received_#{appeal.correct}")
+      end
+
       def type
         @application.application_type
       end

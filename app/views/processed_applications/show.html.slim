@@ -23,7 +23,7 @@
 
         = f.submit 'Delete application', :class => 'govuk-button'
 
-- if Pundit.policy(current_user, @application).benefit_evidence? && @application.failed_benefit_application?
+- if Pundit.policy(current_user, @application).benefit_evidence? && @application.appeal_allowed?
   - evidence_details_attributes = @evidence_form.errors.empty? ? {} : { open: 'open' }
   details.govuk-details.evidence-received *evidence_details_attributes
     summary.govuk-details__summary

@@ -92,22 +92,20 @@ RSpec.describe Views::ApplicationResult do
       it_behaves_like 'result examples', 'application'
     end
 
-    context 'when a failed benefit application was reprocessed after evidence was received' do
-      let(:benefit_override) { build_stubbed(:benefit_override, correct: true, reprocessed: true) }
-      let(:application) do
-        build_stubbed(:application, benefit_override: benefit_override, outcome: 'none', decision: 'full')
-      end
+    context 'when a failed benefit application has been reviewed with correct evidence' do
+      let(:application) { create(:application, :benefit_type, :processed_state, outcome: 'none', decision: 'full') }
+
+      before { create(:appeal, application: application, correct: true) }
 
       it 'shows the decision rather than the original outcome' do
         is_expected.to eq 'full'
       end
     end
 
-    context 'when the benefit evidence was checked during processing' do
-      let(:benefit_override) { build_stubbed(:benefit_override, correct: false, reprocessed: false) }
-      let(:application) do
-        build_stubbed(:application, benefit_override: benefit_override, outcome: 'none', decision: 'none')
-      end
+    context 'when a failed benefit application has been reviewed without correct evidence' do
+      let(:application) { create(:application, :benefit_type, :processed_state, outcome: 'none', decision: 'none') }
+
+      before { create(:appeal, application: application, correct: false) }
 
       it { is_expected.to eq 'none' }
     end

@@ -45,24 +45,22 @@ RSpec.describe Views::ProcessedData do
   describe '#benefits_evidence_processed' do
     subject(:benefits_evidence_processed) { view.benefits_evidence_processed }
 
-    let(:application) { create(:application, :benefit_type, :processed_state, outcome: 'full') }
+    let(:application) { create(:application, :benefit_type, :processed_state, outcome: 'none') }
 
-    context 'when the benefit evidence was received after the application was processed' do
-      let!(:benefit_override) { create(:benefit_override, application: application, correct: true, reprocessed: true) }
+    context 'when the benefit evidence has been reviewed more than once' do
+      let!(:first_appeal) { create(:appeal, application: application, correct: false, created_at: 2.days.ago) }
+      let!(:second_appeal) { create(:appeal, application: application, correct: true) }
 
-      it 'returns when and by whom the evidence was processed' do
-        expect(benefits_evidence_processed).to eql(on: benefit_override.updated_at.strftime(Date::DATE_FORMATS[:gov_uk_long]), by: benefit_override.completed_by.name, text: nil)
+      it 'returns one row per review, oldest first' do
+        expect(benefits_evidence_processed).to eql([
+                                                     { on: first_appeal.created_at.strftime(Date::DATE_FORMATS[:gov_uk_long]), by: first_appeal.completed_by.name, text: 'Evidence received: "No (correct evidence not provided)"' },
+                                                     { on: second_appeal.created_at.strftime(Date::DATE_FORMATS[:gov_uk_long]), by: second_appeal.completed_by.name, text: 'Evidence received: "Yes (correct evidence provided)"' }
+                                                   ])
       end
     end
 
-    context 'when the benefit evidence was checked during processing' do
-      before { create(:benefit_override, application: application, correct: true, reprocessed: false) }
-
-      it { is_expected.to be_nil }
-    end
-
-    context 'when there is no benefit override' do
-      it { is_expected.to be_nil }
+    context 'when the benefit evidence has not been reviewed' do
+      it { is_expected.to eq([]) }
     end
   end
 

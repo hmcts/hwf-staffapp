@@ -170,6 +170,9 @@ en-GB:
     notice:
       deleted: 'The application has been deleted'
       benefit_evidence_received: 'Evidence received - the application has been updated to a full remission'
+      benefit_evidence_not_received: 'Evidence not received - the application is not eligible for help with fees'
+    alert:
+      benefit_evidence_not_allowed: 'Benefit evidence has already been confirmed for this application'
 
     index:
       title: Processed applications
@@ -544,6 +547,7 @@ en-GB:
         savings: Savings and investments
         benefits: Benefits declared in application
         paper_evidence: Correct evidence provided
+        benefits_evidence_received: Benefits evidence received
         benefits_result: Benefits
         income_result: Income
         income_kind_applicant: Income kind applicant
@@ -825,6 +829,8 @@ en-GB:
 
       forms/application/summary:
         passed: '✓ Passed'
+        benefits_evidence_received_true: 'Yes (correct evidence provided)'
+        benefits_evidence_received_false: 'No (correct evidence not provided)'
         failed: '✗ Failed'
         full: '✓ Passed'
         part: '✓ Partial'

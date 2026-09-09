@@ -34,10 +34,11 @@ class ProcessedApplicationsController < ApplicationController
 
   def benefit_evidence
     authorize application
+    return redirect_to_processed_application_with_alert unless application.appeal_allowed?
     @evidence_form = Forms::BenefitEvidenceReceived.new(benefit_evidence_params)
 
     if @evidence_form.valid?
-      reprocess_when_evidence_received
+      record_appeal
       redirect_to processed_application_path(application)
     else
       prepare_show
@@ -81,11 +82,18 @@ class ProcessedApplicationsController < ApplicationController
     assign_views
   end
 
-  def reprocess_when_evidence_received
-    return unless @evidence_form.evidence?
+  def record_appeal
+    RecordAppeal.new(application, current_user).call(correct: @evidence_form.evidence?)
+    flash[:notice] = I18n.t("processed_applications.notice.#{appeal_notice_key}")
+  end
 
-    ReprocessBenefitApplication.new(application, current_user).call
-    flash[:notice] = I18n.t('processed_applications.notice.benefit_evidence_received')
+  def redirect_to_processed_application_with_alert
+    flash[:alert] = I18n.t('processed_applications.alert.benefit_evidence_not_allowed')
+    redirect_to processed_application_path(application)
+  end
+
+  def appeal_notice_key
+    @evidence_form.evidence? ? 'benefit_evidence_received' : 'benefit_evidence_not_received'
   end
 
   def save_and_respond_on_update

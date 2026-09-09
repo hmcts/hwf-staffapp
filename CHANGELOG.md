@@ -5,6 +5,24 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 with entries grouped by branch and date rather than release version.
 
+## 2026-09-09 (rst-8264-benefit-evidence-after-failed)
+
+### Added
+
+- "Evidence Received" review on the processed application page for benefit
+  applications that failed, recorded as `Appeal` records (`has_many`, latest
+  wins). "Yes" sets the decision to `full`; "No" only records the appeal.
+  A "No" can be followed by another answer, a "Yes" is final.
+
+### Why
+
+- `outcome` is left as the original decision and only `decision` changes, so
+  the change stays visible; views read `decision` when an appeal exists.
+- The original `BenefitOverride` is not touched so the processing-time
+  record is preserved.
+- The `benefit_overrides.reprocessed` migration from this branch's first
+  commit was rolled back and deleted (never deployed) in favour of `Appeal`.
+
 ## 2026-09-07
 
 ### Changed

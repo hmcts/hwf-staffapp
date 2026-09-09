@@ -22,8 +22,15 @@ module Views
       end
     end
 
+    # One row per benefit evidence review, oldest first.
     def benefits_evidence_processed
-      build_return_hash(benefit_override) if benefit_evidence_reprocessed?
+      @application.appeals.order(:id).map do |appeal|
+        {
+          on: prepare_date(appeal.created_at),
+          by: prepare_name(appeal.completed_by),
+          text: build_text('Evidence received', appeal_answer(appeal))
+        }
+      end
     end
 
     def evidence_check_processed
@@ -40,12 +47,8 @@ module Views
       @application.decision_override.present?
     end
 
-    def benefit_evidence_reprocessed?
-      benefit_override&.reprocessed?
-    end
-
-    def benefit_override
-      @application.benefit_override
+    def appeal_answer(appeal)
+      I18n.t("benefits_evidence_received_#{appeal.correct}", scope: 'activemodel.attributes.forms/application/summary')
     end
 
     def application_deleted?
@@ -74,7 +77,7 @@ module Views
 
     def build_return_hash(object)
       {
-        on: prepare_date(completed_on(object)),
+        on: prepare_date(object.completed_at),
         by: prepare_name(object.completed_by),
         text: prepare_reason(object)
       }
@@ -86,11 +89,6 @@ module Views
         by: prepare_name(@application.deleted_by),
         text: "Reason for deletion: \"#{@application.deleted_reasons_list}: #{@application.deleted_reason}\""
       }
-    end
-
-    # A benefit override has no completed_at; it is completed when last saved.
-    def completed_on(object)
-      object.is_a?(BenefitOverride) ? object.updated_at : object.completed_at
     end
 
     def prepare_name(user)
@@ -108,7 +106,6 @@ module Views
     end
 
     def prepare_reason(object)
-      return if object.is_a?(BenefitOverride)
       if object.is_a?(Application)
         text = object.detail.emergency_reason
         prefix = 'Reason for emergency'

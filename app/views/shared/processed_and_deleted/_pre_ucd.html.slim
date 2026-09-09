@@ -15,6 +15,8 @@ h1.govuk-heading-xl
 
 =build_section 'Result', @application_view, result_section_list
 
+=build_section 'Benefits evidence review result', @application_view, ['benefits_evidence_received']
+
 =render(partial: 'shared/remission_type', locals: { source: @result })
 
 =render(partial: 'shared/processed_summary', locals: { source: @processing_details })
