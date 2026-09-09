@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.1].define(version: 2026_05_22_120000) do
+ActiveRecord::Schema[8.1].define(version: 2026_09_09_100000) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
   enable_extension "pg_trgm"
@@ -168,6 +168,7 @@ ActiveRecord::Schema[8.1].define(version: 2026_05_22_120000) do
     t.boolean "correct"
     t.datetime "created_at", precision: nil, null: false
     t.string "incorrect_reason"
+    t.boolean "reprocessed", default: false, null: false
     t.datetime "updated_at", precision: nil, null: false
     t.index ["application_id"], name: "index_benefit_overrides_on_application_id"
   end

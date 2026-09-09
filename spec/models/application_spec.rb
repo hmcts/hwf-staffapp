@@ -269,4 +269,29 @@ RSpec.describe Application do
     end
   end
 
+  describe 'failed_benefit_application?' do
+    subject(:application) { build_stubbed(:application, application_type: application_type, decision: decision) }
+
+    context 'when a benefit application has a decision of none' do
+      let(:application_type) { 'benefit' }
+      let(:decision) { 'none' }
+
+      it { expect(application.failed_benefit_application?).to be true }
+    end
+
+    context 'when a benefit application has a decision of full' do
+      let(:application_type) { 'benefit' }
+      let(:decision) { 'full' }
+
+      it { expect(application.failed_benefit_application?).to be false }
+    end
+
+    context 'when an income application has a decision of none' do
+      let(:application_type) { 'income' }
+      let(:decision) { 'none' }
+
+      it { expect(application.failed_benefit_application?).to be false }
+    end
+  end
+
 end

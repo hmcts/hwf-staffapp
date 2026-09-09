@@ -42,6 +42,30 @@ RSpec.describe Views::ProcessedData do
     end
   end
 
+  describe '#benefits_evidence_processed' do
+    subject(:benefits_evidence_processed) { view.benefits_evidence_processed }
+
+    let(:application) { create(:application, :benefit_type, :processed_state, outcome: 'full') }
+
+    context 'when the benefit evidence was received after the application was processed' do
+      let!(:benefit_override) { create(:benefit_override, application: application, correct: true, reprocessed: true) }
+
+      it 'returns when and by whom the evidence was processed' do
+        expect(benefits_evidence_processed).to eql(on: benefit_override.updated_at.strftime(Date::DATE_FORMATS[:gov_uk_long]), by: benefit_override.completed_by.name, text: nil)
+      end
+    end
+
+    context 'when the benefit evidence was checked during processing' do
+      before { create(:benefit_override, application: application, correct: true, reprocessed: false) }
+
+      it { is_expected.to be_nil }
+    end
+
+    context 'when there is no benefit override' do
+      it { is_expected.to be_nil }
+    end
+  end
+
   describe '#application_deleted' do
     subject(:application_deleted) { view.application_deleted }
 

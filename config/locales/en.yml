@@ -169,6 +169,7 @@ en-GB:
         position: Position held at firm
     notice:
       deleted: 'The application has been deleted'
+      benefit_evidence_received: 'Evidence received - the application has been updated to a full remission'
 
     index:
       title: Processed applications
@@ -843,6 +844,10 @@ en-GB:
       forms/application/delete:
         deleted_reasons_list: Select the reason why the application needs to be deleted
         deleted_reason: Describe why the application needs to be deleted
+      forms/benefit_evidence_received:
+        evidence: 'Has the applicant provided correct evidence to confirm receipt of a qualifying benefit?'
+        evidence_true: 'Yes'
+        evidence_false: 'No'
       forms/benefits_evidence:
         evidence: 'Has the applicant provided the correct supporting evidence of benefits received for the period they have declared on their application?'
         evidence_override_hint_html: "BEFORE PROCEEDING FURTHER: you <u>must check</u> whether you have already received supporting evidence from the applicant to confirm they are receiving a qualifying benefit."
@@ -1072,6 +1077,10 @@ en-GB:
               blank: Please select a reason for granting help with fees
             reason:
               blank: Please enter a reason for granting help with fees
+        forms/benefit_evidence_received:
+          attributes:
+            evidence:
+              inclusion: Select yes or no to confirm whether evidence has been received
         forms/benefits_evidence:
           attributes:
             evidence:

@@ -112,6 +112,10 @@ class Application < ActiveRecord::Base
     benefit_check_with_error_message? || BenefitCheck::BENEFIT_CHECK_NO_VALUES.include?(last_benefit_check&.dwp_result)
   end
 
+  def failed_benefit_application?
+    application_type == 'benefit' && decision == 'none'
+  end
+
   def digital?
     medium == 'digital'
   end

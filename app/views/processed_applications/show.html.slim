@@ -23,6 +23,29 @@
 
         = f.submit 'Delete application', :class => 'govuk-button'
 
+- if Pundit.policy(current_user, @application).benefit_evidence? && @application.failed_benefit_application?
+  - evidence_details_attributes = @evidence_form.errors.empty? ? {} : { open: 'open' }
+  details.govuk-details.evidence-received *evidence_details_attributes
+    summary.govuk-details__summary
+      span.govuk-details__summary-text Evidence Received
+    .govuk-details__text
+      = form_for @evidence_form, as: :benefit_evidence, url: benefit_evidence_processed_application_path(@application), method: :post, html: { autocomplete: 'off', class: 'evidence-received-form' } do |f|
+        .govuk-form-group class=('govuk-form-group--error' if @evidence_form.errors[:evidence].present?)
+          fieldset.govuk-fieldset
+            legend.govuk-fieldset__legend = t('evidence', scope: @evidence_form.i18n_scope)
+            - if @evidence_form.errors[:evidence].present?
+              span.govuk-error-message
+                = f.label :evidence, @evidence_form.errors[:evidence].join(', '), class: 'error'
+            .govuk-radios.govuk-radios--small id='benefit_evidence_evidence'
+              .govuk-radios__item
+                = f.radio_button :evidence, 'true', class: 'govuk-radios__input'
+                = f.label :evidence, t('evidence_true', scope: @evidence_form.i18n_scope), value: 'true', class: 'govuk-label govuk-radios__label'
+              .govuk-radios__item
+                = f.radio_button :evidence, 'false', class: 'govuk-radios__input'
+                = f.label :evidence, t('evidence_false', scope: @evidence_form.i18n_scope), value: 'false', class: 'govuk-label govuk-radios__label'
+
+        = f.submit 'Save and Continue', class: 'govuk-button'
+
 - content_for(:javascripts)
   javascript:
     $(document).ready(function () {

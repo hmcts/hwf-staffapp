@@ -22,6 +22,10 @@ module Views
       end
     end
 
+    def benefits_evidence_processed
+      build_return_hash(benefit_override) if benefit_evidence_reprocessed?
+    end
+
     def evidence_check_processed
       build_return_hash(evidence_check) if evidence_check_valid?
     end
@@ -34,6 +38,14 @@ module Views
 
     def application_overridden?
       @application.decision_override.present?
+    end
+
+    def benefit_evidence_reprocessed?
+      benefit_override&.reprocessed?
+    end
+
+    def benefit_override
+      @application.benefit_override
     end
 
     def application_deleted?
@@ -62,7 +74,7 @@ module Views
 
     def build_return_hash(object)
       {
-        on: prepare_date(object.completed_at),
+        on: prepare_date(completed_on(object)),
         by: prepare_name(object.completed_by),
         text: prepare_reason(object)
       }
@@ -74,6 +86,11 @@ module Views
         by: prepare_name(@application.deleted_by),
         text: "Reason for deletion: \"#{@application.deleted_reasons_list}: #{@application.deleted_reason}\""
       }
+    end
+
+    # A benefit override has no completed_at; it is completed when last saved.
+    def completed_on(object)
+      object.is_a?(BenefitOverride) ? object.updated_at : object.completed_at
     end
 
     def prepare_name(user)
@@ -91,6 +108,7 @@ module Views
     end
 
     def prepare_reason(object)
+      return if object.is_a?(BenefitOverride)
       if object.is_a?(Application)
         text = object.detail.emergency_reason
         prefix = 'Reason for emergency'
