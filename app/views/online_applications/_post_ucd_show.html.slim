@@ -17,6 +17,10 @@ dl.govuk-summary-list
     .govuk-summary-list__row
       dt.govuk-summary-list__key =t('summary.date_fee_paid')
       dd.govuk-summary-list__value =@online_application_view.date_fee_paid
+      dd.govuk-summary-list__actions
+        =link_to edit_online_application_path(@online_application) do
+          = 'Change'
+          span.govuk-visually-hidden=t('summary.date_fee_paid')
 
 h2.govuk-heading-m Personal details
 dl.govuk-summary-list
