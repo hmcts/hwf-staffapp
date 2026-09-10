@@ -22,15 +22,14 @@ module Views
       end
     end
 
-    # One row per benefit evidence review, oldest first.
     def benefits_evidence_processed
-      @application.appeals.order(:id).map do |appeal|
-        {
-          on: prepare_date(appeal.created_at),
-          by: prepare_name(appeal.completed_by),
-          text: build_text('Evidence received', appeal_answer(appeal))
-        }
-      end
+      appeal = @application.appeal
+      return if appeal.blank?
+      {
+        on: prepare_date(appeal.created_at),
+        by: prepare_name(appeal.completed_by),
+        text: nil
+      }
     end
 
     def evidence_check_processed
@@ -45,10 +44,6 @@ module Views
 
     def application_overridden?
       @application.decision_override.present?
-    end
-
-    def appeal_answer(appeal)
-      I18n.t("benefits_evidence_received_#{appeal.correct}", scope: 'activemodel.attributes.forms/application/summary')
     end
 
     def application_deleted?

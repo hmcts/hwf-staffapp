@@ -10,11 +10,11 @@ with entries grouped by branch and date rather than release version.
 ### Added
 
 - "Evidence Received" review on the processed application page for benefit
-  applications that failed, recorded as `Appeal` records (`has_many`, latest
-  wins). "Yes" sets the decision to `full`; "No" only records the appeal.
-  A "No" can be followed by another answer, a "Yes" is final.
+  applications that failed, recorded once per application as an `Appeal`
+  (`has_one`, unique index). "Yes" sets the decision to `full`; "No" only
+  records the appeal. Either answer is final.
 - "Passed on re-opening benefits" column (`true`/`false`/`N/A` from the
-  latest appeal) next to "Benefits granted?" in the raw data, applications
+  appeal) next to "Benefits granted?" in the raw data, applications
   by court and Power BI exports.
 
 ### Why

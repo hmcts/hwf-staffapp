@@ -1,4 +1,4 @@
-# Records a staff review of benefit evidence received after a benefit
+# Records the single staff review of benefit evidence received after a benefit
 # application was processed as not eligible, and sets the decision from that
 # review. The outcome keeps the original decision so the change stays visible
 # (CHANGELOG.md).
@@ -12,7 +12,7 @@ class RecordAppeal
   def call(correct:)
     ActiveRecord::Base.transaction do
       @application.update!(full_remission_attributes) if correct
-      @application.appeals.create!(completed_by: @user, correct: correct)
+      @application.create_appeal!(completed_by: @user, correct: correct)
     end
     true
   end

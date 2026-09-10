@@ -28,7 +28,7 @@ RSpec.describe Application do
   it { is_expected.to have_one(:benefit_override).dependent(:destroy) }
   it { is_expected.to have_one(:decision_override).dependent(:destroy) }
   it { is_expected.to have_one(:representative).dependent(:destroy) }
-  it { is_expected.to have_many(:appeals).dependent(:destroy) }
+  it { is_expected.to have_one(:appeal).dependent(:destroy) }
 
   it { expect(application.purged).to be false }
 
@@ -302,13 +302,12 @@ RSpec.describe Application do
       expect(application.appeal_allowed?).to be true
     end
 
-    it 'is allowed again after a review found the evidence not correct' do
+    it 'is not allowed once the evidence has been reviewed as not correct' do
       create(:appeal, application: application, correct: false)
-      expect(application.appeal_allowed?).to be true
+      expect(application.appeal_allowed?).to be false
     end
 
-    it 'is not allowed once a review found the evidence correct' do
-      create(:appeal, application: application, correct: false)
+    it 'is not allowed once the evidence has been reviewed as correct' do
       create(:appeal, application: application, correct: true)
       expect(application.appeal_allowed?).to be false
     end
@@ -316,21 +315,6 @@ RSpec.describe Application do
     it 'is not allowed for an application that was not a failed benefit application' do
       application.update(outcome: 'full')
       expect(application.appeal_allowed?).to be false
-    end
-  end
-
-  describe 'latest_appeal' do
-    let(:application) { create(:application) }
-
-    it 'returns nil when there are no appeals' do
-      expect(application.latest_appeal).to be_nil
-    end
-
-    it 'returns the most recently created appeal' do
-      create(:appeal, application: application, correct: true)
-      latest = create(:appeal, application: application, correct: false)
-
-      expect(application.latest_appeal).to eq(latest)
     end
   end
 

@@ -44,10 +44,7 @@ RSpec.describe Views::Reports::PowerBiNewExport do
       end
 
       context 'when the benefit evidence was reviewed' do
-        before do
-          create(:appeal, application: application, correct: false)
-          create(:appeal, application: application, correct: true)
-        end
+        before { create(:appeal, application: application, correct: true) }
 
         it 'shows the latest review result next to benefits granted' do
           report.export1

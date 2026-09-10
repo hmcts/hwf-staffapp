@@ -111,7 +111,7 @@ module Views
     # The outcome keeps the original decision after benefit evidence has been
     # reviewed, so show the decision instead.
     def appealed?
-      @application.latest_appeal.present?
+      @application.appeal.present?
     end
 
     def part_payment_successful

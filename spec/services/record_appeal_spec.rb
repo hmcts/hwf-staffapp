@@ -18,7 +18,7 @@ RSpec.describe RecordAppeal, type: :service do
 
   describe '#call' do
     let(:updated_application) { service.call(correct: correct) && application.reload }
-    let(:appeal) { updated_application.latest_appeal }
+    let(:appeal) { updated_application.appeal }
 
     context 'when correct evidence was provided' do
       let(:correct) { true }
@@ -43,14 +43,8 @@ RSpec.describe RecordAppeal, type: :service do
     context 'when correct evidence was not provided' do
       let(:correct) { false }
 
-      before { create(:appeal, application: application, correct: false, created_at: 1.day.ago) }
-
       it 'records an incorrect appeal completed by the user' do
         expect(appeal).to have_attributes(correct: false, completed_by: user)
-      end
-
-      it 'keeps the earlier appeal' do
-        expect(updated_application.appeals.count).to eq(2)
       end
 
       it 'does not change the application' do
@@ -92,6 +86,15 @@ RSpec.describe RecordAppeal, type: :service do
       expect(service.call(correct: true)).to be true
     end
 
+    context 'when the evidence has already been reviewed' do
+      before { create(:appeal, application: application, correct: false) }
+
+      it 'refuses a second review and leaves the application unchanged' do
+        expect { service.call(correct: true) }.to raise_error(ActiveRecord::RecordInvalid)
+        expect(application.reload.decision).to eq('none')
+      end
+    end
+
     context 'when the application cannot be updated' do
       before do
         allow(application).to receive(:update!).and_raise(ActiveRecord::RecordInvalid)
@@ -99,7 +102,7 @@ RSpec.describe RecordAppeal, type: :service do
 
       it 'does not record the appeal' do
         expect { service.call(correct: true) }.to raise_error(ActiveRecord::RecordInvalid)
-        expect(application.reload.appeals).to be_empty
+        expect(application.reload.appeal).to be_nil
       end
     end
   end

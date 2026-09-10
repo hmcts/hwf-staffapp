@@ -38,7 +38,7 @@ class Application < ActiveRecord::Base
   has_one :benefit_override, required: false, dependent: :destroy
   has_one :decision_override, required: false, dependent: :destroy
   has_one :representative, dependent: :destroy
-  has_many :appeals, dependent: :destroy
+  has_one :appeal, dependent: :destroy
   has_many :dev_notes, as: :notable, dependent: :destroy
 
   scope :with_evidence_check_for_ni_number, (lambda do |ni_number|
@@ -118,14 +118,9 @@ class Application < ActiveRecord::Base
     application_type == 'benefit' && outcome == 'none'
   end
 
-  def latest_appeal
-    appeals.order(:id).last
-  end
-
-  # Evidence can be reviewed until it is confirmed as correct (no -> no -> yes).
+  # Evidence can be reviewed only once.
   def appeal_allowed?
-    return false unless failed_benefit_application?
-    latest_appeal.nil? || !latest_appeal.correct
+    failed_benefit_application? && appeal.nil?
   end
 
   def digital?

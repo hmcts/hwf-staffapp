@@ -172,7 +172,7 @@ en-GB:
       benefit_evidence_received: 'Evidence received - the application has been updated to a full remission'
       benefit_evidence_not_received: 'Evidence not received - the application is not eligible for help with fees'
     alert:
-      benefit_evidence_not_allowed: 'Benefit evidence has already been confirmed for this application'
+      benefit_evidence_not_allowed: 'Benefit evidence has already been reviewed for this application'
 
     index:
       title: Processed applications

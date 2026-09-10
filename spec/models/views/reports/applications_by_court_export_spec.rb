@@ -38,10 +38,7 @@ RSpec.describe Views::Reports::ApplicationsByCourtExport do
     end
 
     context 'when the latest review found the evidence correct' do
-      before do
-        create(:appeal, application: application, correct: false)
-        create(:appeal, application: application, correct: true)
-      end
+      before { create(:appeal, application: application, correct: true) }
 
       it { expect(row['Passed on re-opening benefits']).to eq 'true' }
     end

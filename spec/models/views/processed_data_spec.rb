@@ -47,20 +47,16 @@ RSpec.describe Views::ProcessedData do
 
     let(:application) { create(:application, :benefit_type, :processed_state, outcome: 'none') }
 
-    context 'when the benefit evidence has been reviewed more than once' do
-      let!(:first_appeal) { create(:appeal, application: application, correct: false, created_at: 2.days.ago) }
-      let!(:second_appeal) { create(:appeal, application: application, correct: true) }
+    context 'when the benefit evidence has been reviewed' do
+      let!(:appeal) { create(:appeal, application: application, correct: false) }
 
-      it 'returns one row per review, oldest first' do
-        expect(benefits_evidence_processed).to eql([
-                                                     { on: first_appeal.created_at.strftime(Date::DATE_FORMATS[:gov_uk_long]), by: first_appeal.completed_by.name, text: 'Evidence received: "No (correct evidence not provided)"' },
-                                                     { on: second_appeal.created_at.strftime(Date::DATE_FORMATS[:gov_uk_long]), by: second_appeal.completed_by.name, text: 'Evidence received: "Yes (correct evidence provided)"' }
-                                                   ])
+      it 'returns when and by whom the review was done' do
+        expect(benefits_evidence_processed).to eql(on: appeal.created_at.strftime(Date::DATE_FORMATS[:gov_uk_long]), by: appeal.completed_by.name, text: nil)
       end
     end
 
     context 'when the benefit evidence has not been reviewed' do
-      it { is_expected.to eq([]) }
+      it { is_expected.to be_nil }
     end
   end
 

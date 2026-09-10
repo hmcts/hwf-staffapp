@@ -48,7 +48,7 @@ RSpec.feature 'Record benefit evidence received after a benefit application fail
       expect(application.decision).to eq('full')
       expect(application.outcome).to eq('none')
       expect(application.decision_cost).to eq(310)
-      expect(application.latest_appeal).to have_attributes(correct: true, completed_by: user)
+      expect(application.appeal).to have_attributes(correct: true, completed_by: user)
       expect(application.benefit_override.correct).to be false
     end
 
@@ -57,37 +57,26 @@ RSpec.feature 'Record benefit evidence received after a benefit application fail
       click_button 'Save and Continue', visible: false
 
       expect(page).to have_text('Evidence not received - the application is not eligible for help with fees')
+      expect(page).to have_no_text('Evidence Received')
       expect(page).to have_text('Benefits evidence receivedNo (correct evidence not provided)')
       expect(page).to have_text('Not eligible for help with fees')
       within '.govuk-table' do
         expect(page).to have_text("Benefits evidence processed#{today}#{user.name}")
       end
 
-      expect(page).to have_text('Evidence Received')
-
       application.reload
       expect(application.decision).to eq('none')
       expect(application.decision_date).to be_nil
-      expect(application.latest_appeal).to have_attributes(correct: false, completed_by: user)
+      expect(application.appeal).to have_attributes(correct: false, completed_by: user)
     end
 
-    scenario 'a no answer can be followed by a yes answer, which is final' do
+    scenario 'the evidence can only be reviewed once' do
       choose 'benefit_evidence_evidence_false', visible: false
       click_button 'Save and Continue', visible: false
-      expect(page).to have_text('Not eligible for help with fees')
 
-      choose 'benefit_evidence_evidence_true', visible: false
-      click_button 'Save and Continue', visible: false
-
-      expect(page).to have_text('Eligible for help with fees')
       expect(page).to have_no_text('Evidence Received')
-      within '.govuk-table' do
-        expect(page).to have_css('tr', text: 'Benefits evidence processed', count: 2)
-        expect(page).to have_text('Evidence received: "No (correct evidence not provided)"')
-        expect(page).to have_text('Evidence received: "Yes (correct evidence provided)"')
-      end
-      expect(application.reload.decision).to eq('full')
-      expect(application.appeals.count).to eq(2)
+      expect(page).to have_css('tr', text: 'Benefits evidence processed', count: 1)
+      expect(application.reload.appeal).to have_attributes(correct: false)
     end
 
     scenario 'not answering the question shows an error' do
@@ -97,7 +86,7 @@ RSpec.feature 'Record benefit evidence received after a benefit application fail
       within '.evidence-received-form' do
         expect(page).to have_text('Select yes or no to confirm whether evidence has been received')
       end
-      expect(application.reload.appeals).to be_empty
+      expect(application.reload.appeal).to be_nil
     end
   end
 

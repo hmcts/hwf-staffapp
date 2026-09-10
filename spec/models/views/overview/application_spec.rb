@@ -130,10 +130,7 @@ RSpec.describe Views::Overview::Application do
     end
 
     context 'when the latest review found the evidence not correct' do
-      before do
-        create(:appeal, application: application, correct: true)
-        create(:appeal, application: application, correct: false)
-      end
+      before { create(:appeal, application: application, correct: false) }
 
       it { is_expected.to eq 'No (correct evidence not provided)' }
     end

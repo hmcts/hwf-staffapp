@@ -61,7 +61,7 @@ ActiveRecord::Schema[8.1].define(version: 2026_09_09_110000) do
     t.boolean "correct", default: false, null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["application_id"], name: "index_appeals_on_application_id"
+    t.index ["application_id"], name: "index_appeals_on_application_id", unique: true
     t.index ["completed_by_id"], name: "index_appeals_on_completed_by_id"
   end
 

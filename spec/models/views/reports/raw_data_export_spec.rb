@@ -464,7 +464,6 @@ RSpec.describe Views::Reports::RawDataExport do
       context 'benefits re-opened after the application failed' do
         it 'passed on re-opening when the latest review found the evidence correct' do
           benefit_overrides
-          create(:appeal, application: application_no_remission, correct: false)
           create(:appeal, application: application_no_remission, correct: true)
 
           export = data.to_csv

@@ -45,7 +45,7 @@ module Views
       end
 
       def benefits_evidence_received
-        appeal = @application.latest_appeal
+        appeal = @application.appeal
         return if appeal.blank?
         format_locale("benefits_evidence_received_#{appeal.correct}")
       end

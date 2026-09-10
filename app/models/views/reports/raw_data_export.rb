@@ -184,8 +184,8 @@ module Views
                  WHEN beo.correct = TRUE THEN 'Yes'
                  WHEN beo.correct = FALSE THEN 'No'
             END AS benefits_granted,
-            CASE WHEN latest_appeal.application_id IS NULL THEN 'N/A'
-                 WHEN latest_appeal.correct = TRUE THEN 'true'
+            CASE WHEN appeals.id IS NULL THEN 'N/A'
+                 WHEN appeals.correct = TRUE THEN 'true'
                  ELSE 'false'
             END AS passed_on_reopening_benefits,
             CASE WHEN ec.id IS NULL THEN false ELSE true END AS evidence_checked,
@@ -283,10 +283,7 @@ module Views
           LEFT JOIN offices ON offices.id = applications.office_id
           LEFT JOIN decision_overrides de ON de.application_id = applications.id
           LEFT JOIN benefit_overrides beo ON beo.application_id = applications.id
-          LEFT JOIN (
-            SELECT DISTINCT ON (application_id) application_id, correct
-            FROM appeals ORDER BY application_id, id DESC
-          ) latest_appeal ON latest_appeal.application_id = applications.id
+          LEFT JOIN appeals ON appeals.application_id = applications.id
           LEFT JOIN evidence_checks ec ON ec.application_id = applications.id
           LEFT JOIN online_applications oa ON oa.id = applications.online_application_id
           LEFT JOIN savings ON savings.application_id = applications.id
