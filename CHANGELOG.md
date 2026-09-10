@@ -5,6 +5,27 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 with entries grouped by branch and date rather than release version.
 
+## 2026-09-09 (rst-8264-benefit-evidence-after-failed)
+
+### Added
+
+- "Evidence Received" review on the processed application page for benefit
+  applications that failed, recorded once per application as an `Appeal`
+  (`has_one`, unique index). "Yes" sets the decision to `full`; "No" only
+  records the appeal. Either answer is final.
+- "Passed on re-opening benefits" column (`true`/`false`/`N/A` from the
+  appeal) next to "Benefits granted?" in the raw data, applications
+  by court and Power BI exports.
+
+### Why
+
+- `outcome` is left as the original decision and only `decision` changes, so
+  the change stays visible; views read `decision` when an appeal exists.
+- The original `BenefitOverride` is not touched so the processing-time
+  record is preserved.
+- The `benefit_overrides.reprocessed` migration from this branch's first
+  commit was rolled back and deleted (never deployed) in favour of `Appeal`.
+
 ## 2026-09-07
 
 ### Changed

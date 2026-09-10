@@ -25,7 +25,7 @@ module Views
         :refund, :pre_evidence_income, :post_evidence_income, :income_period,
         :married, :pension_age, :decision, :failed_on_savings,
         :final_amount_to_pay, :departmental_cost, :source, :benefits_granted,
-        :evidence_checked, :savings_and_investments, :pp_outcome,
+        :passed_on_reopening_benefits, :evidence_checked, :savings_and_investments, :pp_outcome,
         :low_income_declared, :date_received, :decision_date, :date_paid,
         :application_processed_date, :manual_evidence_processed_date,
         :date_submitted_online, :statement_signed_by, :db_evidence_check_type,
@@ -250,6 +250,10 @@ module Views
                  WHEN beo.correct = TRUE THEN 'Yes'
                  WHEN beo.correct = FALSE THEN 'No'
             END AS benefits_granted,
+            CASE WHEN appeals.id IS NULL THEN 'N/A'
+                 WHEN appeals.correct = TRUE THEN 'true'
+                 ELSE 'false'
+            END AS passed_on_reopening_benefits,
             CASE WHEN ec.id IS NULL THEN 'no' ELSE 'yes' END AS evidence_checked,
             CASE WHEN savings.amount >= 16000 THEN NULL
                  ELSE savings.amount
@@ -294,6 +298,7 @@ module Views
           INNER JOIN offices ON offices.id = applications.office_id
           LEFT JOIN jurisdictions ON jurisdictions.id = details.jurisdiction_id
           LEFT JOIN benefit_overrides beo ON beo.application_id = applications.id
+          LEFT JOIN appeals ON appeals.application_id = applications.id
           LEFT JOIN evidence_checks ec ON ec.application_id = applications.id
           LEFT JOIN online_applications oa ON oa.id = applications.online_application_id
           LEFT JOIN savings ON savings.application_id = applications.id
@@ -346,6 +351,7 @@ module Views
             NULL AS decision_cost,
             CASE WHEN oa2.reference LIKE 'HWF%' THEN 'digital' ELSE 'paper' END AS source,
             'N/A' AS benefits_granted,
+            'N/A' AS passed_on_reopening_benefits,
             'no' AS evidence_checked,
             NULL AS savings_amount,
             CASE WHEN oa2.income <= 101 THEN 'true'
@@ -479,6 +485,7 @@ module Views
           row['decision_cost'],
           row['source'],
           row['benefits_granted'],
+          row['passed_on_reopening_benefits'],
           row['evidence_checked'],
           row['savings_amount'],
           row['pp_outcome'],

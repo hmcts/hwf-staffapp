@@ -169,6 +169,10 @@ en-GB:
         position: Position held at firm
     notice:
       deleted: 'The application has been deleted'
+      benefit_evidence_received: 'Evidence received - the application has been updated to a full remission'
+      benefit_evidence_not_received: 'Evidence not received - the application is not eligible for help with fees'
+    alert:
+      benefit_evidence_not_allowed: 'Benefit evidence has already been reviewed for this application'
 
     index:
       title: Processed applications
@@ -543,6 +547,7 @@ en-GB:
         savings: Savings and investments
         benefits: Benefits declared in application
         paper_evidence: Correct evidence provided
+        benefits_evidence_received: Benefits evidence received
         benefits_result: Benefits
         income_result: Income
         income_kind_applicant: Income kind applicant
@@ -824,6 +829,8 @@ en-GB:
 
       forms/application/summary:
         passed: '✓ Passed'
+        benefits_evidence_received_true: 'Yes (correct evidence provided)'
+        benefits_evidence_received_false: 'No (correct evidence not provided)'
         failed: '✗ Failed'
         full: '✓ Passed'
         part: '✓ Partial'
@@ -843,6 +850,10 @@ en-GB:
       forms/application/delete:
         deleted_reasons_list: Select the reason why the application needs to be deleted
         deleted_reason: Describe why the application needs to be deleted
+      forms/benefit_evidence_received:
+        evidence: 'Has the applicant provided correct evidence to confirm receipt of a qualifying benefit?'
+        evidence_true: 'Yes'
+        evidence_false: 'No'
       forms/benefits_evidence:
         evidence: 'Has the applicant provided the correct supporting evidence of benefits received for the period they have declared on their application?'
         evidence_override_hint_html: "BEFORE PROCEEDING FURTHER: you <u>must check</u> whether you have already received supporting evidence from the applicant to confirm they are receiving a qualifying benefit."
@@ -1072,6 +1083,10 @@ en-GB:
               blank: Please select a reason for granting help with fees
             reason:
               blank: Please enter a reason for granting help with fees
+        forms/benefit_evidence_received:
+          attributes:
+            evidence:
+              inclusion: Select yes or no to confirm whether evidence has been received
         forms/benefits_evidence:
           attributes:
             evidence:

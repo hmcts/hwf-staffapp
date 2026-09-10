@@ -114,6 +114,28 @@ RSpec.describe Views::Overview::Application do
 
   end
 
+  describe '#benefits_evidence_received' do
+    subject { view.benefits_evidence_received }
+
+    let(:application) { create(:application, :benefit_type, :processed_state, outcome: 'none') }
+
+    context 'when no benefit evidence review has been recorded' do
+      it { is_expected.to be_nil }
+    end
+
+    context 'when the latest review found the evidence correct' do
+      before { create(:appeal, application: application, correct: true) }
+
+      it { is_expected.to eq 'Yes (correct evidence provided)' }
+    end
+
+    context 'when the latest review found the evidence not correct' do
+      before { create(:appeal, application: application, correct: false) }
+
+      it { is_expected.to eq 'No (correct evidence not provided)' }
+    end
+  end
+
   describe '#total_monthly_income' do
     subject { view.total_monthly_income }
 

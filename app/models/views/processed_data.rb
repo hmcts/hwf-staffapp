@@ -22,6 +22,16 @@ module Views
       end
     end
 
+    def benefits_evidence_processed
+      appeal = @application.appeal
+      return if appeal.blank?
+      {
+        on: prepare_date(appeal.created_at),
+        by: prepare_name(appeal.completed_by),
+        text: nil
+      }
+    end
+
     def evidence_check_processed
       build_return_hash(evidence_check) if evidence_check_valid?
     end

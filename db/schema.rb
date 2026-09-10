@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.1].define(version: 2026_05_22_120000) do
+ActiveRecord::Schema[8.1].define(version: 2026_09_09_110000) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
   enable_extension "pg_trgm"
@@ -53,6 +53,16 @@ ActiveRecord::Schema[8.1].define(version: 2026_05_22_120000) do
     t.bigint "blob_id", null: false
     t.string "variation_digest", null: false
     t.index ["blob_id", "variation_digest"], name: "index_active_storage_variant_records_uniqueness", unique: true
+  end
+
+  create_table "appeals", force: :cascade do |t|
+    t.bigint "application_id", null: false
+    t.bigint "completed_by_id", null: false
+    t.boolean "correct", default: false, null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["application_id"], name: "index_appeals_on_application_id", unique: true
+    t.index ["completed_by_id"], name: "index_appeals_on_completed_by_id"
   end
 
   create_table "applicants", id: :serial, force: :cascade do |t|
@@ -570,6 +580,8 @@ ActiveRecord::Schema[8.1].define(version: 2026_05_22_120000) do
 
   add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id"
   add_foreign_key "active_storage_variant_records", "active_storage_blobs", column: "blob_id"
+  add_foreign_key "appeals", "applications"
+  add_foreign_key "appeals", "users", column: "completed_by_id"
   add_foreign_key "applicants", "applications", on_update: :cascade
   add_foreign_key "applications", "business_entities", on_update: :cascade
   add_foreign_key "applications", "offices", on_update: :cascade
