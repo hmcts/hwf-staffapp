@@ -66,6 +66,7 @@ RSpec.describe 'layouts/application' do
         @dwp_state = 'warning'
 
         expect(render).to have_text I18n.t('error_messages.dwp_warning')
+        expect(render).to have_text I18n.t('error_messages.dwp_warning_text')
       end
     end
 
@@ -74,6 +75,7 @@ RSpec.describe 'layouts/application' do
         @dwp_state = 'offline'
 
         expect(render).to have_text I18n.t('error_messages.dwp_unavailable')
+        expect(render).to have_text I18n.t('error_messages.dwp_unavailable_text')
       end
     end
   end
