@@ -72,3 +72,16 @@
 .dwp-banner-maintenance {
   @include dwp-banner($state: maintenance);
 }
+
+.hmrc-banner-online {
+  @include dwp-banner($state: online);
+  position: relative;
+}
+
+.hmrc-banner-offline {
+  @include dwp-banner($state: offline);
+}
+
+.hmrc-banner-warning {
+  @include dwp-banner($state: warning);
+}

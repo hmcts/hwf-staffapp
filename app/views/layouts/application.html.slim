@@ -17,6 +17,14 @@
             span
               =render("shared/dwp/#{@dwp_state}")
 
+    - if @hmrc_state.present?
+      .container
+        div class=("hmrc-banner-#{@hmrc_state}")
+          p
+            strong.dwp-tag HMRC checker
+            span
+              =render("shared/hmrc/#{@hmrc_state}")
+
     = link_to 'Back to previous page', previous_page_link, class: "govuk-back-link" if previous_page_link.present?
     .container
       section#content.cf

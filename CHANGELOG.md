@@ -34,6 +34,25 @@ with entries grouped by branch and date rather than release version.
   record is preserved.
 - The `benefit_overrides.reprocessed` migration from this branch's first
   commit was rolled back and deleted (never deployed) in favour of `Appeal`.
+## 2026-09-14 (rst-8282-hmrc-banner)
+
+### Added
+
+- HMRC checker banner next to the DWP one, green/amber/red from the last 10
+  `HmrcCheck` rows via `HmrcMonitor` (same 25% / 50% thresholds as
+  `DwpMonitor`). Only service-side failures count - `HmrcCheck.service_failure?`
+  matches the API error codes (INTERNAL_SERVER_ERROR, invalid_client,
+  INVALID_SCOPE, SERVER_ERROR, FORBIDDEN, RESOURCE_FORBIDDEN,
+  MESSAGE_THROTTLED_OUT) plus the stored `Net::ReadTimeout`. Applicant-data
+  responses (MATCHING_FAILED, NO RESULT) and the local tax credit entitlement
+  message are deliberately excluded so a run of bad applicant details never
+  trips the banner.
+- Banner only: unlike DWP there is no admin override, no offline email and
+  nothing in the HMRC flow is gated on the state. Shown on the home page only.
+- Wording and the amber "Warning" / red "There is a problem" box under the
+  banner follow the RST-8282 wireframe; the box lives inside the state partial
+  to match the DWP banner on the RST-8347 branch.
+
 ## 2026-09-08 (rst-8415-paid-date)
 
 ### Changed

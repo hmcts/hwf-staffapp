@@ -1,0 +1,9 @@
+b = t('error_messages.hmrc_unavailable')
+
+.govuk-error-summary aria-labelledby="hmrc-problem-title" role="alert" tabindex="-1" data-module="govuk-error-summary" class='govuk-!-margin-top-1'
+  h2.govuk-error-summary__title#hmrc-problem-title
+    = t('error_block.heading')
+
+  .govuk-error-summary__body
+    ul.govuk-list.govuk-error-summary__list
+      li = t('error_messages.hmrc_unavailable_text')

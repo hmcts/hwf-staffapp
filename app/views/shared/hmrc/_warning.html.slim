@@ -1,0 +1,10 @@
+b = t('error_messages.hmrc_warning')
+
+.govuk-error-summary aria-labelledby="hmrc-warning-title" role="alert" tabindex="-1" data-module="govuk-error-summary" class='govuk-!-margin-top-1'
+  h2.govuk-error-summary__title#hmrc-warning-title
+    = t('error_messages.hmrc_warning_header')
+
+  .govuk-error-summary__body
+    ul.govuk-list
+      li
+        strong = t('error_messages.hmrc_warning_text')

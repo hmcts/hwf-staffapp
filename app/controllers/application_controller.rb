@@ -48,6 +48,11 @@ class ApplicationController < ActionController::Base
   end
   helper_method :dwp_checker_state
 
+  def hmrc_checker_state
+    HmrcMonitor.new.state
+  end
+  helper_method :hmrc_checker_state
+
   def add_datalayer_event(name, data)
     event = GtmOnRails::DataLayer::Event.new(name, **data)
     data_layer.push(event)
