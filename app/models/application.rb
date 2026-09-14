@@ -38,6 +38,7 @@ class Application < ActiveRecord::Base
   has_one :benefit_override, required: false, dependent: :destroy
   has_one :decision_override, required: false, dependent: :destroy
   has_one :representative, dependent: :destroy
+  has_one :appeal, dependent: :destroy
   has_many :dev_notes, as: :notable, dependent: :destroy
 
   scope :with_evidence_check_for_ni_number, (lambda do |ni_number|
@@ -110,6 +111,16 @@ class Application < ActiveRecord::Base
 
   def allow_benefit_check_override?
     benefit_check_with_error_message? || BenefitCheck::BENEFIT_CHECK_NO_VALUES.include?(last_benefit_check&.dwp_result)
+  end
+
+  # The outcome is the original decision, so this stays true after an appeal.
+  def failed_benefit_application?
+    application_type == 'benefit' && outcome == 'none'
+  end
+
+  # Evidence can be reviewed only once.
+  def appeal_allowed?
+    failed_benefit_application? && appeal.nil?
   end
 
   def digital?

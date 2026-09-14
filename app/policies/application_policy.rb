@@ -20,6 +20,10 @@ class ApplicationPolicy < BasePolicy
     staff_or_manager? && same_office?
   end
 
+  def benefit_evidence?
+    staff_or_manager? && same_office?
+  end
+
   def destroy?
     admin? && record.digital?
   end

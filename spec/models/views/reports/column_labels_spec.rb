@@ -22,6 +22,10 @@ RSpec.describe Views::Reports::ColumnLabels do
       expect(described_class.fetch(:reference)).to eq('HwF reference number')
     end
 
+    it 'labels the benefits re-opening column' do
+      expect(described_class.fetch(:passed_on_reopening_benefits)).to eq('Passed on re-opening benefits')
+    end
+
     it 'raises for an unknown key so typos fail loudly' do
       expect { described_class.fetch(:nonsense) }.to raise_error(KeyError)
     end

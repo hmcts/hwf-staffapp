@@ -44,6 +44,7 @@ module Views
         source: 'Source',
         granted: 'Granted?',
         benefits_granted: 'Benefits granted?',
+        passed_on_reopening_benefits: 'Passed on re-opening benefits',
         evidence_checked: 'Evidence checked?',
         capital_band: 'Capital band',
         savings_and_investments: 'Savings and investments amount',

@@ -92,6 +92,24 @@ RSpec.describe Views::ApplicationResult do
       it_behaves_like 'result examples', 'application'
     end
 
+    context 'when a failed benefit application has been reviewed with correct evidence' do
+      let(:application) { create(:application, :benefit_type, :processed_state, outcome: 'none', decision: 'full') }
+
+      before { create(:appeal, application: application, correct: true) }
+
+      it 'shows the decision rather than the original outcome' do
+        is_expected.to eq 'full'
+      end
+    end
+
+    context 'when a failed benefit application has been reviewed without correct evidence' do
+      let(:application) { create(:application, :benefit_type, :processed_state, outcome: 'none', decision: 'none') }
+
+      before { create(:appeal, application: application, correct: false) }
+
+      it { is_expected.to eq 'none' }
+    end
+
     context 'when the application has a completed part-payment' do
       let(:part_payment) { build_stubbed(:part_payment, outcome: 'part', correct: true) }
       let(:application) { build_stubbed(:application, part_payment: part_payment, outcome: 'part', amount_to_pay: 200) }

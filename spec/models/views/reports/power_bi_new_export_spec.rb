@@ -35,6 +35,25 @@ RSpec.describe Views::Reports::PowerBiNewExport do
         expect(row).to be_present
         expect(row['HwF reference number']).to eq(application.reference)
       end
+
+      it 'shows N/A for passed on re-opening benefits when the evidence was not reviewed' do
+        report.export1
+        row = read_csv_from_zip.find { |r| r['Id'].to_i == application.id }
+
+        expect(row['Passed on re-opening benefits']).to eq('N/A')
+      end
+
+      context 'when the benefit evidence was reviewed' do
+        before { create(:appeal, application: application, correct: true) }
+
+        it 'shows the latest review result next to benefits granted' do
+          report.export1
+          row = read_csv_from_zip.find { |r| r['Id'].to_i == application.id }
+
+          expect(row['Passed on re-opening benefits']).to eq('true')
+          expect(row.headers.index('Passed on re-opening benefits')).to eq(row.headers.index('Benefits granted?') + 1)
+        end
+      end
     end
 
     context 'with waiting_for_evidence application' do

@@ -159,6 +159,94 @@ RSpec.describe ProcessedApplicationsController do
     it_behaves_like 'renders correctly and assigns required variables'
   end
 
+  describe 'POST #benefit_evidence' do
+    let(:service) { instance_double(RecordAppeal, call: true) }
+
+    let(:appeal_allowed) { true }
+
+    before do
+      allow(application1).to receive(:appeal_allowed?).and_return(appeal_allowed)
+      allow(RecordAppeal).to receive(:new).with(application1, user).and_return(service)
+      post :benefit_evidence, params: { id: application1.id, benefit_evidence: evidence_params }
+    end
+
+    context 'when evidence has been received' do
+      let(:evidence_params) { { evidence: 'true' } }
+
+      it 'records a correct appeal as the current user' do
+        expect(service).to have_received(:call).with(correct: true)
+      end
+
+      it 'redirects back to the processed application' do
+        expect(response).to redirect_to(processed_application_path(application1))
+      end
+
+      it 'sets a flash notice' do
+        expect(flash[:notice]).to eq(I18n.t('processed_applications.notice.benefit_evidence_received'))
+      end
+    end
+
+    context 'when evidence has not been received' do
+      let(:evidence_params) { { evidence: 'false' } }
+
+      it 'records an incorrect appeal as the current user' do
+        expect(service).to have_received(:call).with(correct: false)
+      end
+
+      it 'redirects back to the processed application' do
+        expect(response).to redirect_to(processed_application_path(application1))
+      end
+
+      it 'sets a flash notice' do
+        expect(flash[:notice]).to eq(I18n.t('processed_applications.notice.benefit_evidence_not_received'))
+      end
+    end
+
+    context 'when the question was not answered' do
+      let(:evidence_params) { { evidence: '' } }
+
+      it 'does not record an appeal' do
+        expect(service).not_to have_received(:call)
+      end
+
+      it_behaves_like 'renders correctly and assigns required variables'
+
+      it 'assigns the evidence form with errors' do
+        expect(assigns(:evidence_form).errors[:evidence]).to be_present
+      end
+    end
+
+    context 'when the evidence has already been confirmed as correct' do
+      let(:appeal_allowed) { false }
+      let(:evidence_params) { { evidence: 'false' } }
+
+      it 'does not record an appeal' do
+        expect(service).not_to have_received(:call)
+      end
+
+      it 'redirects back to the processed application' do
+        expect(response).to redirect_to(processed_application_path(application1))
+      end
+
+      it 'sets a flash alert' do
+        expect(flash[:alert]).to eq(I18n.t('processed_applications.alert.benefit_evidence_not_allowed'))
+      end
+    end
+
+    context 'when the user is from a different office' do
+      let(:application1) { build_stubbed(:application) }
+      let(:evidence_params) { { evidence: 'true' } }
+
+      it 'does not record an appeal' do
+        expect(service).not_to have_received(:call)
+      end
+
+      it 'redirects to root' do
+        expect(response).to redirect_to(root_path)
+      end
+    end
+  end
+
   describe 'DELETE #destroy' do
     context 'when the user is an admin' do
       let(:admin) { create(:admin_user) }

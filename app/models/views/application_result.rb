@@ -101,9 +101,17 @@ module Views
         'granted'
       elsif part_payment_successful
         'paid'
+      elsif appealed?
+        @application.decision
       else
         @application.outcome
       end
+    end
+
+    # The outcome keeps the original decision after benefit evidence has been
+    # reviewed, so show the decision instead.
+    def appealed?
+      @application.appeal.present?
     end
 
     def part_payment_successful

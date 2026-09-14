@@ -28,6 +28,7 @@ RSpec.describe Application do
   it { is_expected.to have_one(:benefit_override).dependent(:destroy) }
   it { is_expected.to have_one(:decision_override).dependent(:destroy) }
   it { is_expected.to have_one(:representative).dependent(:destroy) }
+  it { is_expected.to have_one(:appeal).dependent(:destroy) }
 
   it { expect(application.purged).to be false }
 
@@ -266,6 +267,54 @@ RSpec.describe Application do
     it 'returns true when last benefit check has dwp_result blank' do
       create(:benefit_check, applicationable: application, benefits_valid: true, dwp_result: '')
       expect(application.allow_benefit_check_override?).to be true
+    end
+  end
+
+  describe 'failed_benefit_application?' do
+    subject(:application) { build_stubbed(:application, application_type: application_type, outcome: outcome) }
+
+    context 'when a benefit application was originally not eligible' do
+      let(:application_type) { 'benefit' }
+      let(:outcome) { 'none' }
+
+      it { expect(application.failed_benefit_application?).to be true }
+    end
+
+    context 'when a benefit application was originally eligible' do
+      let(:application_type) { 'benefit' }
+      let(:outcome) { 'full' }
+
+      it { expect(application.failed_benefit_application?).to be false }
+    end
+
+    context 'when an income application was originally not eligible' do
+      let(:application_type) { 'income' }
+      let(:outcome) { 'none' }
+
+      it { expect(application.failed_benefit_application?).to be false }
+    end
+  end
+
+  describe 'appeal_allowed?' do
+    let(:application) { create(:application, :benefit_type, :processed_state, outcome: 'none') }
+
+    it 'is allowed when a failed benefit application has not been reviewed' do
+      expect(application.appeal_allowed?).to be true
+    end
+
+    it 'is not allowed once the evidence has been reviewed as not correct' do
+      create(:appeal, application: application, correct: false)
+      expect(application.appeal_allowed?).to be false
+    end
+
+    it 'is not allowed once the evidence has been reviewed as correct' do
+      create(:appeal, application: application, correct: true)
+      expect(application.appeal_allowed?).to be false
+    end
+
+    it 'is not allowed for an application that was not a failed benefit application' do
+      application.update(outcome: 'full')
+      expect(application.appeal_allowed?).to be false
     end
   end
 

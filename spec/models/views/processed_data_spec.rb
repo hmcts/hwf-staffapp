@@ -42,6 +42,24 @@ RSpec.describe Views::ProcessedData do
     end
   end
 
+  describe '#benefits_evidence_processed' do
+    subject(:benefits_evidence_processed) { view.benefits_evidence_processed }
+
+    let(:application) { create(:application, :benefit_type, :processed_state, outcome: 'none') }
+
+    context 'when the benefit evidence has been reviewed' do
+      let!(:appeal) { create(:appeal, application: application, correct: false) }
+
+      it 'returns when and by whom the review was done' do
+        expect(benefits_evidence_processed).to eql(on: appeal.created_at.strftime(Date::DATE_FORMATS[:gov_uk_long]), by: appeal.completed_by.name, text: nil)
+      end
+    end
+
+    context 'when the benefit evidence has not been reviewed' do
+      it { is_expected.to be_nil }
+    end
+  end
+
   describe '#application_deleted' do
     subject(:application_deleted) { view.application_deleted }
 

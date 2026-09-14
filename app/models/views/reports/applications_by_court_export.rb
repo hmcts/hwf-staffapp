@@ -94,6 +94,10 @@ module Views
                WHEN beo.correct = TRUE THEN 'Yes'
                WHEN beo.correct = FALSE THEN 'No'
           END AS benefits_granted,
+        CASE WHEN appeals.id IS NULL THEN 'N/A'
+               WHEN appeals.correct = TRUE THEN 'true'
+               ELSE 'false'
+          END AS passed_on_reopening_benefits,
         CASE WHEN ec.id IS NULL THEN 'no' ELSE 'yes' END AS evidence_checked,
         CASE WHEN savings.max_threshold_exceeded = TRUE then '16,000 or more'
              WHEN savings.max_threshold_exceeded = FALSE AND savings.min_threshold_exceeded = TRUE THEN '3,000 - 15,999'
@@ -187,6 +191,7 @@ module Views
         LEFT JOIN savings ON savings.application_id = applications.id
         LEFT JOIN decision_overrides de ON de.application_id = applications.id
         LEFT JOIN benefit_overrides beo ON beo.application_id = applications.id
+        LEFT JOIN appeals ON appeals.application_id = applications.id
         LEFT JOIN online_applications oa ON oa.id = applications.online_application_id
         LEFT JOIN (
           SELECT DISTINCT ON (h.evidence_check_id)
@@ -255,6 +260,7 @@ module Views
         'digital' AS source,
         NULL AS granted,
         NULL AS benefits_granted,
+        NULL AS passed_on_reopening_benefits,
         'no' AS evidence_checked,
         NULL AS capital_band,
         online_applications.amount AS savings_and_investments,
