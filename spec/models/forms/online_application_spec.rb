@@ -4,7 +4,8 @@ RSpec.describe Forms::OnlineApplication do
   subject(:form) { described_class.new(online_application) }
 
   params_list = [:fee, :jurisdiction_id, :benefits_override, :date_received, :day_date_received, :case_number,
-                 :month_date_received, :year_date_received, :form_name, :emergency, :emergency_reason, :user_id, :discretion_applied, :dwp_manual_decision,
+                 :month_date_received, :year_date_received, :date_fee_paid, :day_date_fee_paid, :month_date_fee_paid,
+                 :year_date_fee_paid, :form_name, :emergency, :emergency_reason, :user_id, :discretion_applied, :dwp_manual_decision,
                  :fee_code, :claim_amount, :fee_version_valid_from, :fee_entry_method, :fee_search_has_results]
 
   let(:online_application) { build_stubbed(:online_application) }
@@ -282,6 +283,33 @@ RSpec.describe Forms::OnlineApplication do
         it { is_expected.not_to be_valid }
       end
 
+    end
+
+    describe 'date_fee_paid presence' do
+      context 'when the online application is a refund' do
+        let(:online_application) { build_stubbed(:online_application, :with_refund) }
+
+        it 'is invalid without a date_fee_paid' do
+          form.date_fee_paid = nil
+          form.valid?
+          expect(form.errors[:date_fee_paid]).to be_present
+        end
+
+        it 'is valid with a date_fee_paid' do
+          form.date_fee_paid = 1.month.ago.to_date
+          form.valid?
+          expect(form.errors[:date_fee_paid]).to be_empty
+        end
+      end
+
+      context 'when the online application is not a refund' do
+        let(:online_application) { build_stubbed(:online_application, refund: false, date_fee_paid: nil) }
+
+        it 'is valid without a date_fee_paid' do
+          form.valid?
+          expect(form.errors[:date_fee_paid]).to be_empty
+        end
+      end
     end
 
     describe 'emergency' do

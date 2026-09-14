@@ -78,6 +78,17 @@ window.moj.Modules.JsonSearcherModule = (function() {
           $('input[id="application_year_date_fee_paid"]').val()
         );
       }
+      // The online application edit page (refunds only) also has the date fee
+      // paid fields on the same screen, so read them live - the value stamped
+      // on the fee search field goes stale as soon as staff edit them.
+      const onlineDayField = $('input[id="online_application_day_date_fee_paid"]');
+      if (onlineDayField.length > 0) {
+        return dateFromFields(
+          onlineDayField.val(),
+          $('input[id="online_application_month_date_fee_paid"]').val(),
+          $('input[id="online_application_year_date_fee_paid"]').val()
+        );
+      }
       return $('input[id="fee_search"]').data('date-fee-paid') || null;
     },
 
@@ -112,9 +123,10 @@ window.moj.Modules.JsonSearcherModule = (function() {
       });
 
       $('input[id="application_refund"], input[id$="_date_fee_paid"]').on('change blur', function() {
-        // Pre-UCD paper page only: the refund checkbox and date fee paid
-        // fields live on the same screen and drive the search date, so
-        // changing them invalidates any selected fee.
+        // Pre-UCD paper page (refund checkbox + date fee paid) and online
+        // application refund page (date fee paid): these fields live on the
+        // same screen and drive the search date, so changing them
+        // invalidates any selected fee.
         if (self.feeSelected) {
           self.resetSelection();
         }

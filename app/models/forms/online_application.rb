@@ -13,6 +13,10 @@ module Forms
         day_date_received: :integer,
         month_date_received: :integer,
         year_date_received: :integer,
+        date_fee_paid: :date,
+        day_date_fee_paid: :integer,
+        month_date_fee_paid: :integer,
+        year_date_fee_paid: :integer,
         form_name: :string,
         case_number: :string,
         emergency: :boolean,
@@ -38,6 +42,7 @@ module Forms
     validate :fee_search_selection
     validates :jurisdiction_id, presence: true
     validates :case_number, presence: true, if: :refund?
+    validates :date_fee_paid, presence: true, if: :refund?
     validates :emergency_reason, presence: true, if: :emergency?
     validates :emergency_reason, length: { maximum: 500 }
 
@@ -58,7 +63,9 @@ module Forms
     end
 
     def format_date_fields
-      format_dates(:date_received) if format_the_dates?(:date_received)
+      [:date_received, :date_fee_paid].each do |key|
+        format_dates(key) if format_the_dates?(key)
+      end
     end
 
     def submitted_at
@@ -73,10 +80,10 @@ module Forms
       return false if jurisdiction_id.blank?
       Jurisdiction.find_by(id: jurisdiction_id)&.abbr == 'IAC'
     end
-    # The fee search partial stamps these on the search field so the JS can
-    # pick the fee version by the date the fee was paid for refunds. They are
-    # fixed by the citizen's submission, so they are readers, not attributes.
-    delegate :refund, :date_fee_paid, to: :online_application
+    # The fee search partial stamps `refund` on the search field so the JS can
+    # pick the fee version by the date the fee was paid for refunds. Refund is
+    # fixed by the citizen's submission, so it's a reader, not an attribute.
+    delegate :refund, to: :online_application
 
     private
 
@@ -102,6 +109,7 @@ module Forms
         fee: fee,
         jurisdiction_id: jurisdiction_id,
         date_received: date_received,
+        date_fee_paid: date_fee_paid,
         form_name: form_name,
         case_number: case_number,
         benefits_override: benefits_override,
