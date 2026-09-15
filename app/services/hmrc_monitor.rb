@@ -1,5 +1,5 @@
-# Mirrors DwpMonitor for the HMRC income check. Drives the HMRC banner only;
-# it never blocks any functionality - see CHANGELOG.md.
+# Mirrors DwpMonitor for the HMRC income check. Drives the HMRC banner and,
+# when offline, routes new evidence checks to paper - see CHANGELOG.md.
 class HmrcMonitor
   def initialize
     hmrc_results
@@ -13,6 +13,10 @@ class HmrcMonitor
     else
       'online'
     end
+  end
+
+  def offline?
+    state == 'offline'
   end
 
   def hmrc_results

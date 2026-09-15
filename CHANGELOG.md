@@ -23,9 +23,14 @@ with entries grouped by branch and date rather than release version.
   Only service-side failures count (`HmrcCheck.service_failure?`); applicant
   data problems and the local tax credit entitlement message are excluded so
   bad applicant details never trip the banner.
-- Banner only: no admin override, no email, nothing in the HMRC flow is gated
-  on the state. Wording follows the RST-8282 wireframe; the amber/red box sits
-  inside the state partial to match the DWP banner on the RST-8347 branch.
+- No admin override and no email. Wording follows the RST-8282 wireframe; the
+  amber/red box sits inside the state partial to match the DWP banner on the
+  RST-8347 branch.
+- RST-8289: while the HMRC banner is red, `EvidenceCheckSelector` gives new
+  evidence checks `income_check_type` 'paper' instead of 'hmrc', the same path
+  as an applicant without the data needed for an HMRC check. Amber does not
+  change the route. Existing evidence checks already marked 'hmrc' are not
+  touched, and nothing else in the HMRC flow is gated on the state.
 
 
 ## 2026-09-09 (rst-8264-benefit-evidence-after-failed)

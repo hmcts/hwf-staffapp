@@ -81,13 +81,32 @@ describe EvidenceCheckSelector do
               end
 
               context 'hmrc income check type' do
-                before { allow(application).to receive(:hmrc_check_type?).and_return true }
+                let(:hmrc_monitor) { instance_double(HmrcMonitor, offline?: hmrc_offline) }
+                let(:hmrc_offline) { false }
+
+                before do
+                  allow(application).to receive(:hmrc_check_type?).and_return true
+                  allow(HmrcMonitor).to receive(:new).and_return(hmrc_monitor)
+                end
 
                 it { expect(decision.check_type).to eql 'random' }
                 it { expect(decision.income_check_type).to eql 'hmrc' }
 
                 context 'average income' do
                   let(:application) { create(:application_full_remission, :refund, income_period: 'average') }
+                  it { expect(decision.income_check_type).to eql 'hmrc' }
+                end
+
+                context 'when the HMRC checker is offline (red banner)' do
+                  let(:hmrc_offline) { true }
+
+                  it { expect(decision.check_type).to eql 'random' }
+                  it { expect(decision.income_check_type).to eql 'paper' }
+                end
+
+                context 'when the HMRC checker is only warning (amber banner)' do
+                  let(:hmrc_monitor) { instance_double(HmrcMonitor, offline?: false) }
+
                   it { expect(decision.income_check_type).to eql 'hmrc' }
                 end
               end

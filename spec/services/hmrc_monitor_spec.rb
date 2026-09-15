@@ -99,4 +99,23 @@ describe HmrcMonitor do
       end
     end
   end
+
+  describe '#offline?' do
+    let(:evidence_check) { create(:evidence_check, application: create(:application)) }
+
+    it 'is true when the state is offline' do
+      create_list(:hmrc_check, 10, evidence_check: evidence_check, error_response: 'API: SERVER_ERROR - Service unavailable')
+      expect(service.offline?).to be true
+    end
+
+    it 'is false when the state is warning' do
+      create_list(:hmrc_check, 7, evidence_check: evidence_check, error_response: nil)
+      create_list(:hmrc_check, 3, evidence_check: evidence_check, error_response: 'API: SERVER_ERROR - Service unavailable')
+      expect(service.offline?).to be false
+    end
+
+    it 'is false when the state is online' do
+      expect(service.offline?).to be false
+    end
+  end
 end

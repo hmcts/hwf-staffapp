@@ -17,7 +17,8 @@ class HmrcCheck < ActiveRecord::Base
 
   # Error responses caused by the HMRC service itself rather than by the
   # applicant's data. Matched as substrings because the API varies the
-  # wording after the code. Drives the HMRC banner only - see CHANGELOG.md.
+  # wording after the code. Drives the HMRC banner and the paper-evidence
+  # fallback - see CHANGELOG.md.
   SERVICE_FAILURE_PATTERNS = [
     'INTERNAL_SERVER_ERROR',
     'invalid_client',
