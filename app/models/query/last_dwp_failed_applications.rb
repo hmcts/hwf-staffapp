@@ -24,7 +24,7 @@ module Query
         else
           unprocessed_application?(linked_applications[application.reference])
         end
-      end
+      end.sort_by(&:updated_at).reverse
     end
 
     # Loads, in a single query, the paper application linked by reference to each
