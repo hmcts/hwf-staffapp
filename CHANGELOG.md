@@ -5,6 +5,15 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 with entries grouped by branch and date rather than release version.
 
+## 2026-09-15 (rst-8574-appeal-flag)
+
+### Added
+
+- `APPEAL_ENABLED` env switch (`Settings.appeal_enabled`, `appeal_available?`
+  helper) hides the Evidence Received (appeal) section on the processed
+  application page unless set to 1/true. View only: the controller action and
+  `appeal_allowed?` are untouched, so a direct POST still records the appeal.
+
 ## 2026-09-09 (rst-8264-benefit-evidence-after-failed)
 
 ### Added

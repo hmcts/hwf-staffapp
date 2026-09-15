@@ -128,6 +128,18 @@ RSpec.describe ApplicationHelper do
     end
   end
 
+  describe 'appeal_available?' do
+    it 'returns true when Settings.appeal_enabled is true' do
+      allow(Settings).to receive(:appeal_enabled).and_return(true)
+      expect(helper.appeal_available?).to be true
+    end
+
+    it 'returns false when Settings.appeal_enabled is false' do
+      allow(Settings).to receive(:appeal_enabled).and_return(false)
+      expect(helper.appeal_available?).to be false
+    end
+  end
+
   describe 'show_ucd_changes?' do
     before {
       allow(FeatureSwitching).to receive(:active?).with(:band_calculation).and_return true

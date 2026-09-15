@@ -10,7 +10,26 @@ RSpec.feature 'Record benefit evidence received after a benefit application fail
   let(:today) { Time.zone.today.strftime(Date::DATE_FORMATS[:gov_uk_long]) }
 
   before do
+    allow(Settings).to receive(:appeal_enabled).and_return(true)
     login_as(user)
+  end
+
+  context 'when the appeal switch is off' do
+    let(:application) do
+      create(:application, :benefit_type, :processed_state, outcome: 'none', office: user.office, fee: '310.00')
+    end
+
+    before do
+      allow(Settings).to receive(:appeal_enabled).and_return(false)
+      create(:benefit_override, application: application, correct: false)
+      visit processed_application_path(application)
+    end
+
+    scenario 'the evidence received section is hidden' do
+      expect(page).to have_text('Not eligible for help with fees')
+      expect(page).to have_no_text('Evidence Received')
+      expect(page).to have_no_css('.evidence-received-form', visible: :all)
+    end
   end
 
   context 'with a failed benefit application' do
