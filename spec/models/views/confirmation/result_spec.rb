@@ -203,6 +203,54 @@ RSpec.describe Views::Confirmation::Result do
       end
     end
 
+    context 'when a benefit_override exists but a later DWP check passed' do
+      let(:benefit_check) { build_stubbed(:benefit_check, applicationable: application, dwp_result: 'Yes') }
+      let(:application) { build_stubbed(:application, :benefit_type) }
+      before {
+        build_stubbed(:benefit_override, application: application, correct: value)
+        allow(application).to receive(:last_benefit_check).and_return(benefit_check)
+      }
+
+      context 'and the earlier evidence answer was no' do
+        let(:value) { false }
+
+        it { is_expected.to eq string_passed }
+      end
+
+      context 'and the earlier evidence answer was yes' do
+        let(:value) { true }
+
+        it { is_expected.to eq string_passed }
+      end
+    end
+
+    context 'when a benefit_override exists and there is no DWP check (DWP offline)' do
+      let(:application) { build_stubbed(:application, :benefit_type) }
+      before {
+        build_stubbed(:benefit_override, application: application, correct: value)
+        allow(application).to receive(:last_benefit_check).and_return(nil)
+      }
+
+      context 'and the evidence is correct' do
+        let(:value) { true }
+
+        it { is_expected.to eq I18n.t('activemodel.attributes.forms/application/summary.passed_with_evidence') }
+      end
+
+      context 'and the evidence is incorrect' do
+        let(:value) { false }
+
+        it { is_expected.to eq I18n.t('activemodel.attributes.forms/application/summary.failed') }
+      end
+    end
+
+    context 'when there is neither a DWP check nor an override' do
+      let(:application) { build_stubbed(:application, :benefit_type) }
+      before { allow(application).to receive(:last_benefit_check).and_return(nil) }
+
+      it { is_expected.to be_nil }
+    end
+
     context 'when a benefit_override does not exist' do
       describe 'and the application is online which failed the manual benefit check' do
         let(:online_application) { build_stubbed(:online_application, dwp_manual_decision: false, id: 654654) }

@@ -5,6 +5,19 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 with entries grouped by branch and date rather than release version.
 
+## 2026-09-16 (rst-8578-benefit-summary)
+
+### Fixed
+
+- Benefits showed "Failed" on the confirmation and processed application
+  pages when a DWP check had passed but an earlier "no paper evidence" answer
+  (a `BenefitOverride` with `correct: false`) was still on the application,
+  e.g. staff corrected the NI number and re-ran the check. Both
+  `Views::Confirmation::Result#benefits_passed?` and
+  `Views::Overview::BenefitHelper#benefits_result` now use one precedence:
+  manager's decision override, then a DWP "Yes", then the paper evidence
+  answer, then a failed DWP check. The stale override row is left as is.
+
 ## 2026-09-15 (rst-8574-appeal-flag)
 
 ### Added
