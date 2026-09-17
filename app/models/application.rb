@@ -109,8 +109,17 @@ class Application < ActiveRecord::Base
     last_benefit_check&.error_message.present?
   end
 
+  # Paper evidence can stand in for the DWP check on a benefits application
+  # when the check could not run (e.g. blank NI number), errored, or did not
+  # confirm the benefit - see CHANGELOG.md
   def allow_benefit_check_override?
-    benefit_check_with_error_message? || BenefitCheck::BENEFIT_CHECK_NO_VALUES.include?(last_benefit_check&.dwp_result)
+    return false unless benefits
+
+    last_benefit_check.blank? || benefit_check_with_error_message? || benefit_check_not_confirmed?
+  end
+
+  def benefit_check_not_confirmed?
+    BenefitCheck::BENEFIT_CHECK_NO_VALUES.include?(last_benefit_check.dwp_result)
   end
 
   # The outcome is the original decision, so this stays true after an appeal.

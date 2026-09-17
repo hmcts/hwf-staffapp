@@ -5,6 +5,17 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 with entries grouped by branch and date rather than release version.
 
+## 2026-09-16 (rst-8578-benefit-summary)
+
+### Fixed
+
+- Benefits showed "Failed" when a DWP check passed after an earlier "no paper
+  evidence" answer. Both result views now use one precedence: manager's
+  decision, DWP "Yes", paper evidence answer, failed check.
+- A paper benefit application with no NI number failed outright because no
+  check could run. `allow_benefit_check_override?` now offers the paper
+  evidence page when there is no check, and only for benefits applications.
+
 ## 2026-09-15 (rst-8574-appeal-flag)
 
 ### Added

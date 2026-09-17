@@ -270,13 +270,25 @@ RSpec.describe OnlineApplication do
   describe '#allow_benefit_check_override?' do
     let(:online_application) { create(:online_application) }
 
-    it 'returns false when there is no benefit check' do
+    it 'returns true when there is no benefit check (it could not be run)' do
+      expect(online_application.allow_benefit_check_override?).to be true
+    end
+
+    it 'returns false when the applicant did not declare benefits' do
+      online_application.update(benefits: false)
       expect(online_application.allow_benefit_check_override?).to be false
     end
 
     it 'returns true when last benefit check has error message' do
       create(:benefit_check, applicationable: online_application, benefits_valid: false, dwp_result: 'Unspecified error', error_message: 'some error')
       expect(online_application.reload.allow_benefit_check_override?).to be true
+    end
+
+    ['Undetermined', 'Deceased', 'Deleted', 'Superseded', ''].each do |result|
+      it "returns true when last benefit check has dwp_result #{result.inspect}" do
+        create(:benefit_check, applicationable: online_application, benefits_valid: false, dwp_result: result, error_message: nil)
+        expect(online_application.reload.allow_benefit_check_override?).to be true
+      end
     end
 
     it 'returns true when last benefit check has dwp_result No' do
