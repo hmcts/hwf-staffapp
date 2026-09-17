@@ -98,6 +98,30 @@ RSpec.feature 'Benefit checker flow - paper application' do
     then_declaration_page_is_displayed
   end
 
+  # No NI number: the check cannot run, so the evidence page must still be
+  # offered instead of failing the application outright.
+  describe 'applicant without an NI number' do
+    scenario 'paper evidence provided' do
+      drive_to_benefits_question(ni_number: '')
+      answer_on_benefits_yes
+      then_evidence_page_explains_missing_details
+      answer_paper_evidence(provided: true)
+      expect(Application.last.outcome).to eq('full')
+      complete_from_summary
+      then_benefits_result_is('✓ Passed (paper evidence checked)', processed: '✓ Passed (paper evidence checked)')
+    end
+
+    scenario 'no paper evidence' do
+      drive_to_benefits_question(ni_number: '')
+      answer_on_benefits_yes
+      then_evidence_page_explains_missing_details
+      answer_paper_evidence(provided: false)
+      expect(Application.last.outcome).to eq('none')
+      complete_from_summary
+      then_benefits_result_is('✗ Failed', processed: 'Failed')
+    end
+  end
+
   # The Benefits row in the Result section on the confirmation page and on the
   # processed application page for each outcome (rst-8578).
   describe 'Benefits result row' do
@@ -148,6 +172,12 @@ RSpec.feature 'Benefit checker flow - paper application' do
   end
 
   private
+
+  def then_evidence_page_explains_missing_details
+    expect(page).to have_xpath('//h1', text: 'Evidence of benefits')
+    expect(BenefitCheck.count).to eq(0)
+    expect(page).to have_text('There’s a problem with the applicant’s surname, date of birth or National Insurance number')
+  end
 
   def correct_ni_number_and_recheck(ni_number)
     visit application_personal_informations_path(Application.last)

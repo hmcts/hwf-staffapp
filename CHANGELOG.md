@@ -9,14 +9,12 @@ with entries grouped by branch and date rather than release version.
 
 ### Fixed
 
-- Benefits showed "Failed" on the confirmation and processed application
-  pages when a DWP check had passed but an earlier "no paper evidence" answer
-  (a `BenefitOverride` with `correct: false`) was still on the application,
-  e.g. staff corrected the NI number and re-ran the check. Both
-  `Views::Confirmation::Result#benefits_passed?` and
-  `Views::Overview::BenefitHelper#benefits_result` now use one precedence:
-  manager's decision override, then a DWP "Yes", then the paper evidence
-  answer, then a failed DWP check. The stale override row is left as is.
+- Benefits showed "Failed" when a DWP check passed after an earlier "no paper
+  evidence" answer. Both result views now use one precedence: manager's
+  decision, DWP "Yes", paper evidence answer, failed check.
+- A paper benefit application with no NI number failed outright because no
+  check could run. `allow_benefit_check_override?` now offers the paper
+  evidence page when there is no check, and only for benefits applications.
 
 ## 2026-09-15 (rst-8574-appeal-flag)
 
