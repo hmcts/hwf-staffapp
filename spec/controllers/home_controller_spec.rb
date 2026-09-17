@@ -73,6 +73,10 @@ RSpec.describe HomeController do
           expect(assigns(:dwp_state)).to be_a String
         end
 
+        it 'assigns the HmrcMonitor state' do
+          expect(assigns(:hmrc_state)).to be_a String
+        end
+
         it "assigns last updated applications" do
           expect(assigns(:last_updated_applications)).to eq([])
         end

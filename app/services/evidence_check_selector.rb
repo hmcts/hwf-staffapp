@@ -115,8 +115,10 @@ class EvidenceCheckSelector
     hmrc_income_check_type? ? 'hmrc' : 'paper'
   end
 
+  # RST-8289: a red HMRC banner sends the check straight to paper evidence,
+  # exactly as when the applicant data is not valid for an HMRC check.
   def hmrc_income_check_type?
-    @application.hmrc_check_type?
+    @application.hmrc_check_type? && !HmrcMonitor.new.offline?
   end
 
   def ccmcc_evidence_rules_check

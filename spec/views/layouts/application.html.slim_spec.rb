@@ -66,6 +66,7 @@ RSpec.describe 'layouts/application' do
         @dwp_state = 'warning'
 
         expect(render).to have_text I18n.t('error_messages.dwp_warning')
+        expect(render).to have_text I18n.t('error_messages.dwp_warning_text')
       end
     end
 
@@ -74,6 +75,53 @@ RSpec.describe 'layouts/application' do
         @dwp_state = 'offline'
 
         expect(render).to have_text I18n.t('error_messages.dwp_unavailable')
+        expect(render).to have_text I18n.t('error_messages.dwp_unavailable_text')
+      end
+    end
+  end
+
+  describe 'HMRC notification' do
+    context 'when the service is online' do
+      before { @hmrc_state = 'online' }
+
+      it 'displays the working message' do
+        expect(render).to have_text I18n.t('error_messages.hmrc_restored')
+      end
+
+      it 'does not display a problem box' do
+        expect(render).to have_no_text I18n.t('error_messages.hmrc_warning_header')
+      end
+    end
+
+    context 'when the service is failing or restoring' do
+      before { @hmrc_state = 'warning' }
+
+      it 'displays the warning message' do
+        expect(render).to have_text I18n.t('error_messages.hmrc_warning')
+      end
+
+      it 'displays the warning box' do
+        expect(render).to have_text I18n.t('error_messages.hmrc_warning_header')
+        expect(rendered).to have_text I18n.t('error_messages.hmrc_warning_text')
+      end
+    end
+
+    context 'when the service is offline' do
+      before { @hmrc_state = 'offline' }
+
+      it 'displays the unavailable message' do
+        expect(render).to have_text I18n.t('error_messages.hmrc_unavailable')
+      end
+
+      it 'displays the problem box' do
+        expect(render).to have_text I18n.t('error_block.heading')
+        expect(rendered).to have_text I18n.t('error_messages.hmrc_unavailable_text')
+      end
+    end
+
+    context 'when no state is set' do
+      it 'does not render the banner' do
+        expect(render).to have_no_css('[class^="hmrc-banner-"]')
       end
     end
   end

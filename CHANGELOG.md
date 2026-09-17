@@ -14,6 +14,25 @@ with entries grouped by branch and date rather than release version.
   application page unless set to 1/true. View only: the controller action and
   `appeal_allowed?` are untouched, so a direct POST still records the appeal.
 
+## 2026-09-14 (rst-8282-hmrc-banner)
+
+### Added
+
+- HMRC checker banner on the home page, next to the DWP one. `HmrcMonitor`
+  mirrors `DwpMonitor` (last 10 `HmrcCheck` rows, 25% / 50% thresholds).
+  Only service-side failures count (`HmrcCheck.service_failure?`); applicant
+  data problems and the local tax credit entitlement message are excluded so
+  bad applicant details never trip the banner.
+- No admin override and no email. Wording follows the RST-8282 wireframe; the
+  amber/red box sits inside the state partial to match the DWP banner on the
+  RST-8347 branch.
+- RST-8289: while the HMRC banner is red, `EvidenceCheckSelector` gives new
+  evidence checks `income_check_type` 'paper' instead of 'hmrc', the same path
+  as an applicant without the data needed for an HMRC check. Amber does not
+  change the route. Existing evidence checks already marked 'hmrc' are not
+  touched, and nothing else in the HMRC flow is gated on the state.
+
+
 ## 2026-09-09 (rst-8264-benefit-evidence-after-failed)
 
 ### Added
@@ -34,6 +53,7 @@ with entries grouped by branch and date rather than release version.
   record is preserved.
 - The `benefit_overrides.reprocessed` migration from this branch's first
   commit was rolled back and deleted (never deployed) in favour of `Appeal`.
+
 ## 2026-09-08 (rst-8415-paid-date)
 
 ### Changed

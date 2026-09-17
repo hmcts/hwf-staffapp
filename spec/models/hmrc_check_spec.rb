@@ -324,4 +324,63 @@ RSpec.describe HmrcCheck do
 
   end
 
+  describe '.service_failure?' do
+    subject { described_class.service_failure?(error_response) }
+
+    context 'with no error' do
+      let(:error_response) { nil }
+
+      it { is_expected.to be false }
+    end
+
+    context 'with a blank error' do
+      let(:error_response) { '' }
+
+      it { is_expected.to be false }
+    end
+
+    context 'with an HMRC server error' do
+      let(:error_response) { 'API: SERVER_ERROR - Service unavailable' }
+
+      it { is_expected.to be true }
+    end
+
+    context 'with a throttled request' do
+      let(:error_response) { 'API: MESSAGE_THROTTLED_OUT - The request for the API is throttled as you have exceeded your quota.' }
+
+      it { is_expected.to be true }
+    end
+
+    context 'with a timeout' do
+      let(:error_response) { 'Net::ReadTimeout - Timeout error' }
+
+      it { is_expected.to be true }
+    end
+
+    context 'with an applicant matching failure' do
+      let(:error_response) { 'API: MATCHING_FAILED - There is no match for the information provided' }
+
+      it { is_expected.to be false }
+    end
+
+    context 'with no record found' do
+      let(:error_response) { 'NO RESULT - No record found' }
+
+      it { is_expected.to be false }
+    end
+
+    context 'with the local tax credit entitlement message' do
+      let(:error_response) { 'This application requires a paper evidence check due to issues with HMRC tax credit data.' }
+
+      it { is_expected.to be false }
+    end
+  end
+
+  describe '#service_failure?' do
+    it 'delegates to the class method' do
+      check = build(:hmrc_check, error_response: 'API: FORBIDDEN - This endpoint is not available')
+      expect(check.service_failure?).to be true
+    end
+  end
+
 end

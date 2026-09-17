@@ -15,6 +15,32 @@ class HmrcCheck < ActiveRecord::Base
 
   validates :additional_income, numericality: { greater_than_or_equal_to: 0, allow_nil: true }
 
+  # Error responses caused by the HMRC service itself rather than by the
+  # applicant's data. Matched as substrings because the API varies the
+  # wording after the code. Drives the HMRC banner and the paper-evidence
+  # fallback - see CHANGELOG.md.
+  SERVICE_FAILURE_PATTERNS = [
+    'INTERNAL_SERVER_ERROR',
+    'invalid_client',
+    'INVALID_SCOPE',
+    'SERVER_ERROR',
+    'server_error',
+    'FORBIDDEN',
+    'RESOURCE_FORBIDDEN',
+    'MESSAGE_THROTTLED_OUT',
+    'Net::ReadTimeout'
+  ].freeze
+
+  def self.service_failure?(error_response)
+    return false if error_response.blank?
+
+    SERVICE_FAILURE_PATTERNS.any? { |pattern| error_response.include?(pattern) }
+  end
+
+  def service_failure?
+    self.class.service_failure?(error_response)
+  end
+
   def hmrc_income
     paye_income + tax_income
   end
