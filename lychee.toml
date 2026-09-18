@@ -1,0 +1,22 @@
+# Config for Lychee - broken link checker [https://github.com/lycheeverse/lychee] [https://lychee.cli.rs/]
+# Install locally with `brew install lychee`
+# Run tests with `bundle exec rake test:links`
+
+no_progress = true
+# Only check external links
+scheme = ["https", "http"]
+max_concurrency = 8
+timeout = 20
+max_retries = 2
+max_redirects = 0
+# Accept 429 rate limited - not broken
+accept = ["200..=299", "429"]
+
+base_url = "https://staff.helpwithcourtfees.service.gov.uk/"
+
+exclude = [
+  '^https://github\.com/plataformatec/devise/wiki/I18n',
+  '^https://justiceuk\.sharepoint\.com/',
+  '^https://intranet\.justice\.gov\.uk/',
+  '^https://staff\.helpwithcourtfees\.service\.gov\.uk/',
+]
