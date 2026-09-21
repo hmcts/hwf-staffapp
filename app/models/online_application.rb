@@ -71,8 +71,15 @@ class OnlineApplication < ActiveRecord::Base
     last_benefit_check&.error_message.present?
   end
 
+  # Same rule as Application#allow_benefit_check_override? - see CHANGELOG.md
   def allow_benefit_check_override?
-    benefit_check_with_error_message? || last_benefit_check&.dwp_result == 'No'
+    return false unless benefits
+
+    last_benefit_check.blank? || benefit_check_with_error_message? || benefit_check_not_confirmed?
+  end
+
+  def benefit_check_not_confirmed?
+    BenefitCheck::BENEFIT_CHECK_NO_VALUES.include?(last_benefit_check.dwp_result)
   end
 
   def notification_email

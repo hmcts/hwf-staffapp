@@ -37,16 +37,19 @@ module Views
         true
       end
 
+      # A DWP "Yes" wins over an earlier paper evidence answer - see CHANGELOG.md
       # rubocop:disable Style/ReturnNilInPredicateMethodDefinition
       def benefits_passed?
         return nil if @application.benefits.blank?
 
         if decision_overridden?
           I18n.t('activemodel.attributes.forms/application/summary.passed_by_override')
+        elsif benefit_check_passed?
+          convert_to_pass_fail(true)
         elsif benefits_have_been_overridden?
           benefit_override_result
         elsif @application.last_benefit_check.present?
-          convert_to_pass_fail(@application.last_benefit_check.passed?)
+          convert_to_pass_fail(false)
         end
       end
       # rubocop:enable Style/ReturnNilInPredicateMethodDefinition
@@ -145,6 +148,10 @@ module Views
 
       def benefit_overridden?
         @application.benefit_override.present?
+      end
+
+      def benefit_check_passed?
+        @application.last_benefit_check.present? && @application.last_benefit_check.passed?
       end
 
       def application_type_is?(input)
