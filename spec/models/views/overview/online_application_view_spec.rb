@@ -166,6 +166,7 @@ RSpec.describe Views::Overview::OnlineApplicationView do
     describe '#evidence_provided' do
       context 'when benefits were not declared in the application' do
         let(:benefits) { false }
+        let(:dwp_manual_decision) { true }
 
         it { expect(online_app_view.evidence_provided).to be_nil }
       end
@@ -186,22 +187,70 @@ RSpec.describe Views::Overview::OnlineApplicationView do
         end
       end
 
+      context 'when staff answered no but a later DWP check passed' do
+        let(:dwp_manual_decision) { false }
+        let(:benefits_override) { false }
+        let(:benefit_check) { instance_double(BenefitCheck, passed?: true) }
+
+        it 'hides the earlier staff answer' do
+          expect(online_app_view.evidence_provided).to be_nil
+        end
+      end
+
       context 'when there was no manual decision' do
-        context 'and the DWP check passed' do
-          let(:benefit_check) { instance_double(BenefitCheck, passed?: true) }
+        let(:benefit_check) { instance_double(BenefitCheck, passed?: false) }
 
-          it { expect(online_app_view.evidence_provided).to eq('Yes') }
+        it { expect(online_app_view.evidence_provided).to be_nil }
+      end
+    end
+
+    describe '#dwp_check_passed' do
+      context 'when benefits were not declared in the application' do
+        let(:benefits) { false }
+        let(:benefit_check) { instance_double(BenefitCheck, passed?: true) }
+
+        it { expect(online_app_view.dwp_check_passed).to be_nil }
+      end
+
+      context 'when the DWP check passed' do
+        let(:benefit_check) { instance_double(BenefitCheck, passed?: true) }
+
+        it { expect(online_app_view.dwp_check_passed).to eq('Yes') }
+      end
+
+      context 'when the DWP check did not pass' do
+        let(:benefit_check) { instance_double(BenefitCheck, passed?: false) }
+
+        it { expect(online_app_view.dwp_check_passed).to eq('No') }
+      end
+
+      context 'when the DWP check did not pass and staff answered the evidence question' do
+        let(:dwp_manual_decision) { true }
+        let(:benefits_override) { true }
+        let(:benefit_check) { instance_double(BenefitCheck, passed?: false) }
+
+        it { expect(online_app_view.dwp_check_passed).to eq('No') }
+      end
+
+      context 'when staff answered no but a later DWP check passed' do
+        let(:dwp_manual_decision) { false }
+        let(:benefits_override) { false }
+        let(:benefit_check) { instance_double(BenefitCheck, passed?: true) }
+
+        it { expect(online_app_view.dwp_check_passed).to eq('Yes') }
+      end
+
+      context 'when no DWP check was run but staff answered the evidence question' do
+        let(:dwp_manual_decision) { true }
+        let(:benefits_override) { true }
+
+        it 'treats the missing check as failed' do
+          expect(online_app_view.dwp_check_passed).to eq('No')
         end
+      end
 
-        context 'and the DWP check did not pass' do
-          let(:benefit_check) { instance_double(BenefitCheck, passed?: false) }
-
-          it { expect(online_app_view.evidence_provided).to eq('No') }
-        end
-
-        context 'and no DWP check was run' do
-          it { expect(online_app_view.evidence_provided).to be_nil }
-        end
+      context 'when no DWP check was run and there is no staff answer' do
+        it { expect(online_app_view.dwp_check_passed).to be_nil }
       end
     end
 

@@ -5,6 +5,18 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 with entries grouped by branch and date rather than release version.
 
+## 2026-09-22 (rst-8579-benefit-result-copy)
+
+### Changed
+
+- Benefits section on the paper summary pages and the post-UCD online check
+  details page: new "DWP check passed" row (Yes/No) above "Correct evidence
+  provided", which now shows only the staff paper evidence answer. A DWP
+  pass shows the DWP row alone, even after an earlier evidence answer;
+  otherwise both rows show, and a staff answer with no DWP check counts as
+  "DWP check passed: No". The DWP row has no Change link: only the staff
+  answer can be changed.
+
 ## 2026-09-21 (gem-updates-v73)
 
 ### Changed

@@ -3,7 +3,7 @@ module Views
     class Benefits < Base
 
       def all_fields
-        ['on_benefits?', 'override?']
+        ['on_benefits?', 'dwp_check_passed?', 'override?']
       end
 
       def initialize(application)
@@ -14,25 +14,41 @@ module Views
         convert_to_boolean(@application.benefits?)
       end
 
-      # provided correct evidenece or DWP says yes
-      def override?
-        return false unless @application.benefits?
-
-        if benefit_overridden?
-          convert_to_boolean(@application.benefit_override.correct)
-        else
-          convert_to_boolean(@application.last_benefit_check&.passed?)
-        end
+      # The DWP result cannot be changed by staff, only the paper evidence answer.
+      def skip_change_link
+        ['dwp_check_passed?']
       end
+
+      # "DWP check passed" is the DWP result and "Correct evidence provided"
+      # the staff paper evidence answer, shown only when the DWP check did not
+      # pass. An override with no check counts as a failed check - see CHANGELOG.md
+      # rubocop:disable Style/ReturnNilInPredicateMethodDefinition
+      def dwp_check_passed?
+        return unless @application.benefits?
+        return if last_benefit_check.blank? && !benefit_overridden?
+
+        convert_to_boolean(last_benefit_check&.passed?)
+      end
+
+      def override?
+        return unless @application.benefits? && benefit_overridden? && !dwp_check_passed
+
+        convert_to_boolean(@application.benefit_override.correct)
+      end
+      # rubocop:enable Style/ReturnNilInPredicateMethodDefinition
 
       private
 
-      def benefit_overridden?
-        !@application.benefit_override.nil?
+      def dwp_check_passed
+        last_benefit_check.present? && last_benefit_check.passed?
       end
 
-      def hide_when_discretion_applied?
-        @application.detail.try(:discretion_applied) != nil
+      def last_benefit_check
+        @application.last_benefit_check
+      end
+
+      def benefit_overridden?
+        !@application.benefit_override.nil?
       end
     end
   end
