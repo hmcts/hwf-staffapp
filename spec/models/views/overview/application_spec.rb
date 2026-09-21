@@ -91,9 +91,53 @@ RSpec.describe Views::Overview::Application do
 
         it { is_expected.to eql "✓ Passed (by manager's decision)" }
       end
+
+      context 'when the dwp_result is Yes after an earlier paper evidence answer' do
+        let(:result) { 'Yes' }
+        let!(:application) { create(:application, :benefit_type) }
+
+        before { create(:benefit_override, application: application, correct: correct_override) }
+
+        context 'and the answer was no' do
+          let(:correct_override) { false }
+
+          it { is_expected.to eq 'Passed' }
+        end
+
+        context 'and the answer was yes' do
+          let(:correct_override) { true }
+
+          it { is_expected.to eq 'Passed' }
+        end
+      end
+
+      context 'when the dwp_result is No and paper evidence was answered' do
+        let(:result) { 'No' }
+        let!(:application) { create(:application, :benefit_type) }
+
+        before { create(:benefit_override, application: application, correct: correct_override) }
+
+        context 'and the answer was yes' do
+          let(:correct_override) { true }
+
+          it { is_expected.to eql "✓ Passed (paper evidence checked)" }
+        end
+
+        context 'and the answer was no' do
+          let(:correct_override) { false }
+
+          it { is_expected.to eql 'Failed' }
+        end
+      end
+
+      context 'when there is no DWP check and no override' do
+        let(:benefit_check) { nil }
+
+        it { is_expected.to be_nil }
+      end
     end
 
-    context 'for an income type application' do
+    context 'for a benefit type application with no DWP check (DWP offline)' do
       let(:application) { create(:application, :benefit_type) }
       let(:benefit_override) { create(:benefit_override, application: application, correct: correct_override) }
       before { benefit_override }
