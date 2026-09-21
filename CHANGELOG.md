@@ -5,6 +5,42 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 with entries grouped by branch and date rather than release version.
 
+## 2026-09-21 (gem-updates-v73)
+
+### Changed
+
+- Updated Ruby 4.0.6 → 4.0.7 (.ruby-version, Gemfile, Dockerfile base image, Jenkinsfile_CNP, Jenkinsfile_nightly, README)
+- Updated axe-core-api 4.12.0 → 4.13.0
+- Updated pg_search 2.3.8 → 2.4.0 (now requires activerecord >= 8.0; we are on 8.1)
+- Updated rubocop 1.90.0 → 1.91.0 (no new offences)
+- Updated rubocop-rails 2.37.0 → 2.38.0 (no new offences)
+- Updated selenium-webdriver 4.48.0 → 4.49.0
+- Updated parallel_tests 5.7.0 → 5.8.0
+- Updated faraday 2.14.3 → 2.14.4
+- Updated rubyzip 3.6.0 → 3.7.0
+- Updated slim-rails 4.0.0 → 4.0.1
+- Updated net-imap 0.6.6 → 0.6.7 (transitive)
+- Updated jwt 3.2.0 → 3.3.0 (transitive)
+- Updated msgpack 1.8.4 → 1.8.5 (transitive)
+- Updated playwright-ruby-client 1.62.0 → 1.63.0 (transitive)
+- Updated bigdecimal 4.1.2 → 4.1.3 (transitive)
+- Updated fugit 1.13.0 → 1.14.0 (transitive)
+- Updated notifications-ruby-client 6.4.0 → 6.5.1 (transitive)
+- Updated io-console 0.9.2 → 0.9.4 (transitive)
+- Updated net-protocol 0.3.0 → 0.4.0 (transitive)
+- Updated unicode-display_width 3.2.0 → 3.3.0 and unicode-emoji 4.2.0 → 4.3.0 (transitive)
+- Updated mime-types-data 3.2026.0701 → 3.2026.0921 (transitive)
+- Updated govuk-frontend 6.5.0 → 6.5.1
+- Updated sass 1.104.0 → 1.104.1
+- Updated webpack 5.110.3 → 5.111.1
+- Updated jest and jest-environment-jsdom 30.5.1 → 30.5.2
+
+### Known issues
+
+- redis 5.4.1 → 6.0.0 held: major bump, needs its own review.
+- simplecov stays at ~> 0.22.0 (1.x breaks the SonarQube coverage report).
+- cucumber-*, diff-lcs, json, marcel, multi_test majors are constrained by
+  their parent gems and were not proposed.
 ## 2026-09-16 (rst-8578-benefit-summary)
 
 ### Fixed

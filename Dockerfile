@@ -1,4 +1,4 @@
-FROM hmctsprod.azurecr.io/imported/library/ruby:4.0.6-alpine3.23
+FROM hmctsprod.azurecr.io/imported/library/ruby:4.0.7-alpine3.23
 
 # Adding argument support for ping.json
 ARG APPVERSION=unknown
@@ -41,7 +41,7 @@ RUN mkdir -p /home/app
 WORKDIR /home/app
 
 COPY Gemfile Gemfile.lock /home/app/
-RUN gem install bundler -v 4.0.10 \
+RUN gem install bundler -v 4.0.21 \
  && bundle config set --local without 'test development' \
  && bundle config set --local force_ruby_platform true
 RUN bundle install
