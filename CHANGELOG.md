@@ -9,6 +9,7 @@ with entries grouped by branch and date rather than release version.
 
 ### Changed
 
+- Updated Ruby 4.0.6 → 4.0.7 (.ruby-version, Gemfile, Dockerfile base image, Jenkinsfile_CNP, Jenkinsfile_nightly, README)
 - Updated axe-core-api 4.12.0 → 4.13.0
 - Updated pg_search 2.3.8 → 2.4.0 (now requires activerecord >= 8.0; we are on 8.1)
 - Updated rubocop 1.90.0 → 1.91.0 (no new offences)
