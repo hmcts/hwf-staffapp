@@ -266,7 +266,7 @@ dl.govuk-summary-list
         dd.govuk-summary-list__actions
           =link_to application_benefits_path(@application) do
             = 'Change'
-            span.govuk-visually-hidden=t('summary.on_benefits')
+            span.govuk-visually-hidden=t('summary.on_benefits?')
 
     - if @benefits.dwp_check_passed?.present?
       .govuk-summary-list__row

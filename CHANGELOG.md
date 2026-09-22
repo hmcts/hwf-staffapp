@@ -16,6 +16,9 @@ with entries grouped by branch and date rather than release version.
 - Pre-UCD evidence, part payment, processed and deleted pages now use
   `Views::Overview::Benefits` like the post-UCD pages; the unused
   `paper_evidence` presenter method is removed.
+- The "Benefits declared in application" Change link had a missing
+  translation in its hidden label; the Cucumber summary feature now uses it
+  to reach the benefits page instead of the evidence row link.
 
 ## 2026-09-21 (gem-updates-v73)
 

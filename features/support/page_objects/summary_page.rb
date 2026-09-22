@@ -14,7 +14,7 @@ class SummaryPage < BasePage
       element :change_date_received, 'a', text: 'Change Date received'
       element :change_dob, 'a', text: 'Change Date of birth'
       element :change_fee, 'a', text: 'Change Fee'
-      element :change_benefits, 'a', text: 'Change Correct evidence provided'
+      element :change_benefits, 'a', text: 'Change Benefits declared in application'
     end
   end
 end
