@@ -557,7 +557,6 @@ en-GB:
       views/overview/application:
         savings: Savings and investments
         benefits: Benefits declared in application
-        paper_evidence: Correct evidence provided
         benefits_evidence_received: Benefits evidence received
         benefits_result: Benefits
         income_result: Income

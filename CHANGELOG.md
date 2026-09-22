@@ -9,13 +9,13 @@ with entries grouped by branch and date rather than release version.
 
 ### Changed
 
-- Benefits section on the paper summary pages and the post-UCD online check
-  details page: new "DWP check passed" row (Yes/No) above "Correct evidence
-  provided", which now shows only the staff paper evidence answer. A DWP
-  pass shows the DWP row alone, even after an earlier evidence answer;
-  otherwise both rows show, and a staff answer with no DWP check counts as
-  "DWP check passed: No". The DWP row has no Change link: only the staff
-  answer can be changed.
+- Benefits section on all summary pages, both schemes: new "DWP check
+  passed" row (Yes/No, no Change link) above "Correct evidence provided",
+  which now shows the staff paper evidence answer only when the DWP check
+  did not pass. A staff answer with no DWP check counts as "No".
+- Pre-UCD evidence, part payment, processed and deleted pages now use
+  `Views::Overview::Benefits` like the post-UCD pages; the unused
+  `paper_evidence` presenter method is removed.
 
 ## 2026-09-21 (gem-updates-v73)
 

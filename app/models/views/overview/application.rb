@@ -39,11 +39,6 @@ module Views
         format_locale(@application.detail.calculation_scheme.to_s)
       end
 
-      def paper_evidence
-        return if @application.benefit_override.blank?
-        format_locale(@application.benefit_override.correct)
-      end
-
       def benefits_evidence_received
         appeal = @application.appeal
         return if appeal.blank?
