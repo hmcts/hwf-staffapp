@@ -42,6 +42,16 @@ dl.govuk-summary-list
           = 'Change'
           span.govuk-visually-hidden=t('summary.full_name')
 
+  - if @applicant.postcode.present?
+    .govuk-summary-list__row
+      dt.govuk-summary-list__key =t('summary.postcode')
+      dd.govuk-summary-list__value =@applicant.postcode
+      - if show_links
+        dd.govuk-summary-list__actions
+          =link_to application_personal_informations_path(@application) do
+            = 'Change'
+            span.govuk-visually-hidden=t('summary.postcode')
+
   .govuk-summary-list__row
     dt.govuk-summary-list__key =t('summary.date_of_birth')
     dd.govuk-summary-list__value =@applicant.date_of_birth

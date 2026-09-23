@@ -32,10 +32,7 @@ module Forms
       validate :ni_number_duplicate
 
       def format_ni_number
-        unless partner_ni_number.nil?
-          partner_ni_number.upcase!
-          partner_ni_number.delete!(' ')
-        end
+        self.partner_ni_number = PersonalDetailsFormatter.compact_upcase(partner_ni_number)
       end
 
       def ni_number_duplicate

@@ -587,17 +587,34 @@ RSpec.describe BenefitCheckers::DwpApiClient, type: :service do
       end
     end
 
-    context 'when benefit_check has an online application with postcode' do
-      let(:online_application) { create(:online_application) }
-      let(:application) { create(:application_full_remission, online_application: online_application) }
+    context 'when benefit_check has a paper application with an applicant postcode' do
+      let(:application) { create(:application_full_remission) }
       let(:benefit_check) { create(:benefit_check, applicationable: application) }
 
       subject(:client) { described_class.new(benefit_check) }
 
-      it 'includes postcode in match_citizen params' do
+      before do
+        application.applicant.update(postcode: 'TW14 1UH')
+      end
+
+      it 'includes the applicant postcode in match_citizen params' do
         client.check(params)
         expect(connection).to have_received(:match_citizen).with(
-          hash_including(postcode: online_application.postcode)
+          hash_including(postcode: 'TW14 1UH')
+        )
+      end
+    end
+
+    context 'when benefit_check has a paper application without a postcode' do
+      let(:application) { create(:application_full_remission) }
+      let(:benefit_check) { create(:benefit_check, applicationable: application) }
+
+      subject(:client) { described_class.new(benefit_check) }
+
+      it 'does not include postcode in match_citizen params' do
+        client.check(params)
+        expect(connection).to have_received(:match_citizen).with(
+          hash_not_including(:postcode)
         )
       end
     end

@@ -116,7 +116,7 @@ module BenefitCheckers
     def postcode_for(application)
       return application.postcode if application.is_a?(OnlineApplication)
 
-      application.online_application&.postcode
+      application.applicant&.postcode
     end
 
     def store_api_call(endpoint_name, request_params, response_data)

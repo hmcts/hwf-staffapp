@@ -6,6 +6,8 @@ module Forms
       MAXIMUM_AGE = 120
       NI_NUMBER_REGEXP = /\A(?!BG|GB|NK|KN|TN|NT|ZZ)[ABCEGHJ-PRSTW-Z][ABCEGHJ-NPRSTW-Z]\d{6}[A-D]\z/
       HO_NUMBER_REGEXP = %r{\A([a-zA-Z]\d{7}|GWF\d{9}|\d{9}|\d{4}-\d{4}-\d{4}-\d{4})(/\d{1,})?\z}
+      # Outward code A9, A9A, A99, AA9, AA99 or AA9A, optional space, inward code 9AA
+      POSTCODE_REGEXP = /\A[A-Z]{1,2}\d[A-Z\d]? ?\d[A-Z]{2}\z/
       include ActiveModel::Validations::Callbacks
 
       # rubocop:disable Metrics/MethodLength
@@ -20,6 +22,7 @@ module Forms
           title: :string,
           ni_number: :string,
           ho_number: :string,
+          postcode: :string,
           first_name: :string,
           date_received: :date
         }
@@ -28,7 +31,7 @@ module Forms
 
       define_attributes
 
-      before_validation :format_ni_number, :format_ho_number
+      before_validation :format_ni_number, :format_ho_number, :format_postcode
       before_validation :strip_whitespace!
       before_validation :format_dob
 
@@ -41,19 +44,18 @@ module Forms
       validates :married, inclusion: { in: [true, false] }
       validates :ni_number, format: { with: NI_NUMBER_REGEXP }, allow_blank: true
       validates :ho_number, format: { with: HO_NUMBER_REGEXP }, allow_blank: true
+      validates :postcode, format: { with: POSTCODE_REGEXP }, allow_blank: true
 
       def format_ni_number
-        unless ni_number.nil?
-          ni_number.upcase!
-          ni_number.delete!(' ')
-        end
+        self.ni_number = PersonalDetailsFormatter.compact_upcase(ni_number)
       end
 
       def format_ho_number
-        unless ho_number.nil?
-          ho_number.upcase!
-          ho_number.delete!(' ')
-        end
+        self.ho_number = PersonalDetailsFormatter.compact_upcase(ho_number)
+      end
+
+      def format_postcode
+        self.postcode = PersonalDetailsFormatter.postcode(postcode)
       end
 
       def format_dob
@@ -143,7 +145,8 @@ module Forms
           date_of_birth: format_dob,
           married: married,
           ni_number: ni_number,
-          ho_number: ho_number
+          ho_number: ho_number,
+          postcode: postcode
         }
       end
     end

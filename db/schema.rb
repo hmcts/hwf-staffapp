@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.1].define(version: 2026_09_09_110000) do
+ActiveRecord::Schema[8.1].define(version: 2026_09_23_120000) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
   enable_extension "pg_trgm"
@@ -79,6 +79,7 @@ ActiveRecord::Schema[8.1].define(version: 2026_09_09_110000) do
     t.string "partner_first_name"
     t.string "partner_last_name"
     t.string "partner_ni_number"
+    t.string "postcode"
     t.string "title"
     t.datetime "updated_at", precision: nil, null: false
     t.index "((((first_name)::text || ' '::text) || (last_name)::text)) gin_trgm_ops", name: "index_applicants_on_full_name_trgm", using: :gin
