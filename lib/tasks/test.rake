@@ -85,8 +85,8 @@ namespace :test do
     end
 
     unless system("lychee --config lychee.toml --root-dir #{Rails.public_path} " \
-           "'app/views/**/*' 'app/helpers/**/*.rb' " \
-           "'config/locales/**/*.yml' 'public/*.html'")
+                  "'app/views/**/*' 'app/helpers/**/*.rb' " \
+                  "'config/locales/**/*.yml' 'public/*.html'")
       abort "External links check failed"
     end
   end
