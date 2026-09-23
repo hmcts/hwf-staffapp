@@ -81,13 +81,45 @@ RSpec.feature 'Benefit checker flow - online application' do
     then_summary_page_is_displayed
   end
 
+  # Benefits rows on the post-UCD check details page: the staff answer
+  # ("Correct evidence provided") and the DWP result ("DWP check passed") are
+  # never shown together.
+  describe 'check details benefits rows (post-UCD)' do
+    let(:calculation_scheme) { FeatureSwitching::CALCULATION_SCHEMAS[1] }
+
+    scenario 'DWP says Yes' do
+      process_online_application(ni_number: Settings.dwp_mock.ni_number_yes.first)
+      then_summary_page_is_displayed
+      then_summary_shows_dwp_check_passed('Yes')
+    end
+
+    scenario 'DWP says No, paper evidence provided' do
+      process_online_application(ni_number: Settings.dwp_mock.ni_number_no.first)
+      answer_online_evidence(provided: true)
+      then_summary_page_is_displayed
+      then_summary_shows_both_rows(dwp: 'No', evidence: 'Yes')
+    end
+
+    scenario 'DWP says No, no paper evidence' do
+      process_online_application(ni_number: Settings.dwp_mock.ni_number_no.first)
+      answer_online_evidence(provided: false)
+      then_summary_page_is_displayed
+      then_summary_shows_both_rows(dwp: 'No', evidence: 'No')
+    end
+  end
+
   private
+
+  def calculation_scheme
+    nil
+  end
 
   # Fills the application details form and submits; the benefit check runs on
   # submit and decides whether the Evidence of benefits page is shown.
   def process_online_application(ni_number:)
     online_application = create(:online_application, :with_reference, :benefits, :completed,
-                                ni_number: ni_number, jurisdiction: jurisdictions.first)
+                                ni_number: ni_number, jurisdiction: jurisdictions.first,
+                                calculation_scheme: calculation_scheme)
     visit "/online_applications/#{online_application.id}/edit"
     fill_application_details
     click_button 'Next'
@@ -111,6 +143,20 @@ RSpec.feature 'Benefit checker flow - online application' do
 
   def then_summary_page_is_displayed
     expect(page).to have_xpath('//h1', text: 'Check details')
+  end
+
+  def then_summary_shows_dwp_check_passed(value)
+    expect(summary_row('DWP check passed')).to have_text(value)
+    expect(page).to have_no_text('Correct evidence provided')
+  end
+
+  def then_summary_shows_both_rows(dwp:, evidence:)
+    expect(summary_row('DWP check passed')).to have_text(dwp)
+    expect(summary_row('Correct evidence provided')).to have_text(evidence)
+  end
+
+  def summary_row(label)
+    find(:xpath, "//dt[normalize-space()='#{label}']/following-sibling::dd[1]")
   end
 
   def then_user_is_sent_home_with_cannot_process_alert

@@ -107,6 +107,7 @@ RSpec.feature 'Benefit checker flow - paper application' do
       then_evidence_page_explains_missing_details
       answer_paper_evidence(provided: true)
       expect(Application.last.outcome).to eq('full')
+      then_summary_shows_both_rows(dwp: 'No', evidence: 'Yes')
       complete_from_summary
       then_benefits_result_is('✓ Passed (paper evidence checked)', processed: '✓ Passed (paper evidence checked)')
     end
@@ -117,6 +118,7 @@ RSpec.feature 'Benefit checker flow - paper application' do
       then_evidence_page_explains_missing_details
       answer_paper_evidence(provided: false)
       expect(Application.last.outcome).to eq('none')
+      then_summary_shows_both_rows(dwp: 'No', evidence: 'No')
       complete_from_summary
       then_benefits_result_is('✗ Failed', processed: 'Failed')
     end
@@ -128,7 +130,11 @@ RSpec.feature 'Benefit checker flow - paper application' do
     scenario 'DWP says Yes' do
       drive_to_benefits_question(ni_number: Settings.dwp_mock.ni_number_yes.first)
       answer_on_benefits_yes
-      complete_from_declaration
+      then_declaration_page_is_displayed
+      choose 'application_statement_signed_by_applicant'
+      click_button 'Next'
+      then_summary_shows_dwp_check_passed('Yes')
+      complete_from_summary
       then_benefits_result_is('✓ Passed', processed: 'Passed')
     end
 
@@ -136,6 +142,7 @@ RSpec.feature 'Benefit checker flow - paper application' do
       drive_to_benefits_question(ni_number: Settings.dwp_mock.ni_number_no.first)
       answer_on_benefits_yes
       answer_paper_evidence(provided: true)
+      then_summary_shows_both_rows(dwp: 'No', evidence: 'Yes')
       complete_from_summary
       then_benefits_result_is('✓ Passed (paper evidence checked)', processed: '✓ Passed (paper evidence checked)')
     end
@@ -144,6 +151,7 @@ RSpec.feature 'Benefit checker flow - paper application' do
       drive_to_benefits_question(ni_number: Settings.dwp_mock.ni_number_no.first)
       answer_on_benefits_yes
       answer_paper_evidence(provided: false)
+      then_summary_shows_both_rows(dwp: 'No', evidence: 'No')
       complete_from_summary
       then_benefits_result_is('✗ Failed', processed: 'Failed')
     end
@@ -156,7 +164,11 @@ RSpec.feature 'Benefit checker flow - paper application' do
       expect(BenefitOverride.where(application: Application.last, correct: false)).to exist
 
       correct_ni_number_and_recheck(Settings.dwp_mock.ni_number_yes.first)
-      complete_from_declaration
+      then_declaration_page_is_displayed
+      choose 'application_statement_signed_by_applicant'
+      click_button 'Next'
+      then_summary_shows_dwp_check_passed('Yes')
+      complete_from_summary
       expect(Application.last.outcome).to eq('full')
       then_benefits_result_is('✓ Passed', processed: 'Passed')
     end
@@ -172,6 +184,23 @@ RSpec.feature 'Benefit checker flow - paper application' do
   end
 
   private
+
+  # DWP passed: the DWP row alone, any earlier staff answer is hidden.
+  def then_summary_shows_dwp_check_passed(value)
+    then_summary_page_is_displayed
+    expect(result_row('DWP check passed')).to have_text(value)
+    expect(page).to have_no_text('Correct evidence provided')
+  end
+
+  # Staff answered the evidence question: both rows, DWP row shows the check
+  # result. Only the staff answer can be changed, so only its row has a link.
+  def then_summary_shows_both_rows(dwp:, evidence:)
+    then_summary_page_is_displayed
+    expect(result_row('DWP check passed')).to have_text(dwp)
+    expect(result_row('Correct evidence provided')).to have_text(evidence)
+    expect(summary_row('DWP check passed')).to have_no_link('Change')
+    expect(summary_row('Correct evidence provided')).to have_link('Change')
+  end
 
   def then_evidence_page_explains_missing_details
     expect(page).to have_xpath('//h1', text: 'Evidence of benefits')
@@ -208,6 +237,10 @@ RSpec.feature 'Benefit checker flow - paper application' do
 
   def result_row(label)
     find(:xpath, "//dt[normalize-space()='#{label}']/following-sibling::dd[1]")
+  end
+
+  def summary_row(label)
+    find(:xpath, "//dt[normalize-space()='#{label}']/ancestor::div[contains(@class, 'govuk-summary-list__row')][1]")
   end
 
   # Ends on the "Benefits the applicant is receiving" question page
