@@ -84,9 +84,11 @@ namespace :test do
       abort "Lychee is not installed or not found in PATH. See installation instructions in features/README.md"
     end
 
-    system("lychee --config lychee.toml --root-dir #{Rails.public_path} " \
+    unless system("lychee --config lychee.toml --root-dir #{Rails.public_path} " \
            "'app/views/**/*' 'app/helpers/**/*.rb' " \
            "'config/locales/**/*.yml' 'public/*.html'")
+      abort "External links check failed"
+    end
   end
 
   task accessibility: :environment do
