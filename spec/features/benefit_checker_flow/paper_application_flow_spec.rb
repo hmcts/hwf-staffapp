@@ -98,7 +98,150 @@ RSpec.feature 'Benefit checker flow - paper application' do
     then_declaration_page_is_displayed
   end
 
+  # No NI number: the check cannot run, so the evidence page must still be
+  # offered instead of failing the application outright.
+  describe 'applicant without an NI number' do
+    scenario 'paper evidence provided' do
+      drive_to_benefits_question(ni_number: '')
+      answer_on_benefits_yes
+      then_evidence_page_explains_missing_details
+      answer_paper_evidence(provided: true)
+      expect(Application.last.outcome).to eq('full')
+      then_summary_shows_both_rows(dwp: 'No', evidence: 'Yes')
+      complete_from_summary
+      then_benefits_result_is('✓ Passed (paper evidence checked)', processed: '✓ Passed (paper evidence checked)')
+    end
+
+    scenario 'no paper evidence' do
+      drive_to_benefits_question(ni_number: '')
+      answer_on_benefits_yes
+      then_evidence_page_explains_missing_details
+      answer_paper_evidence(provided: false)
+      expect(Application.last.outcome).to eq('none')
+      then_summary_shows_both_rows(dwp: 'No', evidence: 'No')
+      complete_from_summary
+      then_benefits_result_is('✗ Failed', processed: 'Failed')
+    end
+  end
+
+  # The Benefits row in the Result section on the confirmation page and on the
+  # processed application page for each outcome (rst-8578).
+  describe 'Benefits result row' do
+    scenario 'DWP says Yes' do
+      drive_to_benefits_question(ni_number: Settings.dwp_mock.ni_number_yes.first)
+      answer_on_benefits_yes
+      then_declaration_page_is_displayed
+      choose 'application_statement_signed_by_applicant'
+      click_button 'Next'
+      then_summary_shows_dwp_check_passed('Yes')
+      complete_from_summary
+      then_benefits_result_is('✓ Passed', processed: 'Passed')
+    end
+
+    scenario 'DWP says No, paper evidence provided' do
+      drive_to_benefits_question(ni_number: Settings.dwp_mock.ni_number_no.first)
+      answer_on_benefits_yes
+      answer_paper_evidence(provided: true)
+      then_summary_shows_both_rows(dwp: 'No', evidence: 'Yes')
+      complete_from_summary
+      then_benefits_result_is('✓ Passed (paper evidence checked)', processed: '✓ Passed (paper evidence checked)')
+    end
+
+    scenario 'DWP says No, no paper evidence' do
+      drive_to_benefits_question(ni_number: Settings.dwp_mock.ni_number_no.first)
+      answer_on_benefits_yes
+      answer_paper_evidence(provided: false)
+      then_summary_shows_both_rows(dwp: 'No', evidence: 'No')
+      complete_from_summary
+      then_benefits_result_is('✗ Failed', processed: 'Failed')
+    end
+
+    scenario 'DWP says No, no paper evidence, then the NI number is corrected and DWP says Yes' do
+      drive_to_benefits_question(ni_number: Settings.dwp_mock.ni_number_no.first)
+      answer_on_benefits_yes
+      answer_paper_evidence(provided: false)
+      then_summary_page_is_displayed
+      expect(BenefitOverride.where(application: Application.last, correct: false)).to exist
+
+      correct_ni_number_and_recheck(Settings.dwp_mock.ni_number_yes.first)
+      then_declaration_page_is_displayed
+      choose 'application_statement_signed_by_applicant'
+      click_button 'Next'
+      then_summary_shows_dwp_check_passed('Yes')
+      complete_from_summary
+      expect(Application.last.outcome).to eq('full')
+      then_benefits_result_is('✓ Passed', processed: 'Passed')
+    end
+
+    scenario 'admin sets DWP offline, paper evidence provided' do
+      create(:dwp_warning, check_state: DwpWarning::STATES[:offline])
+      drive_to_benefits_question(ni_number: Settings.dwp_mock.ni_number_yes.first)
+      answer_on_benefits_yes
+      answer_paper_evidence(provided: true)
+      complete_from_summary
+      then_benefits_result_is('✓ Passed (paper evidence checked)', processed: '✓ Passed (paper evidence checked)')
+    end
+  end
+
   private
+
+  # DWP passed: the DWP row alone, any earlier staff answer is hidden.
+  def then_summary_shows_dwp_check_passed(value)
+    then_summary_page_is_displayed
+    expect(result_row('DWP check passed')).to have_text(value)
+    expect(page).to have_no_text('Correct evidence provided')
+  end
+
+  # Staff answered the evidence question: both rows, DWP row shows the check
+  # result. Only the staff answer can be changed, so only its row has a link.
+  def then_summary_shows_both_rows(dwp:, evidence:)
+    then_summary_page_is_displayed
+    expect(result_row('DWP check passed')).to have_text(dwp)
+    expect(result_row('Correct evidence provided')).to have_text(evidence)
+    expect(summary_row('DWP check passed')).to have_no_link('Change')
+    expect(summary_row('Correct evidence provided')).to have_link('Change')
+  end
+
+  def then_evidence_page_explains_missing_details
+    expect(page).to have_xpath('//h1', text: 'Evidence of benefits')
+    expect(BenefitCheck.count).to eq(0)
+    expect(page).to have_text('There’s a problem with the applicant’s surname, date of birth or National Insurance number')
+  end
+
+  def correct_ni_number_and_recheck(ni_number)
+    visit application_personal_informations_path(Application.last)
+    fill_in 'application_ni_number', with: ni_number
+    click_button 'Next'
+    visit application_benefits_path(Application.last)
+    answer_on_benefits_yes
+  end
+
+  def complete_from_declaration
+    then_declaration_page_is_displayed
+    choose 'application_statement_signed_by_applicant'
+    click_button 'Next'
+    complete_from_summary
+  end
+
+  def complete_from_summary
+    then_summary_page_is_displayed
+    click_button 'Complete processing'
+    expect(page).to have_text('Application complete')
+  end
+
+  def then_benefits_result_is(confirmation, processed:)
+    expect(result_row('Benefits')).to have_text(confirmation)
+    visit processed_application_path(Application.last)
+    expect(result_row('Benefits')).to have_text(processed)
+  end
+
+  def result_row(label)
+    find(:xpath, "//dt[normalize-space()='#{label}']/following-sibling::dd[1]")
+  end
+
+  def summary_row(label)
+    find(:xpath, "//dt[normalize-space()='#{label}']/ancestor::div[contains(@class, 'govuk-summary-list__row')][1]")
+  end
 
   # Ends on the "Benefits the applicant is receiving" question page
   def drive_to_benefits_question(ni_number:)

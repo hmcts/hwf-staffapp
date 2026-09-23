@@ -1,14 +1,21 @@
 module Views
   module Overview
-    # "Correct evidence provided" on the online application check details page:
-    # the staff member's manual answer when the DWP check was skipped or
-    # errored, otherwise the DWP result (CHANGELOG.md)
+    # Benefits rows on the online application check details page. "DWP check
+    # passed" is the DWP result and "Correct evidence provided" the staff
+    # answer, shown only when the DWP check did not pass. A staff answer with
+    # no check counts as a failed check - see CHANGELOG.md
     module OnlineBenefitEvidence
+      def dwp_check_passed
+        return unless @online_application.benefits
+        return if last_benefit_check.blank? && !manual_evidence_decision?
+
+        last_benefit_check&.passed? ? 'Yes' : 'No'
+      end
+
       def evidence_provided
-        return nil unless @online_application.benefits
-        decision = evidence_decision
-        return nil if decision.nil?
-        decision ? 'Yes' : 'No'
+        return unless @online_application.benefits && manual_evidence_decision? && !dwp_check_passed?
+
+        @online_application.benefits_override ? 'Yes' : 'No'
       end
 
       def manual_evidence_decision?
@@ -17,9 +24,12 @@ module Views
 
       private
 
-      def evidence_decision
-        return @online_application.benefits_override if manual_evidence_decision?
-        @online_application.last_benefit_check&.passed?
+      def dwp_check_passed?
+        last_benefit_check.present? && last_benefit_check.passed?
+      end
+
+      def last_benefit_check
+        @online_application.last_benefit_check
       end
     end
   end

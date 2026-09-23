@@ -2,6 +2,25 @@
 
 
 =build_section_with_defaults 'Application details', @details, edit_online_application_path(@online_application)
-=build_section 'Benefits', @application_view, ['benefits']
+- if !@online_application_view.benefits.nil?
+  h2.govuk-heading-m Benefits
+  dl.govuk-summary-list
+    .govuk-summary-list__row
+      dt.govuk-summary-list__key =t('summary.on_benefits?')
+      dd.govuk-summary-list__value =@online_application_view.on_benefits?
+
+    - if @online_application_view.dwp_check_passed.present?
+      .govuk-summary-list__row
+        dt.govuk-summary-list__key =t('summary.dwp_check_passed?')
+        dd.govuk-summary-list__value =@online_application_view.dwp_check_passed
+
+    - if @online_application_view.evidence_provided.present?
+      .govuk-summary-list__row
+        dt.govuk-summary-list__key =t('summary.override?')
+        dd.govuk-summary-list__value =@online_application_view.evidence_provided
+        dd.govuk-summary-list__actions
+          =link_to benefits_online_application_path(@online_application) do
+            = 'Change'
+            span.govuk-visually-hidden=t('summary.override?')
 
 =build_section 'Income', @application_view, ['number_of_children', 'total_monthly_income', 'income_kind_applicant', 'income_kind_partner']

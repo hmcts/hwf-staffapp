@@ -240,8 +240,30 @@ RSpec.describe Application do
   end
 
   describe 'allow_benefit_check_override?' do
-    it 'returns false when there is no benefit check' do
-      expect(application.allow_benefit_check_override?).to be false
+    before { application.update(benefits: true) }
+
+    it 'returns true when there is no benefit check (it could not be run, e.g. blank NI number)' do
+      expect(application.allow_benefit_check_override?).to be true
+    end
+
+    context 'when the applicant did not declare benefits' do
+      before { application.update(benefits: false) }
+
+      it 'returns false with no benefit check' do
+        expect(application.allow_benefit_check_override?).to be false
+      end
+
+      it 'returns false even with a failed benefit check' do
+        create(:benefit_check, applicationable: application, benefits_valid: false, dwp_result: 'No', error_message: nil)
+        expect(application.allow_benefit_check_override?).to be false
+      end
+    end
+
+    ['Undetermined', 'Deceased', 'Deleted', 'Superseded'].each do |result|
+      it "returns true when last benefit check has dwp_result #{result}" do
+        create(:benefit_check, applicationable: application, benefits_valid: false, dwp_result: result, error_message: nil)
+        expect(application.allow_benefit_check_override?).to be true
+      end
     end
 
     it 'returns true when last benefit check has error message' do
@@ -251,11 +273,6 @@ RSpec.describe Application do
 
     it 'returns true when last benefit check has dwp_result No' do
       create(:benefit_check, applicationable: application, benefits_valid: false, dwp_result: 'No', error_message: nil)
-      expect(application.allow_benefit_check_override?).to be true
-    end
-
-    it 'returns true when last benefit check has dwp_result Undetermined' do
-      create(:benefit_check, applicationable: application, benefits_valid: false, dwp_result: 'Undetermined', error_message: nil)
       expect(application.allow_benefit_check_override?).to be true
     end
 

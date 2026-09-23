@@ -168,12 +168,16 @@ dl.govuk-summary-list
       dt.govuk-summary-list__key =t('summary.on_benefits?')
       dd.govuk-summary-list__value =@online_application_view.on_benefits?
 
-    - unless @online_application_view.evidence_provided.nil?
+    - if @online_application_view.dwp_check_passed.present?
+      .govuk-summary-list__row
+        dt.govuk-summary-list__key =t('summary.dwp_check_passed?')
+        dd.govuk-summary-list__value =@online_application_view.dwp_check_passed
+
+    - if @online_application_view.evidence_provided.present?
       .govuk-summary-list__row
         dt.govuk-summary-list__key =t('summary.override?')
         dd.govuk-summary-list__value =@online_application_view.evidence_provided
-        - if @online_application_view.manual_evidence_decision?
-          dd.govuk-summary-list__actions
+        dd.govuk-summary-list__actions
           =link_to benefits_online_application_path(@online_application) do
             = 'Change'
             span.govuk-visually-hidden=t('summary.override?')

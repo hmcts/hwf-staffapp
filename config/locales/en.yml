@@ -92,6 +92,7 @@ en-GB:
     amount_total: Savings and Investments total
     on_benefits?: Benefits declared in application
     override?: Correct evidence provided
+    dwp_check_passed?: DWP check passed
     dependents: Applicant has children living with them or that they are financially supporting
     children_age_band: Number of children
     income_period: Income period
@@ -519,6 +520,7 @@ en-GB:
       views/overview/benefits:
         on_benefits?: Benefits declared in application
         override?: Correct evidence provided
+        dwp_check_passed?: DWP check passed
         override_valid?: Benefits letter checked
       views/overview/income:
         children?: Applicant has children
@@ -555,7 +557,6 @@ en-GB:
       views/overview/application:
         savings: Savings and investments
         benefits: Benefits declared in application
-        paper_evidence: Correct evidence provided
         benefits_evidence_received: Benefits evidence received
         benefits_result: Benefits
         income_result: Income
