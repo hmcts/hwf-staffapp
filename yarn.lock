@@ -1178,13 +1178,13 @@ __metadata:
   linkType: hard
 
 "@rails/actiontext@npm:^8.1.301":
-  version: 8.1.301
-  resolution: "@rails/actiontext@npm:8.1.301"
+  version: 8.1.400
+  resolution: "@rails/actiontext@npm:8.1.400"
   dependencies:
     "@rails/activestorage": "npm:>= 8.1.0-alpha"
   peerDependencies:
     trix: ^2.0.0
-  checksum: 10c0/ff7a5e64f8e1f985e5f77ddc944ec533fb7eb6f56838d2304bd22bc450918fdc8bd7e0e84c16f280e56f158ca2743e738ea37905d3fed1e528f5f8d6d457f24d
+  checksum: 10c0/cc165d5582e5064d15488beaf79ad9a50a97978e6256a99e61be7f05ba11751cd4d14aaf905bf6dd1e74a6a04eface6a5f17c80ad512ec194e806eb260d13235
   languageName: node
   linkType: hard
 
