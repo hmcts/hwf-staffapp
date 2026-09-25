@@ -4,6 +4,8 @@ module BenefitCheckers
     include DwpApiErrorHandler
 
     ON_BENEFITS_STATUSES = ['active', 'in_payment', 'ongoing_award'].freeze
+    # Same margin HwfDwpApi::Authentication#expired? uses before it refreshes a token
+    TOKEN_REFRESH_BUFFER = 100.seconds
 
     attr_reader :connection
 
@@ -32,12 +34,15 @@ module BenefitCheckers
       @connection = ::HwfDwpApi.new(cached_token_attributes)
       cache_token
     rescue ::HwfDwpApiError => e
+      self.class.clear_token_cache
+      store_api_call('authentication', {}, parse_error_data(e))
       raise_mapped_error(e)
     end
 
+    # An expired cached token makes HwfDwpApi.new raise instead of refreshing. See CHANGELOG.md
     def cached_token_attributes
       cached = self.class.instance_variable_get(:@cached_token)
-      return {} unless cached
+      return {} unless cached && cached[:expires_in] > Time.current + TOKEN_REFRESH_BUFFER
 
       { access_token: cached[:access_token], expires_in: cached[:expires_in] }
     end

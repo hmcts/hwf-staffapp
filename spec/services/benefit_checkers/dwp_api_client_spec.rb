@@ -505,6 +505,23 @@ RSpec.describe BenefitCheckers::DwpApiClient, type: :service do
       end
     end
 
+    context 'when connecting to the DWP API fails' do
+      let(:error_message) { 'Connection attributes validation: EXPIRES IN is in past' }
+
+      before do
+        allow(HwfDwpApi).to receive(:new).and_raise(HwfDwpApiError.new(error_message, :validation))
+      end
+
+      it 'stores the failed authentication against the benefit check' do
+        expect { described_class.new(benefit_check) }.to raise_error(Exceptions::TechnicalFaultDwpCheck)
+
+        call = DwpApiCall.find_by(benefit_check: benefit_check)
+        expect(call.endpoint_name).to eq('authentication')
+        expect(call.request_params).to eq({})
+        expect(call.data).to eq('error' => error_message)
+      end
+    end
+
     context 'without a benefit_check' do
       subject(:client) { described_class.new }
 
@@ -559,6 +576,46 @@ RSpec.describe BenefitCheckers::DwpApiClient, type: :service do
     it 'passes empty hash when no cached token exists' do
       client
       expect(HwfDwpApi).to have_received(:new).with({})
+    end
+
+    it 'does not pass an expired cached token' do
+      described_class.instance_variable_set(
+        :@cached_token,
+        access_token: 'expired-token',
+        expires_in: 1.minute.ago
+      )
+
+      client
+      expect(HwfDwpApi).to have_received(:new).with({})
+    end
+
+    it 'does not pass a cached token that expires within the refresh buffer' do
+      described_class.instance_variable_set(
+        :@cached_token,
+        access_token: 'nearly-expired-token',
+        expires_in: 30.seconds.from_now
+      )
+
+      client
+      expect(HwfDwpApi).to have_received(:new).with({})
+    end
+
+    context 'when connecting fails' do
+      before do
+        described_class.instance_variable_set(
+          :@cached_token,
+          access_token: 'bad-token',
+          expires_in: 1.hour.from_now
+        )
+        allow(HwfDwpApi).to receive(:new).and_raise(
+          HwfDwpApiError.new('Connection attributes validation: EXPIRES IN is in past', :validation)
+        )
+      end
+
+      it 'clears the cached token so the next client starts fresh' do
+        expect { client }.to raise_error(Exceptions::TechnicalFaultDwpCheck)
+        expect(described_class.instance_variable_get(:@cached_token)).to be_nil
+      end
     end
   end
 
