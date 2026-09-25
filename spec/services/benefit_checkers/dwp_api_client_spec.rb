@@ -505,6 +505,23 @@ RSpec.describe BenefitCheckers::DwpApiClient, type: :service do
       end
     end
 
+    context 'when connecting to the DWP API fails' do
+      let(:error_message) { 'Connection attributes validation: EXPIRES IN is in past' }
+
+      before do
+        allow(HwfDwpApi).to receive(:new).and_raise(HwfDwpApiError.new(error_message, :validation))
+      end
+
+      it 'stores the failed authentication against the benefit check' do
+        expect { described_class.new(benefit_check) }.to raise_error(Exceptions::TechnicalFaultDwpCheck)
+
+        call = DwpApiCall.find_by(benefit_check: benefit_check)
+        expect(call.endpoint_name).to eq('authentication')
+        expect(call.request_params).to eq({})
+        expect(call.data).to eq('error' => error_message)
+      end
+    end
+
     context 'without a benefit_check' do
       subject(:client) { described_class.new }
 
@@ -560,6 +577,139 @@ RSpec.describe BenefitCheckers::DwpApiClient, type: :service do
       client
       expect(HwfDwpApi).to have_received(:new).with({})
     end
+
+    it 'does not pass an expired cached token' do
+      described_class.instance_variable_set(
+        :@cached_token,
+        access_token: 'expired-token',
+        expires_in: 1.minute.ago
+      )
+
+      client
+      expect(HwfDwpApi).to have_received(:new).with({})
+    end
+
+    it 'does not pass a cached token that expires within the refresh buffer' do
+      described_class.instance_variable_set(
+        :@cached_token,
+        access_token: 'nearly-expired-token',
+        expires_in: 30.seconds.from_now
+      )
+
+      client
+      expect(HwfDwpApi).to have_received(:new).with({})
+    end
+
+    context 'when connecting fails' do
+      before do
+        described_class.instance_variable_set(
+          :@cached_token,
+          access_token: 'bad-token',
+          expires_in: 1.hour.from_now
+        )
+        allow(HwfDwpApi).to receive(:new).and_raise(
+          HwfDwpApiError.new('Connection attributes validation: EXPIRES IN is in past', :validation)
+        )
+      end
+
+      it 'clears the cached token so the next client starts fresh' do
+        expect { client }.to raise_error(Exceptions::TechnicalFaultDwpCheck)
+        expect(described_class.instance_variable_get(:@cached_token)).to be_nil
+      end
+    end
+  end
+
+  describe 'token rejected by the server' do
+    let(:benefit_check) { create(:benefit_check) }
+    let(:rejected) { HwfDwpApiTokenError.new('API: 401 - Invalid or expired JWT token', :invalid_token) }
+    let(:citizen_guid) { 'abc-123-guid' }
+    let(:match_response) { { 'data' => { 'id' => citizen_guid } } }
+    let(:claims_response) do
+      { 'data' => [{ 'attributes' => { 'status' => 'in_payment' } }] }
+    end
+
+    subject(:client) { described_class.new(benefit_check) }
+
+    before do
+      described_class.clear_token_cache
+      allow(described_class).to receive(:clear_token_cache).and_call_original
+    end
+
+    after { described_class.clear_token_cache }
+
+    context 'when match_citizen is rejected once' do
+      before do
+        attempts = 0
+        allow(connection).to receive(:match_citizen) do
+          attempts += 1
+          raise rejected if attempts == 1
+
+          match_response
+        end
+        allow(connection).to receive(:get_claims).and_return(claims_response)
+      end
+
+      it 'drops the cached token and reconnects' do
+        client.check(params)
+        expect(described_class).to have_received(:clear_token_cache).at_least(:once)
+        expect(HwfDwpApi).to have_received(:new).twice
+      end
+
+      it 'retries and returns the result' do
+        expect(client.check(params)['benefit_checker_status']).to eq('Yes')
+      end
+
+      it 'stores the rejected call and the successful retry' do
+        client.check(params)
+        calls = DwpApiCall.where(benefit_check: benefit_check, endpoint_name: 'match_citizen').order(:id)
+        expect(calls.map(&:data)).to eq([{ 'error' => 'API: 401 - Invalid or expired JWT token' }, match_response])
+      end
+    end
+
+    context 'when match_citizen is rejected again after reconnecting' do
+      before do
+        allow(connection).to receive(:match_citizen).and_raise(rejected)
+      end
+
+      it 'raises TechnicalFaultDwpCheck' do
+        expect { client.check(params) }.to raise_error(Exceptions::TechnicalFaultDwpCheck)
+      end
+
+      it 'stores both rejected calls' do
+        expect { client.check(params) }.to raise_error(Exceptions::TechnicalFaultDwpCheck)
+        expect(DwpApiCall.where(benefit_check: benefit_check, endpoint_name: 'match_citizen').count).to eq(2)
+      end
+    end
+
+    context 'when get_claims is rejected once' do
+      before do
+        attempts = 0
+        allow(connection).to receive(:match_citizen).and_return(match_response)
+        allow(connection).to receive(:get_claims) do
+          attempts += 1
+          raise rejected if attempts == 1
+
+          claims_response
+        end
+      end
+
+      it 'retries with a fresh token and returns the result' do
+        expect(client.check(params)['benefit_checker_status']).to eq('Yes')
+        expect(HwfDwpApi).to have_received(:new).twice
+      end
+    end
+
+    context 'when the token request itself is rejected' do
+      before do
+        allow(HwfDwpApi).to receive(:new).and_raise(rejected)
+      end
+
+      it 'raises TechnicalFaultDwpCheck and stores the failed authentication' do
+        expect { client }.to raise_error(Exceptions::TechnicalFaultDwpCheck)
+        call = DwpApiCall.find_by(benefit_check: benefit_check, endpoint_name: 'authentication')
+        expect(call.data).to eq('error' => 'API: 401 - Invalid or expired JWT token')
+      end
+    end
   end
 
   describe 'applicant extras' do
@@ -587,17 +737,34 @@ RSpec.describe BenefitCheckers::DwpApiClient, type: :service do
       end
     end
 
-    context 'when benefit_check has an online application with postcode' do
-      let(:online_application) { create(:online_application) }
-      let(:application) { create(:application_full_remission, online_application: online_application) }
+    context 'when benefit_check has a paper application with an applicant postcode' do
+      let(:application) { create(:application_full_remission) }
       let(:benefit_check) { create(:benefit_check, applicationable: application) }
 
       subject(:client) { described_class.new(benefit_check) }
 
-      it 'includes postcode in match_citizen params' do
+      before do
+        application.applicant.update(postcode: 'TW14 1UH')
+      end
+
+      it 'includes the applicant postcode in match_citizen params' do
         client.check(params)
         expect(connection).to have_received(:match_citizen).with(
-          hash_including(postcode: online_application.postcode)
+          hash_including(postcode: 'TW14 1UH')
+        )
+      end
+    end
+
+    context 'when benefit_check has a paper application without a postcode' do
+      let(:application) { create(:application_full_remission) }
+      let(:benefit_check) { create(:benefit_check, applicationable: application) }
+
+      subject(:client) { described_class.new(benefit_check) }
+
+      it 'does not include postcode in match_citizen params' do
+        client.check(params)
+        expect(connection).to have_received(:match_citizen).with(
+          hash_not_including(:postcode)
         )
       end
     end

@@ -75,6 +75,7 @@ en-GB:
     paper_application: Paper application
     evidence: Evidence
     full_name: Full name
+    postcode: UK postcode
     date_of_birth: Date of birth
     applicant_over_16: Applicant over 16
     ni_number: National Insurance number
@@ -572,6 +573,7 @@ en-GB:
         income_period_average: Average income for last three calendar months
       views/overview/applicant:
         full_name: Full name
+        postcode: UK postcode
         partner_full_name: Partner's full name
         date_of_birth: Date of birth
         partner_date_of_birth: Partner's date of birth
@@ -685,6 +687,7 @@ en-GB:
         ni_number: 'National Insurance number'
         ho_number: Home Office reference number
         ho_number_hint: Where provided, example L1234567 or L1234567/1 for a family member or 1111-2222-3333-4444 or 1111-2222-3333-4444/1 for a family member
+        postcode: UK postcode
         date_of_birth: 'Date of birth'
         day_date_of_birth: 'Day'
         month_date_of_birth: 'Month'
@@ -966,6 +969,8 @@ en-GB:
               invalid: 'Enter 2 letters, 6 numbers and 1 letter for the National Insurance number'
             ho_number:
               invalid: 'Enter a Home Office reference number in the correct format'
+            postcode:
+              invalid: 'Enter a valid UK postcode, with or without a space'
             married:
               inclusion: Select a marital status
         forms/application/partner:

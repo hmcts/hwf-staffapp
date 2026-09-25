@@ -56,14 +56,11 @@ class Applicant < ActiveRecord::Base
   end
 
   def format_ni_number
-    ni_number.delete!(' ') && ni_number.upcase! unless ni_number.nil?
+    self.ni_number = PersonalDetailsFormatter.compact_upcase(ni_number)
   end
 
   def format_ho_number
-    unless ho_number.nil?
-      ho_number.upcase!
-      ho_number.delete!(' ')
-    end
+    self.ho_number = PersonalDetailsFormatter.compact_upcase(ho_number)
   end
 
 end

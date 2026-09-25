@@ -236,6 +236,15 @@ RSpec.describe Views::Reports::RawDataExport do
       end
     end
 
+    context 'paper application with a staff-entered postcode' do
+      it 'exports the applicant postcode' do
+        none_no_ec.applicant.update(postcode: 'GL7 1HT')
+        export = data.to_csv
+        dob = none_no_ec.applicant.date_of_birth.to_fs
+        expect(export).to include("JK123456A,GL7 1HT,#{dob},")
+      end
+    end
+
     context 'no_remission with evidence check' do
       let(:none_decision_type) { 'evidence_check' }
 

@@ -4,7 +4,7 @@ RSpec.describe Forms::Application::Applicant do
   subject(:created_applicant) { described_class.new(personal_information) }
 
   params_list = [:last_name, :date_of_birth, :day_date_of_birth, :month_date_of_birth, :year_date_of_birth,
-                 :married, :title, :first_name, :ni_number, :ho_number, :date_received]
+                 :married, :title, :first_name, :ni_number, :ho_number, :postcode, :date_received]
 
   let(:personal_information) { attributes_for(:personal_information) }
 
@@ -243,7 +243,8 @@ RSpec.describe Forms::Application::Applicant do
           year_date_of_birth: '1980',
           married: married,
           ni_number: 'AB123456A',
-          ho_number: 'L6543210'
+          ho_number: 'L6543210',
+          postcode: 'SW1H 9AJ'
         }
       end
 
@@ -271,6 +272,10 @@ RSpec.describe Forms::Application::Applicant do
         expect(applicant.ho_number).to eq 'L6543210'
       end
 
+      it 'saves the postcode' do
+        expect(applicant.postcode).to eq 'SW1H 9AJ'
+      end
+
       context 'single' do
         let(:married) { false }
         it 'clears partner info' do
@@ -288,6 +293,71 @@ RSpec.describe Forms::Application::Applicant do
 
       it 'returns false' do
         is_expected.to be false
+      end
+    end
+  end
+
+  describe 'postcode validations' do
+    let(:error_message) { ['Enter a valid UK postcode, with or without a space'] }
+
+    context 'when blank' do
+      before { personal_information[:postcode] = '' }
+
+      it { expect(created_applicant.valid?).to be true }
+    end
+
+    ['A9 9AA', 'A9A 9AA', 'A99 9AA', 'AA9 9AA', 'AA99 9AA', 'AA9A 9AA'].each do |format_example|
+      context "when in the #{format_example} format" do
+        let(:postcode) { format_example.tr('A', 'B').tr('9', '1') }
+
+        context 'with a space' do
+          before { personal_information[:postcode] = postcode }
+
+          it { expect(created_applicant.valid?).to be true }
+        end
+
+        context 'without a space' do
+          before { personal_information[:postcode] = postcode.delete(' ') }
+
+          it { expect(created_applicant.valid?).to be true }
+        end
+      end
+    end
+
+    context 'when lowercase with surrounding whitespace' do
+      before { personal_information[:postcode] = ' tw14 1uh ' }
+
+      it { expect(created_applicant.valid?).to be true }
+
+      it 'is upcased and stripped' do
+        created_applicant.valid?
+        expect(created_applicant.postcode).to eq 'TW14 1UH'
+      end
+    end
+
+    context 'when there are extra spaces between outward and inward code' do
+      before { personal_information[:postcode] = 'GL7  1HT' }
+
+      it { expect(created_applicant.valid?).to be true }
+
+      it 'is saved with a single space' do
+        created_applicant.valid?
+        expect(created_applicant.postcode).to eq 'GL7 1HT'
+      end
+    end
+
+    context 'when invalid' do
+      ['TW14', '1234 567', 'TW14 1U', 'TWA4 1UH', 'TW14 1UHH', 'T 1UH'].each do |invalid|
+        context "with #{invalid.inspect}" do
+          before { personal_information[:postcode] = invalid }
+
+          it { expect(created_applicant.valid?).to be false }
+
+          it 'returns the GDS error message' do
+            created_applicant.valid?
+            expect(created_applicant.errors[:postcode]).to eq error_message
+          end
+        end
       end
     end
   end
