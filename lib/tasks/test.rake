@@ -79,6 +79,18 @@ namespace :test do
     end
   end
 
+  task links: :environment do
+    unless system("command -v lychee > /dev/null 2>&1")
+      abort "Lychee is not installed or not found in PATH. See installation instructions in features/README.md"
+    end
+
+    unless system("lychee --config lychee.toml --root-dir #{Rails.public_path} " \
+                  "'app/views/**/*' 'app/helpers/**/*.rb' " \
+                  "'config/locales/**/*.yml' 'public/*.html'")
+      abort "External links check failed"
+    end
+  end
+
   task accessibility: :environment do
     ENV['RUN_SMOKE_TESTS'] = 'false'
     if system "bundle exec cucumber accessibility/ -p accessibility"

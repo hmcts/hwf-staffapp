@@ -58,6 +58,24 @@ To run one of the drivers individually, e.g. Desktop Firefox run:
 
 All of the playwright drivers can be viewed in [support/playwright_driver_helper.rb](support/playwright_driver_helper.rb).
 
+## Broken link checking with Lychee
+
+To identify broken links we use [Lychee](https://lychee.cli.rs/) and the Lychee [command-line utility](https://github.com/lycheeverse/lychee).
+
+To begin, install Lychee. For this example we are using [Homebrew](https://brew.sh/) - see [other installation methods](https://github.com/lycheeverse/lychee#installation).
+
+`$ brew install lychee`
+
+Then run the checks using the rake command:
+
+`$ bundle exec rake test:links`
+
+This checks external links in `app/views/**/*`, `app/helpers/**/*.rb`, `config/locales/**/*.yml`, and `public/*.html`.
+
+Internal, Intranet, and SharePoint links are excluded.
+
+The scanned directories can be configured in [/lib/tasks/test.rake](../lib/tasks/test.rake). Lychee can be configured in [lychee.toml](../lychee.toml)
+
 ## Brakeman
 
 [Brakeman](https://github.com/presidentbeef/brakeman) is a static analysis tool which checks Ruby on Rails applications for security vulnerabilities.
