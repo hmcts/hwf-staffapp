@@ -9,7 +9,7 @@ with entries grouped by branch and date rather than release version.
 
 - Optional UK postcode on the paper Personal details page and summary, shown only when `DWP_API_ENABLED` is on; paper DWP checks and the raw data export use it.
 - NI/HO/postcode normalisation extracted to `PersonalDetailsFormatter`, shared by the applicant form, partner form and `Applicant` model.
-- DWP client no longer hands an expired cached token to the gem, which failed every check on that process until restart; a failed connection is now recorded on the benefit check and in `dwp_api_calls`.
+- DWP client no longer hands an expired cached token to the gem, and on a 401 drops the cached token and retries once; previously either state failed every check on that process until restart. Failed connections and rejected calls are now recorded on the benefit check and in `dwp_api_calls`.
 
 ## 2026-09-22 (rst-8579-benefit-result-copy)
 

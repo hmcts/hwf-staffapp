@@ -619,6 +619,99 @@ RSpec.describe BenefitCheckers::DwpApiClient, type: :service do
     end
   end
 
+  describe 'token rejected by the server' do
+    let(:benefit_check) { create(:benefit_check) }
+    let(:rejected) { HwfDwpApiTokenError.new('API: 401 - Invalid or expired JWT token', :invalid_token) }
+    let(:citizen_guid) { 'abc-123-guid' }
+    let(:match_response) { { 'data' => { 'id' => citizen_guid } } }
+    let(:claims_response) do
+      { 'data' => [{ 'attributes' => { 'status' => 'in_payment' } }] }
+    end
+
+    subject(:client) { described_class.new(benefit_check) }
+
+    before do
+      described_class.clear_token_cache
+      allow(described_class).to receive(:clear_token_cache).and_call_original
+    end
+
+    after { described_class.clear_token_cache }
+
+    context 'when match_citizen is rejected once' do
+      before do
+        attempts = 0
+        allow(connection).to receive(:match_citizen) do
+          attempts += 1
+          raise rejected if attempts == 1
+
+          match_response
+        end
+        allow(connection).to receive(:get_claims).and_return(claims_response)
+      end
+
+      it 'drops the cached token and reconnects' do
+        client.check(params)
+        expect(described_class).to have_received(:clear_token_cache).at_least(:once)
+        expect(HwfDwpApi).to have_received(:new).twice
+      end
+
+      it 'retries and returns the result' do
+        expect(client.check(params)['benefit_checker_status']).to eq('Yes')
+      end
+
+      it 'stores the rejected call and the successful retry' do
+        client.check(params)
+        calls = DwpApiCall.where(benefit_check: benefit_check, endpoint_name: 'match_citizen').order(:id)
+        expect(calls.map(&:data)).to eq([{ 'error' => 'API: 401 - Invalid or expired JWT token' }, match_response])
+      end
+    end
+
+    context 'when match_citizen is rejected again after reconnecting' do
+      before do
+        allow(connection).to receive(:match_citizen).and_raise(rejected)
+      end
+
+      it 'raises TechnicalFaultDwpCheck' do
+        expect { client.check(params) }.to raise_error(Exceptions::TechnicalFaultDwpCheck)
+      end
+
+      it 'stores both rejected calls' do
+        expect { client.check(params) }.to raise_error(Exceptions::TechnicalFaultDwpCheck)
+        expect(DwpApiCall.where(benefit_check: benefit_check, endpoint_name: 'match_citizen').count).to eq(2)
+      end
+    end
+
+    context 'when get_claims is rejected once' do
+      before do
+        attempts = 0
+        allow(connection).to receive(:match_citizen).and_return(match_response)
+        allow(connection).to receive(:get_claims) do
+          attempts += 1
+          raise rejected if attempts == 1
+
+          claims_response
+        end
+      end
+
+      it 'retries with a fresh token and returns the result' do
+        expect(client.check(params)['benefit_checker_status']).to eq('Yes')
+        expect(HwfDwpApi).to have_received(:new).twice
+      end
+    end
+
+    context 'when the token request itself is rejected' do
+      before do
+        allow(HwfDwpApi).to receive(:new).and_raise(rejected)
+      end
+
+      it 'raises TechnicalFaultDwpCheck and stores the failed authentication' do
+        expect { client }.to raise_error(Exceptions::TechnicalFaultDwpCheck)
+        call = DwpApiCall.find_by(benefit_check: benefit_check, endpoint_name: 'authentication')
+        expect(call.data).to eq('error' => 'API: 401 - Invalid or expired JWT token')
+      end
+    end
+  end
+
   describe 'applicant extras' do
     let(:citizen_guid) { 'abc-123-guid' }
     let(:match_response) { { 'data' => { 'id' => citizen_guid } } }

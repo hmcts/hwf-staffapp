@@ -33,7 +33,7 @@ module BenefitCheckers
     def connect!
       @connection = ::HwfDwpApi.new(cached_token_attributes)
       cache_token
-    rescue ::HwfDwpApiError => e
+    rescue ::HwfDwpApiError, ::HwfDwpApiTokenError => e
       self.class.clear_token_cache
       store_api_call('authentication', {}, parse_error_data(e))
       raise_mapped_error(e)
@@ -59,10 +59,10 @@ module BenefitCheckers
     def dwp_api_match(params, partner: false)
       transformed = transformed_params(params, partner: partner)
 
-      response = @connection.match_citizen(transformed)
+      response = retry_once_if_token_rejected('match_citizen', transformed) { @connection.match_citizen(transformed) }
       store_api_call('match_citizen', transformed, response)
       response
-    rescue ::HwfDwpApiError => e
+    rescue ::HwfDwpApiError, ::HwfDwpApiTokenError => e
       store_api_call('match_citizen', transformed, parse_error_data(e))
       return nil if match_not_found?(e)
 
@@ -70,14 +70,24 @@ module BenefitCheckers
     end
 
     def fetch_claims(guid)
-      claims = @connection.get_claims(guid)
+      claims = retry_once_if_token_rejected('get_claims', { guid: guid }) { @connection.get_claims(guid) }
       store_api_call('get_claims', { guid: guid }, claims)
       benefits_result(claims)
-    rescue ::HwfDwpApiError => e
+    rescue ::HwfDwpApiError, ::HwfDwpApiTokenError => e
       store_api_call('get_claims', { guid: guid }, parse_error_data(e))
       return no_user_found_response if e.error_type == :not_found
 
       raise_mapped_error(e)
+    end
+
+    # The server can reject a cached token before it expires. See CHANGELOG.md
+    def retry_once_if_token_rejected(endpoint_name, request_params)
+      yield
+    rescue ::HwfDwpApiTokenError => e
+      store_api_call(endpoint_name, request_params, parse_error_data(e))
+      self.class.clear_token_cache
+      connect!
+      yield
     end
 
     def guid_present?(response)
