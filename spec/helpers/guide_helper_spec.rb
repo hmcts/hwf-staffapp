@@ -61,4 +61,8 @@ RSpec.describe GuideHelper do
   describe '#manager_guide_url' do
     it { expect(helper.manager_guide_url).to include('knowledgecentral/IQBseyY-O1RLQK0W_lW_Q_22AYp2C_S0XNmU0jwaZ8-OifQ') }
   end
+
+  describe '#income_check_guidance_url' do
+    it { expect(helper.income_check_guidance_url).to include('knowledgecentral/SitePages/Job-Cards.aspx') }
+  end
 end

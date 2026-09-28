@@ -63,6 +63,10 @@ module GuideHelper
     'https://justiceuk.sharepoint.com/:w:/s/knowledgecentral/IQBseyY-O1RLQK0W_lW_Q_22AYp2C_S0XNmU0jwaZ8-OifQ?web=1'
   end
 
+  def income_check_guidance_url
+    'https://justiceuk.sharepoint.com/sites/knowledgecentral/SitePages/Job-Cards.aspx?CT=1790263187017&OR=OWA-NT-Mail&CID=fb29972c-06fc-9665-0c18-62cef19df7c1&SI=NonSentItems&SLSync=Y'
+  end
+
   def processing_paper_applications_job_card_url
     'https://justiceuk.sharepoint.com/:w:/r/sites/knowledgecentral/_layouts/15/Doc.aspx?sourcedoc=%7BB62AF5DB-DF50-4415-A261-A4598E61B298%7D&file=Process%20a%20paper%20HWF%20application%20-%20Jobcard_word%20version.docx&action=default&mobileredirect=true'
   end

@@ -17,5 +17,6 @@ class GuidePage < BasePage
     element :fraud_awareness, 'a', text: 'Fraud awareness'
     element :rrds, 'a', text: 'RRDS'
     element :hmrc_datashare, 'a', text: 'HMRC Datashare - job card demos'
+    element :income_check_guidance, 'a', text: 'Income check guidance'
   end
 end
