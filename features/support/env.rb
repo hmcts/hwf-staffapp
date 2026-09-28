@@ -15,8 +15,8 @@ require 'base64'
 require 'webmock'
 require 'selenium/webdriver'
 require 'fileutils'
+require_relative '../../spec/support/fake_redis'
 include WebMock::API
-require 'mock_redis'
 
 Dir[File.dirname(__FILE__) + '/page_objects/**/*.rb'].each { |f| require f }
 
@@ -124,8 +124,8 @@ Capybara.raise_server_errors = false
 
 Before do
   stub_request(:any, 'https://dc.services.visualstudio.com/v2/track')
-  mock_redis = MockRedis.new
-  allow(Redis).to receive(:new).and_return(mock_redis)
+  fake_redis = FakeRedis.new
+  allow(Redis).to receive(:new).and_return(fake_redis)
 
   app_insight = instance_double(ApplicationInsights::TelemetryClient, flush: '')
   allow(ApplicationInsights::TelemetryClient).to receive(:new).and_return app_insight

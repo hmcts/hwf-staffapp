@@ -5,6 +5,17 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 with entries grouped by branch and date rather than release version.
 
+## 2026-09-28 (rst-8603-guides)
+
+### Changed
+
+- Updated redis 5.4.1 → 6.0.0. It now speaks RESP3 by default and falls back
+  to RESP2 on older servers; `PathStorage` only uses GET/SET, whose return
+  values are unchanged, so no `protocol: 2` override was needed.
+- Removed mock_redis: its latest release (0.55.0) still pins redis `~> 5` and
+  blocked the update. Replaced by a small in-memory `FakeRedis` in
+  `spec/support`, shared with the Cucumber suite.
+
 ## 2026-09-22 (rst-8579-benefit-result-copy)
 
 ### Changed

@@ -328,8 +328,6 @@ GEM
     minitest (6.0.6)
       drb (~> 2.0)
       prism (~> 1.5)
-    mock_redis (0.55.0)
-      redis (~> 5)
     msgpack (1.8.5)
     multi_test (1.1.0)
     multi_xml (0.9.1)
@@ -455,8 +453,8 @@ GEM
       tsort
     readline (0.0.4)
       reline
-    redis (5.4.1)
-      redis-client (>= 0.22.0)
+    redis (6.0.0)
+      redis-client (= 0.30.1)
     redis-client (0.30.1)
       connection_pool
     regexp_parser (2.12.0)
@@ -656,7 +654,6 @@ DEPENDENCIES
   launchy
   listen
   logstasher (~> 3.0)
-  mock_redis
   mutex_m
   nokogiri
   ostruct
