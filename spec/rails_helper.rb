@@ -25,7 +25,6 @@ require 'capybara/rails'
 require 'capybara/rspec'
 require 'webmock/rspec'
 require 'capybara/apparition'
-require 'mock_redis'
 
 # Opt-in performance profiling (off by default, zero impact on normal runs).
 # Enable via `bundle exec rake test:profile` or e.g. FPROF=1 bundle exec rspec.
@@ -131,8 +130,8 @@ RSpec.configure do |config|
 
   config.before(:each) do
     DatabaseCleaner.start
-    mock_redis = MockRedis.new
-    allow(Redis).to receive(:new).and_return(mock_redis)
+    fake_redis = FakeRedis.new
+    allow(Redis).to receive(:new).and_return(fake_redis)
   end
 
   config.after(:each) do

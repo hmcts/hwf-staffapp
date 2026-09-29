@@ -114,7 +114,7 @@ group :development, :test do
   gem 'rubocop-capybara'
   gem 'rubocop-factory_bot'
   gem 'rubocop-rspec_rails'
-  gem 'simplecov', '~> 0.22.0'
+  gem 'simplecov', '~> 1.3'
 end
 
 group :test do
@@ -128,7 +128,6 @@ group :test do
   gem 'cucumber-rails', require: false
   gem 'database_cleaner-active_record'
   gem 'launchy'
-  gem 'mock_redis'
   gem 'rails-controller-testing'
   gem 'rspec_junit_formatter'
   gem 'shoulda-matchers'
