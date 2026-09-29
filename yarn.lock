@@ -1177,14 +1177,14 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@rails/actiontext@npm:^8.1.301":
-  version: 8.1.301
-  resolution: "@rails/actiontext@npm:8.1.301"
+"@rails/actiontext@npm:^8.1.400":
+  version: 8.1.400
+  resolution: "@rails/actiontext@npm:8.1.400"
   dependencies:
     "@rails/activestorage": "npm:>= 8.1.0-alpha"
   peerDependencies:
     trix: ^2.0.0
-  checksum: 10c0/ff7a5e64f8e1f985e5f77ddc944ec533fb7eb6f56838d2304bd22bc450918fdc8bd7e0e84c16f280e56f158ca2743e738ea37905d3fed1e528f5f8d6d457f24d
+  checksum: 10c0/cc165d5582e5064d15488beaf79ad9a50a97978e6256a99e61be7f05ba11751cd4d14aaf905bf6dd1e74a6a04eface6a5f17c80ad512ec194e806eb260d13235
   languageName: node
   linkType: hard
 
@@ -1705,15 +1705,15 @@ __metadata:
   languageName: node
   linkType: hard
 
-"accessible-autocomplete@npm:^3.0.1":
-  version: 3.0.1
-  resolution: "accessible-autocomplete@npm:3.0.1"
+"accessible-autocomplete@npm:^3.0.2":
+  version: 3.0.2
+  resolution: "accessible-autocomplete@npm:3.0.2"
   peerDependencies:
     preact: ^8.0.0
   peerDependenciesMeta:
     preact:
       optional: true
-  checksum: 10c0/a90d76f29940cd7c5cb0795f2062d32f8f4904bae3acfc89eab717c56f2b18ce3fd07a4035ec5e30643119cdfe56be3a4bc260eb80e39eeb4009ea5dc09b163c
+  checksum: 10c0/23be53e61c1fde637cc04a1e842ff01ad8a76e6137473fcce975f5350ab23b075003b3f0544745b822e01de3f919cca83859e68a84e8119ae2567aa3b3c2e6b6
   languageName: node
   linkType: hard
 
@@ -2624,8 +2624,8 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "hwf-staffapp@workspace:."
   dependencies:
-    "@rails/actiontext": "npm:^8.1.301"
-    accessible-autocomplete: "npm:^3.0.1"
+    "@rails/actiontext": "npm:^8.1.400"
+    accessible-autocomplete: "npm:^3.0.2"
     govuk-frontend: "npm:^6.5.1"
     jest: "npm:^30.5.2"
     jest-environment-jsdom: "npm:^30.5.2"
@@ -2633,7 +2633,7 @@ __metadata:
     jquery: "npm:^4.0.0"
     playwright: "npm:^1.63.0"
     rails-ujs: "npm:^5.2.8-1"
-    sass: "npm:^1.104.1"
+    sass: "npm:^1.105.0"
     trix: "npm:^2.1.19"
     webpack: "npm:^5.111.1"
     webpack-cli: "npm:^7.2.3"
@@ -3955,9 +3955,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"sass@npm:^1.104.1":
-  version: 1.104.1
-  resolution: "sass@npm:1.104.1"
+"sass@npm:^1.105.0":
+  version: 1.105.0
+  resolution: "sass@npm:1.105.0"
   dependencies:
     "@parcel/watcher": "npm:^2.4.1"
     chokidar: "npm:^5.0.0"
@@ -3968,7 +3968,7 @@ __metadata:
       optional: true
   bin:
     sass: sass.js
-  checksum: 10c0/d04e1898a9470a7a5052e67cbe5fc4ec342374f6d65a75eb180a5a60d0ee1af85bb2df6d877087169c4d53e358ff0864f2343fd594dc60474ce7a6467ee41961
+  checksum: 10c0/ddd6a8cc70d325fe7465036de32cb3506b578e131719c8bcfd4c225e051b7e8f5b231c3be450e293043876db58a247b9c354ecc1ca466a8274e2d9a8d4bc1ae1
   languageName: node
   linkType: hard
 

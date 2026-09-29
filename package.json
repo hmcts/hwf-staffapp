@@ -16,8 +16,8 @@
   },
   "engineStrict": true,
   "dependencies": {
-    "@rails/actiontext": "^8.1.301",
-    "accessible-autocomplete": "^3.0.1",
+    "@rails/actiontext": "^8.1.400",
+    "accessible-autocomplete": "^3.0.2",
     "govuk-frontend": "^6.5.1",
     "jquery": "^4.0.0",
     "rails-ujs": "^5.2.8-1",
@@ -45,7 +45,7 @@
     "jest-environment-jsdom": "^30.5.2",
     "jest-junit": "^17.0.0",
     "playwright": "^1.63.0",
-    "sass": "^1.104.1",
+    "sass": "^1.105.0",
     "webpack": "^5.111.1",
     "webpack-cli": "^7.2.3"
   },
