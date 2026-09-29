@@ -5,6 +5,9 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 with entries grouped by branch and date rather than release version.
 
+## 2026-09-28 (rst-8603-guides)
+
+- Added "Income check guidance" tile on the staff guides page.
 ## 2026-09-29 (rst-8614-display-banner)
 
 ### Changed

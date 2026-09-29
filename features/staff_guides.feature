@@ -56,6 +56,10 @@ Feature: Staff guides
       And I am signed in on the guide page
       Then I can view HMRC Datashare
 
+    Scenario: Income check guidance
+      And I am signed in on the guide page
+      Then I can view income check guidance
+
     Scenario: Accessibility statement footer
       When I click on the accessibility link in the footer
       Then I am on the accessibility statement page

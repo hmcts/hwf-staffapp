@@ -50,6 +50,10 @@ Then("I can view HMRC Datashare") do
   expect(guide_page.content.hmrc_datashare['href']).to include 'sourcedoc=%7BB23D0CC3-7CF7-47B8-A12A-B79AAA0146FC%7D'
 end
 
+Then("I can view income check guidance") do
+  expect(guide_page.content.income_check_guidance['href']).to include 'knowledgecentral/SitePages/Job-Cards.aspx'
+end
+
 Then("I can view Staff guides link on footer") do
   expect(sign_in_page.footer).to have_see_the_guides
 end
