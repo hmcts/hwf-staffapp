@@ -5,6 +5,13 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 with entries grouped by branch and date rather than release version.
 
+## 2026-09-29 (rst-8614-display-banner)
+
+### Changed
+
+- The HMRC checker banner now shows on the sign-in page alongside the DWP one,
+  so staff see both service states before logging in.
+
 ## 2026-09-28 (rst-8603-guides)
 
 ### Changed
