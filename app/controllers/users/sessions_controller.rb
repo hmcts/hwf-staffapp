@@ -5,6 +5,7 @@ module Users
     def new
       @notification = Notification.order(:id).first
       @dwp_state = dwp_checker_state
+      @hmrc_state = hmrc_checker_state
       super
     end
 
