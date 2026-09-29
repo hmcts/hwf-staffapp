@@ -18,6 +18,8 @@ with entries grouped by branch and date rather than release version.
 - Updated accessible-autocomplete 3.0.1 → 3.0.2 (visually-hidden iOS suffix
   fix when CSP blocks inline styles; the class ships in the imported dist CSS)
 - Updated sass 1.104.1 → 1.105.0
+- Updated simplecov 0.22.0 → 1.3.1; pin dropped now that SonarCloud's Ruby
+  sensor accepts the 1.x coverage.json (sonar-ruby 1.25, RUBY-188)
 
 ### Known issues
 
@@ -26,7 +28,6 @@ with entries grouped by branch and date rather than release version.
   2.13.0 is a large performance rewrite; revisit next run.
 - json 2.21.2 → 3.0.2 held: major bump, needs its own review now that Rails
   8.1.4 supports it.
-- simplecov stays at ~> 0.22.0 (1.x breaks the SonarQube coverage report).
 - cucumber-*, diff-lcs, marcel, multi_test majors are constrained by their
   parent gems and were not proposed.
 
