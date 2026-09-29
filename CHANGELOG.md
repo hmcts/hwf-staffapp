@@ -5,6 +5,32 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 with entries grouped by branch and date rather than release version.
 
+## 2026-09-29 (gem-updates-v74)
+
+### Changed
+
+- Updated Rails 8.1.3.1 → 8.1.4 (bug-fix release; adds json 3.0 compatibility)
+- Updated @rails/actiontext 8.1.301 → 8.1.400 (paired with the Rails bump)
+- Updated devise_invitable 2.0.12 → 2.0.13
+- Updated capybara-playwright-driver 0.5.10 → 0.5.12
+- Updated rdoc 8.0.0 → 8.1.0 (transitive)
+- Updated mime-types-data 3.2026.0921 → 3.2026.0922 (transitive)
+- Updated accessible-autocomplete 3.0.1 → 3.0.2 (visually-hidden iOS suffix
+  fix when CSP blocks inline styles; the class ships in the imported dist CSS)
+- Updated sass 1.104.1 → 1.105.0
+- Updated simplecov 0.22.0 → 1.3.1; pin dropped now that SonarCloud's Ruby
+  sensor accepts the 1.x coverage.json (sonar-ruby 1.25, RUBY-188)
+
+### Known issues
+
+- No open advisories in bundle-audit or yarn npm audit.
+- regexp_parser 2.12.0 → 2.13.1 held: released the day before this run and
+  2.13.0 is a large performance rewrite; revisit next run.
+- json 2.21.2 → 3.0.2 held: major bump, needs its own review now that Rails
+  8.1.4 supports it.
+- cucumber-*, diff-lcs, marcel, multi_test majors are constrained by their
+  parent gems and were not proposed.
+
 ## 2026-09-28 (rst-8603-guides)
 
 ### Changed
