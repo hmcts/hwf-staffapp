@@ -62,6 +62,14 @@ RSpec.describe Views::Overview::OnlineApplicationView do
     end
   end
 
+  describe '#postcode' do
+    before { allow(online_application).to receive(:postcode).and_return('SW1H 9AJ') }
+
+    it 'returns the postcode' do
+      expect(online_app_view.postcode).to eq('SW1H 9AJ')
+    end
+  end
+
   describe '#partner_ni_number' do
     it 'returns formatted partner NI number' do
       expect(online_app_view.partner_ni_number).to eq('CD 78 90 12 E')

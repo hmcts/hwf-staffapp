@@ -28,6 +28,11 @@ dl.govuk-summary-list
     dt.govuk-summary-list__key =t('summary.full_name')
     dd.govuk-summary-list__value =@online_application_view.full_name
 
+  - if @online_application_view.postcode.present?
+    .govuk-summary-list__row
+      dt.govuk-summary-list__key =t('summary.postcode')
+      dd.govuk-summary-list__value =@online_application_view.postcode
+
   .govuk-summary-list__row
     dt.govuk-summary-list__key =t('summary.date_of_birth')
     dd.govuk-summary-list__value =@online_application_view.date_of_birth

@@ -2,14 +2,14 @@ module Views
   module Overview
     class Applicant
 
-      delegate(:full_name, :partner_full_name, :ho_number, :married, to: :applicant)
+      delegate(:full_name, :partner_full_name, :ho_number, :postcode, :married, to: :applicant)
 
       def initialize(application)
         @application = application
       end
 
       def all_fields
-        ['full_name', 'date_of_birth', 'under_age', 'ni_number', 'ho_number', 'status',
+        ['full_name', 'postcode', 'date_of_birth', 'under_age', 'ni_number', 'ho_number', 'status',
          'partner_full_name', 'partner_date_of_birth', 'partner_ni_number']
       end
 

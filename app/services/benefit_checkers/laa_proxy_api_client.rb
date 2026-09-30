@@ -1,5 +1,5 @@
 module BenefitCheckers
-  class RealApiClient < BaseClient
+  class LaaProxyApiClient < BaseClient
     def check(params)
       response = connection.post('/api/benefit_checks') do |req|
         req.body = params

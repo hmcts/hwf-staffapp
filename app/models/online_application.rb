@@ -97,7 +97,7 @@ class OnlineApplication < ActiveRecord::Base
   private
 
   def online_applicant_attributes
-    fields = [:title, :first_name, :last_name, :date_of_birth, :ni_number, :ho_number, :married]
+    fields = [:title, :first_name, :last_name, :date_of_birth, :ni_number, :ho_number, :postcode, :married]
     fields.index_with { |field| send(field) }.to_h
   end
 

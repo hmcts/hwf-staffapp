@@ -205,7 +205,7 @@ RSpec.describe ApplicationBuilder do
       describe 'the applicant' do
         subject(:built_applicant) { built_application.applicant }
 
-        [:title, :first_name, :last_name, :date_of_birth, :ni_number, :ho_number, :married].each do |column|
+        [:title, :first_name, :last_name, :date_of_birth, :ni_number, :ho_number, :married, :postcode].each do |column|
           it "has #{column} assigned" do
             expect(built_applicant.public_send(column)).to eql(online_application.public_send(column))
           end

@@ -5,6 +5,13 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 with entries grouped by branch and date rather than release version.
 
+## 2026-09-30 (dwp-phase-2)
+
+### Changed
+
+- Renamed `BenefitCheckers::RealApiClient` to `LaaProxyApiClient`: it calls the
+  LAA benefit-check proxy, and "real" wrongly suggested the direct DWP client.
+
 ## 2026-09-28 (rst-8603-guides)
 
 - Added "Income check guidance" tile on the staff guides page.
@@ -50,6 +57,11 @@ with entries grouped by branch and date rather than release version.
 - Removed mock_redis: its latest release (0.55.0) still pins redis `~> 5` and
   blocked the update. Replaced by a small in-memory `FakeRedis` in
   `spec/support`, shared with the Cucumber suite.
+## 2026-09-23 (rst-7881-postcode)
+
+- Optional UK postcode on the paper Personal details page (only when `DWP_API_ENABLED` is on), shown when present on check details, summary and processed pages for paper and online applications; paper DWP checks and the raw data export use it.
+- NI/HO/postcode normalisation extracted to `PersonalDetailsFormatter`, shared by the applicant form, partner form and `Applicant` model.
+- DWP client no longer hands an expired cached token to the gem, and on a 401 drops the cached token and retries once; previously either state failed every check on that process until restart. Failed connections and rejected calls are now recorded on the benefit check and in `dwp_api_calls`.
 
 ## 2026-09-22 (rst-8579-benefit-result-copy)
 
