@@ -16,6 +16,7 @@ class PersonalDetailsPage < BasePage
     element :ho_label, '.govuk-label', text: 'Home Office reference number'
     element :ho_hint, '.hint', text: 'Where provided, example L1234567 or L1234567/1 for a family member or 1111-2222-3333-4444 or 1111-2222-3333-4444/1 for a family'
     element :application_ho_number, '#application_ho_number'
+    element :application_postcode, '#application_postcode'
     element :last_name_error, '.error', text: 'Enter the applicant\'s last name'
     element :last_name_too_short_error, '.error', text: 'Last name is too short (minimum is 2 characters)'
     element :invalid_date_of_birth_error, '.error', text: 'Enter a valid date of birth'

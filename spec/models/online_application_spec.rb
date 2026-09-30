@@ -164,6 +164,10 @@ RSpec.describe OnlineApplication do
     it 'has methods related to applicant' do
       expect(online_application.applicant.under_age?).to be false
     end
+
+    it 'carries the postcode' do
+      expect(online_application.applicant.postcode).to eq(online_application.postcode)
+    end
   end
 
   describe 'purged application' do
