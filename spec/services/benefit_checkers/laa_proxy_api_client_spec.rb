@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe BenefitCheckers::RealApiClient, type: :service do
+RSpec.describe BenefitCheckers::LaaProxyApiClient, type: :service do
   subject(:client) { described_class.new }
 
   let(:params) do

@@ -5,6 +5,13 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 with entries grouped by branch and date rather than release version.
 
+## 2026-09-30 (dwp-phase-2)
+
+### Changed
+
+- Renamed `BenefitCheckers::RealApiClient` to `LaaProxyApiClient`: it calls the
+  LAA benefit-check proxy, and "real" wrongly suggested the direct DWP client.
+
 ## 2026-09-28 (rst-8603-guides)
 
 - Added "Income check guidance" tile on the staff guides page.

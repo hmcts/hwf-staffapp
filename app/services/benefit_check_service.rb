@@ -58,7 +58,7 @@ class BenefitCheckService
     elsif Settings.dwp_api_enabled
       BenefitCheckers::DwpApiClient.new(@check_item)
     else
-      BenefitCheckers::RealApiClient.new
+      BenefitCheckers::LaaProxyApiClient.new
     end
   end
 
