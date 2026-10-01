@@ -3,7 +3,6 @@ module BenefitCheckers
     include DwpApiParamFormatter
     include DwpApiErrorHandler
 
-    ON_BENEFITS_STATUSES = ['active', 'in_payment', 'ongoing_award'].freeze
     # Same margin HwfDwpApi::Authentication#expired? uses before it refreshes a token
     TOKEN_REFRESH_BUFFER = 100.seconds
 
@@ -24,7 +23,7 @@ module BenefitCheckers
       if applicant_guid_present?(response) || partner_guid_present?
         fetch_claims(@guid)
       else
-        no_user_found_response
+        not_on_benefits_response
       end
     end
 
@@ -78,16 +77,22 @@ module BenefitCheckers
       benefits_result(claims)
     rescue ::HwfDwpApiError, ::HwfDwpApiTokenError => e
       store_api_call('get_claims', request_params, parse_error_data(e))
-      return no_user_found_response if e.error_type == :not_found
+      return not_on_benefits_response if e.error_type == :not_found
 
       raise_mapped_error(e)
     end
 
     # Sent with every claims call, for the applicant and the partner alike
     def effective_dates
-      return {} unless @benefit_check&.applicationable
+      return {} unless effective_date_window
 
-      @effective_dates ||= EffectiveDates.new(@benefit_check.applicationable).to_h
+      effective_date_window.to_h
+    end
+
+    def effective_date_window
+      return unless @benefit_check&.applicationable
+
+      @effective_date_window ||= EffectiveDates.new(@benefit_check.applicationable)
     end
 
     # The server can reject a cached token before it expires. See CHANGELOG.md
@@ -115,27 +120,25 @@ module BenefitCheckers
       guid_present?(response)
     end
 
+    # Claim dates are checked against the window here as well. See CHANGELOG.md
     def benefits_result(claims)
-      user_on_benefits?(claims) ? on_benefits_response : no_user_found_response
-    end
-
-    def user_on_benefits?(claims)
-      status = claims&.dig('data', 0, 'attributes', 'status')
-      ON_BENEFITS_STATUSES.include?(status)
+      if ClaimsDecision.new(claims, effective_date_window).on_benefits?
+        on_benefits_response
+      else
+        not_on_benefits_response
+      end
     end
 
     def on_benefits_response
-      {
-        'benefit_checker_status' => 'Yes',
-        'confirmation_ref' => @guid
-      }.with_indifferent_access
+      benefit_checker_response('Yes')
     end
 
-    def no_user_found_response
-      {
-        'benefit_checker_status' => 'No',
-        'confirmation_ref' => @guid
-      }.with_indifferent_access
+    def not_on_benefits_response
+      benefit_checker_response('No')
+    end
+
+    def benefit_checker_response(status)
+      { 'benefit_checker_status' => status, 'confirmation_ref' => @guid }.with_indifferent_access
     end
 
     def postcode_for(application)

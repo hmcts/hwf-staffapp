@@ -483,6 +483,51 @@ RSpec.describe BenefitCheckers::DwpApiClient, type: :service do
       end
     end
 
+    # The client has to check the claim dates itself no matter what was returned from API
+    context 'claims outside the effective date window' do
+      let(:application) { create(:application, refund: false, date_received: Date.new(2026, 9, 30)) }
+      let(:benefit_check) { create(:benefit_check, applicationable: application) }
+
+      before do
+        allow(connection).to receive_messages(match_citizen: match_response, get_claims: claims_response)
+      end
+
+      context 'when the only claim in payment started after the window' do
+        let(:claims_response) do
+          { 'data' => [{ 'id' => 'uc_0', 'attributes' => { 'status' => 'in_payment', 'startDate' => '2026-10-15' } }] }
+        end
+
+        it 'returns No status' do
+          expect(client.check(params)['benefit_checker_status']).to eq('No')
+        end
+      end
+
+      context 'when the only claim in payment ended before the window' do
+        let(:claims_response) do
+          { 'data' => [{ 'id' => 'is_0', 'attributes' => { 'status' => 'active', 'startDate' => '2025-05-15', 'endDate' => '2026-08-21' } }] }
+        end
+
+        it 'returns No status' do
+          expect(client.check(params)['benefit_checker_status']).to eq('No')
+        end
+      end
+
+      context 'when a closed claim is listed before a claim in payment inside the window' do
+        let(:claims_response) do
+          {
+            'data' => [
+              { 'id' => 'is_0', 'attributes' => { 'status' => 'claim_closed', 'startDate' => '2025-05-15', 'endDate' => '2026-09-18' } },
+              { 'id' => 'uc_0', 'attributes' => { 'status' => 'in_payment', 'startDate' => '2026-09-19' } }
+            ]
+          }
+        end
+
+        it 'returns Yes status' do
+          expect(client.check(params)['benefit_checker_status']).to eq('Yes')
+        end
+      end
+    end
+
     context 'when match_citizen fails' do
       let(:error_message) do
         { 'errors' => [{ 'status' => '400', 'detail' => 'Bad request' }] }.to_json

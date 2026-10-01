@@ -15,6 +15,9 @@ with entries grouped by branch and date rather than release version.
   alike: `BenefitCheckers::EffectiveDates` ends it at the fee-paid date (refund),
   submission date (online) or date received (paper), starting five weeks
   earlier on the Monday. No window when the application has no date.
+- `BenefitCheckers::ClaimsDecision` checks every returned claim, not just the
+  first, and counts one when its status is on-benefits and it was live inside
+  the date window.
 
 ## 2026-09-28 (rst-8603-guides)
 
