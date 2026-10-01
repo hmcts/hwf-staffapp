@@ -70,14 +70,24 @@ module BenefitCheckers
     end
 
     def fetch_claims(guid)
-      claims = retry_once_if_token_rejected('get_claims', { guid: guid }) { @connection.get_claims(guid) }
-      store_api_call('get_claims', { guid: guid }, claims)
+      request_params = { guid: guid }.merge(effective_dates)
+      claims = retry_once_if_token_rejected('get_claims', request_params) do
+        @connection.get_claims(guid, effective_dates)
+      end
+      store_api_call('get_claims', request_params, claims)
       benefits_result(claims)
     rescue ::HwfDwpApiError, ::HwfDwpApiTokenError => e
-      store_api_call('get_claims', { guid: guid }, parse_error_data(e))
+      store_api_call('get_claims', request_params, parse_error_data(e))
       return no_user_found_response if e.error_type == :not_found
 
       raise_mapped_error(e)
+    end
+
+    # Sent with every claims call, for the applicant and the partner alike
+    def effective_dates
+      return {} unless @benefit_check&.applicationable
+
+      @effective_dates ||= EffectiveDates.new(@benefit_check.applicationable).to_h
     end
 
     # The server can reject a cached token before it expires. See CHANGELOG.md
