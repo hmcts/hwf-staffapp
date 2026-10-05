@@ -33,10 +33,17 @@ class Applicant < ActiveRecord::Base
     age < 16
   end
 
+  # see CHANGELOG.md
+  def partner_details_allowed?
+    return false unless married?
+
+    Settings.dwp_api_enabled || ni_number.present?
+  end
+
   private
 
   def remove_partner_info
-    return if married == true && ni_number.present?
+    return if partner_details_allowed?
     self.partner_date_of_birth = nil
     self.partner_first_name = nil
     self.partner_last_name = nil

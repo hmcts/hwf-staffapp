@@ -37,12 +37,15 @@ RSpec.describe Applications::Process::PersonalInformationsController do
   describe 'PUT #personal_information_save' do
     let(:expected_params) { { last_name: 'Name', date_of_birth: '20/01/2980', married: 'false' } }
     let(:married) { false }
+    let(:ni_number) { 'AB123456C' }
+    let(:dwp_api_enabled) { false }
 
     before do
+      allow(Settings).to receive(:dwp_api_enabled).and_return(dwp_api_enabled)
       allow(personal_information_form).to receive(:update).with(expected_params)
       allow(personal_information_form).to receive(:save).and_return(form_save)
       allow(application).to receive(:applicant).and_return application.applicant
-      allow(application.applicant).to receive(:married?).and_return married
+      allow(application.applicant).to receive_messages(married?: married, ni_number: ni_number)
 
       post :create, params: { application_id: application.id, application: expected_params }
     end
@@ -66,6 +69,22 @@ RSpec.describe Applications::Process::PersonalInformationsController do
           let(:scheme) { FeatureSwitching::CALCULATION_SCHEMAS[1] }
           it 'redirects to application_details' do
             expect(response).to redirect_to(application_partner_informations_path(application))
+          end
+
+          context 'applicant has no NI number' do
+            let(:ni_number) { nil }
+
+            it 'redirects to application_details' do
+              expect(response).to redirect_to(application_details_path(application))
+            end
+
+            context 'DWP API is enabled' do
+              let(:dwp_api_enabled) { true }
+
+              it 'redirects to partner_informations' do
+                expect(response).to redirect_to(application_partner_informations_path(application))
+              end
+            end
           end
         end
       end

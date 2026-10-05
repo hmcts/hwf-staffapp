@@ -5,6 +5,16 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 with entries grouped by branch and date rather than release version.
 
+## 2026-10-05 (rst-8363-date-in-query)
+
+### Changed
+
+- With `DWP_API_ENABLED` on, a married applicant no longer needs an NI number
+  for the partner details page (`Applicant#partner_details_allowed?`). The
+  RST-7092 limit still applies when the flag is off.
+- Summary pages show partner rows whenever partner data exists, regardless of
+  the applicant's NI number or the flag.
+
 ## 2026-09-30 (dwp-phase-2)
 
 ### Changed
