@@ -39,11 +39,17 @@ RSpec.feature 'Personal details - UK postcode' do
       expect(application.applicant.reload.postcode).to eq 'TW141UH'
     end
 
+    scenario 'a postcode with a space in the middle is saved without the space' do
+      fill_personal_details(postcode: 'AB12 5AJ')
+      expect(page).to have_text('Application details')
+      expect(application.applicant.reload.postcode).to eq 'AB125AJ'
+    end
+
     scenario 'the summary page shows the postcode row (post-UCD)' do
       fill_personal_details(postcode: 'TW14 1UH')
       visit application_summary_path(application)
       expect(page).to have_css('.govuk-summary-list__key', text: 'UK postcode')
-      expect(page).to have_css('.govuk-summary-list__value', text: 'TW14 1UH')
+      expect(page).to have_css('.govuk-summary-list__value', text: 'TW141UH')
     end
 
     scenario 'the summary page shows the postcode row (pre-UCD)' do
@@ -51,7 +57,7 @@ RSpec.feature 'Personal details - UK postcode' do
       fill_personal_details(postcode: 'TW14 1UH')
       visit application_summary_path(application)
       expect(page).to have_css('.govuk-summary-list__key', text: 'UK postcode')
-      expect(page).to have_css('.govuk-summary-list__value', text: 'TW14 1UH')
+      expect(page).to have_css('.govuk-summary-list__value', text: 'TW141UH')
     end
 
     scenario 'the summary page hides the postcode row when none was entered' do

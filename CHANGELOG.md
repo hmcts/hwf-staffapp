@@ -14,6 +14,8 @@ with entries grouped by branch and date rather than release version.
   RST-7092 limit still applies when the flag is off.
 - Summary pages show partner rows whenever partner data exists, regardless of
   the applicant's NI number or the flag.
+- The paper Personal details postcode still accepts a space ("AB12 5AJ") but
+  is now stored without it ("AB125AJ").
 
 ## 2026-09-30 (dwp-phase-2)
 

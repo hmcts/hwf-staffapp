@@ -259,7 +259,7 @@ RSpec.describe Forms::Application::Applicant do
 
       it 'saves the parameters in the applicant' do
         params.each do |key, value|
-          next if /day|month|year/.match?(key.to_s)
+          next if /day|month|year|postcode/.match?(key.to_s)
           expect(applicant.send(key)).to eql(value)
         end
       end
@@ -272,8 +272,8 @@ RSpec.describe Forms::Application::Applicant do
         expect(applicant.ho_number).to eq 'L6543210'
       end
 
-      it 'saves the postcode' do
-        expect(applicant.postcode).to eq 'SW1H 9AJ'
+      it 'saves the postcode without the space' do
+        expect(applicant.postcode).to eq 'SW1H9AJ'
       end
 
       context 'single' do
@@ -340,7 +340,7 @@ RSpec.describe Forms::Application::Applicant do
 
       it { expect(created_applicant.valid?).to be true }
 
-      it 'is saved with a single space' do
+      it 'is validated with a single space' do
         created_applicant.valid?
         expect(created_applicant.postcode).to eq 'GL7 1HT'
       end
