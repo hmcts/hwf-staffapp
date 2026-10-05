@@ -38,6 +38,23 @@ RSpec.feature 'Staff can search for online application' do
     end
   end
 
+  # The partner rows depend only on the partner data, not on the applicant's
+  # NI number. See CHANGELOG.md
+  scenario 'User can see partner details on Check details page when the applicant has no NI number' do
+    post_ucd_online_application = create(:online_application, :partner, :completed, :with_reference,
+                                         ni_number: nil, ho_number: 'L1234567',
+                                         calculation_scheme: FeatureSwitching::CALCULATION_SCHEMAS[1])
+
+    visit online_application_path(post_ucd_online_application)
+
+    expect(page).to have_css('.govuk-summary-list__key', text: "Partner's full name")
+    expect(page).to have_css('.govuk-summary-list__value', text: 'Jane Doe')
+    expect(page).to have_css('.govuk-summary-list__key', text: "Partner's date of birth")
+    expect(page).to have_css('.govuk-summary-list__value', text: '1 February 2000')
+    expect(page).to have_css('.govuk-summary-list__key', text: "Partner's National Insurance number")
+    expect(page).to have_css('.govuk-summary-list__value', text: 'SN 74 13 69 A')
+  end
+
   scenario 'User does not fill in all the required fields and the application fails to save' do
     travel_to(current_time) do
       given_user_is_editting_the_application(online_application.id)

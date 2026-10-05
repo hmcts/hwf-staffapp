@@ -146,7 +146,8 @@ module Forms
           married: married,
           ni_number: ni_number,
           ho_number: ho_number,
-          postcode: postcode
+          # stored without the space, see CHANGELOG.md
+          postcode: PersonalDetailsFormatter.compact_upcase(postcode)
         }
       end
     end

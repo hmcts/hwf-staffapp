@@ -5,12 +5,34 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 with entries grouped by branch and date rather than release version.
 
+## 2026-10-05 (rst-8363-date-in-query)
+
+### Changed
+
+- With `DWP_API_ENABLED` on, a married applicant no longer needs an NI number
+  for the partner details page (`Applicant#partner_details_allowed?`). The
+  RST-7092 limit still applies when the flag is off.
+- Summary pages show partner rows whenever partner data exists, regardless of
+  the applicant's NI number or the flag.
+- The paper Personal details postcode still accepts a space ("AB12 5AJ") but
+  is now stored without it ("AB125AJ").
+- `BenefitCheckers::ClaimsDecision` now counts a claim with no status of its
+  own when one of its awards is `live`: DWP returned an ESA claim in that shape
+  and it was wrongly assessed as No. A claim's own status still wins when present.
+
 ## 2026-09-30 (dwp-phase-2)
 
 ### Changed
 
 - Renamed `BenefitCheckers::RealApiClient` to `LaaProxyApiClient`: it calls the
   LAA benefit-check proxy, and "real" wrongly suggested the direct DWP client.
+- DWP claims calls now send an effective date window, applicant and partner
+  alike: `BenefitCheckers::EffectiveDates` ends it at the fee-paid date (refund),
+  submission date (online) or date received (paper), starting five weeks
+  earlier on the Monday. No window when the application has no date.
+- `BenefitCheckers::ClaimsDecision` checks every returned claim, not just the
+  first, and counts one when its status is on-benefits and it was live inside
+  the date window.
 
 ## 2026-09-28 (rst-8603-guides)
 

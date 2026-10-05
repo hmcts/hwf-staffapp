@@ -158,6 +158,36 @@ RSpec.feature 'Application stores correct data' do
       expect(application.amount_to_pay).to eq(2200)
     end
 
+    # The scenario above skips the partner details page because the applicant
+    # has no NI number. With the DWP API on that limit is lifted. See CHANGELOG.md
+    scenario 'Married without NI number - partner details when DWP API is enabled' do
+      allow(Settings).to receive(:dwp_api_enabled).and_return(true)
+      start_new_application
+
+      fill_in 'application_day_date_received', with: '01'
+      fill_in 'application_month_date_received', with: Time.zone.today.month
+      fill_in 'application_year_date_received', with: Time.zone.today.year
+      choose 'application_refund_false'
+      click_button 'Next'
+
+      fill_personal_details_under_66_post_ucd
+      choose 'Married or living with someone'
+      click_button 'Next'
+
+      expect(page).to have_text "Partner's details"
+      fill_in 'application_partner_first_name', with: 'Jane'
+      fill_in 'application_partner_last_name', with: 'Mnemonick'
+      fill_in 'application_partner_ni_number', with: 'SN798466C'
+      click_button 'Next'
+
+      expect(page).to have_field('application_fee')
+      applicant = Application.last.applicant
+      expect(applicant.ni_number).to be_nil
+      expect(applicant.partner_first_name).to eq('Jane')
+      expect(applicant.partner_last_name).to eq('Mnemonick')
+      expect(applicant.partner_ni_number).to eq('SN798466C')
+    end
+
     scenario 'Onine application - Premium failed married children' do
       online_application_1
       visit home_index_url
