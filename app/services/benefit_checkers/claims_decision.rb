@@ -3,6 +3,8 @@ module BenefitCheckers
   # inside the effective date window. See CHANGELOG.md
   class ClaimsDecision
     ON_BENEFITS_STATUSES = ['active', 'in_payment', 'ongoing_award'].freeze
+    # Used when the claim has no status of its own, only one per award
+    ON_BENEFITS_AWARD_STATUSES = ['live'].freeze
 
     # claims_response: the parsed get_claims body
     # window: a BenefitCheckers::EffectiveDates, or nil when there is none
@@ -18,7 +20,15 @@ module BenefitCheckers
     private
 
     def on_benefits_status?(claim)
-      ON_BENEFITS_STATUSES.include?(claim.dig('attributes', 'status'))
+      claim_status = claim.dig('attributes', 'status')
+      return ON_BENEFITS_STATUSES.include?(claim_status) if claim_status.present?
+
+      on_benefits_award?(claim)
+    end
+
+    def on_benefits_award?(claim)
+      awards = claim.dig('attributes', 'awards') || []
+      awards.any? { |award| ON_BENEFITS_AWARD_STATUSES.include?(award['status']) }
     end
 
     # A claim counts when it was live at some point inside the window: it

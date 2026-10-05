@@ -512,6 +512,23 @@ RSpec.describe BenefitCheckers::DwpApiClient, type: :service do
         end
       end
 
+      context 'when the claim has no status of its own but a live award' do
+        let(:claims_response) do
+          {
+            'data' => [
+              { 'id' => '85', 'type' => 'Claim',
+                'attributes' => { 'awards' => [{ 'amount' => 8500, 'status' => 'live', 'startDate' => '2021-01-01' }],
+                                  'startDate' => '2021-01-01',
+                                  'benefitType' => 'employment_support_allowance_income_based' } }
+            ]
+          }
+        end
+
+        it 'returns Yes status' do
+          expect(client.check(params)['benefit_checker_status']).to eq('Yes')
+        end
+      end
+
       context 'when a closed claim is listed before a claim in payment inside the window' do
         let(:claims_response) do
           {

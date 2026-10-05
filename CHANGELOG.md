@@ -16,6 +16,9 @@ with entries grouped by branch and date rather than release version.
   the applicant's NI number or the flag.
 - The paper Personal details postcode still accepts a space ("AB12 5AJ") but
   is now stored without it ("AB125AJ").
+- `BenefitCheckers::ClaimsDecision` now counts a claim with no status of its
+  own when one of its awards is `live`: DWP returned an ESA claim in that shape
+  and it was wrongly assessed as No. A claim's own status still wins when present.
 
 ## 2026-09-30 (dwp-phase-2)
 

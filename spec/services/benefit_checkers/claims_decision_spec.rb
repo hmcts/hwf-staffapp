@@ -14,6 +14,14 @@ RSpec.describe BenefitCheckers::ClaimsDecision do
     { 'id' => 'claim', 'type' => 'Claim', 'attributes' => attributes }
   end
 
+  # Some claims carry no status of their own, only one per award
+  def claim_with_awards(award_statuses:, start_date: nil, status: nil)
+    attributes = { 'awards' => award_statuses.map { |award_status| { 'status' => award_status, 'amount' => 8500 } } }
+    attributes['status'] = status if status
+    attributes['startDate'] = start_date if start_date
+    { 'id' => 'claim', 'type' => 'Claim', 'attributes' => attributes }
+  end
+
   describe '#on_benefits?' do
     context 'with a claim in payment that started before the window' do
       let(:claims) { [claim(status: 'in_payment', start_date: '2025-08-15')] }
@@ -93,6 +101,44 @@ RSpec.describe BenefitCheckers::ClaimsDecision do
       it 'decides on the status alone' do
         expect(decision.on_benefits?).to be true
       end
+    end
+
+    context 'with a claim that has no status of its own but a live award' do
+      let(:claims) { [claim_with_awards(award_statuses: ['live'], start_date: '2021-01-01')] }
+
+      it { expect(decision.on_benefits?).to be true }
+    end
+
+    context 'with a claim that has no status of its own and no live award' do
+      let(:claims) { [claim_with_awards(award_statuses: ['ended'], start_date: '2021-01-01')] }
+
+      it { expect(decision.on_benefits?).to be false }
+    end
+
+    context 'with a claim that has a live award among others' do
+      let(:claims) { [claim_with_awards(award_statuses: ['ended', 'live'], start_date: '2021-01-01')] }
+
+      it { expect(decision.on_benefits?).to be true }
+    end
+
+    context 'with a live award on a claim that started after the window' do
+      let(:claims) { [claim_with_awards(award_statuses: ['live'], start_date: '2026-10-15')] }
+
+      it { expect(decision.on_benefits?).to be false }
+    end
+
+    context 'with a live award on a claim whose own status is closed' do
+      let(:claims) { [claim_with_awards(award_statuses: ['live'], start_date: '2021-01-01', status: 'claim_closed')] }
+
+      it 'goes by the status of the claim' do
+        expect(decision.on_benefits?).to be false
+      end
+    end
+
+    context 'with a claim that has no status and no awards' do
+      let(:claims) { [{ 'id' => 'claim', 'type' => 'Claim', 'attributes' => { 'startDate' => '2021-01-01' } }] }
+
+      it { expect(decision.on_benefits?).to be false }
     end
 
     context 'with no claims' do
