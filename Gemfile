@@ -114,7 +114,7 @@ group :development, :test do
   gem 'rubocop-capybara'
   gem 'rubocop-factory_bot'
   gem 'rubocop-rspec_rails'
-  gem 'simplecov', '~> 1.2.0'
+  gem 'simplecov', '>= 1.3.2'
 end
 
 group :test do
