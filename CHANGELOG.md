@@ -13,8 +13,8 @@ with entries grouped by branch and date rather than release version.
   Credit, Income Support, income-based ESA/JSA), with a `live` award in the
   date window paying over £0; UC also needs take home pay under £500.
   Superseded awards are ignored as replaced versions of a period.
-- `benefit_checks.claim_decision_reasoning` stores one reason per claim
-  (see `ClaimsDecision`), so staff can see why a check passed or failed.
+- `benefit_checks.claim_decision_reasoning` stores the reason that decided
+  the DWP check (see `ClaimsDecision`), so staff can see why it passed or failed.
 
 ## 2026-10-05 (rst-8363-date-in-query)
 

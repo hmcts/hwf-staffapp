@@ -388,64 +388,72 @@ RSpec.describe BenefitCheckers::ClaimsDecision do
     end
   end
 
-  # One reason per claim, in the order DWP returned them, naming the criterion that decided it
-  describe '#reasons' do
+  # The one reason that decided the check, named after the RST-8365 scenario wording
+  describe '#reason' do
     let(:in_window) { { start_date: '2026-08-28', end_date: '2026-09-27' } }
 
-    def reasons_for(*claims_list)
-      described_class.new({ 'data' => claims_list }, window).reasons
+    def reason_for(*claims_list)
+      described_class.new({ 'data' => claims_list }, window).reason
     end
 
     it 'says when no claims came back' do
-      expect(reasons_for).to eq ['no_claims_returned']
-      expect(described_class.new(nil, window).reasons).to eq ['no_claims_returned']
+      expect(reason_for).to eq 'no_claims_returned'
+      expect(described_class.new(nil, window).reason).to eq 'no_claims_returned'
     end
 
     it 'says when the benefit is not listed' do
-      expect(reasons_for(other_claim(benefit_type: 'carers_allowance'))).to eq ['benefit_type_not_listed']
+      expect(reason_for(other_claim(benefit_type: 'carers_allowance'))).to eq 'benefit_type_not_listed'
     end
 
     it 'says when the claim is not active inside the window' do
-      expect(reasons_for(other_claim(benefit_type: 'income_support', status: 'claim_closed'))).to eq ['claim_not_active_within_range']
-      expect(reasons_for(claim(status: 'in_payment', start_date: '2026-10-15'))).to eq ['claim_not_active_within_range']
+      expect(reason_for(other_claim(benefit_type: 'income_support', status: 'claim_closed'))).to eq 'claim_not_active_within_range'
+      expect(reason_for(claim(status: 'in_payment', start_date: '2026-10-15'))).to eq 'claim_not_active_within_range'
     end
 
     it 'says when payments are suspended' do
-      expect(reasons_for(uc_claim(status: 'suspended', awards: [uc_award(**in_window)]))).to eq ['payments_suspended_within_range']
+      expect(reason_for(uc_claim(status: 'suspended', awards: [uc_award(**in_window)]))).to eq 'payments_suspended_within_range'
     end
 
     it 'says when take home pay is over the limit' do
-      expect(reasons_for(uc_claim(awards: [uc_award(**in_window, take_home_pay: 50_000)]))).to eq ['take_home_pay_over_limit']
+      expect(reason_for(uc_claim(awards: [uc_award(**in_window, take_home_pay: 50_000)]))).to eq 'take_home_pay_over_limit'
     end
 
     it 'says when nothing was paid inside the window' do
-      expect(reasons_for(uc_claim(awards: [uc_award(**in_window, amount: 0)]))).to eq ['0_paid_within_range']
-      expect(reasons_for(uc_claim(awards: [uc_award(start_date: '2026-07-01', end_date: '2026-07-31')]))).to eq ['0_paid_within_range']
-      expect(reasons_for(other_claim(benefit_type: 'income_support', amount: 0))).to eq ['0_paid_within_range']
+      expect(reason_for(uc_claim(awards: [uc_award(**in_window, amount: 0)]))).to eq '0_paid_within_range'
+      expect(reason_for(uc_claim(awards: [uc_award(start_date: '2026-07-01', end_date: '2026-07-31')]))).to eq '0_paid_within_range'
+      expect(reason_for(other_claim(benefit_type: 'income_support', amount: 0))).to eq '0_paid_within_range'
     end
 
     it 'prefers the take home pay reason when an award was paid but earned too much' do
       awards = [uc_award(**in_window, amount: 0), uc_award(**in_window, take_home_pay: 90_000)]
-      expect(reasons_for(uc_claim(awards: awards))).to eq ['take_home_pay_over_limit']
+      expect(reason_for(uc_claim(awards: awards))).to eq 'take_home_pay_over_limit'
     end
 
     it 'says which kind of benefit passed' do
-      expect(reasons_for(uc_claim(awards: [uc_award(**in_window)]))).to eq ['universal_credit_passed']
-      expect(reasons_for(other_claim(benefit_type: 'job_seekers_allowance_income_based'))).to eq ['other_benefit_passed']
+      expect(reason_for(uc_claim(awards: [uc_award(**in_window)]))).to eq 'universal_credit_passed'
+      expect(reason_for(other_claim(benefit_type: 'job_seekers_allowance_income_based'))).to eq 'other_benefit_passed'
     end
 
-    it 'gives one reason per claim in response order' do
-      closed = other_claim(benefit_type: 'income_support', status: 'claim_closed')
-      passing = uc_claim(awards: [uc_award(**in_window)])
+    context 'with several claims' do
+      let(:closed) { other_claim(benefit_type: 'income_support', status: 'claim_closed') }
+      let(:unpaid) { other_claim(benefit_type: 'job_seekers_allowance_income_based', amount: 0) }
+      let(:passing) { uc_claim(awards: [uc_award(**in_window)]) }
 
-      expect(reasons_for(closed, passing)).to eq ['claim_not_active_within_range', 'universal_credit_passed']
-      expect(reasons_for(passing, closed)).to eq ['universal_credit_passed', 'claim_not_active_within_range']
+      it 'gives the passing reason whichever claim passed' do
+        expect(reason_for(closed, passing)).to eq 'universal_credit_passed'
+        expect(reason_for(passing, closed)).to eq 'universal_credit_passed'
+      end
+
+      it 'gives the first claim its reason when none passed' do
+        expect(reason_for(closed, unpaid)).to eq 'claim_not_active_within_range'
+        expect(reason_for(unpaid, closed)).to eq '0_paid_within_range'
+      end
     end
 
     it 'agrees with on_benefits?' do
       decision = described_class.new({ 'data' => [other_claim(benefit_type: 'income_support', amount: 0)] }, window)
       expect(decision.on_benefits?).to be false
-      expect(decision.reasons).to eq ['0_paid_within_range']
+      expect(decision.reason).to eq '0_paid_within_range'
     end
   end
 

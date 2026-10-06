@@ -14,7 +14,7 @@ module BenefitCheckers
     # Universal Credit take home pay limit for an assessment period, in pence (£500)
     TAKE_HOME_PAY_LIMIT = 50_000
 
-    # One reason per claim, stored on the benefit check as claim_decision_reasoning
+    # The reason that decided the check, stored on the benefit check as claim_decision_reasoning
     NO_CLAIMS = 'no_claims_returned'.freeze
     NOT_LISTED = 'benefit_type_not_listed'.freeze
     NOT_ACTIVE = 'claim_not_active_within_range'.freeze
@@ -34,14 +34,19 @@ module BenefitCheckers
 
     # One claim that meets every condition is enough
     def on_benefits?
-      reasons.intersect?(PASSED)
+      PASSED.include?(reason)
     end
 
-    def reasons
-      @reasons ||= @claims.empty? ? [NO_CLAIMS] : @claims.map { |claim| claim_reason(claim) }
+    # Why the check passed, or why the first claim failed when none passed
+    def reason
+      @reason ||= claim_reasons.find { |claim_reason| PASSED.include?(claim_reason) } || claim_reasons.first
     end
 
     private
+
+    def claim_reasons
+      @claim_reasons ||= @claims.empty? ? [NO_CLAIMS] : @claims.map { |claim| claim_reason(claim) }
+    end
 
     # The first condition the claim fails, or why it passed. RST-8365. See CHANGELOG.md
     def claim_reason(claim)

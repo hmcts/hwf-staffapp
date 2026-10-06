@@ -471,15 +471,15 @@ RSpec.describe BenefitCheckers::DwpApiClient, type: :service do
       # see CHANGELOG.md
       it 'stores why the claim passed on the benefit check' do
         client.check(params)
-        expect(benefit_check.reload.claim_decision_reasoning).to eq ['other_benefit_passed']
+        expect(benefit_check.reload.claim_decision_reasoning).to eq 'other_benefit_passed'
       end
 
-      it 'stores one reason per claim when the claim fails' do
+      it 'stores why the claim failed' do
         allow(connection).to receive(:get_claims).and_return(
           { 'data' => [{ 'id' => 'is_0', 'attributes' => listed_claim.merge('status' => 'claim_closed') }] }
         )
         client.check(params)
-        expect(benefit_check.reload.claim_decision_reasoning).to eq ['claim_not_active_within_range']
+        expect(benefit_check.reload.claim_decision_reasoning).to eq 'claim_not_active_within_range'
       end
     end
 
@@ -488,7 +488,7 @@ RSpec.describe BenefitCheckers::DwpApiClient, type: :service do
 
       it 'stores that there was no match' do
         client.check(params)
-        expect(benefit_check.reload.claim_decision_reasoning).to eq ['no_match_found']
+        expect(benefit_check.reload.claim_decision_reasoning).to eq 'no_match_found'
       end
     end
 
@@ -617,7 +617,7 @@ RSpec.describe BenefitCheckers::DwpApiClient, type: :service do
 
       it 'stores that no claims came back' do
         client.check(params)
-        expect(benefit_check.reload.claim_decision_reasoning).to eq ['no_claims_returned']
+        expect(benefit_check.reload.claim_decision_reasoning).to eq 'no_claims_returned'
       end
     end
 
@@ -1003,7 +1003,7 @@ RSpec.describe BenefitCheckers::DwpApiClient, type: :service do
 
           it 'stores the reason from the partner claims' do
             client.check(params)
-            expect(benefit_check.reload.claim_decision_reasoning).to eq ['other_benefit_passed']
+            expect(benefit_check.reload.claim_decision_reasoning).to eq 'other_benefit_passed'
           end
         end
 
@@ -1047,7 +1047,7 @@ RSpec.describe BenefitCheckers::DwpApiClient, type: :service do
 
           it 'stores that there was no match' do
             client.check(params)
-            expect(benefit_check.reload.claim_decision_reasoning).to eq ['no_match_found']
+            expect(benefit_check.reload.claim_decision_reasoning).to eq 'no_match_found'
           end
 
           it 'does not call get_claims' do

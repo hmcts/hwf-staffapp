@@ -24,7 +24,7 @@ module BenefitCheckers
       if applicant_guid_present?(response) || partner_guid_present?
         fetch_claims(@guid)
       else
-        not_on_benefits_response([NO_MATCH])
+        not_on_benefits_response(NO_MATCH)
       end
     end
 
@@ -78,7 +78,7 @@ module BenefitCheckers
       benefits_result(claims)
     rescue ::HwfDwpApiError, ::HwfDwpApiTokenError => e
       store_api_call('get_claims', request_params, parse_error_data(e))
-      return not_on_benefits_response([ClaimsDecision::NO_CLAIMS]) if e.error_type == :not_found
+      return not_on_benefits_response(ClaimsDecision::NO_CLAIMS) if e.error_type == :not_found
 
       raise_mapped_error(e)
     end
@@ -124,16 +124,16 @@ module BenefitCheckers
     # Claim dates are checked against the window here as well. See CHANGELOG.md
     def benefits_result(claims)
       decision = ClaimsDecision.new(claims, effective_date_window)
-      benefit_checker_response(decision.on_benefits? ? 'Yes' : 'No', decision.reasons)
+      benefit_checker_response(decision.on_benefits? ? 'Yes' : 'No', decision.reason)
     end
 
-    def not_on_benefits_response(reasons)
-      benefit_checker_response('No', reasons)
+    def not_on_benefits_response(reason)
+      benefit_checker_response('No', reason)
     end
 
-    # The reasons are kept on the benefit check so staff can see why. See CHANGELOG.md
-    def benefit_checker_response(status, reasons)
-      @benefit_check&.update(claim_decision_reasoning: reasons)
+    # The reason is kept on the benefit check so staff can see why. See CHANGELOG.md
+    def benefit_checker_response(status, reason)
+      @benefit_check&.update(claim_decision_reasoning: reason)
       { 'benefit_checker_status' => status, 'confirmation_ref' => @guid }.with_indifferent_access
     end
 

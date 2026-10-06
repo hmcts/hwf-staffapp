@@ -168,7 +168,7 @@ ActiveRecord::Schema[8.1].define(version: 2026_10_06_090000) do
     t.string "parameter_hash"
     t.datetime "updated_at", precision: nil
     t.integer "user_id"
-    t.jsonb "claim_decision_reasoning", default: []
+    t.string "claim_decision_reasoning"
     t.index ["application_id"], name: "index_benefit_checks_on_application_id"
     t.index ["applicationable_id", "applicationable_type"], name: "index_bc_applicationable_id_type"
     t.index ["user_id"], name: "index_benefit_checks_on_user_id"
