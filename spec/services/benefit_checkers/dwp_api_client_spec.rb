@@ -39,6 +39,11 @@ RSpec.describe BenefitCheckers::DwpApiClient, type: :service do
     }
   end
 
+  # What a claim needs besides its status and dates to count: a listed benefit and a live award that pays
+  let(:listed_claim) do
+    { 'benefitType' => 'income_support', 'awards' => [{ 'startDate' => '2020-01-01', 'status' => 'live', 'amount' => 8_460 }] }
+  end
+
   before do
     allow(HwfDwpApi).to receive(:new).and_return(connection)
   end
@@ -73,7 +78,11 @@ RSpec.describe BenefitCheckers::DwpApiClient, type: :service do
               'attributes' => {
                 'guid' => citizen_guid,
                 'benefitType' => 'universal_credit',
-                'status' => 'in_payment'
+                'status' => 'in_payment',
+                'awards' => [
+                  { 'startDate' => '2025-01-01', 'status' => 'live', 'amount' => 74_500,
+                    'assessmentAttributes' => { 'takeHomePay' => 0 } }
+                ]
               }
             }
           ]
@@ -101,12 +110,9 @@ RSpec.describe BenefitCheckers::DwpApiClient, type: :service do
         {
           'data' => [
             {
-              'id' => 'universal_credit_0',
+              'id' => 'income_support_0',
               'type' => 'Claim',
-              'attributes' => {
-                'guid' => citizen_guid,
-                'status' => 'claim_closed'
-              }
+              'attributes' => listed_claim.merge('guid' => citizen_guid, 'status' => 'claim_closed')
             }
           ]
         }
@@ -130,7 +136,7 @@ RSpec.describe BenefitCheckers::DwpApiClient, type: :service do
 
     context 'with other on-benefits statuses' do
       let(:claims_response) do
-        { 'data' => [{ 'id' => 'claim_0', 'type' => 'Claim', 'attributes' => { 'guid' => citizen_guid, 'status' => status } }] }
+        { 'data' => [{ 'id' => 'claim_0', 'type' => 'Claim', 'attributes' => listed_claim.merge('guid' => citizen_guid, 'status' => status) }] }
       end
 
       before do
@@ -432,7 +438,7 @@ RSpec.describe BenefitCheckers::DwpApiClient, type: :service do
     let(:claims_response) do
       {
         'data' => [
-          { 'id' => 'uc_0', 'attributes' => { 'status' => 'in_payment' } }
+          { 'id' => 'is_0', 'attributes' => listed_claim.merge('status' => 'in_payment') }
         ]
       }
     end
@@ -460,6 +466,29 @@ RSpec.describe BenefitCheckers::DwpApiClient, type: :service do
 
       it 'creates two DwpApiCall records' do
         expect { client.check(params) }.to change(DwpApiCall, :count).by(2)
+      end
+
+      # see CHANGELOG.md
+      it 'stores why the claim passed on the benefit check' do
+        client.check(params)
+        expect(benefit_check.reload.claim_decision_reasoning).to eq ['other_benefit_passed']
+      end
+
+      it 'stores one reason per claim when the claim fails' do
+        allow(connection).to receive(:get_claims).and_return(
+          { 'data' => [{ 'id' => 'is_0', 'attributes' => listed_claim.merge('status' => 'claim_closed') }] }
+        )
+        client.check(params)
+        expect(benefit_check.reload.claim_decision_reasoning).to eq ['claim_not_active_within_range']
+      end
+    end
+
+    context 'when the citizen is not matched' do
+      before { allow(connection).to receive(:match_citizen).and_return({ 'data' => {} }) }
+
+      it 'stores that there was no match' do
+        client.check(params)
+        expect(benefit_check.reload.claim_decision_reasoning).to eq ['no_match_found']
       end
     end
 
@@ -494,7 +523,7 @@ RSpec.describe BenefitCheckers::DwpApiClient, type: :service do
 
       context 'when the only claim in payment started after the window' do
         let(:claims_response) do
-          { 'data' => [{ 'id' => 'uc_0', 'attributes' => { 'status' => 'in_payment', 'startDate' => '2026-10-15' } }] }
+          { 'data' => [{ 'id' => 'is_0', 'attributes' => listed_claim.merge('status' => 'in_payment', 'startDate' => '2026-10-15') }] }
         end
 
         it 'returns No status' do
@@ -504,7 +533,7 @@ RSpec.describe BenefitCheckers::DwpApiClient, type: :service do
 
       context 'when the only claim in payment ended before the window' do
         let(:claims_response) do
-          { 'data' => [{ 'id' => 'is_0', 'attributes' => { 'status' => 'active', 'startDate' => '2025-05-15', 'endDate' => '2026-08-21' } }] }
+          { 'data' => [{ 'id' => 'is_0', 'attributes' => listed_claim.merge('status' => 'active', 'startDate' => '2025-05-15', 'endDate' => '2026-08-21') }] }
         end
 
         it 'returns No status' do
@@ -533,8 +562,8 @@ RSpec.describe BenefitCheckers::DwpApiClient, type: :service do
         let(:claims_response) do
           {
             'data' => [
-              { 'id' => 'is_0', 'attributes' => { 'status' => 'claim_closed', 'startDate' => '2025-05-15', 'endDate' => '2026-09-18' } },
-              { 'id' => 'uc_0', 'attributes' => { 'status' => 'in_payment', 'startDate' => '2026-09-19' } }
+              { 'id' => 'is_0', 'attributes' => listed_claim.merge('status' => 'claim_closed', 'startDate' => '2025-05-15', 'endDate' => '2026-09-18') },
+              { 'id' => 'is_1', 'attributes' => listed_claim.merge('status' => 'in_payment', 'startDate' => '2026-09-19') }
             ]
           }
         end
@@ -585,6 +614,11 @@ RSpec.describe BenefitCheckers::DwpApiClient, type: :service do
         call = benefit_check.dwp_api_calls.find_by(endpoint_name: 'get_claims')
         expect(call.data['errors'].first['status']).to eq('404')
       end
+
+      it 'stores that no claims came back' do
+        client.check(params)
+        expect(benefit_check.reload.claim_decision_reasoning).to eq ['no_claims_returned']
+      end
     end
 
     context 'when connecting to the DWP API fails' do
@@ -623,7 +657,7 @@ RSpec.describe BenefitCheckers::DwpApiClient, type: :service do
     let(:citizen_guid) { 'abc-123-guid' }
     let(:match_response) { { 'data' => { 'id' => citizen_guid } } }
     let(:claims_response) do
-      { 'data' => [{ 'attributes' => { 'status' => 'in_payment' } }] }
+      { 'data' => [{ 'attributes' => listed_claim.merge('status' => 'in_payment') }] }
     end
 
     before do
@@ -707,7 +741,7 @@ RSpec.describe BenefitCheckers::DwpApiClient, type: :service do
     let(:citizen_guid) { 'abc-123-guid' }
     let(:match_response) { { 'data' => { 'id' => citizen_guid } } }
     let(:claims_response) do
-      { 'data' => [{ 'attributes' => { 'status' => 'in_payment' } }] }
+      { 'data' => [{ 'attributes' => listed_claim.merge('status' => 'in_payment') }] }
     end
 
     subject(:client) { described_class.new(benefit_check) }
@@ -798,7 +832,7 @@ RSpec.describe BenefitCheckers::DwpApiClient, type: :service do
     let(:citizen_guid) { 'abc-123-guid' }
     let(:match_response) { { 'data' => { 'id' => citizen_guid } } }
     let(:claims_response) do
-      { 'data' => [{ 'attributes' => { 'status' => 'in_payment' } }] }
+      { 'data' => [{ 'attributes' => listed_claim.merge('status' => 'in_payment') }] }
     end
 
     before do
@@ -901,10 +935,10 @@ RSpec.describe BenefitCheckers::DwpApiClient, type: :service do
     let(:partner_guid) { 'partner-guid-xyz' }
     let(:partner_match_response) { { 'data' => { 'id' => partner_guid } } }
     let(:partner_on_benefits) do
-      { 'data' => [{ 'attributes' => { 'status' => 'in_payment' } }] }
+      { 'data' => [{ 'attributes' => listed_claim.merge('status' => 'in_payment') }] }
     end
     let(:partner_off_benefits) do
-      { 'data' => [{ 'attributes' => { 'status' => 'claim_closed' } }] }
+      { 'data' => [{ 'attributes' => listed_claim.merge('status' => 'claim_closed') }] }
     end
 
     # Mirrors what `partner_params` actually produces from the factory-built
@@ -966,6 +1000,11 @@ RSpec.describe BenefitCheckers::DwpApiClient, type: :service do
             expect { client.check(params) }.
               to change(DwpApiCall.where(endpoint_name: 'match_citizen'), :count).by(2)
           end
+
+          it 'stores the reason from the partner claims' do
+            client.check(params)
+            expect(benefit_check.reload.claim_decision_reasoning).to eq ['other_benefit_passed']
+          end
         end
 
         context 'and partner is matched but not on benefits' do
@@ -979,6 +1018,24 @@ RSpec.describe BenefitCheckers::DwpApiClient, type: :service do
           end
         end
 
+        # RST-8365 scenario 7: a match with no claim details and no error is a No
+        context 'and partner is matched but DWP returns no claims' do
+          before { stub_match_citizen(applicant_response: no_match_response, partner_response: partner_match_response) }
+
+          it 'returns No when the claims list is empty' do
+            allow(connection).to receive(:get_claims).with(partner_guid, anything).and_return({ 'data' => [] })
+
+            expect(client.check(params)['benefit_checker_status']).to eq('No')
+          end
+
+          it 'returns No when DWP answers that there are no claims' do
+            no_claims = { 'errors' => [{ 'status' => '404', 'detail' => 'No claims found for the supplied criteria' }] }.to_json
+            allow(connection).to receive(:get_claims).with(partner_guid, anything).and_raise(HwfDwpApiError.new(no_claims, :not_found))
+
+            expect(client.check(params)['benefit_checker_status']).to eq('No')
+          end
+        end
+
         context 'and partner is also not matched' do
           before do
             stub_match_citizen(applicant_response: no_match_response, partner_response: no_match_response)
@@ -986,6 +1043,11 @@ RSpec.describe BenefitCheckers::DwpApiClient, type: :service do
 
           it 'returns No' do
             expect(client.check(params)['benefit_checker_status']).to eq('No')
+          end
+
+          it 'stores that there was no match' do
+            client.check(params)
+            expect(benefit_check.reload.claim_decision_reasoning).to eq ['no_match_found']
           end
 
           it 'does not call get_claims' do

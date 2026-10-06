@@ -5,6 +5,7 @@ module BenefitCheckers
 
     # Same margin HwfDwpApi::Authentication#expired? uses before it refreshes a token
     TOKEN_REFRESH_BUFFER = 100.seconds
+    NO_MATCH = 'no_match_found'.freeze
 
     attr_reader :connection
 
@@ -23,7 +24,7 @@ module BenefitCheckers
       if applicant_guid_present?(response) || partner_guid_present?
         fetch_claims(@guid)
       else
-        not_on_benefits_response
+        not_on_benefits_response([NO_MATCH])
       end
     end
 
@@ -77,7 +78,7 @@ module BenefitCheckers
       benefits_result(claims)
     rescue ::HwfDwpApiError, ::HwfDwpApiTokenError => e
       store_api_call('get_claims', request_params, parse_error_data(e))
-      return not_on_benefits_response if e.error_type == :not_found
+      return not_on_benefits_response([ClaimsDecision::NO_CLAIMS]) if e.error_type == :not_found
 
       raise_mapped_error(e)
     end
@@ -122,22 +123,17 @@ module BenefitCheckers
 
     # Claim dates are checked against the window here as well. See CHANGELOG.md
     def benefits_result(claims)
-      if ClaimsDecision.new(claims, effective_date_window).on_benefits?
-        on_benefits_response
-      else
-        not_on_benefits_response
-      end
+      decision = ClaimsDecision.new(claims, effective_date_window)
+      benefit_checker_response(decision.on_benefits? ? 'Yes' : 'No', decision.reasons)
     end
 
-    def on_benefits_response
-      benefit_checker_response('Yes')
+    def not_on_benefits_response(reasons)
+      benefit_checker_response('No', reasons)
     end
 
-    def not_on_benefits_response
-      benefit_checker_response('No')
-    end
-
-    def benefit_checker_response(status)
+    # The reasons are kept on the benefit check so staff can see why. See CHANGELOG.md
+    def benefit_checker_response(status, reasons)
+      @benefit_check&.update(claim_decision_reasoning: reasons)
       { 'benefit_checker_status' => status, 'confirmation_ref' => @guid }.with_indifferent_access
     end
 

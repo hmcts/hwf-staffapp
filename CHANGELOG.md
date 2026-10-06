@@ -5,6 +5,17 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 with entries grouped by branch and date rather than release version.
 
+## 2026-10-05 (rst-8365-benefit-types)
+
+### Changed
+
+- RST-8365: a DWP claim now counts only for a listed benefit (UC, Pension
+  Credit, Income Support, income-based ESA/JSA), with a `live` award in the
+  date window paying over £0; UC also needs take home pay under £500.
+  Superseded awards are ignored as replaced versions of a period.
+- `benefit_checks.claim_decision_reasoning` stores one reason per claim
+  (see `ClaimsDecision`), so staff can see why a check passed or failed.
+
 ## 2026-10-05 (rst-8363-date-in-query)
 
 ### Changed
