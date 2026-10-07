@@ -168,6 +168,38 @@ describe BenefitCheckService do
     end
   end
 
+  context 'when the DWP API client fails to connect' do
+    let(:user) { create(:user) }
+    let(:check) { create(:benefit_check, user_id: user.id, date_of_birth: '19800101', ni_number: 'AB123456C', last_name: 'LAST_NAME') }
+
+    before do
+      allow(Settings.dwp_mock).to receive(:fake_api_enabled).and_return(false)
+      allow(Settings).to receive(:dwp_api_enabled).and_return(true)
+      allow(BenefitCheckers::DwpApiClient).to receive(:new).and_raise(
+        Exceptions::TechnicalFaultDwpCheck, 'Connection attributes validation: EXPIRES IN is in past'
+      )
+    end
+
+    it 'does not raise' do
+      expect { described_class.new(check) }.not_to raise_error
+    end
+
+    it 'records the dwp_result as Technical fault' do
+      described_class.new(check)
+      expect(check.dwp_result).to eq('Technical fault')
+    end
+
+    it 'saves the unavailable user message' do
+      described_class.new(check)
+      expect(check.error_message).to eq(I18n.t('error_messages.benefit_checker.unavailable'))
+    end
+
+    it 'marks benefits as not valid' do
+      described_class.new(check)
+      expect(check.benefits_valid).to be false
+    end
+  end
+
   context 'when the DWP API client raises a rate limit error' do
     let(:user) { create(:user) }
     let(:check) { create(:benefit_check, user_id: user.id, date_of_birth: '19800101', ni_number: 'AB123456C', last_name: 'LAST_NAME') }

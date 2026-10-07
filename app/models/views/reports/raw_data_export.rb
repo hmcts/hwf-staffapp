@@ -209,7 +209,7 @@ module Views
             CASE WHEN ec.income_check_type = 'paper' THEN ec.completed_at ELSE NULL END as manual_process_date,
             savings.over_66 AS over_66,
             details.case_number AS case_number,
-            oa.postcode AS postcode,
+            COALESCE(applicants.postcode, oa.postcode) AS postcode,
             applicants.date_of_birth AS date_of_birth,
             details.date_received AS date_received,
             applications.decision_date AS decision_date,

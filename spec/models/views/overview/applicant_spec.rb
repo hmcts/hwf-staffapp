@@ -9,7 +9,7 @@ RSpec.describe Views::Overview::Applicant do
     subject { view.all_fields }
 
     it {
-      is_expected.to eql(['full_name', 'date_of_birth', 'under_age', 'ni_number', 'ho_number', 'status',
+      is_expected.to eql(['full_name', 'postcode', 'date_of_birth', 'under_age', 'ni_number', 'ho_number', 'status',
                           "partner_full_name", "partner_date_of_birth", "partner_ni_number"])
     }
   end
@@ -20,6 +20,13 @@ RSpec.describe Views::Overview::Applicant do
 
   describe '#ho_number' do
     it { expect(view.ho_number).to eql application.applicant.ho_number }
+  end
+
+  describe '#postcode' do
+    let(:applicant) { build_stubbed(:applicant, postcode: 'TW14 1UH') }
+    let(:application) { build_stubbed(:application, applicant: applicant) }
+
+    it { expect(view.postcode).to eql 'TW14 1UH' }
   end
 
   describe '#status' do

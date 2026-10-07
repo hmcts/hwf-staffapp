@@ -7,7 +7,7 @@ module Views
       end
 
       def all_fields
-        ['full_name', 'date_of_birth', 'under_age', 'ni_number', 'ho_number', 'status',
+        ['full_name', 'postcode', 'date_of_birth', 'under_age', 'ni_number', 'ho_number', 'status',
          'partner_full_name', 'partner_date_of_birth', 'partner_ni_number']
       end
 
@@ -23,7 +23,7 @@ module Views
         @application.ni_number&.gsub(/(.{2})/, '\1 ')
       end
 
-      delegate :ho_number, to: :@application
+      delegate :ho_number, :postcode, to: :@application
 
       def partner_ni_number
         @application.partner_ni_number&.gsub(/(.{2})/, '\1 ')

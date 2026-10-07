@@ -33,10 +33,17 @@ class Applicant < ActiveRecord::Base
     age < 16
   end
 
+  # see CHANGELOG.md
+  def partner_details_allowed?
+    return false unless married?
+
+    Settings.dwp_api_enabled || ni_number.present?
+  end
+
   private
 
   def remove_partner_info
-    return if married == true && ni_number.present?
+    return if partner_details_allowed?
     self.partner_date_of_birth = nil
     self.partner_first_name = nil
     self.partner_last_name = nil
@@ -56,14 +63,11 @@ class Applicant < ActiveRecord::Base
   end
 
   def format_ni_number
-    ni_number.delete!(' ') && ni_number.upcase! unless ni_number.nil?
+    self.ni_number = PersonalDetailsFormatter.compact_upcase(ni_number)
   end
 
   def format_ho_number
-    unless ho_number.nil?
-      ho_number.upcase!
-      ho_number.delete!(' ')
-    end
+    self.ho_number = PersonalDetailsFormatter.compact_upcase(ho_number)
   end
 
 end
