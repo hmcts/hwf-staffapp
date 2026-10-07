@@ -21,7 +21,8 @@ module BenefitCheckers
     def check(params)
       response = dwp_api_match(params)
 
-      if applicant_guid_present?(response) || partner_guid_present?
+      if guid_present?(response) || partner_guid_present?
+        fetch_citizen
         fetch_claims(@guid)
       else
         not_on_benefits_response(NO_MATCH)
@@ -69,6 +70,18 @@ module BenefitCheckers
       raise_mapped_error(e)
     end
 
+    # The citizen record comes before the claims, and DWP may hand back a new
+    # guid with it. A missing record is not a failure; anything else is. See CHANGELOG.md
+    def fetch_citizen
+      request_params = { guid: @guid }
+      citizen = retry_once_if_token_rejected('citizen', request_params) { @connection.get_citizen(@guid) }
+      store_api_call('citizen', request_params, citizen)
+      @guid = citizen.dig('data', 'id').presence || @guid
+    rescue ::HwfDwpApiError, ::HwfDwpApiTokenError => e
+      store_api_call('citizen', request_params, parse_error_data(e))
+      raise_mapped_error(e) unless e.error_type == :not_found
+    end
+
     def fetch_claims(guid)
       request_params = { guid: guid }.merge(effective_dates)
       claims = retry_once_if_token_rejected('get_claims', request_params) do
@@ -111,10 +124,6 @@ module BenefitCheckers
       @guid.present?
     end
 
-    def applicant_guid_present?(response)
-      guid_present?(response)
-    end
-
     def partner_guid_present?
       return false unless @benefit_check.applicationable&.applicant&.married?
       response = dwp_api_match(partner_params, partner: true)
@@ -135,12 +144,6 @@ module BenefitCheckers
     def benefit_checker_response(status, reason)
       @benefit_check&.update(claim_decision_reasoning: reason)
       { 'benefit_checker_status' => status, 'confirmation_ref' => @guid }.with_indifferent_access
-    end
-
-    def postcode_for(application)
-      return application.postcode if application.is_a?(OnlineApplication)
-
-      application.applicant&.postcode
     end
 
     def store_api_call(endpoint_name, request_params, response_data)

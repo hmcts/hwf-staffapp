@@ -5,6 +5,15 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 with entries grouped by branch and date rather than release version.
 
+## 2026-10-07 (rst-8412-date-of-death)
+
+### Changed
+
+- The DWP check now fetches the citizen record after every match, applicant
+  or partner, before the claims (match -> citizen -> claims), and carries on
+  with the guid DWP hands back with it. A missing citizen record is not a
+  failure; any other error on that call is, like the claims call.
+
 ## 2026-10-05 (rst-8365-benefit-types)
 
 ### Changed

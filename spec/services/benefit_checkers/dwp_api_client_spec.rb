@@ -44,8 +44,13 @@ RSpec.describe BenefitCheckers::DwpApiClient, type: :service do
     { 'benefitType' => 'income_support', 'awards' => [{ 'startDate' => '2020-01-01', 'status' => 'live', 'amount' => 8_460 }] }
   end
 
+  def citizen_record(guid, attributes = {})
+    { 'jsonapi' => { 'version' => '1.0' }, 'data' => { 'id' => guid, 'type' => 'Citizen', 'attributes' => { 'guid' => guid }.merge(attributes) } }
+  end
+
   before do
     allow(HwfDwpApi).to receive(:new).and_return(connection)
+    allow(connection).to receive(:get_citizen) { |guid| citizen_record(guid) }
   end
 
   describe '#initialize' do
@@ -464,8 +469,30 @@ RSpec.describe BenefitCheckers::DwpApiClient, type: :service do
         expect(call.request_params['guid']).to eq(citizen_guid)
       end
 
-      it 'creates two DwpApiCall records' do
-        expect { client.check(params) }.to change(DwpApiCall, :count).by(2)
+      it 'creates three DwpApiCall records' do
+        expect { client.check(params) }.to change(DwpApiCall, :count).by(3)
+      end
+
+      # The citizen record is fetched on every match, before the claims. See CHANGELOG.md
+      it 'fetches the citizen record between the match and the claims' do
+        client.check(params)
+        expect(connection).to have_received(:match_citizen).ordered
+        expect(connection).to have_received(:get_citizen).with(citizen_guid).ordered
+        expect(connection).to have_received(:get_claims).with(citizen_guid, anything).ordered
+      end
+
+      it 'stores the citizen call' do
+        client.check(params)
+        call = benefit_check.dwp_api_calls.find_by(endpoint_name: 'citizen')
+        expect(call.request_params).to eq('guid' => citizen_guid)
+        expect(call.data).to eq(citizen_record(citizen_guid))
+      end
+
+      it 'uses the guid DWP hands back with the citizen record for the claims call' do
+        allow(connection).to receive(:get_citizen).and_return(citizen_record('rotated-guid'))
+        result = client.check(params)
+        expect(connection).to have_received(:get_claims).with('rotated-guid', anything)
+        expect(result['confirmation_ref']).to eq('rotated-guid')
       end
 
       # see CHANGELOG.md
@@ -489,6 +516,35 @@ RSpec.describe BenefitCheckers::DwpApiClient, type: :service do
       it 'stores that there was no match' do
         client.check(params)
         expect(benefit_check.reload.claim_decision_reasoning).to eq 'no_match_found'
+      end
+    end
+
+    context 'when the citizen record is not found' do
+      let(:not_found) { { 'errors' => [{ 'status' => '404', 'detail' => 'No Resource Found' }] }.to_json }
+
+      before do
+        allow(connection).to receive_messages(match_citizen: match_response, get_claims: claims_response)
+        allow(connection).to receive(:get_citizen).and_raise(HwfDwpApiError.new(not_found, :not_found))
+      end
+
+      it 'stores the error and still checks the claims' do
+        expect(client.check(params)['benefit_checker_status']).to eq('Yes')
+        expect(benefit_check.dwp_api_calls.find_by(endpoint_name: 'citizen').data['errors'].first['status']).to eq('404')
+        expect(connection).to have_received(:get_claims).with(citizen_guid, anything)
+      end
+    end
+
+    context 'when the citizen call fails for another reason' do
+      let(:unavailable) { { 'errors' => [{ 'status' => '503', 'detail' => 'Service Unavailable' }] }.to_json }
+
+      before do
+        allow(connection).to receive_messages(match_citizen: match_response, get_claims: claims_response)
+        allow(connection).to receive(:get_citizen).and_raise(HwfDwpApiError.new(unavailable, :service_unavailable))
+      end
+
+      it 'is a failed check, like any other DWP failure' do
+        expect { client.check(params) }.to raise_error(Exceptions::TechnicalFaultDwpCheck)
+        expect(benefit_check.dwp_api_calls.pluck(:endpoint_name)).to eq(['match_citizen', 'citizen'])
       end
     end
 
@@ -604,9 +660,9 @@ RSpec.describe BenefitCheckers::DwpApiClient, type: :service do
         allow(connection).to receive(:get_claims).and_raise(HwfDwpApiError.new(not_found_error, :not_found))
       end
 
-      it 'stores both API calls' do
+      it 'stores the match, citizen and claims calls' do
         client.check(params)
-        expect(benefit_check.dwp_api_calls.count).to eq(2)
+        expect(benefit_check.dwp_api_calls.pluck(:endpoint_name)).to eq(['match_citizen', 'citizen', 'get_claims'])
       end
 
       it 'stores the error in the get_claims call' do
@@ -981,6 +1037,11 @@ RSpec.describe BenefitCheckers::DwpApiClient, type: :service do
           it 'fetches claims using the partner guid' do
             client.check(params)
             expect(connection).to have_received(:get_claims).with(partner_guid, anything)
+          end
+
+          it 'fetches the partner citizen record before the claims' do
+            client.check(params)
+            expect(connection).to have_received(:get_citizen).with(partner_guid)
           end
 
           it 'sends the effective date window with the partner claims call too' do
