@@ -77,6 +77,7 @@ module BenefitCheckers
       citizen = retry_once_if_token_rejected('citizen', request_params) { @connection.get_citizen(@guid) }
       store_api_call('citizen', request_params, citizen)
       @guid = citizen.dig('data', 'id').presence || @guid
+      @date_of_death = DateOfDeath.flagged(citizen, effective_date_window&.effective_to)
     rescue ::HwfDwpApiError, ::HwfDwpApiTokenError => e
       store_api_call('citizen', request_params, parse_error_data(e))
       raise_mapped_error(e) unless e.error_type == :not_found
@@ -91,15 +92,13 @@ module BenefitCheckers
       benefits_result(claims)
     rescue ::HwfDwpApiError, ::HwfDwpApiTokenError => e
       store_api_call('get_claims', request_params, parse_error_data(e))
-      return not_on_benefits_response(ClaimsDecision::NO_CLAIMS) if e.error_type == :not_found
+      return benefits_result(nil) if e.error_type == :not_found
 
       raise_mapped_error(e)
     end
 
     # Sent with every claims call, for the applicant and the partner alike
     def effective_dates
-      return {} unless effective_date_window
-
       effective_date_window.to_h
     end
 
@@ -132,8 +131,15 @@ module BenefitCheckers
 
     # Claim dates are checked against the window here as well. See CHANGELOG.md
     def benefits_result(claims)
+      return deceased_response if @date_of_death
+
       decision = ClaimsDecision.new(claims, effective_date_window)
       benefit_checker_response(decision.on_benefits? ? 'Yes' : 'No', decision.reason)
+    end
+
+    def deceased_response
+      @benefit_check&.update(date_of_death: @date_of_death)
+      benefit_checker_response('No', DateOfDeath::FLAGGED)
     end
 
     def not_on_benefits_response(reason)
@@ -149,12 +155,8 @@ module BenefitCheckers
     def store_api_call(endpoint_name, request_params, response_data)
       return unless @benefit_check
 
-      DwpApiCall.create(
-        benefit_check: @benefit_check,
-        endpoint_name: endpoint_name,
-        request_params: request_params,
-        data: response_data
-      )
+      DwpApiCall.create(benefit_check: @benefit_check, endpoint_name: endpoint_name,
+                        request_params: request_params, data: response_data)
     end
   end
 end

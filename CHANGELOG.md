@@ -13,6 +13,11 @@ with entries grouped by branch and date rather than release version.
   or partner, before the claims (match -> citizen -> claims), and carries on
   with the guid DWP hands back with it. A missing citizen record is not a
   failure; any other error on that call is, like the claims call.
+- Date of death: a date on the citizen record that is on or before the
+  application date (submitted, received or fee paid) is stored in
+  `benefit_checks.date_of_death` and makes the check No with
+  `date_of_death_flagged`, whatever the claims say; the claims are still
+  fetched and stored. Otherwise the RST-8365 rules decide as before.
 
 ## 2026-10-05 (rst-8365-benefit-types)
 
