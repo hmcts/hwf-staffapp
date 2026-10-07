@@ -18,6 +18,9 @@ with entries grouped by branch and date rather than release version.
   `benefit_checks.date_of_death` and makes the check No with
   `date_of_death_flagged`, whatever the claims say; the claims are still
   fetched and stored. Otherwise the RST-8365 rules decide as before.
+- `DwpApiClient` split for readability: token handling in `DwpApiConnection`,
+  call storage in `DwpApiCallRecorder`, one `call_dwp` helper for every DWP
+  call. No behaviour change.
 
 ## 2026-10-05 (rst-8365-benefit-types)
 

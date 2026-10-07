@@ -1,5 +1,8 @@
 module BenefitCheckers
   module DwpApiErrorHandler
+    # DWP answers these when nobody, or more than one person, fits the match request
+    MATCH_NOT_FOUND = [:not_found, :unprocessable, :bad_request].freeze
+
     private
 
     # Maps HwfDwpApiError error_type to the exceptions process_proxy_api_call expects
@@ -20,7 +23,7 @@ module BenefitCheckers
     end
 
     def match_not_found?(error)
-      [:not_found, :unprocessable, :bad_request].include?(error.error_type)
+      MATCH_NOT_FOUND.include?(error.error_type)
     end
 
     def dwp_error_detail(error)
