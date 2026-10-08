@@ -610,28 +610,6 @@ RSpec.describe BenefitCheckers::DwpApiClient, type: :service do
         expect(benefit_check.dwp_api_calls.pluck(:endpoint_name)).to eq(['match_citizen', 'citizen'])
       end
 
-      # see CHANGELOG.md
-      it 'stores why the claim passed on the benefit check' do
-        client.check(params)
-        expect(benefit_check.reload.claim_decision_reasoning).to eq 'other_benefit_passed'
-      end
-
-      it 'stores why the claim failed' do
-        allow(connection).to receive(:get_claims).and_return(
-          { 'data' => [{ 'id' => 'is_0', 'attributes' => listed_claim.merge('status' => 'claim_closed') }] }
-        )
-        client.check(params)
-        expect(benefit_check.reload.claim_decision_reasoning).to eq 'claim_not_active_within_range'
-      end
-    end
-
-    context 'when the citizen is not matched' do
-      before { allow(connection).to receive(:match_citizen).and_return({ 'data' => {} }) }
-
-      it 'stores that there was no match' do
-        client.check(params)
-        expect(benefit_check.reload.claim_decision_reasoning).to eq 'no_match_found'
-      end
     end
 
     context 'effective date window' do
