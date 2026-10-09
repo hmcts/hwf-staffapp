@@ -23,8 +23,9 @@ module Views
         SQL
       end
 
+      # 'N/A' for an empty value too, so every export shows the same thing
       def benefit_check_column(value, not_applicable)
-        "CASE WHEN #{not_applicable} THEN 'N/A' WHEN #{laa_check} THEN 'LAA' ELSE #{value} END"
+        "CASE WHEN #{not_applicable} THEN 'N/A' WHEN #{laa_check} THEN 'LAA' ELSE COALESCE(#{value}, 'N/A') END"
       end
 
       def laa_check
