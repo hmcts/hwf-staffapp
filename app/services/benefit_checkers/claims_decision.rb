@@ -42,7 +42,37 @@ module BenefitCheckers
       @reason ||= claim_reasons.find { |claim_reason| PASSED.include?(claim_reason) } || claim_reasons.first
     end
 
+    # What the raw data export shows: every benefit type returned, and the status
+    # and take home pay of the claim the decision used. RST-7882. See CHANGELOG.md
+    def summary
+      {
+        benefit_types: @claims.filter_map { |claim| benefit_type(claim) }.join(' and ').presence,
+        claim_status: deciding_claim && status_for(deciding_claim),
+        take_home_pay: deciding_claim && take_home_pay_for(deciding_claim)
+      }
+    end
+
     private
+
+    # The passing claim, or the first one when none passed
+    def deciding_claim
+      @deciding_claim ||= @claims[claim_reasons.index { |claim_reason| PASSED.include?(claim_reason) } || 0]
+    end
+
+    def status_for(claim)
+      return 'suspended' if claim_status(claim) == 'suspended'
+      return 'active' if on_benefits_status?(claim) && within_window?(claim['attributes'])
+
+      'not active'
+    end
+
+    # From the award the decision used: the one that paid, else the first live one in the window
+    def take_home_pay_for(claim)
+      return unless benefit_type(claim) == UNIVERSAL_CREDIT && status_for(claim) == 'active'
+
+      award = paid_awards_in_window(claim).first || awards(claim).find { |a| live?(a) && within_window?(a) }
+      award&.dig('assessmentAttributes', 'takeHomePay')
+    end
 
     def claim_reasons
       @claim_reasons ||= @claims.empty? ? [NO_CLAIMS] : @claims.map { |claim| claim_reason(claim) }

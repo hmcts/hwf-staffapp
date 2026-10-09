@@ -703,4 +703,78 @@ RSpec.describe Views::Reports::RawDataExport do
       it { expect(row['DB income check type']).to eq 'hmrc' }
     end
   end
+
+  # RST-7882: the DWP benefit check columns come from the latest benefit check. See CHANGELOG.md
+  describe 'DWP benefit check columns' do
+    let(:application) do
+      create(:application_full_remission, :processed_state, shared_parameters.merge(application_type: 'benefit', benefits: true))
+    end
+
+    # The row's last seven columns: HMRC request date range, then the six benefit check columns
+    def benefit_columns(application)
+      row = data.to_csv.lines.find { |line| line.start_with?("#{application.id},") }
+      row.strip.split(',').last(6)
+    end
+
+    it 'exports what the DWP check decided on' do
+      create(:benefit_check, applicationable: application, dwp_result: 'Yes', checker: 'dwp',
+                             benefit_types: 'universal_credit', claim_status: 'active', take_home_pay: 41_050)
+
+      expect(benefit_columns(application)).to eq(['Yes', 'N/A', 'N/A', 'universal_credit', 'active', '41050'])
+    end
+
+    it 'exports the error and N/A for the response when the check failed' do
+      create(:benefit_check, applicationable: application, dwp_result: 'Server unavailable', checker: 'dwp',
+                             error_message: 'The benefits checker is not available at the moment. Please check again later.')
+
+      expect(benefit_columns(application)).to eq(['N/A', 'The benefits checker is not available at the moment. Please check again later.', 'N/A', 'N/A', 'N/A', 'N/A'])
+    end
+
+    it 'exports a flagged date of death as yyyy-mm-dd' do
+      create(:benefit_check, applicationable: application, dwp_result: 'No', checker: 'dwp',
+                             date_of_death: Date.new(2026, 9, 20), benefit_types: 'universal_credit', claim_status: 'not active')
+
+      expect(benefit_columns(application)).to eq(['No', 'N/A', '2026-09-20', 'universal_credit', 'not active', 'N/A'])
+    end
+
+    it 'exports LAA for a check made through the old checker' do
+      create(:benefit_check, applicationable: application, dwp_result: 'Yes', checker: nil)
+
+      expect(benefit_columns(application)).to eq(['LAA', 'LAA', 'LAA', 'LAA', 'LAA', 'LAA'])
+    end
+
+    it 'exports N/A when staff said the applicant has no benefits' do
+      application.update(benefits: false)
+      create(:benefit_check, applicationable: application, dwp_result: 'Yes', checker: 'dwp', benefit_types: 'universal_credit')
+
+      expect(benefit_columns(application)).to eq(['N/A', 'N/A', 'N/A', 'N/A', 'N/A', 'N/A'])
+    end
+
+    it 'exports N/A for an income application' do
+      application.update(application_type: 'income')
+      create(:benefit_check, applicationable: application, dwp_result: 'Yes', checker: 'dwp', benefit_types: 'universal_credit')
+
+      expect(benefit_columns(application)).to eq(['N/A', 'N/A', 'N/A', 'N/A', 'N/A', 'N/A'])
+    end
+
+    it 'exports N/A when there was no check' do
+      expect(benefit_columns(application)).to eq(['N/A', 'N/A', 'N/A', 'N/A', 'N/A', 'N/A'])
+    end
+
+    it 'uses the latest check when there are several' do
+      create(:benefit_check, applicationable: application, dwp_result: 'No', checker: 'dwp', claim_status: 'not active', created_at: 2.days.ago)
+      create(:benefit_check, applicationable: application, dwp_result: 'Yes', checker: 'dwp', claim_status: 'active', created_at: 1.day.ago)
+
+      expect(benefit_columns(application).first).to eq('Yes')
+      expect(benefit_columns(application)[4]).to eq('active')
+    end
+
+    it 'finds the check made on the online application before it was converted' do
+      online_application = create(:online_application, :with_reference)
+      application.update(online_application: online_application)
+      create(:benefit_check, applicationable: online_application, dwp_result: 'Yes', checker: 'dwp', benefit_types: 'pensions_credit', claim_status: 'active')
+
+      expect(benefit_columns(application)).to eq(['Yes', 'N/A', 'N/A', 'pensions_credit', 'active', 'N/A'])
+    end
+  end
 end

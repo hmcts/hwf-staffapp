@@ -2,6 +2,7 @@
 module Views
   module Reports
     class RawDataExport < ReportBase
+      include BenefitCheckColumns
 
       # Keys are the SQL column aliases this report selects; values are the
       # canonical header labels, drawn from the single source of truth so the
@@ -69,7 +70,13 @@ module Views
         complete_processing: L.fetch(:complete_processing),
         additional_income: L.fetch(:additional_income),
         income_processed: L.fetch(:income_processed),
-        hmrc_request_date_range: L.fetch(:hmrc_request_date_range)
+        hmrc_request_date_range: L.fetch(:hmrc_request_date_range),
+        benefit_checker_response: L.fetch(:benefit_checker_response),
+        benefit_checker_errors: L.fetch(:benefit_checker_errors),
+        date_of_death: L.fetch(:date_of_death),
+        benefit_type: L.fetch(:benefit_type),
+        benefit_status: L.fetch(:benefit_status),
+        take_home_pay: L.fetch(:take_home_pay)
       }.freeze
 
       HEADERS = FIELDS.values
@@ -141,6 +148,11 @@ module Views
 
       def data
         @data ||= build_data
+      end
+
+      # Not a benefit application, staff said no benefits, or no check
+      def not_a_dwp_benefit_check
+        "applications.application_type <> 'benefit' OR applications.benefits = FALSE OR bc.id IS NULL"
       end
 
       def build_data
@@ -272,6 +284,7 @@ module Views
               ELSE NULL
             END as income_processed,
             hc.request_params as hmrc_request_date_range,
+            #{benefit_check_columns(not_a_dwp_benefit_check)}
             details.fee_code,
             details.claim_amount,
             details.fee_entry_method
@@ -294,6 +307,7 @@ module Views
             (partition by evidence_check_id order by created_at desc)
             as row_number from hmrc_checks
           ) hc ON ec.id = hc.evidence_check_id AND (hc.row_number = 1 OR hc.row_number IS NULL)
+          LEFT JOIN (#{latest_benefit_check_per_application_sql}) bc ON bc.app_id = applications.id AND bc.row_number = 1
           WHERE offices.name NOT IN ('Digital', 'HMCTS HQ Team')
             AND applications.decision_date >= '#{@date_from.strftime('%Y-%m-%d %H:%M:%S')}'
             AND applications.decision_date <= '#{@date_to.strftime('%Y-%m-%d %H:%M:%S')}'

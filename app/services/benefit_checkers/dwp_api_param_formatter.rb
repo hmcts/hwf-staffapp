@@ -48,6 +48,12 @@ module BenefitCheckers
       nino.gsub(/[A-Za-z]/, '').last(4)
     end
 
+    def postcode_for(application)
+      return application.postcode if application.is_a?(OnlineApplication)
+
+      application.applicant&.postcode
+    end
+
     def transformed_params(params, partner: false)
       return params if partner
       citizen_params(params).merge(applicant_extras)
