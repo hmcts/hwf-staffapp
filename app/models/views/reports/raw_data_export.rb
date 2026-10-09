@@ -2,6 +2,7 @@
 module Views
   module Reports
     class RawDataExport < ReportBase
+      include BenefitCheckColumns
 
       # Keys are the SQL column aliases this report selects; values are the
       # canonical header labels, drawn from the single source of truth so the
@@ -139,47 +140,6 @@ module Views
         data.size
       end
 
-      # RST-7882: six columns from the latest DWP benefit check. 'LAA' marks a
-      # check made through the old checker (nil checker), 'N/A' an application
-      # that is not a benefit one, had no check, or whose check did not answer. See CHANGELOG.md
-      def benefit_check_columns
-        <<~SQL.squish
-          CASE WHEN #{not_a_dwp_benefit_check} THEN 'N/A'
-               WHEN bc.checker IS NULL OR bc.checker = 'laa' THEN 'LAA'
-               WHEN bc.dwp_result IN ('Yes', 'No') THEN bc.dwp_result
-               ELSE 'N/A' END AS benefit_checker_response,
-          #{dwp_column('bc.error_message')} AS benefit_checker_errors,
-          #{dwp_column("to_char(bc.date_of_death, 'YYYY-MM-DD')")} AS date_of_death,
-          #{dwp_column('bc.benefit_types')} AS benefit_type,
-          #{dwp_column('bc.claim_status')} AS benefit_status,
-          #{dwp_column('bc.take_home_pay::text')} AS take_home_pay,
-        SQL
-      end
-
-      def not_a_dwp_benefit_check
-        "applications.application_type <> 'benefit' OR applications.benefits = FALSE OR bc.id IS NULL"
-      end
-
-      def dwp_column(value)
-        "CASE WHEN #{not_a_dwp_benefit_check} THEN 'N/A' " \
-          "WHEN bc.checker IS NULL OR bc.checker = 'laa' THEN 'LAA' ELSE #{value} END"
-      end
-
-      # The latest check per application, whether it was made on the paper
-      # application or on the online application it came from.
-      def latest_benefit_check_sql
-        <<~SQL.squish
-          SELECT checks.*, row_number() OVER (PARTITION BY checks.app_id ORDER BY checks.created_at DESC, checks.id DESC) AS row_number
-          FROM (
-            SELECT benefit_checks.*, applications.id AS app_id
-            FROM benefit_checks
-            INNER JOIN applications ON (benefit_checks.applicationable_type = 'Application' AND benefit_checks.applicationable_id = applications.id)
-              OR (benefit_checks.applicationable_type = 'OnlineApplication' AND benefit_checks.applicationable_id = applications.online_application_id)
-            WHERE benefit_checks.dwp_result IS NOT NULL
-          ) checks
-        SQL
-      end
-
       def tidy_up
         FileUtils.rm_f(zipfile_path)
       end
@@ -188,6 +148,11 @@ module Views
 
       def data
         @data ||= build_data
+      end
+
+      # Not a benefit application, staff said no benefits, or no check
+      def not_a_dwp_benefit_check
+        "applications.application_type <> 'benefit' OR applications.benefits = FALSE OR bc.id IS NULL"
       end
 
       def build_data
@@ -319,7 +284,7 @@ module Views
               ELSE NULL
             END as income_processed,
             hc.request_params as hmrc_request_date_range,
-            #{benefit_check_columns}
+            #{benefit_check_columns(not_a_dwp_benefit_check)}
             details.fee_code,
             details.claim_amount,
             details.fee_entry_method
@@ -342,7 +307,7 @@ module Views
             (partition by evidence_check_id order by created_at desc)
             as row_number from hmrc_checks
           ) hc ON ec.id = hc.evidence_check_id AND (hc.row_number = 1 OR hc.row_number IS NULL)
-          LEFT JOIN (#{latest_benefit_check_sql}) bc ON bc.app_id = applications.id AND bc.row_number = 1
+          LEFT JOIN (#{latest_benefit_check_per_application_sql}) bc ON bc.app_id = applications.id AND bc.row_number = 1
           WHERE offices.name NOT IN ('Digital', 'HMCTS HQ Team')
             AND applications.decision_date >= '#{@date_from.strftime('%Y-%m-%d %H:%M:%S')}'
             AND applications.decision_date <= '#{@date_to.strftime('%Y-%m-%d %H:%M:%S')}'
