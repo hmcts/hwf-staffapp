@@ -501,6 +501,13 @@ RSpec.describe BenefitCheckers::DwpApiClient, type: :service do
         expect(benefit_check.reload.claim_decision_reasoning).to eq 'other_benefit_passed'
       end
 
+      # RST-7882: the raw data export reads these instead of the stored JSON
+      it 'stores what the decision used on the benefit check' do
+        client.check(params)
+        check = benefit_check.reload
+        expect([check.benefit_types, check.claim_status, check.take_home_pay]).to eq(['income_support', 'active', nil])
+      end
+
       it 'stores why the claim failed' do
         allow(connection).to receive(:get_claims).and_return(
           { 'data' => [{ 'id' => 'is_0', 'attributes' => listed_claim.merge('status' => 'claim_closed') }] }
@@ -540,6 +547,11 @@ RSpec.describe BenefitCheckers::DwpApiClient, type: :service do
         it 'stores the date of death on the benefit check' do
           client.check(params)
           expect(benefit_check.reload.date_of_death).to eq(Date.new(2026, 9, 30))
+        end
+
+        it 'still stores what the claims said' do
+          client.check(params)
+          expect(benefit_check.reload.benefit_types).to eq('income_support')
         end
 
         it 'still fetches and stores the claims' do

@@ -5,6 +5,17 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 with entries grouped by branch and date rather than release version.
 
+## 2026-10-08 (rst-7882-dwp-mi-report)
+
+### Changed
+
+- Raw data export: six DWP benefit check columns (response, errors, date of
+  death, benefit type, benefit status, take home pay) from the latest check per
+  application; 'LAA' for checks made through the old checker, 'N/A' otherwise.
+- The check now stores what the decision used (`checker`, `benefit_types`,
+  `claim_status`, `take_home_pay`) so the export reads columns, not the stored
+  DWP JSON. Older checks are not backfilled.
+
 ## 2026-10-07 (rst-8412-date-of-death)
 
 ### Changed

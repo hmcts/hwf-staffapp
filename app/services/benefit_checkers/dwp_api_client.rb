@@ -57,12 +57,13 @@ module BenefitCheckers
     end
 
     def decide(claims)
+      decision = ClaimsDecision.new(claims, effective_date_window)
+      @benefit_check&.update(decision.summary)
       if @date_of_death
         @benefit_check&.update(date_of_death: @date_of_death)
         return result('No', DateOfDeath::FLAGGED)
       end
 
-      decision = ClaimsDecision.new(claims, effective_date_window)
       result(decision.on_benefits? ? 'Yes' : 'No', decision.reason)
     end
 
