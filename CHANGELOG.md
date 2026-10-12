@@ -5,6 +5,23 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 with entries grouped by branch and date rather than release version.
 
+## 2026-10-07 (rst-8412-date-of-death)
+
+### Changed
+
+- The DWP check now fetches the citizen record after every match, applicant
+  or partner, before the claims (match -> citizen -> claims), and carries on
+  with the guid DWP hands back with it. A missing citizen record is not a
+  failure; any other error on that call is, like the claims call.
+- Date of death: a date on the citizen record that is on or before the
+  application date (submitted, received or fee paid) is stored in
+  `benefit_checks.date_of_death` and makes the check No with
+  `date_of_death_flagged`, whatever the claims say; the claims are still
+  fetched and stored. Otherwise the RST-8365 rules decide as before.
+- `DwpApiClient` split for readability: token handling in `DwpApiConnection`,
+  call storage in `DwpApiCallRecorder`, one `call_dwp` helper for every DWP
+  call. No behaviour change.
+
 ## 2026-10-05 (rst-8365-benefit-types)
 
 ### Changed

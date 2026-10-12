@@ -44,8 +44,13 @@ RSpec.describe BenefitCheckers::DwpApiClient, type: :service do
     { 'benefitType' => 'income_support', 'awards' => [{ 'startDate' => '2020-01-01', 'status' => 'live', 'amount' => 8_460 }] }
   end
 
+  def citizen_record(guid, attributes = {})
+    { 'jsonapi' => { 'version' => '1.0' }, 'data' => { 'id' => guid, 'type' => 'Citizen', 'attributes' => { 'guid' => guid }.merge(attributes) } }
+  end
+
   before do
     allow(HwfDwpApi).to receive(:new).and_return(connection)
+    allow(connection).to receive(:get_citizen) { |guid| citizen_record(guid) }
   end
 
   describe '#initialize' do
@@ -464,8 +469,30 @@ RSpec.describe BenefitCheckers::DwpApiClient, type: :service do
         expect(call.request_params['guid']).to eq(citizen_guid)
       end
 
-      it 'creates two DwpApiCall records' do
-        expect { client.check(params) }.to change(DwpApiCall, :count).by(2)
+      it 'creates three DwpApiCall records' do
+        expect { client.check(params) }.to change(DwpApiCall, :count).by(3)
+      end
+
+      # The citizen record is fetched on every match, before the claims. See CHANGELOG.md
+      it 'fetches the citizen record between the match and the claims' do
+        client.check(params)
+        expect(connection).to have_received(:match_citizen).ordered
+        expect(connection).to have_received(:get_citizen).with(citizen_guid).ordered
+        expect(connection).to have_received(:get_claims).with(citizen_guid, anything).ordered
+      end
+
+      it 'stores the citizen call' do
+        client.check(params)
+        call = benefit_check.dwp_api_calls.find_by(endpoint_name: 'citizen')
+        expect(call.request_params).to eq('guid' => citizen_guid)
+        expect(call.data).to eq(citizen_record(citizen_guid))
+      end
+
+      it 'uses the guid DWP hands back with the citizen record for the claims call' do
+        allow(connection).to receive(:get_citizen).and_return(citizen_record('rotated-guid'))
+        result = client.check(params)
+        expect(connection).to have_received(:get_claims).with('rotated-guid', anything)
+        expect(result['confirmation_ref']).to eq('rotated-guid')
       end
 
       # see CHANGELOG.md
@@ -490,6 +517,99 @@ RSpec.describe BenefitCheckers::DwpApiClient, type: :service do
         client.check(params)
         expect(benefit_check.reload.claim_decision_reasoning).to eq 'no_match_found'
       end
+    end
+
+    # Date of death scenarios 1 to 4. See CHANGELOG.md
+    context 'when the citizen record carries a date of death' do
+      let(:application) { create(:application, refund: false, date_received: Date.new(2026, 9, 30)) }
+      let(:benefit_check) { create(:benefit_check, applicationable: application) }
+
+      before { allow(connection).to receive_messages(match_citizen: match_response, get_claims: claims_response) }
+
+      context 'on or before the application date' do
+        before do
+          allow(connection).to receive(:get_citizen).and_return(citizen_record(citizen_guid, 'dateOfDeath' => { 'date' => '2026-09-30' }))
+        end
+
+        it 'answers No, flagged, whatever the claims say' do
+          result = client.check(params)
+          expect(result['benefit_checker_status']).to eq('No')
+          expect(benefit_check.reload.claim_decision_reasoning).to eq('date_of_death_flagged')
+        end
+
+        it 'stores the date of death on the benefit check' do
+          client.check(params)
+          expect(benefit_check.reload.date_of_death).to eq(Date.new(2026, 9, 30))
+        end
+
+        it 'still fetches and stores the claims' do
+          client.check(params)
+          expect(benefit_check.dwp_api_calls.pluck(:endpoint_name)).to eq(['match_citizen', 'citizen', 'get_claims'])
+        end
+
+        it 'is flagged even when DWP returns no claims' do
+          no_claims = { 'errors' => [{ 'status' => '404', 'detail' => 'No claims found for the supplied criteria' }] }.to_json
+          allow(connection).to receive(:get_claims).and_raise(HwfDwpApiError.new(no_claims, :not_found))
+
+          expect(client.check(params)['benefit_checker_status']).to eq('No')
+          expect(benefit_check.reload.claim_decision_reasoning).to eq('date_of_death_flagged')
+          expect(benefit_check.date_of_death).to eq(Date.new(2026, 9, 30))
+        end
+      end
+
+      context 'after the application date' do
+        before do
+          allow(connection).to receive(:get_citizen).and_return(citizen_record(citizen_guid, 'dateOfDeath' => { 'date' => '2026-10-01' }))
+        end
+
+        it 'is not flagged and the claims decide' do
+          result = client.check(params)
+          expect(result['benefit_checker_status']).to eq('Yes')
+          expect(benefit_check.reload.date_of_death).to be_nil
+          expect(benefit_check.claim_decision_reasoning).to eq('other_benefit_passed')
+        end
+      end
+
+      context 'in the wrong format' do
+        before do
+          allow(connection).to receive(:get_citizen).and_return(citizen_record(citizen_guid, 'dateOfDeath' => { 'date' => '05/01/2022' }))
+        end
+
+        it 'is not flagged and the claims decide' do
+          expect(client.check(params)['benefit_checker_status']).to eq('Yes')
+          expect(benefit_check.reload.date_of_death).to be_nil
+        end
+      end
+    end
+
+    context 'when the citizen record is not found' do
+      let(:not_found) { { 'errors' => [{ 'status' => '404', 'detail' => 'No Resource Found' }] }.to_json }
+
+      before do
+        allow(connection).to receive_messages(match_citizen: match_response, get_claims: claims_response)
+        allow(connection).to receive(:get_citizen).and_raise(HwfDwpApiError.new(not_found, :not_found))
+      end
+
+      it 'stores the error and still checks the claims' do
+        expect(client.check(params)['benefit_checker_status']).to eq('Yes')
+        expect(benefit_check.dwp_api_calls.find_by(endpoint_name: 'citizen').data['errors'].first['status']).to eq('404')
+        expect(connection).to have_received(:get_claims).with(citizen_guid, anything)
+      end
+    end
+
+    context 'when the citizen call fails for another reason' do
+      let(:unavailable) { { 'errors' => [{ 'status' => '503', 'detail' => 'Service Unavailable' }] }.to_json }
+
+      before do
+        allow(connection).to receive_messages(match_citizen: match_response, get_claims: claims_response)
+        allow(connection).to receive(:get_citizen).and_raise(HwfDwpApiError.new(unavailable, :service_unavailable))
+      end
+
+      it 'is a failed check, like any other DWP failure' do
+        expect { client.check(params) }.to raise_error(Exceptions::TechnicalFaultDwpCheck)
+        expect(benefit_check.dwp_api_calls.pluck(:endpoint_name)).to eq(['match_citizen', 'citizen'])
+      end
+
     end
 
     context 'effective date window' do
@@ -604,9 +724,9 @@ RSpec.describe BenefitCheckers::DwpApiClient, type: :service do
         allow(connection).to receive(:get_claims).and_raise(HwfDwpApiError.new(not_found_error, :not_found))
       end
 
-      it 'stores both API calls' do
+      it 'stores the match, citizen and claims calls' do
         client.check(params)
-        expect(benefit_check.dwp_api_calls.count).to eq(2)
+        expect(benefit_check.dwp_api_calls.pluck(:endpoint_name)).to eq(['match_citizen', 'citizen', 'get_claims'])
       end
 
       it 'stores the error in the get_claims call' do
@@ -981,6 +1101,17 @@ RSpec.describe BenefitCheckers::DwpApiClient, type: :service do
           it 'fetches claims using the partner guid' do
             client.check(params)
             expect(connection).to have_received(:get_claims).with(partner_guid, anything)
+          end
+
+          it 'fetches the partner citizen record before the claims' do
+            client.check(params)
+            expect(connection).to have_received(:get_citizen).with(partner_guid)
+          end
+
+          it 'flags a partner who died before the application date in the same way' do
+            allow(connection).to receive(:get_citizen).and_return(citizen_record(partner_guid, 'dateOfDeath' => { 'date' => '2020-01-01' }))
+            expect(client.check(params)['benefit_checker_status']).to eq('No')
+            expect(benefit_check.reload.date_of_death).to eq(Date.new(2020, 1, 1))
           end
 
           it 'sends the effective date window with the partner claims call too' do
