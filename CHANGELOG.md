@@ -16,6 +16,11 @@ with entries grouped by branch and date rather than release version.
 - The check now stores what the decision used (`checker`, `benefit_types`,
   `claim_status`, `take_home_pay`) so the export reads columns, not the stored
   DWP JSON. Older checks are not backfilled.
+- `DwpApiCallsPurgeJob` removes the stored DWP response and the personal
+  details in the request once a call is older than
+  `dwp_api_calls_purge.months_ago` (6; env `DWP_API_CALLS_PURGE_MONTHS`),
+  keeping the endpoint, status, dates and the claims request (guid and date
+  window). Scheduled like the other purges, see README.
 
 ## 2026-10-07 (rst-8412-date-of-death)
 

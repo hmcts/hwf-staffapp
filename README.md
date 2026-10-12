@@ -64,6 +64,10 @@ Runs every 5 minutes
 Runs 10 minutes past midnight
 ```HmrcDataPurgeJob.delay(cron: '10 0 * * *').perform_now```
 
+## Delayed jobs for DWP API calls purge
+Runs every day at 2am; removes the stored DWP request and response JSON older than `Settings.dwp_api_calls_purge.months_ago` (6)
+```DwpApiCallsPurgeJob.delay(cron: '0 2 * * *').perform_now```
+
 ## Delayed jobs for Personal data purge
 Runs every day at 1am
 ```PersonalDataPurgeJob.delay(cron: '0 1 * * *').perform_now```
