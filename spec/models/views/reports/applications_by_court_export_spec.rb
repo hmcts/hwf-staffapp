@@ -523,7 +523,7 @@ RSpec.describe Views::Reports::ApplicationsByCourtExport do
           it "from evidence check" do
             reference = application1.reference
             data_row = data.find { |row| row.split(',')[3] == reference }
-            expect(data_row).to include('1578,N/A,N/A,N/A,N/A,N/A,N/A,N/A,legal_representative,true,false,post_ucd')
+            expect(data_row).to include('1578,N/A,legal_representative,true,false,post_ucd,N/A,N/A,N/A,N/A,N/A,N/A,N/A,N/A')
           end
         end
 
@@ -706,9 +706,9 @@ RSpec.describe Views::Reports::ApplicationsByCourtExport do
        'DB income check type', 'HMRC total income', 'Evidence check type',
        'HMRC response?', 'HMRC errors', 'Complete processing?',
        'Additional income', 'Income processed', 'HMRC request date range',
-       'Benefit checker response?', 'Benefit checker errors', 'Date of death', 'Benefit type', 'Benefit status', 'Take home pay',
        'Statement signed by', 'Partner NI entered', 'Partner name entered',
-       'HwF scheme', 'Deletion reason', 'Reason description']
+       'HwF scheme', 'Deletion reason', 'Reason description',
+       'Benefit checker response?', 'Benefit checker errors', 'Date of death', 'Benefit type', 'Benefit status', 'Take home pay']
     end
 
     before { travel_to(date_from + 1.day) { create(:application, :processed_state, office: office) } }

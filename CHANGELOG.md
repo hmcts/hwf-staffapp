@@ -11,7 +11,7 @@ with entries grouped by branch and date rather than release version.
 
 - Raw data, applications-by-court and Power BI exports: six DWP benefit check
   columns (response, errors, date of death, benefit type, benefit status, take
-  home pay) from the latest check per application; 'LAA' for checks made
+  home pay) as the last columns, from the latest check per application; 'LAA' for checks made
   through the old checker, 'N/A' otherwise. Shared in `BenefitCheckColumns`.
 - The check now stores what the decision used (`checker`, `benefit_types`,
   `claim_status`, `take_home_pay`) so the export reads columns, not the stored

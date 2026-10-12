@@ -284,7 +284,7 @@ module Views
               ELSE NULL
             END as income_processed,
             hc.request_params as hmrc_request_date_range,
-            #{benefit_check_columns(not_a_dwp_benefit_check)}
+            #{benefit_check_columns(not_a_dwp_benefit_check)},
             details.fee_code,
             details.claim_amount,
             details.fee_entry_method
