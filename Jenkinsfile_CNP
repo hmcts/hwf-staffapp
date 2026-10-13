@@ -86,6 +86,10 @@ withPipeline(type, product, component) {
       rubyBuilder.bundle("exec rake assets:precompile")
   }
 
+  afterAlways('test') {
+    sh script: 'echo DIAG "ENABLE_COVERAGE=[$ENABLE_COVERAGE]"; ls -la coverage || echo "DIAG no coverage dir"', label: 'DIAG for ENABLE_COVERAGE'
+  }
+
   afterAlways('smokeTest') {
       sh script: "docker stop hwf-test-postgres && docker rm hwf-test-postgres || echo 'Ignoring failure in stopping postgres'",
           label: "docker stop hwf-test-postgres"
