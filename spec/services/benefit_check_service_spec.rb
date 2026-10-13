@@ -25,6 +25,10 @@ describe BenefitCheckService do
         it 'returns the expected mock response' do
           expect(check.dwp_result).to eql('Yes')
         end
+
+        it 'records that the fake checker answered' do
+          expect(check.reload.checker).to eq('mock')
+        end
       end
 
       context 'fake API call replaces the webmock one' do
@@ -130,6 +134,11 @@ describe BenefitCheckService do
     it 'sets the dwp_result from the API response' do
       described_class.new(check)
       expect(check.dwp_result).to eq('Yes')
+    end
+
+    it 'records that DWP answered' do
+      described_class.new(check)
+      expect(check.reload.checker).to eq('dwp')
     end
   end
 

@@ -12,6 +12,8 @@ module Views
     #   export.export3  # waiting_for_evidence and waiting_for_part_payment only (by date_received)
     #
     class PowerBiNewExport
+      include BenefitCheckColumns
+
       require 'csv'
       require 'zip'
 
@@ -31,7 +33,9 @@ module Views
         :date_submitted_online, :statement_signed_by, :db_evidence_check_type,
         :db_income_check_type, :hmrc_total_income, :evidence_check_outcome,
         :evidence_check_type, :hmrc_response, :hmrc_errors, :complete_processing,
-        :additional_income, :income_processed, :hmrc_request_date_range
+        :additional_income, :income_processed, :hmrc_request_date_range,
+        :benefit_checker_response, :benefit_checker_errors, :date_of_death,
+        :benefit_type, :benefit_status, :take_home_pay
       ].freeze
 
       HEADERS = ColumnLabels.for(HEADER_KEYS).freeze
@@ -284,6 +288,7 @@ module Views
                  WHEN ec.completed_at IS NOT NULL THEN ec.income
                  ELSE NULL
             END AS income_processed,
+            #{benefit_check_columns("applications.application_type <> 'benefit' OR applications.benefits = FALSE OR bc.id IS NULL")}
             hc.request_params AS hmrc_request_date_range
         SQL
       end
@@ -308,6 +313,7 @@ module Views
                    ROW_NUMBER() OVER (PARTITION BY evidence_check_id ORDER BY created_at DESC) AS row_number
             FROM hmrc_checks
           ) hc ON ec.id = hc.evidence_check_id AND (hc.row_number = 1 OR hc.row_number IS NULL)
+          LEFT JOIN (#{latest_benefit_check_per_application_sql}) bc ON bc.app_id = applications.id AND bc.row_number = 1
         SQL
       end
 
@@ -374,6 +380,7 @@ module Views
             NULL AS complete_processing,
             NULL AS additional_income,
             oa2.income AS income_processed,
+            #{benefit_check_columns('oa2.benefits = FALSE OR bc.id IS NULL')}
             NULL AS hmrc_request_date_range
         SQL
       end
@@ -384,6 +391,8 @@ module Views
           FROM online_applications oa2
           LEFT JOIN applications app2 ON app2.online_application_id = oa2.id
           LEFT JOIN jurisdictions jurisdictions2 ON jurisdictions2.id = oa2.jurisdiction_id
+          LEFT JOIN (#{latest_benefit_check_per_record_sql}) bc ON bc.applicationable_type = 'OnlineApplication'
+            AND bc.applicationable_id = oa2.id AND bc.row_number = 1
         SQL
       end
 
@@ -507,7 +516,13 @@ module Views
           row['complete_processing'],
           row['additional_income'],
           row['income_processed'],
-          format_hmrc_date_range(row['hmrc_request_date_range'])
+          format_hmrc_date_range(row['hmrc_request_date_range']),
+          row['benefit_checker_response'],
+          row['benefit_checker_errors'],
+          row['date_of_death'],
+          row['benefit_type'],
+          row['benefit_status'],
+          row['take_home_pay']
         ]
       end
       # rubocop:enable Metrics/AbcSize, Metrics/MethodLength

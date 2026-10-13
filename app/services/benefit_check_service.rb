@@ -59,10 +59,13 @@ class BenefitCheckService
 
   def default_client
     if Settings.dwp_mock.fake_api_enabled
+      @check_item.checker = BenefitCheck::CHECKERS[:mock]
       BenefitCheckers::MockApiClient.new
     elsif Settings.dwp_api_enabled
+      @check_item.checker = BenefitCheck::CHECKERS[:dwp]
       BenefitCheckers::DwpApiClient.new(@check_item)
     else
+      @check_item.checker = BenefitCheck::CHECKERS[:laa]
       BenefitCheckers::LaaProxyApiClient.new
     end
   end

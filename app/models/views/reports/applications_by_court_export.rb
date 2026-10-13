@@ -5,6 +5,7 @@ module Views
     class ApplicationsByCourtExport < ReportBase
       require 'csv'
       include ApplicationsByCourtExportHelper
+      include BenefitCheckColumns
 
       NUMERIC_FIELDS = [
         'estimated_amount_to_pay', 'final_amount_to_pay'
@@ -173,6 +174,7 @@ module Views
           ELSE NULL
         END as income_processed,
         request_params as hmrc_request_date_range,
+        #{benefit_check_columns(paper_benefit_check_not_applicable)}
         details.statement_signed_by as statement_signed_by,
         CASE WHEN applicants.partner_ni_number IS NULL THEN 'false'
              WHEN applicants.partner_ni_number = '' THEN 'false'
@@ -202,6 +204,7 @@ module Views
           WHERE a_inner.created_at BETWEEN '#{@date_from.to_fs(:db)}' AND '#{@date_to.to_fs(:db)}'
           ORDER BY h.evidence_check_id, h.created_at DESC
         ) hc ON ec.id = hc.evidence_check_id
+        LEFT JOIN (#{latest_benefit_check_per_application_sql}) bc ON bc.app_id = applications.id AND bc.row_number = 1
         INNER JOIN \"applicants\" ON \"applicants\".\"application_id\" = \"applications\".\"id\"
         INNER JOIN \"details\" ON \"details\".\"application_id\" = \"applications\".\"id\"
         LEFT JOIN jurisdictions ON jurisdictions.id = details.jurisdiction_id
@@ -211,6 +214,11 @@ module Views
         AND (applications.state != 0
           OR (applications.state = 0 AND details.date_received IS NOT NULL AND details.refund IS NOT NULL))
         ORDER BY applications.created_at DESC"
+      end
+
+      # Not a benefit application, staff said no benefits, or no check
+      def paper_benefit_check_not_applicable
+        "applications.application_type <> 'benefit' OR applications.benefits = FALSE OR bc.id IS NULL"
       end
 
       # No office filter when reporting on all offices or when none was chosen
@@ -287,6 +295,7 @@ module Views
         NULL AS additional_income,
         online_applications.income AS income_processed,
         NULL AS hmrc_request_date_range,
+        #{benefit_check_columns('online_applications.benefits = FALSE OR bc.id IS NULL')}
         online_applications.statement_signed_by AS statement_signed_by,
         CASE WHEN online_applications.partner_ni_number IS NULL THEN 'false'
              WHEN online_applications.partner_ni_number = '' THEN 'false'
@@ -303,6 +312,8 @@ module Views
         INNER JOIN offices ON offices.id = users.office_id
         LEFT JOIN applications ON applications.online_application_id = online_applications.id
         LEFT JOIN jurisdictions ON jurisdictions.id = online_applications.jurisdiction_id
+        LEFT JOIN (#{latest_benefit_check_per_record_sql}) bc ON bc.applicationable_type = 'OnlineApplication'
+          AND bc.applicationable_id = online_applications.id AND bc.row_number = 1
         WHERE applications.id IS NULL
         AND online_applications.date_received IS NOT NULL
         AND online_applications.created_at BETWEEN '#{@date_from.to_fs(:db)}' AND '#{@date_to.to_fs(:db)}'

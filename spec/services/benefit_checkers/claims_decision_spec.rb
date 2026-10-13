@@ -457,6 +457,80 @@ RSpec.describe BenefitCheckers::ClaimsDecision do
     end
   end
 
+  # RST-7882: what the raw data export shows about the claim the decision used
+  describe '#summary' do
+    let(:in_window) { { start_date: '2026-08-28', end_date: '2026-09-27' } }
+
+    def summary_for(*claims_list)
+      described_class.new({ 'data' => claims_list }, window).summary
+    end
+
+    it 'describes a passing Universal Credit claim and the award it paid from' do
+      claim = uc_claim(awards: [uc_award(**in_window, take_home_pay: 41_050)])
+
+      expect(summary_for(claim)).to eq(benefit_types: 'universal_credit', claim_status: 'active', take_home_pay: 41_050)
+    end
+
+    it 'describes a passing claim for another benefit, which has no take home pay' do
+      expect(summary_for(other_claim(benefit_type: 'income_support'))).to eq(
+        benefit_types: 'income_support', claim_status: 'active', take_home_pay: nil
+      )
+    end
+
+    it 'lists every benefit type DWP returned, in response order' do
+      claims = [other_claim(benefit_type: 'income_support', status: 'claim_closed'), uc_claim(awards: [uc_award(**in_window)])]
+
+      expect(summary_for(*claims)[:benefit_types]).to eq 'income_support and universal_credit'
+    end
+
+    it 'takes the status and pay from the claim that decided: the passing one' do
+      claims = [other_claim(benefit_type: 'income_support', status: 'claim_closed'), uc_claim(awards: [uc_award(**in_window)])]
+
+      expect(summary_for(*claims)).to include(claim_status: 'active', take_home_pay: 0)
+    end
+
+    it 'takes them from the first claim when none passed' do
+      claims = [uc_claim(status: 'suspended', awards: [uc_award(**in_window)]), other_claim(benefit_type: 'income_support', amount: 0)]
+
+      expect(summary_for(*claims)).to include(claim_status: 'suspended', take_home_pay: nil)
+    end
+
+    it 'says not active for a closed claim' do
+      expect(summary_for(other_claim(benefit_type: 'income_support', status: 'claim_closed'))[:claim_status]).to eq 'not active'
+    end
+
+    it 'says not active for an active claim outside the window' do
+      expect(summary_for(claim(status: 'in_payment', start_date: '2026-10-15'))[:claim_status]).to eq 'not active'
+    end
+
+    it 'says suspended for a suspended claim' do
+      expect(summary_for(uc_claim(status: 'suspended', awards: [uc_award(**in_window)]))).to include(claim_status: 'suspended', take_home_pay: nil)
+    end
+
+    it 'keeps the take home pay of an active Universal Credit claim that failed on it' do
+      claim = uc_claim(awards: [uc_award(**in_window, take_home_pay: 90_000)])
+
+      expect(summary_for(claim)).to include(claim_status: 'active', take_home_pay: 90_000)
+    end
+
+    it 'keeps the take home pay of an active Universal Credit claim that paid nothing' do
+      claim = uc_claim(awards: [uc_award(**in_window, amount: 0, take_home_pay: 41_050)])
+
+      expect(summary_for(claim)).to include(claim_status: 'active', take_home_pay: 41_050)
+    end
+
+    it 'has no take home pay when no award falls inside the window' do
+      claim = uc_claim(awards: [uc_award(start_date: '2026-07-01', end_date: '2026-07-31', take_home_pay: 41_050)])
+
+      expect(summary_for(claim)).to include(claim_status: 'active', take_home_pay: nil)
+    end
+
+    it 'is empty when DWP returned no claims' do
+      expect(summary_for).to eq(benefit_types: nil, claim_status: nil, take_home_pay: nil)
+      expect(described_class.new(nil, window).summary).to eq(benefit_types: nil, claim_status: nil, take_home_pay: nil)
+    end
+  end
+
   # RST-8365: only the listed benefits count
   describe '#on_benefits? with no listed benefit' do
     context 'with an active benefit that is not on the list' do

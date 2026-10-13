@@ -85,6 +85,53 @@ RSpec.describe Views::Reports::PowerBiNewExport do
     end
   end
 
+  # RST-7882: the six DWP benefit check columns, shared with the other exports. See CHANGELOG.md
+  describe 'DWP benefit check columns' do
+    let(:columns) { ['Benefit checker response?', 'Benefit checker errors', 'Date of death', 'Benefit type', 'Benefit status', 'Take home pay'] }
+    let!(:application) do
+      app = create(:application_full_remission, :processed_state, office: office, business_entity: business_entity,
+                                                                  application_type: 'benefit', benefits: true)
+      app.detail.update!(date_received: 2.weeks.ago)
+      app
+    end
+
+    def benefit_columns(id)
+      report.export2
+      read_csv_from_zip.find { |r| r['Id'].to_i == id }.values_at(*columns)
+    end
+
+    it 'exports what the DWP check decided on' do
+      create(:benefit_check, applicationable: application, dwp_result: 'Yes', checker: 'dwp',
+                             benefit_types: 'universal_credit', claim_status: 'active', take_home_pay: 41_050)
+
+      expect(benefit_columns(application.id)).to eq(['Yes', 'N/A', 'N/A', 'universal_credit', 'active', '41050'])
+    end
+
+    it 'exports a flagged date of death' do
+      create(:benefit_check, applicationable: application, dwp_result: 'No', checker: 'dwp', date_of_death: Date.new(2026, 9, 20))
+
+      expect(benefit_columns(application.id).values_at(0, 2)).to eq(['No', '2026-09-20'])
+    end
+
+    it 'exports LAA for a check made through the old checker' do
+      create(:benefit_check, applicationable: application, dwp_result: 'Yes', checker: nil)
+
+      expect(benefit_columns(application.id)).to eq(['LAA'] * 6)
+    end
+
+    it 'exports N/A when there was no check' do
+      expect(benefit_columns(application.id)).to eq(['N/A'] * 6)
+    end
+
+    it 'exports the check made on an unlinked online application' do
+      online_application = create(:online_application, date_received: Time.zone.today, reference: 'HWF-OA1-DWP', benefits: true)
+      create(:benefit_check, applicationable: online_application, dwp_result: 'Yes', checker: 'dwp',
+                             benefit_types: 'pensions_credit', claim_status: 'active')
+
+      expect(benefit_columns(online_application.id)).to eq(['Yes', 'N/A', 'N/A', 'pensions_credit', 'active', 'N/A'])
+    end
+  end
+
   describe '#export2 (all states by date_received)' do
     context 'with processed application' do
       let!(:application) do

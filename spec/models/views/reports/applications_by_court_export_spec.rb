@@ -50,6 +50,80 @@ RSpec.describe Views::Reports::ApplicationsByCourtExport do
     end
   end
 
+  # RST-7882: the six DWP benefit check columns, from the latest check. See CHANGELOG.md
+  describe 'DWP benefit check columns' do
+    let(:columns) { ['Benefit checker response?', 'Benefit checker errors', 'Date of death', 'Benefit type', 'Benefit status', 'Take home pay'] }
+    let(:application) do
+      travel_to(date_from + 1.day) do
+        create(:application_full_remission, :processed_state, office: office, application_type: 'benefit', benefits: true)
+      end
+    end
+
+    def row_for(reference)
+      CSV.parse(export.to_csv, headers: true).find { |r| r['HwF reference number'] == reference }
+    end
+
+    def benefit_columns(reference)
+      row_for(reference).values_at(*columns)
+    end
+
+    it 'exports what the DWP check decided on' do
+      create(:benefit_check, applicationable: application, dwp_result: 'Yes', checker: 'dwp',
+                             benefit_types: 'universal_credit', claim_status: 'active', take_home_pay: 41_050)
+
+      expect(benefit_columns(application.reference)).to eq(['Yes', 'N/A', 'N/A', 'universal_credit', 'active', '41050'])
+    end
+
+    it 'exports the error, a flagged date of death and LAA the same way as the raw data export' do
+      create(:benefit_check, applicationable: application, dwp_result: 'No', checker: 'dwp', date_of_death: Date.new(2026, 9, 20),
+                             error_message: nil, benefit_types: 'income_support', claim_status: 'not active')
+
+      expect(benefit_columns(application.reference)).to eq(['No', 'N/A', '2026-09-20', 'income_support', 'not active', 'N/A'])
+    end
+
+    it 'exports LAA for a check made through the old checker' do
+      create(:benefit_check, applicationable: application, dwp_result: 'Yes', checker: nil)
+
+      expect(benefit_columns(application.reference)).to eq(['LAA'] * 6)
+    end
+
+    it 'exports N/A for an income application' do
+      application.update(application_type: 'income', benefits: false)
+      create(:benefit_check, applicationable: application, dwp_result: 'Yes', checker: 'dwp', benefit_types: 'universal_credit')
+
+      expect(benefit_columns(application.reference)).to eq(['N/A'] * 6)
+    end
+
+    it 'uses the latest check' do
+      create(:benefit_check, applicationable: application, dwp_result: 'No', checker: 'dwp', claim_status: 'not active', created_at: date_from + 1.day)
+      create(:benefit_check, applicationable: application, dwp_result: 'Yes', checker: 'dwp', claim_status: 'active', created_at: date_from + 2.days)
+
+      expect(benefit_columns(application.reference).values_at(0, 4)).to eq(['Yes', 'active'])
+    end
+
+    context 'for an online application not yet processed' do
+      let(:online_application) do
+        travel_to(date_from + 1.day) do
+          create(:online_application, :with_reference, user: create(:user, office: office), date_received: date_from + 1.day, benefits: true)
+        end
+      end
+
+      it 'exports the check made on the online application' do
+        create(:benefit_check, applicationable: online_application, dwp_result: 'Yes', checker: 'dwp',
+                               benefit_types: 'pensions_credit', claim_status: 'active')
+
+        expect(benefit_columns(online_application.reference)).to eq(['Yes', 'N/A', 'N/A', 'pensions_credit', 'active', 'N/A'])
+      end
+
+      it 'exports N/A when the applicant said they have no benefits' do
+        online_application.update(benefits: false)
+        create(:benefit_check, applicationable: online_application, dwp_result: 'Yes', checker: 'dwp', benefit_types: 'pensions_credit')
+
+        expect(benefit_columns(online_application.reference)).to eq(['N/A'] * 6)
+      end
+    end
+  end
+
   describe 'DB income check type' do
     subject(:row) do
       CSV.parse(export.to_csv, headers: true).find { |r| r['HwF reference number'] == application.reference }
@@ -449,7 +523,7 @@ RSpec.describe Views::Reports::ApplicationsByCourtExport do
           it "from evidence check" do
             reference = application1.reference
             data_row = data.find { |row| row.split(',')[3] == reference }
-            expect(data_row).to include('1578,N/A,legal_representative,true,false,post_ucd')
+            expect(data_row).to include('1578,N/A,N/A,N/A,N/A,N/A,N/A,N/A,legal_representative,true,false,post_ucd')
           end
         end
 
@@ -632,13 +706,14 @@ RSpec.describe Views::Reports::ApplicationsByCourtExport do
        'DB income check type', 'HMRC total income', 'Evidence check type',
        'HMRC response?', 'HMRC errors', 'Complete processing?',
        'Additional income', 'Income processed', 'HMRC request date range',
+       'Benefit checker response?', 'Benefit checker errors', 'Date of death', 'Benefit type', 'Benefit status', 'Take home pay',
        'Statement signed by', 'Partner NI entered', 'Partner name entered',
        'HwF scheme', 'Deletion reason', 'Reason description']
     end
 
     before { travel_to(date_from + 1.day) { create(:application, :processed_state, office: office) } }
 
-    it 'has the 62 expected columns in the expected order' do
+    it 'has the 68 expected columns in the expected order' do
       csv = CSV.parse(export.to_csv, headers: true)
 
       expect(csv.headers).to eq(expected_headers)
