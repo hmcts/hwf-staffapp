@@ -9,10 +9,12 @@ puts "1. Environment Variable Check:"
 puts "ENABLE_COVERAGE is: #{ENV['ENABLE_COVERAGE'].inspect}"
 puts "=== END DIAGNOSTIC BLOCK ==="
 
-SimpleCov.formatter = SimpleCov::Formatter::JSONFormatter
+# SimpleCov.formatter = SimpleCov::Formatter::JSONFormatter
 
 if ENV.fetch('ENABLE_COVERAGE', 'false').downcase == 'true'
-  SimpleCov.start
+  SimpleCov.start do
+    formats :json
+  end
   puts "DIAGNOSTIC: SimpleCov started successfully."
 else
   puts "DIAGNOSTIC: SimpleCov bypassed. Condition evaluated to false."
