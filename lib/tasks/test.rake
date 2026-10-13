@@ -1,11 +1,15 @@
 # These tasks are needed by Jenkins pipeline
 
 task test: :environment do
+  puts "Running rubocop tests..."
   unless system "bundle exec rubocop"
     raise "Rubocop failed"
   end
 
-  unless system("ENABLE_COVERAGE=true rspec --format RspecJunitFormatter --out tmp/test/rspec.xml")
+  puts "DIAG: ENABLE_COVERAGE=#{ENV['ENABLE_COVERAGE'].inspect}"
+
+  puts "Running RSpec tests..."
+  unless system("ENABLE_COVERAGE=true rspec --format progress --format RspecJunitFormatter --out tmp/test/rspec.xml")
     raise "Rspec testing failed #{$?}"
   end
 
