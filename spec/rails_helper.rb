@@ -4,8 +4,19 @@ require 'simplecov'
 ENV['RAILS_ENV'] ||= 'test'
 ENV['DWP_API_PROXY'] ||= 'http://localhost:9292'
 
+puts "=== START DIAGNOSTIC BLOCK ==="
+puts "1. Environment Variable Check:"
+puts "ENABLE_COVERAGE is: #{ENV['ENABLE_COVERAGE'].inspect}"
+puts "=== END DIAGNOSTIC BLOCK ==="
+
 SimpleCov.formatter = SimpleCov::Formatter::JSONFormatter
-SimpleCov.start if ENV.fetch('ENABLE_COVERAGE', 'false').downcase == 'true'
+
+if ENV.fetch('ENABLE_COVERAGE', 'false').downcase == 'true'
+  SimpleCov.start
+  puts "DIAGNOSTIC: SimpleCov started successfully."
+else
+  puts "DIAGNOSTIC: SimpleCov bypassed. Condition evaluated to false."
+end
 
 require File.expand_path('../../config/environment', __FILE__)
 require 'rspec/rails'
