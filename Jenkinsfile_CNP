@@ -87,7 +87,7 @@ withPipeline(type, product, component) {
   }
 
   afterAlways('test') {
-    sh script: 'echo DIAG "ENABLE_COVERAGE=[$ENABLE_COVERAGE]"; ls -la coverage || echo "DIAG no coverage dir"', label: 'DIAG for ENABLE_COVERAGE'
+    sh script: 'echo "DIAG TEST_ENV_NUMBER=[$TEST_ENV_NUMBER] PARALLEL_TEST_GROUPS=[$PARALLEL_TEST_GROUPS]"; env | grep -i -E "parallel|test_env" || echo "DIAG no parallel vars"; ls -la coverage; head -c 400 coverage/.resultset.json', label: 'DIAG for ENABLE_COVERAGE'
   }
 
   afterAlways('smokeTest') {
