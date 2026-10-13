@@ -5,11 +5,26 @@ module Views
     # 'LAA' marks a check made through the old checker (nil checker), 'N/A' a
     # row the columns do not apply to or whose check did not answer. See CHANGELOG.md
     module BenefitCheckColumns
+      BENEFIT_CHECK_KEYS = [:benefit_checker_response, :benefit_checker_errors, :date_of_death,
+                            :benefit_type, :benefit_status, :take_home_pay].freeze
+
+      # The columns are left out of every export until the DWP check is switched on. See CHANGELOG.md
+      def benefit_check_columns?
+        Settings.dwp_api_enabled
+      end
+
       private
 
+      # The six columns closing a select list (comma included), or nothing when they are switched off.
       # not_applicable: SQL that is true when the row gets 'N/A' in every column;
       # the latest check must be joined as "bc".
       def benefit_check_columns(not_applicable)
+        return '' unless benefit_check_columns?
+
+        ", #{benefit_check_columns_sql(not_applicable)}"
+      end
+
+      def benefit_check_columns_sql(not_applicable)
         <<~SQL.squish
           CASE WHEN #{not_applicable} THEN 'N/A'
                WHEN #{laa_check} THEN 'LAA'

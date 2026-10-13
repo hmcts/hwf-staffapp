@@ -706,6 +706,7 @@ RSpec.describe Views::Reports::RawDataExport do
 
   # RST-7882: the DWP benefit check columns come from the latest benefit check. See CHANGELOG.md
   describe 'DWP benefit check columns' do
+    before { allow(Settings).to receive(:dwp_api_enabled).and_return(true) }
     let(:application) do
       create(:application_full_remission, :processed_state, shared_parameters.merge(application_type: 'benefit', benefits: true))
     end
@@ -759,6 +760,18 @@ RSpec.describe Views::Reports::RawDataExport do
 
     it 'exports N/A when there was no check' do
       expect(benefit_columns(application)).to eq(['N/A', 'N/A', 'N/A', 'N/A', 'N/A', 'N/A'])
+    end
+
+    # Hidden until the DWP check is switched on, so staff do not see them early. See CHANGELOG.md
+    context 'when the DWP check is switched off' do
+      before { allow(Settings).to receive(:dwp_api_enabled).and_return(false) }
+
+      it 'leaves the columns out' do
+        headers = data.to_csv.lines.first.strip.split(',')
+
+        expect(headers).not_to include('Benefit checker response?')
+        expect(headers.last).to eq('HMRC request date range')
+      end
     end
 
     it 'uses the latest check when there are several' do

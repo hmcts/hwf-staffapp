@@ -13,6 +13,8 @@ with entries grouped by branch and date rather than release version.
   columns (response, errors, date of death, benefit type, benefit status, take
   home pay) as the last columns, from the latest check per application; 'LAA' for checks made
   through the old checker, 'N/A' otherwise. Shared in `BenefitCheckColumns`.
+  The columns only appear once `DWP_API_ENABLED` is on, so staff do not see
+  them before the DWP check goes live.
 - The check now stores what the decision used (`checker`, `benefit_types`,
   `claim_status`, `take_home_pay`) so the export reads columns, not the stored
   DWP JSON. Older checks are not backfilled.

@@ -52,6 +52,7 @@ RSpec.describe Views::Reports::ApplicationsByCourtExport do
 
   # RST-7882: the six DWP benefit check columns, from the latest check. See CHANGELOG.md
   describe 'DWP benefit check columns' do
+    before { allow(Settings).to receive(:dwp_api_enabled).and_return(true) }
     let(:columns) { ['Benefit checker response?', 'Benefit checker errors', 'Date of death', 'Benefit type', 'Benefit status', 'Take home pay'] }
     let(:application) do
       travel_to(date_from + 1.day) do
@@ -85,6 +86,19 @@ RSpec.describe Views::Reports::ApplicationsByCourtExport do
       create(:benefit_check, applicationable: application, dwp_result: 'Yes', checker: nil)
 
       expect(benefit_columns(application.reference)).to eq(['LAA'] * 6)
+    end
+
+    # Hidden until the DWP check is switched on. See CHANGELOG.md
+    context 'when the DWP check is switched off' do
+      before { allow(Settings).to receive(:dwp_api_enabled).and_return(false) }
+
+      it 'leaves the columns out' do
+        application
+        headers = CSV.parse(export.to_csv, headers: true).headers
+
+        expect(headers).not_to include(*columns)
+        expect(headers.last).to eq('Reason description')
+      end
     end
 
     it 'exports N/A for an income application' do
@@ -523,7 +537,7 @@ RSpec.describe Views::Reports::ApplicationsByCourtExport do
           it "from evidence check" do
             reference = application1.reference
             data_row = data.find { |row| row.split(',')[3] == reference }
-            expect(data_row).to include('1578,N/A,legal_representative,true,false,post_ucd,N/A,N/A,N/A,N/A,N/A,N/A,N/A,N/A')
+            expect(data_row).to include('1578,N/A,legal_representative,true,false,post_ucd,N/A,N/A')
           end
         end
 
@@ -713,10 +727,17 @@ RSpec.describe Views::Reports::ApplicationsByCourtExport do
 
     before { travel_to(date_from + 1.day) { create(:application, :processed_state, office: office) } }
 
-    it 'has the 68 expected columns in the expected order' do
+    it 'has the expected columns in the expected order when the DWP check is switched on' do
+      allow(Settings).to receive(:dwp_api_enabled).and_return(true)
       csv = CSV.parse(export.to_csv, headers: true)
 
       expect(csv.headers).to eq(expected_headers)
+    end
+
+    it 'leaves the six DWP benefit check columns out when the DWP check is switched off' do
+      csv = CSV.parse(export.to_csv, headers: true)
+
+      expect(csv.headers).to eq(expected_headers.first(expected_headers.size - 6))
     end
 
     it 'places Fee code, Claim amount and Fee population immediately after Fee' do

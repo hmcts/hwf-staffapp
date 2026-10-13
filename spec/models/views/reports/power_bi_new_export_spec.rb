@@ -87,6 +87,7 @@ RSpec.describe Views::Reports::PowerBiNewExport do
 
   # RST-7882: the six DWP benefit check columns, shared with the other exports. See CHANGELOG.md
   describe 'DWP benefit check columns' do
+    before { allow(Settings).to receive(:dwp_api_enabled).and_return(true) }
     let(:columns) { ['Benefit checker response?', 'Benefit checker errors', 'Date of death', 'Benefit type', 'Benefit status', 'Take home pay'] }
     let!(:application) do
       app = create(:application_full_remission, :processed_state, office: office, business_entity: business_entity,
@@ -121,6 +122,19 @@ RSpec.describe Views::Reports::PowerBiNewExport do
 
     it 'exports N/A when there was no check' do
       expect(benefit_columns(application.id)).to eq(['N/A'] * 6)
+    end
+
+    # Hidden until the DWP check is switched on. See CHANGELOG.md
+    context 'when the DWP check is switched off' do
+      before { allow(Settings).to receive(:dwp_api_enabled).and_return(false) }
+
+      it 'leaves the columns out' do
+        report.export2
+        headers = read_csv_from_zip.headers
+
+        expect(headers).not_to include(*columns)
+        expect(headers.last).to eq('HMRC request date range')
+      end
     end
 
     it 'exports the check made on an unlinked online application' do
