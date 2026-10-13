@@ -288,7 +288,7 @@ module Views
                  WHEN ec.completed_at IS NOT NULL THEN ec.income
                  ELSE NULL
             END AS income_processed,
-            #{benefit_check_columns("applications.application_type <> 'benefit' OR applications.benefits = FALSE OR bc.id IS NULL")}
+            #{benefit_check_columns("applications.application_type <> 'benefit' OR applications.benefits = FALSE OR bc.id IS NULL")},
             hc.request_params AS hmrc_request_date_range
         SQL
       end
@@ -380,7 +380,7 @@ module Views
             NULL AS complete_processing,
             NULL AS additional_income,
             oa2.income AS income_processed,
-            #{benefit_check_columns('oa2.benefits = FALSE OR bc.id IS NULL')}
+            #{benefit_check_columns('oa2.benefits = FALSE OR bc.id IS NULL')},
             NULL AS hmrc_request_date_range
         SQL
       end

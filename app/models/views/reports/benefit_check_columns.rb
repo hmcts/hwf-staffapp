@@ -19,7 +19,7 @@ module Views
           #{benefit_check_column("to_char(bc.date_of_death, 'YYYY-MM-DD')", not_applicable)} AS date_of_death,
           #{benefit_check_column('bc.benefit_types', not_applicable)} AS benefit_type,
           #{benefit_check_column('bc.claim_status', not_applicable)} AS benefit_status,
-          #{benefit_check_column('bc.take_home_pay::text', not_applicable)} AS take_home_pay,
+          #{benefit_check_column('bc.take_home_pay::text', not_applicable)} AS take_home_pay
         SQL
       end
 

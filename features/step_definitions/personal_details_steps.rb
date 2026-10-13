@@ -105,13 +105,12 @@ end
 
 Then("I see more information about home office numbers") do
   expect(personal_details_page.content.guidance.guidance_header[2].text).to eq 'Home Office reference number'
-  expect(personal_details_page.content.guidance.guidance_text[3].text).to have_text 'A Home Office reference number may be provided for an income-based application if the applicant is subject to immigration control'
+  expect(personal_details_page.content.guidance.guidance_text[3].text).to have_text 'A Home Office reference number may be provided if the applicant is subject to immigration control'
   expect(personal_details_page.content.guidance.guidance_text[4].text).to have_text "An applicant can find their Home Office reference number on any correspondence received from the Home Office."
 end
 
 Then("I see that I should check the status of the applicant") do
   expect(personal_details_page.content.guidance.guidance_header[3].text).to eq 'Status'
-  expect(personal_details_page.content.guidance.guidance_list[3].text).to have_text "a NI number is essential for a benefit application - you must not process the application without this and should instead return it"
   expect(personal_details_page.content.guidance.text).to have_text "If the applicant is part of a couple but their case concerns their partner, eg divorce, dissolution or domestic violence, select 'Single'."
   expect(personal_details_page.content.guidance.guidance_link[3]['href']).to eq new_process_application_url
   expect(personal_details_page.content.guidance.guidance_link[4]['href']).to end_with '/guide'

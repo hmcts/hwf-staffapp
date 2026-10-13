@@ -174,7 +174,6 @@ module Views
           ELSE NULL
         END as income_processed,
         request_params as hmrc_request_date_range,
-        #{benefit_check_columns(paper_benefit_check_not_applicable)}
         details.statement_signed_by as statement_signed_by,
         CASE WHEN applicants.partner_ni_number IS NULL THEN 'false'
              WHEN applicants.partner_ni_number = '' THEN 'false'
@@ -185,7 +184,8 @@ module Views
              END AS partner_name_entered,
         details.calculation_scheme as hwf_scheme,
         applications.deleted_reasons_list as deletion_reason,
-        applications.deleted_reason as reason_description
+        applications.deleted_reason as reason_description,
+        #{benefit_check_columns(paper_benefit_check_not_applicable)}
 
         FROM \"applications\" LEFT JOIN offices ON offices.id = applications.office_id
         LEFT JOIN evidence_checks ec ON ec.application_id = applications.id
@@ -295,7 +295,6 @@ module Views
         NULL AS additional_income,
         online_applications.income AS income_processed,
         NULL AS hmrc_request_date_range,
-        #{benefit_check_columns('online_applications.benefits = FALSE OR bc.id IS NULL')}
         online_applications.statement_signed_by AS statement_signed_by,
         CASE WHEN online_applications.partner_ni_number IS NULL THEN 'false'
              WHEN online_applications.partner_ni_number = '' THEN 'false'
@@ -306,7 +305,8 @@ module Views
         END AS partner_name_entered,
         online_applications.calculation_scheme AS hwf_scheme,
         NULL AS deletion_reason,
-        NULL AS reason_description
+        NULL AS reason_description,
+        #{benefit_check_columns('online_applications.benefits = FALSE OR bc.id IS NULL')}
         FROM online_applications
         INNER JOIN users ON users.id = online_applications.user_id
         INNER JOIN offices ON offices.id = users.office_id
