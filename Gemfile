@@ -114,7 +114,7 @@ group :development, :test do
   gem 'rubocop-capybara'
   gem 'rubocop-factory_bot'
   gem 'rubocop-rspec_rails'
-  gem 'simplecov', '>= 1.3.2'
+  gem 'simplecov', '~> 0.22.0' # 1.x gives SonarCloud 0% coverage, see CHANGELOG.md
 end
 
 group :test do

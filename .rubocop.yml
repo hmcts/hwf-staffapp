@@ -212,6 +212,11 @@ RSpec/EmptyLineAfterFinalLet:
 RSpec/ExpectChange:
   Enabled: false
 
+# rubocop-rspec_rails 2.33: the suite runs ActiveJob inline, so the controller specs stub
+# perform_later instead of using have_enqueued_job (which needs the test adapter). See CHANGELOG.md
+RSpecRails/ReceivePerformLater:
+  Enabled: false
+
 RSpec/ContextWording:
   Enabled: false
 
