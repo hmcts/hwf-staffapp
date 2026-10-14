@@ -1,6 +1,6 @@
 #!groovy
 
-@Library("Infrastructure@2.9.0")
+@Library("Infrastructure@2.12.1")
 
 def type = "ruby"
 def product = "help-with-fees"
@@ -93,5 +93,5 @@ withPipeline(type, product, component) {
 
   afterAlways('functionalTest:preview') {
         junit testResults: 'tmp/test/cucumber-functional/*.xml', allowEmptyResults: true, skipPublishingChecks: false
-  }  
+  }
 }
