@@ -93,7 +93,7 @@ RSpec.configure do |config|
   end
 
   config.before(:all) do
-    WebMock.disable_net_connect!(allow: ['127.0.0.1', 'codeclimate.com', 'www.gstatic.com/charts/loader.js', 'chromedriver.storage.googleapis.com'])
+    WebMock.disable_net_connect!(allow: ['127.0.0.1', 'www.gstatic.com/charts/loader.js', 'chromedriver.storage.googleapis.com'])
   end
 
   config.before(:each) do |example|
