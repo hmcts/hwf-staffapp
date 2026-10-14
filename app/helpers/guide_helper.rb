@@ -66,9 +66,9 @@ module GuideHelper
   def income_check_guidance_url
     if Settings.dwp_api_enabled == true
       'https://justiceuk.sharepoint.com/:w:/r/sites/knowledgecentral/_layouts/15/' \
-      'Doc.aspx?sourcedoc=%7B28F4D6C2-FE0B-4E1C-AA11-' \
-      '1FBAF3D3BB83%7D&file=Evidence%20Checking%20-Final%20Version' \
-      '%2025.09.2026%20(003).docx&action=default&mobileredirect=true'
+        'Doc.aspx?sourcedoc=%7B28F4D6C2-FE0B-4E1C-AA11-' \
+        '1FBAF3D3BB83%7D&file=Evidence%20Checking%20-Final%20Version' \
+        '%2025.09.2026%20(003).docx&action=default&mobileredirect=true'
     else
       'https://justiceuk.sharepoint.com/sites/knowledgecentral/SitePages/Job-Cards.aspx?CT=1790263187017&OR=OWA-NT-Mail&CID=fb29972c-06fc-9665-0c18-62cef19df7c1&SI=NonSentItems&SLSync=Y'
     end
