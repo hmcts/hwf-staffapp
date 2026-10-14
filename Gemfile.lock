@@ -115,7 +115,7 @@ GEM
     ast (2.4.3)
     axe-core-api (4.13.0)
       dumb_delegator
-    azure-blob (0.8.0)
+    azure-blob (0.9.0)
       cgi
       rexml
     base64 (0.3.0)
@@ -605,7 +605,7 @@ DEPENDENCIES
   apparition!
   application_insights (~> 0.5.6)
   axe-core-api
-  azure-blob (~> 0.8.0)
+  azure-blob (~> 0.9.0)
   azure_env_secrets!
   benchmark
   bootsnap
