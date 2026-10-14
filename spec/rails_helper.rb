@@ -1,13 +1,12 @@
+require 'simplecov'
+require "simplecov_json_formatter"
+
 # This file is copied to spec/ when you run 'rails generate rspec:install'
 ENV['RAILS_ENV'] ||= 'test'
 ENV['DWP_API_PROXY'] ||= 'http://localhost:9292'
 
-puts "=== START DIAGNOSTIC BLOCK ==="
-puts "1. Environment Variable Check:"
-puts "ENABLE_COVERAGE is: #{ENV['ENABLE_COVERAGE'].inspect}"
-puts "=== END DIAGNOSTIC BLOCK ==="
-
-# SimpleCov.formatter = SimpleCov::Formatter::JSONFormatter
+SimpleCov.formatter = SimpleCov::Formatter::JSONFormatter
+SimpleCov.start if ENV.fetch('ENABLE_COVERAGE', 'false').downcase == 'true'
 
 require File.expand_path('../../config/environment', __FILE__)
 require 'rspec/rails'
