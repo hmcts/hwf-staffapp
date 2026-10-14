@@ -181,6 +181,54 @@ en-GB:
         <p>If you need help or support to complete a Help with Fees application form, email: <a href="mailto:support@wearegroup.com">support@wearegroup.com</a> for more information.</p>
         <p>From,</p>
         <p>%{user_name}</p>
+      dwp_reject_no_benefits_html: |
+        <p>Dear %{greeting}</p>
+        <p><strong>Your reference: %{reference}</strong></p>
+        <p>We've received your Help with Fees application. Unfortunately, you are not eligible for help with paying the fee. This is because we cannot find a Department for Work and Pensions (DWP) record of you receiving any of the benefits that make you automatically eligible for Help with Fees.</p>
+        <p>You will get automatic help with your fee if you're receiving any of these benefits:</p>
+        <ul class="govuk-list govuk-list--bullet">
+          <li><strong>income-based</strong> Jobseeker's Allowance (JSA)</li>
+          <li><strong>income-related</strong> Employment and Support Allowance (ESA)</li>
+          <li>Income Support</li>
+          <li>Universal Credit (<strong>and you earn less than £6,000 over the last 12 months</strong>)</li>
+          <li>Pension Credit (<strong>guarantee credit</strong>)</li>
+        </ul>
+        <p>Please double check that your personal details provided on your Help with Fees application are correct and match the details on your DWP paperwork. Please also double check on your DWP paperwork that you received these specific benefits and not similarly named ones (see 'Other benefits or low income' section).</p>
+        <h3 class='govuk-heading-m'>What you can do next:</h3>
+        <h3 class='govuk-heading-m'>Provide evidence of benefits</h3>
+        <p>If you have checked your evidence which confirms that you were on one of the above passported benefits at the time you applied and a fee would have been payable, you should return your Help with Fees reference number or EX160 application along with proof of the benefits within <strong>14 days</strong>.</p>
+        <p><strong>Please ensure you include the reference number %{reference} on all correspondence relating to your evidence review.</strong></p>
+        <p>For evidence, you will need to provide a full breakdown letter from the DWP which clearly states which benefit you receive, how much you are entitled to (including a clear breakdown of the income considered by DWP in their decision (if applicable) and your evidence must also cover the relevant Help with Fees application assessment date.</p>
+        <p>If you are receiving Universal Credit and you have told us that you are earning less than £6,000 a year, please provide proof of this. Examples of proof can include your Universal Credit statements for the past 12 months, payslips or bank statements.</p>
+        <p>Screenshots or photos of this information are acceptable, but they must be clear images and your name and address need to be visible. You must be clearly identifiable on everything you send.</p>
+        <p>If the benefit is received jointly but is in your partner's name, evidence should also be provided that they share your address.</p>
+        <p>Before sending, please check on your DWP paperwork that you received the specific benefits mentioned above and not similarly named ones (such as contribution-based Job Seekers Allowance or new-style JSA, contribution-based Employment and Support Allowance and Pension Credit (savings credit). If you receive Universal Credit, please check that your annual earnings before tax and National Insurance are less than £6,000. If they are more than £6,000, please refer to the 'low income and other benefits' section below.</p>
+        <p>If you think you have declared your benefit status incorrectly, and you still believe you are eligible for Help with Fees, you should reapply on the basis of income, including all benefit payments as income, unless they are explicitly excluded.</p>
+        <p>Remember, you must write your Help with Fees reference number on any letters/emails that you send. Here is your reference number: <strong>%{reference}</strong></p>
+        <h3 class='govuk-heading-m'>Apply under low income and other benefits</h3>
+        <p>You may still be able to get help with your fee if you're on a low income and receive other types of benefit. Other types of benefits may include:</p>
+        <ul class="govuk-list govuk-list--bullet">
+         <li><strong>contribution-based</strong> Job Seekers Allowance (or new-style JSA)</li>
+         <li><strong>contribution-based</strong> Employment and Support Allowance</li>
+         <li>Pension Credit (<strong>savings credit</strong>)</li>
+         <li>Universal Credit (<strong>and you earn over £6,000 a year before tax and National Insurance</strong>)</li>
+        </ul>
+        <p>If you are receiving any other type of benefits, you must declare them as part of your income in a new Help with Fees application. Remember, some parts of your benefit award may be excluded and do not need declaring, for example housing element of Universal Credit. You can find further information on what is excluded from income at <a href="https://www.gov.uk/get-help-with-court-fees" target="_blank" title="Get help paying court and tribunal fees">https://www.gov.uk/get-help-with-court-fees</a></p>
+        <h3 class='govuk-heading-m'>Pay the court fee</h3>
+        <p>You need to pay %{amount_to_pay} towards the fee by %{date_for_part_payment}.</p>
+        <p>You can pay by:</p>
+        <ul class="govuk-list govuk-list--bullet">
+          <li>calling &lt;<strong>add phone number</strong>&gt; with debit card details</li>
+          <li>posting a cheque written out to 'HM Courts and Tribunals Service' to the address at the top of this letter</li>
+          <li>going to the court counter with cash, a cheque or debit card (please check with the court dealing with your case that they provide a counter service before making the journey)</li>
+        </ul>
+        <p>If none of these options are possible, call the court on &lt;<strong>add phone number</strong>&gt;</p>
+        <h3 class='govuk-heading-m'>Useful links</h3>
+        <p>You can use this link to locate the address or email address for the court/tribunal dealing with your case <a href="https://www.gov.uk/find-court-tribunal" target="_blank" title"Find the right court or tribunal">https://www.gov.uk/find-court-tribunal</a>.</p>
+        <p>You can find more guidance on applying for Help with Fees here: <a href="https://www.gov.uk/get-help-with-court-fees" target="_blank" title"Get help paying court and tribunal fees">https://www.gov.uk/get-help-with-court-fees</a></p>
+        <p>If you need help or support to complete a Help with Fees application form, email: <a href="mailto:support@wearegroup.com">support@wearegroup.com</a> for more information.</p>
+        <p>From,</p>
+        <p>%{user_name}</p>
       reject_no_benefits_refund_html: |
         <p>Dear %{greeting}</p>
         <p><strong>Your reference: %{reference}</strong></p>
@@ -217,6 +265,45 @@ en-GB:
         <p>If you need help or support to complete a Help with Fees application form, email: <a href="mailto:support@wearegroup.com">support@wearegroup.com</a> for more information.</p>
         <p>From,</p>
         <p>%{user_name}</p>
+      dwp_reject_no_benefits_refund_html: |
+        <p>Dear %{greeting}</p>
+        <p><strong>Your reference: %{reference}</strong></p>
+        <p>We have received your refund Help with Fees application. Unfortunately, you are not eligible for a refund of the fee paid. This is because we cannot find a Department for Work and Pensions (DWP) record of you receiving any of the benefits that make you automatically eligible for Help with Fees.</p>
+        <p>You will get automatic help with your fee if you're receiving any of these benefits:</p>
+        <ul class="govuk-list govuk-list--bullet">
+          <li><strong>income-based</strong> Jobseeker's Allowance (JSA)</li>
+          <li><strong>income-related</strong> Employment and Support Allowance (ESA)</li>
+          <li>Income Support</li>
+          <li>Universal Credit (<strong>and you earn less than £6,000 over the last 12 months</strong>)</li>
+          <li>Pension Credit (<strong>guarantee credit</strong>)</li>
+        </ul>
+        <p>Please double check that your personal details provided on your Help with Fees application are correct and match the details on your DWP paperwork. Please also double check on your DWP paperwork that you received these specific benefits and not similarly named ones (see 'Other benefits or low income' section).</p>
+        <h3 class='govuk-heading-m'>What you can do next:</h3>
+        <h3 class='govuk-heading-m'>Provide evidence of benefits</h3>
+        <p>If you have checked your evidence which confirms that you were on one of these passported benefits at the time you paid the fee, you should return your Help with Fees reference number or EX160 application along with proof of the benefits within <strong>14 days</strong>.</p>
+        <p><strong>Please ensure you include the reference number %{reference} on all correspondence relating to your evidence review.</strong></p>
+        <p>For evidence, you will need to provide a full breakdown letter from the DWP which clearly states which benefit you receive, how much you are entitled to (including a clear breakdown of the income considered by DWP in their decision (if applicable) and your evidence must also cover the relevant Help with Fees application assessment date.</p>
+        <p>If you are receiving Universal Credit and you have told us that you are earning less than £6,000 a year, please provide proof of this. Examples of proof can include your Universal Credit statements for the past 12 months, payslips or bank statements.</p>
+        <p>Screenshots or photos of this information are acceptable, but they must be clear images and your name and address need to be visible. You must be clearly identifiable on everything you send.</p>
+        <p>If the benefit is received jointly but is in your partner's name, evidence should also be provided that they share your address. </p>
+        <p>Before sending, please check on your DWP paperwork that you received the specific benefits mentioned above and not similarly named ones (such as contribution-based Job Seekers Allowance or new-style JSA, contribution-based Employment and Support Allowance and Pension Credit (savings credit). If you receive Universal Credit, please check that your annual earnings before tax and National insurance are less than £6,000. If they are more than £6,000, please refer to the 'low income or other benefits' section below.</p>
+        <p>If you think you have declared your benefit status incorrectly, and you still believe you are eligible for Help with Fees, you should reapply on the basis of income, including all benefit payments as income, unless they are explicitly excluded.</p>
+        <p>Remember, you must write your Help with Fees reference number on any letters/emails that you send. Here is your reference number: <strong>%{reference}</strong></p>
+        <h3 class='govuk-heading-m'>Apply under low income or other benefits</h3>
+        <p>You may still be able to get help with your fee if you're on a low income and receive other types of benefit. Other types of benefits may include:</p>
+        <ul class="govuk-list govuk-list--bullet">
+         <li><strong>contribution-based</strong> Job Seekers Allowance (or new-style JSA)</li>
+         <li><strong>contribution-based</strong> Employment and Support Allowance</li>
+         <li>Pension Credit (<strong>savings credit</strong>)</li>
+         <li>Universal Credit (<strong>and you earn over £6,000 a year before tax and National Insurance</strong>)</li>
+        </ul>
+        <p>If you are receiving any other type of benefits, you must declare them as part of your income in a new Help with Fees application. Remember, some parts of your benefit award may be excluded and do not need declaring, for example housing element of Universal Credit. You can find further information on what is excluded from income at <a href="https://www.gov.uk/get-help-with-court-fees" target="_blank" title="Get help paying court and tribunal fees">https://www.gov.uk/get-help-with-court-fees</a></p>
+        <h3 class='govuk-heading-m'>Useful links</h3>
+        <p>You can use this link to locate the address or email address for the court/tribunal dealing with your main case <a href="https://www.gov.uk/find-court-tribunal" target="_blank" title"Find the right court or tribunal">https://www.gov.uk/find-court-tribunal</a>.</p>
+        <p>You can find more guidance on applying for Help with Fees here: <a href="https://www.gov.uk/get-help-with-court-fees" target="_blank" title"Get help paying court and tribunal fees">https://www.gov.uk/get-help-with-court-fees</a></p>
+        <p>If you need help or support to complete a Help with Fees application form, email: <a href="mailto:support@wearegroup.com">support@wearegroup.com</a> for more information.</p>
+        <p>From,</p>
+        <p>%{user_name}</p>
       reject_no_benefits_refund_representation_html: |
         <p>Dear %{greeting}</p>
         <p><strong>Your reference: %{reference}</strong></p>
@@ -242,6 +329,45 @@ en-GB:
         <p>The applicant may be able to get help with the fee if they're on a low income and receive other types of benefit. There are examples of some of these types of benefits below.</p>
         <ul class="govuk-list govuk-list--bullet">
          <li><strong>contribution-based</strong> Job Seekers Allowance</li>
+         <li><strong>contribution-based</strong> Employment and Support Allowance</li>
+         <li>Pension Credit (<strong>savings credit</strong>)</li>
+         <li>Universal Credit (<strong>and they earn over £6,000 a year before tax and National Insurance</strong>)</li>
+        </ul>
+        <p>If the applicant is receiving any other type of benefits, you must declare them as part of their income in a new Help with Fees application. Remember, some parts of their benefit award may be excluded and do not need declaring, for example housing element of Universal Credit. You can find further information on what is excluded from income at <a href="https://www.gov.uk/get-help-with-court-fees" target="_blank" title="Get help paying court and tribunal fees">https://www.gov.uk/get-help-with-court-fees</a></p>
+        <h3 class='govuk-heading-m'>Useful links</h3>
+        <p>You can use this link to locate the address or email address for the court/tribunal dealing with the applicant's main case <a href="https://www.gov.uk/find-court-tribunal" target="_blank" title"Find the right court or tribunal">https://www.gov.uk/find-court-tribunal</a>.</p>
+        <p>You can find more guidance on applying for Help with Fees here: <a href="https://www.gov.uk/get-help-with-court-fees" target="_blank" title"Get help paying court and tribunal fees">https://www.gov.uk/get-help-with-court-fees</a></p>
+        <p>If you need help or support to complete a Help with Fees application form, email <a href="mailto:support@wearegroup.com">support@wearegroup.com</a> for more information.</p>
+        <p>From,</p>
+        <p>%{user_name}</p>
+      dwp_reject_no_benefits_refund_representation_html: |
+        <p>Dear %{greeting}</p>
+        <p><strong>Your reference: %{reference}</strong></p>
+        <p>We have received your refund Help with Fees application. Unfortunately, the applicant is not eligible for a refund of the fee paid. This is because we cannot find a Department for Work and Pensions (DWP) record of the applicant receiving any of the benefits that make them automatically eligible for Help with Fees.</p>
+        <p>They will get automatic help with the fee if they're receiving any of these benefits:</p>
+        <ul class="govuk-list govuk-list--bullet">
+          <li><strong>income-based</strong> Jobseeker's Allowance (JSA)</li>
+          <li><strong>income-related</strong> Employment and Support Allowance (ESA)</li>
+          <li>Income Support</li>
+          <li>Universal Credit (<strong>and they earn less than £6,000 over the last 12 months</strong>)</li>
+          <li>Pension Credit (<strong>guarantee credit</strong>)</li>
+        </ul>
+        <p>Please double check that the personal details provided on the Help with Fees application are correct and match the details on the DWP paperwork. Please also double check on the DWP paperwork that the applicant received these specific benefits and not similarly named ones (see 'low income or other benefits' below).</p>
+        <h3 class='govuk-heading-m'>What you can do next:</h3>
+        <h3 class='govuk-heading-m'>Provide evidence of benefits</h3>
+        <p>If they have checked their evidence which confirms that they were on one of these passported benefits at the time they paid the fee you should return their Help with Fees reference number or EX160 application along with proof of the benefits within <strong>14 days</strong>.</p>
+        <p><strong>Please ensure you include the reference number %{reference} on all correspondence relating to your evidence review.</strong></p>
+        <p>For evidence, you will need to provide a full breakdown letter from the DWP which clearly states which benefit was received by the applicant, how much they are entitled to (including a clear breakdown of the income considered by DWP in their decision (if applicable) and the evidence must also cover the relevant Help with Fees application assessment date.</p>
+        <p>If the applicant is receiving Universal Credit and they have told us that they are earning less than £6,000 a year, please provide proof of this. Examples of proof can include their Universal Credit statements for the past 12 months, payslips or bank statements.</p>
+        <p>Screenshots or photos of this information are acceptable, but they must be clear images and the applicant's name and address need to be visible. The applicant must be clearly identifiable on everything you send.</p>        
+        <p>If the benefit is received jointly but is in the name of the applicant's partner, evidence should also be provided that they share an address.</p>
+        <p>Before sending, please check on the DWP paperwork that the applicant received the specific benefits mentioned above and not similarly named ones (such as contribution-based Job Seekers Allowance or new-style JSA, contribution-based Employment and Support Allowance and Pension Credit (savings credit). If they receive Universal Credit, please check that their annual earnings before tax and National insurance are less than £6,000. If they are more than £6,000, please refer to the 'low income or other benefits' section below.</p>
+        <p>If you think you have declared the applicant's benefit status incorrectly, and you still believe they are eligible for Help with Fees, you should reapply on the basis of income, including all benefit payments as income, unless they are explicitly excluded</p>
+        <p>Remember, you must write the Help with Fees reference number on any letters/emails that you send. Here is your reference number: <strong>%{reference}</strong></p>
+        <h3 class='govuk-heading-m'>Apply under low income or other benefits</h3>
+        <p>The applicant may still be able to get help with the fee if they're on a low income and receive other types of benefit. Other types of benefits may include:</p>
+        <ul class="govuk-list govuk-list--bullet">
+         <li><strong>contribution-based</strong> Job Seekers Allowance (or new-style JSA)</li>
          <li><strong>contribution-based</strong> Employment and Support Allowance</li>
          <li>Pension Credit (<strong>savings credit</strong>)</li>
          <li>Universal Credit (<strong>and they earn over £6,000 a year before tax and National Insurance</strong>)</li>
@@ -299,6 +425,54 @@ en-GB:
         <p>If you need help or support to complete a Help with Fees application form, email: <a href="mailto:support@wearegroup.com">support@wearegroup.com</a> for more information.</p>
         <p>From,</p>
         <p>%{user_name}</p>
+      dwp_reject_no_benefits_representation_html: |
+        <p>Dear %{greeting}</p>
+        <p><strong>Your reference: %{reference}</strong></p>
+        <p>We've received your Help with Fees application. Unfortunately, the applicant is not eligible for help with paying the fee. This is because we cannot find a Department for Work and Pensions (DWP) record of the applicant receiving any of the benefits that make them automatically eligible for Help with Fees.</p>
+        <p>The applicant will get automatic help with the fee if they're receiving any of these benefits:</p>
+        <ul class="govuk-list govuk-list--bullet">
+          <li><strong>income-based</strong> Jobseeker's Allowance (JSA)</li>
+          <li><strong>income-related</strong> Employment and Support Allowance (ESA)</li>
+          <li>Income Support</li>
+          <li>Universal Credit (<strong>and they earns less than £6,000 over the last 12 months</strong>)</li>
+          <li>Pension Credit (<strong>guarantee credit</strong>)</li>
+        </ul>
+        <p>Please double check that the personal details provided on the Help with Fees application are correct and match the details on the DWP paperwork. Please also double check on the DWP paperwork that the applicant received these specific benefits and not similarly named ones (see 'low income and other benefits' section).</p>
+        <h3 class='govuk-heading-m'>What you can do next:</h3>
+        <h3 class='govuk-heading-m'>Provide evidence of benefits</h3>
+        <p>If they have checked their evidence which confirms that they were on one of these passported benefits at the time they applied and a fee would have been payable you should return their Help with Fees reference number or EX160 application along with proof of the benefits within <strong>14 days.</strong></p>
+        <p><strong>Please ensure you include the reference number %{reference} on all correspondence relating to your appeal.</strong></p>
+        <p>For evidence, the applicant will need to provide a full breakdown letter from the DWP which clearly states which benefit they receive, how much they are entitled to (including a clear breakdown of the income considered by DWP in their decision (if applicable) and their evidence must also cover the relevant Help with Fees application assessment date.</p>
+        <p>If the applicant is receiving Universal Credit and they have told us that they are earning less than £6,000 a year, please provide proof of this. Examples of proof can include your Universal Credit statements for the past 12 months, payslips or bank statements.</p>
+        <p>Screenshots or photos of this information are acceptable, but they must be clear images and your name and address need to be visible. You must be clearly identifiable on everything you send. If the benefit is received jointly but is in the name of the applicant's partner, evidence should also be provided that they share an address.</p>
+        <p>Before sending, please check on the DWP paperwork that the applicant receives the specific benefits mentioned above and not similarly named ones (such as contribution-based Job Seekers Allowance or new-style JSA, contribution-based Employment and Support Allowance and Pension Credit (savings credit). If they receive Universal Credit, please check that their annual earnings before tax and National Insurance are less than £6,000. If they are more than £6,000, please refer to the 'low income or other benefits' section below.</p>
+        <p>If you think you have declared the applicant's benefit status incorrectly, and you still believe they are eligible for Help with Fees, you should reapply on the basis of income, including all benefit payments as income, unless they are explicitly excluded.</p>
+        <p>Remember, you must write the Help with Fees reference number on any letters/emails that you send. Here is your reference number: <strong>%{reference}</strong></p>
+        <h3 class='govuk-heading-m'>Apply under low income or other benefits</h3>
+        <p>The applicant may still be able to get help with the fee if they're on a low income and receive other types of benefit. Other types of benefits may include:</p>
+        <ul class="govuk-list govuk-list--bullet">
+         <li><strong>contribution-based</strong> Job Seekers Allowance (new-style JSA)</li>
+         <li><strong>contribution-based</strong> Employment and Support Allowance</li>
+         <li>Pension Credit (<strong>savings credit</strong>)</li>
+         <li>Universal Credit (<strong>and they earn over £6,000 a year before tax and National Insurance</strong>)</li>
+        </ul>
+        <p>If the applicant is receiving any other type of benefits, you must declare them as part of their income in a new Help with Fees application. Remember, some parts of their benefit award may be excluded and do not need declaring, for example housing element of Universal Credit. You can find further information on what is excluded from income at <a href="https://www.gov.uk/get-help-with-court-fees" target="_blank" title="Get help paying court and tribunal fees">https://www.gov.uk/get-help-with-court-fees</a></p>
+        <h3 class='govuk-heading-m'>Pay the fee </h3>
+        <p>The applicant needs to pay %{amount_to_pay} towards the fee by %{date_for_part_payment}.</p>
+        <p>This can be paid by:</p>
+        <ul class="govuk-list govuk-list--bullet">
+          <li>calling <strong>&lt;add phone number&gt;</strong> with debit card details</li>
+          <li>posting a cheque written out to 'HM Courts and Tribunals Service' to the address at the top of this letter</li>
+          <li>going to the court counter with cash, a cheque or debit card (please check with the court dealing with your case that they provide a counter service before making the journey)</li>
+          <li>If you have a PBA number - by providing this to the Court with authorisation to deduct the fee from your account. Remember to quote the reference above and any claim number (if applicable).</li>
+        </ul>
+        <p>If none of these options are possible, call the court on<strong>&lt;add phone number&gt;</strong></p>
+        <h3 class='govuk-heading-m'>Useful links</h3>
+        <p>You can use this link to locate the address or email address for the court/tribunal dealing with the applicant's main case <a href="https://www.gov.uk/find-court-tribunal" target="_blank" title"Find the right court or tribunal">https://www.gov.uk/find-court-tribunal</a>.</p>
+        <p>You can find more guidance on applying for Help with Fees here: <a href="https://www.gov.uk/get-help-with-court-fees" target="_blank" title"Get help paying court and tribunal fees">https://www.gov.uk/get-help-with-court-fees</a></p>
+        <p>If you need help or support to complete a Help with Fees application form, email: <a href="mailto:support@wearegroup.com">support@wearegroup.com</a> for more information.</p>
+        <p>From,</p>
+        <p>%{user_name}</p>
     evidence:
       send_evidence:
         header_html: |
@@ -319,6 +493,10 @@ en-GB:
           <h3 class='govuk-heading-m'>Wages</h3>
           <p>If you are employed, please provide wage slips for the %{wage_period}.</p>
           <p>If you are self employed, you should include all bank accounts for which you receive income or pay business expenditure to work out your net profit, whether personal or business accounts. You will need to also identify any transfers between your accounts.</p>
+        dwp_wages_html: |
+          <h3 class='govuk-heading-m'>Wages</h3>
+          <p>If you are employed, please provide wage slips for the %{wage_period}.</p>
+          <p>If you are self-employed, you should include all bank accounts for which you receive income or pay business expenditure to work out your net profit, whether personal or business accounts. You will need to also identify any transfers between your accounts.</p>
         bank_statements_html: |
           <h3 class='govuk-heading-m'>Bank statements</h3>
           <p>If you haven't paid the fee yet, please provide bank statements for all bank accounts (including business accounts) which state any income during the %{wage_period} before the Help with Fees application was made. If you provided an average income over a 3 month period, you will need to provide 3 months worth of bank statements.</p>
@@ -334,16 +512,31 @@ en-GB:
             <li>child support agency assessment</li>
             <li>voluntary agreement or letter of agreement signed by both parties.</li>
           </ul>
+        dwp_child_maintenance_html: |
+          <h3 class='govuk-heading-m'>Child maintenance</h3>
+          <p>You need to send documents showing how much you're paid and how often, for example a:</p>
+          <ul class="govuk-list govuk-list--bullet">
+            <li>sealed court order</li>
+            <li>Child Maintenance Service assessment</li>
+            <li>voluntary agreement or letter of agreement signed by both parties.</li>
+          </ul>
         benefits_and_credits_html: |
           <h3 class='govuk-heading-m'>Benefits and tax credits</h3>
           <p>If you're receiving Universal Credit and are earning more than £6,000 per year, you will need to provide your Universal Credit statement confirming your payments received and covering the assessment period alongside your pay slips. Your statement must include your name, address, all payment calculations, deductions and take-home pay. This can be in the form of mobile screenshots, PDF or JPEG attachments.</p>
           <p>If you're receiving Child Benefit, Working Tax Credit or Child Tax Credit, send a letter or document from HM Revenue and Customs (HMRC). If you're receiving contribution-based Jobseeker's Allowance (JSA), contribution-based Employment and Support Allowance (ESA) or Universal Credit, send a letter or document from the Department of Work and Pensions (DWP) covering the time period for your application. This can be in the form of mobile screenshots, PDF or JPEG attachments. </p>
+        dwp_benefits_and_credits_html: |
+          <h3 class='govuk-heading-m'>Benefits and tax credits</h3>
+          <p>If you're receiving Universal Credit and are earning more than £6,000 per year, you will need to provide your latest Universal Credit statement confirming your payments received and covering the assessment period alongside your pay slips. Your statement must include your name, address, all payment calculations, deductions and take-home pay. This can be in the form of mobile screenshots, PDF or JPEG attachments.</p>
+          <p>If you're receiving Child Benefit provide a copy of your child Benefit Award Notice or bank statement. If you're receiving contribution-based Jobseeker's Allowance (JSA) or new-style JSA, contribution-based Employment and Support Allowance (ESA), send your entitlement letter or document from the Department of Work and Pensions (DWP) covering the time period for your application. This can be in the form of mobile screenshots, PDF or JPEG attachments. </p>
         pensions_html: |
           <h3 class='govuk-heading-m'>Pensions</h3>
           <p>You need to send a letter or statement showing your state, work and private pension payments.</p>
         rental_html: |
           <h3 class='govuk-heading-m'>Rental income</h3>
           <p>If you get rent from anyone living with you or at other properties you own, send a letter from the person confirming the arrangement and amount you're paid. This includes payment of rent, board, or contributions to household bills from lodgers or non-financially dependent children or relatives.</p>
+        dwp_rental_html: |
+          <h3 class='govuk-heading-m'>Rental income</h3>
+          <p>If you get rent from anyone living with you or at other properties you own, send us letter from the person confirming the arrangement and amount you're paid. This includes payment of rent, board, or contributions to household bills from lodgers or non-financially dependent children or relatives.</p>
         other_income_header_html: |
           <h3 class='govuk-heading-m'>Other income</h3>
           <p>If any of the following 'other income' types cover your circumstances please provide the appropriate evidence requested: </p>
@@ -351,14 +544,29 @@ en-GB:
           <h3 class='govuk-heading-m'>Income from selling goods</h3>
           <p>You need to send official documents showing how much you've received from public or private sales by what method and how often.</p>
           <p>Your documents need to show how you sell the goods and how often, for example you can send printed screenshots of your eBay account.</p>
+        dwp_goods_selling_html: |
+          <h3 class='govuk-heading-m'>Income from selling goods</h3>
+          <p>You need to send official documents showing how much you've received from public or private sales by what method and how often.</p>
+          <p>Your documents need to show how you sell the goods and how often, for example you can send printed screenshots of your eBay, Vinted or Paypal account.</p>
+        other_monthly_income_html: |
+          <h3 class='govuk-heading-m'>Money from friends and family or any other income</h3>
+          <p>You must tell us about and send documents showing any other income you receive including one-off payments and support from friends and family covering the time period for your application.</p>
+        dwp_other_monthly_income_html: |
+          <h3 class='govuk-heading-m'>Financial support from others</h3>
+          <p>You must tell us about and send documents showing any other income you receive including one-off or ongoing payments and support from friends and family including any loans (excluding student loans or grants) covering the time period for your application.</p>
+        dwp_cash_gifts_and_prizes_html: |
+          <h3 class='govuk-heading-m'>Cash gifts and prizes</h3>
+          <p>You must tell us about all one-off or regular payments such as birthday money, winnings from gambling and competitions received within the assessment period. Any other income You must provide evidence and an explanation for any other money received during the assessment period, including but not limited to refunds, interest payments, dividend payments, cash gifts, financial support from others, or proceeds from the sale of assets. If you hold stocks, shares, bonds, cryptocurrency or other investments, these should be considered as part of the applicant's savings and investments (capital). However, any income generated from those investments, such as interest or dividends, must be evidenced. Acceptable evidence may include current statements, dividend vouchers, interest statements, or certificates showing the arrangement and the amount of income received.</p>
         prisoner_income_html: |
           <h3 class='govuk-heading-m'>Prisoner's income</h3>
           <p>If you are a prisoner, you need to send a Prisoner Income and Expenditure Statement (PIES) covering the relevant period of time. If you're in a private prison, your statement needs to show earnings and private cash.</p>
           <p><strong>Please note:</strong> If you did have other incomings in the relevant period not shown on your bank statements, you must provide evidence and/or an explanation of what these incomings are.</p>
           <p>You must write your new Help with Fees reference number on any letters that you send %{reference}.</p>
-        other_monthly_income_html: |
-          <h3 class='govuk-heading-m'>Money from friends and family or any other income</h3>
-          <p>You must tell us about and send documents showing any other income you receive including one-off payments and support from friends and family covering the time period for your application.</p>
+        dwp_prisoner_income_html: |
+          <h3 class='govuk-heading-m'>Prisoner's income (if applicable)</h3>
+          <p>If you are a prisoner, you need to send a Prisoner Income and Expenditure Statement (PIES) covering the relevant period of time. If you're in a private prison, your statement needs to show earnings and private cash.</p>
+          <p><strong>Please note:</strong> If you did have other incomings in the relevant period not shown on your bank statements, you must provide evidence and/or an explanation of what these incomings are.</p>
+          <p>You must write your new Help with Fees reference number on any letters that you send %{reference}.</p>
         footer_html: |
           <h3 class='govuk-heading-m'>Useful links</h3>
           <p>You can use this link to locate the address or email address for the court/tribunal dealing with your case <a href="https://www.gov.uk/find-court-tribunal" target="_blank" title"Find the right court or tribunal">https://www.gov.uk/find-court-tribunal</a>.</p>
@@ -668,6 +876,10 @@ en-GB:
           <p><strong>Wages</strong></p>
           <p>If the applicant is employed, please provide wage slips for the %{wage_period}.</p>
           <p>If the applicant is self employed, they should include all bank accounts for which they receive income or pay business expenditure to work out their net profit, whether personal or business accounts. They will need to also identify any transfers between their accounts.</p>
+        dwp_wages_html: |
+          <p><strong>Wages</strong></p>
+          <p>If the applicant is employed, please provide wage slips for the %{wage_period}.</p>
+          <p>If the applicant is self-employed, they should include all bank accounts for which they receive income or pay business expenditure to work out their net profit, whether personal or business accounts. They will need to also identify any transfers between their accounts.</p>
         bank_statements_html: |
           <p><strong>Bank statements</strong></p>
           <p>If the fee hasn't been paid yet, please provide bank statements for all bank accounts (including business accounts) which state any income during the %{wage_period} before the Help with Fees application was made. If the applicant provided an average income over a 3 month period, they will need to provide 3 months worth of bank statements.</p>
@@ -683,10 +895,22 @@ en-GB:
             <li>child support agency assessment</li>
             <li>voluntary agreement or letter of agreement signed by both parties.</li>
           </ul>
+        dwp_child_maintenance_html: |
+          <p><strong>Child maintenance</strong></p>
+          <p>You need to send documents showing how much the applicant is paid and how often, for example a:</p>
+          <ul class="govuk-list govuk-list--bullet">
+            <li>sealed court order</li>
+            <li>Child Maintenance Service assessment</li>
+            <li>voluntary agreement or letter of agreement signed by both parties.</li>
+          </ul>
         benefits_and_credits_html: |
           <p><strong>Benefits and tax credits</strong></p>
           <p>If the applicant is receiving Universal Credit and is earning more than £6,000 per year, they will need to provide their Universal Credit statement confirming their payments received and covering the assessment period alongside their pay slips. The statement must include the applicant's name, address, all payment calculations, deductions and take-home pay. This can be in the form of mobile screenshots, PDF or JPEG attachments.</p>
           <p>If they're receiving Child Benefit, Working Tax Credit or Child Tax Credit, send a letter or document from HM Revenue and Customs (HMRC). If they're receiving contribution-based Jobseeker's Allowance (JSA), contribution-based Employment and Support Allowance (ESA) or Universal Credit, send a letter or document from the Department of Work and Pensions (DWP) covering the time period for the application. This can be in the form of mobile screenshots, PDF or JPEG attachments.</p>
+        dwp_benefits_and_credits_html: |
+          <p><strong>Benefits and tax credits</strong></p>
+          <p>If the applicant is receiving Universal Credit and is earning more than £6,000 per year, they will need to provide their latest Universal Credit statement confirming their payments received and covering the assessment period alongside their pay slips. The statement must include the applicant's name, address, all payment calculations, deductions and take-home pay. This can be in the form of mobile screenshots, PDF or JPEG attachments.</p>
+          <p>If they're receiving Child Benefit provide a copy of their Benefit Award Notice or bank statement. If they're receiving contribution-based Jobseeker's Allowance (JSA) or new style JSA, contribution-based Employment and Support Allowance (ESA) or Universal Credit, send their entitlement letter or document from the Department of Work and Pensions (DWP) covering the time period for the application. This can be in the form of mobile screenshots, PDF or JPEG attachments.</p>
         rental_html: |
           <p><strong>Rental income</strong></p>
           <p>If the applicant gets rent from anyone living with them or at other properties they own, send a letter from the person confirming the arrangement and amount they're paid. This includes payment of rent, board, or contributions to household bills from lodgers or non-financially dependent children or relatives.</p>
@@ -694,12 +918,27 @@ en-GB:
           <p><strong>Income from selling goods</strong></p>
           <p>They need to send official documents showing how much they've received from public or private sales by what method and how often.</p>
           <p>The documents need to show how they sell the goods and how often, for example you can send printed screenshots of their eBay account covering the time period for the application.</p>
+        dwp_goods_selling_html: |
+          <p><strong>Income from selling goods</strong></p>
+          <p>They need to send official documents showing how much they've received from public or private sales by what method and how often.</p>
+          <p>The documents need to show how they sell the goods and how often, for example you can send printed screenshots of their eBay, Vinted or Paypal account covering the time period for the application.</p>
         other_income_header_html: |
           <p><strong>Money from friends and family or any other income</strong></p>
           <p>The applicant must tell us about and send documents showing any other income they receive including one-off payments and support from friends and family covering the time period for the application.</p>
+        dwp_other_income_header_html: |
+          <p><strong>Financial support from others</strong></p>
+          <p>The applicant must tell us about and send documents showing any other income they receive including one-off or ongoing payments and support from friends and family including any loans (excluding student loans or grants) covering the time period for the application.</p>
+        dwp_cash_gifts_and_prizes_html: |
+          <p><strong>Cash gifts and prizes</strong></p>
+          <p>The applicant must tell us about all one-off or regular payments such as birthday money, winnings from gambling and competitions received within the assessment period. Any other income You must tell us about any other money the applicant has received within the assessment period which includes refunds, dividends or interest payments.</p>
         prisoner_income_html: |
           <p><strong>Prisoner's income</strong></p>
           <p>If the applicant is a prisoner, they need to send a Prisoner Income and Expenditure Statement (PIES) covering the relevant period of time. If they're in a private prison, the statement needs to show earnings and private cash.</p>
+          <p><strong>Please note:</strong> If they did have other incomings in the relevant period not shown on their bank statements, they must provide evidence and/or an explanation of what these incomings are.</p>
+          <p>You must write the new Help with Fees reference number on any letters that you send %{reference}.</p>
+        dwp_prisoner_income_html: |
+          <p><strong>Prisoner's income (if applicable)</strong></p>
+          <p>If the applicant is a prisoner, they will need to send a Prisoner Income and Expenditure Statement (PIES) covering the relevant period of time. If they are in a private prison, their statement needs to show earnings and private cash.</p>
           <p><strong>Please note:</strong> If they did have other incomings in the relevant period not shown on their bank statements, they must provide evidence and/or an explanation of what these incomings are.</p>
           <p>You must write the new Help with Fees reference number on any letters that you send %{reference}.</p>
         footer_html: |
@@ -759,5 +998,152 @@ en-GB:
         <p><strong>Reference: %{reference}</strong></p>
         <p>We have received your Help with Fees application.</p>
         <p>We can confirm that the application has been processed and has received a full remission of the court/tribunal fee in question.</p>
+        <p>From,</p>
+        <p>%{user_name}</p>
+      benefit_evidence_received_not eligible_issue_html: |
+        <p>Dear %{full_name}</p>
+        <p><strong>Your Reference: %{reference}</strong></p>
+        <p>We've received your benefit evidence relating to your Help with Fees application. Unfortunately, after reviewing the evidence provided, you are not eligible for help with paying the fee. This is because the evidence provided does not confirm you receiving any of the benefits that make you automatically eligible for Help with Fees.</p>
+        <p>You will get automatic help with your fee if you're receiving any of these benefits:</p>
+        <ul class="govuk-list govuk-list--bullet">
+          <li><strong>Income-based</strong>Jobseeker's Allowance (JSA)</li>
+          <li><strong>income-related</strong>Employment and Support Allowance (ESA)</li>
+          <li>Income Support</li>
+          <li>Universal Credit (<strong>and you earn less than £6,000 over the last 12 months</strong>)</li>
+          <li>Pension Credit (<strong>guarantee credit</strong>)</li>
+        </ul>
+        <h3 class='govuk-heading-m'>What you can do next:</h3>
+        <h3 class='govuk-heading-m'>You can pay the fee</h3>
+        <p>You need to pay %{fee_amount} towards the fee by %{expiry_date}.</p>
+        <p><strong>You can pay by:</strong></p>
+        <ul class="govuk-list govuk-list--bullet">
+          <li>calling <strong>&lt;add phone number&gt;</strong> with debit card details</li>
+          <li>posting a cheque written out to 'HM Courts and Tribunals Service' to the address at the top of this letter</li>
+          <li>going to the court counter with cash, a cheque or debit card (please check with the court dealing with your case that they provide a counter service before making the journey)</li>
+        </ul>
+        <p>If none of these options are possible, call the court on <strong>&lt;add phone number&gt;</strong></p>
+        <h3 class='govuk-heading-m'>Apply for an income application</h3>
+        <p>You still may be able to get help with your fee if you're on a low income and receive the other types of benefit. There are examples of some of these types of benefits below.</p>
+        <ul class="govuk-list govuk-list--bullet">
+          <li>contirbuion-based Jobseeker's Allowance (or new-style JSA)</li>
+          <li>contribution-based Employment and Support Allowance</li>
+          <li>income-based pension credit</li>
+          <li>Pension Credit (savings credit)</li>
+          <li>Universal Credit(<strong>and you earn over £6,000 a year before tax and National Insurance</strong>)</li>
+        </ul>
+        <p>When applying ensure you declare all your income including your benefits. Remember, some parts of your benefit award may be excluded and do not need declaring, for example housing element of Universal Credit. You can find further information on what is excluded from income at <a href="https://www.gov.uk/get-help-with-court-fees" target="_blank" title"Get help paying court and tribunal fees">https://www.gov.uk/get-help-with-court-fees</a></p>
+        <h3 class=govuk-heading-m>Appeal by providing further evidence</h3>
+        <p>If you have further evidence which supports that you were on one of these passported benefits at the time a fee had to be paid, you should return your Help with Fees reference number or EX160 application (if you submitted a paper application) along with further proof of the benefits you receive within <strong>14 days</strong>. If you are on Universal Credit and you have told us that you are earning less than £6,000 a year, please provide proof of this. Examples of proof can include your Universal Credit statements for the past 12 months, payslips or bank statements.</p>
+        <p>Please double check that your personal details provided on your Help with Fees application are correct and match the details on your DWP paperwork. Please also double check on your DWP paperwork that you received these specific benefits and not similarly named ones.</p>
+        <p><strong>Please ensure you include the reference number %{reference} on all correspondence relating to your evidence review.</strong></p>
+        <h3 class='govuk-heading-m'>Useful links</h3>
+        <p>You can use this link to locate the address or email address for the court/tribunal dealing with your case <a href="https://www.gov.uk/find-court-tribunal" target="_blank" title"Find the right court or tribunal">https://www.gov.uk/find-court-tribunal</a>.</p>
+        <p>You can find more guidance on applying for Help with Fees here: <a href="https://www.gov.uk/get-help-with-court-fees" target="_blank" title"Get help paying court and tribunal fees">https://www.gov.uk/get-help-with-court-fees</a></p>
+        <p>If you need help or support to complete a Help with Fees application form, email: <a href="mailto:support@wearegroup.com">support@wearegroup.com</a> for more information.</p>
+        <p>From,</p>
+        <p>%{user_name}</p>
+      benefit_evidence_received_not eligible_issue_rep_html: |
+        <p>Dear %{greeting}</p>
+        <p><strong>Your Reference: %{reference}</strong></p>
+        <p>We've received the benefit evidence relating to your applicant's Help with Fees application. Unfortunately, after reviewing the evidence provided, the applicant is not eligible for help with paying the fee. This is because the evidence provided does not confirm they are receiving any of the benefits that make them automatically eligible for Help with Fees.</p>
+        <p>They will get automatic help with their fee if they're receiving any of these benefits:</p>
+        <ul class="govuk-list govuk-list--bullet">
+          <li><strong>Income-based</strong>Jobseeker's Allowance (JSA)</li>
+          <li><strong>income-related</strong>Employment and Support Allowance (ESA)</li>
+          <li>Income Support</li>
+          <li>Universal Credit (<strong>and they earn less than £6,000 over the last 12 months</strong>)</li>
+          <li>Pension Credit (<strong>guarantee credit</strong>)</li>
+        </ul>
+        <h3 class='govuk-heading-m'>What to do next:</h3>
+        <h3 class='govuk-heading-m'>You can pay the fee</h3>
+        <p>You need to pay %{fee_amount} towards the fee by %{expiry_date}.</p>
+        <p><strong>You can pay by:</strong></p>
+        <ul class="govuk-list govuk-list--bullet">
+          <li>calling <strong>&lt;add phone number&gt;</strong> with debit card details</li>
+          <li>posting a cheque written out to 'HM Courts and Tribunals Service' to the address at the top of this letter</li>
+          <li>going to the court counter with cash, a cheque or debit card (please check with the court dealing with your case that they provide a counter service before making the journey)</li>
+        </ul>
+        <p>If none of these options are possible, call the court on <strong>&lt;add phone number&gt;</strong></p>
+        <h3 class='govuk-heading-m'>Apply for an income application</h3>
+        <p>The applicant may still be able to get help with their fee if they're on a low income and receive the other types of benefit. There are examples of some of these types of benefits below.</p>
+        <ul class="govuk-list govuk-list--bullet">
+          <li>contirbuion-based Jobseeker's Allowance (or new-style JSA)</li>
+          <li>contribution-based Employment and Support Allowance</li>
+          <li>Pension Credit (savings credit)</li>
+          <li>Universal Credit(<strong>and they earn over £6,000 a year before tax and National Insurance</strong>)</li>
+        </ul>
+        <p>When applying ensure they declare all their income including their benefits. Remember, some parts of their benefit award may be excluded and do not need declaring, for example housing element of Universal Credit. You can find further information on what is excluded from income at <a href="https://www.gov.uk/get-help-with-court-fees" target="_blank" title"Get help paying court and tribunal fees">https://www.gov.uk/get-help-with-court-fees</a></p>
+        <h3 class=govuk-heading-m>Appeal by providing further evidence</h3>
+        <p>If you have further evidence which supports that the applicant was on one of these passported benefits at the time a fee had to be paid, they should return their Help with Fees reference number or EX160 application (if you submitted a paper application) along with further proof of the benefits they receive within <strong>14 days</strong>. If the applicant is receiving Universal Credit and they have told us that you are earning less than £6,000 a year, please provide proof of this. Examples of proof can include your Universal Credit statements for the past 12 months, payslips or bank statements.</p>
+        <p>Please double check that their personal details provided on their Help with Fees application are correct and match the details on their DWP paperwork. Please also double check on their DWP paperwork that they received these specific benefits and not similarly named ones.</p>
+        <p><strong>Please ensure you include the reference number %{reference} on all correspondence relating to your evidence review.</strong></p>
+        <h3 class='govuk-heading-m'>Useful links</h3>
+        <p>You can use this link to locate the address or email address for the court/tribunal dealing with your case <a href="https://www.gov.uk/find-court-tribunal" target="_blank" title"Find the right court or tribunal">https://www.gov.uk/find-court-tribunal</a>.</p>
+        <p>You can find more guidance on applying for Help with Fees here: <a href="https://www.gov.uk/get-help-with-court-fees" target="_blank" title"Get help paying court and tribunal fees">https://www.gov.uk/get-help-with-court-fees</a></p>
+        <p>If you need help or support to complete a Help with Fees application form, email: <a href="mailto:"></a> for more information.</p>
+        <p>From,</p>
+        <p>%{user_name}</p>
+      benefit_evidence_received_not eligible_refund_html: |
+        <p>Dear %{full_name}</p>
+        <p><strong>Reference: %{reference}</strong></p>
+        <p>We have received your benefit evidence relating to your refund Help with Fees application. Unfortunately, after reviewing the evidence provided, you are not eligible for a refund of the fee paid. This is because the evidence provided does not confirm you were receiving any of the benefits that make you automatically eligible for Help with Fees at the time the fee was paid.</p>
+        <p>You will get automatic help with your fee if you're receiving any of these benefits:</p>
+        <ul class="govuk-list govuk-list--bullet">
+          <li><strong>Income-based</strong>Jobseeker's Allowance (JSA)</li>
+          <li><strong>income-related</strong>Employment and Support Allowance (ESA)</li>
+          <li>Income Support</li>
+          <li>Universal Credit (<strong>and you earn less than £6,000 over the last 12 months</strong>)</li>
+          <li>Pension Credit (<strong>guarantee credit</strong>)</li>
+        </ul>
+        <h3 class='govuk-heading-m'>What to do next:</h3>
+        <h3 class='govuk-heading-m'>Apply for an income application</h3>
+        <p>You still may be able to get help with your fee if, at the time you paid the fee, you were on a low income and received the other types of benefit. There are examples of some of these types of benefits below.</p>
+        <ul class="govuk-list govuk-list--bullet">
+          <li>contirbuion-based Jobseeker's Allowance (or new-style JSA)</li>
+          <li>contribution-based Employment and Support Allowance</li>
+          <li>Pension Credit (savings credit)</li>
+          <li>Universal Credit(<strong>and you earn over £6,000 a year before tax and National Insurance</strong>)</li>
+        </ul>
+        <p>When applying ensure you declare all your income including your benefits at the time you paid your fee. Remember, some parts of your benefit award may be excluded and do not need declaring, for example housing element of Universal Credit. You can find further information on what is excluded from income at <a href="https://www.gov.uk/get-help-with-court-fees" target="_blank" title"Get help paying court and tribunal fees">https://www.gov.uk/get-help-with-court-fees</a></p>
+        <h3 class=govuk-heading-m>Appeal by providing further evidence</h3>
+        <p>If you have further evidence which supports that you were on one of these passported benefits at the time a fee had to be paid, you should return your Help with Fees reference number or EX160 application (if you submitted a paper application) along with further proof of the benefits you receive within <strong>14 days</strong>. If you are on Universal Credit and you have told us that you are earning less than £6,000 a year, please provide proof of this. Examples of proof can include your Universal Credit statements for the past 12 months, payslips or bank statements.</p>
+        <p>Please double check that your personal details provided on your Help with Fees application are correct and match the details on your DWP paperwork. Please also double check on your DWP paperwork that you received these specific benefits and not similarly named ones.</p>
+        <p><strong>Please ensure you include the reference number %{reference} on all correspondence relating to your evidence review.</strong></p>
+        <h3 class='govuk-heading-m'>Useful links</h3>
+        <p>You can use this link to locate the address or email address for the court/tribunal dealing with your case <a href="https://www.gov.uk/find-court-tribunal" target="_blank" title"Find the right court or tribunal">https://www.gov.uk/find-court-tribunal</a>.</p>
+        <p>You can find more guidance on applying for Help with Fees here: <a href="https://www.gov.uk/get-help-with-court-fees" target="_blank" title"Get help paying court and tribunal fees">https://www.gov.uk/get-help-with-court-fees</a></p>
+        <p>If you need help or support to complete a Help with Fees application form, email: <a href="mailto:"></a> for more information.</p>
+        <p>From,</p>
+        <p>%{user_name}</p>
+      benefit_evidence_received_not eligible_refund_rep_html: |
+        <p>Dear %{greeting}</p>
+        <p><strong>Reference: %{reference}</strong></p>
+        <p>We have received the benefit evidence relating to your applicant's refund Help with Fees application. Unfortunately, after reviewing the evidence provided, the applicant is not eligible for a refund of the fee paid. This is because the evidence provided does not confirm they receive any of the benefits that make them automatically eligible for Help with Fees.</p>
+        <p>They will get automatic help with their fee if they're receiving any of these benefits:</p>
+        <ul class="govuk-list govuk-list--bullet">
+          <li><strong>Income-based</strong>Jobseeker's Allowance (JSA)</li>
+          <li><strong>income-related</strong>Employment and Support Allowance (ESA)</li>
+          <li>Income Support</li>
+          <li>Universal Credit (<strong>and they earn less than £6,000 over the last 12 months</strong>)</li>
+          <li>Pension Credit (<strong>guarantee credit</strong>)</li>
+        </ul>
+        <h3 class='govuk-heading-m'>What to do next:</h3>
+        <h3 class='govuk-heading-m'>Apply for an income application</h3>
+        <p>The applicant may still be able to get help with their fee if they're on a low income and receive the other types of benefit. There are examples of some of these types of benefits below.</p>
+        <ul class="govuk-list govuk-list--bullet">
+          <li>contirbuion-based Jobseeker's Allowance (or new-style JSA)</li>
+          <li>contribution-based Employment and Support Allowance</li>
+          <li>Pension Credit (savings credit)</li>
+          <li>Universal Credit(<strong>and they earn over £6,000 a year before tax and National Insurance</strong>)</li>
+        </ul>
+        <p>When applying ensure they declare all their income including their benefits at the time you paid your fee. Remember, some parts of their benefit award may be excluded and do not need declaring, for example housing element of Universal Credit. You can find further information on what is excluded from income at <a href="https://www.gov.uk/get-help-with-court-fees" target="_blank" title"Get help paying court and tribunal fees">https://www.gov.uk/get-help-with-court-fees</a></p>
+        <h3 class=govuk-heading-m>Appeal by providing further evidence</h3>
+        <p>If you have further evidence which supports that the applicant was on one of these passported benefits at the time a fee had to be paid, you should return their Help with Fees reference number or EX160 application (if you submitted a paper application) along with further proof of the benefits they receive within <strong>14 days</strong>. If the applicant is receiving Universal Credit and they have told us that you are earning less than £6,000 a year, please provide proof of this. Examples of proof can include your Universal Credit statements for the past 12 months, payslips or bank statements.</p>
+        <p>Please double check that their personal details provided on your Help with Fees application are correct and match the details on their DWP paperwork. Please also double check on their DWP paperwork that they received these specific benefits and not similarly named ones.</p>
+        <p><strong>Please ensure you include the reference number %{reference} on all correspondence relating to your evidence review.</strong></p>
+        <h3 class='govuk-heading-m'>Useful links</h3>
+        <p>You can use this link to locate the address or email address for the court/tribunal dealing with your case <a href="https://www.gov.uk/find-court-tribunal" target="_blank" title"Find the right court or tribunal">https://www.gov.uk/find-court-tribunal</a>.</p>
+        <p>You can find more guidance on applying for Help with Fees here: <a href="https://www.gov.uk/get-help-with-court-fees" target="_blank" title"Get help paying court and tribunal fees">https://www.gov.uk/get-help-with-court-fees</a></p>
+        <p>If you need help or support to complete a Help with Fees application form, email: <a href="mailto:"></a> for more information.</p>
         <p>From,</p>
         <p>%{user_name}</p>

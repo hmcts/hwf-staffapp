@@ -3,7 +3,54 @@
 
 h1.govuk-heading-m.util_mt-medium New scheme letters
 
-h2.govuk-heading-m Processed application results in part payment
+p.govuk-body
+  strong You must review the letter templates carefully and adjust them accordingly on a case-by-case basis.
+p.govuk-body
+  strong Please ensure any red text has been amended/removed, including any staff notes and brackets that are not applicable.
+
+ul.govuk-list.govuk-list--bullet
+  li = link_to 'Letter 1: Processed application results in part payment', '#processed-application-results-in-part-payment', class: 'govuk-link'
+  li = link_to 'Letter 2: Evidence check - received, but not correct', '#evidence-check-received-but-not-correct', class: 'govuk-link'
+  li = link_to 'Letter 3: Evidence check - requested, but not received', '#evidence-check-requested-but-not-received', class: 'govuk-link'
+  li = link_to 'Letter 4: Evidence check - requested, but not received, refund', '#evidence-check-requested-but-not-received-refund', class: 'govuk-link'
+  li = link_to 'Letter 5: Processed application results in evidence check', '#processed-application-results-in-evidence-check', class: 'govuk-link'
+  li = link_to 'Letter 6: Part payment - requested, but not received', '#part-payment-requested-but-not-received', class: 'govuk-link'
+  li = link_to 'Letter 7: Part payment - received, but not correct', '#part-payment-received-but-not-correct', class: 'govuk-link'
+  li = link_to 'Letter 8: Application rejected because savings threshold exceeded', '#application-rejected-because-savings-threshold-exceeded', class: 'govuk-link'
+  li = link_to 'Letter 9: Application rejected because income threshold exceeded', '#application-rejected-because-income-threshold-exceeded', class: 'govuk-link'
+  li = link_to 'Letter 10: Application rejected because benefits not received-on issue', '#application-rejected-because-benefits-not-received-on-issue', class: 'govuk-link'
+  li = link_to 'Letter 11: Application rejected because benefits not received-refund', '#application-rejected-because-benefits-not-received-refund', class: 'govuk-link'
+  li = link_to 'Letter 12: Application rejected because benefits not received-refund-representation', '#application-rejected-because-benefits-not-received-refund-representation', class: 'govuk-link'
+  li = link_to 'Letter 13: Application is not eligible for refund', '#application-is-not-eligible-for-refund', class: 'govuk-link'
+  li = link_to 'Letter 14: Application is eligible for partial refund', '#application-is-eligible-for-partial-refund', class: 'govuk-link'
+  li = link_to 'Letter 15: Application is eligible for full refund', '#application-is-eligible-for-full-refund', class: 'govuk-link'
+  li = link_to 'Letter 16: Processed application results in part payment-representation', '#processed-application-results-in-part-payment-representation', class: 'govuk-link'
+  li = link_to 'Letter 17: Evidence check - received, but not correct-representation', '#evidence-check-received-but-not-correct-representation', class: 'govuk-link'
+  li = link_to 'Letter 18: Part payment - requested, but not received-representation', '#part-payment-requested-but-not-received-representation', class: 'govuk-link'
+  li = link_to 'Letter 19: Part payment - received, but not correct-representation', '#part-payment-received-but-not-correct-representation', class: 'govuk-link'
+  li = link_to 'Letter 20: Application rejected because savings threshold exceeded-representation', '#application-rejected-because-savings-threshold-exceeded-representation', class: 'govuk-link'
+  li = link_to 'Letter 21: Application rejected because income threshold exceeded-representation', '#application-rejected-because-income-threshold-exceeded-representation', class: 'govuk-link'
+  li = link_to 'Letter 22: Application rejected because benefits not received-on issue-representation', '#application-rejected-because-benefits-not-received-on-issue-representation', class: 'govuk-link'
+  li = link_to 'Letter 23: Application is not eligible for refund-representation', '#application-is-not-eligible-for-refund-representation', class: 'govuk-link'
+  li = link_to 'Letter 24: Application is eligible for partial refund-representation', '#application-is-eligible-for-partial-refund-representation', class: 'govuk-link'
+  li = link_to 'Letter 25: Application is eligible for full refund-representation', '#application-is-eligible-for-full-refund-representation', class: 'govuk-link'
+  li = link_to 'Letter 26: Reference code received out of time-representation', '#reference-code-received-out-of-time-representation', class: 'govuk-link'
+  li = link_to 'Letter 27: Reference code received out of time', '#reference-code-received-out-of-time', class: 'govuk-link'
+  li = link_to 'Letter 28: Processed application results in evidence check-representation', '#processed-application-results-in-evidence-check-representation', class: 'govuk-link'
+  li = link_to 'Letter 29: Evidence check - requested, but not received-representation', '#evidence-check-requested-but-not-received-representation', class: 'govuk-link'
+  li = link_to 'Letter 30: Evidence check - requested, but not received, refund-representation', '#evidence-check-requested-but-not-received-refund-representation', class: 'govuk-link'
+  li = link_to 'Letter 31: Compulsory information missing from new application-representation', '#compulsory-information-missing-from-new-application-representation', class: 'govuk-link'
+  li = link_to 'Letter 32: Application is eligible for full remission-representation', '#application-is-eligible-for-full-remission-representation', class: 'govuk-link'
+  li = link_to 'Letter 33: Application is eligible for full remission', '#application-is-eligible-for-full-remission', class: 'govuk-link'
+  - if Settings.dwp_api_enabled
+    li = link_to 'Letter 34: Benefit evidence received but not eligible-on issue', '#benefit-evidence-received-but-not-eligible-on-issue', class: 'govuk-link'
+    li = link_to 'Letter 35: Benefit evidence received but not eligible-on issue-representation', '#benefit-evidence-received-but-not-eligible-on-issue-representation', class: 'govuk-link'
+    li = link_to 'Letter 36: Benefit evidence received but not eligible-refund', '#benefit-evidence-received-but-not-eligible-refund', class: 'govuk-link'
+    li = link_to 'Letter 37: Benefit evidence received but not eligible-refund-representation', '#benefit-evidence-received-but-not-eligible-refund-representation', class: 'govuk-link'
+
+br
+
+h2.govuk-heading-m id="processed-application-results-in-part-payment" Processed application results in part payment
 .confirmation-letter
   = t('new_letters.part-payment.send_part_payment_non_rep_html',
           income_type: '{AUTO: Your total monthly income/Your average income for the last 3 months}',
@@ -17,7 +64,7 @@ h2.govuk-heading-m Processed application results in part payment
           children_old: '{AUTO: APPLICANTS CHILDREN 14+}',
           date_for_part_payment: '{AUTO: DATE FOR PAYMENT}')
 
-h2.govuk-heading-m Evidence check - received, but not correct
+h2.govuk-heading-m id="evidence-check-received-but-not-correct" Evidence check - received, but not correct
 .confirmation-letter
   = t('new_letters.evidence.evidence_incorrect_non_rep_html',
           greeting: '{AUTO: APPLICANTS NAME}',
@@ -27,7 +74,7 @@ h2.govuk-heading-m Evidence check - received, but not correct
           expiry_date: '{AUTO: DATE EVIDENCE DUE}',
           amount_to_pay: '£{AUTO: AMOUNT TO PAY}')
 
-h2.govuk-heading-m Evidence check - requested, but not received
+h2.govuk-heading-m id="evidence-check-requested-but-not-received" Evidence check - requested, but not received
 .confirmation-letter
   = t('letters.evidence.no_evidence_received_html',
           reference: '{AUTO: APPLICATION REFERENCE}',
@@ -35,7 +82,7 @@ h2.govuk-heading-m Evidence check - requested, but not received
           user_name: '{AUTO: CURRENT USERS NAME}',
           expiry_date: '{AUTO: DATE EVIDENCE DUE}')
 
-h2.govuk-heading-m Evidence check - requested, but not received, refund
+h2.govuk-heading-m id="evidence-check-requested-but-not-received-refund" Evidence check - requested, but not received, refund
 .confirmation-letter
   = t('letters.evidence.no_evidence_received_refund_html',
           reference: '{AUTO: APPLICATION REFERENCE}',
@@ -43,23 +90,38 @@ h2.govuk-heading-m Evidence check - requested, but not received, refund
           user_name: '{AUTO: CURRENT USERS NAME}',
           expiry_date: '{AUTO: DATE EVIDENCE DUE}')
 
-h2.govuk-heading-m Processed application results in evidence check
+h2.govuk-heading-m id="processed-application-results-in-evidence-check" Processed application results in evidence check
 .confirmation-letter
   =t('new_letters.evidence.send_evidence.header_html', reference: '{AUTO: APPLICATION REFERENCE}', full_name: '{AUTO: APPLICANTS NAME}',
           user_name: '{AUTO: CURRENT USERS NAME}',
           expiry_date: '{AUTO: DATE EVIDENCE DUE}')
-  =t('new_letters.evidence.send_evidence.wages_html', wage_period: '{AUTO: LAST CALENDAR MONTH} {AUTO: LAST THREE MONTHS}')
+  - if Settings.dwp_api_enabled
+    =t('new_letters.evidence.send_evidence.dwp_wages_html', wage_period: '{AUTO: LAST CALENDAR MONTH} {AUTO: LAST THREE MONTHS}')
+  - else
+    =t('new_letters.evidence.send_evidence.wages_html', wage_period: '{AUTO: LAST CALENDAR MONTH} {AUTO: LAST THREE MONTHS}')
+
   =t('new_letters.evidence.send_evidence.bank_statements_html', wage_period: '{AUTO: LAST CALENDAR MONTH} {AUTO: LAST THREE MONTHS}')
-  =t('new_letters.evidence.send_evidence.child_maintenance_html')
-  =t('new_letters.evidence.send_evidence.benefits_and_credits_html')
-  =t('new_letters.evidence.send_evidence.rental_html')
-  =t('new_letters.evidence.send_evidence.goods_selling_html')
-  =t('new_letters.evidence.send_evidence.other_monthly_income_html')
-  =t('new_letters.evidence.send_evidence.prisoner_income_html', reference: '{AUTO: APPLICATION REFERENCE}')
+
+  - if Settings.dwp_api_enabled
+    =t('new_letters.evidence.send_evidence.dwp_child_maintenance_html')
+    =t('new_letters.evidence.send_evidence.dwp_benefits_and_credits_html')
+    =t('new_letters.evidence.send_evidence.dwp_rental_html')
+    =t('new_letters.evidence.send_evidence.dwp_goods_selling_html')
+    =t('new_letters.evidence.send_evidence.dwp_other_monthly_income_html')
+    =t('new_letters.evidence.send_evidence.dwp_cash_gifts_and_prizes_html')
+    =t('new_letters.evidence.send_evidence.dwp_prisoner_income_html', reference: '{AUTO: APPLICATION REFERENCE}')
+  -else
+    =t('new_letters.evidence.send_evidence.child_maintenance_html')
+    =t('new_letters.evidence.send_evidence.benefits_and_credits_html')
+    =t('new_letters.evidence.send_evidence.rental_html')
+    =t('new_letters.evidence.send_evidence.goods_selling_html')
+    =t('new_letters.evidence.send_evidence.other_monthly_income_html')
+    =t('new_letters.evidence.send_evidence.prisoner_income_html', reference: '{AUTO: APPLICATION REFERENCE}')
+
   =t('new_letters.evidence.send_evidence.footer_html', user_name: '{AUTO: CURRENT USERS NAME}')
 
 
-h2.govuk-heading-m Part payment - requested, but not received
+h2.govuk-heading-m id="part-payment-requested-but-not-received" Part payment - requested, but not received
 .confirmation-letter
   = t('letters.part-payment.no_part_payment_received_html',
           reference: '{AUTO: APPLICATION REFERENCE}',
@@ -68,14 +130,14 @@ h2.govuk-heading-m Part payment - requested, but not received
           part_payment_amount: '£{AUTO: AMOUNT TO PAY}',
           date_for_part_payment: '{AUTO: DATE FOR PAYMENT}')
 
-h2.govuk-heading-m Part payment - received, but not correct
+h2.govuk-heading-m id="part-payment-received-but-not-correct" Part payment - received, but not correct
 .confirmation-letter
   = t('letters.part-payment.part_payment_incorrect_html',
           reference: '{AUTO: APPLICATION REFERENCE}',
           full_name: '{AUTO: APPLICANTS NAME}',
           user_name: '{AUTO: CURRENT USERS NAME}')
 
-h2.govuk-heading-m Application rejected because savings threshold exceeded
+h2.govuk-heading-m id="application-rejected-because-savings-threshold-exceeded" Application rejected because savings threshold exceeded
 .confirmation-letter
   = t('new_letters.reject.reject_over_savings_non_rep_html',
           greeting: '{AUTO: APPLICANTS NAME}',
@@ -86,7 +148,7 @@ h2.govuk-heading-m Application rejected because savings threshold exceeded
           full_name: '{AUTO: APPLICANTS NAME}',
           user_name: '{AUTO: CURRENT USERS NAME}')
 
-h2.govuk-heading-m Application rejected because income threshold exceeded
+h2.govuk-heading-m id="application-rejected-because-income-threshold-exceeded" Application rejected because income threshold exceeded
 .confirmation-letter
   = t('new_letters.reject.reject_over_income_no_rep_html',
           greeting: '{AUTO: APPLICANTS NAME}',
@@ -98,38 +160,67 @@ h2.govuk-heading-m Application rejected because income threshold exceeded
           full_name: '{AUTO: APPLICANTS NAME}',
           user_name: '{AUTO: CURRENT USERS NAME}')
 
-h2.govuk-heading-m Application rejected because benefits not received-on issue
+h2.govuk-heading-m id="application-rejected-because-benefits-not-received-on-issue" Application rejected because benefits not received-on issue
 .confirmation-letter
-  = t('new_letters.reject.reject_no_benefits_html',
-          greeting: '{AUTO: APPLICANTS NAME}',
-          reference: '{AUTO: APPLICATION REFERENCE}',
-          full_name: '{AUTO: APPLICANTS NAME}',
-          user_name: '{AUTO: CURRENT USERS NAME}',
-          amount_to_pay: '£{AUTO: AMOUNT TO PAY}',
-          date_for_part_payment: '{AUTO: DATE FOR PAYMENT}')
+  - if Settings.dwp_api_enabled
+    = t('new_letters.reject.dwp_reject_no_benefits_html',
+            greeting: '{AUTO: APPLICANTS NAME}',
+            reference: '{AUTO: APPLICATION REFERENCE}',
+            full_name: '{AUTO: APPLICANTS NAME}',
+            user_name: '{AUTO: CURRENT USERS NAME}',
+            amount_to_pay: '£{AUTO: AMOUNT TO PAY}',
+            date_for_part_payment: '{AUTO: DATE FOR PAYMENT}')
+  - else
+    = t('new_letters.reject.reject_no_benefits_html',
+            greeting: '{AUTO: APPLICANTS NAME}',
+            reference: '{AUTO: APPLICATION REFERENCE}',
+            full_name: '{AUTO: APPLICANTS NAME}',
+            user_name: '{AUTO: CURRENT USERS NAME}',
+            amount_to_pay: '£{AUTO: AMOUNT TO PAY}',
+            date_for_part_payment: '{AUTO: DATE FOR PAYMENT}')
 
-h2.govuk-heading-m Application rejected because benefits not received-refund
+
+h2.govuk-heading-m id="application-rejected-because-benefits-not-received-refund" Application rejected because benefits not received-refund
 .confirmation-letter
-  = t('new_letters.reject.reject_no_benefits_refund_html',
-          greeting: '{AUTO: APPLICANTS NAME}',
-          reference: '{AUTO: APPLICATION REFERENCE}',
-          full_name: '{AUTO: APPLICANTS NAME}',
-          user_name: '{AUTO: CURRENT USERS NAME}',
-          amount_to_pay: '£{AUTO: AMOUNT TO PAY}',
-          date_for_part_payment: '{AUTO: DATE FOR PAYMENT}')
+  - if Settings.dwp_api_enabled
+    = t('new_letters.reject.dwp_reject_no_benefits_refund_html',
+            greeting: '{AUTO: APPLICANTS NAME}',
+            reference: '{AUTO: APPLICATION REFERENCE}',
+            full_name: '{AUTO: APPLICANTS NAME}',
+            user_name: '{AUTO: CURRENT USERS NAME}',
+            amount_to_pay: '£{AUTO: AMOUNT TO PAY}',
+            date_for_part_payment: '{AUTO: DATE FOR PAYMENT}')
+  - else
+    = t('new_letters.reject.reject_no_benefits_refund_html',
+            greeting: '{AUTO: APPLICANTS NAME}',
+            reference: '{AUTO: APPLICATION REFERENCE}',
+            full_name: '{AUTO: APPLICANTS NAME}',
+            user_name: '{AUTO: CURRENT USERS NAME}',
+            amount_to_pay: '£{AUTO: AMOUNT TO PAY}',
+            date_for_part_payment: '{AUTO: DATE FOR PAYMENT}')
 
-h2.govuk-heading-m Application rejected because benefits not received-refund-representation
+h2.govuk-heading-m id="application-rejected-because-benefits-not-received-refund-representation" Application rejected because benefits not received-refund-representation
 .confirmation-letter
-  = t('new_letters.reject.reject_no_benefits_refund_representation_html',
-          greeting: '{AUTO: THIRD PARTY NAME} regarding {AUTO: APPLICANTS NAME}',
-          legal_rep: '{AUTO: THIRD PARTY NAME}',
-          reference: '{AUTO: APPLICATION REFERENCE}',
-          full_name: '{AUTO: APPLICANTS NAME}',
-          user_name: '{AUTO: CURRENT USERS NAME}',
-          amount_to_pay: '£{AUTO: AMOUNT TO PAY}',
-          date_for_part_payment: '{AUTO: DATE FOR PAYMENT}')
+  - if Settings.dwp_api_enabled
+    = t('new_letters.reject.dwp_reject_no_benefits_refund_representation_html',
+            greeting: '{AUTO: THIRD PARTY NAME} regarding {AUTO: APPLICANTS NAME}',
+            legal_rep: '{AUTO: THIRD PARTY NAME}',
+            reference: '{AUTO: APPLICATION REFERENCE}',
+            full_name: '{AUTO: APPLICANTS NAME}',
+            user_name: '{AUTO: CURRENT USERS NAME}',
+            amount_to_pay: '£{AUTO: AMOUNT TO PAY}',
+            date_for_part_payment: '{AUTO: DATE FOR PAYMENT}')
+  - else
+    = t('new_letters.reject.reject_no_benefits_refund_representation_html',
+            greeting: '{AUTO: THIRD PARTY NAME} regarding {AUTO: APPLICANTS NAME}',
+            legal_rep: '{AUTO: THIRD PARTY NAME}',
+            reference: '{AUTO: APPLICATION REFERENCE}',
+            full_name: '{AUTO: APPLICANTS NAME}',
+            user_name: '{AUTO: CURRENT USERS NAME}',
+            amount_to_pay: '£{AUTO: AMOUNT TO PAY}',
+            date_for_part_payment: '{AUTO: DATE FOR PAYMENT}')
 
-h2.govuk-heading-m Application is not eligible for refund
+h2.govuk-heading-m id="application-is-not-eligible-for-refund" Application is not eligible for refund
 .confirmation-letter
   = t('new_letters.refund.not_eligible_non_rep_html',
           greeting: '{AUTO: APPLICANTS NAME}',
@@ -137,7 +228,7 @@ h2.govuk-heading-m Application is not eligible for refund
           full_name: '{AUTO: APPLICANTS NAME}',
           user_name: '{AUTO: CURRENT USERS NAME}')
 
-h2.govuk-heading-m Application is eligible for partial refund
+h2.govuk-heading-m id="application-is-eligible-for-partial-refund" Application is eligible for partial refund
 .confirmation-letter
   = t('new_letters.refund.part_html',
           greeting: '{AUTO: APPLICANTS NAME}',
@@ -148,14 +239,14 @@ h2.govuk-heading-m Application is eligible for partial refund
           amount_refunded: '{AUTO: PARTIAL REMISSION AMOUNT}',
           amount_to_pay: '£{AUTO: REFUND AMOUNT}')
 
-h2.govuk-heading-m Application is eligible for full refund
+h2.govuk-heading-m id="application-is-eligible-for-full-refund" Application is eligible for full refund
 .confirmation-letter
   = t('letters.refund.full_html',
           reference: '{AUTO: APPLICATION REFERENCE}',
           full_name: '{AUTO: APPLICANTS NAME}',
           user_name: '{AUTO: CURRENT USERS NAME}')
 
-h2.govuk-heading-m Processed application results in part payment-representation
+h2.govuk-heading-m id="processed-application-results-in-part-payment-representation" Processed application results in part payment-representation
 .confirmation-letter
   = t('new_letters.part-payment.send_part_payment_html',
       reference: '{AUTO: APPLICATION REFERENCE}',
@@ -171,7 +262,7 @@ h2.govuk-heading-m Processed application results in part payment-representation
       children_old: '{AUTO: APPLICANTS CHILDREN 14+}',
       date_for_part_payment: '{AUTO: DATE FOR PAYMENT}')
 
-h2.govuk-heading-m Evidence check - received, but not correct-representation
+h2.govuk-heading-m id="evidence-check-received-but-not-correct-representation" Evidence check - received, but not correct-representation
 .confirmation-letter
   = t('new_letters.evidence.evidence_incorrect_html',
       reference: '{AUTO: APPLICATION REFERENCE}',
@@ -182,7 +273,7 @@ h2.govuk-heading-m Evidence check - received, but not correct-representation
       expiry_date: '{AUTO: DATE EVIDENCE DUE}',
       amount_to_pay: '£{AUTO: AMOUNT TO PAY}')
 
-h2.govuk-heading-m Part payment - requested, but not received-representation
+h2.govuk-heading-m id="part-payment-requested-but-not-received-representation" Part payment - requested, but not received-representation
 .confirmation-letter
   = t('new_letters.part-payment.no_part_payment_received_html',
       reference: '{AUTO: APPLICATION REFERENCE}',
@@ -193,7 +284,7 @@ h2.govuk-heading-m Part payment - requested, but not received-representation
       part_payment_amount: '£{AUTO: AMOUNT TO PAY}',
       date_for_part_payment: '{AUTO: DATE FOR PAYMENT}')
 
-h2.govuk-heading-m Part payment - received, but not correct-representation
+h2.govuk-heading-m id="part-payment-received-but-not-correct-representation" Part payment - received, but not correct-representation
 .confirmation-letter
   = t('new_letters.part-payment.part_payment_incorrect_html',
       reference: '{AUTO: APPLICATION REFERENCE}',
@@ -202,7 +293,7 @@ h2.govuk-heading-m Part payment - received, but not correct-representation
       greeting: '{AUTO: THIRD PARTY NAME} regarding {AUTO: APPLICANTS NAME}',
       user_name: '{AUTO: CURRENT USERS NAME}')
 
-h2.govuk-heading-m Application rejected because savings threshold exceeded-representation
+h2.govuk-heading-m id="application-rejected-because-savings-threshold-exceeded-representation" Application rejected because savings threshold exceeded-representation
 .confirmation-letter
   = t('new_letters.reject.reject_over_savings_html',
       reference: '{AUTO: APPLICATION REFERENCE}',
@@ -214,7 +305,7 @@ h2.govuk-heading-m Application rejected because savings threshold exceeded-repre
       greeting: '{AUTO: THIRD PARTY NAME} regarding {AUTO: APPLICANTS NAME}',
       user_name: '{AUTO: CURRENT USERS NAME}')
 
-h2.govuk-heading-m Application rejected because income threshold exceeded-representation
+h2.govuk-heading-m id="application-rejected-because-income-threshold-exceeded-representation" Application rejected because income threshold exceeded-representation
 .confirmation-letter
   = t('new_letters.reject.reject_over_income_html',
       reference: '{AUTO: APPLICATION REFERENCE}',
@@ -227,18 +318,28 @@ h2.govuk-heading-m Application rejected because income threshold exceeded-repres
       greeting: '{AUTO: THIRD PARTY NAME} regarding {AUTO: APPLICANTS NAME}',
       user_name: '{AUTO: CURRENT USERS NAME}')
 
-h2.govuk-heading-m Application rejected because benefits not received-on issue-representation
+h2.govuk-heading-m id="application-rejected-because-benefits-not-received-on-issue-representation" Application rejected because benefits not received-on issue-representation
 .confirmation-letter
-  = t('new_letters.reject.reject_no_benefits_representation_html',
-      reference: '{AUTO: APPLICATION REFERENCE}',
-      full_name: '{AUTO: APPLICANTS NAME}',
-      legal_rep: '{AUTO: THIRD PARTY NAME}',
-      greeting: '{AUTO: THIRD PARTY NAME} regarding {AUTO: APPLICANTS NAME}',
-      user_name: '{AUTO: CURRENT USERS NAME}',
-      amount_to_pay: '£{AUTO: AMOUNT TO PAY}',
-      date_for_part_payment: '{AUTO: DATE FOR PAYMENT}')
+  - if Settings.dwp_api_enabled
+    = t('new_letters.reject.dwp_reject_no_benefits_representation_html',
+            reference: '{AUTO: APPLICATION REFERENCE}',
+            full_name: '{AUTO: APPLICANTS NAME}',
+            legal_rep: '{AUTO: THIRD PARTY NAME}',
+            greeting: '{AUTO: THIRD PARTY NAME} regarding {AUTO: APPLICANTS NAME}',
+            user_name: '{AUTO: CURRENT USERS NAME}',
+            amount_to_pay: '£{AUTO: AMOUNT TO PAY}',
+            date_for_part_payment: '{AUTO: DATE FOR PAYMENT}')
+  - else
+    = t('new_letters.reject.reject_no_benefits_representation_html',
+            reference: '{AUTO: APPLICATION REFERENCE}',
+            full_name: '{AUTO: APPLICANTS NAME}',
+            legal_rep: '{AUTO: THIRD PARTY NAME}',
+            greeting: '{AUTO: THIRD PARTY NAME} regarding {AUTO: APPLICANTS NAME}',
+            user_name: '{AUTO: CURRENT USERS NAME}',
+            amount_to_pay: '£{AUTO: AMOUNT TO PAY}',
+            date_for_part_payment: '{AUTO: DATE FOR PAYMENT}')
 
-h2.govuk-heading-m Application is not eligible for refund-representation
+h2.govuk-heading-m id="application-is-not-eligible-for-refund-representation" Application is not eligible for refund-representation
 .confirmation-letter
   = t('new_letters.refund.not_eligible_html',
       reference: '{AUTO: APPLICATION REFERENCE}',
@@ -247,7 +348,7 @@ h2.govuk-heading-m Application is not eligible for refund-representation
       greeting: '{AUTO: THIRD PARTY NAME} regarding {AUTO: APPLICANTS NAME}',
       user_name: '{AUTO: CURRENT USERS NAME}')
 
-h2.govuk-heading-m Application is eligible for partial refund-representation
+h2.govuk-heading-m id="application-is-eligible-for-partial-refund-representation" Application is eligible for partial refund-representation
 .confirmation-letter
   = t('new_letters.refund.part_representation_html',
       reference: '{AUTO: APPLICATION REFERENCE}',
@@ -263,7 +364,7 @@ h2.govuk-heading-m Application is eligible for partial refund-representation
       children_young: '{AUTO: APPLICANTS CHILDREN 0-13}',
       children_old: '{AUTO: APPLICANTS CHILDREN 14+}')
 
-h2.govuk-heading-m Application is eligible for full refund-representation
+h2.govuk-heading-m id="application-is-eligible-for-full-refund-representation" Application is eligible for full refund-representation
 .confirmation-letter
   = t('new_letters.refund.full_html',
     reference: '{AUTO: APPLICATION REFERENCE}',
@@ -272,7 +373,7 @@ h2.govuk-heading-m Application is eligible for full refund-representation
     greeting: '{AUTO: THIRD PARTY NAME} regarding {AUTO: APPLICANTS NAME}',
     user_name: '{AUTO: CURRENT USERS NAME}')
 
-h2.govuk-heading-m Reference code received out of time-representation
+h2.govuk-heading-m id="reference-code-received-out-of-time-representation" Reference code received out of time-representation
 .confirmation-letter
   = t('new_letters.new_letters.reference_code_html',
           reference: '{AUTO: APPLICATION REFERENCE}',
@@ -282,7 +383,7 @@ h2.govuk-heading-m Reference code received out of time-representation
           application_received: '{AUTO: DATE APPLICATION RECEIVED}',
           user_name: '{AUTO: CURRENT USERS NAME}')
 
-h2.govuk-heading-m Reference code received out of time
+h2.govuk-heading-m id="reference-code-received-out-of-time" Reference code received out of time
 .confirmation-letter
   = t('new_letters.new_letters.reference_code_non_rep_html',
           reference: '{AUTO: APPLICATION REFERENCE}',
@@ -291,23 +392,42 @@ h2.govuk-heading-m Reference code received out of time
           application_received: '{AUTO: DATE APPLICATION RECEIVED}',
           user_name: '{AUTO: CURRENT USERS NAME}')
 
-h2.govuk-heading-m Processed application results in evidence check-representation
+h2.govuk-heading-m id="processed-application-results-in-evidence-check-representation" Processed application results in evidence check-representation
 .confirmation-letter
   = t('new_letters.new_letters.processed_application.header_html',
           reference: '{AUTO: APPLICATION REFERENCE}',
           greeting: '{AUTO: THIRD PARTY NAME} regarding {AUTO: APPLICANTS NAME}',
           evidence_due: '{AUTO: DATE EVIDENCE DUE}')
-  = t('new_letters.new_letters.processed_application.wages_html', wage_period: '{AUTO: LAST CALENDAR MONTH} {AUTO: LAST THREE MONTHS}')
+
+  - if Settings.dwp_api_enabled
+    = t('new_letters.new_letters.processed_application.dwp_wages_html', wage_period: '{AUTO: LAST CALENDAR MONTH} {AUTO: LAST THREE MONTHS}')
+  - else
+    = t('new_letters.new_letters.processed_application.wages_html', wage_period: '{AUTO: LAST CALENDAR MONTH} {AUTO: LAST THREE MONTHS}')
+
   = t('new_letters.new_letters.processed_application.bank_statements_html', wage_period: '{AUTO: LAST CALENDAR MONTH} {AUTO: LAST THREE MONTHS}')
-  = t('new_letters.new_letters.processed_application.child_maintenance_html')
-  = t('new_letters.new_letters.processed_application.benefits_and_credits_html')
+
+  - if Settings.dwp_api_enabled
+    = t('new_letters.new_letters.processed_application.dwp_child_maintenance_html')
+    = t('new_letters.new_letters.processed_application.dwp_benefits_and_credits_html')
+  - else
+    = t('new_letters.new_letters.processed_application.child_maintenance_html')
+    = t('new_letters.new_letters.processed_application.benefits_and_credits_html')
+
   = t('new_letters.new_letters.processed_application.rental_html')
-  = t('new_letters.new_letters.processed_application.goods_selling_html')
-  = t('new_letters.new_letters.processed_application.other_income_header_html')
-  = t('new_letters.new_letters.processed_application.prisoner_income_html', reference: '{AUTO: APPLICATION REFERENCE}')
+
+  - if Settings.dwp_api_enabled
+    = t('new_letters.new_letters.processed_application.dwp_goods_selling_html')
+    = t('new_letters.new_letters.processed_application.dwp_other_income_header_html')
+    = t('new_letters.new_letters.processed_application.dwp_cash_gifts_and_prizes_html')
+    = t('new_letters.new_letters.processed_application.dwp_prisoner_income_html', reference: '{AUTO: APPLICATION REFERENCE}')
+  - else
+    = t('new_letters.new_letters.processed_application.goods_selling_html')
+    = t('new_letters.new_letters.processed_application.other_income_header_html')
+    = t('new_letters.new_letters.processed_application.prisoner_income_html', reference: '{AUTO: APPLICATION REFERENCE}')
+
   = t('new_letters.new_letters.processed_application.footer_html', user_name: '{AUTO: CURRENT USERS NAME}')
 
-h2.govuk-heading-m Evidence check - requested, but not received-representation
+h2.govuk-heading-m id="evidence-check-requested-but-not-received-representation" Evidence check - requested, but not received-representation
 .confirmation-letter
   = t('new_letters.new_letters.evidence_check_html',
           reference: '{AUTO: APPLICATION REFERENCE}',
@@ -317,7 +437,7 @@ h2.govuk-heading-m Evidence check - requested, but not received-representation
           evidence_due: '{AUTO: DATE EVIDENCE DUE}',
           user_name: '{AUTO: CURRENT USERS NAME}')
 
-h2.govuk-heading-m Evidence check - requested, but not received, refund-representation
+h2.govuk-heading-m id="evidence-check-requested-but-not-received-refund-representation" Evidence check - requested, but not received, refund-representation
 .confirmation-letter
   = t('new_letters.new_letters.evidence_check_refund_html',
           reference: '{AUTO: APPLICATION REFERENCE}',
@@ -327,7 +447,7 @@ h2.govuk-heading-m Evidence check - requested, but not received, refund-represen
           evidence_due: '{AUTO: DATE EVIDENCE DUE}',
           user_name: '{AUTO: CURRENT USERS NAME}')
 
-h2.govuk-heading-m Compulsory information missing from new application-representation
+h2.govuk-heading-m id="compulsory-information-missing-from-new-application-representation" Compulsory information missing from new application-representation
 .confirmation-letter
   = t('new_letters.new_letters.information_missing_html',
           full_name: '{AUTO: APPLICANTS NAME}',
@@ -336,7 +456,7 @@ h2.govuk-heading-m Compulsory information missing from new application-represent
           application_received: '{AUTO: DATE APPLICATION RECEIVED}',
           user_name: '{AUTO: CURRENT USERS NAME}')
 
-h2.govuk-heading-m Application is eligible for full remission-representation
+h2.govuk-heading-m id="application-is-eligible-for-full-remission-representation" Application is eligible for full remission-representation
 .confirmation-letter
   = t('new_letters.new_letters.full_remission_html',
           full_name: '{AUTO: APPLICANTS NAME}',
@@ -345,10 +465,49 @@ h2.govuk-heading-m Application is eligible for full remission-representation
           reference: '{AUTO: APPLICATION REFERENCE}',
           user_name: '{AUTO: CURRENT USERS NAME}')
 
-h2.govuk-heading-m Application is eligible for full remission
+h2.govuk-heading-m id="application-is-eligible-for-full-remission" Application is eligible for full remission
 .confirmation-letter
   = t('new_letters.new_letters.full_remission_non_rep_html',
           full_name: '{AUTO: APPLICANTS NAME}',
           legal_rep: '{AUTO: THIRD PARTY NAME}',
           reference: '{AUTO: APPLICATION REFERENCE}',
           user_name: '{AUTO: CURRENT USERS NAME}')
+
+- if Settings.dwp_api_enabled
+  h2.govuk-heading-m id="benefit-evidence-received-but-not-eligible-on-issue" Benefit evidence received but not eligible-on issue
+  .confirmation-letter
+    = t('new_letters.new_letters.benefit_evidence_received_not eligible_issue_html',
+            full_name: '{AUTO: APPLICANTS NAME}',
+            legal_rep: '{AUTO: THIRD PARTY NAME}',
+            reference: '{AUTO: APPLICATION REFERENCE}',
+            user_name: '{AUTO: CURRENT USERS NAME}',
+            fee_amount: '£{AUTO: AMOUNT TO PAY}',
+            expiry_date: '{AUTO: DATE FOR PAYMENT}',)
+
+  h2.govuk-heading-m id="benefit-evidence-received-but-not-eligible-on-issue-representation" Benefit evidence received but not eligible-on issue-representation
+  .confirmation-letter
+    = t('new_letters.new_letters.benefit_evidence_received_not eligible_issue_rep_html',
+            greeting: '{AUTO: THIRD PARTY NAME} regarding {AUTO: APPLICANTS NAME}',
+            full_name: '{AUTO: APPLICANTS NAME}',
+            legal_rep: '{AUTO: THIRD PARTY NAME}',
+            reference: '{AUTO: APPLICATION REFERENCE}',
+            user_name: '{AUTO: CURRENT USERS NAME}',
+            fee_amount: '£{AUTO: AMOUNT TO PAY}',
+            expiry_date: '{AUTO: DATE FOR PAYMENT}')
+
+  h2.govuk-heading-m id="benefit-evidence-received-but-not-eligible-refund" Benefit evidence received but not eligible-refund
+  .confirmation-letter
+    = t('new_letters.new_letters.benefit_evidence_received_not eligible_refund_html',
+            full_name: '{AUTO: APPLICANTS NAME}',
+            legal_rep: '{AUTO: THIRD PARTY NAME}',
+            reference: '{AUTO: APPLICATION REFERENCE}',
+            user_name: '{AUTO: CURRENT USERS NAME}')
+
+  h2.govuk-heading-m id="benefit-evidence-received-but-not-eligible-refund-representation" Benefit evidence received but not eligible-refund-representation
+  .confirmation-letter
+    = t('new_letters.new_letters.benefit_evidence_received_not eligible_refund_rep_html',
+            greeting: '{AUTO: THIRD PARTY NAME} regarding {AUTO: APPLICANTS NAME}',
+            full_name: '{AUTO: APPLICANTS NAME}',
+            legal_rep: '{AUTO: THIRD PARTY NAME}',
+            reference: '{AUTO: APPLICATION REFERENCE}',
+            user_name: '{AUTO: CURRENT USERS NAME}')
