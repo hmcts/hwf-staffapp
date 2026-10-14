@@ -5,6 +5,10 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 with entries grouped by branch and date rather than release version.
 
+## 2026-10-14 (rcov-revert)
+
+- simplecov re-pinned to `~> 0.22.0` (from 1.3.2): SonarCloud reported 0% coverage on every PR since the 1.x bump in gem-updates-v74, so CI failed the coverage gate.
+
 ## 2026-10-13 (gem-updates-v75)
 
 ### Changed
