@@ -80,7 +80,6 @@ module Views
       }.freeze
 
       HEADERS = FIELDS.values
-      ATTRIBUTES = FIELDS.keys
 
       def initialize(start_date, end_date, court_id = nil)
         @date_from = format_dates(start_date)
@@ -91,11 +90,19 @@ module Views
         @zipfile_path = "tmp/#{@csv_file_name}.zip"
       end
 
+      def headers
+        fields.values
+      end
+
+      def attributes
+        fields.keys
+      end
+
       def to_csv
         CSV.generate do |csv|
-          csv << HEADERS
+          csv << headers
           data.each do |row|
-            csv << ATTRIBUTES.map do |attr|
+            csv << attributes.map do |attr|
               process_row(row, attr)
             end
           end
@@ -151,6 +158,11 @@ module Views
       end
 
       # Not a benefit application, staff said no benefits, or no check
+      # FIELDS without the six DWP benefit check columns while the DWP check is switched off
+      def fields
+        benefit_check_columns? ? FIELDS : FIELDS.except(*BENEFIT_CHECK_KEYS)
+      end
+
       def not_a_dwp_benefit_check
         "applications.application_type <> 'benefit' OR applications.benefits = FALSE OR bc.id IS NULL"
       end
@@ -284,10 +296,10 @@ module Views
               ELSE NULL
             END as income_processed,
             hc.request_params as hmrc_request_date_range,
-            #{benefit_check_columns(not_a_dwp_benefit_check)},
             details.fee_code,
             details.claim_amount,
             details.fee_entry_method
+            #{benefit_check_columns(not_a_dwp_benefit_check)}
           FROM applications
           INNER JOIN applicants ON applicants.application_id = applications.id
           INNER JOIN business_entities ON business_entities.id = applications.business_entity_id

@@ -184,7 +184,7 @@ module Views
              END AS partner_name_entered,
         details.calculation_scheme as hwf_scheme,
         applications.deleted_reasons_list as deletion_reason,
-        applications.deleted_reason as reason_description,
+        applications.deleted_reason as reason_description
         #{benefit_check_columns(paper_benefit_check_not_applicable)}
 
         FROM \"applications\" LEFT JOIN offices ON offices.id = applications.office_id
@@ -305,7 +305,7 @@ module Views
         END AS partner_name_entered,
         online_applications.calculation_scheme AS hwf_scheme,
         NULL AS deletion_reason,
-        NULL AS reason_description,
+        NULL AS reason_description
         #{benefit_check_columns('online_applications.benefits = FALSE OR bc.id IS NULL')}
         FROM online_applications
         INNER JOIN users ON users.id = online_applications.user_id

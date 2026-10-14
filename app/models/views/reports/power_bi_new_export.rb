@@ -40,6 +40,15 @@ module Views
 
       HEADERS = ColumnLabels.for(HEADER_KEYS).freeze
 
+      # HEADER_KEYS without the six DWP benefit check columns while the DWP check is switched off
+      def header_keys
+        benefit_check_columns? ? HEADER_KEYS : HEADER_KEYS - BENEFIT_CHECK_KEYS
+      end
+
+      def headers
+        ColumnLabels.for(header_keys)
+      end
+
       EXCLUDED_OFFICES = "('Digital', 'HMCTS HQ Team')"
 
       def initialize(start_date, end_date, verbose: false)
@@ -156,7 +165,7 @@ module Views
         row_count = 0
 
         File.open(@csv_file_path, 'w') do |file|
-          file.write(CSV.generate_line(HEADERS))
+          file.write(CSV.generate_line(headers))
 
           fetch_data_in_batches do |rows|
             rows.each do |row|
@@ -288,8 +297,8 @@ module Views
                  WHEN ec.completed_at IS NOT NULL THEN ec.income
                  ELSE NULL
             END AS income_processed,
-            #{benefit_check_columns("applications.application_type <> 'benefit' OR applications.benefits = FALSE OR bc.id IS NULL")},
             hc.request_params AS hmrc_request_date_range
+            #{benefit_check_columns("applications.application_type <> 'benefit' OR applications.benefits = FALSE OR bc.id IS NULL")}
         SQL
       end
       # rubocop:enable Metrics/MethodLength
@@ -380,8 +389,8 @@ module Views
             NULL AS complete_processing,
             NULL AS additional_income,
             oa2.income AS income_processed,
-            #{benefit_check_columns('oa2.benefits = FALSE OR bc.id IS NULL')},
             NULL AS hmrc_request_date_range
+            #{benefit_check_columns('oa2.benefits = FALSE OR bc.id IS NULL')}
         SQL
       end
       # rubocop:enable Metrics/MethodLength
@@ -471,7 +480,7 @@ module Views
 
       # rubocop:disable Metrics/AbcSize, Metrics/MethodLength
       def build_csv_row(row)
-        [
+        columns = [
           row['id'],
           row['reference'] || 'N/A',
           row['status'],
@@ -516,14 +525,10 @@ module Views
           row['complete_processing'],
           row['additional_income'],
           row['income_processed'],
-          format_hmrc_date_range(row['hmrc_request_date_range']),
-          row['benefit_checker_response'],
-          row['benefit_checker_errors'],
-          row['date_of_death'],
-          row['benefit_type'],
-          row['benefit_status'],
-          row['take_home_pay']
+          format_hmrc_date_range(row['hmrc_request_date_range'])
         ]
+        columns += row.values_at(*BENEFIT_CHECK_KEYS) if benefit_check_columns?
+        columns
       end
       # rubocop:enable Metrics/AbcSize, Metrics/MethodLength
 
