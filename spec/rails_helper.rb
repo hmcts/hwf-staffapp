@@ -12,7 +12,7 @@ puts "=== END DIAGNOSTIC BLOCK ==="
 # SimpleCov.formatter = SimpleCov::Formatter::JSONFormatter
 
 if ENV.fetch('ENABLE_COVERAGE', 'false').downcase == 'true'
-  SimpleCov.start do
+  SimpleCov.start 'rails' do
     formats :json
   end
   puts "DIAGNOSTIC: SimpleCov started successfully."

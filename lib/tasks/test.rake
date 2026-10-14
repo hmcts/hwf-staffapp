@@ -6,10 +6,8 @@ task test: :environment do
     raise "Rubocop failed"
   end
 
-  puts "DIAG: ENABLE_COVERAGE=#{ENV['ENABLE_COVERAGE'].inspect}"
-
   puts "Running RSpec tests..."
-  unless system("ENABLE_COVERAGE=true rspec --format progress --format RspecJunitFormatter --out tmp/test/rspec.xml")
+  unless system("rspec --format progress --format RspecJunitFormatter --out tmp/test/rspec.xml")
     raise "Rspec testing failed #{$?}"
   end
 
