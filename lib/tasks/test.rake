@@ -1,13 +1,11 @@
 # These tasks are needed by Jenkins pipeline
 
 task test: :environment do
-  puts "Running rubocop tests..."
   unless system "bundle exec rubocop"
     raise "Rubocop failed"
   end
 
-  puts "Running RSpec tests..."
-  unless system("rspec --format progress --format RspecJunitFormatter --out tmp/test/rspec.xml")
+  unless system("rspec --format RspecJunitFormatter --out tmp/test/rspec.xml")
     raise "Rspec testing failed #{$?}"
   end
 
