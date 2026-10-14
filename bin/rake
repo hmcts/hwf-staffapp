@@ -1,4 +1,10 @@
 #!/usr/bin/env ruby
 require_relative "../config/boot"
+if ENV.fetch('ENABLE_COVERAGE', 'false').downcase == 'true'
+  require 'simplecov'
+  SimpleCov.start 'rails' do
+    formats :json
+  end
+end
 require "rake"
 Rake.application.run
