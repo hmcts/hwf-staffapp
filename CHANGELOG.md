@@ -78,6 +78,27 @@ with entries grouped by branch and date rather than release version.
 - `BenefitCheckers::ClaimsDecision` checks every returned claim, not just the
   first, and counts one when its status is on-benefits and it was live inside
   the date window.
+## 2026-10-13 (gem-updates-v75)
+
+### Changed
+
+- Updated sentry 7.0.0 → 7.1.0 (Rails structured logging now off by default,
+  never enabled here; redirects no longer excluded from tracing), pg 1.6.3 →
+  1.7.0, rubocop 1.91.0 → 1.92.0 and rubocop-rspec_rails 2.32.0 → 2.33.0.
+  Its new `RSpecRails/ReceivePerformLater` cop is disabled in .rubocop.yml:
+  the suite runs ActiveJob inline, so the report controller specs stub
+  `perform_later`.
+- Routine bumps: brakeman, image_processing, listen, bullet, selenium-webdriver,
+  capybara-playwright-driver, playwright (gem and npm), test-prof, uri, webmock,
+  simplecov, sass and ten transitive gems.
+
+### Known issues
+
+- No open advisories.
+- devise_invitable 2.0.14 reverted: its `invitation_instructions` now comes via
+  `Devise::Mailers::Helpers`, which NotifyMailer lacks, so a bare `User#invite!`
+  raises. Add that method to NotifyMailer before retrying.
+- Held: azure-blob 0.9.0 (pin edit, two days old), cucumber 12 and json 3 (majors).
 
 ## 2026-09-28 (rst-8603-guides)
 
