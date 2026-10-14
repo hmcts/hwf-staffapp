@@ -56,9 +56,9 @@ Feature: Staff guides
       And I am signed in on the guide page
       Then I can view HMRC Datashare
 
-    Scenario: Income check guidance
+    Scenario: Evidence checks job card - new legislation
       And I am signed in on the guide page
-      Then I can view income check guidance
+      Then I can view Evidence checks job card - new legislation
 
     Scenario: Accessibility statement footer
       When I click on the accessibility link in the footer

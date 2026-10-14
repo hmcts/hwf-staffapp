@@ -64,7 +64,18 @@ module GuideHelper
   end
 
   def income_check_guidance_url
-    'https://justiceuk.sharepoint.com/sites/knowledgecentral/SitePages/Job-Cards.aspx?CT=1790263187017&OR=OWA-NT-Mail&CID=fb29972c-06fc-9665-0c18-62cef19df7c1&SI=NonSentItems&SLSync=Y'
+    if Settings.dwp_api_enabled == true
+      'https://justiceuk.sharepoint.com/:w:/r/sites/knowledgecentral/_layouts/15/' \
+      'Doc.aspx?sourcedoc=%7B28F4D6C2-FE0B-4E1C-AA11-' \
+      '1FBAF3D3BB83%7D&file=Evidence%20Checking%20-Final%20Version' \
+      '%2025.09.2026%20(003).docx&action=default&mobileredirect=true'
+    else
+      'https://justiceuk.sharepoint.com/sites/knowledgecentral/SitePages/Job-Cards.aspx?CT=1790263187017&OR=OWA-NT-Mail&CID=fb29972c-06fc-9665-0c18-62cef19df7c1&SI=NonSentItems&SLSync=Y'
+    end
+  end
+
+  def benefit_check_guidance_url
+    'https://justiceuk.sharepoint.com/:w:/r/sites/knowledgecentral/Shared%20Documents/Cross-Jurisdiction/Help%20with%20Fees/Job%20Cards/Evidence%20Checking%20-%20Benefits%20final%201.docx?d=w2654f399e92f46dba892d40a8ed34298&csf=1&web=1&e=MUGOhu'
   end
 
   def processing_paper_applications_job_card_url

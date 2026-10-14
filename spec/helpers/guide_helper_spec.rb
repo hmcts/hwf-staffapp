@@ -63,6 +63,14 @@ RSpec.describe GuideHelper do
   end
 
   describe '#income_check_guidance_url' do
-    it { expect(helper.income_check_guidance_url).to include('knowledgecentral/SitePages/Job-Cards.aspx') }
+    if Settings.dwp_api_enabled == true
+      it { expect(helper.income_check_guidance_url).to include('sourcedoc=%7B28F4D6C2-FE0B-4E1C-AA11-') }
+    else
+      it { expect(helper.income_check_guidance_url).to include('knowledgecentral/SitePages/Job-Cards.aspx') }
+    end
+  end
+
+  describe '#benefit_check_guidance_url' do
+    it { expect(helper.benefit_check_guidance_url).to include('d=w2654f399e92f46dba892d40a8ed34298&csf=1&web=1&e=MUGOhu') }
   end
 end

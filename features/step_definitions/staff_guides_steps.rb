@@ -50,8 +50,12 @@ Then("I can view HMRC Datashare") do
   expect(guide_page.content.hmrc_datashare['href']).to include 'sourcedoc=%7BB23D0CC3-7CF7-47B8-A12A-B79AAA0146FC%7D'
 end
 
-Then("I can view income check guidance") do
-  expect(guide_page.content.income_check_guidance['href']).to include 'knowledgecentral/SitePages/Job-Cards.aspx'
+Then("I can view Evidence checks job card - new legislation") do
+  if Settings.dwp_api_enabled
+    expect(guide_page.content.new_income_check_guidance['href']).to include 'sourcedoc=%7B28F4D6C2-FE0B-4E1C-AA11-'
+  else
+    expect(guide_page.content.income_check_guidance['href']).to include 'knowledgecentral/SitePages/Job-Cards.aspx'
+  end
 end
 
 Then("I can view Staff guides link on footer") do
