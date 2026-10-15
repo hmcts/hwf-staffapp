@@ -65,7 +65,7 @@ en-GB:
         <p>Fee to pay: %{fee_amount}</p>
         <p><strong>Please note your income information may have been checked with HMRC.</strong></p>
         <h3 class='govuk-heading-m'>What you need to do</h3>
-        <p>You need to pay the full fee amount of %{fee_amount} by %{expiry_date}.</p>
+        <p>You need to pay the full fee amount of <strong>%{fee_amount}</strong> by <strong>%{expiry_date}</strong>.</p>
         <p>You can pay by:</p>
         <ul class="govuk-list govuk-list--bullet">
           <li>calling <strong>&lt;add phone number&gt;</strong> with debit card details</li>
@@ -167,7 +167,7 @@ en-GB:
         </ul>
         <p>If you are receiving any other type of benefits, you must declare them as part of your income in a new Help with Fees application. Remember, some parts of your benefit award may be excluded and do not need declaring, for example housing element of Universal Credit. You can find further information on what is excluded from income at <a href="https://www.gov.uk/get-help-with-court-fees" target="_blank" title="Get help paying court and tribunal fees">https://www.gov.uk/get-help-with-court-fees</a></p>
         <h3 class='govuk-heading-m'>What you need to do if you are paying the fee</h3>
-        <p>You need to pay %{amount_to_pay} towards the fee by %{date_for_part_payment}.</p>
+        <p>You need to pay <strong>%{amount_to_pay}</strong> towards the fee by <strong>%{date_for_part_payment}</strong>.</p>
         <p>You can pay by:</p>
         <ul class="govuk-list govuk-list--bullet">
           <li>calling &lt;<strong>add phone number</strong>&gt; with debit card details</li>
@@ -215,7 +215,7 @@ en-GB:
         </ul>
         <p>If you are receiving any other type of benefits, you must declare them as part of your income in a new Help with Fees application. Remember, some parts of your benefit award may be excluded and do not need declaring, for example housing element of Universal Credit. You can find further information on what is excluded from income at <a href="https://www.gov.uk/get-help-with-court-fees" target="_blank" title="Get help paying court and tribunal fees">https://www.gov.uk/get-help-with-court-fees</a></p>
         <h3 class='govuk-heading-m'>Pay the court fee</h3>
-        <p>You need to pay %{amount_to_pay} towards the fee by %{date_for_part_payment}.</p>
+        <p>You need to pay <strong>%{amount_to_pay}</strong> towards the fee by <strong>%{date_for_part_payment}</strong>.</p>
         <p>You can pay by:</p>
         <ul class="govuk-list govuk-list--bullet">
           <li>calling &lt;<strong>add phone number</strong>&gt; with debit card details</li>
@@ -410,7 +410,7 @@ en-GB:
         </ul>
         <p>If the applicant is receiving any other type of benefits, you must declare them as part of their income in a new Help with Fees application. Remember, some parts of their benefit award may be excluded and do not need declaring, for example housing element of Universal Credit. You can find further information on what is excluded from income at <a href="https://www.gov.uk/get-help-with-court-fees" target="_blank" title="Get help paying court and tribunal fees">https://www.gov.uk/get-help-with-court-fees</a></p>
         <h3 class='govuk-heading-m'>What you need to do if you are paying the fee</h3>
-        <p>The applicant needs to pay %{amount_to_pay} towards the fee by %{date_for_part_payment}.</p>
+        <p>The applicant needs to pay <strong>%{amount_to_pay}</strong> towards the fee by <strong>%{date_for_part_payment}</strong>.</p>
         <p>This can be paid by:</p>
         <ul class="govuk-list govuk-list--bullet">
           <li>calling <strong>&lt;add phone number&gt;</strong> with debit card details</li>
@@ -441,7 +441,7 @@ en-GB:
         <h3 class='govuk-heading-m'>What you can do next:</h3>
         <h3 class='govuk-heading-m'>Provide evidence of benefits</h3>
         <p>If they have checked their evidence which confirms that they were on one of these passported benefits at the time they applied and a fee would have been payable you should return their Help with Fees reference number or EX160 application along with proof of the benefits within <strong>14 days.</strong></p>
-        <p><strong>Please ensure you include the reference number %{reference} on all correspondence relating to your appeal.</strong></p>
+        <p><strong>Please ensure you include the reference number %{reference} on all correspondence relating to your evidence review.</strong></p>
         <p>For evidence, the applicant will need to provide a full breakdown letter from the DWP which clearly states which benefit they receive, how much they are entitled to (including a clear breakdown of the income considered by DWP in their decision (if applicable) and their evidence must also cover the relevant Help with Fees application assessment date.</p>
         <p>If the applicant is receiving Universal Credit and they have told us that they are earning less than £6,000 a year, please provide proof of this. Examples of proof can include your Universal Credit statements for the past 12 months, payslips or bank statements.</p>
         <p>Screenshots or photos of this information are acceptable, but they must be clear images and your name and address need to be visible. You must be clearly identifiable on everything you send. If the benefit is received jointly but is in the name of the applicant's partner, evidence should also be provided that they share an address.</p>
@@ -458,7 +458,7 @@ en-GB:
         </ul>
         <p>If the applicant is receiving any other type of benefits, you must declare them as part of their income in a new Help with Fees application. Remember, some parts of their benefit award may be excluded and do not need declaring, for example housing element of Universal Credit. You can find further information on what is excluded from income at <a href="https://www.gov.uk/get-help-with-court-fees" target="_blank" title="Get help paying court and tribunal fees">https://www.gov.uk/get-help-with-court-fees</a></p>
         <h3 class='govuk-heading-m'>Pay the fee </h3>
-        <p>The applicant needs to pay %{amount_to_pay} towards the fee by %{date_for_part_payment}.</p>
+        <p>The applicant needs to pay <strong>%{amount_to_pay}</strong> towards the fee by <strong>%{date_for_part_payment}</strong>.</p>
         <p>This can be paid by:</p>
         <ul class="govuk-list govuk-list--bullet">
           <li>calling <strong>&lt;add phone number&gt;</strong> with debit card details</li>
@@ -499,7 +499,7 @@ en-GB:
           <p>If you are self-employed, you should include all bank accounts for which you receive income or pay business expenditure to work out your net profit, whether personal or business accounts. You will need to also identify any transfers between your accounts.</p>
         bank_statements_html: |
           <h3 class='govuk-heading-m'>Bank statements</h3>
-          <p>If you haven't paid the fee yet, please provide bank statements for all bank accounts (including business accounts) which state any income during the %{wage_period} before the Help with Fees application was made. If you provided an average income over a 3 month period, you will need to provide 3 months worth of bank statements.</p>
+          <p>If you haven't paid the fee yet, please provide bank statements for all bank accounts (including business accounts) which state any income during the %{wage_period} before the Help with Fees application was made. If you provided an average income over a 3 month period, you will need to provide 3 month's worth of bank statements.</p>
           <p>As explained above, you need to provide bank account statements for all accounts which received any income during the full calendar month before your application was made.</p>
           <p>You will also need to identify any transfers between the accounts to avoid double counting. This is particularly important if you are self-employed to identify any drawings from business accounts and whether funds have been drawn from previous profits.</p>
           <p>If you've already paid the fee, send bank statements for all your accounts including any business accounts for the %{wage_period} before you paid the fee.</p>
@@ -556,7 +556,8 @@ en-GB:
           <p>You must tell us about and send documents showing any other income you receive including one-off or ongoing payments and support from friends and family including any loans (excluding student loans or grants) covering the time period for your application.</p>
         dwp_cash_gifts_and_prizes_html: |
           <h3 class='govuk-heading-m'>Cash gifts and prizes</h3>
-          <p>You must tell us about all one-off or regular payments such as birthday money, winnings from gambling and competitions received within the assessment period. Any other income You must provide evidence and an explanation for any other money received during the assessment period, including but not limited to refunds, interest payments, dividend payments, cash gifts, financial support from others, or proceeds from the sale of assets. If you hold stocks, shares, bonds, cryptocurrency or other investments, these should be considered as part of the applicant's savings and investments (capital). However, any income generated from those investments, such as interest or dividends, must be evidenced. Acceptable evidence may include current statements, dividend vouchers, interest statements, or certificates showing the arrangement and the amount of income received.</p>
+          <p>You must tell us about all one-off or regular payments such as birthday money, winnings from gambling and competitions received within the assessment period.</p>
+          <p>Any other income You must provide evidence and an explanation for any other money received during the assessment period, including but not limited to refunds, interest payments, dividend payments, cash gifts, financial support from others, or proceeds from the sale of assets. If you hold stocks, shares, bonds, cryptocurrency or other investments, these should be considered as part of the applicant's savings and investments (capital). However, any income generated from those investments, such as interest or dividends, must be evidenced. Acceptable evidence may include current statements, dividend vouchers, interest statements, or certificates showing the arrangement and the amount of income received.</p>
         prisoner_income_html: |
           <h3 class='govuk-heading-m'>Prisoner's income</h3>
           <p>If you are a prisoner, you need to send a Prisoner Income and Expenditure Statement (PIES) covering the relevant period of time. If you're in a private prison, your statement needs to show earnings and private cash.</p>
@@ -603,7 +604,7 @@ en-GB:
           <li>Your savings are too high.</li>
         </ul>
         <p>Unfortunately, this means that the Help with Fees application is unsuccessful.</p>
-        <p>You have to pay the fee of %{amount_to_pay}. You need to pay this by %{expiry_date}.</p>
+        <p>You have to pay the fee of <strong>%{amount_to_pay}</strong>. You need to pay this by %{expiry_date}.</p>
         <p>This may have an impact on the original case or claim related to this application.</p>
         <h3 class='govuk-heading-m'>How to pay</h3>
         <p>You can pay by:</p>
@@ -717,7 +718,7 @@ en-GB:
       no_part_payment_received_html: |
         <p>Dear %{greeting}</p>
         <p><strong>Reference: %{reference}</strong></p>
-        <p>We wrote to you about the applicant's Help with Fees application, asking that part-payment of %{part_payment_amount} be paid towards the fee by %{date_for_part_payment}.</p>
+        <p>We wrote to you about the applicant's Help with Fees application, asking that part-payment of <strong>%{part_payment_amount}</strong> be paid towards the fee by <strong>%{date_for_part_payment}</strong>.</p>
         <p>As we haven't received payment, we're unable to process the application. This may have an impact on the original case or claim related to this application.</p>
         <p>If the applicant still wants to apply for help with the fee, they will have to complete a new application.</p>
         <p>From,</p>
@@ -882,7 +883,7 @@ en-GB:
           <p>If the applicant is self-employed, they should include all bank accounts for which they receive income or pay business expenditure to work out their net profit, whether personal or business accounts. They will need to also identify any transfers between their accounts.</p>
         bank_statements_html: |
           <p><strong>Bank statements</strong></p>
-          <p>If the fee hasn't been paid yet, please provide bank statements for all bank accounts (including business accounts) which state any income during the %{wage_period} before the Help with Fees application was made. If the applicant provided an average income over a 3 month period, they will need to provide 3 months worth of bank statements.</p>
+          <p>If the fee hasn't been paid yet, please provide bank statements for all bank accounts (including business accounts) which state any income during the %{wage_period} before the Help with Fees application was made. If the applicant provided an average income over a 3 month period, they will need to provide 3 month's worth of bank statements.</p>
           <p>As explained above, the applicant needs to provide bank account statements for all accounts which received any income during the full calendar month before the application was made.</p>
           <p>They will also need to identify any transfers between the accounts to avoid double counting. This is particularly important if they are self-employed to identify any drawings from business accounts and whether funds have been drawn from previous profits.</p>
           <p>If the fee has already been paid, send bank statements for all of the applicant's accounts including any business accounts for the %{wage_period} before the fee was paid.</p>
@@ -930,7 +931,8 @@ en-GB:
           <p>The applicant must tell us about and send documents showing any other income they receive including one-off or ongoing payments and support from friends and family including any loans (excluding student loans or grants) covering the time period for the application.</p>
         dwp_cash_gifts_and_prizes_html: |
           <p><strong>Cash gifts and prizes</strong></p>
-          <p>The applicant must tell us about all one-off or regular payments such as birthday money, winnings from gambling and competitions received within the assessment period. Any other income You must tell us about any other money the applicant has received within the assessment period which includes refunds, dividends or interest payments.</p>
+          <p>The applicant must tell us about all one-off or regular payments such as birthday money, winnings from gambling and competitions received within the assessment period.</p>
+          <p>Any other income You must tell us about any other money the applicant has received within the assessment period which includes refunds, dividends or interest payments.</p>
         prisoner_income_html: |
           <p><strong>Prisoner's income</strong></p>
           <p>If the applicant is a prisoner, they need to send a Prisoner Income and Expenditure Statement (PIES) covering the relevant period of time. If they're in a private prison, the statement needs to show earnings and private cash.</p>
@@ -1014,7 +1016,7 @@ en-GB:
         </ul>
         <h3 class='govuk-heading-m'>What you can do next:</h3>
         <h3 class='govuk-heading-m'>You can pay the fee</h3>
-        <p>You need to pay %{fee_amount} towards the fee by %{expiry_date}.</p>
+        <p>You need to pay <strong>%{fee_amount}</strong> towards the fee by <strong>%{expiry_date}</strong>.</p>
         <p><strong>You can pay by:</strong></p>
         <ul class="govuk-list govuk-list--bullet">
           <li>calling <strong>&lt;add phone number&gt;</strong> with debit card details</li>
@@ -1056,7 +1058,7 @@ en-GB:
         </ul>
         <h3 class='govuk-heading-m'>What to do next:</h3>
         <h3 class='govuk-heading-m'>You can pay the fee</h3>
-        <p>You need to pay %{fee_amount} towards the fee by %{expiry_date}.</p>
+        <p>You need to pay <strong>%{fee_amount}</strong> towards the fee by <strong>%{expiry_date}</strong>.</p>
         <p><strong>You can pay by:</strong></p>
         <ul class="govuk-list govuk-list--bullet">
           <li>calling <strong>&lt;add phone number&gt;</strong> with debit card details</li>
@@ -1112,7 +1114,7 @@ en-GB:
         <h3 class='govuk-heading-m'>Useful links</h3>
         <p>You can use this link to locate the address or email address for the court/tribunal dealing with your case <a href="https://www.gov.uk/find-court-tribunal" target="_blank" title"Find the right court or tribunal">https://www.gov.uk/find-court-tribunal</a>.</p>
         <p>You can find more guidance on applying for Help with Fees here: <a href="https://www.gov.uk/get-help-with-court-fees" target="_blank" title"Get help paying court and tribunal fees">https://www.gov.uk/get-help-with-court-fees</a></p>
-        <p>If you need help or support to complete a Help with Fees application form, email: <a href="mailto:"></a> for more information.</p>
+        <p>If you need help or support to complete a Help with Fees application form, email: <a href="mailto:support@wearegroup.com ">support@wearegroup.com</a> for more information.</p>
         <p>From,</p>
         <p>%{user_name}</p>
       benefit_evidence_received_not_eligible_refund_rep_html: |
@@ -1144,6 +1146,6 @@ en-GB:
         <h3 class='govuk-heading-m'>Useful links</h3>
         <p>You can use this link to locate the address or email address for the court/tribunal dealing with your case <a href="https://www.gov.uk/find-court-tribunal" target="_blank" title"Find the right court or tribunal">https://www.gov.uk/find-court-tribunal</a>.</p>
         <p>You can find more guidance on applying for Help with Fees here: <a href="https://www.gov.uk/get-help-with-court-fees" target="_blank" title"Get help paying court and tribunal fees">https://www.gov.uk/get-help-with-court-fees</a></p>
-        <p>If you need help or support to complete a Help with Fees application form, email: <a href="mailto:"></a> for more information.</p>
+        <p>If you need help or support to complete a Help with Fees application form, email: <a href="mailto:support@wearegroup.com ">support@wearegroup.com </a> for more information.</p>
         <p>From,</p>
         <p>%{user_name}</p>
