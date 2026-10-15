@@ -1000,7 +1000,7 @@ en-GB:
         <p>We can confirm that the application has been processed and has received a full remission of the court/tribunal fee in question.</p>
         <p>From,</p>
         <p>%{user_name}</p>
-      benefit_evidence_received_not eligible_issue_html: |
+      benefit_evidence_received_not_eligible_issue_html: |
         <p>Dear %{full_name}</p>
         <p><strong>Your Reference: %{reference}</strong></p>
         <p>We've received your benefit evidence relating to your Help with Fees application. Unfortunately, after reviewing the evidence provided, you are not eligible for help with paying the fee. This is because the evidence provided does not confirm you receiving any of the benefits that make you automatically eligible for Help with Fees.</p>
@@ -1042,7 +1042,7 @@ en-GB:
         <p>If you need help or support to complete a Help with Fees application form, email: <a href="mailto:support@wearegroup.com">support@wearegroup.com</a> for more information.</p>
         <p>From,</p>
         <p>%{user_name}</p>
-      benefit_evidence_received_not eligible_issue_rep_html: |
+      benefit_evidence_received_not_eligible_issue_rep_html: |
         <p>Dear %{greeting}</p>
         <p><strong>Your Reference: %{reference}</strong></p>
         <p>We've received the benefit evidence relating to your applicant's Help with Fees application. Unfortunately, after reviewing the evidence provided, the applicant is not eligible for help with paying the fee. This is because the evidence provided does not confirm they are receiving any of the benefits that make them automatically eligible for Help with Fees.</p>
@@ -1083,7 +1083,7 @@ en-GB:
         <p>If you need help or support to complete a Help with Fees application form, email: <a href="mailto:"></a> for more information.</p>
         <p>From,</p>
         <p>%{user_name}</p>
-      benefit_evidence_received_not eligible_refund_html: |
+      benefit_evidence_received_not_eligible_refund_html: |
         <p>Dear %{full_name}</p>
         <p><strong>Reference: %{reference}</strong></p>
         <p>We have received your benefit evidence relating to your refund Help with Fees application. Unfortunately, after reviewing the evidence provided, you are not eligible for a refund of the fee paid. This is because the evidence provided does not confirm you were receiving any of the benefits that make you automatically eligible for Help with Fees at the time the fee was paid.</p>
@@ -1115,7 +1115,7 @@ en-GB:
         <p>If you need help or support to complete a Help with Fees application form, email: <a href="mailto:"></a> for more information.</p>
         <p>From,</p>
         <p>%{user_name}</p>
-      benefit_evidence_received_not eligible_refund_rep_html: |
+      benefit_evidence_received_not_eligible_refund_rep_html: |
         <p>Dear %{greeting}</p>
         <p><strong>Reference: %{reference}</strong></p>
         <p>We have received the benefit evidence relating to your applicant's refund Help with Fees application. Unfortunately, after reviewing the evidence provided, the applicant is not eligible for a refund of the fee paid. This is because the evidence provided does not confirm they receive any of the benefits that make them automatically eligible for Help with Fees.</p>
