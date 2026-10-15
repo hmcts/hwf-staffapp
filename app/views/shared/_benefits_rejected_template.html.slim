@@ -1,0 +1,20 @@
+- if display_benefit_evidence_not_eligible_letter?(@application)
+  - if @application.detail.refund?
+    .confirmation-letter
+      - letter_key = @application.representative.present? ? 'benefit_evidence_received_not_eligible_refund_rep_html' : 'benefit_evidence_received_not_eligible_refund_html'
+      = t("new_letters.new_letters.#{letter_key}",
+              reference: @application.reference,
+              full_name: @application.applicant.full_name,
+              greeting: greeting_condition3(@application.representative, @application.applicant),
+              user_name: current_user.name)
+
+  - else
+    .confirmation-letter
+      - letter_key = @application.representative.present? ? 'benefit_evidence_received_not_eligible_issue_rep_html' : 'benefit_evidence_received_not_eligible_issue_html'
+      = t("new_letters.new_letters.#{letter_key}",
+              reference: @application.reference,
+              full_name: @application.applicant.full_name,
+              greeting: greeting_condition3(@application.representative, @application.applicant),
+              user_name: current_user.name,
+              fee_amount: currency_format(@application.detail.fee),
+              expiry_date: @application.payment_expires_at.strftime(Date::DATE_FORMATS[:gov_uk_long]))
