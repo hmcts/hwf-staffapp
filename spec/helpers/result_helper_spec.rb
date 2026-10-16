@@ -39,10 +39,10 @@ RSpec.describe ResultHelper do
 
     before do
       allow(application).to receive_messages(
-                              appeal: appeal,
-                              benefits: benefits,
-                              benefit_checks: [benefit_check]
-                            )
+        appeal: appeal,
+        benefits: benefits,
+        benefit_checks: [benefit_check]
+      )
       allow(benefit_check).to receive(:benefits_valid?).and_return(benefits_valid)
     end
 
