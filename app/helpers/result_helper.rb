@@ -25,7 +25,7 @@ module ResultHelper
   end
 
   def display_benefit_evidence_not_eligible_letter?(application)
-    return false unless application.appeal.correct == false
+    return false unless application.appeal&.correct == false
 
     checks = application.benefit_checks
 
