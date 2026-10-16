@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.1].define(version: 2026_09_09_110000) do
+ActiveRecord::Schema[8.1].define(version: 2026_10_12_100000) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
   enable_extension "pg_trgm"
@@ -79,6 +79,7 @@ ActiveRecord::Schema[8.1].define(version: 2026_09_09_110000) do
     t.string "partner_first_name"
     t.string "partner_last_name"
     t.string "partner_ni_number"
+    t.string "postcode"
     t.string "title"
     t.datetime "updated_at", precision: nil, null: false
     t.index "((((first_name)::text || ' '::text) || (last_name)::text)) gin_trgm_ops", name: "index_applicants_on_full_name_trgm", using: :gin
@@ -167,6 +168,12 @@ ActiveRecord::Schema[8.1].define(version: 2026_09_09_110000) do
     t.string "parameter_hash"
     t.datetime "updated_at", precision: nil
     t.integer "user_id"
+    t.string "claim_decision_reasoning"
+    t.date "date_of_death"
+    t.string "checker"
+    t.string "benefit_types"
+    t.string "claim_status"
+    t.integer "take_home_pay"
     t.index ["application_id"], name: "index_benefit_checks_on_application_id"
     t.index ["applicationable_id", "applicationable_type"], name: "index_bc_applicationable_id_type"
     t.index ["user_id"], name: "index_benefit_checks_on_user_id"
@@ -273,6 +280,7 @@ ActiveRecord::Schema[8.1].define(version: 2026_09_09_110000) do
     t.jsonb "request_params"
     t.integer "response_status"
     t.datetime "updated_at", null: false
+    t.datetime "purged_at"
     t.index ["benefit_check_id"], name: "index_dwp_api_calls_on_benefit_check_id"
   end
 

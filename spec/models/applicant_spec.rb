@@ -225,5 +225,88 @@ RSpec.describe Applicant do
       expect(applicant.partner_last_name).to be_nil
       expect(applicant.partner_ni_number).to be_nil
     end
+
+    context 'when married applicant has no NI number' do
+      let(:applicant) do
+        create(:applicant, application: application, married: true, ni_number: nil,
+                           partner_date_of_birth: Time.zone.today,
+                           partner_first_name: 'Jim',
+                           partner_last_name: 'Jones',
+                           partner_ni_number: 'sn798466c')
+      end
+
+      before { allow(Settings).to receive(:dwp_api_enabled).and_return(dwp_api_enabled) }
+
+      context 'when the DWP API is disabled' do
+        let(:dwp_api_enabled) { false }
+
+        it 'removes the partner info' do
+          expect(applicant.partner_date_of_birth).to be_nil
+          expect(applicant.partner_first_name).to be_nil
+          expect(applicant.partner_last_name).to be_nil
+          expect(applicant.partner_ni_number).to be_nil
+        end
+      end
+
+      context 'when the DWP API is enabled' do
+        let(:dwp_api_enabled) { true }
+
+        it 'keeps the partner info' do
+          expect(applicant.partner_date_of_birth).to eql(Time.zone.today)
+          expect(applicant.partner_first_name).to eql('Jim')
+          expect(applicant.partner_last_name).to eql('Jones')
+          expect(applicant.partner_ni_number).to eql('sn798466c')
+        end
+
+        it 'still removes the partner info for a single applicant' do
+          applicant.update(married: false)
+          expect(applicant.partner_first_name).to be_nil
+          expect(applicant.partner_ni_number).to be_nil
+        end
+      end
+    end
+  end
+
+  describe '#partner_details_allowed?' do
+    subject { applicant.partner_details_allowed? }
+
+    let(:application) { build(:application) }
+    let(:applicant) { build(:applicant, application: application, married: married, ni_number: ni_number) }
+    let(:married) { true }
+    let(:ni_number) { nil }
+
+    before { allow(Settings).to receive(:dwp_api_enabled).and_return(dwp_api_enabled) }
+
+    context 'when the DWP API is disabled' do
+      let(:dwp_api_enabled) { false }
+
+      context 'married without NI number' do
+        it { is_expected.to be false }
+      end
+
+      context 'married with NI number' do
+        let(:ni_number) { 'AB123456C' }
+        it { is_expected.to be true }
+      end
+
+      context 'single with NI number' do
+        let(:married) { false }
+        let(:ni_number) { 'AB123456C' }
+        it { is_expected.to be false }
+      end
+    end
+
+    context 'when the DWP API is enabled' do
+      let(:dwp_api_enabled) { true }
+
+      context 'married without NI number' do
+        it { is_expected.to be true }
+      end
+
+      context 'single without NI number' do
+        let(:married) { false }
+        it { is_expected.to be false }
+      end
+    end
   end
 end

@@ -59,6 +59,10 @@ sentry:
 personal_data_purge:
   years_ago: 7
   user_id: <%= ENV['PURGE_USER_ID'] %>
+# Stored DWP API request and response JSON is removed after this long; the
+# columns the exports use stay on benefit_checks. See CHANGELOG.md
+dwp_api_calls_purge:
+  months_ago: <%= ENV['DWP_API_CALLS_PURGE_MONTHS'] || 6 %>
 legislation_work:
   active_date: <%= ENV['NEW_LEGISLATION_ACTIVE_DATE'] || '27-10-2023' %>
 redis_url: <%= ENV["REDIS_URL"] || "redis://localhost:6379/1" %>

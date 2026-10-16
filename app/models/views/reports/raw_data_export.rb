@@ -2,6 +2,7 @@
 module Views
   module Reports
     class RawDataExport < ReportBase
+      include BenefitCheckColumns
 
       # Keys are the SQL column aliases this report selects; values are the
       # canonical header labels, drawn from the single source of truth so the
@@ -69,11 +70,16 @@ module Views
         complete_processing: L.fetch(:complete_processing),
         additional_income: L.fetch(:additional_income),
         income_processed: L.fetch(:income_processed),
-        hmrc_request_date_range: L.fetch(:hmrc_request_date_range)
+        hmrc_request_date_range: L.fetch(:hmrc_request_date_range),
+        benefit_checker_response: L.fetch(:benefit_checker_response),
+        benefit_checker_errors: L.fetch(:benefit_checker_errors),
+        date_of_death: L.fetch(:date_of_death),
+        benefit_type: L.fetch(:benefit_type),
+        benefit_status: L.fetch(:benefit_status),
+        take_home_pay: L.fetch(:take_home_pay)
       }.freeze
 
       HEADERS = FIELDS.values
-      ATTRIBUTES = FIELDS.keys
 
       def initialize(start_date, end_date, court_id = nil)
         @date_from = format_dates(start_date)
@@ -84,11 +90,19 @@ module Views
         @zipfile_path = "tmp/#{@csv_file_name}.zip"
       end
 
+      def headers
+        fields.values
+      end
+
+      def attributes
+        fields.keys
+      end
+
       def to_csv
         CSV.generate do |csv|
-          csv << HEADERS
+          csv << headers
           data.each do |row|
-            csv << ATTRIBUTES.map do |attr|
+            csv << attributes.map do |attr|
               process_row(row, attr)
             end
           end
@@ -141,6 +155,16 @@ module Views
 
       def data
         @data ||= build_data
+      end
+
+      # Not a benefit application, staff said no benefits, or no check
+      # FIELDS without the six DWP benefit check columns while the DWP check is switched off
+      def fields
+        benefit_check_columns? ? FIELDS : FIELDS.except(*BENEFIT_CHECK_KEYS)
+      end
+
+      def not_a_dwp_benefit_check
+        "applications.application_type <> 'benefit' OR applications.benefits = FALSE OR bc.id IS NULL"
       end
 
       def build_data
@@ -209,7 +233,7 @@ module Views
             CASE WHEN ec.income_check_type = 'paper' THEN ec.completed_at ELSE NULL END as manual_process_date,
             savings.over_66 AS over_66,
             details.case_number AS case_number,
-            oa.postcode AS postcode,
+            COALESCE(applicants.postcode, oa.postcode) AS postcode,
             applicants.date_of_birth AS date_of_birth,
             details.date_received AS date_received,
             applications.decision_date AS decision_date,
@@ -275,6 +299,7 @@ module Views
             details.fee_code,
             details.claim_amount,
             details.fee_entry_method
+            #{benefit_check_columns(not_a_dwp_benefit_check)}
           FROM applications
           INNER JOIN applicants ON applicants.application_id = applications.id
           INNER JOIN business_entities ON business_entities.id = applications.business_entity_id
@@ -294,6 +319,7 @@ module Views
             (partition by evidence_check_id order by created_at desc)
             as row_number from hmrc_checks
           ) hc ON ec.id = hc.evidence_check_id AND (hc.row_number = 1 OR hc.row_number IS NULL)
+          LEFT JOIN (#{latest_benefit_check_per_application_sql}) bc ON bc.app_id = applications.id AND bc.row_number = 1
           WHERE offices.name NOT IN ('Digital', 'HMCTS HQ Team')
             AND applications.decision_date >= '#{@date_from.strftime('%Y-%m-%d %H:%M:%S')}'
             AND applications.decision_date <= '#{@date_to.strftime('%Y-%m-%d %H:%M:%S')}'

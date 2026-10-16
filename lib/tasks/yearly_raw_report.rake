@@ -41,7 +41,7 @@ class YearlyRawDataExporter
     start_time = Time.zone.now
 
     record_count = File.open(filepath, 'w') do |file|
-      file.write(CSV.generate_line(export_helper.class::HEADERS))
+      file.write(CSV.generate_line(export_helper.headers))
       write_csv_data(file)
     end
 
@@ -58,7 +58,7 @@ class YearlyRawDataExporter
   def write_csv_data(file)
     record_count = 0
     offset = 0
-    attributes = export_helper.class::ATTRIBUTES
+    attributes = export_helper.attributes
 
     loop do
       sql = "#{base_sql} ORDER BY applications.id ASC LIMIT #{BATCH_SIZE} OFFSET #{offset}"

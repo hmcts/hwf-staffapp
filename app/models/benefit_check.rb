@@ -4,6 +4,8 @@ class BenefitCheck < ActiveRecord::Base
   has_many :dev_notes, as: :notable, dependent: :destroy
   has_many :dwp_api_calls, dependent: :destroy
   BENEFIT_CHECK_NO_VALUES = ['No', 'Undetermined', 'Deceased', 'Deleted', 'Superseded', ''].freeze
+  # Which service answered the check; nil on checks made before this was recorded (all LAA). See CHANGELOG.md
+  CHECKERS = { dwp: 'dwp', laa: 'laa', mock: 'mock' }.freeze
 
   # A valid DWP answer - needs no rerun and is not an outage.
   VALID_DWP_RESULTS = ['Yes', 'No'].freeze

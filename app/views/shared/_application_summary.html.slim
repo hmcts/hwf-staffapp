@@ -42,6 +42,16 @@ dl.govuk-summary-list
           = 'Change'
           span.govuk-visually-hidden=t('summary.full_name')
 
+  - if @applicant.postcode.present?
+    .govuk-summary-list__row
+      dt.govuk-summary-list__key =t('summary.postcode')
+      dd.govuk-summary-list__value =@applicant.postcode
+      - if show_links
+        dd.govuk-summary-list__actions
+          =link_to application_personal_informations_path(@application) do
+            = 'Change'
+            span.govuk-visually-hidden=t('summary.postcode')
+
   .govuk-summary-list__row
     dt.govuk-summary-list__key =t('summary.date_of_birth')
     dd.govuk-summary-list__value =@applicant.date_of_birth
@@ -92,7 +102,7 @@ dl.govuk-summary-list
 
 
   - if @applicant.married
-    - if @applicant&.partner_full_name.present? && @applicant.ni_number.present?
+    - if @applicant&.partner_full_name.present?
       .govuk-summary-list__row
         dt.govuk-summary-list__key =t('summary.partner_full_name')
         dd.govuk-summary-list__value =@applicant.partner_full_name
@@ -103,7 +113,7 @@ dl.govuk-summary-list
               span.govuk-visually-hidden=t('summary.partner_full_name')
 
 
-    - if @applicant.partner_date_of_birth.present? && @applicant.ni_number.present?
+    - if @applicant.partner_date_of_birth.present?
       .govuk-summary-list__row
         dt.govuk-summary-list__key =t('summary.partner_date_of_birth')
         dd.govuk-summary-list__value =@applicant.partner_date_of_birth
@@ -113,7 +123,7 @@ dl.govuk-summary-list
               = 'Change'
               span.govuk-visually-hidden=t('summary.partner_date_of_birth')
 
-    - if @applicant.partner_ni_number.present? && @applicant.ni_number.present?
+    - if @applicant.partner_ni_number.present?
       .govuk-summary-list__row
         dt.govuk-summary-list__key =t('summary.partner_ni_number')
         dd.govuk-summary-list__value =@applicant.partner_ni_number
