@@ -7,10 +7,10 @@ en-GB:
         <p>We have received your Help with Fees application. Unfortunately, you're not eligible and will have to pay the full fee.</p>
         <p>This is because you have more than the maximum amount of savings and investments allowed.</p>
         <p>We've calculated this as follows:</p>
-        <p>Fee to pay: %{fee_amount}</p>
+        <p>Fee to pay: <strong>%{fee_amount}</strong></p>
         <p><strong>Please note your income information may have been checked with HMRC.</strong></p>
-        <p>Maximum amount of savings and investments allowed: %{savings_threshold}</p>
-        <p>Your savings and investments total: %{savings_total}</p>
+        <p>Maximum amount of savings and investments allowed: <strong>%{savings_threshold}</strong></p>
+        <p>Your savings and investments total: <strong>%{savings_total}</strong></p>
         <h3 class='govuk-heading-m'>How to pay</h3>
         <p>You can pay by:</p>
         <ul class="govuk-list govuk-list--bullet">
@@ -34,10 +34,10 @@ en-GB:
         <p>We have received your Help with Fees application. Unfortunately, the applicant is not eligible and will have to pay the full fee.</p>
         <p>This is because the applicant has more than the maximum amount of savings and investments allowed.</p>
         <p>We've calculated this as follows:</p>
-        <p>Fee to pay: %{fee_amount}</p>
+        <p>Fee to pay: <strong>%{fee_amount}</strong></p>
         <p><strong>Please note the applicant's income information may have been checked with HMRC.</strong></p>
-        <p>Maximum amount of savings and investments allowed: %{savings_threshold}</p>
-        <p>The applicant's savings and investments total: %{savings_total}</p>
+        <p>Maximum amount of savings and investments allowed: <strong>%{savings_threshold}</strong></p>
+        <p>The applicant's savings and investments total: <strong>%{savings_total}</strong></p>
         <h3 class='govuk-heading-m'>How to pay</h3>
         <p>The fee can be paid by:</p>
         <ul class="govuk-list govuk-list--bullet">
@@ -61,7 +61,7 @@ en-GB:
         <p><strong>Your reference: %{reference}</strong></p>
         <p>We've received your Help with Fees application. Unfortunately, we can't help with this fee. You need to pay the full amount. This is because you have more than the maximum amount of income allowed.</p>
         <p><strong>We've calculated this as follows:</strong></p>
-        <p>%{income_type}: %{income_total}</p>
+        <p><strong>%{income_type}: %{income_total}</strong></p>
         <p>Fee to pay: %{fee_amount}</p>
         <p><strong>Please note your income information may have been checked with HMRC.</strong></p>
         <h3 class='govuk-heading-m'>What you need to do</h3>
@@ -87,11 +87,11 @@ en-GB:
         <p><strong>Reference: %{reference}</strong></p>
         <p>We've received your Help with Fees application. Unfortunately, we can't help with this fee. The applicant needs to pay the full amount. This is because the applicant has more than the maximum amount of income allowed.</p>
         <p><strong>We've calculated this as follows:</strong></p>
-        <p>%{income_type}: %{income_total}</p>
-        <p>Fee to pay: %{fee_amount}</p>
+        <p><strong>%{income_type}: %{income_total}</strong></p>
+        <p>Fee to pay: <strong>%{fee_amount}</strong></p>
         <p><strong>Please note the applicant's income information may have been checked with HMRC.</strong></p>
         <h3 class='govuk-heading-m'>What you need to do</h3>
-        <p>The full fee amount of %{fee_amount} needs to be paid by %{expiry_date}.</p>
+        <p>The full fee amount of <strong>%{fee_amount}</strong> needs to be paid by <strong>%{expiry_date}</strong>.</p>
         <p>This can be paid by:</p>
         <ul class="govuk-list govuk-list--bullet">
           <li>calling <strong>&lt;add phone number&gt;</strong> with debit card details</li>
@@ -123,7 +123,7 @@ en-GB:
           <li>Your savings are too high.</li>
         </ul>
         <p>Unfortunately, this means that the application for help with fees is unsuccessful. </p>
-        <p>You have to pay the fee of <strong>&lt;add fee&gt;</strong>. You need to pay this by %{expiry_date}.</p>
+        <p>You have to pay the fee of <strong>&lt;add fee&gt;</strong>. You need to pay this by <strong>%{expiry_date}</strong>.</p>
         <p>This may have an impact on the original case or claim related to this application.</p>
         <h3 class='govuk-heading-m'>How to pay</h3>
         <p>You can pay by:</p>
@@ -151,7 +151,7 @@ en-GB:
         <p>Please double check that your personal details provided on your Help with Fees application are correct and match the details on your DWP paperwork. Please also double check on your DWP paperwork that you received these specific benefits and not similarly named ones (see 'Other benefits or low income' section).</p>
         <h3 class='govuk-heading-m'>Appeal by providing evidence</h3>
         <p>If you have evidence that you were on one of these passported benefits at the time a fee had to be paid, you should return your Help with Fees application (if you submitted a paper application) along with proof of the benefits you receive within 14 days. If you applied for Help with Fees using an online reference number, this number is no longer valid and you will need to complete a new application. You must provide a new Help with Fees reference to the court alongside your evidence.</p>
-        <p><strong>Please ensure you include the reference number %{reference} on all correspondence relating to your appeal. If you are making a new online Help with Fees application, please include the above reference as well as your new reference number.</strong></p>
+        <p><strong>Please ensure you include the reference number <strong>%{reference}</strong> on all correspondence relating to your appeal. If you are making a new online Help with Fees application, please include the above reference as well as your new reference number.</strong></p>
         <p>For evidence, you will need to provide a full breakdown letter from the DWP which clearly states which benefit you receive, how much you are entitled to (including a clear breakdown of the income considered by DWP in their decision (if applicable) and your evidence must also cover the relevant Help with Fees application assessment date. Screenshots or photos of this information are acceptable, but they must be clear images and your name and address needs to be visible. You must be clearly identifiable on everything you send.</p>
         <p>If the benefit is received jointly but is in your partner's name, evidence should also be provided that they share your address. </p>
         <p>Before sending, please check on your DWP paperwork that you received the specific benefits mentioned above and not similarly named ones (such as contribution-based Job Seekers Allowance, contribution-based Employment and Support Allowance and Pension Credit (savings credit). If you receive Universal Credit, please check that your annual earnings before tax and National insurance are less than £6,000. If they are more than £6,000, please refer to the 'Other benefits or low income' section.</p>
@@ -197,7 +197,7 @@ en-GB:
         <h3 class='govuk-heading-m'>What you can do next:</h3>
         <h3 class='govuk-heading-m'>Provide evidence of benefits</h3>
         <p>If you have checked your evidence which confirms that you were on one of the above passported benefits at the time you applied and a fee would have been payable, you should return your Help with Fees reference number or EX160 application along with proof of the benefits within <strong>14 days</strong>.</p>
-        <p><strong>Please ensure you include the reference number %{reference} on all correspondence relating to your evidence review.</strong></p>
+        <p><strong>Please ensure you include the reference number <strong>%{reference}</strong> on all correspondence relating to your evidence review.</strong></p>
         <p>For evidence, you will need to provide a full breakdown letter from the DWP which clearly states which benefit you receive, how much you are entitled to (including a clear breakdown of the income considered by DWP in their decision (if applicable) and your evidence must also cover the relevant Help with Fees application assessment date.</p>
         <p>If you are receiving Universal Credit and you have told us that you are earning less than £6,000 a year, please provide proof of this. Examples of proof can include your Universal Credit statements for the past 12 months, payslips or bank statements.</p>
         <p>Screenshots or photos of this information are acceptable, but they must be clear images and your name and address need to be visible. You must be clearly identifiable on everything you send.</p>
@@ -244,7 +244,7 @@ en-GB:
         <p>Please double check that your personal details provided on your Help with Fees application are correct and match the details on your DWP paperwork. Please also double check on your DWP paperwork that you received these specific benefits and not similarly named ones (see 'Other benefits or low income' section).</p>
         <h3 class='govuk-heading-m'>Appeal by providing evidence</h3>
         <p>If you have evidence that you were on one of the above passported benefits at the time a fee had to be paid, you should return your Help with Fees application (if you submitted a paper application) along with proof of the benefits you receive within 14 days. If you applied for Help with Fees using an online reference number, this number is no longer valid and you will need to complete a new application. You must provide a new Help with Fees reference to the court alongside your evidence.</p>
-        <p><strong>Please ensure you include the reference number %{reference} on all correspondence relating to your appeal. If you are making a new online Help with Fees application, please include the above reference as well as your new reference number.</strong></p>
+        <p><strong>Please ensure you include the reference number <strong>%{reference}</strong> on all correspondence relating to your appeal. If you are making a new online Help with Fees application, please include the above reference as well as your new reference number.</strong></p>
         <p>For evidence, you will need to provide a full breakdown letter from the DWP which clearly states which benefit you receive, how much you are entitled to (including a clear breakdown of the income considered by DWP in their decision (if applicable) and your evidence must also cover the relevant Help with Fees application assessment date. Screenshots or photos of this information are acceptable, but they must be clear images and your name and address needs to be visible. You must be clearly identifiable on everything you send.</p>
         <p>If the benefit is received jointly but is in your partner's name, evidence should also be provided that they share your address. </p>
         <p>Before sending, please check on your DWP paperwork that you received the specific benefits mentioned above and not similarly named ones (such as contribution-based Job Seekers Allowance, contribution-based Employment and Support Allowance and Pension Credit (savings credit). If you receive Universal Credit, please check that your annual earnings before tax and National insurance are less than £6,000. If they are more than £6,000, please refer to the 'Other benefits or low income' section.</p>
@@ -281,7 +281,7 @@ en-GB:
         <h3 class='govuk-heading-m'>What you can do next:</h3>
         <h3 class='govuk-heading-m'>Provide evidence of benefits</h3>
         <p>If you have checked your evidence which confirms that you were on one of these passported benefits at the time you paid the fee, you should return your Help with Fees reference number or EX160 application along with proof of the benefits within <strong>14 days</strong>.</p>
-        <p><strong>Please ensure you include the reference number %{reference} on all correspondence relating to your evidence review.</strong></p>
+        <p><strong>Please ensure you include the reference number <strong>%{reference}</strong> on all correspondence relating to your evidence review.</strong></p>
         <p>For evidence, you will need to provide a full breakdown letter from the DWP which clearly states which benefit you receive, how much you are entitled to (including a clear breakdown of the income considered by DWP in their decision (if applicable) and your evidence must also cover the relevant Help with Fees application assessment date.</p>
         <p>If you are receiving Universal Credit and you have told us that you are earning less than £6,000 a year, please provide proof of this. Examples of proof can include your Universal Credit statements for the past 12 months, payslips or bank statements.</p>
         <p>Screenshots or photos of this information are acceptable, but they must be clear images and your name and address need to be visible. You must be clearly identifiable on everything you send.</p>
@@ -319,7 +319,7 @@ en-GB:
         <p>Please double check that the personal details provided on the Help with Fees application are correct and match the details on the DWP paperwork. Please also double check on the DWP paperwork that the applicant received these specific benefits and not similarly named ones (see 'Other benefits or low income' section).</p>
         <h3 class='govuk-heading-m'>Appeal by providing evidence</h3>
         <p>If you have evidence that the applicant was on one of the above passported benefits at the time a fee had to be paid, you should return the Help with Fees application (if you submitted a paper application) along with proof of the benefits they received within 14 days. If you applied for Help with Fees using an online reference number, this number is no longer valid and you will need to complete a new application. You must provide a new Help with Fees reference to the court alongside the evidence.</p>
-        <p><strong>Please ensure you include the reference number %{reference} on all correspondence relating to your appeal. If you are making a new online Help with Fees application, please include the above reference as well as your new reference number.</strong></p>
+        <p><strong>Please ensure you include the reference number <strong>%{reference}</strong> on all correspondence relating to your appeal. If you are making a new online Help with Fees application, please include the above reference as well as your new reference number.</strong></p>
         <p>For evidence, you will need to provide a full breakdown letter from the DWP which clearly states which benefit was received by the applicant, how much they are entitled to (including a clear breakdown of the income considered by DWP in their decision (if applicable) and the evidence must also cover the relevant Help with Fees application assessment date. Screenshots or photos of this information are acceptable, but they must be clear images and the applicant's name and address needs to be visible. The applicant must be clearly identifiable on everything you send.</p>
         <p>If the benefit is received jointly but is in the name of the applicant's partner, evidence should also be provided that they share an address.</p>
         <p>Before sending, please check on the DWP paperwork that the applicant received the specific benefits mentioned above and not similarly named ones (such as contribution-based Job Seekers Allowance, contribution-based Employment and Support Allowance and Pension Credit (savings credit). If they receive Universal Credit, please check that their annual earnings before tax and National insurance are less than £6,000. If they are more than £6,000, please refer to the 'Other benefits or low income' section.</p>
@@ -356,7 +356,7 @@ en-GB:
         <h3 class='govuk-heading-m'>What you can do next:</h3>
         <h3 class='govuk-heading-m'>Provide evidence of benefits</h3>
         <p>If they have checked their evidence which confirms that they were on one of these passported benefits at the time they paid the fee you should return their Help with Fees reference number or EX160 application along with proof of the benefits within <strong>14 days</strong>.</p>
-        <p><strong>Please ensure you include the reference number %{reference} on all correspondence relating to your evidence review.</strong></p>
+        <p><strong>Please ensure you include the reference number <strong>%{reference}</strong> on all correspondence relating to your evidence review.</strong></p>
         <p>For evidence, you will need to provide a full breakdown letter from the DWP which clearly states which benefit was received by the applicant, how much they are entitled to (including a clear breakdown of the income considered by DWP in their decision (if applicable) and the evidence must also cover the relevant Help with Fees application assessment date.</p>
         <p>If the applicant is receiving Universal Credit and they have told us that they are earning less than £6,000 a year, please provide proof of this. Examples of proof can include their Universal Credit statements for the past 12 months, payslips or bank statements.</p>
         <p>Screenshots or photos of this information are acceptable, but they must be clear images and the applicant's name and address need to be visible. The applicant must be clearly identifiable on everything you send.</p>        
@@ -394,7 +394,7 @@ en-GB:
         <p>Please double check that the personal details provided on the Help with Fees application are correct and match the details on the DWP paperwork. Please also double check on the DWP paperwork that the applicant received these specific benefits and not similarly named ones (see 'Other benefits or low income' section).</p>
         <h3 class='govuk-heading-m'>Appeal by providing evidence</h3>
         <p>If you have evidence that the applicant was on one of these passported benefits at the time a fee had to be paid, you should return the Help with Fees application (if you submitted a paper application) along with proof of the benefits they receive within 14 days. If you applied for Help with Fees using an online reference number, this number is no longer valid and you will need to complete a new application. You must provide a new Help with Fees reference to the court alongside the evidence.</p>
-        <p><strong>Please ensure you include the reference number %{reference} on all correspondence relating to your appeal. If you are making a new online Help with Fees application, please include the above reference as well as your new reference number.</strong></p>
+        <p><strong>Please ensure you include the reference number <strong>%{reference}</strong> on all correspondence relating to your appeal. If you are making a new online Help with Fees application, please include the above reference as well as your new reference number.</strong></p>
         <p>For evidence, you will need to provide a full breakdown letter from the DWP which clearly states which benefit the applicant receives, how much they are entitled to (including a clear breakdown of the income considered by DWP in their decision (if applicable) and the evidence must also cover the relevant Help with Fees application assessment date. Screenshots or photos of this information are acceptable, but they must be clear images and the applicant's name and address needs to be visible. The applicant must be clearly identifiable on everything you send.</p>
         <p>If the benefit is received jointly but is in the name of the applicant's partner, evidence should also be provided that they share an address.</p>
         <p>Before sending, please check on the DWP paperwork that the applicant receives the specific benefits mentioned above and not similarly named ones (such as contribution-based Job Seekers Allowance, contribution-based Employment and Support Allowance and Pension Credit (savings credit). If they receive Universal Credit, please check that their annual earnings before tax and National insurance are less than £6,000. If they are more than £6,000, please refer to the 'Other benefits or low income' section.</p>
@@ -441,7 +441,7 @@ en-GB:
         <h3 class='govuk-heading-m'>What you can do next:</h3>
         <h3 class='govuk-heading-m'>Provide evidence of benefits</h3>
         <p>If they have checked their evidence which confirms that they were on one of these passported benefits at the time they applied and a fee would have been payable you should return their Help with Fees reference number or EX160 application along with proof of the benefits within <strong>14 days.</strong></p>
-        <p><strong>Please ensure you include the reference number %{reference} on all correspondence relating to your evidence review.</strong></p>
+        <p><strong>Please ensure you include the reference number <strong>%{reference}</strong> on all correspondence relating to your evidence review.</strong></p>
         <p>For evidence, the applicant will need to provide a full breakdown letter from the DWP which clearly states which benefit they receive, how much they are entitled to (including a clear breakdown of the income considered by DWP in their decision (if applicable) and their evidence must also cover the relevant Help with Fees application assessment date.</p>
         <p>If the applicant is receiving Universal Credit and they have told us that they are earning less than £6,000 a year, please provide proof of this. Examples of proof can include your Universal Credit statements for the past 12 months, payslips or bank statements.</p>
         <p>Screenshots or photos of this information are acceptable, but they must be clear images and your name and address need to be visible. You must be clearly identifiable on everything you send. If the benefit is received jointly but is in the name of the applicant's partner, evidence should also be provided that they share an address.</p>
@@ -479,7 +479,7 @@ en-GB:
           <p>Dear %{full_name}</p>
           <p><strong>Your reference: %{reference}</strong></p>
           <p>We've received your Help with Fees application. Before we can start work on your application, we need more information about your income.</p>
-          <p>We need this information by<strong> %{expiry_date}</strong>. If we do not receive the requested information within <strong>28 days</strong> of our request, your Help with Fees application will be treated as abandoned. If your application is for a refund, this may cause a delay and as refund applications need to be received within three months of paying the fee, you may no longer be eligible for a refund of your court fee.</p>
+          <p>We need this information by <strong>%{expiry_date}</strong>. If we do not receive the requested information within <strong>28 days</strong> of our request, your Help with Fees application will be treated as abandoned. If your application is for a refund, this may cause a delay and as refund applications need to be received within three months of paying the fee, you may no longer be eligible for a refund of your court fee.</p>
           <h3 class='govuk-heading-m'>What you need to do</h3>
           <ol class="govuk-list govuk-list--number">
             <li>Check the list below and get a copy of all the documents that apply to you and your partner if applicable.</li>
@@ -491,18 +491,18 @@ en-GB:
           <p><strong>If you (and your partner if you have one) received no income during the relevant period, please provide an explanation on how you support yourself and how you cover day to day living expenses as well as proof of the documents relevant below.</strong></p>
         wages_html: |
           <h3 class='govuk-heading-m'>Wages</h3>
-          <p>If you are employed, please provide wage slips for the %{wage_period}.</p>
+          <p>If you are employed, please provide wage slips for the <strong>%{wage_period}</strong>.</p>
           <p>If you are self employed, you should include all bank accounts for which you receive income or pay business expenditure to work out your net profit, whether personal or business accounts. You will need to also identify any transfers between your accounts.</p>
         dwp_wages_html: |
           <h3 class='govuk-heading-m'>Wages</h3>
-          <p>If you are employed, please provide wage slips for the %{wage_period}.</p>
+          <p>If you are employed, please provide wage slips for the <strong>%{wage_period}</strong>.</p>
           <p>If you are self-employed, you should include all bank accounts for which you receive income or pay business expenditure to work out your net profit, whether personal or business accounts. You will need to also identify any transfers between your accounts.</p>
         bank_statements_html: |
           <h3 class='govuk-heading-m'>Bank statements</h3>
-          <p>If you haven't paid the fee yet, please provide bank statements for all bank accounts (including business accounts) which state any income during the %{wage_period} before the Help with Fees application was made. If you provided an average income over a 3 month period, you will need to provide 3 month's worth of bank statements.</p>
+          <p>If you haven't paid the fee yet, please provide bank statements for all bank accounts (including business accounts) which state any income during the <strong>%{wage_period}</strong> before the Help with Fees application was made. If you provided an average income over a 3 month period, you will need to provide 3 month's worth of bank statements.</p>
           <p>As explained above, you need to provide bank account statements for all accounts which received any income during the full calendar month before your application was made.</p>
           <p>You will also need to identify any transfers between the accounts to avoid double counting. This is particularly important if you are self-employed to identify any drawings from business accounts and whether funds have been drawn from previous profits.</p>
-          <p>If you've already paid the fee, send bank statements for all your accounts including any business accounts for the %{wage_period} before you paid the fee.</p>
+          <p>If you've already paid the fee, send bank statements for all your accounts including any business accounts for the <strong>%{wage_period}</strong> before you paid the fee.</p>
           <p>Please indicate on your bank statements payments that the EX160A guidance says should be excluded from your income.</p>
         child_maintenance_html: |
           <h3 class='govuk-heading-m'>Child maintenance</h3>
@@ -557,17 +557,18 @@ en-GB:
         dwp_cash_gifts_and_prizes_html: |
           <h3 class='govuk-heading-m'>Cash gifts and prizes</h3>
           <p>You must tell us about all one-off or regular payments such as birthday money, winnings from gambling and competitions received within the assessment period.</p>
-          <p>Any other income You must provide evidence and an explanation for any other money received during the assessment period, including but not limited to refunds, interest payments, dividend payments, cash gifts, financial support from others, or proceeds from the sale of assets. If you hold stocks, shares, bonds, cryptocurrency or other investments, these should be considered as part of the applicant's savings and investments (capital). However, any income generated from those investments, such as interest or dividends, must be evidenced. Acceptable evidence may include current statements, dividend vouchers, interest statements, or certificates showing the arrangement and the amount of income received.</p>
+          <h3 class='govuk-heading-m'>Any other income</h3>
+          <p>You must provide evidence and an explanation for any other money received during the assessment period, including but not limited to refunds, interest payments, dividend payments, cash gifts, financial support from others, or proceeds from the sale of assets. If you hold stocks, shares, bonds, cryptocurrency or other investments, these should be considered as part of the applicant's savings and investments (capital). However, any income generated from those investments, such as interest or dividends, must be evidenced. Acceptable evidence may include current statements, dividend vouchers, interest statements, or certificates showing the arrangement and the amount of income received.</p>
         prisoner_income_html: |
           <h3 class='govuk-heading-m'>Prisoner's income</h3>
           <p>If you are a prisoner, you need to send a Prisoner Income and Expenditure Statement (PIES) covering the relevant period of time. If you're in a private prison, your statement needs to show earnings and private cash.</p>
           <p><strong>Please note:</strong> If you did have other incomings in the relevant period not shown on your bank statements, you must provide evidence and/or an explanation of what these incomings are.</p>
-          <p>You must write your new Help with Fees reference number on any letters that you send %{reference}.</p>
+          <p>You must write your new Help with Fees reference number on any letters that you send <strong>%{reference}</strong>.</p>
         dwp_prisoner_income_html: |
           <h3 class='govuk-heading-m'>Prisoner's income (if applicable)</h3>
           <p>If you are a prisoner, you need to send a Prisoner Income and Expenditure Statement (PIES) covering the relevant period of time. If you're in a private prison, your statement needs to show earnings and private cash.</p>
           <p><strong>Please note:</strong> If you did have other incomings in the relevant period not shown on your bank statements, you must provide evidence and/or an explanation of what these incomings are.</p>
-          <p>You must write your new Help with Fees reference number on any letters that you send %{reference}.</p>
+          <p>You must write your new Help with Fees reference number on any letters that you send <strong>%{reference}</strong>.</p>
         footer_html: |
           <h3 class='govuk-heading-m'>Useful links</h3>
           <p>You can use this link to locate the address or email address for the court/tribunal dealing with your case <a href="https://www.gov.uk/find-court-tribunal" target="_blank" title"Find the right court or tribunal">https://www.gov.uk/find-court-tribunal</a>.</p>
@@ -585,7 +586,7 @@ en-GB:
       no_evidence_received_html: |
         <p>Dear %{full_name}</p>
         <p><strong>Reference: %{reference}</strong></p>
-        <p>We wrote to you about your application for help with fees, asking for additional information by %{expiry_date}.</p>
+        <p>We wrote to you about your application for help with fees, asking for additional information by <strong>%{expiry_date}</strong>.</p>
         <p>As we haven't received any information, we're unable to process your application. You have to pay the full fee. This may have an impact on the original case or claim related to this application.</p>
         <p>If you still want help with your fees, you will have to complete a new application.</p>
         <p>Yours sincerely,</p>
@@ -604,7 +605,7 @@ en-GB:
           <li>Your savings are too high.</li>
         </ul>
         <p>Unfortunately, this means that the Help with Fees application is unsuccessful.</p>
-        <p>You have to pay the fee of <strong>%{amount_to_pay}</strong>. You need to pay this by %{expiry_date}.</p>
+        <p>You have to pay the fee of <strong>%{amount_to_pay}</strong>. You need to pay this by <strong>%{expiry_date}</strong>.</p>
         <p>This may have an impact on the original case or claim related to this application.</p>
         <h3 class='govuk-heading-m'>How to pay</h3>
         <p>You can pay by:</p>
@@ -637,7 +638,7 @@ en-GB:
           <li>Your savings are too high.</li>
         </ul>
         <p>Unfortunately, this means that the Help with Fees application is unsuccessful.</p>
-        <p>The applicant has to pay the fee of %{amount_to_pay}. This needs to be paid by %{expiry_date}.</p>
+        <p>The applicant has to pay the fee of <strong>%{amount_to_pay}</strong>. This needs to be paid by <strong>%{expiry_date}</strong>.</p>
         <p>This may have an impact on the original case or claim related to this application.</p>
         <h3 class='govuk-heading-m'>How to pay</h3>
         <p>This can be paid by:</p>
@@ -661,12 +662,12 @@ en-GB:
       send_part_payment_html: |
         <p>Dear %{greeting}</p>
         <p><strong>Your reference: %{reference}</strong></p>
-        <p>We've received your Help with Fees application. The applicant is eligible to get some money taken off the full fee of %{full_fee}.</p>
+        <p>We've received your Help with Fees application. The applicant is eligible to get some money taken off the full fee of <strong>%{full_fee}</strong>.</p>
         <p><strong>How we worked this out:</strong></p>
-        <p>%{income_type}: %{total_income}</p>
-        <p>Number of children aged 0 to 13: %{children_young}</p>
-        <p>Number of children aged 14 and over: %{children_old}</p>
-        <p>Amount the applicant needs to pay: %{part_payment_amount}</p>
+        <p><strong>%{income_type}: %{total_income}</strong></p>
+        <p>Number of children aged 0 to 13: <strong>%{children_young}</strong></p>
+        <p>Number of children aged 14 and over: <strong>%{children_old}</strong></p>
+        <p>Amount the applicant needs to pay: <strong>%{part_payment_amount}</strong></p>
         <p><strong>Please note the applicant's income information may have been checked with HMRC.</strong></p>
         <p><strong>What you need to do</strong></p>
         <p>The applicant needs to pay <strong>%{part_payment_amount}</strong> towards the fee by <strong>%{date_for_part_payment}</strong>.</p>
@@ -690,12 +691,12 @@ en-GB:
       send_part_payment_non_rep_html: |
         <p>Dear %{full_name}</p>
         <p><strong>Your reference: %{reference}</strong></p>
-        <p>We've received your Help with Fees application. You're eligible to get some money taken off the full fee of %{full_fee}.</p>
+        <p>We've received your Help with Fees application. You're eligible to get some money taken off the full fee of <strong>%{full_fee}</strong>.</p>
         <p><strong>How we worked this out:</strong></p>
-        <p>%{income_type}: %{total_income}</p>
-        <p>Number of children aged 0 to 13: %{children_young}</p>
-        <p>Number of children aged 14 and over: %{children_old}</p>
-        <p>Amount you need to pay: %{part_payment_amount}</p>
+        <p><strong>%{income_type}: %{total_income}</strong></p>
+        <p>Number of children aged 0 to 13: <strong>%{children_young}</strong></p>
+        <p>Number of children aged 14 and over: <strong>%{children_old}</strong></p>
+        <p>Amount you need to pay: <strong>%{part_payment_amount}</strong></p>
         <p><strong>Please note your income information may have been checked with HMRC.</strong></p>
         <p><strong>What you need to do</strong></p>
         <p>You need to pay <strong>%{part_payment_amount}</strong> towards the fee by <strong>%{date_for_part_payment}</strong>.</p>
@@ -794,10 +795,10 @@ en-GB:
         <p>We have processed your refund Help with Fees application and the applicant is entitled to a partial refund.</p>
         <p>The application has been processed for the fee of <strong>%{fee}</strong>. The amount that was required to be paid towards this fee was <strong>%{amount_to_pay}</strong>. Therefore, the amount to be refunded is <strong>%{amount_refunded}</strong>.</<p>
         <p><strong>How we worked this out:</strong></p>
-        <p>%{income_type}: %{total_income}</p>
-        <p>Number of children aged 0 to 13: %{children_young}</p>
-        <p>Number of children aged 14 and over: %{children_old}</p>
-        <p>Amount to be refunded: %{amount_refunded}</p>
+        <p><strong>%{income_type}: %{total_income}</strong></p>
+        <p>Number of children aged 0 to 13: <strong>%{children_young}</strong></p>
+        <p>Number of children aged 14 and over: <strong>%{children_old}</strong></p>
+        <p>Amount to be refunded: <strong>%{amount_refunded}</strong></p>
         <p>The refund will now be processed in line with the court/tribunal procedures.</p>
         <p><strong>What happens next</strong></p>
         <p>We will refund the monies to the original fee payer using the same payment method originally used.</p>
@@ -828,7 +829,7 @@ en-GB:
       reference_code_html: |
         <p>Dear %{greeting}</p>
         <p><strong>Reference: %{reference}</strong></p>
-        <p>We received your Help with Fees reference code on %{application_received} however, our records show that the code was generated more than 28 days ago.</p>
+        <p>We received your Help with Fees reference code on <strong>%{application_received}</strong> however, our records show that the code was generated more than 28 days ago.</p>
         <p>As we did not receive the Help with Fees reference code within the 28 days of it being generated, we're unable to process the application. This is because the applicant's financial details need to be up-to-date upon submitting the application to the court or tribunal.</p>
         <p>The applicant will have to pay the full fee. This may have an impact on the original case or claim related to this application.</p>
         <p>This can be paid by:</p>
@@ -845,7 +846,7 @@ en-GB:
       reference_code_non_rep_html: |
         <p>Dear %{full_name}</p>
         <p><strong>Your reference: %{reference}</strong></p>
-        <p>We received your Help with Fees reference code on %{application_received} however, our records show that the code was generated more than 28 days ago.</p>
+        <p>We received your Help with Fees reference code on <strong>%{application_received}</strong> however, our records show that the code was generated more than 28 days ago.</p>
         <p>As we did not receive your Help with Fees reference code within the 28 days of it being generated, we're unable to process the application. This is because your financial details need to be up-to-date upon submitting the application to the court or tribunal.</p>
         <p>You will have to pay the full fee. This may have an impact on the original case or claim related to this application.</p>
         <p>You can pay by:</p>
@@ -863,7 +864,7 @@ en-GB:
           <p>Dear %{greeting}</p>
           <p><strong>Reference: %{reference}</strong></p>
           <p>We've received your Help with Fees application. Before we can start work on the application, we need more information about the applicant’s income.</p>
-          <p>We need this information by %{evidence_due}. If we do not receive the requested information within <strong>28 days</strong> of our request, the Help with Fees application will be treated as abandoned. If the application is for a refund, this may cause a delay and as refund applications need to be received within three months of paying the fee, the applicant may no longer be eligible for a refund of the court fee.</p>
+          <p>We need this information by <strong>%{evidence_due}</strong>. If we do not receive the requested information within <strong>28 days</strong> of our request, the Help with Fees application will be treated as abandoned. If the application is for a refund, this may cause a delay and as refund applications need to be received within three months of paying the fee, the applicant may no longer be eligible for a refund of the court fee.</p>
           <p><strong>What you need to do</strong></p>
           <ol class="govuk-list govuk-list--number">
             <li>Check the list below and get a copy of all the documents that apply to the applicant and their partner if applicable.</li>
@@ -875,18 +876,18 @@ en-GB:
           <p><strong>If the applicant (and their partner if they have one) received no income during the relevant period, please provide an explanation on how they support themselves and how they cover day to day living expenses as well as proof of the documents relevant below.</strong></p>
         wages_html: |
           <p><strong>Wages</strong></p>
-          <p>If the applicant is employed, please provide wage slips for the %{wage_period}.</p>
+          <p>If the applicant is employed, please provide wage slips for the <strong>%{wage_period}</strong>.</p>
           <p>If the applicant is self employed, they should include all bank accounts for which they receive income or pay business expenditure to work out their net profit, whether personal or business accounts. They will need to also identify any transfers between their accounts.</p>
         dwp_wages_html: |
           <p><strong>Wages</strong></p>
-          <p>If the applicant is employed, please provide wage slips for the %{wage_period}.</p>
+          <p>If the applicant is employed, please provide wage slips for the <strong>%{wage_period}</strong>.</p>
           <p>If the applicant is self-employed, they should include all bank accounts for which they receive income or pay business expenditure to work out their net profit, whether personal or business accounts. They will need to also identify any transfers between their accounts.</p>
         bank_statements_html: |
           <p><strong>Bank statements</strong></p>
-          <p>If the fee hasn't been paid yet, please provide bank statements for all bank accounts (including business accounts) which state any income during the %{wage_period} before the Help with Fees application was made. If the applicant provided an average income over a 3 month period, they will need to provide 3 month's worth of bank statements.</p>
+          <p>If the fee hasn't been paid yet, please provide bank statements for all bank accounts (including business accounts) which state any income during the <strong>%{wage_period}</strong> before the Help with Fees application was made. If the applicant provided an average income over a 3 month period, they will need to provide 3 month's worth of bank statements.</p>
           <p>As explained above, the applicant needs to provide bank account statements for all accounts which received any income during the full calendar month before the application was made.</p>
           <p>They will also need to identify any transfers between the accounts to avoid double counting. This is particularly important if they are self-employed to identify any drawings from business accounts and whether funds have been drawn from previous profits.</p>
-          <p>If the fee has already been paid, send bank statements for all of the applicant's accounts including any business accounts for the %{wage_period} before the fee was paid.</p>
+          <p>If the fee has already been paid, send bank statements for all of the applicant's accounts including any business accounts for the <strong>%{wage_period}</strong> before the fee was paid.</p>
           <p>Please indicate on the bank statements payments that the EX160A guidance says should be excluded from their income.</p>
         child_maintenance_html: |
           <p><strong>Child maintenance</strong></p>
@@ -932,17 +933,18 @@ en-GB:
         dwp_cash_gifts_and_prizes_html: |
           <p><strong>Cash gifts and prizes</strong></p>
           <p>The applicant must tell us about all one-off or regular payments such as birthday money, winnings from gambling and competitions received within the assessment period.</p>
-          <p>Any other income You must tell us about any other money the applicant has received within the assessment period which includes refunds, dividends or interest payments.</p>
+          <p><strong>Any other income</strong></p>
+          <p>You must tell us about any other money the applicant has received within the assessment period which includes refunds, dividends or interest payments.</p>
         prisoner_income_html: |
           <p><strong>Prisoner's income</strong></p>
           <p>If the applicant is a prisoner, they need to send a Prisoner Income and Expenditure Statement (PIES) covering the relevant period of time. If they're in a private prison, the statement needs to show earnings and private cash.</p>
           <p><strong>Please note:</strong> If they did have other incomings in the relevant period not shown on their bank statements, they must provide evidence and/or an explanation of what these incomings are.</p>
-          <p>You must write the new Help with Fees reference number on any letters that you send %{reference}.</p>
+          <p>You must write the new Help with Fees reference number on any letters that you send <strong>%{reference}</strong>.</p>
         dwp_prisoner_income_html: |
           <p><strong>Prisoner's income (if applicable)</strong></p>
           <p>If the applicant is a prisoner, they will need to send a Prisoner Income and Expenditure Statement (PIES) covering the relevant period of time. If they are in a private prison, their statement needs to show earnings and private cash.</p>
           <p><strong>Please note:</strong> If they did have other incomings in the relevant period not shown on their bank statements, they must provide evidence and/or an explanation of what these incomings are.</p>
-          <p>You must write the new Help with Fees reference number on any letters that you send %{reference}.</p>
+          <p>You must write the new Help with Fees reference number on any letters that you send <strong>%{reference}</strong>.</p>
         footer_html: |
           <h3 class='govuk-heading-m'>Useful links</h3>
           <p>You can use this link to locate the address or email address for the court/tribunal dealing with your case <a href="https://www.gov.uk/find-court-tribunal" target="_blank" title"Find the right court or tribunal">https://www.gov.uk/find-court-tribunal</a>.</p>
@@ -953,7 +955,7 @@ en-GB:
       evidence_check_html: |
         <p>Dear %{greeting}</p>
         <p><strong>Reference: %{reference}</strong></p>
-        <p>We wrote to you about your Help with Fees application, asking for additional information by %{evidence_due}.</p>
+        <p>We wrote to you about your Help with Fees application, asking for additional information by <strong>%{evidence_due}</strong>.</p>
         <p>As we haven't received any information within 28 days of request, we're unable to process the application. The applicant will have to pay the full fee. This may have an impact on the original case or claim related to this application.</p>
         <p>This can be paid by:</p>
         <ul class="govuk-list govuk-list--bullet">
@@ -969,14 +971,14 @@ en-GB:
       evidence_check_refund_html: |
         <p>Dear %{greeting}</p>
         <p><strong>Reference: %{reference}</strong></p>
-        <p>We wrote to you about the applicant’s Help with Fees application, asking for additional information by %{evidence_due}.</p>
+        <p>We wrote to you about the applicant’s Help with Fees application, asking for additional information by <strong>%{evidence_due}</strong>.</p>
         <p>As we haven't received any information within 28 days of request, we're unable to process the application and no refund will be issued.</p>
         <p>If the applicant still wants to apply for help with fees, they will have to complete a new application.</p>
         <p>From,</p>
         <p>%{user_name}</p>
       information_missing_html: |
         <p>Dear %{greeting}</p>
-        <p>We received your help with fees application on %{application_received}. However, the application is incomplete therefore we are unable to process this. </p>
+        <p>We received your help with fees application on <strong>%{application_received}</strong>. However, the application is incomplete therefore we are unable to process this. </p>
         <p><strong>The following required information is missing:</strong></p>
         <ul class="govuk-list govuk-list--bullet">
           <li><strong>(INSERT MISSING INFORMATION)</strong> **Insert and delete as required**</li>
@@ -1037,7 +1039,7 @@ en-GB:
         <h3 class=govuk-heading-m>Appeal by providing further evidence</h3>
         <p>If you have further evidence which supports that you were on one of these passported benefits at the time a fee had to be paid, you should return your Help with Fees reference number or EX160 application (if you submitted a paper application) along with further proof of the benefits you receive within <strong>14 days</strong>. If you are on Universal Credit and you have told us that you are earning less than £6,000 a year, please provide proof of this. Examples of proof can include your Universal Credit statements for the past 12 months, payslips or bank statements.</p>
         <p>Please double check that your personal details provided on your Help with Fees application are correct and match the details on your DWP paperwork. Please also double check on your DWP paperwork that you received these specific benefits and not similarly named ones.</p>
-        <p><strong>Please ensure you include the reference number %{reference} on all correspondence relating to your evidence review.</strong></p>
+        <p><strong>Please ensure you include the reference number <strong>%{reference}</strong> on all correspondence relating to your evidence review.</strong></p>
         <h3 class='govuk-heading-m'>Useful links</h3>
         <p>You can use this link to locate the address or email address for the court/tribunal dealing with your case <a href="https://www.gov.uk/find-court-tribunal" target="_blank" title"Find the right court or tribunal">https://www.gov.uk/find-court-tribunal</a>.</p>
         <p>You can find more guidance on applying for Help with Fees here: <a href="https://www.gov.uk/get-help-with-court-fees" target="_blank" title"Get help paying court and tribunal fees">https://www.gov.uk/get-help-with-court-fees</a></p>
@@ -1078,7 +1080,7 @@ en-GB:
         <h3 class=govuk-heading-m>Appeal by providing further evidence</h3>
         <p>If you have further evidence which supports that the applicant was on one of these passported benefits at the time a fee had to be paid, they should return their Help with Fees reference number or EX160 application (if you submitted a paper application) along with further proof of the benefits they receive within <strong>14 days</strong>. If the applicant is receiving Universal Credit and they have told us that you are earning less than £6,000 a year, please provide proof of this. Examples of proof can include your Universal Credit statements for the past 12 months, payslips or bank statements.</p>
         <p>Please double check that their personal details provided on their Help with Fees application are correct and match the details on their DWP paperwork. Please also double check on their DWP paperwork that they received these specific benefits and not similarly named ones.</p>
-        <p><strong>Please ensure you include the reference number %{reference} on all correspondence relating to your evidence review.</strong></p>
+        <p><strong>Please ensure you include the reference number <strong>%{reference}</strong> on all correspondence relating to your evidence review.</strong></p>
         <h3 class='govuk-heading-m'>Useful links</h3>
         <p>You can use this link to locate the address or email address for the court/tribunal dealing with your case <a href="https://www.gov.uk/find-court-tribunal" target="_blank" title"Find the right court or tribunal">https://www.gov.uk/find-court-tribunal</a>.</p>
         <p>You can find more guidance on applying for Help with Fees here: <a href="https://www.gov.uk/get-help-with-court-fees" target="_blank" title"Get help paying court and tribunal fees">https://www.gov.uk/get-help-with-court-fees</a></p>
@@ -1110,7 +1112,7 @@ en-GB:
         <h3 class=govuk-heading-m>Appeal by providing further evidence</h3>
         <p>If you have further evidence which supports that you were on one of these passported benefits at the time a fee had to be paid, you should return your Help with Fees reference number or EX160 application (if you submitted a paper application) along with further proof of the benefits you receive within <strong>14 days</strong>. If you are on Universal Credit and you have told us that you are earning less than £6,000 a year, please provide proof of this. Examples of proof can include your Universal Credit statements for the past 12 months, payslips or bank statements.</p>
         <p>Please double check that your personal details provided on your Help with Fees application are correct and match the details on your DWP paperwork. Please also double check on your DWP paperwork that you received these specific benefits and not similarly named ones.</p>
-        <p><strong>Please ensure you include the reference number %{reference} on all correspondence relating to your evidence review.</strong></p>
+        <p><strong>Please ensure you include the reference number <strong>%{reference}</strong> on all correspondence relating to your evidence review.</strong></p>
         <h3 class='govuk-heading-m'>Useful links</h3>
         <p>You can use this link to locate the address or email address for the court/tribunal dealing with your case <a href="https://www.gov.uk/find-court-tribunal" target="_blank" title"Find the right court or tribunal">https://www.gov.uk/find-court-tribunal</a>.</p>
         <p>You can find more guidance on applying for Help with Fees here: <a href="https://www.gov.uk/get-help-with-court-fees" target="_blank" title"Get help paying court and tribunal fees">https://www.gov.uk/get-help-with-court-fees</a></p>
@@ -1142,7 +1144,7 @@ en-GB:
         <h3 class=govuk-heading-m>Appeal by providing further evidence</h3>
         <p>If you have further evidence which supports that the applicant was on one of these passported benefits at the time a fee had to be paid, you should return their Help with Fees reference number or EX160 application (if you submitted a paper application) along with further proof of the benefits they receive within <strong>14 days</strong>. If the applicant is receiving Universal Credit and they have told us that you are earning less than £6,000 a year, please provide proof of this. Examples of proof can include your Universal Credit statements for the past 12 months, payslips or bank statements.</p>
         <p>Please double check that their personal details provided on your Help with Fees application are correct and match the details on their DWP paperwork. Please also double check on their DWP paperwork that they received these specific benefits and not similarly named ones.</p>
-        <p><strong>Please ensure you include the reference number %{reference} on all correspondence relating to your evidence review.</strong></p>
+        <p><strong>Please ensure you include the reference number <strong>%{reference}</strong> on all correspondence relating to your evidence review.</strong></p>
         <h3 class='govuk-heading-m'>Useful links</h3>
         <p>You can use this link to locate the address or email address for the court/tribunal dealing with your case <a href="https://www.gov.uk/find-court-tribunal" target="_blank" title"Find the right court or tribunal">https://www.gov.uk/find-court-tribunal</a>.</p>
         <p>You can find more guidance on applying for Help with Fees here: <a href="https://www.gov.uk/get-help-with-court-fees" target="_blank" title"Get help paying court and tribunal fees">https://www.gov.uk/get-help-with-court-fees</a></p>
