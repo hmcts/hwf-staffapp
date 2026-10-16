@@ -376,7 +376,7 @@ en-GB:
         <h3 class='govuk-heading-m'>Useful links</h3>
         <p>You can use this link to locate the address or email address for the court/tribunal dealing with the applicant's main case <a href="https://www.gov.uk/find-court-tribunal" target="_blank" title"Find the right court or tribunal">https://www.gov.uk/find-court-tribunal</a>.</p>
         <p>You can find more guidance on applying for Help with Fees here: <a href="https://www.gov.uk/get-help-with-court-fees" target="_blank" title"Get help paying court and tribunal fees">https://www.gov.uk/get-help-with-court-fees</a></p>
-        <p>If you need help or support to complete a Help with Fees application form, email <a href="mailto:support@wearegroup.com">support@wearegroup.com</a> for more information.</p>
+        <p>If you need help or support to complete a Help with Fees application form, email: <a href="mailto:support@wearegroup.com">support@wearegroup.com</a> for more information.</p>
         <p>From,</p>
         <p>%{user_name}</p>
       reject_no_benefits_representation_html: |
@@ -1010,8 +1010,8 @@ en-GB:
         <p>We've received your benefit evidence relating to your Help with Fees application. Unfortunately, after reviewing the evidence provided, you are not eligible for help with paying the fee. This is because the evidence provided does not confirm you receiving any of the benefits that make you automatically eligible for Help with Fees.</p>
         <p>You will get automatic help with your fee if you're receiving any of these benefits:</p>
         <ul class="govuk-list govuk-list--bullet">
-          <li><strong>Income-based</strong>Jobseeker's Allowance (JSA)</li>
-          <li><strong>income-related</strong>Employment and Support Allowance (ESA)</li>
+          <li><strong>Income-based </strong>Jobseeker's Allowance (JSA)</li>
+          <li><strong>income-related </strong>Employment and Support Allowance (ESA)</li>
           <li>Income Support</li>
           <li>Universal Credit (<strong>and you earn less than £6,000 over the last 12 months</strong>)</li>
           <li>Pension Credit (<strong>guarantee credit</strong>)</li>
@@ -1052,8 +1052,8 @@ en-GB:
         <p>We've received the benefit evidence relating to your applicant's Help with Fees application. Unfortunately, after reviewing the evidence provided, the applicant is not eligible for help with paying the fee. This is because the evidence provided does not confirm they are receiving any of the benefits that make them automatically eligible for Help with Fees.</p>
         <p>They will get automatic help with their fee if they're receiving any of these benefits:</p>
         <ul class="govuk-list govuk-list--bullet">
-          <li><strong>Income-based</strong>Jobseeker's Allowance (JSA)</li>
-          <li><strong>income-related</strong>Employment and Support Allowance (ESA)</li>
+          <li><strong>Income-based </strong>Jobseeker's Allowance (JSA)</li>
+          <li><strong>income-related </strong>Employment and Support Allowance (ESA)</li>
           <li>Income Support</li>
           <li>Universal Credit (<strong>and they earn less than £6,000 over the last 12 months</strong>)</li>
           <li>Pension Credit (<strong>guarantee credit</strong>)</li>
@@ -1084,7 +1084,7 @@ en-GB:
         <h3 class='govuk-heading-m'>Useful links</h3>
         <p>You can use this link to locate the address or email address for the court/tribunal dealing with your case <a href="https://www.gov.uk/find-court-tribunal" target="_blank" title"Find the right court or tribunal">https://www.gov.uk/find-court-tribunal</a>.</p>
         <p>You can find more guidance on applying for Help with Fees here: <a href="https://www.gov.uk/get-help-with-court-fees" target="_blank" title"Get help paying court and tribunal fees">https://www.gov.uk/get-help-with-court-fees</a></p>
-        <p>If you need help or support to complete a Help with Fees application form, email: <a href="mailto:"></a> for more information.</p>
+        <p>If you need help or support to complete a Help with Fees application form, email: <a href="mailto:support@wearegroup.com">support@wearegroup.com</a> for more information.</p>
         <p>From,</p>
         <p>%{user_name}</p>
       benefit_evidence_received_not_eligible_refund_html: |
@@ -1093,8 +1093,8 @@ en-GB:
         <p>We have received your benefit evidence relating to your refund Help with Fees application. Unfortunately, after reviewing the evidence provided, you are not eligible for a refund of the fee paid. This is because the evidence provided does not confirm you were receiving any of the benefits that make you automatically eligible for Help with Fees at the time the fee was paid.</p>
         <p>You will get automatic help with your fee if you're receiving any of these benefits:</p>
         <ul class="govuk-list govuk-list--bullet">
-          <li><strong>Income-based</strong>Jobseeker's Allowance (JSA)</li>
-          <li><strong>income-related</strong>Employment and Support Allowance (ESA)</li>
+          <li><strong>Income-based </strong>Jobseeker's Allowance (JSA)</li>
+          <li><strong>income-related </strong>Employment and Support Allowance (ESA)</li>
           <li>Income Support</li>
           <li>Universal Credit (<strong>and you earn less than £6,000 over the last 12 months</strong>)</li>
           <li>Pension Credit (<strong>guarantee credit</strong>)</li>
@@ -1125,8 +1125,8 @@ en-GB:
         <p>We have received the benefit evidence relating to your applicant's refund Help with Fees application. Unfortunately, after reviewing the evidence provided, the applicant is not eligible for a refund of the fee paid. This is because the evidence provided does not confirm they receive any of the benefits that make them automatically eligible for Help with Fees.</p>
         <p>They will get automatic help with their fee if they're receiving any of these benefits:</p>
         <ul class="govuk-list govuk-list--bullet">
-          <li><strong>Income-based</strong>Jobseeker's Allowance (JSA)</li>
-          <li><strong>income-related</strong>Employment and Support Allowance (ESA)</li>
+          <li><strong>Income-based </strong>Jobseeker's Allowance (JSA)</li>
+          <li><strong>income-related </strong>Employment and Support Allowance (ESA)</li>
           <li>Income Support</li>
           <li>Universal Credit (<strong>and they earn less than £6,000 over the last 12 months</strong>)</li>
           <li>Pension Credit (<strong>guarantee credit</strong>)</li>
