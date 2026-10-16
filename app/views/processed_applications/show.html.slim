@@ -46,6 +46,8 @@
 
         = f.submit 'Save and Continue', class: 'govuk-button'
 
+=render('shared/benefits_rejected_template', locals: { application: @application })
+
 - content_for(:javascripts)
   javascript:
     $(document).ready(function () {
