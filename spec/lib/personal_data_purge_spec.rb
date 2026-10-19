@@ -5,9 +5,9 @@ RSpec.describe PersonalDataPurge do
   describe 'settings for data range' do
     it { expect(Settings.personal_data_purge.years_ago).to be(7) }
   end
-  let(:benefit_check1) { build(:benefit_check, parameter_hash: 'personal_data1', our_api_token: 'includes data too1') }
+  let(:benefit_check1) { build(:benefit_check, parameter_hash: 'personal_data1', our_api_token: 'includes data too1', name_variant: 'Anna Jones') }
   let(:benefit_check2) { build(:benefit_check, parameter_hash: 'personal_data2', our_api_token: 'includes data too2') }
-  let(:online_benefit_check1) { build(:benefit_check, parameter_hash: 'personal_data1', our_api_token: 'includes data too1') }
+  let(:online_benefit_check1) { build(:benefit_check, parameter_hash: 'personal_data1', our_api_token: 'includes data too1', name_variant: 'Anna Jones') }
   let(:online_benefit_check2) { build(:benefit_check, parameter_hash: 'personal_data2', our_api_token: 'includes data too2') }
 
   describe 'purge online_application only' do
@@ -20,17 +20,17 @@ RSpec.describe PersonalDataPurge do
     it { expect(online_application.reload.purged).to be true }
 
     context 'benefit_checks' do
-      let(:keys) { [:parameter_hash, :our_api_token, :last_name, :ni_number] }
+      let(:keys) { [:parameter_hash, :our_api_token, :last_name, :ni_number, :name_variant] }
       it {
         online_benefit_check1.reload
         values = keys.map { |key| online_benefit_check1[key] }
-        expect(values).to eq [nil, nil, nil, nil]
+        expect(values).to all(be_nil)
       }
 
       it {
         online_benefit_check2.reload
         values = keys.map { |key| online_benefit_check2[key] }
-        expect(values).to eq [nil, nil, nil, nil]
+        expect(values).to all(be_nil)
       }
     end
   end
@@ -77,32 +77,32 @@ RSpec.describe PersonalDataPurge do
     end
 
     context 'benefit_checks' do
-      let(:keys) { [:parameter_hash, :our_api_token, :last_name, :ni_number] }
+      let(:keys) { [:parameter_hash, :our_api_token, :last_name, :ni_number, :name_variant] }
       it {
         benefit_check1.reload
         values = keys.map { |key| benefit_check1[key] }
-        expect(values).to eq [nil, nil, nil, nil]
+        expect(values).to all(be_nil)
       }
 
       it {
         benefit_check2.reload
         values = keys.map { |key| benefit_check2[key] }
-        expect(values).to eq [nil, nil, nil, nil]
+        expect(values).to all(be_nil)
       }
     end
 
     context 'online benefit_checks' do
-      let(:keys) { [:parameter_hash, :our_api_token, :last_name, :ni_number] }
+      let(:keys) { [:parameter_hash, :our_api_token, :last_name, :ni_number, :name_variant] }
       it {
         online_benefit_check1.reload
         values = keys.map { |key| online_benefit_check1[key] }
-        expect(values).to eq [nil, nil, nil, nil]
+        expect(values).to all(be_nil)
       }
 
       it {
         online_benefit_check2.reload
         values = keys.map { |key| online_benefit_check2[key] }
-        expect(values).to eq [nil, nil, nil, nil]
+        expect(values).to all(be_nil)
       }
     end
 

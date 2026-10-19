@@ -5,6 +5,21 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 with entries grouped by branch and date rather than release version.
 
+## 2026-10-15 (dwp-middle-name-matching)
+
+### Changed
+
+- DWP match: when the name as entered finds nobody, the same person is tried
+  with the words split differently between first and last name (at most five
+  requests, stopping at the first guid). Taken from the production rerun
+  script, where these splits found citizens the plain request missed. Every
+  try is stored as a `DwpApiCall`; the name that matched is kept in
+  `benefit_checks.name_variant` and purged with its other personal data.
+- The citizen record fetched after a match is checked against the person sent
+  (date of birth, last name, NI number when both sides have one). A mismatch
+  is a no match, recorded as a `verify_citizen` call. Why: DWP also returns
+  non-exact matches and nothing confirmed who the guid belonged to.
+
 ## 2026-10-08 (rst-7882-dwp-mi-report)
 
 ### Changed

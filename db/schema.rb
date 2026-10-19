@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.1].define(version: 2026_10_12_100000) do
+ActiveRecord::Schema[8.1].define(version: 2026_10_16_100000) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
   enable_extension "pg_trgm"
@@ -174,6 +174,7 @@ ActiveRecord::Schema[8.1].define(version: 2026_10_12_100000) do
     t.string "benefit_types"
     t.string "claim_status"
     t.integer "take_home_pay"
+    t.string "name_variant"
     t.index ["application_id"], name: "index_benefit_checks_on_application_id"
     t.index ["applicationable_id", "applicationable_type"], name: "index_bc_applicationable_id_type"
     t.index ["user_id"], name: "index_benefit_checks_on_user_id"

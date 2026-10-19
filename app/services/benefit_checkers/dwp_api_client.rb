@@ -18,36 +18,71 @@ module BenefitCheckers
       return result('No', NO_MATCH) unless match_applicant(params) || match_partner
 
       fetch_citizen
+      return result('No', NO_MATCH) unless matched_citizen_verified?
+
       decide(fetch_claims)
     end
 
     private
 
     def match_applicant(params)
-      match(transformed_params(params))
+      match_any_way(transformed_params(params), @benefit_check&.ni_number)
     end
 
     # Only when the applicant was not matched
     def match_partner
       return false unless @benefit_check.applicationable&.applicant&.married?
 
-      match(partner_params)
+      match_any_way(partner_params, partner_ni_number)
     end
 
-    def match(request)
-      response = call_dwp('match_citizen', request, not_found: MATCH_NOT_FOUND) { @connection.match_citizen(request) }
+    # When DWP finds nobody, the same person is tried with the name split
+    # differently, stopping at the first guid. A failure that is not a "not
+    # found" raises out of match and stops the tries. Who was matched, and
+    # with which request, is kept for the check against the citizen record. See CHANGELOG.md
+    def match_any_way(request, ni_number)
+      NameVariants.for(request).each do |variant|
+        next unless match(variant)
+
+        @matched = MatchedCitizen.new(request, variant.request, ni_number)
+        return true
+      end
+      false
+    end
+
+    # The stored request also says which way the name was sent (name_variant); DWP gets the request
+    # alone. The name that matched is kept on the benefit check, purged with the rest of its personal data.
+    def match(variant)
+      request = variant.request
+      response = call_dwp('match_citizen', request.merge(name_variant: variant.label), not_found: MATCH_NOT_FOUND) do
+        @connection.match_citizen(request)
+      end
       @guid = response&.dig('data', 'id')
-      @guid.present?
+      return false if @guid.blank?
+
+      @benefit_check&.update(name_variant: request.values_at(:first_name, :last_name).compact.join(' '))
+      true
     end
 
     # DWP may hand back a new guid with the citizen record. A missing record is
     # not a failure; the date of death on it decides the check when it is flagged.
     def fetch_citizen
-      citizen = call_dwp('citizen', { guid: @guid }) { @connection.get_citizen(@guid) }
-      return if citizen.nil?
+      @citizen = call_dwp('citizen', { guid: @guid }) { @connection.get_citizen(@guid) }
+      return if @citizen.nil?
 
-      @guid = citizen.dig('data', 'id').presence || @guid
-      @date_of_death = DateOfDeath.flagged(citizen, effective_date_window&.effective_to)
+      @guid = @citizen.dig('data', 'id').presence || @guid
+      @date_of_death = DateOfDeath.flagged(@citizen, effective_date_window&.effective_to)
+    end
+
+    # The record must be the person the match was made for before the claims
+    # are read; a mismatch counts as no match. Without a record there is
+    # nothing to check against and the check carries on. See CHANGELOG.md
+    def matched_citizen_verified?
+      return true if @citizen.nil?
+
+      verified = @matched.verify(@citizen)
+      @calls.record('verify_citizen', @matched.compared, @matched.outcome)
+      verified
     end
 
     # Sent with the effective date window; nil when DWP has no claims
