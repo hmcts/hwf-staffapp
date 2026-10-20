@@ -9,6 +9,10 @@ with entries grouped by branch and date rather than release version.
 
 ### Changed
 
+- The Evidence Received (appeal) section now follows `DWP_API_ENABLED`; the
+  separate `APPEAL_ENABLED` switch is removed. Why: the appeal flow only makes
+  sense alongside the DWP checks, so one switch is enough. Remove
+  `APPEAL_ENABLED` from the environment configs when deploying.
 - DWP match: when the name as entered finds nobody, the same person is tried
   with the words split differently between first and last name (at most five
   requests, stopping at the first guid). Taken from the production rerun
