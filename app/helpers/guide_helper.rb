@@ -69,10 +69,14 @@ module GuideHelper
   end
 
   def faq_url
-    'https://justiceuk.sharepoint.com/sites/knowledgecentral/Shared%20Documents/Forms/AllItems.aspx' \
-      '?id=%2Fsites%2Fknowledgecentral%2FShared%20Documents%2FCross%2DJurisdiction%2FHelp%20with' \
-      '%20Fees%2FHWF%5FFAQ%20%5FOriginal%5FVersion1%2E0%5F28%2E10%2E2025%2Epdf' \
-      '&parent=%2Fsites%2Fknowledgecentral%2FShared%20Documents%2FCross%2DJurisdiction%2FHelp%20with%20Fees'
+    if Settings.dwp_api_enabled == true
+      'https://justiceuk.sharepoint.com/:w:/r/sites/knowledgecentral/Shared%20Documents/Cross-Jurisdiction/Help%20with%20Fees/HWF%20FAQ%20updated%20Oct%202026.docx?d=w2e356a37957540d4ad8951e8988e4231&csf=1&web=1&e=KerfIS&isSPOFile=1'
+    else
+      'https://justiceuk.sharepoint.com/sites/knowledgecentral/Shared%20Documents/Forms/AllItems.aspx' \
+        '?id=%2Fsites%2Fknowledgecentral%2FShared%20Documents%2FCross%2DJurisdiction%2FHelp%20with' \
+        '%20Fees%2FHWF%5FFAQ%20%5FOriginal%5FVersion1%2E0%5F28%2E10%2E2025%2Epdf' \
+        '&parent=%2Fsites%2Fknowledgecentral%2FShared%20Documents%2FCross%2DJurisdiction%2FHelp%20with%20Fees'
+    end
   end
 
   def manager_guide_url

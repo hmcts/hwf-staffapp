@@ -71,7 +71,11 @@ RSpec.describe GuideHelper do
   end
 
   describe '#faq_url' do
-    it { expect(helper.faq_url).to include('HWF%5FFAQ%20%5FOriginal%5FVersion1%2E0%5F28%2E10%2E2025%2Epdf') }
+    if Settings.dwp_api_enabled == true
+      it { expect(helper.faq_url).to include('d=w2e356a37957540d4ad8951e8988e4231') }
+    else
+      it { expect(helper.faq_url).to include('HWF%5FFAQ%20%5FOriginal%5FVersion1%2E0%5F28%2E10%2E2025%2Epdf') }
+    end
   end
 
   describe '#manager_guide_url' do
