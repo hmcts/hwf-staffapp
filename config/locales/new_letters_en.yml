@@ -154,13 +154,13 @@ en-GB:
         <p><strong>Please ensure you include the reference number <strong>%{reference}</strong> on all correspondence relating to your appeal. If you are making a new online Help with Fees application, please include the above reference as well as your new reference number.</strong></p>
         <p>For evidence, you will need to provide a full breakdown letter from the DWP which clearly states which benefit you receive, how much you are entitled to (including a clear breakdown of the income considered by DWP in their decision (if applicable) and your evidence must also cover the relevant Help with Fees application assessment date. Screenshots or photos of this information are acceptable, but they must be clear images and your name and address needs to be visible. You must be clearly identifiable on everything you send.</p>
         <p>If the benefit is received jointly but is in your partner's name, evidence should also be provided that they share your address. </p>
-        <p>Before sending, please check on your DWP paperwork that you received the specific benefits mentioned above and not similarly named ones (such as contribution-based Job Seeker's Allowance, contribution-based Employment and Support Allowance and Pension Credit (savings credit). If you receive Universal Credit, please check that your annual earnings before tax and National insurance are less than £6,000. If they are more than £6,000, please refer to the 'Other benefits or low income' section.</p>
+        <p>Before sending, please check on your DWP paperwork that you received the specific benefits mentioned above and not similarly named ones (such as contribution-based Jobseeker's Allowance, contribution-based Employment and Support Allowance and Pension Credit (savings credit). If you receive Universal Credit, please check that your annual earnings before tax and National insurance are less than £6,000. If they are more than £6,000, please refer to the 'Other benefits or low income' section.</p>
         <p>If you think you have declared your benefit status incorrectly, and you still believe you are eligible for Help with Fees, you should reapply on the basis of income, including all benefit payments as income, unless they are explicitly excluded.</p>
         <p>Remember, you must write your Help with Fees reference number on any letters/emails that you send. Here is your reference number: <strong>%{reference}</strong></p>
         <h3 class='govuk-heading-m'>Other benefits or low income</h3>
         <p>You may be able to get help with your fee if you're on a low income and receive other types of benefit. There are examples of some of these types of benefits below.</p>
         <ul class="govuk-list govuk-list--bullet">
-         <li><strong>contribution-based</strong> Job Seeker's Allowance</li>
+         <li><strong>contribution-based</strong> Jobseeker's Allowance</li>
          <li><strong>contribution-based</strong> Employment and Support Allowance</li>
          <li>Pension Credit (<strong>savings credit</strong>)</li>
          <li>Universal Credit (<strong>and you earn over £6,000 a year before tax and National Insurance</strong>)</li>
@@ -202,13 +202,13 @@ en-GB:
         <p>If you are receiving Universal Credit and you have told us that you are earning less than £6,000 a year, please provide proof of this. Examples of proof can include your Universal Credit statements for the past 12 months, payslips or bank statements.</p>
         <p>Screenshots or photos of this information are acceptable, but they must be clear images and your name and address need to be visible. You must be clearly identifiable on everything you send.</p>
         <p>If the benefit is received jointly but is in your partner's name, evidence should also be provided that they share your address.</p>
-        <p>Before sending, please check on your DWP paperwork that you received the specific benefits mentioned above and not similarly named ones (such as contribution-based Job Seeker's Allowance or new-style JSA, contribution-based Employment and Support Allowance and Pension Credit (savings credit). If you receive Universal Credit, please check that your annual earnings before tax and National Insurance are less than £6,000. If they are more than £6,000, please refer to the 'low income and other benefits' section below.</p>
+        <p>Before sending, please check on your DWP paperwork that you received the specific benefits mentioned above and not similarly named ones (such as contribution-based Jobseeker's Allowance or new-style JSA, contribution-based Employment and Support Allowance and Pension Credit (savings credit). If you receive Universal Credit, please check that your annual earnings before tax and National Insurance are less than £6,000. If they are more than £6,000, please refer to the 'low income and other benefits' section below.</p>
         <p>If you think you have declared your benefit status incorrectly, and you still believe you are eligible for Help with Fees, you should reapply on the basis of income, including all benefit payments as income, unless they are explicitly excluded.</p>
         <p>Remember, you must write your Help with Fees reference number on any letters/emails that you send. Here is your reference number: <strong>%{reference}</strong></p>
         <h3 class='govuk-heading-m'>Apply under low income and other benefits</h3>
         <p>You may still be able to get help with your fee if you're on a low income and receive other types of benefit. Other types of benefits may include:</p>
         <ul class="govuk-list govuk-list--bullet">
-         <li><strong>contribution-based</strong> Job Seeker's Allowance (or new-style JSA)</li>
+         <li><strong>contribution-based</strong> Jobseeker's Allowance (or new-style JSA)</li>
          <li><strong>contribution-based</strong> Employment and Support Allowance</li>
          <li>Pension Credit (<strong>savings credit</strong>)</li>
          <li>Universal Credit (<strong>and you earn over £6,000 a year before tax and National Insurance</strong>)</li>
@@ -247,13 +247,13 @@ en-GB:
         <p><strong>Please ensure you include the reference number <strong>%{reference}</strong> on all correspondence relating to your appeal. If you are making a new online Help with Fees application, please include the above reference as well as your new reference number.</strong></p>
         <p>For evidence, you will need to provide a full breakdown letter from the DWP which clearly states which benefit you receive, how much you are entitled to (including a clear breakdown of the income considered by DWP in their decision (if applicable) and your evidence must also cover the relevant Help with Fees application assessment date. Screenshots or photos of this information are acceptable, but they must be clear images and your name and address needs to be visible. You must be clearly identifiable on everything you send.</p>
         <p>If the benefit is received jointly but is in your partner's name, evidence should also be provided that they share your address. </p>
-        <p>Before sending, please check on your DWP paperwork that you received the specific benefits mentioned above and not similarly named ones (such as contribution-based Job Seeker's Allowance, contribution-based Employment and Support Allowance and Pension Credit (savings credit). If you receive Universal Credit, please check that your annual earnings before tax and National insurance are less than £6,000. If they are more than £6,000, please refer to the 'Other benefits or low income' section.</p>
+        <p>Before sending, please check on your DWP paperwork that you received the specific benefits mentioned above and not similarly named ones (such as contribution-based Jobseeker's Allowance, contribution-based Employment and Support Allowance and Pension Credit (savings credit). If you receive Universal Credit, please check that your annual earnings before tax and National insurance are less than £6,000. If they are more than £6,000, please refer to the 'Other benefits or low income' section.</p>
         <p>If you think you have declared your benefit status incorrectly, and you still believe you are eligible for Help with Fees, you should reapply on the basis of income, including all benefit payments as income, unless they are explicitly excluded.</p>
         <p>Remember, you must write your Help with Fees reference number on any letters/emails that you send. Here is your reference number: <strong>%{reference}</strong></p>
         <h3 class='govuk-heading-m'>Other benefits or low income</h3>
         <p>You may be able to get help with your fee if you're on a low income and receive other types of benefit. There are examples of some of these types of benefits below.</p>
         <ul class="govuk-list govuk-list--bullet">
-         <li><strong>contribution-based</strong> Job Seeker's Allowance</li>
+         <li><strong>contribution-based</strong> Jobseeker's Allowance</li>
          <li><strong>contribution-based</strong> Employment and Support Allowance</li>
          <li>Pension Credit (<strong>savings credit</strong>)</li>
          <li>Universal Credit (<strong>and you earn over £6,000 a year before tax and National Insurance</strong>)</li>
@@ -286,13 +286,13 @@ en-GB:
         <p>If you are receiving Universal Credit and you have told us that you are earning less than £6,000 a year, please provide proof of this. Examples of proof can include your Universal Credit statements for the past 12 months, payslips or bank statements.</p>
         <p>Screenshots or photos of this information are acceptable, but they must be clear images and your name and address need to be visible. You must be clearly identifiable on everything you send.</p>
         <p>If the benefit is received jointly but is in your partner's name, evidence should also be provided that they share your address. </p>
-        <p>Before sending, please check on your DWP paperwork that you received the specific benefits mentioned above and not similarly named ones (such as contribution-based Job Seeker's Allowance or new-style JSA, contribution-based Employment and Support Allowance and Pension Credit (savings credit). If you receive Universal Credit, please check that your annual earnings before tax and National insurance are less than £6,000. If they are more than £6,000, please refer to the 'low income or other benefits' section below.</p>
+        <p>Before sending, please check on your DWP paperwork that you received the specific benefits mentioned above and not similarly named ones (such as contribution-based Jobseeker's Allowance or new-style JSA, contribution-based Employment and Support Allowance and Pension Credit (savings credit). If you receive Universal Credit, please check that your annual earnings before tax and National insurance are less than £6,000. If they are more than £6,000, please refer to the 'low income or other benefits' section below.</p>
         <p>If you think you have declared your benefit status incorrectly, and you still believe you are eligible for Help with Fees, you should reapply on the basis of income, including all benefit payments as income, unless they are explicitly excluded.</p>
         <p>Remember, you must write your Help with Fees reference number on any letters/emails that you send. Here is your reference number: <strong>%{reference}</strong></p>
         <h3 class='govuk-heading-m'>Apply under low income or other benefits</h3>
         <p>You may still be able to get help with your fee if you're on a low income and receive other types of benefit. Other types of benefits may include:</p>
         <ul class="govuk-list govuk-list--bullet">
-         <li><strong>contribution-based</strong> Job Seeker's Allowance (or new-style JSA)</li>
+         <li><strong>contribution-based</strong> Jobseeker's Allowance (or new-style JSA)</li>
          <li><strong>contribution-based</strong> Employment and Support Allowance</li>
          <li>Pension Credit (<strong>savings credit</strong>)</li>
          <li>Universal Credit (<strong>and you earn over £6,000 a year before tax and National Insurance</strong>)</li>
@@ -322,13 +322,13 @@ en-GB:
         <p><strong>Please ensure you include the reference number <strong>%{reference}</strong> on all correspondence relating to your appeal. If you are making a new online Help with Fees application, please include the above reference as well as your new reference number.</strong></p>
         <p>For evidence, you will need to provide a full breakdown letter from the DWP which clearly states which benefit was received by the applicant, how much they are entitled to (including a clear breakdown of the income considered by DWP in their decision (if applicable) and the evidence must also cover the relevant Help with Fees application assessment date. Screenshots or photos of this information are acceptable, but they must be clear images and the applicant's name and address needs to be visible. The applicant must be clearly identifiable on everything you send.</p>
         <p>If the benefit is received jointly but is in the name of the applicant's partner, evidence should also be provided that they share an address.</p>
-        <p>Before sending, please check on the DWP paperwork that the applicant received the specific benefits mentioned above and not similarly named ones (such as contribution-based Job Seeker's Allowance, contribution-based Employment and Support Allowance and Pension Credit (savings credit). If they receive Universal Credit, please check that their annual earnings before tax and National insurance are less than £6,000. If they are more than £6,000, please refer to the 'Other benefits or low income' section.</p>
-        <p>If you think you have declared the applicant's benefit status incorrectly, and you still believe they are eligible for Help with Fees, you should reapply on the basis of income, including all benefit payments as income, unless they are explicitly excluded</p>
+        <p>Before sending, please check on the DWP paperwork that the applicant received the specific benefits mentioned above and not similarly named ones (such as contribution-based Jobseeker's Allowance, contribution-based Employment and Support Allowance and Pension Credit (savings credit). If they receive Universal Credit, please check that their annual earnings before tax and National insurance are less than £6,000. If they are more than £6,000, please refer to the 'Other benefits or low income' section.</p>
+        <p>If you think you have declared the applicant's benefit status incorrectly, and you still believe they are eligible for Help with Fees, you should reapply on the basis of income, including all benefit payments as income, unless they are explicitly excluded.</p>
         <p>Remember, you must write the Help with Fees reference number on any letters/emails that you send. Here is your reference number: <strong>%{reference}</strong></p>
         <h3 class='govuk-heading-m'>Other benefits or low income</h3>
         <p>The applicant may be able to get help with the fee if they're on a low income and receive other types of benefit. There are examples of some of these types of benefits below.</p>
         <ul class="govuk-list govuk-list--bullet">
-         <li><strong>contribution-based</strong> Job Seeker's Allowance</li>
+         <li><strong>contribution-based</strong> Jobseeker's Allowance</li>
          <li><strong>contribution-based</strong> Employment and Support Allowance</li>
          <li>Pension Credit (<strong>savings credit</strong>)</li>
          <li>Universal Credit (<strong>and they earn over £6,000 a year before tax and National Insurance</strong>)</li>
@@ -342,7 +342,7 @@ en-GB:
         <p>%{user_name}</p>
       dwp_reject_no_benefits_refund_representation_html: |
         <p>Dear %{greeting}</p>
-        <p><strong>Your reference: %{reference}</strong></p>
+        <p><strong>Reference: %{reference}</strong></p>
         <p>We have received your refund Help with Fees application. Unfortunately, the applicant is not eligible for a refund of the fee paid. This is because we cannot find a Department for Work and Pensions (DWP) record of the applicant receiving any of the benefits that make them automatically eligible for Help with Fees.</p>
         <p>They will get automatic help with the fee if they're receiving any of these benefits:</p>
         <ul class="govuk-list govuk-list--bullet">
@@ -361,13 +361,13 @@ en-GB:
         <p>If the applicant is receiving Universal Credit and they have told us that they are earning less than £6,000 a year, please provide proof of this. Examples of proof can include their Universal Credit statements for the past 12 months, payslips or bank statements.</p>
         <p>Screenshots or photos of this information are acceptable, but they must be clear images and the applicant's name and address need to be visible. The applicant must be clearly identifiable on everything you send.</p>        
         <p>If the benefit is received jointly but is in the name of the applicant's partner, evidence should also be provided that they share an address.</p>
-        <p>Before sending, please check on the DWP paperwork that the applicant received the specific benefits mentioned above and not similarly named ones (such as contribution-based Job Seeker's Allowance or new-style JSA, contribution-based Employment and Support Allowance and Pension Credit (savings credit). If they receive Universal Credit, please check that their annual earnings before tax and National insurance are less than £6,000. If they are more than £6,000, please refer to the 'low income or other benefits' section below.</p>
-        <p>If you think you have declared the applicant's benefit status incorrectly, and you still believe they are eligible for Help with Fees, you should reapply on the basis of income, including all benefit payments as income, unless they are explicitly excluded</p>
+        <p>Before sending, please check on the DWP paperwork that the applicant received the specific benefits mentioned above and not similarly named ones (such as contribution-based Jobseeker's Allowance or new-style JSA, contribution-based Employment and Support Allowance and Pension Credit (savings credit). If they receive Universal Credit, please check that their annual earnings before tax and National insurance are less than £6,000. If they are more than £6,000, please refer to the 'low income or other benefits' section below.</p>
+        <p>If you think you have declared the applicant's benefit status incorrectly, and you still believe they are eligible for Help with Fees, you should reapply on the basis of income, including all benefit payments as income, unless they are explicitly excluded.</p>
         <p>Remember, you must write the Help with Fees reference number on any letters/emails that you send. Here is your reference number: <strong>%{reference}</strong></p>
         <h3 class='govuk-heading-m'>Apply under low income or other benefits</h3>
         <p>The applicant may still be able to get help with the fee if they're on a low income and receive other types of benefit. Other types of benefits may include:</p>
         <ul class="govuk-list govuk-list--bullet">
-         <li><strong>contribution-based</strong> Job Seeker's Allowance (or new-style JSA)</li>
+         <li><strong>contribution-based</strong> Jobseeker's Allowance (or new-style JSA)</li>
          <li><strong>contribution-based</strong> Employment and Support Allowance</li>
          <li>Pension Credit (<strong>savings credit</strong>)</li>
          <li>Universal Credit (<strong>and they earn over £6,000 a year before tax and National Insurance</strong>)</li>
@@ -397,13 +397,13 @@ en-GB:
         <p><strong>Please ensure you include the reference number <strong>%{reference}</strong> on all correspondence relating to your appeal. If you are making a new online Help with Fees application, please include the above reference as well as your new reference number.</strong></p>
         <p>For evidence, you will need to provide a full breakdown letter from the DWP which clearly states which benefit the applicant receives, how much they are entitled to (including a clear breakdown of the income considered by DWP in their decision (if applicable) and the evidence must also cover the relevant Help with Fees application assessment date. Screenshots or photos of this information are acceptable, but they must be clear images and the applicant's name and address needs to be visible. The applicant must be clearly identifiable on everything you send.</p>
         <p>If the benefit is received jointly but is in the name of the applicant's partner, evidence should also be provided that they share an address.</p>
-        <p>Before sending, please check on the DWP paperwork that the applicant receives the specific benefits mentioned above and not similarly named ones (such as contribution-based Job Seeker's Allowance, contribution-based Employment and Support Allowance and Pension Credit (savings credit). If they receive Universal Credit, please check that their annual earnings before tax and National insurance are less than £6,000. If they are more than £6,000, please refer to the 'Other benefits or low income' section.</p>
+        <p>Before sending, please check on the DWP paperwork that the applicant receives the specific benefits mentioned above and not similarly named ones (such as contribution-based Jobseeker's Allowance, contribution-based Employment and Support Allowance and Pension Credit (savings credit). If they receive Universal Credit, please check that their annual earnings before tax and National insurance are less than £6,000. If they are more than £6,000, please refer to the 'Other benefits or low income' section.</p>
         <p>If you think you have declared the applicant's benefit status incorrectly, and you still believe they are eligible for Help with Fees, you should reapply on the basis of income, including all benefit payments as income, unless they are explicitly excluded.</p>
         <p>Remember, you must write the Help with Fees reference number on any letters/emails that you send. Here is your reference number: <strong>%{reference}</strong></p>
         <h3 class='govuk-heading-m'>Other benefits or low income</h3>
         <p>The Applicant may be able to get help with the fee if they're on a low income and receive other types of benefit. There are examples of some of these types of benefits below.</p>
         <ul class="govuk-list govuk-list--bullet">
-         <li><strong>contribution-based</strong> Job Seeker's Allowance</li>
+         <li><strong>contribution-based</strong> Jobseeker's Allowance</li>
          <li><strong>contribution-based</strong> Employment and Support Allowance</li>
          <li>Pension Credit (<strong>savings credit</strong>)</li>
          <li>Universal Credit (<strong>and they earn over £6,000 a year before tax and National Insurance</strong>)</li>
@@ -427,7 +427,7 @@ en-GB:
         <p>%{user_name}</p>
       dwp_reject_no_benefits_representation_html: |
         <p>Dear %{greeting}</p>
-        <p><strong>Your reference: %{reference}</strong></p>
+        <p><strong>Reference: %{reference}</strong></p>
         <p>We've received your Help with Fees application. Unfortunately, the applicant is not eligible for help with paying the fee. This is because we cannot find a Department for Work and Pensions (DWP) record of the applicant receiving any of the benefits that make them automatically eligible for Help with Fees.</p>
         <p>The applicant will get automatic help with the fee if they're receiving any of these benefits:</p>
         <ul class="govuk-list govuk-list--bullet">
@@ -445,13 +445,13 @@ en-GB:
         <p>For evidence, the applicant will need to provide a full breakdown letter from the DWP which clearly states which benefit they receive, how much they are entitled to (including a clear breakdown of the income considered by DWP in their decision (if applicable) and their evidence must also cover the relevant Help with Fees application assessment date.</p>
         <p>If the applicant is receiving Universal Credit and they have told us that they are earning less than £6,000 a year, please provide proof of this. Examples of proof can include your Universal Credit statements for the past 12 months, payslips or bank statements.</p>
         <p>Screenshots or photos of this information are acceptable, but they must be clear images and your name and address need to be visible. You must be clearly identifiable on everything you send. If the benefit is received jointly but is in the name of the applicant's partner, evidence should also be provided that they share an address.</p>
-        <p>Before sending, please check on the DWP paperwork that the applicant receives the specific benefits mentioned above and not similarly named ones (such as contribution-based Job Seeker's Allowance or new-style JSA, contribution-based Employment and Support Allowance and Pension Credit (savings credit). If they receive Universal Credit, please check that their annual earnings before tax and National Insurance are less than £6,000. If they are more than £6,000, please refer to the 'low income or other benefits' section below.</p>
-        <p>If you think you have declared the applicant's benefit status incorrectly, and you still believe they are eligible for Help with Fees, you should reapply on the basis of income, including all benefit payments as income, unless they are explicitly.</p>
+        <p>Before sending, please check on the DWP paperwork that the applicant receives the specific benefits mentioned above and not similarly named ones (such as contribution-based Jobseeker's Allowance or new-style JSA, contribution-based Employment and Support Allowance and Pension Credit (savings credit). If they receive Universal Credit, please check that their annual earnings before tax and National Insurance are less than £6,000. If they are more than £6,000, please refer to the 'low income or other benefits' section below.</p>
+        <p>If you think you have declared the applicant's benefit status incorrectly, and you still believe they are eligible for Help with Fees, you should reapply on the basis of income, including all benefit payments as income, unless they are explicitly excluded.</p>
         <p>Remember, you must write the Help with Fees reference number on any letters/emails that you send. Here is your reference number: <strong>%{reference}</strong></p>
         <h3 class='govuk-heading-m'>Apply under low income or other benefits</h3>
         <p>The applicant may still be able to get help with the fee if they're on a low income and receive other types of benefit. Other types of benefits may include:</p>
         <ul class="govuk-list govuk-list--bullet">
-         <li><strong>contribution-based</strong> Job Seeker's Allowance (new-style JSA)</li>
+         <li><strong>contribution-based</strong> Jobseeker's Allowance (new-style JSA)</li>
          <li><strong>contribution-based</strong> Employment and Support Allowance</li>
          <li>Pension Credit (<strong>savings credit</strong>)</li>
          <li>Universal Credit (<strong>and they earn over £6,000 a year before tax and National Insurance</strong>)</li>
@@ -499,7 +499,7 @@ en-GB:
           <p>If you are self-employed, you should include all bank accounts for which you receive income or pay business expenditure to work out your net profit, whether personal or business accounts. You will need to also identify any transfers between your accounts.</p>
         bank_statements_html: |
           <h3 class='govuk-heading-m'>Bank statements</h3>
-          <p>If you haven't paid the fee yet, please provide bank statements for all bank accounts (including business accounts) which state any income during the <strong>%{wage_period}</strong> before the Help with Fees application was made. If you provided an average income over a three month period, you will need to provide 3 months' worth of bank statements.</p>
+          <p>If you haven't paid the fee yet, please provide bank statements for all bank accounts (including business accounts) which state any income during the <strong>%{wage_period}</strong> before the Help with Fees application was made. If you provided an average income over a three month period, you will need to provide three months' worth of bank statements.</p>
           <p>As explained above, you need to provide bank account statements for all accounts which received any income during the full calendar month before your application was made.</p>
           <p>You will also need to identify any transfers between the accounts to avoid double counting. This is particularly important if you are self-employed to identify any drawings from business accounts and whether funds have been drawn from previous profits.</p>
           <p>If you've already paid the fee, send bank statements for all your accounts including any business accounts for the <strong>%{wage_period}</strong> before you paid the fee.</p>
@@ -662,7 +662,7 @@ en-GB:
     part-payment:
       send_part_payment_html: |
         <p>Dear %{greeting}</p>
-        <p><strong>Your reference: %{reference}</strong></p>
+        <p><strong>Reference: %{reference}</strong></p>
         <p>We've received your Help with Fees application. The applicant is eligible to get some money taken off the full fee of <strong>%{full_fee}</strong>.</p>
         <p><strong>How we worked this out:</strong></p>
         <p><strong>%{income_type}: %{total_income}</strong></p>
@@ -885,7 +885,7 @@ en-GB:
           <p>If the applicant is self-employed, they should include all bank accounts for which they receive income or pay business expenditure to work out their net profit, whether personal or business accounts. They will need to also identify any transfers between their accounts.</p>
         bank_statements_html: |
           <p><strong>Bank statements</strong></p>
-          <p>If the fee hasn't been paid yet, please provide bank statements for all bank accounts (including business accounts) which state any income during the <strong>%{wage_period}</strong> before the Help with Fees application was made. If the applicant provided an average income over a three month period, they will need to provide 3 months' worth of bank statements.</p>
+          <p>If the fee hasn't been paid yet, please provide bank statements for all bank accounts (including business accounts) which state any income during the <strong>%{wage_period}</strong> before the Help with Fees application was made. If the applicant provided an average income over a three month period, they will need to provide three months' worth of bank statements.</p>
           <p>As explained above, the applicant needs to provide bank account statements for all accounts which received any income during the full calendar month before the application was made.</p>
           <p>They will also need to identify any transfers between the accounts to avoid double counting. This is particularly important if they are self-employed to identify any drawings from business accounts and whether funds have been drawn from previous profits.</p>
           <p>If the fee has already been paid, send bank statements for all of the applicant's accounts including any business accounts for the <strong>%{wage_period}</strong> before the fee was paid.</p>
