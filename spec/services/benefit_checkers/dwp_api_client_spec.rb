@@ -44,8 +44,13 @@ RSpec.describe BenefitCheckers::DwpApiClient, type: :service do
     { 'benefitType' => 'income_support', 'awards' => [{ 'startDate' => '2020-01-01', 'status' => 'live', 'amount' => 8_460 }] }
   end
 
+  # Who the citizen record says was matched: the applicant from `params` unless a context says otherwise.
+  # The client checks it against the person it sent before reading the claims. See CHANGELOG.md
+  let(:citizen_identity) { { 'dateOfBirth' => { 'date' => '1980-01-01' }, 'name' => { 'lastName' => 'JONES' } } }
+
   def citizen_record(guid, attributes = {})
-    { 'jsonapi' => { 'version' => '1.0' }, 'data' => { 'id' => guid, 'type' => 'Citizen', 'attributes' => { 'guid' => guid }.merge(attributes) } }
+    { 'jsonapi' => { 'version' => '1.0' },
+      'data' => { 'id' => guid, 'type' => 'Citizen', 'attributes' => { 'guid' => guid }.merge(citizen_identity).merge(attributes) } }
   end
 
   before do
@@ -469,8 +474,8 @@ RSpec.describe BenefitCheckers::DwpApiClient, type: :service do
         expect(call.request_params['guid']).to eq(citizen_guid)
       end
 
-      it 'creates three DwpApiCall records' do
-        expect { client.check(params) }.to change(DwpApiCall, :count).by(3)
+      it 'creates four DwpApiCall records: match, citizen, verification, claims' do
+        expect { client.check(params) }.to change(DwpApiCall, :count).by(4)
       end
 
       # The citizen record is fetched on every match, before the claims. See CHANGELOG.md
@@ -556,7 +561,7 @@ RSpec.describe BenefitCheckers::DwpApiClient, type: :service do
 
         it 'still fetches and stores the claims' do
           client.check(params)
-          expect(benefit_check.dwp_api_calls.pluck(:endpoint_name)).to eq(['match_citizen', 'citizen', 'get_claims'])
+          expect(benefit_check.dwp_api_calls.pluck(:endpoint_name)).to eq(['match_citizen', 'citizen', 'verify_citizen', 'get_claims'])
         end
 
         it 'is flagged even when DWP returns no claims' do
@@ -736,9 +741,9 @@ RSpec.describe BenefitCheckers::DwpApiClient, type: :service do
         allow(connection).to receive(:get_claims).and_raise(HwfDwpApiError.new(not_found_error, :not_found))
       end
 
-      it 'stores the match, citizen and claims calls' do
+      it 'stores the match, citizen, verification and claims calls' do
         client.check(params)
-        expect(benefit_check.dwp_api_calls.pluck(:endpoint_name)).to eq(['match_citizen', 'citizen', 'get_claims'])
+        expect(benefit_check.dwp_api_calls.pluck(:endpoint_name)).to eq(['match_citizen', 'citizen', 'verify_citizen', 'get_claims'])
       end
 
       it 'stores the error in the get_claims call' do
@@ -1077,6 +1082,11 @@ RSpec.describe BenefitCheckers::DwpApiClient, type: :service do
     # applicant when the `:married` trait is on — `partner_first_name`/
     # `partner_last_name` come from the trait, DOB is formatted, and the
     # nino_fragment is the last 4 digits of `partner_ni_number`.
+    let(:partner_identity) do
+      { 'dateOfBirth' => { 'date' => applicant.partner_date_of_birth.strftime('%Y-%m-%d') },
+        'name' => { 'lastName' => applicant.partner_last_name } }
+    end
+
     let(:expected_partner_params) do
       hash_including(
         first_name: applicant.partner_first_name,
@@ -1098,6 +1108,7 @@ RSpec.describe BenefitCheckers::DwpApiClient, type: :service do
     context 'when applicant lookup returns no match' do
       context 'and applicant is married' do
         let(:application) { build(:application, applicant: applicant_with_partner) }
+        let(:citizen_identity) { partner_identity }
 
         context 'and partner is matched and on benefits' do
           before do
@@ -1250,6 +1261,11 @@ RSpec.describe BenefitCheckers::DwpApiClient, type: :service do
       end
 
       context 'and the online_application is married and partner is on benefits' do
+        let(:citizen_identity) do
+          { 'dateOfBirth' => { 'date' => online_application.partner_date_of_birth.strftime('%Y-%m-%d') },
+            'name' => { 'lastName' => online_application.partner_last_name } }
+        end
+
         before do
           stub_match_citizen(applicant_response: no_match_response, partner_response: partner_match_response)
           allow(connection).to receive(:get_claims).with(partner_guid, anything).and_return(partner_on_benefits)
@@ -1300,6 +1316,316 @@ RSpec.describe BenefitCheckers::DwpApiClient, type: :service do
         it 'returns No' do
           expect(client.check(params)['benefit_checker_status']).to eq('No')
         end
+      end
+    end
+  end
+
+  # DWP is strict about names: a middle name entered with the first name, or a two
+  # word last name, can hide a citizen. See CHANGELOG.md (dwp-middle-name-matching)
+  describe 'name variants when a person is not matched' do
+    subject(:client) { described_class.new(benefit_check) }
+
+    let(:application) { build(:application, applicant: applicant) }
+    let(:applicant) { build(:applicant_with_all_details, first_name: 'Anna Maria') }
+    let(:surname) { 'JONES' }
+    let(:citizen_guid) { 'variant-guid' }
+    let(:no_match) { { 'errors' => [{ 'status' => '404', 'detail' => 'No Resource Found' }] }.to_json }
+    # [first_name, last_name] pairs DWP answers with a guid; anything else is a no match
+    let(:matched_names) { [] }
+    let(:sent) { [] }
+
+    before do
+      allow(connection).to receive(:match_citizen) do |request|
+        names = request.values_at(:first_name, :last_name)
+        sent << names
+        raise HwfDwpApiError.new(no_match, :not_found) unless matched_names.include?(names)
+
+        { 'data' => { 'id' => citizen_guid } }
+      end
+      allow(connection).to receive(:get_claims).
+        and_return('data' => [{ 'attributes' => listed_claim.merge('status' => 'in_payment') }])
+    end
+
+    def run_check
+      client.check(params.merge(surname: surname))
+    end
+
+    context 'when the applicant has a middle name and nobody matches' do
+      it 'tries the name three ways' do
+        run_check
+        expect(sent).to eq([['Anna Maria', 'JONES'], ['Anna', 'JONES'], ['Anna', 'Maria JONES']])
+      end
+
+      it 'is a No with no match found' do
+        expect(run_check['benefit_checker_status']).to eq('No')
+        expect(benefit_check.reload.claim_decision_reasoning).to eq 'no_match_found'
+      end
+
+      it 'stores every try' do
+        expect { run_check }.to change(DwpApiCall.where(endpoint_name: 'match_citizen'), :count).by(3)
+      end
+    end
+
+    context 'when the applicant matches once the middle name is dropped' do
+      let(:matched_names) { [['Anna', 'JONES']] }
+
+      it 'stops at the match' do
+        run_check
+        expect(sent).to eq([['Anna Maria', 'JONES'], ['Anna', 'JONES']])
+      end
+
+      it 'carries on with the matched guid' do
+        expect(run_check).to include('benefit_checker_status' => 'Yes', 'confirmation_ref' => citizen_guid)
+        expect(connection).to have_received(:get_claims).with(citizen_guid, anything)
+      end
+    end
+
+    context 'when the applicant matches as entered' do
+      let(:matched_names) { [['Anna Maria', 'JONES']] }
+
+      it 'sends the name once' do
+        run_check
+        expect(sent).to eq([['Anna Maria', 'JONES']])
+      end
+    end
+
+    context 'when the last name has more than one word' do
+      let(:applicant) { build(:applicant_with_all_details, first_name: 'Anna') }
+      let(:surname) { 'VAN JONES' }
+
+      it 'tries the last word alone, then moves the rest to the first name' do
+        run_check
+        expect(sent).to eq([['Anna', 'VAN JONES'], ['Anna', 'JONES'], ['Anna VAN', 'JONES']])
+      end
+    end
+
+    context 'when both names have more than one word' do
+      let(:surname) { 'VAN JONES' }
+
+      it 'tries at most five ways' do
+        run_check
+        expect(sent.size).to eq(5)
+      end
+    end
+
+    context 'when a try fails for a reason other than no match' do
+      before do
+        allow(connection).to receive(:match_citizen) do |request|
+          sent << request.values_at(:first_name, :last_name)
+          raise HwfDwpApiError.new(no_match, :not_found) if sent.size == 1
+
+          raise HwfDwpApiError.new('Service Unavailable', :service_unavailable)
+        end
+      end
+
+      it 'stops there and fails like any other DWP failure' do
+        expect { run_check }.to raise_error(Exceptions::TechnicalFaultDwpCheck)
+        expect(sent.size).to eq(2)
+      end
+    end
+
+    context 'when the applicant is married' do
+      let(:applicant) do
+        build(:applicant_with_all_details, :married, first_name: 'Anna Maria', partner_first_name: 'John Paul')
+      end
+
+      it 'tries every way of the applicant name before the partner, then the partner the same ways' do
+        run_check
+        expect(sent).to eq([['Anna Maria', 'JONES'], ['Anna', 'JONES'], ['Anna', 'Maria JONES'],
+                            ['John Paul', 'marmite'], ['John', 'marmite'], ['John', 'Paul marmite']])
+      end
+
+      context 'and the partner matches with the middle name joined to the last name' do
+        let(:matched_names) { [['John', 'Paul marmite']] }
+        let(:citizen_identity) do
+          { 'dateOfBirth' => { 'date' => applicant.partner_date_of_birth.strftime('%Y-%m-%d') }, 'name' => { 'lastName' => 'marmite' } }
+        end
+
+        it 'uses the partner guid' do
+          expect(run_check['confirmation_ref']).to eq(citizen_guid)
+          expect(sent.last).to eq(['John', 'Paul marmite'])
+        end
+
+        it 'stores the partner name that matched on the benefit check' do
+          run_check
+          expect(benefit_check.reload.name_variant).to eq('John Paul marmite')
+        end
+      end
+    end
+  end
+
+  # Who DWP matched is checked against the citizen record before the claims are read. See CHANGELOG.md
+  describe 'verifying the matched citizen' do
+    subject(:client) { described_class.new(benefit_check) }
+
+    let(:benefit_check) { build(:benefit_check, applicationable: application, ni_number: 'AB123456C') }
+    let(:application) { build(:application, applicant: applicant) }
+    let(:applicant) { build(:applicant_with_all_details, first_name: 'Anna') }
+    let(:citizen_guid) { 'verified-guid' }
+    let(:match_response) { { 'data' => { 'id' => citizen_guid, 'attributes' => { 'matchingScenario' => 'SCENARIO_3' } } } }
+    let(:claims_response) { { 'data' => [{ 'attributes' => listed_claim.merge('status' => 'in_payment') }] } }
+    let(:record) { citizen_record(citizen_guid) }
+    let(:no_match) { { 'errors' => [{ 'status' => '404', 'detail' => 'No Resource Found' }] }.to_json }
+
+    before do
+      allow(connection).to receive_messages(match_citizen: match_response, get_citizen: record, get_claims: claims_response)
+    end
+
+    def verification
+      benefit_check.dwp_api_calls.find_by(endpoint_name: 'verify_citizen')
+    end
+
+    def match_variants_sent
+      benefit_check.dwp_api_calls.where(endpoint_name: 'match_citizen').order(:id).map { |call| call.request_params['name_variant'] }
+    end
+
+    context 'when the record agrees with what was sent' do
+      it 'carries on to the claims and is a Yes' do
+        expect(client.check(params)['benefit_checker_status']).to eq('Yes')
+        expect(connection).to have_received(:get_claims).with(citizen_guid, anything)
+      end
+
+      it 'records the verification with our side of the comparison only' do
+        client.check(params)
+        expect(verification.request_params).to eq('date_of_birth' => '1980-01-01', 'last_names' => ['JONES'], 'ni_number' => 'AB123456C')
+        expect(verification.data).to eq('verified' => true, 'failed_on' => nil, 'ni_number_checked' => false)
+      end
+
+      it 'stores the name as sent on the benefit check' do
+        client.check(params)
+        expect(benefit_check.reload.name_variant).to eq('Anna JONES')
+      end
+
+      it 'stores which way the name was sent with the match request' do
+        client.check(params)
+        expect(match_variants_sent).to eq(['as sent'])
+      end
+    end
+
+    context 'when DWP returns the same NI number' do
+      let(:record) { citizen_record(citizen_guid, 'nino' => 'ab 12 34 56 c') }
+
+      it 'passes, whatever the case and spacing' do
+        expect(client.check(params)['benefit_checker_status']).to eq('Yes')
+        expect(verification.data).to include('verified' => true, 'ni_number_checked' => true)
+      end
+    end
+
+    context 'when DWP returns a different NI number' do
+      let(:record) { citizen_record(citizen_guid, 'nino' => 'ZZ999999Z') }
+
+      it 'is treated as no match: No, no claims call, the mismatch recorded' do
+        expect(client.check(params)['benefit_checker_status']).to eq('No')
+        expect(benefit_check.reload.claim_decision_reasoning).to eq('no_match_found')
+        expect(connection).not_to have_received(:get_claims)
+        expect(verification.data).to include('verified' => false, 'failed_on' => 'ni_number')
+      end
+
+      it 'does not store a date of death from the rejected record' do
+        allow(connection).to receive(:get_citizen).and_return(citizen_record(citizen_guid, 'nino' => 'ZZ999999Z', 'dateOfDeath' => { 'date' => '2020-01-01' }))
+        client.check(params)
+        expect(benefit_check.reload.date_of_death).to be_nil
+      end
+    end
+
+    context 'when the application has no NI number' do
+      let(:benefit_check) { build(:benefit_check, applicationable: application, ni_number: nil) }
+      let(:record) { citizen_record(citizen_guid, 'nino' => 'ZZ999999Z') }
+
+      it 'does not compare NI numbers' do
+        expect(client.check(params)['benefit_checker_status']).to eq('Yes')
+        expect(verification.data).to include('verified' => true, 'ni_number_checked' => false)
+        expect(verification.request_params).not_to have_key('ni_number')
+      end
+    end
+
+    context 'when the date of birth is different' do
+      let(:record) { citizen_record(citizen_guid, 'dateOfBirth' => { 'date' => '1980-01-02' }) }
+
+      it 'is treated as no match: No with no claims call' do
+        expect(client.check(params)['benefit_checker_status']).to eq('No')
+        expect(connection).not_to have_received(:get_claims)
+        expect(verification.data).to include('verified' => false, 'failed_on' => 'date_of_birth')
+      end
+    end
+
+    context 'when the last name is different' do
+      let(:record) { citizen_record(citizen_guid, 'name' => { 'lastName' => 'SMITH' }) }
+
+      it 'fails on the last name' do
+        expect(client.check(params)['benefit_checker_status']).to eq('No')
+        expect(verification.data).to include('failed_on' => 'last_name')
+      end
+    end
+
+    context 'when the last name sent is held as the alternate name' do
+      let(:record) { citizen_record(citizen_guid, 'name' => { 'lastName' => 'SMITH' }, 'alternateName' => { 'lastName' => 'Jones' }) }
+
+      it 'passes' do
+        expect(client.check(params)['benefit_checker_status']).to eq('Yes')
+      end
+    end
+
+    context 'when a name variant made the match and DWP holds the surname that way' do
+      let(:applicant) { build(:applicant_with_all_details, first_name: 'Anna Maria') }
+      let(:record) { citizen_record(citizen_guid, 'name' => { 'lastName' => 'Maria Jones' }) }
+
+      before do
+        allow(connection).to receive(:match_citizen) do |request|
+          raise HwfDwpApiError.new(no_match, :not_found) unless request[:last_name] == 'Maria JONES'
+
+          match_response
+        end
+      end
+
+      it 'accepts the surname the variant sent and is a Yes' do
+        expect(client.check(params)['benefit_checker_status']).to eq('Yes')
+        expect(verification.request_params['last_names']).to eq(['JONES', 'Maria JONES'])
+      end
+
+      it 'stores which way the name was sent with every match request' do
+        client.check(params)
+        expect(match_variants_sent).to eq(['as sent', 'middle name dropped', 'middle name joined to last name'])
+      end
+
+      it 'stores the name that matched on the benefit check' do
+        client.check(params)
+        expect(benefit_check.reload.name_variant).to eq('Anna Maria JONES')
+      end
+    end
+
+    context 'when the partner was matched' do
+      let(:applicant) { build(:applicant_with_all_details, :married, first_name: 'Anna', partner_ni_number: 'JA 12 34 56 D') }
+      let(:partner_dob) { applicant.partner_date_of_birth.strftime('%Y-%m-%d') }
+      let(:record) do
+        citizen_record(citizen_guid, 'dateOfBirth' => { 'date' => partner_dob }, 'name' => { 'lastName' => 'Marmite' }, 'nino' => 'JA123456D')
+      end
+
+      before do
+        allow(connection).to receive(:match_citizen) do |request|
+          request[:last_name] == 'marmite' ? match_response : { 'data' => {} }
+        end
+      end
+
+      it 'checks the record against the partner details' do
+        expect(client.check(params)['benefit_checker_status']).to eq('Yes')
+        expect(verification.request_params).to eq('date_of_birth' => partner_dob, 'last_names' => ['marmite'], 'ni_number' => 'JA 12 34 56 D')
+        expect(verification.data).to include('verified' => true, 'ni_number_checked' => true)
+      end
+
+      it 'rejects a record that is the applicant rather than the partner' do
+        allow(connection).to receive(:get_citizen).and_return(citizen_record(citizen_guid))
+        expect(client.check(params)['benefit_checker_status']).to eq('No')
+        expect(verification.data).to include('verified' => false, 'failed_on' => 'date_of_birth')
+      end
+    end
+
+    context 'when there is no citizen record to check against' do
+      before { allow(connection).to receive(:get_citizen).and_raise(HwfDwpApiError.new(no_match, :not_found)) }
+
+      it 'carries on to the claims as before, with nothing to verify' do
+        expect(client.check(params)['benefit_checker_status']).to eq('Yes')
+        expect(verification).to be_nil
       end
     end
   end
