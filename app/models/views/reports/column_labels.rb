@@ -77,6 +77,12 @@ module Views
         additional_income: 'Additional income',
         income_processed: 'Income processed',
         hmrc_request_date_range: 'HMRC request date range',
+        benefit_checker_response: 'Benefit checker response?',
+        benefit_checker_errors: 'Benefit checker errors',
+        date_of_death: 'Date of death',
+        benefit_type: 'Benefit type',
+        benefit_status: 'Benefit status',
+        take_home_pay: 'Take home pay',
         deletion_reason: 'Deletion reason',
         reason_description: 'Reason description'
       }.freeze
