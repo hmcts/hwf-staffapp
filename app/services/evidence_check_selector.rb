@@ -19,14 +19,14 @@ class EvidenceCheckSelector
   end
 
   def evidence_check_type
-    if random_evidence_check?
-      'random'
-    elsif flagged?
+    if flagged?
       'flag'
-    elsif low_income_check?
-      'low_income'
     elsif applicant_have_pending_evidence_check?
       'ni_exist'
+    elsif low_income_check?
+      'low_income'
+    elsif random_evidence_check?
+      'random'
     end
   end
 
