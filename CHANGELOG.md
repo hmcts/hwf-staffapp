@@ -7,7 +7,7 @@ with entries grouped by branch and date rather than release version.
 
 ## 2026-10-22
 
-## Changed
+### Changed
 
 - Updated README.md with status shields including SonarCloud 
 - Removed old shields (package.json)
