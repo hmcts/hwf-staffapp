@@ -12,14 +12,14 @@ RSpec.feature 'Application is not evidence check when income is above threshold'
     login_as user
   end
 
-  context 'Non-refund application no evidence check for 10th application when income above threshold' do
+  context 'Non-refund application no evidence check when income above threshold' do
     let(:application) { create(:application_full_remission) }
 
     before do
       create_list(:application_full_remission, 9)
     end
 
-    scenario 'Every 10th application is not evidence check for application with income exceeding threshold' do
+    scenario 'Application is not evidence check for application with income exceeding threshold' do
       start_new_application
       fill_personal_details
       fill_application_details
@@ -39,7 +39,7 @@ RSpec.feature 'Application is not evidence check when income is above threshold'
       create_list(:application_full_remission, 1, :refund)
     end
 
-    scenario 'Every 2nd application is not evidence check for emergency application' do
+    scenario 'Application is not evidence check for emergency application' do
       start_new_application
       fill_personal_details
       fill_application_refund_details

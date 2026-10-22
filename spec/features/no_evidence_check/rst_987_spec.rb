@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.feature 'Application is evidence checked when 1 in X' do
+RSpec.feature 'Application is evidence checked by the CCMCC frequency rule' do
 
   include Warden::Test::Helpers
 
@@ -13,14 +13,14 @@ RSpec.feature 'Application is evidence checked when 1 in X' do
     login_as user
   end
 
-  context 'Benefit application excluded in the 1 in 10 count' do
+  context 'Benefit application is never evidence checked' do
     let(:application) { create(:application_full_remission) }
 
     before do
       create_list(:application_full_remission, 9, office: user.office)
     end
 
-    scenario 'Every 10th application is not evidence check when a benefit application' do
+    scenario 'Application is not evidence check when a benefit application' do
       start_new_application
 
       fill_personal_details(Settings.dwp_mock.ni_number_no.first)
@@ -36,14 +36,14 @@ RSpec.feature 'Application is evidence checked when 1 in X' do
     end
   end
 
-  context 'Benefit application with paper evidence false excluded in the 1 in 10 count' do
+  context 'Benefit application with paper evidence false is never evidence checked' do
     let(:application) { create(:application_full_remission) }
 
     before do
       create_list(:application_full_remission, 9, office: user.office)
     end
 
-    scenario 'Every 10th application is not evidence check when a benefit application paper check is false' do
+    scenario 'Application is not evidence check when a benefit application paper check is false' do
       start_new_application
 
       fill_personal_details(Settings.dwp_mock.ni_number_no.first)
@@ -58,14 +58,14 @@ RSpec.feature 'Application is evidence checked when 1 in X' do
     end
   end
 
-  context 'Benefit application excluded in the 1 in 2 count' do
+  context 'Benefit refund application is never evidence checked' do
     let(:application) { create(:application_full_remission, :refund) }
 
     before do
       create_list(:application_full_remission, 1, :refund, office: user.office)
     end
 
-    scenario 'Every 2nd application is not evidence check when Benefit Application' do
+    scenario 'Application is not evidence check when Benefit Application' do
       start_new_application
 
       fill_personal_details(Settings.dwp_mock.ni_number_no.first)
@@ -81,14 +81,14 @@ RSpec.feature 'Application is evidence checked when 1 in X' do
     end
   end
 
-  context 'Benefit application with papper evidence false excluded in the 1 in 2 count' do
+  context 'Benefit refund application with paper evidence false is never evidence checked' do
     let(:application) { create(:application_full_remission, :refund) }
 
     before do
       create_list(:application_full_remission, 1, :refund, office: user.office)
     end
 
-    scenario 'Every 2nd application is not evidence check when paper evidence is false on Benefit Application' do
+    scenario 'Application is not evidence check when paper evidence is false on Benefit Application' do
       start_new_application
 
       fill_personal_details(Settings.dwp_mock.ni_number_no.first)
@@ -112,7 +112,7 @@ RSpec.feature 'Application is evidence checked when 1 in X' do
       create(:application_full_remission, :refund, office: user.office)
     end
 
-    scenario 'Every 2nd application is evidence check when application is within 3 month of application date' do
+    scenario 'CCMCC refund frequency selects the application when within 3 month of application date' do
       start_new_application
       fill_personal_details_no_ni
       fill_application_refund_details
@@ -134,7 +134,7 @@ RSpec.feature 'Application is evidence checked when 1 in X' do
       create(:application_full_remission, :refund, office: user.office)
     end
 
-    scenario 'Every 2nd application is evidence check when 3 month application date exceeded and discretion is yes' do
+    scenario 'CCMCC refund frequency selects the application when 3 month application date exceeded and discretion is yes' do
       start_new_application
       fill_personal_details
       fill_application_date_set_discretion_yes

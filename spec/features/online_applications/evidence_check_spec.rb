@@ -68,7 +68,7 @@ RSpec.feature 'Online application processing Evidence check' do
       click_link reference
     end
 
-    # because it's 10th so random evidence check
+    # selected by the low income rule (income under 101)
     expect(page).to have_text("#{reference} - Waiting for evidence")
 
     click_link 'Start now'

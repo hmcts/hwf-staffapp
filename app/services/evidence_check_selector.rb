@@ -35,8 +35,6 @@ class EvidenceCheckSelector
       outcome = ccmcc_evidence_rules_check
       @ccmcc.clean_annotation_data unless outcome
       outcome
-    else
-      @application.detail.refund? ? check_every_other_refund : check_every_tenth_non_refund
     end
   end
 
@@ -50,38 +48,6 @@ class EvidenceCheckSelector
     end
     ev_check_attributes[:income_check_type] = income_check_type
     @application.create_evidence_check(ev_check_attributes)
-  end
-
-  def check_every_other_refund
-    get_evidence_check(2, true)
-  end
-
-  def check_every_tenth_non_refund
-    get_evidence_check(10, false)
-  end
-
-  def get_evidence_check(frequency, refund)
-    position = application_position(refund, frequency)
-    position_matching_frequency?(position, frequency)
-  end
-
-  def position_matching_frequency?(position, frequency)
-    (position >= 1) && (position % frequency).zero?
-  end
-
-  def application_position(refund, frequency)
-    # get only as many last applications we need to check for the frequency
-    list = Query::EvidenceCheckable.new.list(@application.id, refund, frequency)
-
-    check_position_index(frequency, list)
-  end
-
-  def check_position_index(frequency, list)
-    # edge case for test/staging/demo environments
-    return 1 if list.count < frequency
-    index = list.map { |a| a.evidence_check.try(:check_type) }.rindex('random').to_i
-
-    frequency - index
   end
 
   def expires_at
@@ -125,6 +91,18 @@ class EvidenceCheckSelector
     position = check_position_index(@ccmcc.frequency, ccmcc_query)
 
     position_matching_frequency?(position, @ccmcc.frequency)
+  end
+
+  def position_matching_frequency?(position, frequency)
+    (position >= 1) && (position % frequency).zero?
+  end
+
+  def check_position_index(frequency, list)
+    # edge case for test/staging/demo environments
+    return 1 if list.count < frequency
+    index = list.map { |a| a.evidence_check.try(:check_type) }.rindex('random').to_i
+
+    frequency - index
   end
 
   def ccmcc_query
