@@ -495,5 +495,70 @@ describe EvidenceCheckSelector do
       end
     end
 
+    # Each rule is made to apply on its own terms; the first one in
+    # EvidenceCheckSelector#evidence_check_type wins.
+    context 'rule order' do
+      let(:application) do
+        create(:application_full_remission, :applicant_full, ni_number: 'SN123456D', income: 150, office: create(:office))
+      end
+      let(:ccmcc_rule) do
+        instance_double(CCMCCEvidenceCheckRules, rule_applies?: ccmcc_applies, frequency: 1, check_type: nil,
+                                                 query_type: CCMCCEvidenceCheckRules::QUERY_ALL, clean_annotation_data: nil)
+      end
+      let(:low_income_rule) { instance_double(LowIncomeEvidenceCheckRules, rule_applies?: low_income_applies, annotation: nil) }
+      let(:flagged) { true }
+      let(:duplicate_ni) { true }
+      let(:low_income_applies) { true }
+      let(:ccmcc_applies) { true }
+
+      before do
+        allow(CCMCCEvidenceCheckRules).to receive(:new).and_return(ccmcc_rule)
+        allow(LowIncomeEvidenceCheckRules).to receive(:new).and_return(low_income_rule)
+        create(:evidence_check_flag, reg_number: 'SN123456D') if flagged
+        create(:application, :income_type, :applicant_full, :waiting_for_evidence_state, ni_number: 'SN123456D') if duplicate_ni
+      end
+
+      it 'flag comes before everything else' do
+        expect(decision.check_type).to eql 'flag'
+      end
+
+      context 'without a flag' do
+        let(:flagged) { false }
+
+        it 'duplicate NI number comes next' do
+          expect(decision.check_type).to eql 'ni_exist'
+        end
+      end
+
+      context 'without a flag or a duplicate NI number' do
+        let(:flagged) { false }
+        let(:duplicate_ni) { false }
+
+        it 'low income comes next' do
+          expect(decision.check_type).to eql 'low_income'
+        end
+      end
+
+      context 'with only the CCMCC rule' do
+        let(:flagged) { false }
+        let(:duplicate_ni) { false }
+        let(:low_income_applies) { false }
+
+        it 'CCMCC random check comes last' do
+          expect(decision.check_type).to eql 'random'
+        end
+      end
+
+      context 'with no rule applying' do
+        let(:flagged) { false }
+        let(:duplicate_ni) { false }
+        let(:low_income_applies) { false }
+        let(:ccmcc_applies) { false }
+
+        it 'creates no evidence check' do
+          is_expected.to be_nil
+        end
+      end
+    end
   end
 end
