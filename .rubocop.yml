@@ -1,8 +1,5 @@
-inherit_from:
-  - .rubocop_todo.yml
-
 AllCops:
-  TargetRubyVersion: 3.4.8
+  TargetRubyVersion: 4.0
 
   NewCops: enable
   # Exclude anything that isn't really part of our code.
@@ -16,10 +13,7 @@ AllCops:
     - '**/Rakefile'
     - '**/Vagrantfile'
     - 'spec/rails_helper.rb'
-    - 'lib/tasks/cucumber.rake'
     - 'features/support/env.rb'
-    - 'script/cucumber'
-    - 'lib/log_stuff.rb'
     - 'tmp/**/*'
     - 'log/**/*'
 
@@ -45,8 +39,6 @@ Style/BlockDelimiters:
 Metrics/MethodLength:
   Exclude:
     - 'spec/**/*'
-    - 'app/models/ability.rb'
-    - 'config/initializers/markdown_handler.rb'
 
 # No need to check for describe class param in support files.
 RSpec/DescribeClass:

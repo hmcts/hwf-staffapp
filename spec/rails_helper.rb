@@ -7,17 +7,6 @@ ENV['DWP_API_PROXY'] ||= 'http://localhost:9292'
 
 SimpleCov.formatter = SimpleCov::Formatter::JSONFormatter
 SimpleCov.start if ENV.fetch('ENABLE_COVERAGE', 'false').downcase == 'true'
-# allow Code Climate Test coverage reports to be sent
-
-
-
-
-if ENV['CODECLIMATE_REPO_TOKEN']
-  require 'codeclimate-test-reporter'
-  CodeClimate::TestReporter.start
-  # allow Code Climate Test coverage reports to be sent
-end
-
 
 require File.expand_path('../../config/environment', __FILE__)
 require 'rspec/rails'
@@ -104,7 +93,7 @@ RSpec.configure do |config|
   end
 
   config.before(:all) do
-    WebMock.disable_net_connect!(allow: ['127.0.0.1', 'codeclimate.com', 'www.gstatic.com/charts/loader.js', 'chromedriver.storage.googleapis.com'])
+    WebMock.disable_net_connect!(allow: ['127.0.0.1', 'www.gstatic.com/charts/loader.js', 'chromedriver.storage.googleapis.com'])
   end
 
   config.before(:each) do |example|
