@@ -11,13 +11,6 @@ module Query
         where(where_condition)
     end
 
-    def list(id, refund, frequency)
-      find_all.where(
-        'applications.id < ? AND details.refund = ?',
-        id, refund
-      ).last(frequency)
-    end
-
     private
 
     def where_condition

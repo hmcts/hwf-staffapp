@@ -37,7 +37,7 @@ RSpec.feature 'Evidence check' do
   end
 
   context 'Processing income based application' do
-    scenario 'evidence check every 10th application' do
+    scenario 'evidence check by the CCMCC non-refund frequency' do
       visit  home_index_url
 
       within "#process-application" do
@@ -100,7 +100,7 @@ RSpec.feature 'Evidence check' do
       create(:application, :refund, :income_type, benefits: false, outcome: 'part', office: office)
     }
 
-    scenario 'evidence check ever 2nd application' do
+    scenario 'evidence check by the CCMCC refund frequency' do
       visit  home_index_url
 
       within "#process-application" do

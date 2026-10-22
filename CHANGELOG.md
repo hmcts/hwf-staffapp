@@ -5,6 +5,13 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 with entries grouped by branch and date rather than release version.
 
+## 2026-10-22 (rst-8592-evidence-checking)
+
+### Changed
+
+- Removed the 1 in 2 (refund) and 1 in 10 random evidence check fallback;
+  random selection now comes only from the CCMCC fee-band frequencies.
+
 ## 2026-10-15 (dwp-middle-name-matching)
 
 ### Changed

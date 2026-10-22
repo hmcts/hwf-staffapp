@@ -41,16 +41,16 @@ describe EvidenceCheckSelector do
     end
 
     context 'for a non-benefit remission application' do
-      context 'for a non-refund application' do
+      context 'selected by the CCMCC frequency rule' do
 
-        context 'frequency test with stubs' do
+        context 'with a stubbed query' do
           let(:query_checkeable) { instance_double(Query::EvidenceCheckable) }
           let(:ccmcc_mock) { instance_double(CCMCCEvidenceCheckRules) }
           let(:find_all_result) { double('find_all_result') } # rubocop:disable RSpec/VerifiedDoubles
 
           before do
             allow(Query::EvidenceCheckable).to receive(:new).and_return(query_checkeable)
-            allow(query_checkeable).to receive_messages(list: list, find_all: find_all_result)
+            allow(query_checkeable).to receive(:find_all).and_return(find_all_result)
             allow(find_all_result).to receive_messages(where: find_all_result, last: list)
             allow(CCMCCEvidenceCheckRules).to receive(:new).and_return(ccmcc_mock)
             allow(ccmcc_mock).to receive_messages(rule_applies?: true, frequency: ccmcc_test_frequency,
@@ -181,6 +181,37 @@ describe EvidenceCheckSelector do
 
               it { is_expected.not_to be_a(EvidenceCheck) }
             end
+          end
+        end
+      end
+
+      context 'when no CCMCC fee rule applies' do
+        let(:ccmcc_mock) { instance_double(CCMCCEvidenceCheckRules, rule_applies?: false) }
+        let(:office) { create(:office) }
+
+        # Earlier applications in the same office, the setup the removed
+        # 1 in 2 (refund) and 1 in 10 rules used to count against
+        before do
+          allow(CCMCCEvidenceCheckRules).to receive(:new).and_return(ccmcc_mock)
+          create(:application_full_remission_ev, :refund, office: office)
+          create(:application_full_remission, :refund, office: office)
+          create(:application_full_remission_ev, office: office)
+          create_list(:application_full_remission, 9, office: office)
+        end
+
+        context 'refund application' do
+          let(:application) { create(:application_full_remission, :refund, income: 150, office: office) }
+
+          it 'is not selected at random' do
+            is_expected.to be_nil
+          end
+        end
+
+        context 'non-refund application' do
+          let(:application) { create(:application_full_remission, income: 150, office: office) }
+
+          it 'is not selected at random' do
+            is_expected.to be_nil
           end
         end
       end
