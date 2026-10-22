@@ -11,7 +11,7 @@ with entries grouped by branch and date rather than release version.
 
 - Updated README.md with status shields including SonarCloud 
 - Removed old shields (package.json)
-- Removed redundant sauacelabs and azure-pipelines.yml environment variables (.env.test, .dockerignore)
+- Removed redundant saucelabs and azure-pipelines.yml environment variables (.env.test, .dockerignore)
 - Removed redundant saucelabs config (config/cucumber.yml)
 - Removed redundant codeclimate block (spec/rails_helper.rb)
 - Removed redundant cucumber execution scripts and tasks (script/cucumber, lib/tasks/cucumber.rake)
