@@ -89,6 +89,8 @@ RSpec.feature 'Application is not evidence check when an emergency app' do
     end
 
     context 'Duplicate NINO application where EV not flagged' do
+      # Excluded from the default income check so the NINO rules decide the outcome
+      let(:user) { create(:user, office: create(:office, entity_code: 'NB243')) }
       let(:application) { create(:application_full_remission) }
 
       scenario 'evidence check on for duplicate NINO when not flagged' do

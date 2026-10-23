@@ -7,7 +7,8 @@ RSpec.feature 'Application is not evidence check when income is above threshold'
   Warden.test_mode!
 
   let(:user) { create(:user, office: office, jurisdiction: jurisdiction) }
-  let(:office) { create(:office, jurisdictions: [jurisdiction]) }
+  # Excluded from the default income check so the NINO rules decide the outcome
+  let(:office) { create(:office, jurisdictions: [jurisdiction], entity_code: 'NB243') }
   let(:jurisdiction) { create(:jurisdiction) }
 
   before do

@@ -1,4 +1,6 @@
 class EvidenceCheckSelector
+  EXLUDED_OFFICE_CODES = ['NB243', 'TI122'].freeze
+
   def initialize(application, expires_in_days)
     @application = application
     @expires_in_days = expires_in_days
@@ -18,16 +20,17 @@ class EvidenceCheckSelector
     @application.skip_ev_check?
   end
 
+  # Order matters: the first rule that applies decides the check type
   def evidence_check_type
-    if flagged?
-      'flag'
-    elsif applicant_have_pending_evidence_check?
-      'ni_exist'
-    elsif low_income_check?
-      'low_income'
-    elsif random_evidence_check?
-      'random'
-    end
+    return 'flag' if flagged?
+    return 'ni_exist' if applicant_have_pending_evidence_check?
+    return 'low_income' if low_income_check?
+    return 'random' if random_evidence_check?
+    'flag_extended' if not_excluded_offices?
+  end
+
+  def not_excluded_offices?
+    EXLUDED_OFFICE_CODES.exclude?(@application.office.try(:entity_code))
   end
 
   def random_evidence_check?
