@@ -115,7 +115,7 @@ describe EvidenceCheckSelector do
             context '1st' do
               let(:list) { [app_no_ev_check, app_ev_check] }
 
-              it { expect(decision.check_type).to eql 'flag_extended' }
+              it { expect(decision.check_type).to eql 'flagExtended' }
             end
             context 'no previous check' do
               let(:list) { [app_no_ev_check, app_no_ev_check] }
@@ -125,7 +125,7 @@ describe EvidenceCheckSelector do
             context 'empty list' do
               let(:list) { [] }
 
-              it { expect(decision.check_type).to eql 'flag_extended' }
+              it { expect(decision.check_type).to eql 'flagExtended' }
             end
           end
 
@@ -157,7 +157,7 @@ describe EvidenceCheckSelector do
                  app_no_ev_check, app_no_ev_check, app_ev_check, app_no_ev_check]
               }
 
-              it { expect(decision.check_type).to eql 'flag_extended' }
+              it { expect(decision.check_type).to eql 'flagExtended' }
             end
             context '1st' do
               let(:list) {
@@ -165,7 +165,7 @@ describe EvidenceCheckSelector do
                  app_no_ev_check, app_no_ev_check, app_no_ev_check, app_no_ev_check, app_ev_check]
               }
 
-              it { expect(decision.check_type).to eql 'flag_extended' }
+              it { expect(decision.check_type).to eql 'flagExtended' }
             end
             context 'no previous check' do
               let(:list) {
@@ -179,7 +179,7 @@ describe EvidenceCheckSelector do
             context 'empty list' do
               let(:list) { [] }
 
-              it { expect(decision.check_type).to eql 'flag_extended' }
+              it { expect(decision.check_type).to eql 'flagExtended' }
             end
           end
         end
@@ -203,7 +203,7 @@ describe EvidenceCheckSelector do
           let(:application) { create(:application_full_remission, :refund, income: 150, office: office) }
 
           it 'falls through to the default income check' do
-            expect(decision.check_type).to eql 'flag_extended'
+            expect(decision.check_type).to eql 'flagExtended'
           end
         end
 
@@ -211,7 +211,7 @@ describe EvidenceCheckSelector do
           let(:application) { create(:application_full_remission, income: 150, office: office) }
 
           it 'falls through to the default income check' do
-            expect(decision.check_type).to eql 'flag_extended'
+            expect(decision.check_type).to eql 'flagExtended'
           end
         end
       end
@@ -281,7 +281,7 @@ describe EvidenceCheckSelector do
         end
 
         it 'skips the ni_exist check and falls through to the default income check' do
-          expect(decision.check_type).to eql 'flag_extended'
+          expect(decision.check_type).to eql 'flagExtended'
         end
       end
 
@@ -338,7 +338,7 @@ describe EvidenceCheckSelector do
         end
         context 'under 102' do
           let(:income) { 102 }
-          it { expect(decision.check_type).to eql 'flag_extended' }
+          it { expect(decision.check_type).to eql 'flagExtended' }
         end
       end
 
@@ -380,7 +380,7 @@ describe EvidenceCheckSelector do
             let(:query_type) { CCMCCEvidenceCheckRules::QUERY_REFUND }
 
             it 'is not picked by the CCMCC frequency and falls through to the default income check' do
-              expect(decision.check_type).to eql 'flag_extended'
+              expect(decision.check_type).to eql 'flagExtended'
             end
           end
 
@@ -393,7 +393,7 @@ describe EvidenceCheckSelector do
             let(:query_type) { nil }
 
             it 'is not picked by the CCMCC frequency and falls through to the default income check' do
-              expect(decision.check_type).to eql 'flag_extended'
+              expect(decision.check_type).to eql 'flagExtended'
             end
           end
 
@@ -405,7 +405,7 @@ describe EvidenceCheckSelector do
             end
 
             it 'is not picked by the CCMCC frequency and falls through to the default income check' do
-              expect(decision.check_type).to eql 'flag_extended'
+              expect(decision.check_type).to eql 'flagExtended'
             end
           end
         end
@@ -505,7 +505,7 @@ describe EvidenceCheckSelector do
       context 'office not in EXLUDED_OFFICE_CODES' do
         let(:office) { create(:office, entity_code: 'DH403') }
 
-        it { expect(decision.check_type).to eql 'flag_extended' }
+        it { expect(decision.check_type).to eql 'flagExtended' }
         it { expect(decision.checks_annotation).to be_nil }
         it { expect(decision.expires_at).to eql(current_time + expires_in_days.days) }
       end
@@ -590,7 +590,7 @@ describe EvidenceCheckSelector do
         let(:ccmcc_applies) { false }
 
         it 'default income check comes last' do
-          expect(decision.check_type).to eql 'flag_extended'
+          expect(decision.check_type).to eql 'flagExtended'
         end
 
         context 'in an excluded office' do

@@ -26,7 +26,7 @@ class EvidenceCheckSelector
     return 'ni_exist' if applicant_have_pending_evidence_check?
     return 'low_income' if low_income_check?
     return 'random' if random_evidence_check?
-    'flag_extended' if not_excluded_offices?
+    'flagExtended' if not_excluded_offices?
   end
 
   def not_excluded_offices?

@@ -785,6 +785,55 @@ RSpec.describe Views::Reports::PowerBiNewExport do
     end
   end
 
+  # RST-8592: 'flagExtended' is the remaining pool rule. See CHANGELOG.md
+  describe '#export1 DB evidence check type' do
+    let!(:application) do
+      create(:application_full_remission, :processed_state,
+             office: office, business_entity: business_entity, decision_date: Time.zone.now)
+    end
+    let(:evidence_check) do
+      create(:evidence_check, application: application, check_type: check_type, income_check_type: income_check_type,
+                              completed_at: Time.zone.now)
+    end
+    let(:income_check_type) { 'paper' }
+
+    before { evidence_check }
+
+    subject(:row) do
+      report.export1
+      read_csv_from_zip.find { |r| r['Id'].to_i == application.id }
+    end
+
+    context 'when the remaining pool rule selected the application' do
+      let(:check_type) { 'flagExtended' }
+
+      it { expect(row['DB evidence check type']).to eq 'flagExtended' }
+
+      context 'with paper income check and no HMRC check' do
+        it { expect(row['Evidence check type']).to eq 'Manual FlagExtended' }
+      end
+
+      context 'with hmrc income check' do
+        let(:income_check_type) { 'hmrc' }
+
+        it { expect(row['Evidence check type']).to eq 'HMRC FlagExtended' }
+      end
+
+      context 'with paper income check after an HMRC check' do
+        before { create(:hmrc_check, evidence_check: evidence_check, created_at: 1.day.ago) }
+
+        it { expect(row['Evidence check type']).to eq 'ManualAfterHMRC' }
+      end
+    end
+
+    context 'when another rule selected the application' do
+      let(:check_type) { 'low_income' }
+
+      it { expect(row['DB evidence check type']).to eq 'low_income' }
+      it { expect(row['Evidence check type']).to eq 'Manual LowIncome' }
+    end
+  end
+
   private
 
   def read_csv_from_zip

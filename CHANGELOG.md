@@ -42,7 +42,10 @@ with entries grouped by branch and date rather than release version.
 - Removed the 1 in 2 (refund) and 1 in 10 random evidence check fallback;
   random selection now comes only from the CCMCC fee-band frequencies.
 - Every income application that no other rule picks now gets an evidence check
-  (`flag_extended`), except offices NB243 and TI122.
+  (`flagExtended`), except offices NB243 and TI122. CamelCase so the
+  'DB evidence check type' export column needs no mapping. The derived 'Evidence check type'
+  column in Raw data, Applications by court, Power BI and the yearly raw data
+  task maps it as Manual/HMRC FlagExtended.
 
 ## 2026-10-15 (dwp-middle-name-matching)
 
