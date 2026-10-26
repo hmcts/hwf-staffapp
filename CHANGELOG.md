@@ -5,6 +5,17 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 with entries grouped by branch and date rather than release version.
 
+## 2026-10-26 (infra-update)
+
+### Changed
+
+- Updated Jenkins-Infrastructure library 2.12.2 → 2.13.1.
+- Updated Ruby 4.0.7 → 4.0.9 (.ruby-version, Gemfile, Dockerfile base image,
+  Jenkinsfile_CNP, Jenkinsfile_nightly, README). 4.0.9 fixes the Regexp
+  compilation bugs behind GitLab's CVE-2026-89078, -93577, -97229 and -110264.
+  The base image comes through the `imported/library/ruby` ACR cache rule, so
+  a new tag appears on first pull; no import request is needed.
+
 ## 2026-10-15 (dwp-middle-name-matching)
 
 ### Changed
