@@ -25,7 +25,7 @@ Then("I should see select from one of the options error message") do
 end
 
 When("I click on save changes") do
-  click_on 'Save changes', visible: false
+  click_on 'Save changes', visible: :all
 end
 
 Then("I should see your changes have been saved message") do

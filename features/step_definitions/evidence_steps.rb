@@ -13,7 +13,7 @@ And("I am on an application waiting for evidence") do
 end
 
 When("I click on start now to process the evidence") do
-  click_on 'Start now', visible: false
+  click_on 'Start now', visible: :all
 end
 
 Then("I should be taken to a page asking me if the evidence ready to process") do
@@ -60,7 +60,7 @@ end
 When("I click on return application") do
   expect(evidence_page.content).to have_waiting_for_evidence_instance_header
   evidence_page.content.evidence_can_not_be_processed.click
-  click_link 'Return application', visible: false
+  click_link 'Return application', visible: :all
 end
 
 Then("I should be taken to the problem with evidence page") do
@@ -121,12 +121,12 @@ Then("I see that the applicant needs to make a payment towards the fee") do
 end
 
 Given("I have successfully submitted the evidence") do
-  click_on 'Start now', visible: false
+  click_on 'Start now', visible: :all
   expect(evidence_accuracy_page.content).to have_header
   evidence_accuracy_page.content.correct_evidence.click
   evidence_accuracy_page.click_next
   expect(evidence_income_page.content).to have_header
-  find_field('Total monthly income from evidence', visible: false).set('500')
+  find_field('Total monthly income from evidence', visible: :all).set('500')
   evidence_page.click_next
   expect(evidence_result_page.content).to have_header
   expect(evidence_result_page.content).to have_eligable_header

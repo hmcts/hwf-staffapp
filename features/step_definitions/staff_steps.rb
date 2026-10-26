@@ -52,7 +52,7 @@ And("I change the jurisdiction") do
   jurisdiction = user.office.jurisdictions.first
   change_user_details_page.content.wait_until_header_visible
   expect(change_user_details_page.content.radio[6].text).to have_text jurisdiction.name
-  find(:element, id: "user_jurisdiction_id_#{jurisdiction.id}", visible: false).click
+  find(:element, id: "user_jurisdiction_id_#{jurisdiction.id}", visible: :all).click
   change_user_details_page.content.save_changes_button.click
   expect(staff_details_page.content).to have_header
 end
@@ -67,7 +67,7 @@ Then("I should see the jurisdiction has been updated") do
 end
 
 When("I click on add staff") do
-  click_on 'Add staff', visible: false
+  click_on 'Add staff', visible: :all
 end
 
 Then("I am taken to the send invitation page") do
@@ -75,7 +75,7 @@ Then("I am taken to the send invitation page") do
 end
 
 When("I click on deleted staff") do
-  click_on 'Deleted staff', visible: false
+  click_on 'Deleted staff', visible: :all
 end
 
 Then("I am taken to the deleted staff page") do

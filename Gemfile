@@ -2,7 +2,7 @@ source 'https://rubygems.org'
 
 git_source(:github) { |repo| "https://github.com/#{repo}.git" }
 
-ruby '4.0.7'
+ruby '4.0.9'
 
 gem 'application_insights', '~> 0.5.6'
 gem 'csv'
@@ -23,7 +23,7 @@ gem 'rails-i18n'
 
 # Azure key vault secrets to ENV variables
 gem 'azure_env_secrets', github: 'hmcts/azure_env_secrets', tag: 'v1.0.1'
-gem 'azure-blob', '~> 0.8.0'
+gem 'azure-blob', '~> 0.9.0'
 gem 'hwf_hmrc_api', github: 'hmcts/hwf_hmrc_api', tag: 'v0.3.3'
 
 # DWP API

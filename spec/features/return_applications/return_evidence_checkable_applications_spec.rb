@@ -38,7 +38,7 @@ RSpec.feature 'When evidence checkable applications are returned' do
 
     scenario 'when returning application' do
       click_link application1.reference
-      click_link 'Return application', visible: false
+      click_link 'Return application', visible: :all
 
       expect(page).to have_text 'What is the problem?'
       choose 'Citizen not proceeding'

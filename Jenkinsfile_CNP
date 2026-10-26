@@ -1,6 +1,6 @@
 #!groovy
 
-@Library("Infrastructure@2.12.2")
+@Library("Infrastructure@2.13.1")
 
 def type = "ruby"
 def product = "help-with-fees"
@@ -56,8 +56,8 @@ withPipeline(type, product, component) {
       sh script:"""#!/bin/bash -l
         set +x
         source /usr/local/rvm/scripts/rvm
-        rvm install ruby-4.0.7
-        rvm use ruby-4.0.7 --default
+        rvm install ruby-4.0.9 --binary --autolibs=read-only
+        rvm use ruby-4.0.9 --default
         """, label: 'Ruby version install'
     }
 

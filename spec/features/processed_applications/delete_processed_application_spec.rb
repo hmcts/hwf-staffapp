@@ -23,8 +23,8 @@ RSpec.feature 'Delete processed applications' do
     end
 
     scenario 'With reason provided the application is deleted and does not show in the list' do
-      fill_in 'application_deleted_reason', with: 'Reason', visible: false
-      click_button 'Delete application', visible: false
+      fill_in 'application_deleted_reason', with: 'Reason', visible: :all
+      click_button 'Delete application', visible: :all
 
       expect(page).to have_text('Processed applications')
       expect(page).to have_text('The application has been deleted')
@@ -36,7 +36,7 @@ RSpec.feature 'Delete processed applications' do
 
     scenario 'With reason not provided the application shows an error' do
       select text: 'Other error made by office processing application', from: 'application_deleted_reasons_list'
-      click_button 'Delete application', visible: false
+      click_button 'Delete application', visible: :all
 
       expect(page).to have_text('Processed application')
       expect(page).to have_text("Full name#{application1.applicant.full_name}")

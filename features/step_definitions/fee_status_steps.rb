@@ -9,7 +9,7 @@ end
 
 Given('I started to process paper application') do
   start_application
-  click_on 'Start now', visible: false
+  click_on 'Start now', visible: :all
 end
 
 Given('I am on the fee status page') do
@@ -29,7 +29,7 @@ When('I fill in date received') do
 end
 
 When('I will in refund with range outside of the scope') do
-  fee_status_page.content.find_by_id('application_refund_true', visible: false).click
+  fee_status_page.content.find_by_id('application_refund_true', visible: :all).click
   fee_status_page.fill_in_date_payed(8.months)
   fee_status_page.click_next
 end
@@ -39,7 +39,7 @@ Then('I should see error about the refund date') do
 end
 
 When('I fill in discretion') do
-  fee_status_page.content.find_by_id('application_discretion_applied_true', visible: false).click
+  fee_status_page.content.find_by_id('application_discretion_applied_true', visible: :all).click
   fee_status_page.fill_in_discretion_manager
   fee_status_page.click_next
 end
@@ -49,7 +49,7 @@ Then('I should be on personal page') do
 end
 
 When('I will in refund within range') do
-  fee_status_page.content.find_by_id('application_refund_true', visible: false).click
+  fee_status_page.content.find_by_id('application_refund_true', visible: :all).click
   fee_status_page.fill_in_date_payed(3.months)
   fee_status_page.click_next
 end
