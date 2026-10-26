@@ -84,12 +84,38 @@ RSpec.describe BenefitCheckers::MatchedCitizen do
 
     it 'does not compare the NI number when DWP leaves it out' do
       expect(matched.verify(citizen)).to be true
-      expect(matched.outcome['ni_number_checked']).to be false
+      expect(matched.outcome['checked']).not_to include('ni_number')
     end
 
-    it 'fails on the date of birth when the record has no attributes' do
-      expect(matched.verify({ 'data' => {} })).to be false
-      expect(matched.failed_on).to eq :date_of_birth
+    # DWP does not have to send the identity fields; only a field it does send can disagree
+    context 'when DWP leaves fields out' do
+      it 'passes without the date of birth' do
+        attributes.delete('dateOfBirth')
+
+        expect(matched.verify(citizen)).to be true
+        expect(matched.outcome['checked']).to eq ['last_name']
+      end
+
+      it 'passes without the name' do
+        attributes.delete('name')
+
+        expect(matched.verify(citizen)).to be true
+        expect(matched.outcome['checked']).to eq ['date_of_birth']
+      end
+
+      it 'passes with nothing checked when the record has no attributes' do
+        expect(matched.verify({ 'data' => {} })).to be true
+        expect(matched.failed_on).to be_nil
+        expect(matched.outcome).to eq('verified' => true, 'failed_on' => nil, 'checked' => [])
+      end
+
+      it 'still fails on a field that is there and different' do
+        attributes.delete('dateOfBirth')
+        attributes['nino'] = 'ZZ999999Z'
+
+        expect(matched.verify(citizen)).to be false
+        expect(matched.failed_on).to eq :ni_number
+      end
     end
   end
 
@@ -110,13 +136,13 @@ RSpec.describe BenefitCheckers::MatchedCitizen do
       attributes['nino'] = 'ZZ999999Z'
       matched.verify(citizen)
 
-      expect(matched.outcome).to eq('verified' => false, 'failed_on' => 'ni_number', 'ni_number_checked' => true)
+      expect(matched.outcome).to eq('verified' => false, 'failed_on' => 'ni_number', 'checked' => ['date_of_birth', 'last_name', 'ni_number'])
     end
 
-    it 'says the NI number was not checked when DWP left it out' do
+    it 'lists only the fields DWP sent as checked' do
       matched.verify(citizen)
 
-      expect(matched.outcome).to eq('verified' => true, 'failed_on' => nil, 'ni_number_checked' => false)
+      expect(matched.outcome).to eq('verified' => true, 'failed_on' => nil, 'checked' => ['date_of_birth', 'last_name'])
     end
   end
 end

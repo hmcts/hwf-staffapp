@@ -5,6 +5,17 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 with entries grouped by branch and date rather than release version.
 
+## 2026-10-26 (dwo-citizen-fix)
+
+### Fixed
+
+- A citizen record without the identity fields no longer fails the DWP check.
+  Only a field DWP sends (date of birth, last name, NI number) can disagree; the
+  check then carries on to the claims. The `verify_citizen` outcome now lists
+  the fields in `checked`, replacing `ni_number_checked`. Why: production
+  `GET /citizens/{guid}` returned only the guid and links, so every exact match
+  was recorded as `no_match_found` on the date of birth.
+
 ## 2026-10-26 (infra-update)
 
 ### Changed
