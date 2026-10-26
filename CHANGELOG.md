@@ -9,12 +9,11 @@ with entries grouped by branch and date rather than release version.
 
 ### Changed
 
-- Updated Jenkins-Infrastructure library 2.12.2 → 2.13.1.
-- Updated Ruby 4.0.7 → 4.0.9 (.ruby-version, Gemfile, Dockerfile base image,
-  Jenkinsfile_CNP, Jenkinsfile_nightly, README). 4.0.9 fixes the Regexp
-  compilation bugs behind GitLab's CVE-2026-89078, -93577, -97229 and -110264.
-  The base image comes through the `imported/library/ruby` ACR cache rule, so
-  a new tag appears on first pull; no import request is needed.
+- Updated Jenkins-Infrastructure library 2.12.2 → 2.13.1 and Ruby 4.0.7 → 4.0.9
+  (security release; Regexp CVE fixes).
+- Jenkins `installRuby` now uses `rvm install --binary --autolibs=read-only`.
+  Why: the new ubuntu-preview agents cannot run `apt-get update`, and the
+  Travis binary mirror only carries 4.0.9 for Ubuntu 24.04.
 
 ## 2026-10-15 (dwp-middle-name-matching)
 
