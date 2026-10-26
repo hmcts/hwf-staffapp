@@ -15,6 +15,27 @@ with entries grouped by branch and date rather than release version.
   Why: the new ubuntu-preview agents cannot run `apt-get update`, and the
   Travis binary mirror only carries 4.0.9 for Ubuntu 24.04.
 
+### Security
+
+- Updated crass 1.0.7 → 1.0.8 — fixes GHSA-pq4g-8rxf-4g29 (CSS sanitizer bypass).
+
+### Changed
+
+- Routine gem and npm bumps, including json 2 → 3 (app only uses `JSON.parse`/`to_json`)
+  and the azure-blob pin to `~> 0.9.0`; versions are in the lockfile diff. Fresh
+  releases applied on explicit approval.
+- rubocop-capybara 3.1.0 added `Capybara/VisibilityOption`: `visible: false` in
+  features and specs became the equivalent `visible: :all`.
+
+### Known issues
+
+- devise_invitable 2.0.14 reverted to 2.0.13: it no longer adds
+  `invitation_instructions` to custom mailers, so `User#invite!` raises with
+  `NotifyMailer`. Define that method on `NotifyMailer` before retrying.
+- Held: faraday 2.15.1 (released today), govuk-frontend 6.6.0 (visual check after
+  the DWP freeze), cucumber 12 / marcel 2 / diff-lcs 2 / prism 2 (majors, no
+  advisories), redis-client 0.31.0 (blocked by redis 6.0.0), simplecov (SonarCloud).
+
 ## 2026-10-15 (dwp-middle-name-matching)
 
 ### Changed

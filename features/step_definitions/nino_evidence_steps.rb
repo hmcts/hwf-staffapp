@@ -13,7 +13,7 @@ And("I create an Application B that has correct evidence") do
   click_on 'Sign in'
   dashboard_page.content.wait_until_last_application_header_visible
   dashboard_page.content.waiting_for_evidence_application_link.click
-  click_on 'Start now', visible: false
+  click_on 'Start now', visible: :all
   expect(evidence_accuracy_page.content).to have_header
   evidence_accuracy_page.content.correct_evidence.click
   evidence_accuracy_page.click_next
@@ -26,7 +26,7 @@ And("I create an Application B that has correct evidence") do
 end
 
 When("I create Application C") do
-  click_link 'Sign out', visible: false
+  click_link 'Sign out', visible: :all
   @user3 = FactoryBot.create(:user)
   fill_in 'Email', with: @user3.email
   fill_in 'Password', with: 'password1234'
@@ -53,7 +53,7 @@ When("I create an Application B and wrong evidence is provided") do
   click_on 'Sign in'
   dashboard_page.content.wait_until_last_application_header_visible
   dashboard_page.content.waiting_for_evidence_application_link.click
-  click_on 'Start now', visible: false
+  click_on 'Start now', visible: :all
   expect(evidence_accuracy_page.content).to have_header
   expect(evidence_accuracy_page.content).to have_problem_with_evidence
   evidence_accuracy_page.content.problem_with_evidence.click
@@ -73,20 +73,20 @@ And("evidence check is called") do
 end
 
 And("I close application A") do
-  click_link 'Sign out', visible: false
+  click_link 'Sign out', visible: :all
   fill_in 'Email', with: @user1.email
   fill_in 'Password', with: 'password1234'
   click_on 'Sign in'
   dashboard_page.content.wait_until_last_application_header_visible
   dashboard_page.content.waiting_for_evidence_application_link.click
   evidence_page.content.evidence_can_not_be_processed.click
-  click_link 'Return application', visible: false
+  click_link 'Return application', visible: :all
   problem_with_evidence_page.submit_not_arrived_too_late
   click_on 'Back to start'
 end
 
 Then("I create Application D") do
-  click_link 'Sign out', visible: false
+  click_link 'Sign out', visible: :all
   sign_in_as_user
   online_application = FactoryBot.create(:online_application, :with_reference, :income1000, :partner_no_nino, ni_number: 'AB123456D', fee: 500)
 
@@ -101,14 +101,14 @@ Then("I create Application D") do
 end
 
 When("Application C has correct evidence") do
-  click_link 'Sign out', visible: false
+  click_link 'Sign out', visible: :all
   fill_in 'Email', with: @user3.email
   fill_in 'Password', with: 'password1234'
   click_on 'Sign in'
   dashboard_page.content.wait_until_last_application_header_visible
   dashboard_page.content.waiting_for_evidence_application_link2.click
 
-  click_on 'Start now', visible: false
+  click_on 'Start now', visible: :all
   expect(evidence_accuracy_page.content).to have_header
   evidence_accuracy_page.content.correct_evidence.click
   evidence_accuracy_page.click_next
@@ -120,7 +120,7 @@ When("Application C has correct evidence") do
 end
 
 Then("I create Application E") do
-  click_link 'Sign out', visible: false
+  click_link 'Sign out', visible: :all
   sign_in_as_user
   application = FactoryBot.create(:online_application, :with_reference, :income1000, :partner_no_nino, ni_number: 'AB123456D', fee: 500)
   reference = application.reference
@@ -135,13 +135,13 @@ Then("I create Application E") do
 end
 
 When("Application A has failed evidence") do
-  click_link 'Sign out', visible: false
+  click_link 'Sign out', visible: :all
   fill_in 'Email', with: @user1.email
   fill_in 'Password', with: 'password1234'
   click_on 'Sign in'
   dashboard_page.content.waiting_for_evidence_application_link.click
 
-  click_on 'Start now', visible: false
+  click_on 'Start now', visible: :all
   expect(evidence_accuracy_page.content).to have_header
   expect(evidence_accuracy_page.content).to have_problem_with_evidence
   evidence_accuracy_page.content.problem_with_evidence.click
@@ -157,7 +157,7 @@ When("Application D has correct evidence") do
   dashboard_page.content.wait_until_last_application_header_visible
   dashboard_page.content.waiting_for_evidence_application_link2.click
 
-  click_on 'Start now', visible: false
+  click_on 'Start now', visible: :all
   expect(evidence_accuracy_page.content).to have_header
   evidence_accuracy_page.content.correct_evidence.click
   evidence_accuracy_page.click_next
@@ -188,7 +188,7 @@ And("I create an Application B that has correct evidence with the same ho_number
   click_on 'Sign in'
   dashboard_page.content.wait_until_last_application_header_visible
   dashboard_page.content.waiting_for_evidence_application_link.click
-  click_on 'Start now', visible: false
+  click_on 'Start now', visible: :all
   expect(evidence_accuracy_page.content).to have_header
   evidence_accuracy_page.content.correct_evidence.click
   evidence_accuracy_page.click_next
@@ -200,7 +200,7 @@ And("I create an Application B that has correct evidence with the same ho_number
 end
 
 When("I create Application C with the same ho_number") do
-  click_link 'Sign out', visible: false
+  click_link 'Sign out', visible: :all
   @user3 = FactoryBot.create(:user)
   fill_in 'Email', with: @user3.email
   fill_in 'Password', with: 'password1234'
@@ -219,7 +219,7 @@ When("I create Application C with the same ho_number") do
 end
 
 When("I create Application C with the same ho_number and lowercase ho_number") do
-  click_link 'Sign out', visible: false
+  click_link 'Sign out', visible: :all
   @user3 = FactoryBot.create(:user)
   fill_in 'Email', with: @user3.email
   fill_in 'Password', with: 'password1234'
@@ -238,7 +238,7 @@ When("I create Application C with the same ho_number and lowercase ho_number") d
 end
 
 Then("I create Application D with the same ho_number") do
-  click_link 'Sign out', visible: false
+  click_link 'Sign out', visible: :all
   sign_in_as_user
   FactoryBot.create(:online_application, :with_reference, :income1000, :partner_no_nino, ho_number: 'L1234567', ni_number: '', fee: 500)
   reference = OnlineApplication.last.reference
@@ -263,7 +263,7 @@ And("I create an Application B and wrong evidence is provided with the same ho_n
   click_on 'Sign in'
   dashboard_page.content.wait_until_last_application_header_visible
   dashboard_page.content.waiting_for_evidence_application_link.click
-  click_on 'Start now', visible: false
+  click_on 'Start now', visible: :all
   expect(evidence_accuracy_page.content).to have_header
   expect(evidence_accuracy_page.content).to have_problem_with_evidence
   evidence_accuracy_page.content.problem_with_evidence.click
@@ -275,7 +275,7 @@ And("I create an Application B and wrong evidence is provided with the same ho_n
 end
 
 Then("I create Application E with the same ho_number") do
-  click_link 'Sign out', visible: false
+  click_link 'Sign out', visible: :all
   sign_in_as_user
   FactoryBot.create(:online_application, :with_reference, :income1000, :partner_no_nino, ho_number: 'L1234567', ni_number: '', fee: 500)
   reference = OnlineApplication.last.reference

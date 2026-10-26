@@ -121,8 +121,8 @@ Then("I am on the personal details page") do
 end
 
 Then('I change the personal data') do
-  find_field('First and middle names', visible: false).set('Jean')
-  find_field('Last name', visible: false).set('Jones')
+  find_field('First and middle names', visible: :all).set('Jean')
+  find_field('Last name', visible: :all).set('Jones')
 
   personal_details_page.content.application_day_date_of_birth.set '11'
   personal_details_page.content.application_month_date_of_birth.set '03'

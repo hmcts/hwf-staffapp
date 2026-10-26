@@ -34,7 +34,7 @@ RSpec.feature 'When part-payment applications are returned' do
         expect(page).to have_text 'Process part-payment'
         expect(page).to have_text application1.applicant.full_name
         expect(page).to have_link 'Start now'
-        click_button 'Return application', visible: false
+        click_button 'Return application', visible: :all
         expect(page).to have_text 'Processing complete'
         expect(application1.reload.state).to eq 'processed'
         expect(page).to have_link 'Back to start'

@@ -21,7 +21,7 @@ end
 When("I uncheck show on admin homepage") do
   navigation_page.navigation_link.edit_banner.click
   edit_banner_page.content.show_message_checkbox.click
-  click_on 'Save changes', visible: false
+  click_on 'Save changes', visible: :all
 end
 
 Then("I should not see the notification on my homepage") do
