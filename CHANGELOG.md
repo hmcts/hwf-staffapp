@@ -21,6 +21,100 @@ with entries grouped by branch and date rather than release version.
 - Removed redundant RuboCop TODO list (.rubocop_todo.yml)
 - Updated RuboCop ruby version and removed redundant excludes (.rubocop.yml)
 
+## 2026-10-15 (dwp-middle-name-matching)
+
+### Changed
+
+- The Evidence Received (appeal) section now follows `DWP_API_ENABLED`; the
+  separate `APPEAL_ENABLED` switch is removed. Why: the appeal flow only makes
+  sense alongside the DWP checks, so one switch is enough. Remove
+  `APPEAL_ENABLED` from the environment configs when deploying.
+- DWP match: when the name as entered finds nobody, the same person is tried
+  with the words split differently between first and last name (at most five
+  requests, stopping at the first guid). Taken from the production rerun
+  script, where these splits found citizens the plain request missed. Every
+  try is stored as a `DwpApiCall`; the name that matched is kept in
+  `benefit_checks.name_variant` and purged with its other personal data.
+- The citizen record fetched after a match is checked against the person sent
+  (date of birth, last name, NI number when both sides have one). A mismatch
+  is a no match, recorded as a `verify_citizen` call. Why: DWP also returns
+  non-exact matches and nothing confirmed who the guid belonged to.
+
+## 2026-10-08 (rst-7882-dwp-mi-report)
+
+### Changed
+
+- Raw data, applications-by-court and Power BI exports: six DWP benefit check
+  columns (response, errors, date of death, benefit type, benefit status, take
+  home pay) as the last columns, from the latest check per application; 'LAA' for checks made
+  through the old checker, 'N/A' otherwise. Shared in `BenefitCheckColumns`.
+  The columns only appear once `DWP_API_ENABLED` is on, so staff do not see
+  them before the DWP check goes live.
+- The check now stores what the decision used (`checker`, `benefit_types`,
+  `claim_status`, `take_home_pay`) so the export reads columns, not the stored
+  DWP JSON. Older checks are not backfilled.
+- `DwpApiCallsPurgeJob` removes the stored DWP response and the personal
+  details in the request once a call is older than
+  `dwp_api_calls_purge.months_ago` (6; env `DWP_API_CALLS_PURGE_MONTHS`),
+  keeping the endpoint, status, dates and the claims request (guid and date
+  window). Scheduled like the other purges, see README.
+
+## 2026-10-07 (rst-8412-date-of-death)
+
+### Changed
+
+- The DWP check now fetches the citizen record after every match, applicant
+  or partner, before the claims (match -> citizen -> claims), and carries on
+  with the guid DWP hands back with it. A missing citizen record is not a
+  failure; any other error on that call is, like the claims call.
+- Date of death: a date on the citizen record that is on or before the
+  application date (submitted, received or fee paid) is stored in
+  `benefit_checks.date_of_death` and makes the check No with
+  `date_of_death_flagged`, whatever the claims say; the claims are still
+  fetched and stored. Otherwise the RST-8365 rules decide as before.
+- `DwpApiClient` split for readability: token handling in `DwpApiConnection`,
+  call storage in `DwpApiCallRecorder`, one `call_dwp` helper for every DWP
+  call. No behaviour change.
+
+## 2026-10-05 (rst-8365-benefit-types)
+
+### Changed
+
+- RST-8365: a DWP claim now counts only for a listed benefit (UC, Pension
+  Credit, Income Support, income-based ESA/JSA), with a `live` award in the
+  date window paying over £0; UC also needs take home pay under £500.
+  Superseded awards are ignored as replaced versions of a period.
+- `benefit_checks.claim_decision_reasoning` stores the reason that decided
+  the DWP check (see `ClaimsDecision`), so staff can see why it passed or failed.
+
+## 2026-10-05 (rst-8363-date-in-query)
+
+### Changed
+
+- With `DWP_API_ENABLED` on, a married applicant no longer needs an NI number
+  for the partner details page (`Applicant#partner_details_allowed?`). The
+  RST-7092 limit still applies when the flag is off.
+- Summary pages show partner rows whenever partner data exists, regardless of
+  the applicant's NI number or the flag.
+- The paper Personal details postcode still accepts a space ("AB12 5AJ") but
+  is now stored without it ("AB125AJ").
+- `BenefitCheckers::ClaimsDecision` now counts a claim with no status of its
+  own when one of its awards is `live`: DWP returned an ESA claim in that shape
+  and it was wrongly assessed as No. A claim's own status still wins when present.
+
+## 2026-09-30 (dwp-phase-2)
+
+### Changed
+
+- Renamed `BenefitCheckers::RealApiClient` to `LaaProxyApiClient`: it calls the
+  LAA benefit-check proxy, and "real" wrongly suggested the direct DWP client.
+- DWP claims calls now send an effective date window, applicant and partner
+  alike: `BenefitCheckers::EffectiveDates` ends it at the fee-paid date (refund),
+  submission date (online) or date received (paper), starting five weeks
+  earlier on the Monday. No window when the application has no date.
+- `BenefitCheckers::ClaimsDecision` checks every returned claim, not just the
+  first, and counts one when its status is on-benefits and it was live inside
+  the date window.
 ## 2026-10-14 (rcov-revert)
 
 - simplecov re-pinned to `~> 0.22.0` (from 1.3.2): SonarCloud reported 0% coverage on every PR since the 1.x bump in gem-updates-v74, so CI failed the coverage gate.
@@ -92,6 +186,11 @@ with entries grouped by branch and date rather than release version.
 - Removed mock_redis: its latest release (0.55.0) still pins redis `~> 5` and
   blocked the update. Replaced by a small in-memory `FakeRedis` in
   `spec/support`, shared with the Cucumber suite.
+## 2026-09-23 (rst-7881-postcode)
+
+- Optional UK postcode on the paper Personal details page (only when `DWP_API_ENABLED` is on), shown when present on check details, summary and processed pages for paper and online applications; paper DWP checks and the raw data export use it.
+- NI/HO/postcode normalisation extracted to `PersonalDetailsFormatter`, shared by the applicant form, partner form and `Applicant` model.
+- DWP client no longer hands an expired cached token to the gem, and on a 401 drops the cached token and retries once; previously either state failed every check on that process until restart. Failed connections and rejected calls are now recorded on the benefit check and in `dwp_api_calls`.
 
 ## 2026-09-22 (rst-8579-benefit-result-copy)
 

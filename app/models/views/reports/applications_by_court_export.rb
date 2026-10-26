@@ -5,6 +5,7 @@ module Views
     class ApplicationsByCourtExport < ReportBase
       require 'csv'
       include ApplicationsByCourtExportHelper
+      include BenefitCheckColumns
 
       NUMERIC_FIELDS = [
         'estimated_amount_to_pay', 'final_amount_to_pay'
@@ -184,6 +185,7 @@ module Views
         details.calculation_scheme as hwf_scheme,
         applications.deleted_reasons_list as deletion_reason,
         applications.deleted_reason as reason_description
+        #{benefit_check_columns(paper_benefit_check_not_applicable)}
 
         FROM \"applications\" LEFT JOIN offices ON offices.id = applications.office_id
         LEFT JOIN evidence_checks ec ON ec.application_id = applications.id
@@ -202,6 +204,7 @@ module Views
           WHERE a_inner.created_at BETWEEN '#{@date_from.to_fs(:db)}' AND '#{@date_to.to_fs(:db)}'
           ORDER BY h.evidence_check_id, h.created_at DESC
         ) hc ON ec.id = hc.evidence_check_id
+        LEFT JOIN (#{latest_benefit_check_per_application_sql}) bc ON bc.app_id = applications.id AND bc.row_number = 1
         INNER JOIN \"applicants\" ON \"applicants\".\"application_id\" = \"applications\".\"id\"
         INNER JOIN \"details\" ON \"details\".\"application_id\" = \"applications\".\"id\"
         LEFT JOIN jurisdictions ON jurisdictions.id = details.jurisdiction_id
@@ -211,6 +214,11 @@ module Views
         AND (applications.state != 0
           OR (applications.state = 0 AND details.date_received IS NOT NULL AND details.refund IS NOT NULL))
         ORDER BY applications.created_at DESC"
+      end
+
+      # Not a benefit application, staff said no benefits, or no check
+      def paper_benefit_check_not_applicable
+        "applications.application_type <> 'benefit' OR applications.benefits = FALSE OR bc.id IS NULL"
       end
 
       # No office filter when reporting on all offices or when none was chosen
@@ -298,11 +306,14 @@ module Views
         online_applications.calculation_scheme AS hwf_scheme,
         NULL AS deletion_reason,
         NULL AS reason_description
+        #{benefit_check_columns('online_applications.benefits = FALSE OR bc.id IS NULL')}
         FROM online_applications
         INNER JOIN users ON users.id = online_applications.user_id
         INNER JOIN offices ON offices.id = users.office_id
         LEFT JOIN applications ON applications.online_application_id = online_applications.id
         LEFT JOIN jurisdictions ON jurisdictions.id = online_applications.jurisdiction_id
+        LEFT JOIN (#{latest_benefit_check_per_record_sql}) bc ON bc.applicationable_type = 'OnlineApplication'
+          AND bc.applicationable_id = online_applications.id AND bc.row_number = 1
         WHERE applications.id IS NULL
         AND online_applications.date_received IS NOT NULL
         AND online_applications.created_at BETWEEN '#{@date_from.to_fs(:db)}' AND '#{@date_to.to_fs(:db)}'

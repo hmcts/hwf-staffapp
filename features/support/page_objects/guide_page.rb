@@ -18,5 +18,7 @@ class GuidePage < BasePage
     element :rrds, 'a', text: 'RRDS'
     element :hmrc_datashare, 'a', text: 'HMRC Datashare - job card demos'
     element :income_check_guidance, 'a', text: 'Income check guidance'
+    element :new_income_check_guidance, 'a', text: 'Evidence checking - income based applications'
+    element :benefit_check_guidance, 'a', text: 'Evidence checking - benefit based applications'
   end
 end

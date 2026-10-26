@@ -15,4 +15,13 @@ module GreetingHelper
       applicant.full_name
     end
   end
+
+  def greeting_condition3(representative, applicant)
+    if representative&.first_name.present? && representative&.last_name.present?
+      full_name = "#{representative.first_name} #{representative.last_name}".strip
+      "#{full_name} regarding #{applicant.full_name}"
+    else
+      applicant.full_name
+    end
+  end
 end

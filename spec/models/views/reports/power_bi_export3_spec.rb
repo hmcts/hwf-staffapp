@@ -53,6 +53,21 @@ RSpec.describe Views::Reports::PowerBiExport3 do
         expect(headers).to include('Office', 'Fee', 'Fee code', 'Claim amount',
                                    'Fee population', 'Jurisdiction', 'Reason description')
       end
+
+      # The six DWP benefit check columns close the row, and only once the DWP check is switched on. See CHANGELOG.md
+      it 'ends with the DWP benefit check columns when the DWP check is switched on' do
+        allow(Settings).to receive(:dwp_api_enabled).and_return(true)
+        headers = CSV.parse(power_bi_export.to_csv, headers: true).headers
+
+        expect(headers.last(6)).to eq(['Benefit checker response?', 'Benefit checker errors', 'Date of death', 'Benefit type', 'Benefit status', 'Take home pay'])
+      end
+
+      it 'leaves the DWP benefit check columns out when the DWP check is switched off' do
+        headers = CSV.parse(power_bi_export.to_csv, headers: true).headers
+
+        expect(headers).not_to include('Benefit checker response?')
+        expect(headers.last).to eq('Reason description')
+      end
     end
   end
 

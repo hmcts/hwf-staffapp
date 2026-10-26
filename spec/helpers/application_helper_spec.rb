@@ -129,13 +129,13 @@ RSpec.describe ApplicationHelper do
   end
 
   describe 'appeal_available?' do
-    it 'returns true when Settings.appeal_enabled is true' do
-      allow(Settings).to receive(:appeal_enabled).and_return(true)
+    it 'returns true when Settings.dwp_api_enabled is true' do
+      allow(Settings).to receive(:dwp_api_enabled).and_return(true)
       expect(helper.appeal_available?).to be true
     end
 
-    it 'returns false when Settings.appeal_enabled is false' do
-      allow(Settings).to receive(:appeal_enabled).and_return(false)
+    it 'returns false when Settings.dwp_api_enabled is false' do
+      allow(Settings).to receive(:dwp_api_enabled).and_return(false)
       expect(helper.appeal_available?).to be false
     end
   end
