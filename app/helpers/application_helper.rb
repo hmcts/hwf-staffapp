@@ -74,9 +74,9 @@ module ApplicationHelper
     Settings.freg_enabled
   end
 
-  # Shows or hides the Evidence Received (appeal) section only - see CHANGELOG.md
+  # Shows or hides the Evidence Received (appeal) section only; follows the DWP API switch - see CHANGELOG.md
   def appeal_available?
-    Settings.appeal_enabled
+    Settings.dwp_api_enabled
   end
 
   def online_application_error_anchor(attribute)

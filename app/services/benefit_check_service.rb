@@ -4,7 +4,7 @@ class BenefitCheckService
   def initialize(data_to_check, client: nil)
     @result = false
     @check_item = data_to_check
-    @client = client || default_client
+    @client = client
     begin
       validate_inputs
       check_remote_api
@@ -48,17 +48,25 @@ class BenefitCheckService
   end
 
   def query_proxy_api
-    @response = @client.check(params)
+    @response = client.check(params)
     @result = true
+  end
+
+  # Built here, inside process_proxy_api_call's rescue, so a failed connection is logged like any other fault
+  def client
+    @client ||= default_client
   end
 
   def default_client
     if Settings.dwp_mock.fake_api_enabled
+      @check_item.checker = BenefitCheck::CHECKERS[:mock]
       BenefitCheckers::MockApiClient.new
     elsif Settings.dwp_api_enabled
+      @check_item.checker = BenefitCheck::CHECKERS[:dwp]
       BenefitCheckers::DwpApiClient.new(@check_item)
     else
-      BenefitCheckers::RealApiClient.new
+      @check_item.checker = BenefitCheck::CHECKERS[:laa]
+      BenefitCheckers::LaaProxyApiClient.new
     end
   end
 

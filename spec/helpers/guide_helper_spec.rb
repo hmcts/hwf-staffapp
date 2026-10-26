@@ -27,19 +27,35 @@ RSpec.describe GuideHelper do
   end
 
   describe '#new_process_application_url' do
-    it { expect(helper.new_process_application_url).to include('sourcedoc=%7BB62AF5DB-DF50-4415-A261-A4598E61B298%7D') }
+    if Settings.dwp_api_enabled
+      it { expect(helper.new_process_application_url).to include('d=w16e76ffee0614a44b9e095196dd137c3') }
+    else
+      it { expect(helper.new_process_application_url).to include('sourcedoc=%7BB62AF5DB-DF50-4415-A261-A4598E61B298%7D') }
+    end
   end
 
   describe '#new_online_process_application_url' do
-    it { expect(helper.new_online_process_application_url).to include('sourcedoc=%7B1ADE6338-5A41-4D11-8047-ACBB1A070C19%7D') }
+    if Settings.dwp_api_enabled
+      it { expect(helper.new_online_process_application_url).to include('d=w560392691852483096baa52a0ae64955') }
+    else
+      it { expect(helper.new_online_process_application_url).to include('sourcedoc=%7B1ADE6338-5A41-4D11-8047-ACBB1A070C19%7D') }
+    end
   end
 
   describe '#new_evidence_checks_url' do
-    it { expect(helper.new_evidence_checks_url).to include('sourcedoc=%7B40446293-A8A9-4003-B09E-F228F727A441%7D') }
+    if Settings.dwp_api_enabled
+      it { expect(helper.new_evidence_checks_url).to include('d=wb9f4849824cd4e73b4185a24d1dca202') }
+    else
+      it { expect(helper.new_evidence_checks_url).to include('sourcedoc=%7B40446293-A8A9-4003-B09E-F228F727A441%7D') }
+    end
   end
 
   describe '#part_payment_url' do
-    it { expect(helper.part_payment_url).to include('sourcedoc=%7BA5D5C042-C211-45A6-B1C5-22275AC6E0C5%7D') }
+    if Settings.dwp_api_enabled
+      it { expect(helper.part_payment_url).to include('d=w030275ccc48141329be20a8e9f0fe129') }
+    else
+      it { expect(helper.part_payment_url).to include('sourcedoc=%7BA5D5C042-C211-45A6-B1C5-22275AC6E0C5%7D') }
+    end
   end
 
   describe '#fraud_awareness_url' do
@@ -55,7 +71,11 @@ RSpec.describe GuideHelper do
   end
 
   describe '#faq_url' do
-    it { expect(helper.faq_url).to include('HWF%5FFAQ%20%5FOriginal%5FVersion1%2E0%5F28%2E10%2E2025%2Epdf') }
+    if Settings.dwp_api_enabled == true
+      it { expect(helper.faq_url).to include('d=w2e356a37957540d4ad8951e8988e4231') }
+    else
+      it { expect(helper.faq_url).to include('HWF%5FFAQ%20%5FOriginal%5FVersion1%2E0%5F28%2E10%2E2025%2Epdf') }
+    end
   end
 
   describe '#manager_guide_url' do
@@ -63,6 +83,14 @@ RSpec.describe GuideHelper do
   end
 
   describe '#income_check_guidance_url' do
-    it { expect(helper.income_check_guidance_url).to include('knowledgecentral/SitePages/Job-Cards.aspx') }
+    if Settings.dwp_api_enabled == true
+      it { expect(helper.income_check_guidance_url).to include('sourcedoc=%7B28F4D6C2-FE0B-4E1C-AA11-') }
+    else
+      it { expect(helper.income_check_guidance_url).to include('knowledgecentral/SitePages/Job-Cards.aspx') }
+    end
+  end
+
+  describe '#benefit_check_guidance_url' do
+    it { expect(helper.benefit_check_guidance_url).to include('d=w2654f399e92f46dba892d40a8ed34298&csf=1&web=1&e=MUGOhu') }
   end
 end

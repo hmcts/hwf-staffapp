@@ -24,6 +24,16 @@ module ResultHelper
     !checks.last.benefits_valid?
   end
 
+  def display_benefit_evidence_not_eligible_letter?(application)
+    return false unless application.appeal&.correct == false
+
+    checks = application.benefit_checks
+
+    return false if application.benefits != true || checks.blank?
+
+    !checks.last.benefits_valid?
+  end
+
   def display_evidence_failed_letter?(application)
     checks = application.evidence_check
     return false if checks.blank?

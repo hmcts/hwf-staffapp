@@ -29,6 +29,64 @@ RSpec.describe ResultHelper do
     end
   end
 
+  describe '#display_benefit_evidence_not_eligible_letter' do
+    let(:application) { instance_double(Application) }
+    let(:appeal) { instance_double(Appeal, correct: appeal_correct) }
+    let(:benefit_check) { instance_double(BenefitCheck) }
+    let(:benefits) { true }
+    let(:appeal_correct) { false }
+    let(:benefits_valid) { false }
+
+    before do
+      allow(application).to receive_messages(
+        appeal: appeal,
+        benefits: benefits,
+        benefit_checks: [benefit_check]
+      )
+      allow(benefit_check).to receive(:benefits_valid?).and_return(benefits_valid)
+    end
+
+    context 'when the appeal is incorrect' do
+      context 'when benefits are not applicable' do
+        let(:benefits) { false }
+
+        it { expect(helper.display_benefit_evidence_not_eligible_letter?(application)).to be false }
+      end
+
+      context 'when there are no benefit checks' do
+        before do
+          allow(application).to receive(:benefit_checks).and_return([])
+        end
+
+        it { expect(helper.display_benefit_evidence_not_eligible_letter?(application)).to be false }
+      end
+
+      context 'when the benefit check is valid' do
+        let(:benefits_valid) { true }
+
+        it { expect(helper.display_benefit_evidence_not_eligible_letter?(application)).to be false }
+      end
+
+      context 'when the benefit check is invalid' do
+        let(:benefits_valid) { false }
+
+        it { expect(helper.display_benefit_evidence_not_eligible_letter?(application)).to be true }
+      end
+    end
+
+    context 'when the appeal is correct' do
+      let(:appeal_correct) { true }
+
+      it { expect(helper.display_benefit_evidence_not_eligible_letter?(application)).to be false }
+    end
+
+    context 'when there is no appeal' do
+      let(:appeal) { nil }
+
+      it { expect(helper.display_benefit_evidence_not_eligible_letter?(application)).to be false }
+    end
+  end
+
   describe '#display_benefit_failed_letter' do
     let(:application) { instance_double(Application) }
     let(:benefit_check) { instance_double(BenefitCheck) }

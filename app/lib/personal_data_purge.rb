@@ -72,7 +72,8 @@ class PersonalDataPurge
   def benefit_check_purge!(application)
     benefit_checks = application.benefit_checks
     return unless benefit_checks
-    benefit_checks.update_all(parameter_hash: nil, our_api_token: nil, last_name: nil, ni_number: nil)
+    benefit_checks.update_all(parameter_hash: nil, our_api_token: nil, last_name: nil, ni_number: nil,
+                              name_variant: nil)
   end
 
   # rubocop:enable Rails/SkipsModelValidations
