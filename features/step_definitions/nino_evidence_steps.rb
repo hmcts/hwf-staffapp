@@ -27,8 +27,8 @@ end
 
 When("I create Application C") do
   click_link 'Sign out', visible: :all
-  @user3 = FactoryBot.create(:user)
-  fill_in 'Email', with: excluded_office_user
+  @user3 = excluded_office_user
+  fill_in 'Email', with: @user3.email
   fill_in 'Password', with: 'password1234'
   click_on 'Sign in'
 
