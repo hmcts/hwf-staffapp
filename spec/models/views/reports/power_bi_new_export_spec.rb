@@ -329,6 +329,49 @@ RSpec.describe Views::Reports::PowerBiNewExport do
         expect(row['HwF reference number']).to eq('HWF-OA2-TEST')
       end
     end
+
+    # Blank shows as N/A, as in Power BI exports 1 and 3. See CHANGELOG.md
+    context 'when there is no evidence check' do
+      let!(:application) do
+        create(:application_full_remission, :processed_state,
+               office: office, business_entity: business_entity, created_at: Time.zone.now)
+      end
+      let!(:online_application) do
+        create(:online_application, created_at: Time.zone.now, fee: 300, form_name: 'EX160', reference: 'HWF-OA3-TEST')
+      end
+
+      before { report.export2_by_created_at }
+
+      it 'shows N/A as the DB evidence check type of an application' do
+        row = read_csv_from_zip.find { |r| r['Id'].to_i == application.id && r['HwF reference number'] != 'HWF-OA3-TEST' }
+
+        expect(row['DB evidence check type']).to eq('N/A')
+      end
+
+      it 'shows N/A as the DB evidence check type of an unlinked online application' do
+        row = read_csv_from_zip.find { |r| r['HwF reference number'] == 'HWF-OA3-TEST' }
+
+        expect(row['DB evidence check type']).to eq('N/A')
+      end
+    end
+
+    context 'when there is an evidence check' do
+      let!(:application) do
+        create(:application_full_remission, :processed_state,
+               office: office, business_entity: business_entity, created_at: Time.zone.now)
+      end
+
+      before do
+        create(:evidence_check, application: application, check_type: 'random')
+        report.export2_by_created_at
+      end
+
+      it 'shows its check type' do
+        row = read_csv_from_zip.find { |r| r['Id'].to_i == application.id }
+
+        expect(row['DB evidence check type']).to eq('random')
+      end
+    end
   end
 
   describe '#export3 (waiting states only by date_received)' do

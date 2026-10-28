@@ -518,7 +518,7 @@ module Views
           format_date(row['manual_process_date']),
           format_date(row['date_submitted_online']),
           row['statement_signed_by'],
-          row['db_evidence_check_type'],
+          row['db_evidence_check_type'].presence || 'N/A',
           row['db_income_check_type'],
           row['hmrc_total_income'],
           row['ev_check_outcome'],

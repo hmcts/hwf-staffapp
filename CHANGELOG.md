@@ -46,6 +46,8 @@ with entries grouped by branch and date rather than release version.
   'DB evidence check type' export column needs no mapping. The derived 'Evidence check type'
   column in Raw data, Applications by court, Power BI and the yearly raw data
   task maps it as Manual/HMRC FlagExtended.
+- Power BI export 2 shows 'N/A' for a blank 'DB evidence check type', as exports
+  1 and 3 already did; it wrote an empty cell.
 
 ## 2026-10-15 (dwp-middle-name-matching)
 
