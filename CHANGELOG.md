@@ -5,6 +5,15 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 with entries grouped by branch and date rather than release version.
 
+## 2026-10-29 (rst-8657-hmrc-notify)
+
+### Added
+
+- HMRC checker offline email, a copy of the DWP one: `HmrcReportStatusJob` runs
+  every 5 minutes and emails the DWP alert list when `HmrcMonitor` says offline.
+  The "HMRC Checker" wording lives in a new Notify template
+  (`NOTIFY_HMRC_DOWN_TEMPLATE_ID`); the cron is set up by hand, see README.
+
 ## 2026-10-26 (dwo-citizen-fix)
 
 ### Fixed
