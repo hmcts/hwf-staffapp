@@ -60,6 +60,10 @@ To set it up (if there is no record in DB) run this in rails console:
 Runs every 5 minutes
 ```DwpReportStatusJob.delay(cron: '*/5 * * * *').perform_now```
 
+## Delayed jobs for HMRC offline notification
+Runs every 5 minutes, same as the DWP one
+```HmrcReportStatusJob.delay(cron: '*/5 * * * *').perform_now```
+
 ## Delayed jobs for HMRC data purge
 Runs 10 minutes past midnight
 ```HmrcDataPurgeJob.delay(cron: '10 0 * * *').perform_now```
