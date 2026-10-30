@@ -27,7 +27,7 @@ end
 
 When("I create Application C") do
   click_link 'Sign out', visible: :all
-  @user3 = FactoryBot.create(:user)
+  @user3 = excluded_office_user
   fill_in 'Email', with: @user3.email
   fill_in 'Password', with: 'password1234'
   click_on 'Sign in'
@@ -87,7 +87,7 @@ end
 
 Then("I create Application D") do
   click_link 'Sign out', visible: :all
-  sign_in_as_user
+  sign_in_as_excluded_office_user
   online_application = FactoryBot.create(:online_application, :with_reference, :income1000, :partner_no_nino, ni_number: 'AB123456D', fee: 500)
 
   reference = online_application.reference
@@ -121,7 +121,7 @@ end
 
 Then("I create Application E") do
   click_link 'Sign out', visible: :all
-  sign_in_as_user
+  sign_in_as_excluded_office_user
   application = FactoryBot.create(:online_application, :with_reference, :income1000, :partner_no_nino, ni_number: 'AB123456D', fee: 500)
   reference = application.reference
   fill_in 'Reference', with: reference
@@ -201,7 +201,7 @@ end
 
 When("I create Application C with the same ho_number") do
   click_link 'Sign out', visible: :all
-  @user3 = FactoryBot.create(:user)
+  @user3 = excluded_office_user
   fill_in 'Email', with: @user3.email
   fill_in 'Password', with: 'password1234'
   click_on 'Sign in'
@@ -220,7 +220,7 @@ end
 
 When("I create Application C with the same ho_number and lowercase ho_number") do
   click_link 'Sign out', visible: :all
-  @user3 = FactoryBot.create(:user)
+  @user3 = excluded_office_user
   fill_in 'Email', with: @user3.email
   fill_in 'Password', with: 'password1234'
   click_on 'Sign in'
@@ -239,7 +239,7 @@ end
 
 Then("I create Application D with the same ho_number") do
   click_link 'Sign out', visible: :all
-  sign_in_as_user
+  sign_in_as_excluded_office_user
   FactoryBot.create(:online_application, :with_reference, :income1000, :partner_no_nino, ho_number: 'L1234567', ni_number: '', fee: 500)
   reference = OnlineApplication.last.reference
   fill_in 'Reference', with: reference
@@ -276,7 +276,7 @@ end
 
 Then("I create Application E with the same ho_number") do
   click_link 'Sign out', visible: :all
-  sign_in_as_user
+  sign_in_as_excluded_office_user
   FactoryBot.create(:online_application, :with_reference, :income1000, :partner_no_nino, ho_number: 'L1234567', ni_number: '', fee: 500)
   reference = OnlineApplication.last.reference
   fill_in 'Reference', with: reference

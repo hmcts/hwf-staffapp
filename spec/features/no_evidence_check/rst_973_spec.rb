@@ -12,14 +12,14 @@ RSpec.feature 'Application is not evidence check when an emergency app' do
     login_as user
   end
 
-  context 'Non-refund application no evidence check for 10th application' do
+  context 'Non-refund application no evidence check' do
     let(:application) { create(:application_full_remission) }
 
     before do
       create_list(:application_full_remission, 9)
     end
 
-    scenario 'Every 10th application is not evidence check for emergency application' do
+    scenario 'Application is not evidence check for emergency application' do
       start_new_application
       fill_personal_details
       fill_application_emergency_details
@@ -33,14 +33,14 @@ RSpec.feature 'Application is not evidence check when an emergency app' do
     end
   end
 
-  context 'Refund application no evidence check for emergency 2nd application' do
+  context 'Refund application no evidence check for emergency application' do
     let(:application) { create(:application_full_remission, :refund) }
 
     before do
       create_list(:application_full_remission, 1, :refund)
     end
 
-    scenario 'Every 2nd application is not evidence check for emergency application' do
+    scenario 'Application is not evidence check for emergency application' do
       start_new_application
       fill_personal_details
       check 'This is an emergency case'
@@ -89,6 +89,8 @@ RSpec.feature 'Application is not evidence check when an emergency app' do
     end
 
     context 'Duplicate NINO application where EV not flagged' do
+      # Excluded from the default income check so the NINO rules decide the outcome
+      let(:user) { create(:user, office: create(:office, entity_code: 'NB243')) }
       let(:application) { create(:application_full_remission) }
 
       scenario 'evidence check on for duplicate NINO when not flagged' do

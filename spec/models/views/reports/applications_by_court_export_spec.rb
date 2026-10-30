@@ -173,6 +173,53 @@ RSpec.describe Views::Reports::ApplicationsByCourtExport do
     end
   end
 
+  # RST-8592: 'flagExtended' is the remaining pool rule. See CHANGELOG.md
+  describe 'DB evidence check type' do
+    subject(:row) do
+      CSV.parse(export.to_csv, headers: true).find { |r| r['HwF reference number'] == application.reference }
+    end
+
+    let(:application) { create(:application_full_remission, :processed_state, office: office) }
+    let(:evidence_check) do
+      travel_to(date_from + 1.day) do
+        create(:evidence_check, application: application, check_type: check_type, income_check_type: income_check_type,
+                                completed_at: Time.zone.now)
+      end
+    end
+    let(:income_check_type) { 'paper' }
+
+    before { evidence_check }
+
+    context 'when the remaining pool rule selected the application' do
+      let(:check_type) { 'flagExtended' }
+
+      it { expect(row['DB evidence check type']).to eq 'flagExtended' }
+
+      context 'with paper income check and no HMRC check' do
+        it { expect(row['Evidence check type']).to eq 'Manual FlagExtended' }
+      end
+
+      context 'with hmrc income check' do
+        let(:income_check_type) { 'hmrc' }
+
+        it { expect(row['Evidence check type']).to eq 'HMRC FlagExtended' }
+      end
+
+      context 'with paper income check after an HMRC check' do
+        before { create(:hmrc_check, evidence_check: evidence_check, created_at: 1.day.ago) }
+
+        it { expect(row['Evidence check type']).to eq 'ManualAfterHMRC' }
+      end
+    end
+
+    context 'when another rule selected the application' do
+      let(:check_type) { 'low_income' }
+
+      it { expect(row['DB evidence check type']).to eq 'low_income' }
+      it { expect(row['Evidence check type']).to eq 'Manual LowIncome' }
+    end
+  end
+
   describe 'excluded offices' do
     context 'when office is Digital and HMCTS one' do
       before do

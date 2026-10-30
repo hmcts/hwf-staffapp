@@ -421,13 +421,16 @@ module Views
                WHEN ec.check_type = 'flag' AND ec.income_check_type = 'paper' AND hc.hc_id IS NULL THEN 'Manual NIFlag'
                WHEN ec.check_type = 'ni_exist' AND ec.income_check_type = 'paper' AND hc.hc_id IS NULL THEN 'Manual NIDuplicate'
                WHEN ec.check_type = 'low_income' AND ec.income_check_type = 'paper' AND hc.hc_id IS NULL THEN 'Manual LowIncome'
+               WHEN ec.check_type = 'flagExtended' AND ec.income_check_type = 'paper' AND hc.hc_id IS NULL THEN 'Manual FlagExtended'
                WHEN ec.check_type = 'random' AND ec.income_check_type = 'hmrc' THEN 'HMRC NumberRule'
                WHEN ec.check_type = 'flag' AND ec.income_check_type = 'hmrc' THEN 'HMRC NIFlag'
                WHEN ec.check_type = 'ni_exist' AND ec.income_check_type = 'hmrc' THEN 'HMRC NIDuplicate'
                WHEN ec.check_type = 'low_income' AND ec.income_check_type = 'hmrc' THEN 'HMRC LowIncome'
+               WHEN ec.check_type = 'flagExtended' AND ec.income_check_type = 'hmrc' THEN 'HMRC FlagExtended'
                WHEN ec.check_type = 'flag' AND ec.income_check_type = 'paper' AND hc.hc_id IS NOT NULL THEN 'ManualAfterHMRC'
                WHEN ec.check_type = 'random' AND ec.income_check_type = 'paper' AND hc.hc_id IS NOT NULL THEN 'ManualAfterHMRC'
                WHEN ec.check_type = 'low_income' AND ec.income_check_type = 'paper' AND hc.hc_id IS NOT NULL THEN 'ManualAfterHMRC'
+               WHEN ec.check_type = 'flagExtended' AND ec.income_check_type = 'paper' AND hc.hc_id IS NOT NULL THEN 'ManualAfterHMRC'
                ELSE NULL
           END AS evidence_check_type
         SQL
@@ -515,7 +518,7 @@ module Views
           format_date(row['manual_process_date']),
           format_date(row['date_submitted_online']),
           row['statement_signed_by'],
-          row['db_evidence_check_type'],
+          row['db_evidence_check_type'].presence || 'N/A',
           row['db_income_check_type'],
           row['hmrc_total_income'],
           row['ev_check_outcome'],

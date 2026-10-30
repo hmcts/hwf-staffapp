@@ -55,6 +55,19 @@ with entries grouped by branch and date rather than release version.
 - Held: faraday 2.15.1 (released today), govuk-frontend 6.6.0 (visual check after
   the DWP freeze), cucumber 12 / marcel 2 / diff-lcs 2 / prism 2 (majors, no
   advisories), redis-client 0.31.0 (blocked by redis 6.0.0), simplecov (SonarCloud).
+## 2026-10-22 (rst-8592-evidence-checking)
+
+### Changed
+
+- Removed the 1 in 2 (refund) and 1 in 10 random evidence check fallback;
+  random selection now comes only from the CCMCC fee-band frequencies.
+- Every income application that no other rule picks now gets an evidence check
+  (`flagExtended`), except offices NB243 and TI122. CamelCase so the
+  'DB evidence check type' export column needs no mapping. The derived 'Evidence check type'
+  column in Raw data, Applications by court, Power BI and the yearly raw data
+  task maps it as Manual/HMRC FlagExtended.
+- Power BI export 2 shows 'N/A' for a blank 'DB evidence check type', as exports
+  1 and 3 already did; it wrote an empty cell.
 
 ## 2026-10-15 (dwp-middle-name-matching)
 

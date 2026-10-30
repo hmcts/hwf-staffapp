@@ -18,7 +18,7 @@ Feature: Pre-UCD end-to-end Tests
     Then I should see that the applicant is eligible for help with fees
 
   Scenario: Process paper application without benefits - income based (pre-UCD)
-    Given I successfully sign in as a user
+    Given I successfully sign in as a user from an office excluded from the default evidence check
     And I start to process a new paper application
     Then I am on the personal details page
     When I successfully submit my required personal details
