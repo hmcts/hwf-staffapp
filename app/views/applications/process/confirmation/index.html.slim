@@ -48,6 +48,34 @@
                 expiry_date: @confirm.expires_at,
                 amount_to_pay: currency_format(@application.detail.fee))
 
+    - elsif display_benefit_failed_letter?(@application)
+      p.govuk-body Write the reference number on the top right corner of the paper form.
+      p.govuk-body Write to the applicant using the letter on this page.
+      p.govuk-body Store the application form in a secure location.
+
+      p: strong = link_to 'See the guides', guide_path, target: 'blank'
+      - if @representative.present?
+        .confirmation-letter
+          = t('new_letters.reject.dwp_reject_no_benefits_refund_representation_html',
+                  greeting: greeting_condition(@confirm, @application),
+                  legal_rep: @confirm.representative_full_name,
+                  reference: @application.reference,
+                  full_name: @application.applicant.full_name,
+                  user_name: current_user.name,
+                  amount_to_pay: currency_format(@application.detail.fee),
+                  date_for_part_payment: @confirm.expires_at)
+
+      - else
+        .confirmation-letter
+          = t('new_letters.reject.dwp_reject_no_benefits_refund_html',
+                  greeting: greeting_condition(@confirm, @application),
+                  reference: @application.reference,
+                  full_name: @application.applicant.full_name,
+                  user_name: current_user.name,
+                  amount_to_pay: currency_format(@application.detail.fee),
+                  date_for_part_payment: @confirm.expires_at)
+
+
     - elsif @application.detail.refund?
       = render(partial: 'shared/refund_template', locals: { application: @application, outcome: @confirm.outcome, representative: @representative })
 
@@ -138,16 +166,28 @@
         p.govuk-body Store the application form in a secure location.
 
         p: strong = link_to 'See the guides', guide_path, target: 'blank'
+        -if @representative.present?
+          .confirmation-letter
+            = t('new_letters.reject.dwp_reject_no_benefits_representation_html',
+                    reference: @application.reference,
+                    full_name: @application.applicant.full_name,
+                    legal_rep: @confirm.representative_full_name,
+                    greeting: greeting_condition(@confirm, @application),
+                    user_name: current_user.name,
+                    amount_to_pay: currency_format(@application.detail.fee),
+                    date_for_part_payment: @confirm.expires_at)
+        -else
+          .confirmation-letter
+            = t('new_letters.reject.dwp_reject_no_benefits_html',
+                    reference: @application.reference,
+                    full_name: @application.applicant.full_name,
+                    legal_rep: @confirm.representative_full_name,
+                    greeting: greeting_condition(@confirm, @application),
+                    user_name: current_user.name,
+                    amount_to_pay: currency_format(@application.detail.fee),
+                    date_for_part_payment: @confirm.expires_at)
 
-        .confirmation-letter
-          = t('new_letters.reject.reject_no_benefits_html',
-              reference: @application.reference,
-              full_name: @application.applicant.full_name,
-              legal_rep: @confirm.representative_full_name,
-              greeting: greeting_condition(@confirm, @application),
-              user_name: current_user.name,
-              amount_to_pay: currency_format(@application.detail.fee),
-              date_for_part_payment: @confirm.expires_at)
+
 
       -else
         p.govuk-body Write the reference number on the top right corner of the paper form
