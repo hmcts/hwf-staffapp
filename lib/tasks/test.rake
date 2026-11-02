@@ -1,18 +1,39 @@
 # These tasks are needed by Jenkins pipeline
 
-task test: :environment do
-  unless system "bundle exec rubocop"
-    raise "Rubocop failed"
-  end
+# Prints how long each CI step took, so slow runs can be traced - see CHANGELOG.md
+def timed_step(name)
+  started_at = Process.clock_gettime(Process::CLOCK_MONOTONIC)
+  result = yield
+  puts "== #{name} took #{(Process.clock_gettime(Process::CLOCK_MONOTONIC) - started_at).round(1)}s"
+  result
+end
 
-  unless system("rspec --format RspecJunitFormatter --out tmp/test/rspec.xml")
-    raise "Rspec testing failed #{$?}"
+# RSpec runs in RSPEC_PROCESSES processes; each writes its own JUnit file (.rspec_parallel)
+# and they are merged into the one tmp/test/rspec.xml that Jenkins reads - see CHANGELOG.md
+RSPEC_PROCESSES = 4
+
+def merge_rspec_junit_reports
+  merged = Nokogiri::XML('<testsuites/>')
+  Dir['tmp/test/rspec_parallel*.xml'].each do |file|
+    merged.root.add_child(Nokogiri::XML(File.read(file)).root)
   end
+  File.write('tmp/test/rspec.xml', merged.to_xml)
+end
+
+task test: :environment do
+  rubocop_passed = timed_step('Rubocop') { system "bundle exec rubocop" }
+  raise "Rubocop failed" unless rubocop_passed
+
+  FileUtils.rm_f(Dir['tmp/test/rspec*.xml'])
+  rspec_passed = timed_step('RSpec') do
+    system("bundle exec parallel_rspec -n #{RSPEC_PROCESSES} --serialize-stdout --combine-stderr spec")
+  end
+  merge_rspec_junit_reports
+  raise "Rspec testing failed #{$?}" unless rspec_passed
 
   puts "Running JS tests..."
-  unless system("yarn test:ci")
-    raise "Jest testing failed #{$?}"
-  end
+  jest_passed = timed_step('Jest') { system("yarn test:ci") }
+  raise "Jest testing failed #{$?}" unless jest_passed
 end
 
 namespace :test do
@@ -35,15 +56,17 @@ namespace :test do
 
   task functional: :environment do
     ENV['RUN_SMOKE_TESTS'] = 'false'
-    if system "bundle exec cucumber features/ " \
-              "--tags 'not @smoke and not @accessibility' " \
-              "--format pretty " \
-              "--format junit " \
-              "--out tmp/test/cucumber-functional"
-      puts "Functional test passed"
-    else
-      raise "Functional tests failed"
+    ENV['CUCUMBER_TIMING'] = 'true'
+    passed = timed_step('Cucumber') do
+      system "bundle exec cucumber features/ " \
+             "--tags 'not @smoke and not @accessibility' " \
+             "--format pretty " \
+             "--format junit " \
+             "--out tmp/test/cucumber-functional"
     end
+    raise "Functional tests failed" unless passed
+
+    puts "Functional test passed"
   end
 
   # Local-only deep profiling to find what makes the RSpec suite slow. Combines
