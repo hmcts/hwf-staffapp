@@ -5,6 +5,12 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 with entries grouped by branch and date rather than release version.
 
+## 2026-11-02 (gem-updates-v2)
+
+- Security and routine gem/npm updates. The HTML sanitizer fixes (nokogiri, loofah,
+  rails-html-sanitizer) went in under 7 days old. Held: devise_invitable 3 (needs a
+  data migration), cucumber 12 (cucumber-rails doesn't support it yet).
+
 ## 2026-11-02 (gem-updates-v1)
 
 ### Security
