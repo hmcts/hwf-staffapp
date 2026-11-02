@@ -15,6 +15,13 @@ with entries grouped by branch and date rather than release version.
 - CI runs RSpec in 4 parallel processes (RSpec was 11-18 of the ~20-26 minutes). The
   CNP library's junit step reads only `tmp/test/rspec.xml`, so the per-process reports
   are merged into it; the `fr-staffapp_test8` database stays for the Cucumber stage.
+## 2026-11-02 (rst-7173-savings-mapping)
+
+### Fixed
+
+- Online applications now get a savings `choice` (less / between / more), like paper ones.
+  The public app sends only the threshold flags, so `ApplicationBuilder` works the choice out
+  from them, matching `Views::Overview::OnlineSaving`. Existing records are not backfilled.
 
 ## 2026-11-02 (gem-updates-v1)
 
