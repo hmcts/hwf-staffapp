@@ -54,7 +54,7 @@
       p.govuk-body Store the application form in a secure location.
 
       p: strong = link_to 'See the guides', guide_path, target: 'blank'
-      - if @representative.present?
+      - if @confirm.representative.present?
         .confirmation-letter
           = t('new_letters.reject.dwp_reject_no_benefits_refund_representation_html',
                   greeting: greeting_condition(@confirm, @application),
@@ -166,7 +166,7 @@
         p.govuk-body Store the application form in a secure location.
 
         p: strong = link_to 'See the guides', guide_path, target: 'blank'
-        -if @representative.present?
+        -if @confirm.representative.present?
           .confirmation-letter
             = t('new_letters.reject.dwp_reject_no_benefits_representation_html',
                     reference: @application.reference,
