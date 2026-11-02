@@ -5,6 +5,13 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 with entries grouped by branch and date rather than release version.
 
+## 2026-11-02 (gem-updates-v1)
+
+### Security
+
+- Updated addressable 2.9.0 → 2.9.2 (7 advisories) and rack 3.2.7 → 3.2.8
+  (4 advisories). Both releases were under 7 days old; applied early as fixes.
+
 ## 2026-10-29 (rst-8657-hmrc-notify)
 
 ### Added
