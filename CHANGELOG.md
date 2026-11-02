@@ -10,6 +10,8 @@ with entries grouped by branch and date rather than release version.
 - Security and routine gem/npm updates. The HTML sanitizer fixes (nokogiri, loofah,
   rails-html-sanitizer) went in under 7 days old. Held: devise_invitable 3 (needs a
   data migration), cucumber 12 (cucumber-rails doesn't support it yet).
+- CI now logs how long rubocop, RSpec, Jest and Cucumber take, the 25 slowest
+  specs and the slowest scenarios/features, to find what makes the 26-minute run slow.
 
 ## 2026-11-02 (gem-updates-v1)
 

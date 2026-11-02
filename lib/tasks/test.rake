@@ -1,18 +1,25 @@
 # These tasks are needed by Jenkins pipeline
 
-task test: :environment do
-  unless system "bundle exec rubocop"
-    raise "Rubocop failed"
-  end
+# Prints how long each CI step took, so slow runs can be traced - see CHANGELOG.md
+def timed_step(name)
+  started_at = Process.clock_gettime(Process::CLOCK_MONOTONIC)
+  result = yield
+  puts "== #{name} took #{(Process.clock_gettime(Process::CLOCK_MONOTONIC) - started_at).round(1)}s"
+  result
+end
 
-  unless system("rspec --format RspecJunitFormatter --out tmp/test/rspec.xml")
-    raise "Rspec testing failed #{$?}"
+task test: :environment do
+  rubocop_passed = timed_step('Rubocop') { system "bundle exec rubocop" }
+  raise "Rubocop failed" unless rubocop_passed
+
+  rspec_passed = timed_step('RSpec') do
+    system("rspec --profile 25 --format progress --format RspecJunitFormatter --out tmp/test/rspec.xml")
   end
+  raise "Rspec testing failed #{$?}" unless rspec_passed
 
   puts "Running JS tests..."
-  unless system("yarn test:ci")
-    raise "Jest testing failed #{$?}"
-  end
+  jest_passed = timed_step('Jest') { system("yarn test:ci") }
+  raise "Jest testing failed #{$?}" unless jest_passed
 end
 
 namespace :test do
@@ -35,15 +42,17 @@ namespace :test do
 
   task functional: :environment do
     ENV['RUN_SMOKE_TESTS'] = 'false'
-    if system "bundle exec cucumber features/ " \
-              "--tags 'not @smoke and not @accessibility' " \
-              "--format pretty " \
-              "--format junit " \
-              "--out tmp/test/cucumber-functional"
-      puts "Functional test passed"
-    else
-      raise "Functional tests failed"
+    ENV['CUCUMBER_TIMING'] = 'true'
+    passed = timed_step('Cucumber') do
+      system "bundle exec cucumber features/ " \
+             "--tags 'not @smoke and not @accessibility' " \
+             "--format pretty " \
+             "--format junit " \
+             "--out tmp/test/cucumber-functional"
     end
+    raise "Functional tests failed" unless passed
+
+    puts "Functional test passed"
   end
 
   # Local-only deep profiling to find what makes the RSpec suite slow. Combines
