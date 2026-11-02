@@ -8,13 +8,27 @@ def timed_step(name)
   result
 end
 
+# RSpec runs in RSPEC_PROCESSES processes; each writes its own JUnit file (.rspec_parallel)
+# and they are merged into the one tmp/test/rspec.xml that Jenkins reads - see CHANGELOG.md
+RSPEC_PROCESSES = 4
+
+def merge_rspec_junit_reports
+  merged = Nokogiri::XML('<testsuites/>')
+  Dir['tmp/test/rspec_parallel*.xml'].each do |file|
+    merged.root.add_child(Nokogiri::XML(File.read(file)).root)
+  end
+  File.write('tmp/test/rspec.xml', merged.to_xml)
+end
+
 task test: :environment do
   rubocop_passed = timed_step('Rubocop') { system "bundle exec rubocop" }
   raise "Rubocop failed" unless rubocop_passed
 
+  FileUtils.rm_f(Dir['tmp/test/rspec*.xml'])
   rspec_passed = timed_step('RSpec') do
-    system("rspec --profile 25 --format progress --format RspecJunitFormatter --out tmp/test/rspec.xml")
+    system("bundle exec parallel_rspec -n #{RSPEC_PROCESSES} --serialize-stdout --combine-stderr spec")
   end
+  merge_rspec_junit_reports
   raise "Rspec testing failed #{$?}" unless rspec_passed
 
   puts "Running JS tests..."
