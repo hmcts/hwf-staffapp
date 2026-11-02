@@ -15,10 +15,10 @@ GIT
 
 GIT
   remote: https://github.com/hmcts/hwf_hmrc_api.git
-  revision: 9a46f3a0b48265ec3ea9e612afb16db10653f2d8
-  tag: v0.3.3
+  revision: 953f6ddb876592cde98fb940c0c62c5a76981466
+  tag: v0.3.4
   specs:
-    hwf_hmrc_api (0.3.3)
+    hwf_hmrc_api (0.3.4)
       httparty (~> 0.24.0)
       rotp (~> 6.3.0)
       uuid (~> 2.3.9)
@@ -168,7 +168,7 @@ GEM
     crass (1.0.8)
     cssbundling-rails (1.4.3)
       railties (>= 6.0.0)
-    csv (3.3.6)
+    csv (3.3.7)
     cucumber (11.1.1)
       base64 (~> 0.2)
       builder (~> 3.2)
@@ -467,7 +467,7 @@ GEM
       actionpack (>= 7.0)
       railties (>= 7.0)
     rexml (3.4.4)
-    rotp (6.3.0)
+    rotp (6.3.1)
     rspec-core (3.13.6)
       rspec-support (~> 3.13.0)
     rspec-expectations (3.13.5)
