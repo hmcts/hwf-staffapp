@@ -16,6 +16,11 @@ When("I successfully sign in as a user") do
   expect(dashboard_page.content).to have_find_an_application_heading
 end
 
+When("I successfully sign in as a user from an office excluded from the default evidence check") do
+  sign_in_as_excluded_office_user
+  expect(dashboard_page.content).to have_find_an_application_heading
+end
+
 When("I successfully sign in as a manager") do
   sign_in_as_manager
   expect(dashboard_page.content).to have_find_an_application_heading

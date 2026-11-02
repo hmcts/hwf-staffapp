@@ -7,7 +7,8 @@ RSpec.feature 'Application is not evidence check when income is above threshold'
   Warden.test_mode!
 
   let(:user) { create(:user, office: office, jurisdiction: jurisdiction) }
-  let(:office) { create(:office, jurisdictions: [jurisdiction]) }
+  # Excluded from the default income check so the NINO rules decide the outcome
+  let(:office) { create(:office, jurisdictions: [jurisdiction], entity_code: 'NB243') }
   let(:jurisdiction) { create(:jurisdiction) }
 
   before do
@@ -108,7 +109,7 @@ RSpec.feature 'Application is not evidence check when income is above threshold'
     end
   end
 
-  context 'Duplicate NINO not included in 1 in 2 count for Refund application' do
+  context 'Duplicate NINO flag and CCMCC refund frequency' do
     let(:application) { create(:application_full_remission, :refund) }
 
     before do
@@ -116,7 +117,7 @@ RSpec.feature 'Application is not evidence check when income is above threshold'
       create(:application_full_remission, :refund, office: office)
     end
 
-    scenario 'Create duplicate NINO and verify it is not included in 1 in 2 count' do
+    scenario 'Flagged duplicate NINO is checked, then the next refund application is picked by the CCMCC refund frequency' do
       start_new_application
       fill_personal_details('SN987654D')
       fill_application_details
