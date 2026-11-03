@@ -89,8 +89,23 @@ class ApplicationBuilder
     fields = [:min_threshold_exceeded, :max_threshold_exceeded, :over_66, :amount]
     {
       min_threshold: Settings.savings_threshold.minimum_value,
-      max_threshold: Settings.savings_threshold.maximum_value
+      max_threshold: Settings.savings_threshold.maximum_value,
+      choice: savings_choice(online_application)
     }.merge(prepare_attributes(fields, online_application))
+  end
+
+  # The public app sends only the threshold flags, see CHANGELOG.md
+  def savings_choice(online_application)
+    min_exceeded = online_application.min_threshold_exceeded
+    max_exceeded = online_application.max_threshold_exceeded
+
+    if min_exceeded == false
+      'less'
+    elsif min_exceeded && max_exceeded == false
+      'between'
+    elsif min_exceeded && max_exceeded
+      'more'
+    end
   end
 
   def online_representative_attributes(online_application)
