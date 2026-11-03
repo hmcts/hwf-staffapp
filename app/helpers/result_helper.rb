@@ -18,6 +18,15 @@ module ResultHelper
     application.income_max_threshold_exceeded
   end
 
+  # Applicant wording only after an evidence check, other routes unchanged - see CHANGELOG.md
+  def income_failed_letter_key(application)
+    if application.evidence_check && application.detail.statement_signed_by == 'applicant'
+      'new_letters.reject.reject_over_income_no_rep_html'
+    else
+      'new_letters.reject.reject_over_income_html'
+    end
+  end
+
   def display_benefit_failed_letter?(application)
     checks = application.benefit_checks
     return false if application.benefits != true || checks.blank?

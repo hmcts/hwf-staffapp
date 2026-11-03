@@ -15,7 +15,7 @@ with entries grouped by branch and date rather than release version.
 
 ### Changed
 
-- Updated README.md with status shields including SonarCloud 
+- Updated README.md with status shields including SonarCloud
 - Removed old shields (package.json)
 - Removed redundant saucelabs and azure-pipelines.yml environment variables (.env.test, .dockerignore)
 - Removed redundant saucelabs config (config/cucumber.yml)
@@ -33,6 +33,13 @@ with entries grouped by branch and date rather than release version.
   raw data extract, as export 2 timed out the request.
 - The export query runs once through a cursor instead of once per 5,000-row page (~66s down
   to ~11s), ordered by id within a date so rows are no longer skipped or repeated.
+## 2026-11-03 (rst-8633-income-rejected-template)
+
+- After an evidence check fails on income, the "Not eligible" page now shows the income
+  rejection letter when the original income was £0 too (it needed an original income above £0).
+- That letter uses the applicant wording when the applicant signed the statement of truth;
+  legal representative and litigation friend keep the representation wording. Income rejections
+  without an evidence check are unchanged, as the ticket asks.
 
 ## 2026-11-02 (gem-updates-v2)
 

@@ -21,13 +21,13 @@ module EvidenceCheckHelper
     thresholds.max_threshold
   end
 
+  # An original income of 0 or blank counts as 0 - see CHANGELOG.md
   def income_increase?(application)
-    if application.income.try(:positive?) &&
-       application.evidence_check.income.try(:positive?) &&
-       (application.income < application.evidence_check.income)
-      return true
-    end
-    false
+    evidence_income = application.evidence_check.income
+    return false unless evidence_income.try(:positive?)
+
+    original_income = application.income || 0
+    original_income < evidence_income
   end
 
   def display_evidence_section?(application, section_name)

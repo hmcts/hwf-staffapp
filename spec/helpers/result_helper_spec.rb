@@ -162,8 +162,43 @@ RSpec.describe ResultHelper do
 
         it { expect(helper.display_income_failed_letter?(application)).to be false }
       end
+
+      context 'original income was zero' do
+        let(:application) { build(:application, evidence_check: evidence, income: 0) }
+        let(:evidence) { build(:evidence_check, income: 5000) }
+
+        it { expect(helper.display_income_failed_letter?(application)).to be true }
+      end
     end
 
+  end
+
+  describe '#income_failed_letter_key' do
+    let(:application) { build(:application, evidence_check: evidence, detail: detail) }
+    let(:evidence) { build(:evidence_check, income: 5000) }
+    let(:applicant_letter) { 'new_letters.reject.reject_over_income_no_rep_html' }
+    let(:representation_letter) { 'new_letters.reject.reject_over_income_html' }
+
+    context 'evidence checked and signed by the applicant' do
+      let(:detail) { build(:complete_detail, :applicant) }
+      it { expect(helper.income_failed_letter_key(application)).to eq applicant_letter }
+    end
+
+    context 'evidence checked and signed by a legal representative' do
+      let(:detail) { build(:complete_detail, :legal_representative) }
+      it { expect(helper.income_failed_letter_key(application)).to eq representation_letter }
+    end
+
+    context 'evidence checked and signed by a litigation friend' do
+      let(:detail) { build(:complete_detail, :litigation_friend) }
+      it { expect(helper.income_failed_letter_key(application)).to eq representation_letter }
+    end
+
+    context 'no evidence check, signed by the applicant' do
+      let(:evidence) { nil }
+      let(:detail) { build(:complete_detail, :applicant) }
+      it { expect(helper.income_failed_letter_key(application)).to eq representation_letter }
+    end
   end
 
   describe '#income_value' do
