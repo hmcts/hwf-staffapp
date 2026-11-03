@@ -5,6 +5,13 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 with entries grouped by branch and date rather than release version.
 
+## 2026-11-03 (rst-8782-timout)
+
+- Power BI exports are built in a background job and emailed as a download link, like the
+  raw data extract, as export 2 timed out the request.
+- The export query runs once through a cursor instead of once per 5,000-row page (~66s down
+  to ~11s), ordered by id within a date so rows are no longer skipped or repeated.
+
 ## 2026-11-02 (gem-updates-v2)
 
 - Security and routine gem/npm updates. The HTML sanitizer fixes (nokogiri, loofah,
