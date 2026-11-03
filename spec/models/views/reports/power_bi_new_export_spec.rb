@@ -774,6 +774,43 @@ RSpec.describe Views::Reports::PowerBiNewExport do
     end
   end
 
+  describe 'reading rows from the database' do
+    let!(:applications) do
+      Array.new(5) do
+        create(:application_full_remission, office: office, business_entity: business_entity,
+                                            created_at: Time.zone.now)
+      end
+    end
+
+    before { stub_const("#{described_class}::FETCH_SIZE", 2) }
+
+    it 'runs the export query once instead of paging with OFFSET' do
+      queries = []
+      record_query = ->(*, payload) { queries << payload[:sql] }
+      ActiveSupport::Notifications.subscribed(record_query, 'sql.active_record') do
+        report.export2_by_created_at
+      end
+
+      expect(queries.grep(/OFFSET/i)).to be_empty
+      expect(queries.grep(/FROM applications/).size).to eq(1)
+    end
+
+    it 'exports every row once when there are more rows than one fetch' do
+      report.export2_by_created_at
+      ids = read_csv_from_zip.map { |r| r['Id'].to_i }
+
+      expect(ids).to match_array(applications.map(&:id))
+    end
+
+    it 'orders rows with the same date by id' do
+      applications.each { |app| app.detail.update!(date_received: Time.zone.yesterday) }
+      report.export2_by_created_at
+      ids = read_csv_from_zip.map { |r| r['Id'].to_i }
+
+      expect(ids).to eq(applications.map(&:id).sort)
+    end
+  end
+
   describe 'part payment data' do
     let!(:application) do
       create(:application_part_remission, :waiting_for_part_payment_state,

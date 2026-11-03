@@ -1300,6 +1300,8 @@ en-GB:
       finance_transactional: 'Finance transactional'
   forms/report/raw_data:
     notice: 'Raw data export in progress. You should receive an email with a download link in a few minutes. If not received, please contact technical support.'
+  forms/report/power_bi:
+    notice: 'PowerBI export in progress. You should receive an email with a download link in a few minutes. If not received, please contact technical support.'
   forms/report/fi_transactional:
     notice: 'Finance transactional export in progress. You should receive an email with a download link in a few minutes. If not please contact technical support.'
   forms/report/applications_by_court:
