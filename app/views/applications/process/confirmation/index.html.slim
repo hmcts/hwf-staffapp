@@ -155,7 +155,7 @@
               greeting: greeting_condition(@confirm, @application),
               user_name: current_user.name,
               fee_amount: currency_format(@application.detail.fee),
-              income_type: income_duration_type(@application),
+              income_type: income_failed_letter_income_type(@application),
               income_total: income_value(@application),
               expiry_date: @confirm.expires_at)
 

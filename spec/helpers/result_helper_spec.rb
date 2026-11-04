@@ -201,6 +201,23 @@ RSpec.describe ResultHelper do
     end
   end
 
+  describe '#income_failed_letter_income_type' do
+    let(:application) do
+      build(:application, evidence_check: build(:evidence_check, income: 5000), income_period: 'last_month',
+                          detail: build(:complete_detail, :post_ucd, statement_signed_by: signed_by))
+    end
+
+    context 'applicant letter' do
+      let(:signed_by) { 'applicant' }
+      it { expect(helper.income_failed_letter_income_type(application)).to eq 'Your total monthly income' }
+    end
+
+    context 'representation letter' do
+      let(:signed_by) { 'legal_representative' }
+      it { expect(helper.income_failed_letter_income_type(application)).to eq "The applicant's total monthly income" }
+    end
+  end
+
   describe '#income_value' do
     let(:application) {
       build(:application, income: income,

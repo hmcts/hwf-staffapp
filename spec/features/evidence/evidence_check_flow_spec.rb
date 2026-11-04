@@ -322,6 +322,9 @@ RSpec.feature 'Evidence check flow' do
         let(:representation_letter_text) do
           'This is because the applicant has more than the maximum amount of income allowed.'
         end
+        let(:income_labels) { '(income total|total monthly income|average income for the last 3 months)' }
+        let(:applicant_income_line) { /Your #{income_labels}: £5,000/ }
+        let(:representation_income_line) { /The applicant's #{income_labels}: £5,000/ }
 
         context 'signed by the applicant, original income above zero' do
           it { expect(page).to have_text applicant_letter_text }
@@ -337,6 +340,8 @@ RSpec.feature 'Evidence check flow' do
           it { expect(page).to have_text '£5,000' }
 
           it { expect(page).to have_no_text 'Maximum amount of income allowed: £5,490' }
+
+          it { expect(page).to have_text applicant_income_line }
         end
 
         context 'signed by the applicant, original income zero' do
@@ -363,6 +368,10 @@ RSpec.feature 'Evidence check flow' do
           it { expect(page).to have_text "Dear #{representative.first_name} #{representative.last_name} regarding" }
 
           it { expect(page).to have_text "The full fee amount of £#{amount} needs to be paid by #{paid_by}." }
+
+          it { expect(page).to have_text representation_income_line }
+
+          it { expect(page).to have_no_text applicant_income_line }
         end
 
         context 'signed by a litigation friend, original income zero' do
@@ -373,7 +382,7 @@ RSpec.feature 'Evidence check flow' do
 
           it { expect(page).to have_text representation_letter_text }
 
-          it { expect(page).to have_text '£5,000' }
+          it { expect(page).to have_text representation_income_line }
         end
       end
     end
