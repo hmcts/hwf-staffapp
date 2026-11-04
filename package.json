@@ -16,7 +16,7 @@
   },
   "engineStrict": true,
   "dependencies": {
-    "@rails/actiontext": "^8.1.400",
+    "@rails/actiontext": "^8.1.401",
     "accessible-autocomplete": "^3.0.2",
     "govuk-frontend": "^6.6.0",
     "jquery": "^4.0.0",

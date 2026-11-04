@@ -5,6 +5,12 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 with entries grouped by branch and date rather than release version.
 
+## 2026-11-04 (gem-updates-v3)
+
+- Security and routine gem/npm updates. Rails 8.1.4.1 (2 High advisories), Sentry, selenium,
+  rotp and mime-types-data went in under 7 days old. Held: other fresh releases, sass (exact pin),
+  rotp 6.4 (hwf_hmrc_api pins ~> 6.3.0), redis-client (redis pins it), devise_invitable 3, cucumber 12.
+
 ## 2026-11-04
 
 ### Changed
