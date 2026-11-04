@@ -7,7 +7,6 @@ std_opts = "--format #{ENV['CUCUMBER_FORMAT'] || 'pretty'} --strict --tags 'not 
 create_json_opts = "--format json --out tmp/cucumber-report/cucumber_report.json"
 %>
 default: <%= std_opts %>
-saucelabs: -t @saucelabs -t "not @fail"
 wip: --tags @wip:3 --wip features
 rerun: <%= rerun_opts %> --format rerun --out rerun.txt --strict --tags 'not @wip and not @accessibility'
 report: <%= std_opts %> <%= create_json_opts %> features
