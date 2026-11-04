@@ -12,14 +12,14 @@ RSpec.feature 'Application is not evidence checked when above saving threshold' 
     login_as user
   end
 
-  context 'Non-refund application no evidence check for 10th application' do
+  context 'Non-refund application no evidence check' do
     let(:application) { create(:application_full_remission) }
 
     before do
       create_list(:application_full_remission, 9)
     end
 
-    scenario 'Every 10th application is not evidence check when saving threshold exceeded' do
+    scenario 'Application is not evidence check when saving threshold exceeded' do
       start_new_application
 
       expect(page).to have_text 'Personal details'
@@ -43,14 +43,14 @@ RSpec.feature 'Application is not evidence checked when above saving threshold' 
     end
   end
 
-  context 'Refund application no evidence check for emergency 2nd application' do
+  context 'Refund application no evidence check for emergency application' do
     let(:application) { create(:application_full_remission, :refund) }
 
     before do
       create_list(:application_full_remission, 1, :refund)
     end
 
-    scenario 'Every 2nd application is not evidence check when saving threshold exceeded' do
+    scenario 'Application is not evidence check when saving threshold exceeded' do
       start_new_application
       fill_personal_details
       fill_application_refund_details

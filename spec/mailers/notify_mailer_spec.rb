@@ -52,6 +52,20 @@ RSpec.describe NotifyMailer do
     end
   end
 
+  describe '#hmrc_is_down_notifier' do
+    let(:mail) { described_class.hmrc_is_down_notifier }
+
+    it_behaves_like 'a Notify mail', template_id: ENV.fetch('NOTIFY_HMRC_DOWN_TEMPLATE_ID', nil)
+
+    it 'sends the environment name to the same people as the DWP alert' do
+      allow(ENV).to receive(:fetch).and_call_original
+      allow(ENV).to receive(:fetch).with('EMAIL_ENV', 'unknown').and_return('aat')
+
+      expect(mail.govuk_notify_personalisation).to eq({ environment: 'aat' })
+      expect(mail.to).to eq(['dan@test.com', 'petr@test.gov.uk'])
+    end
+  end
+
   describe '#user_invite' do
     let(:mail) { described_class.user_invite(user) }
 

@@ -94,7 +94,7 @@ RSpec.feature 'EV Skipped for All Benefit Application' do
       create_list(:application_full_remission, 1, :refund)
     end
 
-    scenario 'Every 2nd application is not evidence check when paper evidence is false on Benefit Application' do
+    scenario 'Application is not evidence check when paper evidence is false on Benefit Application' do
       start_new_application
 
       fill_personal_details(Settings.dwp_mock.ni_number_no.first)

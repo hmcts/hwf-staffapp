@@ -89,7 +89,10 @@ RSpec.describe YearlyRawDataExporter do
 
   describe 'output matches RawDataExport' do
     before do
-      create(:application_full_remission, :processed_state, **shared_parameters, fee: 500)
+      # RST-8592: flagExtended must map the same way as in RawDataExport
+      full = create(:application_full_remission, :processed_state, **shared_parameters, fee: 500)
+      create(:evidence_check, application: full, check_type: 'flagExtended', income_check_type: 'paper',
+                              completed_at: decision_date)
       create(:application_part_remission, :processed_state, **shared_parameters, fee: 300,
                                                                                  amount_to_pay: 50, decision_cost: 250)
     end

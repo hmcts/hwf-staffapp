@@ -14,7 +14,8 @@ RSpec.feature 'Staff can complete processing of an online application' do
   let(:income_based_part) { create(:online_application, :with_reference, :income, :completed, income: 1300, jurisdiction: user.office.jurisdictions.first) }
   let(:income_based_full) { create(:online_application, :with_reference, :income, :completed, income: 600, jurisdiction: user.office.jurisdictions.first) }
 
-  let(:user) { create(:staff) }
+  # Excluded from the default income check so processing ends on the confirmation page
+  let(:user) { create(:staff, office: create(:office, entity_code: 'NB243')) }
 
   before do
     login_as user

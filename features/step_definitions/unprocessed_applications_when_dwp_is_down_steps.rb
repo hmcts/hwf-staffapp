@@ -41,7 +41,7 @@ end
 Given("I'm on the Check details page") do
   expect(application_details_page.content).to have_header
   application_details_page.content.jurisdiction.click
-  click_button 'Next', visible: false
+  click_button 'Next', visible: :all
   expect(summary_page.content).to have_header
 end
 

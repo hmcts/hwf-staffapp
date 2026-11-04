@@ -67,3 +67,6 @@ features/cucumber-report/
 
 CLAUDE.md
 .claude/**
+
+# Local-only developer tools, never committed (e.g. the e2e data creator)
+script/local/

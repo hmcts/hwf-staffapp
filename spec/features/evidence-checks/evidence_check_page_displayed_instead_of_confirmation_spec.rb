@@ -16,7 +16,7 @@ RSpec.feature 'Evidence check page displayed instead of confirmation' do
 
   let(:application) { create(:application_full_remission, office: office, jurisdiction: jurisdiction) }
 
-  context '1 in 10 spot check' do
+  context 'low income rule' do
     scenario 'User continues from the summary page when building the application and is redirected to evidence check' do
       create(:application_full_remission_ev)
       create_list(:application_full_remission, 9)
@@ -31,7 +31,7 @@ RSpec.feature 'Evidence check page displayed instead of confirmation' do
     end
   end
 
-  context '1 in 2 spotcheck refund application' do
+  context 'low income rule refund application' do
     let(:application) { create(:application_full_remission, :refund, office: office, jurisdiction: jurisdiction) }
 
     scenario 'User continues from the summary page when building the application and is redirected to evidence check' do

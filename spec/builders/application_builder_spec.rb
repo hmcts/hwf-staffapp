@@ -243,6 +243,41 @@ RSpec.describe ApplicationBuilder do
             expect(built_saving.public_send(column)).to eql(online_application.public_send(column))
           end
         end
+
+        describe 'choice' do
+          before do
+            online_application.min_threshold_exceeded = min_threshold_exceeded
+            online_application.max_threshold_exceeded = max_threshold_exceeded
+          end
+
+          context 'when the minimum threshold has not been exceeded' do
+            let(:min_threshold_exceeded) { false }
+            let(:max_threshold_exceeded) { nil }
+
+            it { expect(built_saving.choice).to eq('less') }
+          end
+
+          context 'when the savings are between the thresholds' do
+            let(:min_threshold_exceeded) { true }
+            let(:max_threshold_exceeded) { false }
+
+            it { expect(built_saving.choice).to eq('between') }
+          end
+
+          context 'when the maximum threshold has been exceeded' do
+            let(:min_threshold_exceeded) { true }
+            let(:max_threshold_exceeded) { true }
+
+            it { expect(built_saving.choice).to eq('more') }
+          end
+
+          context 'when the maximum threshold was not answered' do
+            let(:min_threshold_exceeded) { true }
+            let(:max_threshold_exceeded) { nil }
+
+            it { expect(built_saving.choice).to be_nil }
+          end
+        end
       end
     end
   end

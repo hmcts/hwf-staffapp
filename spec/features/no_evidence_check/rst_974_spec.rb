@@ -19,7 +19,7 @@ RSpec.feature 'Application outside of 3 month limit is not evidence checked when
       create_list(:application_full_remission, 1, :refund)
     end
 
-    scenario 'Every 2nd application is not evidence checked when outside 3 month limit' do
+    scenario 'Application is not evidence checked when outside 3 month limit' do
       start_new_application
       fill_personal_details
       fill_application_date_set_discretion_no

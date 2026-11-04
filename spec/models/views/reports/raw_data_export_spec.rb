@@ -704,6 +704,51 @@ RSpec.describe Views::Reports::RawDataExport do
     end
   end
 
+  # RST-8592: 'flagExtended' is the remaining pool rule. See CHANGELOG.md
+  describe 'DB evidence check type' do
+    subject(:row) do
+      CSV.parse(data.to_csv, headers: true).find { |r| r['HwF reference number'] == application.reference }
+    end
+
+    let(:application) { create(:application_full_remission, :processed_state, shared_parameters) }
+    let(:evidence_check) do
+      create(:evidence_check, application: application, check_type: check_type, income_check_type: income_check_type,
+                              completed_at: decision_date)
+    end
+    let(:income_check_type) { 'paper' }
+
+    before { evidence_check }
+
+    context 'when the remaining pool rule selected the application' do
+      let(:check_type) { 'flagExtended' }
+
+      it { expect(row['DB evidence check type']).to eq 'flagExtended' }
+
+      context 'with paper income check and no HMRC check' do
+        it { expect(row['Evidence check type']).to eq 'Manual FlagExtended' }
+      end
+
+      context 'with hmrc income check' do
+        let(:income_check_type) { 'hmrc' }
+
+        it { expect(row['Evidence check type']).to eq 'HMRC FlagExtended' }
+      end
+
+      context 'with paper income check after an HMRC check' do
+        before { create(:hmrc_check, evidence_check: evidence_check, created_at: 1.day.ago) }
+
+        it { expect(row['Evidence check type']).to eq 'ManualAfterHMRC' }
+      end
+    end
+
+    context 'when another rule selected the application' do
+      let(:check_type) { 'low_income' }
+
+      it { expect(row['DB evidence check type']).to eq 'low_income' }
+      it { expect(row['Evidence check type']).to eq 'Manual LowIncome' }
+    end
+  end
+
   # RST-7882: the DWP benefit check columns come from the latest benefit check. See CHANGELOG.md
   describe 'DWP benefit check columns' do
     before { allow(Settings).to receive(:dwp_api_enabled).and_return(true) }

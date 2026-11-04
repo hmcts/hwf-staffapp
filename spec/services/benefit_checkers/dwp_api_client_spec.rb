@@ -1488,7 +1488,7 @@ RSpec.describe BenefitCheckers::DwpApiClient, type: :service do
       it 'records the verification with our side of the comparison only' do
         client.check(params)
         expect(verification.request_params).to eq('date_of_birth' => '1980-01-01', 'last_names' => ['JONES'], 'ni_number' => 'AB123456C')
-        expect(verification.data).to eq('verified' => true, 'failed_on' => nil, 'ni_number_checked' => false)
+        expect(verification.data).to eq('verified' => true, 'failed_on' => nil, 'checked' => ['date_of_birth', 'last_name'])
       end
 
       it 'stores the name as sent on the benefit check' do
@@ -1507,7 +1507,22 @@ RSpec.describe BenefitCheckers::DwpApiClient, type: :service do
 
       it 'passes, whatever the case and spacing' do
         expect(client.check(params)['benefit_checker_status']).to eq('Yes')
-        expect(verification.data).to include('verified' => true, 'ni_number_checked' => true)
+        expect(verification.data).to include('verified' => true, 'checked' => ['date_of_birth', 'last_name', 'ni_number'])
+      end
+    end
+
+    # Production records can carry only the guid and links. See CHANGELOG.md
+    context 'when the record has none of the identity fields' do
+      let(:record) { { 'jsonapi' => { 'version' => '1.0' }, 'data' => { 'id' => citizen_guid, 'type' => 'Citizen', 'attributes' => { 'guid' => citizen_guid } } } }
+
+      it 'carries on to the claims and decides there' do
+        expect(client.check(params)['benefit_checker_status']).to eq('Yes')
+        expect(connection).to have_received(:get_claims).with(citizen_guid, anything)
+      end
+
+      it 'records that nothing could be checked' do
+        client.check(params)
+        expect(verification.data).to eq('verified' => true, 'failed_on' => nil, 'checked' => [])
       end
     end
 
@@ -1534,7 +1549,7 @@ RSpec.describe BenefitCheckers::DwpApiClient, type: :service do
 
       it 'does not compare NI numbers' do
         expect(client.check(params)['benefit_checker_status']).to eq('Yes')
-        expect(verification.data).to include('verified' => true, 'ni_number_checked' => false)
+        expect(verification.data).to include('verified' => true, 'checked' => ['date_of_birth', 'last_name'])
         expect(verification.request_params).not_to have_key('ni_number')
       end
     end
@@ -1610,7 +1625,7 @@ RSpec.describe BenefitCheckers::DwpApiClient, type: :service do
       it 'checks the record against the partner details' do
         expect(client.check(params)['benefit_checker_status']).to eq('Yes')
         expect(verification.request_params).to eq('date_of_birth' => partner_dob, 'last_names' => ['marmite'], 'ni_number' => 'JA 12 34 56 D')
-        expect(verification.data).to include('verified' => true, 'ni_number_checked' => true)
+        expect(verification.data).to include('verified' => true, 'checked' => ['date_of_birth', 'last_name', 'ni_number'])
       end
 
       it 'rejects a record that is the applicant rather than the partner' do

@@ -1,4 +1,4 @@
-FROM hmctsprod.azurecr.io/imported/library/ruby:4.0.7-alpine3.23
+FROM hmctsprod.azurecr.io/imported/library/ruby:4.0.9-alpine3.23
 
 # Adding argument support for ping.json
 ARG APPVERSION=unknown
@@ -18,6 +18,7 @@ ENV NOTIFY_COMPLETED_CY_NEW_REFUND_TEMPLATE_ID=replace_this_at_build_time
 ENV NOTIFY_COMPLETED_CY_ONLINE_TEMPLATE_ID=replace_this_at_build_time
 ENV NOTIFY_COMPLETED_CY_PAPER_TEMPLATE_ID=replace_this_at_build_time
 ENV NOTIFY_DWP_DOWN_TEMPLATE_ID=replace_this_at_build_time
+ENV NOTIFY_HMRC_DOWN_TEMPLATE_ID=replace_this_at_build_time
 
 # fix to address http://tzinfo.github.io/datasourcenotfound - PET ONLY
 ARG DEBIAN_FRONTEND=noninteractive

@@ -51,6 +51,9 @@ module Views
 
       EXCLUDED_OFFICES = "('Digital', 'HMCTS HQ Team')"
 
+      # Rows read from the database cursor at a time
+      FETCH_SIZE = 5000
+
       def initialize(start_date, end_date, verbose: false)
         @date_from = parse_date(start_date)
         @date_to = parse_date(end_date).end_of_day
@@ -181,42 +184,42 @@ module Views
       end
       # rubocop:enable Metrics/MethodLength
 
-      def fetch_data_in_batches(batch_size: 5000)
-        offset = 0
+      # One query read through a cursor, not LIMIT/OFFSET pages - see CHANGELOG.md
+      def fetch_data_in_batches
+        connection = ActiveRecord::Base.connection
 
-        loop do
-          sql = build_sql_query(limit: batch_size, offset: offset)
-          rows = ActiveRecord::Base.connection.exec_query(sql).to_a
+        connection.transaction do
+          connection.execute("DECLARE power_bi_rows NO SCROLL CURSOR FOR #{build_sql_query}")
 
-          break if rows.empty?
+          loop do
+            rows = connection.exec_query("FETCH #{FETCH_SIZE} FROM power_bi_rows").to_a
+            break if rows.empty?
 
-          yield rows.map(&:with_indifferent_access)
+            yield rows.map(&:with_indifferent_access)
+          end
 
-          break if rows.size < batch_size
-
-          offset += batch_size
+          connection.execute('CLOSE power_bi_rows')
         end
       end
 
-      def build_sql_query(limit:, offset:)
+      def build_sql_query
         if @include_online_applications
-          build_union_sql_query(limit: limit, offset: offset)
+          build_union_sql_query
         else
-          build_applications_sql_query(limit: limit, offset: offset)
+          build_applications_sql_query
         end
       end
 
-      def build_applications_sql_query(limit:, offset:)
+      def build_applications_sql_query
         <<~SQL.squish
           #{applications_select_sql}
           #{applications_from_sql}
           #{applications_where_sql}
-          ORDER BY #{@date_field}
-          LIMIT #{limit} OFFSET #{offset}
+          ORDER BY #{@date_field}, applications.id
         SQL
       end
 
-      def build_union_sql_query(limit:, offset:)
+      def build_union_sql_query
         <<~SQL.squish
           SELECT * FROM (
             #{applications_select_sql}
@@ -227,8 +230,7 @@ module Views
             #{online_applications_from_sql}
             #{online_applications_where_sql}
           ) combined
-          ORDER BY combined.date_received
-          LIMIT #{limit} OFFSET #{offset}
+          ORDER BY combined.date_received, combined.id
         SQL
       end
 
@@ -421,13 +423,16 @@ module Views
                WHEN ec.check_type = 'flag' AND ec.income_check_type = 'paper' AND hc.hc_id IS NULL THEN 'Manual NIFlag'
                WHEN ec.check_type = 'ni_exist' AND ec.income_check_type = 'paper' AND hc.hc_id IS NULL THEN 'Manual NIDuplicate'
                WHEN ec.check_type = 'low_income' AND ec.income_check_type = 'paper' AND hc.hc_id IS NULL THEN 'Manual LowIncome'
+               WHEN ec.check_type = 'flagExtended' AND ec.income_check_type = 'paper' AND hc.hc_id IS NULL THEN 'Manual FlagExtended'
                WHEN ec.check_type = 'random' AND ec.income_check_type = 'hmrc' THEN 'HMRC NumberRule'
                WHEN ec.check_type = 'flag' AND ec.income_check_type = 'hmrc' THEN 'HMRC NIFlag'
                WHEN ec.check_type = 'ni_exist' AND ec.income_check_type = 'hmrc' THEN 'HMRC NIDuplicate'
                WHEN ec.check_type = 'low_income' AND ec.income_check_type = 'hmrc' THEN 'HMRC LowIncome'
+               WHEN ec.check_type = 'flagExtended' AND ec.income_check_type = 'hmrc' THEN 'HMRC FlagExtended'
                WHEN ec.check_type = 'flag' AND ec.income_check_type = 'paper' AND hc.hc_id IS NOT NULL THEN 'ManualAfterHMRC'
                WHEN ec.check_type = 'random' AND ec.income_check_type = 'paper' AND hc.hc_id IS NOT NULL THEN 'ManualAfterHMRC'
                WHEN ec.check_type = 'low_income' AND ec.income_check_type = 'paper' AND hc.hc_id IS NOT NULL THEN 'ManualAfterHMRC'
+               WHEN ec.check_type = 'flagExtended' AND ec.income_check_type = 'paper' AND hc.hc_id IS NOT NULL THEN 'ManualAfterHMRC'
                ELSE NULL
           END AS evidence_check_type
         SQL
@@ -515,7 +520,7 @@ module Views
           format_date(row['manual_process_date']),
           format_date(row['date_submitted_online']),
           row['statement_signed_by'],
-          row['db_evidence_check_type'],
+          row['db_evidence_check_type'].presence || 'N/A',
           row['db_income_check_type'],
           row['hmrc_total_income'],
           row['ev_check_outcome'],

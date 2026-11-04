@@ -9,7 +9,7 @@ Feature: Currency format
     And I should see total savings is an integer amount
 
   Scenario: Letter - part payment and no evidence check
-    Given I successfully sign in as a user
+    Given I successfully sign in as a user from an office excluded from the default evidence check
     When I have completed a part payment paper application
     Then I should be on the paper application confirmation page
     And I should see amount to pay is an integer amount
@@ -40,7 +40,7 @@ Feature: Currency format
     And I should see total monthly income is an integer amount
 
   Scenario: Letter - part refund and no evidence check
-    Given I successfully sign in as a user
+    Given I successfully sign in as a user from an office excluded from the default evidence check
     When I have completed a part refund paper application
     Then I should be on the paper application confirmation page
     And I should see that all currency amounts are integers

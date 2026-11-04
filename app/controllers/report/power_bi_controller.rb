@@ -13,31 +13,13 @@ module Report
 
     def data_export
       authorize :report, :power_bi?
-      send_file power_bi_data_file
+      # Built in the background and emailed, as the export can outlast the request - see CHANGELOG.md
+      PowerBiExportJob.perform_later(export_type: params[:export_type], month: selected_month,
+                                     user_id: current_user.id)
+      redirect_to report_power_bi_path, notice: t('forms/report/power_bi.notice')
     end
 
     private
-
-    def power_bi_data_file
-      power_bi = power_bi_export
-      power_bi.to_zip
-      power_bi.zipfile_path
-    rescue StandardError => e
-      Sentry.with_scope do |scope|
-        scope.set_tags(task: "power_bi_export")
-        Sentry.capture_message(e.message)
-      end
-      Rails.logger.debug { "Error in power_bi export task: #{e.message}" }
-    end
-
-    def power_bi_export
-      month = selected_month
-      case params[:export_type]
-      when '2' then Views::Reports::PowerBiExport2.new(month)
-      when '3' then Views::Reports::PowerBiExport3.new(month)
-      else Views::Reports::PowerBiExport1.new(month)
-      end
-    end
 
     # Parse the chosen "YYYY-MM" month, falling back to the previous month.
     def selected_month

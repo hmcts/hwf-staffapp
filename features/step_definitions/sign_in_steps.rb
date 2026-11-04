@@ -16,6 +16,11 @@ When("I successfully sign in as a user") do
   expect(dashboard_page.content).to have_find_an_application_heading
 end
 
+When("I successfully sign in as a user from an office excluded from the default evidence check") do
+  sign_in_as_excluded_office_user
+  expect(dashboard_page.content).to have_find_an_application_heading
+end
+
 When("I successfully sign in as a manager") do
   sign_in_as_manager
   expect(dashboard_page.content).to have_find_an_application_heading
@@ -112,7 +117,7 @@ Then("I should be able to send an email to help with fees support") do
 end
 
 When("I sign out") do
-  click_link 'Sign out', visible: false
+  click_link 'Sign out', visible: :all
 end
 
 Then("I should be on sign in page") do

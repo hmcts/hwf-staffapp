@@ -5,7 +5,7 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 with entries grouped by branch and date rather than release version.
 
-## 2026-10-22
+## 2026-11-04
 
 ### Changed
 
@@ -20,6 +20,102 @@ with entries grouped by branch and date rather than release version.
 - Removed outdated ESLint configurations (.eslintignore, .eslintrc)
 - Removed redundant RuboCop TODO list (.rubocop_todo.yml)
 - Updated RuboCop ruby version and removed redundant excludes (.rubocop.yml)
+
+## 2026-11-03 (rst-8782-timout)
+
+- Power BI exports are built in a background job and emailed as a download link, like the
+  raw data extract, as export 2 timed out the request.
+- The export query runs once through a cursor instead of once per 5,000-row page (~66s down
+  to ~11s), ordered by id within a date so rows are no longer skipped or repeated.
+
+## 2026-11-02 (gem-updates-v2)
+
+- Security and routine gem/npm updates. The HTML sanitizer fixes (nokogiri, loofah,
+  rails-html-sanitizer) went in under 7 days old. Held: devise_invitable 3 (needs a
+  data migration), cucumber 12 (cucumber-rails doesn't support it yet).
+- CI now logs how long rubocop, RSpec, Jest and Cucumber take, the 25 slowest
+  specs and the slowest scenarios/features, to find what makes the 26-minute run slow.
+- CI runs RSpec in 4 parallel processes (RSpec was 11-18 of the ~20-26 minutes). The
+  CNP library's junit step reads only `tmp/test/rspec.xml`, so the per-process reports
+  are merged into it; the `fr-staffapp_test8` database stays for the Cucumber stage.
+## 2026-11-02 (rst-7173-savings-mapping)
+
+### Fixed
+
+- Online applications now get a savings `choice` (less / between / more), like paper ones.
+  The public app sends only the threshold flags, so `ApplicationBuilder` works the choice out
+  from them, matching `Views::Overview::OnlineSaving`. Existing records are not backfilled.
+
+## 2026-11-02 (gem-updates-v1)
+
+### Security
+
+- Updated addressable 2.9.0 → 2.9.2 (7 advisories) and rack 3.2.7 → 3.2.8
+  (4 advisories). Both releases were under 7 days old; applied early as fixes.
+
+## 2026-10-29 (rst-8657-hmrc-notify)
+
+### Added
+
+- HMRC checker offline email, a copy of the DWP one: `HmrcReportStatusJob` runs
+  every 5 minutes and emails the DWP alert list when `HmrcMonitor` says offline.
+  The "HMRC Checker" wording lives in a new Notify template
+  (`NOTIFY_HMRC_DOWN_TEMPLATE_ID`); the cron is set up by hand, see README.
+
+## 2026-10-26 (dwo-citizen-fix)
+
+### Fixed
+
+- A citizen record without the identity fields no longer fails the DWP check.
+  Only a field DWP sends (date of birth, last name, NI number) can disagree; the
+  check then carries on to the claims. The `verify_citizen` outcome now lists
+  the fields in `checked`, replacing `ni_number_checked`. Why: production
+  `GET /citizens/{guid}` returned only the guid and links, so every exact match
+  was recorded as `no_match_found` on the date of birth.
+
+## 2026-10-26 (infra-update)
+
+### Changed
+
+- Updated Jenkins-Infrastructure library 2.12.2 → 2.13.1 and Ruby 4.0.7 → 4.0.9
+  (security release; Regexp CVE fixes).
+- Jenkins `installRuby` now uses `rvm install --binary --autolibs=read-only`.
+  Why: the new ubuntu-preview agents cannot run `apt-get update`, and the
+  Travis binary mirror only carries 4.0.9 for Ubuntu 24.04.
+
+### Security
+
+- Updated crass 1.0.7 → 1.0.8 — fixes GHSA-pq4g-8rxf-4g29 (CSS sanitizer bypass).
+
+### Changed
+
+- Routine gem and npm bumps, including json 2 → 3 (app only uses `JSON.parse`/`to_json`)
+  and the azure-blob pin to `~> 0.9.0`; versions are in the lockfile diff. Fresh
+  releases applied on explicit approval.
+- rubocop-capybara 3.1.0 added `Capybara/VisibilityOption`: `visible: false` in
+  features and specs became the equivalent `visible: :all`.
+
+### Known issues
+
+- devise_invitable 2.0.14 reverted to 2.0.13: it no longer adds
+  `invitation_instructions` to custom mailers, so `User#invite!` raises with
+  `NotifyMailer`. Define that method on `NotifyMailer` before retrying.
+- Held: faraday 2.15.1 (released today), govuk-frontend 6.6.0 (visual check after
+  the DWP freeze), cucumber 12 / marcel 2 / diff-lcs 2 / prism 2 (majors, no
+  advisories), redis-client 0.31.0 (blocked by redis 6.0.0), simplecov (SonarCloud).
+## 2026-10-22 (rst-8592-evidence-checking)
+
+### Changed
+
+- Removed the 1 in 2 (refund) and 1 in 10 random evidence check fallback;
+  random selection now comes only from the CCMCC fee-band frequencies.
+- Every income application that no other rule picks now gets an evidence check
+  (`flagExtended`), except offices NB243 and TI122. CamelCase so the
+  'DB evidence check type' export column needs no mapping. The derived 'Evidence check type'
+  column in Raw data, Applications by court, Power BI and the yearly raw data
+  task maps it as Manual/HMRC FlagExtended.
+- Power BI export 2 shows 'N/A' for a blank 'DB evidence check type', as exports
+  1 and 3 already did; it wrote an empty cell.
 
 ## 2026-10-15 (dwp-middle-name-matching)
 

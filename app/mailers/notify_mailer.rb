@@ -43,6 +43,14 @@ class NotifyMailer < GovukNotifyRails::Mailer
     mail(to: Settings.mail.dwp_notification_alert)
   end
 
+  def hmrc_is_down_notifier
+    set_template(ENV.fetch('NOTIFY_HMRC_DOWN_TEMPLATE_ID', nil))
+    set_personalisation(
+      environment: ENV.fetch('EMAIL_ENV', 'unknown')
+    )
+    mail(to: Settings.mail.dwp_notification_alert)
+  end
+
   def user_invite(user)
     set_template(ENV.fetch('NOTIFY_USER_INVITE_TEMPLATE_ID', nil))
     set_personalisation(

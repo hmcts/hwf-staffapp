@@ -5,7 +5,8 @@ require 'rails_helper'
 RSpec.feature 'Processing refund application with valid date received date' do
 
   let(:jurisdiction) { create(:jurisdiction) }
-  let(:office) { create(:office, jurisdictions: [jurisdiction]) }
+  # Excluded from the default income check so processing ends on the confirmation page
+  let(:office) { create(:office, jurisdictions: [jurisdiction], entity_code: 'NB243') }
   let(:user) { create(:user, office: office) }
 
   let(:online_application_1) do

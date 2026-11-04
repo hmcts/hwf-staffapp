@@ -9,7 +9,7 @@ Then("I can view feedback received") do
 end
 
 Then("I can give feedback") do
-  click_link 'Tell us what you think', visible: false
+  click_link 'Tell us what you think', visible: :all
   expect(feedback_page.content).to have_user_feedback_header
 end
 

@@ -41,16 +41,16 @@ describe EvidenceCheckSelector do
     end
 
     context 'for a non-benefit remission application' do
-      context 'for a non-refund application' do
+      context 'selected by the CCMCC frequency rule' do
 
-        context 'frequency test with stubs' do
+        context 'with a stubbed query' do
           let(:query_checkeable) { instance_double(Query::EvidenceCheckable) }
           let(:ccmcc_mock) { instance_double(CCMCCEvidenceCheckRules) }
           let(:find_all_result) { double('find_all_result') } # rubocop:disable RSpec/VerifiedDoubles
 
           before do
             allow(Query::EvidenceCheckable).to receive(:new).and_return(query_checkeable)
-            allow(query_checkeable).to receive_messages(list: list, find_all: find_all_result)
+            allow(query_checkeable).to receive(:find_all).and_return(find_all_result)
             allow(find_all_result).to receive_messages(where: find_all_result, last: list)
             allow(CCMCCEvidenceCheckRules).to receive(:new).and_return(ccmcc_mock)
             allow(ccmcc_mock).to receive_messages(rule_applies?: true, frequency: ccmcc_test_frequency,
@@ -115,7 +115,7 @@ describe EvidenceCheckSelector do
             context '1st' do
               let(:list) { [app_no_ev_check, app_ev_check] }
 
-              it { is_expected.not_to be_a(EvidenceCheck) }
+              it { expect(decision.check_type).to eql 'flagExtended' }
             end
             context 'no previous check' do
               let(:list) { [app_no_ev_check, app_no_ev_check] }
@@ -125,7 +125,7 @@ describe EvidenceCheckSelector do
             context 'empty list' do
               let(:list) { [] }
 
-              it { is_expected.not_to be_a(EvidenceCheck) }
+              it { expect(decision.check_type).to eql 'flagExtended' }
             end
           end
 
@@ -157,7 +157,7 @@ describe EvidenceCheckSelector do
                  app_no_ev_check, app_no_ev_check, app_ev_check, app_no_ev_check]
               }
 
-              it { is_expected.not_to be_a(EvidenceCheck) }
+              it { expect(decision.check_type).to eql 'flagExtended' }
             end
             context '1st' do
               let(:list) {
@@ -165,7 +165,7 @@ describe EvidenceCheckSelector do
                  app_no_ev_check, app_no_ev_check, app_no_ev_check, app_no_ev_check, app_ev_check]
               }
 
-              it { is_expected.not_to be_a(EvidenceCheck) }
+              it { expect(decision.check_type).to eql 'flagExtended' }
             end
             context 'no previous check' do
               let(:list) {
@@ -179,8 +179,39 @@ describe EvidenceCheckSelector do
             context 'empty list' do
               let(:list) { [] }
 
-              it { is_expected.not_to be_a(EvidenceCheck) }
+              it { expect(decision.check_type).to eql 'flagExtended' }
             end
+          end
+        end
+      end
+
+      context 'when no CCMCC fee rule applies' do
+        let(:ccmcc_mock) { instance_double(CCMCCEvidenceCheckRules, rule_applies?: false) }
+        let(:office) { create(:office) }
+
+        # Earlier applications in the same office, the setup the removed
+        # 1 in 2 (refund) and 1 in 10 rules used to count against
+        before do
+          allow(CCMCCEvidenceCheckRules).to receive(:new).and_return(ccmcc_mock)
+          create(:application_full_remission_ev, :refund, office: office)
+          create(:application_full_remission, :refund, office: office)
+          create(:application_full_remission_ev, office: office)
+          create_list(:application_full_remission, 9, office: office)
+        end
+
+        context 'refund application' do
+          let(:application) { create(:application_full_remission, :refund, income: 150, office: office) }
+
+          it 'falls through to the default income check' do
+            expect(decision.check_type).to eql 'flagExtended'
+          end
+        end
+
+        context 'non-refund application' do
+          let(:application) { create(:application_full_remission, income: 150, office: office) }
+
+          it 'falls through to the default income check' do
+            expect(decision.check_type).to eql 'flagExtended'
           end
         end
       end
@@ -249,8 +280,8 @@ describe EvidenceCheckSelector do
           evidence_check
         end
 
-        it 'selects the application for evidence_check' do
-          is_expected.not_to be_a(EvidenceCheck)
+        it 'skips the ni_exist check and falls through to the default income check' do
+          expect(decision.check_type).to eql 'flagExtended'
         end
       end
 
@@ -307,7 +338,7 @@ describe EvidenceCheckSelector do
         end
         context 'under 102' do
           let(:income) { 102 }
-          it { is_expected.not_to be_a(EvidenceCheck) }
+          it { expect(decision.check_type).to eql 'flagExtended' }
         end
       end
 
@@ -315,7 +346,6 @@ describe EvidenceCheckSelector do
         let(:office) { create(:office, entity_code: 'TI122') }
         context 'under 101' do
           let(:income) { 11 }
-          it { is_expected.not_to be_a(EvidenceCheck) }
           it { is_expected.not_to be_a(EvidenceCheck) }
         end
       end
@@ -349,8 +379,8 @@ describe EvidenceCheckSelector do
 
             let(:query_type) { CCMCCEvidenceCheckRules::QUERY_REFUND }
 
-            it 'creates evidence_check record for the application' do
-              is_expected.not_to be_a(EvidenceCheck)
+            it 'is not picked by the CCMCC frequency and falls through to the default income check' do
+              expect(decision.check_type).to eql 'flagExtended'
             end
           end
 
@@ -362,8 +392,8 @@ describe EvidenceCheckSelector do
 
             let(:query_type) { nil }
 
-            it 'creates evidence_check record for the application' do
-              is_expected.not_to be_a(EvidenceCheck)
+            it 'is not picked by the CCMCC frequency and falls through to the default income check' do
+              expect(decision.check_type).to eql 'flagExtended'
             end
           end
 
@@ -374,8 +404,8 @@ describe EvidenceCheckSelector do
               create(:application_full_remission, office: digital_office)
             end
 
-            it 'creates evidence_check record for the application' do
-              is_expected.not_to be_a(EvidenceCheck)
+            it 'is not picked by the CCMCC frequency and falls through to the default income check' do
+              expect(decision.check_type).to eql 'flagExtended'
             end
           end
         end
@@ -464,5 +494,113 @@ describe EvidenceCheckSelector do
       end
     end
 
+    context 'default income check for applications no other rule picked' do
+      let(:application) { create(:application_full_remission, :applicant_full, income: 150, office: office) }
+      let(:ccmcc_rule) { instance_double(CCMCCEvidenceCheckRules, rule_applies?: false) }
+
+      before do
+        allow(CCMCCEvidenceCheckRules).to receive(:new).and_return(ccmcc_rule)
+      end
+
+      context 'office not in EXLUDED_OFFICE_CODES' do
+        let(:office) { create(:office, entity_code: 'DH403') }
+
+        it { expect(decision.check_type).to eql 'flagExtended' }
+        it { expect(decision.checks_annotation).to be_nil }
+        it { expect(decision.expires_at).to eql(current_time + expires_in_days.days) }
+      end
+
+      EvidenceCheckSelector::EXLUDED_OFFICE_CODES.each do |code|
+        context "office #{code}" do
+          let(:office) { create(:office, entity_code: code) }
+
+          it { is_expected.to be_nil }
+        end
+      end
+
+      context 'benefit application' do
+        let(:application) { create(:application, :applicant_full, office: office) }
+        let(:office) { create(:office, entity_code: 'DH403') }
+
+        it 'is still skipped' do
+          is_expected.to be_nil
+        end
+      end
+    end
+
+    # Each rule is made to apply on its own terms; the first one in
+    # EvidenceCheckSelector#evidence_check_type wins.
+    context 'rule order' do
+      let(:application) do
+        create(:application_full_remission, :applicant_full, ni_number: 'SN123456D', income: 150, office: office)
+      end
+      let(:office) { create(:office) }
+      let(:ccmcc_rule) do
+        instance_double(CCMCCEvidenceCheckRules, rule_applies?: ccmcc_applies, frequency: 1, check_type: nil,
+                                                 query_type: CCMCCEvidenceCheckRules::QUERY_ALL, clean_annotation_data: nil)
+      end
+      let(:low_income_rule) { instance_double(LowIncomeEvidenceCheckRules, rule_applies?: low_income_applies, annotation: nil) }
+      let(:flagged) { true }
+      let(:duplicate_ni) { true }
+      let(:low_income_applies) { true }
+      let(:ccmcc_applies) { true }
+
+      before do
+        allow(CCMCCEvidenceCheckRules).to receive(:new).and_return(ccmcc_rule)
+        allow(LowIncomeEvidenceCheckRules).to receive(:new).and_return(low_income_rule)
+        create(:evidence_check_flag, reg_number: 'SN123456D') if flagged
+        create(:application, :income_type, :applicant_full, :waiting_for_evidence_state, ni_number: 'SN123456D') if duplicate_ni
+      end
+
+      it 'flag comes before everything else' do
+        expect(decision.check_type).to eql 'flag'
+      end
+
+      context 'without a flag' do
+        let(:flagged) { false }
+
+        it 'duplicate NI number comes next' do
+          expect(decision.check_type).to eql 'ni_exist'
+        end
+      end
+
+      context 'without a flag or a duplicate NI number' do
+        let(:flagged) { false }
+        let(:duplicate_ni) { false }
+
+        it 'low income comes next' do
+          expect(decision.check_type).to eql 'low_income'
+        end
+      end
+
+      context 'with only the CCMCC rule' do
+        let(:flagged) { false }
+        let(:duplicate_ni) { false }
+        let(:low_income_applies) { false }
+
+        it 'CCMCC random check comes last' do
+          expect(decision.check_type).to eql 'random'
+        end
+      end
+
+      context 'with none of the named rules' do
+        let(:flagged) { false }
+        let(:duplicate_ni) { false }
+        let(:low_income_applies) { false }
+        let(:ccmcc_applies) { false }
+
+        it 'default income check comes last' do
+          expect(decision.check_type).to eql 'flagExtended'
+        end
+
+        context 'in an excluded office' do
+          let(:office) { create(:office, entity_code: 'NB243') }
+
+          it 'creates no evidence check' do
+            is_expected.to be_nil
+          end
+        end
+      end
+    end
   end
 end

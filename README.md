@@ -72,6 +72,10 @@ To set it up (if there is no record in DB) run this in rails console:
 Runs every 5 minutes
 ```DwpReportStatusJob.delay(cron: '*/5 * * * *').perform_now```
 
+## Delayed jobs for HMRC offline notification
+Runs every 5 minutes, same as the DWP one
+```HmrcReportStatusJob.delay(cron: '*/5 * * * *').perform_now```
+
 ## Delayed jobs for HMRC data purge
 Runs 10 minutes past midnight
 ```HmrcDataPurgeJob.delay(cron: '10 0 * * *').perform_now```
@@ -155,11 +159,11 @@ To be able to pull the image locally you either have to log in via
 or you can just remove the path from the image line ie:
 
 ```
-FROM hmctsprod.azurecr.io/imported/library/ruby:4.0.7-alpine3.23
+FROM hmctsprod.azurecr.io/imported/library/ruby:4.0.9-alpine3.23
 ```
 to
 ```
-FROM ruby:4.0.7-alpine3.23
+FROM ruby:4.0.9-alpine3.23
 ```
 
 ### Docker image on Jenkins/Azure
@@ -241,4 +245,4 @@ else
 - "5" or "FEE0003" → should find the percentage fee
 - "family" → should find FEE0004
 
-Deployment versions trigger: 7
+Deployment versions trigger: 8

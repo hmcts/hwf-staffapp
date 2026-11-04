@@ -1,5 +1,7 @@
 
 CCMCC_OFFICE_ENTITY_CODE = 'DH403'.freeze
+# Not picked by the default income evidence check (RST-8592), see CHANGELOG.md
+EXCLUDED_OFFICE_ENTITY_CODE = 'NB243'.freeze
 
 def base_page
   @base_page ||= BasePage.new
@@ -306,6 +308,16 @@ end
 def sign_in_as_user
   sign_in_page.load_page
   sign_in_page.user_account
+end
+
+def excluded_office_user
+  office = FactoryBot.create(:office, entity_code: EXCLUDED_OFFICE_ENTITY_CODE)
+  FactoryBot.create(:user, office: office)
+end
+
+def sign_in_as_excluded_office_user
+  sign_in_page.load_page
+  sign_in_page.sign_in_with excluded_office_user
 end
 
 def sign_in_as_ccmcc_office_user

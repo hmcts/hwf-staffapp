@@ -51,8 +51,8 @@ RSpec.feature 'Record benefit evidence received after a benefit application fail
     end
 
     scenario 'confirming evidence was received moves the application to a full remission' do
-      choose 'benefit_evidence_evidence_true', visible: false
-      click_button 'Save and Continue', visible: false
+      choose 'benefit_evidence_evidence_true', visible: :all
+      click_button 'Save and Continue', visible: :all
 
       expect(page).to have_text('Evidence received - the application has been updated to a full remission')
       expect(page).to have_no_text('Evidence Received')
@@ -72,8 +72,8 @@ RSpec.feature 'Record benefit evidence received after a benefit application fail
     end
 
     scenario 'saying no records the review and keeps the application not eligible' do
-      choose 'benefit_evidence_evidence_false', visible: false
-      click_button 'Save and Continue', visible: false
+      choose 'benefit_evidence_evidence_false', visible: :all
+      click_button 'Save and Continue', visible: :all
 
       expect(page).to have_text('Evidence not received - the application is not eligible for help with fees')
       expect(page).to have_no_text('Evidence Received')
@@ -90,8 +90,8 @@ RSpec.feature 'Record benefit evidence received after a benefit application fail
     end
 
     scenario 'the evidence can only be reviewed once' do
-      choose 'benefit_evidence_evidence_false', visible: false
-      click_button 'Save and Continue', visible: false
+      choose 'benefit_evidence_evidence_false', visible: :all
+      click_button 'Save and Continue', visible: :all
 
       expect(page).to have_no_text('Evidence Received')
       expect(page).to have_css('tr', text: 'Benefits evidence processed', count: 1)
@@ -99,7 +99,7 @@ RSpec.feature 'Record benefit evidence received after a benefit application fail
     end
 
     scenario 'not answering the question shows an error' do
-      click_button 'Save and Continue', visible: false
+      click_button 'Save and Continue', visible: :all
 
       expect(page).to have_text('Processed application')
       within '.evidence-received-form' do
