@@ -40,6 +40,8 @@ with entries grouped by branch and date rather than release version.
 - That letter uses the applicant wording when the applicant signed the statement of truth;
   legal representative and litigation friend keep the representation wording. Income rejections
   without an evidence check are unchanged, as the ticket asks.
+- Power BI export file names get a random suffix. Parallel RSpec runs exporting in the same
+  second used one tmp file, and one run deleted it before the other zipped it (CI flake).
 
 ## 2026-11-02 (gem-updates-v2)
 

@@ -705,6 +705,21 @@ RSpec.describe Views::Reports::PowerBiNewExport do
     end
   end
 
+  describe 'file names' do
+    let(:other_report) { described_class.new(start_date, end_date) }
+
+    after { FileUtils.rm_f(other_report.zipfile_path) if other_report.zipfile_path }
+
+    it 'gives two exports run in the same second different files' do
+      freeze_time do
+        report.export2
+        other_report.export2
+      end
+
+      expect(report.zipfile_path).not_to eq(other_report.zipfile_path)
+    end
+  end
+
   describe 'ordering' do
     context 'export1 orders by decision_date' do
       let!(:older_app) do
