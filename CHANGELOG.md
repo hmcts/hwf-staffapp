@@ -5,6 +5,19 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 with entries grouped by branch and date rather than release version.
 
+## 2026-11-06 (rst-8790-claims-update)
+
+- Universal Credit: the newest live award (sorted by end date, no end date = newest) decides,
+  without checking its dates against our window, as DWP already filters awards by the window we
+  send. It must pay over £0 with take home pay under £500, and that award's take home pay is
+  stored. This replaces the total from dwp-fix. Claim dates and other benefits' awards are still
+  checked against the window.
+- `benefit_checks.award_within_window` records whether that Universal Credit award overlaps our
+  window, as a sanity check on DWP's filtering. Empty for other benefits; not in the MI exports.
+- `claim_not_active_within_range` is split into `claim_not_active` (status not on-benefits) and
+  `claim_outside_range` (dates miss our window), so staff see the real reason. Older checks keep
+  the old value. DWP filters claims by our window but returns each claim's full award history.
+
 ## 2026-11-05 (dwp-fix)
 
 - Universal Credit take home pay is now the total of every live award in the date window (paid

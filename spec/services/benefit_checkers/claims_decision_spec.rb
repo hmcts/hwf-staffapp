@@ -181,9 +181,9 @@ RSpec.describe BenefitCheckers::ClaimsDecision do
     end
   end
 
-  # RST-8365: a Universal Credit claim also needs a live award inside the window
-  # paying over £0, and the take home pay of all its live awards in the window
-  # added together under £500. See CHANGELOG.md
+  # RST-8365, RST-8790: for Universal Credit the newest live award (latest end date) decides,
+  # whatever its dates (DWP filtered the awards by our window): it must pay over £0 and its
+  # take home pay must be under £500. The claim itself must still be active in the window. See CHANGELOG.md
   describe '#on_benefits? for Universal Credit' do
     # The window is 2026-08-24 to 2026-09-30
     let(:award_in_window) { { start_date: '2026-08-28', end_date: '2026-09-27' } }
@@ -233,62 +233,75 @@ RSpec.describe BenefitCheckers::ClaimsDecision do
       it { expect(decision.on_benefits?).to be false }
     end
 
-    context 'with two awards in the window, one paying £0 with take home pay over £500' do
-      let(:claims) do
-        [uc_claim(awards: [uc_award(start_date: '2026-07-28', end_date: '2026-08-27', amount: 0, take_home_pay: 90_000),
-                           uc_award(**award_in_window)])]
-      end
-
-      it 'adds its take home pay too' do
-        expect(decision.on_benefits?).to be false
-      end
-    end
-
-    context 'with two awards in the window adding up to £500 or more' do
-      let(:claims) do
-        [uc_claim(awards: [uc_award(start_date: '2026-07-28', end_date: '2026-08-27', take_home_pay: 30_000),
-                           uc_award(**award_in_window, take_home_pay: 20_000)])]
-      end
-
-      it { expect(decision.on_benefits?).to be false }
-    end
-
-    context 'with one award over £500 and one under in the window' do
+    context 'with an earlier award over £500 and the last one under' do
       let(:claims) do
         [uc_claim(awards: [uc_award(start_date: '2026-07-28', end_date: '2026-08-27', take_home_pay: 50_169),
                            uc_award(**award_in_window, take_home_pay: 10_000)])]
       end
 
-      it { expect(decision.on_benefits?).to be false }
-    end
-
-    context 'with two awards in the window adding up to under £500' do
-      let(:claims) do
-        [uc_claim(awards: [uc_award(start_date: '2026-07-28', end_date: '2026-08-27', take_home_pay: 20_000),
-                           uc_award(**award_in_window, take_home_pay: 29_999)])]
-      end
-
-      it { expect(decision.on_benefits?).to be true }
-    end
-
-    context 'with an award outside the window' do
-      let(:claims) do
-        [uc_claim(awards: [uc_award(**award_before_window, take_home_pay: 90_000),
-                           uc_award(**award_in_window, take_home_pay: 41_050)])]
-      end
-
-      it 'leaves its take home pay out' do
+      it 'does not add them up' do
         expect(decision.on_benefits?).to be true
       end
     end
 
-    context 'with a superseded award in the window' do
+    context 'with an earlier award under £500 and the last one over' do
       let(:claims) do
-        [uc_claim(awards: [uc_award(**award_in_window, status: 'superseded', take_home_pay: 90_000),
-                           uc_award(**award_in_window, take_home_pay: 41_050)])]
+        [uc_claim(awards: [uc_award(start_date: '2026-07-28', end_date: '2026-08-27', take_home_pay: 10_000),
+                           uc_award(**award_in_window, take_home_pay: 50_169)])]
       end
 
-      it 'leaves its take home pay out' do
+      it { expect(decision.on_benefits?).to be false }
+    end
+
+    context 'with an earlier award that pays and the last one paying £0' do
+      let(:claims) do
+        [uc_claim(awards: [uc_award(start_date: '2026-07-28', end_date: '2026-08-27'),
+                           uc_award(**award_in_window, amount: 0)])]
+      end
+
+      it { expect(decision.on_benefits?).to be false }
+    end
+
+    context 'with the newest award listed first by DWP' do
+      let(:claims) do
+        [uc_claim(awards: [uc_award(**award_in_window, take_home_pay: 90_000),
+                           uc_award(start_date: '2026-07-28', end_date: '2026-08-27', take_home_pay: 10_000)])]
+      end
+
+      it 'sorts the awards by end date' do
+        expect(decision.on_benefits?).to be false
+      end
+    end
+
+    context 'with an award that has no end date' do
+      let(:claims) do
+        [uc_claim(awards: [uc_award(start_date: '2026-09-28', end_date: nil, take_home_pay: 90_000),
+                           uc_award(**award_in_window, take_home_pay: 10_000)])]
+      end
+
+      it 'treats it as the newest' do
+        expect(decision.on_benefits?).to be false
+      end
+    end
+
+    context 'with two awards ending on the same day' do
+      let(:claims) do
+        [uc_claim(awards: [uc_award(**award_in_window, take_home_pay: 90_000),
+                           uc_award(**award_in_window, take_home_pay: 10_000)])]
+      end
+
+      it 'keeps the order DWP sent them in' do
+        expect(decision.on_benefits?).to be true
+      end
+    end
+
+    context 'with a superseded award listed last' do
+      let(:claims) do
+        [uc_claim(awards: [uc_award(**award_in_window, take_home_pay: 41_050),
+                           uc_award(**award_in_window, status: 'superseded', take_home_pay: 90_000)])]
+      end
+
+      it 'takes the last live award' do
         expect(decision.on_benefits?).to be true
       end
     end
@@ -299,16 +312,20 @@ RSpec.describe BenefitCheckers::ClaimsDecision do
       it { expect(decision.on_benefits?).to be false }
     end
 
-    context 'when the only passing award starts after the window' do
+    context 'when the only award starts after the window' do
       let(:claims) { [uc_claim(awards: [uc_award(start_date: '2026-10-01', end_date: '2026-10-31')])] }
 
-      it { expect(decision.on_benefits?).to be false }
+      it 'relies on DWP and still uses it' do
+        expect(decision.on_benefits?).to be true
+      end
     end
 
-    context 'when no award falls inside the window' do
+    context 'when the only award ended before the window' do
       let(:claims) { [uc_claim(awards: [uc_award(**award_before_window)])] }
 
-      it { expect(decision.on_benefits?).to be false }
+      it 'relies on DWP and still uses it' do
+        expect(decision.on_benefits?).to be true
+      end
     end
 
     context 'when the claim has no awards' do
@@ -328,7 +345,7 @@ RSpec.describe BenefitCheckers::ClaimsDecision do
       end
     end
 
-    context 'with an award that has no end date' do
+    context 'with a single award that has no end date' do
       let(:claims) { [uc_claim(awards: [uc_award(start_date: '2026-01-01', end_date: nil)])] }
 
       it { expect(decision.on_benefits?).to be true }
@@ -457,9 +474,18 @@ RSpec.describe BenefitCheckers::ClaimsDecision do
       expect(reason_for(other_claim(benefit_type: 'carers_allowance'))).to eq 'benefit_type_not_listed'
     end
 
-    it 'says when the claim is not active inside the window' do
-      expect(reason_for(other_claim(benefit_type: 'income_support', status: 'claim_closed'))).to eq 'claim_not_active_within_range'
-      expect(reason_for(claim(status: 'in_payment', start_date: '2026-10-15'))).to eq 'claim_not_active_within_range'
+    # RST-8790: a claim that is not active and one outside our window are told apart
+    it 'says when the claim is not active' do
+      expect(reason_for(other_claim(benefit_type: 'income_support', status: 'claim_closed'))).to eq 'claim_not_active'
+    end
+
+    it 'says not active rather than out of range when the claim is both' do
+      expect(reason_for(claim(status: 'claim_closed', start_date: '2026-10-15'))).to eq 'claim_not_active'
+    end
+
+    it 'says when an active claim is outside the window' do
+      expect(reason_for(claim(status: 'in_payment', start_date: '2026-10-15'))).to eq 'claim_outside_range'
+      expect(reason_for(uc_claim(start_date: '2026-10-15', awards: [uc_award(**in_window)]))).to eq 'claim_outside_range'
     end
 
     it 'says when payments are suspended' do
@@ -472,13 +498,17 @@ RSpec.describe BenefitCheckers::ClaimsDecision do
 
     it 'says when nothing was paid inside the window' do
       expect(reason_for(uc_claim(awards: [uc_award(**in_window, amount: 0)]))).to eq '0_paid_within_range'
-      expect(reason_for(uc_claim(awards: [uc_award(start_date: '2026-07-01', end_date: '2026-07-31')]))).to eq '0_paid_within_range'
       expect(reason_for(other_claim(benefit_type: 'income_support', amount: 0))).to eq '0_paid_within_range'
+      expect(reason_for(other_claim(benefit_type: 'income_support', award: { 'endDate' => '2026-08-21' }))).to eq '0_paid_within_range'
     end
 
-    it 'says when the take home pay of the awards in the window adds up to over the limit' do
-      awards = [uc_award(**in_window, take_home_pay: 30_000), uc_award(**in_window, take_home_pay: 20_000)]
-      expect(reason_for(uc_claim(awards: awards))).to eq 'take_home_pay_over_limit'
+    it 'takes the take home pay from the newest award' do
+      expect(reason_for(uc_claim(awards: [uc_award(**in_window, take_home_pay: 90_000), uc_award(**in_window)]))).to eq 'universal_credit_passed'
+      expect(reason_for(uc_claim(awards: [uc_award(**in_window), uc_award(**in_window, take_home_pay: 90_000)]))).to eq 'take_home_pay_over_limit'
+    end
+
+    it 'says nothing was paid when the newest award paid £0' do
+      expect(reason_for(uc_claim(awards: [uc_award(**in_window), uc_award(**in_window, amount: 0)]))).to eq '0_paid_within_range'
     end
 
     it 'prefers the take home pay reason when an award was paid but earned too much' do
@@ -502,7 +532,7 @@ RSpec.describe BenefitCheckers::ClaimsDecision do
       end
 
       it 'gives the first claim its reason when none passed' do
-        expect(reason_for(closed, unpaid)).to eq 'claim_not_active_within_range'
+        expect(reason_for(closed, unpaid)).to eq 'claim_not_active'
         expect(reason_for(unpaid, closed)).to eq '0_paid_within_range'
       end
     end
@@ -525,12 +555,13 @@ RSpec.describe BenefitCheckers::ClaimsDecision do
     it 'describes a passing Universal Credit claim and its take home pay' do
       claim = uc_claim(awards: [uc_award(**in_window, take_home_pay: 41_050)])
 
-      expect(summary_for(claim)).to eq(benefit_types: 'universal_credit', claim_status: 'active', take_home_pay: 41_050)
+      expect(summary_for(claim)).to eq(benefit_types: 'universal_credit', claim_status: 'active', take_home_pay: 41_050,
+                                       award_within_window: true)
     end
 
     it 'describes a passing claim for another benefit, which has no take home pay' do
       expect(summary_for(other_claim(benefit_type: 'income_support'))).to eq(
-        benefit_types: 'income_support', claim_status: 'active', take_home_pay: nil
+        benefit_types: 'income_support', claim_status: 'active', take_home_pay: nil, award_within_window: nil
       )
     end
 
@@ -564,12 +595,12 @@ RSpec.describe BenefitCheckers::ClaimsDecision do
       expect(summary_for(uc_claim(status: 'suspended', awards: [uc_award(**in_window)]))).to include(claim_status: 'suspended', take_home_pay: nil)
     end
 
-    it 'adds up the take home pay of the live awards in the window' do
+    it 'takes the take home pay of the newest live award' do
       claim = uc_claim(awards: [uc_award(**in_window, take_home_pay: 50_169), uc_award(**in_window, amount: 0, take_home_pay: 10_000),
                                 uc_award(**in_window, status: 'superseded', take_home_pay: 5_000),
                                 uc_award(start_date: '2026-07-01', end_date: '2026-07-31', take_home_pay: 7_000)])
 
-      expect(summary_for(claim)).to include(claim_status: 'active', take_home_pay: 60_169)
+      expect(summary_for(claim)).to include(claim_status: 'active', take_home_pay: 10_000)
     end
 
     it 'keeps the take home pay of an active Universal Credit claim that failed on it' do
@@ -584,15 +615,44 @@ RSpec.describe BenefitCheckers::ClaimsDecision do
       expect(summary_for(claim)).to include(claim_status: 'active', take_home_pay: 41_050)
     end
 
-    it 'has no take home pay when no award falls inside the window' do
-      claim = uc_claim(awards: [uc_award(start_date: '2026-07-01', end_date: '2026-07-31', take_home_pay: 41_050)])
+    it 'has no take home pay when the claim has no live award' do
+      claim = uc_claim(awards: [uc_award(**in_window, status: 'superseded', take_home_pay: 41_050)])
 
       expect(summary_for(claim)).to include(claim_status: 'active', take_home_pay: nil)
     end
 
+    # RST-8790: a sanity check on DWP's filtering, kept on the benefit check and not in the MI exports
+    describe 'award_within_window' do
+      it 'is true when the award the decision used overlaps our window' do
+        expect(summary_for(uc_claim(awards: [uc_award(**in_window)]))[:award_within_window]).to be true
+      end
+
+      it 'is false when DWP sent an award outside our window and the decision used it' do
+        claim = uc_claim(awards: [uc_award(start_date: '2026-07-01', end_date: '2026-07-31', take_home_pay: 41_050)])
+
+        expect(summary_for(claim)).to include(take_home_pay: 41_050, award_within_window: false)
+      end
+
+      it 'looks at the newest award only' do
+        claim = uc_claim(awards: [uc_award(start_date: '2026-07-01', end_date: '2026-07-31'), uc_award(**in_window)])
+
+        expect(summary_for(claim)[:award_within_window]).to be true
+      end
+
+      it 'is only kept for Universal Credit' do
+        expect(summary_for(other_claim(benefit_type: 'income_support'))[:award_within_window]).to be_nil
+      end
+
+      it 'is nil when there is no live award or no window' do
+        expect(summary_for(uc_claim(awards: []))[:award_within_window]).to be_nil
+        expect(described_class.new({ 'data' => [uc_claim(awards: [uc_award(**in_window)])] }, nil).summary[:award_within_window]).to be_nil
+      end
+    end
+
     it 'is empty when DWP returned no claims' do
-      expect(summary_for).to eq(benefit_types: nil, claim_status: nil, take_home_pay: nil)
-      expect(described_class.new(nil, window).summary).to eq(benefit_types: nil, claim_status: nil, take_home_pay: nil)
+      empty = { benefit_types: nil, claim_status: nil, take_home_pay: nil, award_within_window: nil }
+      expect(summary_for).to eq(empty)
+      expect(described_class.new(nil, window).summary).to eq(empty)
     end
   end
 
