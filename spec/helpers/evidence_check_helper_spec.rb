@@ -39,6 +39,33 @@ RSpec.describe EvidenceCheckHelper do
         expect(income_increase?(application)).to be_falsey
       end
     end
+
+    context 'original income is zero and evidence shows income' do
+      let(:income1) { 0 }
+      let(:income2) { 5000 }
+
+      it 'returns true' do
+        expect(income_increase?(application)).to be true
+      end
+    end
+
+    context 'original income is blank and evidence shows income' do
+      let(:income1) { nil }
+      let(:income2) { 5000 }
+
+      it 'returns true' do
+        expect(income_increase?(application)).to be true
+      end
+    end
+
+    context 'original income is zero and evidence shows no income' do
+      let(:income1) { 0 }
+      let(:income2) { 0 }
+
+      it 'returns false' do
+        expect(income_increase?(application)).to be false
+      end
+    end
   end
 
   describe 'display_evidence_section?' do

@@ -148,14 +148,14 @@
         p: strong = link_to 'See the guides', guide_path, target: 'blank'
 
         .confirmation-letter
-          = t('new_letters.reject.reject_over_income_html',
+          = t(income_failed_letter_key(@application),
               reference: @application.reference,
               full_name: @application.applicant.full_name,
               legal_rep: @confirm.representative_full_name,
               greeting: greeting_condition(@confirm, @application),
               user_name: current_user.name,
               fee_amount: currency_format(@application.detail.fee),
-              income_type: income_duration_type(@application),
+              income_type: income_failed_letter_income_type(@application),
               income_total: income_value(@application),
               expiry_date: @confirm.expires_at)
 

@@ -144,7 +144,8 @@ module Views
 
       def setup_file_paths(export_name)
         timestamp = Time.current.strftime('%Y%m%d_%H%M%S')
-        @csv_file_name = "power_bi_#{export_name}_#{timestamp}.csv"
+        # random suffix: parallel runs in the same second shared one file - see CHANGELOG.md
+        @csv_file_name = "power_bi_#{export_name}_#{timestamp}_#{SecureRandom.hex(4)}.csv"
         @csv_file_path = Rails.root.join('tmp', @csv_file_name)
         @zipfile_path = Rails.root.join('tmp', "#{@csv_file_name}.zip")
       end
