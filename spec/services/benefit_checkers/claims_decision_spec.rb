@@ -182,7 +182,8 @@ RSpec.describe BenefitCheckers::ClaimsDecision do
   end
 
   # RST-8365: a Universal Credit claim also needs a live award inside the window
-  # with take home pay under £500 and an amount over £0. See CHANGELOG.md
+  # paying over £0, and the take home pay of all its live awards in the window
+  # added together under £500. See CHANGELOG.md
   describe '#on_benefits? for Universal Credit' do
     # The window is 2026-08-24 to 2026-09-30
     let(:award_in_window) { { start_date: '2026-08-28', end_date: '2026-09-27' } }
@@ -232,13 +233,64 @@ RSpec.describe BenefitCheckers::ClaimsDecision do
       it { expect(decision.on_benefits?).to be false }
     end
 
-    context 'with two awards in the window and only one that passes' do
+    context 'with two awards in the window, one paying £0 with take home pay over £500' do
       let(:claims) do
         [uc_claim(awards: [uc_award(start_date: '2026-07-28', end_date: '2026-08-27', amount: 0, take_home_pay: 90_000),
                            uc_award(**award_in_window)])]
       end
 
+      it 'adds its take home pay too' do
+        expect(decision.on_benefits?).to be false
+      end
+    end
+
+    context 'with two awards in the window adding up to £500 or more' do
+      let(:claims) do
+        [uc_claim(awards: [uc_award(start_date: '2026-07-28', end_date: '2026-08-27', take_home_pay: 30_000),
+                           uc_award(**award_in_window, take_home_pay: 20_000)])]
+      end
+
+      it { expect(decision.on_benefits?).to be false }
+    end
+
+    context 'with one award over £500 and one under in the window' do
+      let(:claims) do
+        [uc_claim(awards: [uc_award(start_date: '2026-07-28', end_date: '2026-08-27', take_home_pay: 50_169),
+                           uc_award(**award_in_window, take_home_pay: 10_000)])]
+      end
+
+      it { expect(decision.on_benefits?).to be false }
+    end
+
+    context 'with two awards in the window adding up to under £500' do
+      let(:claims) do
+        [uc_claim(awards: [uc_award(start_date: '2026-07-28', end_date: '2026-08-27', take_home_pay: 20_000),
+                           uc_award(**award_in_window, take_home_pay: 29_999)])]
+      end
+
       it { expect(decision.on_benefits?).to be true }
+    end
+
+    context 'with an award outside the window' do
+      let(:claims) do
+        [uc_claim(awards: [uc_award(**award_before_window, take_home_pay: 90_000),
+                           uc_award(**award_in_window, take_home_pay: 41_050)])]
+      end
+
+      it 'leaves its take home pay out' do
+        expect(decision.on_benefits?).to be true
+      end
+    end
+
+    context 'with a superseded award in the window' do
+      let(:claims) do
+        [uc_claim(awards: [uc_award(**award_in_window, status: 'superseded', take_home_pay: 90_000),
+                           uc_award(**award_in_window, take_home_pay: 41_050)])]
+      end
+
+      it 'leaves its take home pay out' do
+        expect(decision.on_benefits?).to be true
+      end
     end
 
     context 'when the only passing award ended before the window' do
@@ -424,6 +476,11 @@ RSpec.describe BenefitCheckers::ClaimsDecision do
       expect(reason_for(other_claim(benefit_type: 'income_support', amount: 0))).to eq '0_paid_within_range'
     end
 
+    it 'says when the take home pay of the awards in the window adds up to over the limit' do
+      awards = [uc_award(**in_window, take_home_pay: 30_000), uc_award(**in_window, take_home_pay: 20_000)]
+      expect(reason_for(uc_claim(awards: awards))).to eq 'take_home_pay_over_limit'
+    end
+
     it 'prefers the take home pay reason when an award was paid but earned too much' do
       awards = [uc_award(**in_window, amount: 0), uc_award(**in_window, take_home_pay: 90_000)]
       expect(reason_for(uc_claim(awards: awards))).to eq 'take_home_pay_over_limit'
@@ -465,7 +522,7 @@ RSpec.describe BenefitCheckers::ClaimsDecision do
       described_class.new({ 'data' => claims_list }, window).summary
     end
 
-    it 'describes a passing Universal Credit claim and the award it paid from' do
+    it 'describes a passing Universal Credit claim and its take home pay' do
       claim = uc_claim(awards: [uc_award(**in_window, take_home_pay: 41_050)])
 
       expect(summary_for(claim)).to eq(benefit_types: 'universal_credit', claim_status: 'active', take_home_pay: 41_050)
@@ -505,6 +562,14 @@ RSpec.describe BenefitCheckers::ClaimsDecision do
 
     it 'says suspended for a suspended claim' do
       expect(summary_for(uc_claim(status: 'suspended', awards: [uc_award(**in_window)]))).to include(claim_status: 'suspended', take_home_pay: nil)
+    end
+
+    it 'adds up the take home pay of the live awards in the window' do
+      claim = uc_claim(awards: [uc_award(**in_window, take_home_pay: 50_169), uc_award(**in_window, amount: 0, take_home_pay: 10_000),
+                                uc_award(**in_window, status: 'superseded', take_home_pay: 5_000),
+                                uc_award(start_date: '2026-07-01', end_date: '2026-07-31', take_home_pay: 7_000)])
+
+      expect(summary_for(claim)).to include(claim_status: 'active', take_home_pay: 60_169)
     end
 
     it 'keeps the take home pay of an active Universal Credit claim that failed on it' do

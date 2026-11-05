@@ -5,6 +5,12 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 with entries grouped by branch and date rather than release version.
 
+## 2026-11-05 (dwp-fix)
+
+- Universal Credit take home pay is now the total of every live award in the date window (paid
+  or not) and must be under £500, per the spec. Before, one award under £500 was enough, so a
+  check could pass with £501.69 in the window. The export's take home pay shows that total.
+
 ## 2026-11-04 (gem-updates-v3)
 
 - Security and routine gem/npm updates. Rails 8.1.4.1 (2 High advisories), Sentry, selenium,
