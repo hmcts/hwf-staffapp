@@ -11,7 +11,7 @@ module BenefitCheckers
       UNIVERSAL_CREDIT, 'pensions_credit', 'income_support',
       'employment_support_allowance_income_based', 'job_seekers_allowance_income_based'
     ].freeze
-    # Universal Credit take home pay limit for an assessment period, in pence (£500)
+    # Universal Credit take home pay limit for all the awards in the window together, in pence (£500)
     TAKE_HOME_PAY_LIMIT = 50_000
 
     # The reason that decided the check, stored on the benefit check as claim_decision_reasoning
@@ -66,12 +66,12 @@ module BenefitCheckers
       'not active'
     end
 
-    # From the award the decision used: the one that paid, else the first live one in the window
+    # The total the decision compared with the limit; nil when no live award is in the window
     def take_home_pay_for(claim)
       return unless benefit_type(claim) == UNIVERSAL_CREDIT && status_for(claim) == 'active'
+      return if live_awards_in_window(claim).empty?
 
-      award = paid_awards_in_window(claim).first || awards(claim).find { |a| live?(a) && within_window?(a) }
-      award&.dig('assessmentAttributes', 'takeHomePay')
+      take_home_pay_total(claim).round
     end
 
     def claim_reasons
@@ -90,15 +90,18 @@ module BenefitCheckers
     # The claim needs a live award inside the window that pays over £0.
     # Universal Credit also has a take home pay limit.
     def award_reason(claim)
-      paid = paid_awards_in_window(claim)
-      return NOTHING_PAID if paid.empty?
-      return TAKE_HOME_PAY_OVER_LIMIT unless paid.any? { |award| take_home_pay_allowed?(claim, award) }
+      return NOTHING_PAID if paid_awards_in_window(claim).empty?
+      return TAKE_HOME_PAY_OVER_LIMIT unless take_home_pay_allowed?(claim)
 
       benefit_type(claim) == UNIVERSAL_CREDIT ? UNIVERSAL_CREDIT_PASSED : OTHER_BENEFIT_PASSED
     end
 
+    def live_awards_in_window(claim)
+      awards(claim).select { |award| live?(award) && within_window?(award) }
+    end
+
     def paid_awards_in_window(claim)
-      awards(claim).select { |award| live?(award) && within_window?(award) && amount_paid?(award) }
+      live_awards_in_window(claim).select { |award| amount_paid?(award) }
     end
 
     def on_benefits_status?(claim)
@@ -111,10 +114,15 @@ module BenefitCheckers
       award['amount'].to_f.positive?
     end
 
-    def take_home_pay_allowed?(claim, award)
+    def take_home_pay_allowed?(claim)
       return true unless benefit_type(claim) == UNIVERSAL_CREDIT
 
-      award.dig('assessmentAttributes', 'takeHomePay').to_f < TAKE_HOME_PAY_LIMIT
+      take_home_pay_total(claim) < TAKE_HOME_PAY_LIMIT
+    end
+
+    # All live awards in the window added together, paid or not; a missing value counts as 0. See CHANGELOG.md
+    def take_home_pay_total(claim)
+      live_awards_in_window(claim).sum { |award| award.dig('assessmentAttributes', 'takeHomePay').to_f }
     end
 
     def benefit_type(claim)
