@@ -28,7 +28,7 @@ gem 'hwf_hmrc_api', github: 'hmcts/hwf_hmrc_api', tag: 'v0.3.4'
 
 # DWP API
 # gem 'hwf-dwp-api', path: '/Users/petrzaparka/projects/moj/hwf/hwf-dwp-api/hwf-dwp-api-gem'
-gem 'hwf-dwp-api', github: 'hmcts/hwf-dwp-api', tag: '0.4.5'
+gem 'hwf-dwp-api', github: 'hmcts/hwf-dwp-api', tag: '0.4.6'
 
 # configuration
 gem 'config'
