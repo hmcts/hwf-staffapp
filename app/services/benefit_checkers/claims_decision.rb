@@ -11,13 +11,17 @@ module BenefitCheckers
       UNIVERSAL_CREDIT, 'pensions_credit', 'income_support',
       'employment_support_allowance_income_based', 'job_seekers_allowance_income_based'
     ].freeze
-    # Universal Credit take home pay limit for all the awards in the window together, in pence (£500)
+    # Universal Credit take home pay limit for the newest award, in pence (£500)
     TAKE_HOME_PAY_LIMIT = 50_000
+    # Sorts an award with no end date as the newest: it is still ongoing
+    ONGOING = Date.new(9999, 12, 31)
 
     # The reason that decided the check, stored on the benefit check as claim_decision_reasoning
     NO_CLAIMS = 'no_claims_returned'.freeze
     NOT_LISTED = 'benefit_type_not_listed'.freeze
-    NOT_ACTIVE = 'claim_not_active_within_range'.freeze
+    # Before RST-8790 both were stored as claim_not_active_within_range. See CHANGELOG.md
+    NOT_ACTIVE = 'claim_not_active'.freeze
+    OUTSIDE_RANGE = 'claim_outside_range'.freeze
     SUSPENDED = 'payments_suspended_within_range'.freeze
     NOTHING_PAID = '0_paid_within_range'.freeze
     TAKE_HOME_PAY_OVER_LIMIT = 'take_home_pay_over_limit'.freeze
@@ -42,13 +46,15 @@ module BenefitCheckers
       @reason ||= claim_reasons.find { |claim_reason| PASSED.include?(claim_reason) } || claim_reasons.first
     end
 
-    # What the raw data export shows: every benefit type returned, and the status
-    # and take home pay of the claim the decision used. RST-7882. See CHANGELOG.md
+    # What's stored on the benefit check: every benefit type returned, and the status
+    # and take home pay of the claim the decision used (RST-7882), plus whether the Universal
+    # Credit award it used overlaps our window (RST-8790, sanity check only, not MI). See CHANGELOG.md
     def summary
       {
         benefit_types: @claims.filter_map { |claim| benefit_type(claim) }.join(' and ').presence,
         claim_status: deciding_claim && status_for(deciding_claim),
-        take_home_pay: deciding_claim && take_home_pay_for(deciding_claim)
+        take_home_pay: deciding_claim && take_home_pay_for(deciding_claim),
+        award_within_window: deciding_claim && award_within_window(deciding_claim)
       }
     end
 
@@ -66,12 +72,19 @@ module BenefitCheckers
       'not active'
     end
 
-    # The total the decision compared with the limit; nil when no live award is in the window
+    # From the award the decision used: the newest live one
     def take_home_pay_for(claim)
       return unless benefit_type(claim) == UNIVERSAL_CREDIT && status_for(claim) == 'active'
-      return if live_awards_in_window(claim).empty?
 
-      take_home_pay_total(claim).round
+      newest_award(claim)&.dig('assessmentAttributes', 'takeHomePay')
+    end
+
+    # nil for other benefits, or when there is no award or no window to compare with
+    def award_within_window(claim)
+      return unless benefit_type(claim) == UNIVERSAL_CREDIT && window_to.present?
+
+      award = newest_award(claim)
+      award && within_window?(award)
     end
 
     def claim_reasons
@@ -82,26 +95,38 @@ module BenefitCheckers
     def claim_reason(claim)
       return NOT_LISTED unless LISTED_BENEFITS.include?(benefit_type(claim))
       return SUSPENDED if claim_status(claim) == 'suspended'
-      return NOT_ACTIVE unless on_benefits_status?(claim) && within_window?(claim['attributes'])
+      return NOT_ACTIVE unless on_benefits_status?(claim)
+      return OUTSIDE_RANGE unless within_window?(claim['attributes'])
 
       award_reason(claim)
     end
 
-    # The claim needs a live award inside the window that pays over £0.
-    # Universal Credit also has a take home pay limit.
+    # The other benefits need a live award inside the window that pays over £0
     def award_reason(claim)
-      return NOTHING_PAID if paid_awards_in_window(claim).empty?
-      return TAKE_HOME_PAY_OVER_LIMIT unless take_home_pay_allowed?(claim)
+      return universal_credit_reason(claim) if benefit_type(claim) == UNIVERSAL_CREDIT
+      return NOTHING_PAID if live_awards(claim).none? { |award| within_window?(award) && amount_paid?(award) }
 
-      benefit_type(claim) == UNIVERSAL_CREDIT ? UNIVERSAL_CREDIT_PASSED : OTHER_BENEFIT_PASSED
+      OTHER_BENEFIT_PASSED
     end
 
-    def live_awards_in_window(claim)
-      awards(claim).select { |award| live?(award) && within_window?(award) }
+    # The newest live award decides, whatever its dates as DWP filtered the awards by our
+    # window: it must pay over £0 and have take home pay under the limit. RST-8790. See CHANGELOG.md
+    def universal_credit_reason(claim)
+      award = newest_award(claim)
+      return NOTHING_PAID unless award && amount_paid?(award)
+      return TAKE_HOME_PAY_OVER_LIMIT unless award.dig('assessmentAttributes', 'takeHomePay').to_f < TAKE_HOME_PAY_LIMIT
+
+      UNIVERSAL_CREDIT_PASSED
     end
 
-    def paid_awards_in_window(claim)
-      live_awards_in_window(claim).select { |award| amount_paid?(award) }
+    def newest_award(claim)
+      live_awards(claim).last
+    end
+
+    # Oldest end date first, newest last; awards ending on the same day keep DWP's order
+    def live_awards(claim)
+      awards(claim).select { |award| live?(award) }.
+        sort_by.with_index { |award, position| [parse_date(award['endDate']) || ONGOING, position] }
     end
 
     def on_benefits_status?(claim)
@@ -112,17 +137,6 @@ module BenefitCheckers
 
     def amount_paid?(award)
       award['amount'].to_f.positive?
-    end
-
-    def take_home_pay_allowed?(claim)
-      return true unless benefit_type(claim) == UNIVERSAL_CREDIT
-
-      take_home_pay_total(claim) < TAKE_HOME_PAY_LIMIT
-    end
-
-    # All live awards in the window added together, paid or not; a missing value counts as 0. See CHANGELOG.md
-    def take_home_pay_total(claim)
-      live_awards_in_window(claim).sum { |award| award.dig('assessmentAttributes', 'takeHomePay').to_f }
     end
 
     def benefit_type(claim)
@@ -146,17 +160,9 @@ module BenefitCheckers
     def within_window?(dated)
       return true if window_to.blank?
 
-      started_by_window_end?(dated || {}) && not_ended_before_window_start?(dated || {})
-    end
-
-    def started_by_window_end?(dated)
-      start_date = parse_date(dated['startDate'])
-      start_date.nil? || start_date <= window_to
-    end
-
-    def not_ended_before_window_start?(dated)
-      end_date = parse_date(dated['endDate'])
-      end_date.nil? || end_date >= window_from
+      start_date = parse_date(dated&.dig('startDate'))
+      end_date = parse_date(dated&.dig('endDate'))
+      (start_date.nil? || start_date <= window_to) && (end_date.nil? || end_date >= window_from)
     end
 
     def window_from

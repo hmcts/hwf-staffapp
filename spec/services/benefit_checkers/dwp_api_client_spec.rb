@@ -513,12 +513,18 @@ RSpec.describe BenefitCheckers::DwpApiClient, type: :service do
         expect([check.benefit_types, check.claim_status, check.take_home_pay]).to eq(['income_support', 'active', nil])
       end
 
+      # RST-8790: sanity check on DWP's filtering, not for MI
+      it 'keeps the award window flag for Universal Credit only' do
+        client.check(params)
+        expect(benefit_check.reload.award_within_window).to be_nil
+      end
+
       it 'stores why the claim failed' do
         allow(connection).to receive(:get_claims).and_return(
           { 'data' => [{ 'id' => 'is_0', 'attributes' => listed_claim.merge('status' => 'claim_closed') }] }
         )
         client.check(params)
-        expect(benefit_check.reload.claim_decision_reasoning).to eq 'claim_not_active_within_range'
+        expect(benefit_check.reload.claim_decision_reasoning).to eq 'claim_not_active'
       end
     end
 
