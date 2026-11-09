@@ -5,6 +5,11 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 with entries grouped by branch and date rather than release version.
 
+## 2026-11-09 (rst-8786-mi-rounding)
+
+- Exports (raw data, applications by court, Power BI new) show take home pay in whole pounds
+  instead of pence: the pence are dropped, not rounded (449528 → 4495). Stored value stays in pence.
+
 ## 2026-11-06 (rst-8790-claims-update)
 
 - Universal Credit: the newest live award (sorted by end date, no end date = newest) decides,

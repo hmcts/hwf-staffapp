@@ -16,6 +16,7 @@ module Views
       private
 
       # The six columns closing a select list (comma included), or nothing when they are switched off.
+      # Take home pay is stored in pence and exported in whole pounds. See CHANGELOG.md
       # not_applicable: SQL that is true when the row gets 'N/A' in every column;
       # the latest check must be joined as "bc".
       def benefit_check_columns(not_applicable)
@@ -34,7 +35,7 @@ module Views
           #{benefit_check_column("to_char(bc.date_of_death, 'YYYY-MM-DD')", not_applicable)} AS date_of_death,
           #{benefit_check_column('bc.benefit_types', not_applicable)} AS benefit_type,
           #{benefit_check_column('bc.claim_status', not_applicable)} AS benefit_status,
-          #{benefit_check_column('bc.take_home_pay::text', not_applicable)} AS take_home_pay
+          #{benefit_check_column('(bc.take_home_pay / 100)::text', not_applicable)} AS take_home_pay
         SQL
       end
 

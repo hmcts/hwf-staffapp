@@ -764,9 +764,16 @@ RSpec.describe Views::Reports::RawDataExport do
 
     it 'exports what the DWP check decided on' do
       create(:benefit_check, applicationable: application, dwp_result: 'Yes', checker: 'dwp',
-                             benefit_types: 'universal_credit', claim_status: 'active', take_home_pay: 41_050)
+                             benefit_types: 'universal_credit', claim_status: 'active', take_home_pay: 449_528)
 
-      expect(benefit_columns(application)).to eq(['Yes', 'N/A', 'N/A', 'universal_credit', 'active', '41050'])
+      expect(benefit_columns(application)).to eq(['Yes', 'N/A', 'N/A', 'universal_credit', 'active', '4495'])
+    end
+
+    it 'drops the pence from take home pay without rounding' do
+      create(:benefit_check, applicationable: application, dwp_result: 'Yes', checker: 'dwp',
+                             benefit_types: 'universal_credit', claim_status: 'active', take_home_pay: 41_099)
+
+      expect(benefit_columns(application).last).to eq('410')
     end
 
     it 'exports the error and N/A for the response when the check failed' do
