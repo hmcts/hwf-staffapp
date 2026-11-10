@@ -9,6 +9,11 @@ with entries grouped by branch and date rather than release version.
 
 - Exports (raw data, applications by court, Power BI new) show take home pay in whole pounds
   instead of pence: the pence are dropped, not rounded (449528 → 4495). Stored value stays in pence.
+## 2026-11-09 (gem-updates-v4)
+
+- Routine gem/npm and Yarn updates, no advisories open. rspec, minitest, irb, hashdiff and sass went in
+  under 7 days old. Held: playwright (wait for playwright-ruby-client 1.65), cucumber 12 (blocked
+  by cucumber-rails), devise_invitable 3 (major), rotp/redis-client (pinned by hwf_hmrc_api/redis).
 
 ## 2026-11-06 (rst-8790-claims-update)
 
