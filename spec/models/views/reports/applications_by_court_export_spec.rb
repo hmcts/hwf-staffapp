@@ -70,9 +70,9 @@ RSpec.describe Views::Reports::ApplicationsByCourtExport do
 
     it 'exports what the DWP check decided on' do
       create(:benefit_check, applicationable: application, dwp_result: 'Yes', checker: 'dwp',
-                             benefit_types: 'universal_credit', claim_status: 'active', take_home_pay: 41_050)
+                             benefit_types: 'universal_credit', claim_status: 'active', take_home_pay: 449_528)
 
-      expect(benefit_columns(application.reference)).to eq(['Yes', 'N/A', 'N/A', 'universal_credit', 'active', '41050'])
+      expect(benefit_columns(application.reference)).to eq(['Yes', 'N/A', 'N/A', 'universal_credit', 'active', '4495'])
     end
 
     it 'exports the error, a flagged date of death and LAA the same way as the raw data export' do
