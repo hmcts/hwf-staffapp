@@ -3,6 +3,8 @@ class DashboardPage < BasePage
 
   element :dwp_offline_banner, '.dwp-banner-offline', text: 'DWP checkerYou can’t check an applicant’s benefits. We’re investigating this issue.'
   element :dwp_online_banner, '.dwp-banner-online', text: 'DWP checkerThe link to DWP for benefit checks is working.'
+  element :hmrc_offline_banner, '.hmrc-banner-offline', text: 'There are problems with the HMRC checker at the moment.'
+  element :hmrc_online_banner, '.hmrc-banner-online', text: 'The link to HMRC for income checks is working.'
   element :help_with_fees_home, 'a', text: 'Help with fees'
   section :content, '#content' do
     element :alert_title, '.govuk-error-summary__title'

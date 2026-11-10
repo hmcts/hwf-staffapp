@@ -81,8 +81,8 @@ describe EvidenceCheckSelector do
               end
 
               context 'hmrc income check type' do
-                let(:hmrc_monitor) { instance_double(HmrcMonitor, offline?: hmrc_offline) }
-                let(:hmrc_offline) { false }
+                let(:hmrc_monitor) { instance_double(HmrcMonitor, state: hmrc_state) }
+                let(:hmrc_state) { 'online' }
 
                 before do
                   allow(application).to receive(:hmrc_check_type?).and_return true
@@ -98,16 +98,28 @@ describe EvidenceCheckSelector do
                 end
 
                 context 'when the HMRC checker is offline (red banner)' do
-                  let(:hmrc_offline) { true }
+                  let(:hmrc_state) { 'offline' }
 
                   it { expect(decision.check_type).to eql 'random' }
                   it { expect(decision.income_check_type).to eql 'paper' }
+
+                  context 'and an admin has switched HMRC to online' do
+                    before { create(:hmrc_warning, check_state: HmrcWarning::STATES[:online]) }
+
+                    it { expect(decision.income_check_type).to eql 'hmrc' }
+                  end
                 end
 
                 context 'when the HMRC checker is only warning (amber banner)' do
-                  let(:hmrc_monitor) { instance_double(HmrcMonitor, offline?: false) }
+                  let(:hmrc_state) { 'warning' }
 
                   it { expect(decision.income_check_type).to eql 'hmrc' }
+                end
+
+                context 'when the HMRC checker is online but an admin has switched HMRC to offline' do
+                  before { create(:hmrc_warning, check_state: HmrcWarning::STATES[:offline]) }
+
+                  it { expect(decision.income_check_type).to eql 'paper' }
                 end
               end
 

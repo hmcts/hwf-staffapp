@@ -49,7 +49,7 @@ class ApplicationController < ActionController::Base
   helper_method :dwp_checker_state
 
   def hmrc_checker_state
-    HmrcMonitor.new.state
+    HmrcWarning.checker_state
   end
   helper_method :hmrc_checker_state
 

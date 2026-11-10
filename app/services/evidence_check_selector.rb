@@ -86,8 +86,9 @@ class EvidenceCheckSelector
 
   # RST-8289: a red HMRC banner sends the check straight to paper evidence,
   # exactly as when the applicant data is not valid for an HMRC check.
+  # RST-8805: an admin can override the banner with the HMRC switch - see CHANGELOG.md
   def hmrc_income_check_type?
-    @application.hmrc_check_type? && !HmrcMonitor.new.offline?
+    @application.hmrc_check_type? && !HmrcWarning.checker_offline?
   end
 
   def ccmcc_evidence_rules_check

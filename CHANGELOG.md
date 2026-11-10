@@ -5,6 +5,13 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 with entries grouped by branch and date rather than release version.
 
+## 2026-11-10 (rst-8805-hmrc-switch)
+
+- Admin "HMRC message" switch (`HmrcWarning`), a copy of the DWP one: online, offline or use the
+  monitor. It drives the HMRC banner and the HMRC/paper choice for new evidence checks, so an admin
+  can keep HMRC API checks going while the monitor is red. The "HMRC is down" email still follows
+  the real monitor, as the DWP one does. Unlike `DwpWarning`, the one-record guard really aborts.
+
 ## 2026-11-09 (rst-8786-mi-rounding)
 
 - Exports (raw data, applications by court, Power BI new) show take home pay in whole pounds

@@ -187,6 +187,10 @@ def dwp_message_page
   @dwp_message_page ||= DwpMessagePage.new
 end
 
+def hmrc_message_page
+  @hmrc_message_page ||= HmrcMessagePage.new
+end
+
 def navigation_page
   @navigation_page ||= NavigationPage.new
 end

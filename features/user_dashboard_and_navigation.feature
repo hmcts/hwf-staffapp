@@ -46,6 +46,10 @@ Feature: User dashboard and navigation
     Given I successfully sign in as a user
     Then I should not be able to navigate to the DWP warning message page
 
+  Scenario: Unable to edit HMRC message
+    Given I successfully sign in as a user
+    Then I should not be able to navigate to the HMRC warning message page
+
   Scenario: DWP connection
     Given I successfully sign in as a user
     Then I should see the status of the DWP connection

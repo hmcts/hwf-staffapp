@@ -18,6 +18,9 @@ Feature: Admin navigation
     Scenario: DWP message
       Then I can view staff DWP warning message page
 
+    Scenario: HMRC message
+      Then I can view staff HMRC warning message page
+
     Scenario: Staff guides
       Then I can view staff guides
 

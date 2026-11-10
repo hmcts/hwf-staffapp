@@ -460,6 +460,13 @@ en-GB:
         offline: "Display DWP check is down message"
         online: "Display DWP check is working message"
         default: "Use the default DWP check to display message"
+  hmrc_warnings:
+    edit:
+      header: Choose the HMRC message
+      form:
+        offline: "Display HMRC check is down message"
+        online: "Display HMRC check is working message"
+        default: "Use the default HMRC check to display message"
 
 
   online_application_benefits:
