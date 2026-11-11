@@ -567,7 +567,7 @@ RSpec.describe BenefitCheckers::DwpApiClient, type: :service do
 
         it 'still fetches and stores the claims' do
           client.check(params)
-          expect(benefit_check.dwp_api_calls.pluck(:endpoint_name)).to eq(['match_citizen', 'citizen', 'verify_citizen', 'get_claims'])
+          expect(benefit_check.dwp_api_calls.order(:id).pluck(:endpoint_name)).to eq(['match_citizen', 'citizen', 'verify_citizen', 'get_claims'])
         end
 
         it 'is flagged even when DWP returns no claims' do
@@ -630,7 +630,7 @@ RSpec.describe BenefitCheckers::DwpApiClient, type: :service do
 
       it 'is a failed check, like any other DWP failure' do
         expect { client.check(params) }.to raise_error(Exceptions::TechnicalFaultDwpCheck)
-        expect(benefit_check.dwp_api_calls.pluck(:endpoint_name)).to eq(['match_citizen', 'citizen'])
+        expect(benefit_check.dwp_api_calls.order(:id).pluck(:endpoint_name)).to eq(['match_citizen', 'citizen'])
       end
 
     end
@@ -749,7 +749,7 @@ RSpec.describe BenefitCheckers::DwpApiClient, type: :service do
 
       it 'stores the match, citizen, verification and claims calls' do
         client.check(params)
-        expect(benefit_check.dwp_api_calls.pluck(:endpoint_name)).to eq(['match_citizen', 'citizen', 'verify_citizen', 'get_claims'])
+        expect(benefit_check.dwp_api_calls.order(:id).pluck(:endpoint_name)).to eq(['match_citizen', 'citizen', 'verify_citizen', 'get_claims'])
       end
 
       it 'stores the error in the get_claims call' do
