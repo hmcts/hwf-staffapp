@@ -30,3 +30,6 @@ Feature: Read only navigation
   
     Scenario: Unable to edit DWP message
       Then I should not be able to navigate to the DWP warning message page
+
+    Scenario: Unable to edit HMRC message
+      Then I should not be able to navigate to the HMRC warning message page

@@ -24,4 +24,19 @@ RSpec.describe Users::SessionsController do
       expect(assigns(:hmrc_state)).to eq('offline')
     end
   end
+
+  describe 'GET #new with the HMRC switch set by an admin' do
+    let(:hmrc_monitor) { instance_double(HmrcMonitor, state: 'offline') }
+
+    before do
+      create(:hmrc_warning, check_state: HmrcWarning::STATES[:online])
+      @request.env['devise.mapping'] = Devise.mappings[:user]
+      allow(HmrcMonitor).to receive(:new).and_return(hmrc_monitor)
+      get :new
+    end
+
+    it 'shows the switch state instead of the monitor state' do
+      expect(assigns(:hmrc_state)).to eq('online')
+    end
+  end
 end

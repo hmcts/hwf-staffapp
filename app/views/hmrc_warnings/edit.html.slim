@@ -1,0 +1,24 @@
+- content_for :page_title
+  = t('.header')
+
+
+= form_for(@hmrc_warning, url: hmrc_warnings_path, action: :patch) do |f|
+  .govuk-form-group
+    fieldset.govuk-fieldset
+      legend.govuk-fieldset__legend class='govuk-!-padding-top-7'
+        h1.govuk-heading-xl = t('.header')
+      .govuk-radios.govuk-radios--small
+        .govuk-radios__item
+          = f.radio_button :check_state, HmrcWarning::STATES[:offline], class: 'govuk-radios__input'
+          = f.label :check_state, class: 'govuk-label govuk-radios__label', for: 'hmrc_warning_check_state_offline'
+            = t('.form.offline')
+        .govuk-radios__item
+          = f.radio_button :check_state, HmrcWarning::STATES[:online], class: 'govuk-radios__input'
+          = f.label :check_state, class: 'govuk-label govuk-radios__label', for: 'hmrc_warning_check_state_online'
+            = t('.form.online')
+        .govuk-radios__item
+          = f.radio_button :check_state, HmrcWarning::STATES[:default_checker], class: 'govuk-radios__input'
+          = f.label :check_state, class: 'govuk-label govuk-radios__label', for: 'hmrc_warning_check_state_default_checker'
+            = t('.form.default')
+
+  = f.submit 'Save changes', class: 'govuk-button'

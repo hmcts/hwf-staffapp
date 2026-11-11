@@ -2,6 +2,7 @@ Rails.application.routes.draw do
 
   resource :notifications, only: [:edit, :update]
   resource :dwp_warnings, only: [:edit, :update]
+  resource :hmrc_warnings, only: [:edit, :update]
 
   post 'api/submissions' => 'api/submissions#create'
   post 'api/calculate_percentage_fee' => 'api/fee_calculator#calculate_percentage_fee'
