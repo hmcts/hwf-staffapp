@@ -36,6 +36,7 @@ end
 Then("I can view office details") do
   navigation_page.navigation_link.view_office.click
   expect(office_page.content).to have_header
+
 end
 
 Then("I can view staff") do
