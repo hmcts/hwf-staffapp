@@ -4,7 +4,10 @@
         h2.govuk-heading-l = t("remissions.callout_html")
     - elsif source.evidence_check_outcome == 'part'
       #result.callout class="callout-#{source.evidence_check_outcome}"
-        h2.govuk-heading-l = t("remissions.#{source.evidence_check_outcome}_html", amount_to_pay: source.amount_to_pay)
+        - if source.refund
+          h2.govuk-heading-l = t("remissions.part_refund_html", amount_to_pay: "£#{parse_amount_to_pay(source.amount_to_refund)}")
+        - else
+          h2.govuk-heading-l = t("remissions.#{source.evidence_check_outcome}_html", amount_to_pay: source.amount_to_pay)
     - elsif source.evidence_check_outcome == 'none'
       #result.callout class="callout-none"
         h2.govuk-heading-l = t("remissions.none_html", amount_to_pay: source.amount_to_pay, return_type: source.return_type)

@@ -235,6 +235,30 @@ RSpec.feature 'Evidence check flow' do
       end
     end
 
+    context 'for a part remission outcome on a post UCD application' do
+      let(:application) do
+        create(:application_full_remission, user: user, office: office, state: 1, fee: 300, refund: true,
+                                            detail_traits: [:post_ucd])
+      end
+      let(:evidence) { create(:evidence_check_part_outcome, application: application, amount_to_pay: 43.33) }
+
+      it 'shows the amount to be refunded for a refund' do
+        expect(page).to have_text('The amount to be refunded should be £256.67')
+        expect(page).to have_no_text('The applicant must pay')
+      end
+
+      context 'when it is not a refund' do
+        let(:application) do
+          create(:application_full_remission, user: user, office: office, state: 1, fee: 300, refund: false,
+                                              detail_traits: [:post_ucd])
+        end
+
+        it 'shows the amount the applicant must pay' do
+          expect(page).to have_text('The applicant must pay £43.33 towards the fee')
+        end
+      end
+    end
+
     context 'for a full remission outcome' do
       let(:evidence) { create(:evidence_check_full_outcome, application: application) }
       let(:expected_fields) do
