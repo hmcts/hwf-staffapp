@@ -36,19 +36,19 @@ class NotifyMailer < GovukNotifyRails::Mailer
   end
 
   def dwp_is_down_notifier
-    set_template(ENV.fetch('NOTIFY_DWP_DOWN_TEMPLATE_ID', nil))
-    set_personalisation(
-      environment: ENV.fetch('EMAIL_ENV', 'unknown')
-    )
-    mail(to: Settings.mail.dwp_notification_alert)
+    status_alert('NOTIFY_DWP_DOWN_TEMPLATE_ID')
   end
 
   def hmrc_is_down_notifier
-    set_template(ENV.fetch('NOTIFY_HMRC_DOWN_TEMPLATE_ID', nil))
-    set_personalisation(
-      environment: ENV.fetch('EMAIL_ENV', 'unknown')
-    )
-    mail(to: Settings.mail.dwp_notification_alert)
+    status_alert('NOTIFY_HMRC_DOWN_TEMPLATE_ID')
+  end
+
+  def hmrc_is_up_notifier
+    status_alert('NOTIFY_HMRC_UP_TEMPLATE_ID')
+  end
+
+  def dwp_is_up_notifier
+    status_alert('NOTIFY_DWP_UP_TEMPLATE_ID')
   end
 
   def user_invite(user)
@@ -92,6 +92,13 @@ class NotifyMailer < GovukNotifyRails::Mailer
   end
 
   private
+
+  # DWP/HMRC down and up alerts share one recipient list and personalisation
+  def status_alert(template_env_name)
+    set_template(ENV.fetch(template_env_name, nil))
+    set_personalisation(environment: ENV.fetch('EMAIL_ENV', 'unknown'))
+    mail(to: Settings.mail.dwp_notification_alert)
+  end
 
   def report_notify_bad_request(_exception)
     Sentry.capture_message(

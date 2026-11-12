@@ -11,6 +11,19 @@ with entries grouped by branch and date rather than release version.
   monitor. It drives the HMRC banner and the HMRC/paper choice for new evidence checks, so an admin
   can keep HMRC API checks going while the monitor is red. The "HMRC is down" email still follows
   the real monitor, as the DWP one does. Unlike `DwpWarning`, the one-record guard really aborts.
+## 2026-11-11 (rst-8807-notification-throttling)
+
+- HMRC status emails are throttled: the down email goes out at the first offline check, twice more
+  5 minutes apart, then every 30 minutes; the first online check after that sends a new "back
+  online" email and resets the cycle. The monitor is still checked every 5 minutes. Amber
+  (warning) sends nothing and leaves an outage open. It uses the real HmrcMonitor state, never
+  the admin HMRC message switch. The gaps are 4 and 29 minutes, so a slightly early cron run
+  doesn't push an email back a whole check.
+- `status_notifications` keeps one row per service. It's in the database, not the cache, so a
+  restart or Redis flush can't resend notification 1. The schedule is ready for DWP too (one row
+  plus `dwp_is_up_notifier`), but DwpReportStatusJob isn't switched over yet. There's no flapping
+  protection: a monitor bouncing around 50% sends a down and up pair each time. Prod needs its
+  own `NOTIFY_HMRC_UP_TEMPLATE_ID` / `NOTIFY_DWP_UP_TEMPLATE_ID` set outside this repo.
 
 ## 2026-11-09 (rst-8786-mi-rounding)
 

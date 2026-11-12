@@ -73,7 +73,7 @@ Runs every 5 minutes
 ```DwpReportStatusJob.delay(cron: '*/5 * * * *').perform_now```
 
 ## Delayed jobs for HMRC offline notification
-Runs every 5 minutes, same as the DWP one
+Runs every 5 minutes, same as the DWP one. Emails are throttled (3 at 5-minute gaps, then every 30 minutes) and a "back online" email is sent on recovery - see CHANGELOG.md (rst-8807)
 ```HmrcReportStatusJob.delay(cron: '*/5 * * * *').perform_now```
 
 ## Delayed jobs for HMRC data purge

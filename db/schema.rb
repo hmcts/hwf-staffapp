@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.1].define(version: 2026_11_10_100000) do
+ActiveRecord::Schema[8.1].define(version: 2026_11_11_100000) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
   enable_extension "pg_trgm"
@@ -541,6 +541,16 @@ ActiveRecord::Schema[8.1].define(version: 2026_11_10_100000) do
     t.boolean "passed"
     t.datetime "updated_at", precision: nil, null: false
     t.index ["application_id"], name: "index_savings_on_application_id"
+  end
+
+  create_table "status_notifications", force: :cascade do |t|
+    t.string "service", null: false
+    t.boolean "outage_open", default: false, null: false
+    t.integer "sent_count", default: 0, null: false
+    t.datetime "last_sent_at"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["service"], name: "index_status_notifications_on_service", unique: true
   end
 
   create_table "users", id: :serial, force: :cascade do |t|
