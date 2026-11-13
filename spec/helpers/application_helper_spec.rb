@@ -50,6 +50,14 @@ RSpec.describe ApplicationHelper do
         expect(helper.amount_to_refund(application).to_i).to be(70)
       end
     end
+
+    context 'full remission with nothing to pay' do
+      let(:application) { build(:application, fee: 100, amount_to_pay: nil) }
+
+      it 'refunds the whole fee' do
+        expect(helper.amount_to_refund(application).to_i).to be(100)
+      end
+    end
   end
 
   describe 'amount_to_pay' do

@@ -15,7 +15,7 @@ module ApplicationHelper
 
   def amount_to_refund(application)
     amount_to_pay = application.evidence_check ? application.evidence_check.amount_to_pay : application.amount_to_pay
-    application.detail.fee - amount_to_pay
+    application.detail.fee - (amount_to_pay || 0)
   end
 
   def amount_to_pay(application)

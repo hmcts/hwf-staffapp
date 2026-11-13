@@ -68,7 +68,8 @@ RSpec.feature 'Processing refund application with valid date received date' do
 
       expect(page).to have_text 'Savings and investments✓ Passed'
       expect(page).to have_text 'Benefits✓ Passed'
-      expect(page).to have_text 'Eligible for help with fees'
+      expect(page).to have_text 'The amount to be refunded should be £1550'
+      expect(page).to have_no_text 'Eligible for help with fees'
     end
 
     it "ignore date_received date because it was already validated" do
@@ -90,7 +91,7 @@ RSpec.feature 'Processing refund application with valid date received date' do
 
       expect(page).to have_text 'Savings and investments✓ Passed'
       expect(page).to have_text 'Benefits✓ Passed'
-      expect(page).to have_text 'Eligible for help with fees'
+      expect(page).to have_text 'The amount to be refunded should be £1550'
     end
 
   end
@@ -134,7 +135,7 @@ RSpec.feature 'Processing refund application with valid date received date' do
 
           expect(page).to have_text 'Savings and investments✓ Passed'
           expect(page).to have_text 'Benefits✓ Passed'
-          expect(page).to have_text 'Eligible for help with fees'
+          expect(page).to have_text 'The amount to be refunded should be £300'
         end
 
       end
@@ -271,7 +272,7 @@ RSpec.feature 'Processing refund application with valid date received date' do
             click_button 'Complete processing'
 
             expect(page).to have_text 'Benefits✓ Passed'
-            expect(page).to have_text 'Eligible for help with fees'
+            expect(page).to have_text 'The amount to be refunded should be £300'
             expect(page).to have_text 'Delivery Manager Discretion✓ Passed'
             expect(page).to have_text 'Savings and investments✓ Passed'
           end
@@ -314,7 +315,7 @@ RSpec.feature 'Processing refund application with valid date received date' do
         click_button 'Complete processing'
 
         expect(page).to have_text 'Savings and investments✓ Passed'
-        expect(page).to have_text 'Eligible for help with fees'
+        expect(page).to have_text 'The amount to be refunded should be £300'
       end
 
       it "invalid date discretion granted" do
@@ -366,7 +367,7 @@ RSpec.feature 'Processing refund application with valid date received date' do
         click_button 'Complete processing'
 
         expect(page).to have_text 'Savings and investments✓ Passed'
-        expect(page).to have_text 'Eligible for help with fees'
+        expect(page).to have_text 'The amount to be refunded should be £300'
       end
     end
   end

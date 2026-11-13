@@ -126,6 +126,45 @@ RSpec.feature 'Evidence check flow' do
     end
   end
 
+  context 'when a full remission refund stays full after the evidence check (post UCD)' do
+    # Single applicant, no children: £1000 income is under the threshold, so the whole £455 fee is refunded.
+    let(:application) do
+      create(:application_full_remission, user: user, office: office, state: 1, fee: 455, income: 55, refund: true,
+                                          applicant_traits: [], dependents: false, children: 0,
+                                          detail_traits: [:post_ucd])
+    end
+    let(:evidence) { create(:evidence_check, application: application) }
+    let(:refund_message) { 'The amount to be refunded should be £455' }
+
+    before do
+      visit accuracy_evidence_path(id: evidence.id)
+      choose 'evidence_correct_true'
+      click_button 'Next'
+      fill_in 'evidence_income', with: 1000
+      click_button 'Next'
+    end
+
+    it 'shows the refund on the income result page' do
+      expect(page).to have_text(refund_message)
+      expect(page).to have_no_text('Eligible for help with fees')
+    end
+
+    it 'shows the same refund on the summary page' do
+      click_link_or_button 'Next'
+      expect(page).to have_text('Check details')
+      expect(page).to have_text(refund_message)
+      expect(page).to have_no_text('Eligible for help with fees')
+    end
+
+    it 'shows the same refund on the confirmation page' do
+      click_link_or_button 'Next'
+      click_link_or_button 'Complete processing'
+      expect(page).to have_text('Application complete')
+      expect(page).to have_text(refund_message)
+      expect(page).to have_no_text('Eligible for help with fees')
+    end
+  end
+
   context 'when on "Evidence accuracy" page' do
     before { visit accuracy_evidence_path(id: evidence.id) }
 

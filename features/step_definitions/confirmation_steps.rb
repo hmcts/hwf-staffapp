@@ -43,6 +43,11 @@ Then("I should see that the applicant is eligible for help with fees") do
   expect(confirmation_page.content).to have_eligible
 end
 
+Then("I should see that the amount to be refunded is {string}") do |amount|
+  expect(confirmation_page.content.refund_amount.text).to eq("The amount to be refunded should be #{amount}")
+  expect(confirmation_page.content).to have_no_eligible
+end
+
 Then("I should see a help with fees reference number") do
   expect(confirmation_page.content).to have_reference_number_is
   reference_number = "#{reference_prefix}-000001"
