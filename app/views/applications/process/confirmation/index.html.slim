@@ -12,7 +12,7 @@
 
 
     #result.callout class="callout-#{@confirm.result}"
-      - if @application.detail.refund? && @application.outcome.eql?('part')
+      - if @application.detail.refund? && ['full', 'part'].include?(@confirm.result)
         h2.govuk-heading-l = t("remissions.part_refund_html", amount_to_pay: "£#{parse_amount_to_pay(amount_to_refund(@application))}")
       - else
         h2.govuk-heading-l = t("remissions.#{@confirm.result}_html", amount_to_pay: "£#{parse_amount_to_pay(@confirm.amount_to_pay)}")

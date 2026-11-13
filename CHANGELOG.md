@@ -5,6 +5,16 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 with entries grouped by branch and date rather than release version.
 
+## 2026-11-12 (rst-8791-refund-banner)
+
+- Post-UCD evidence summary: a refund with a part outcome now shows "The amount to be refunded
+  should be …", like the income result page, instead of "The applicant must pay … towards the fee".
+  `Views::Overview::Application#amount_to_refund` now uses the evidence check's amount to pay when
+  there is one, so the figure matches too.
+- A refund with a full outcome now shows "The amount to be refunded should be £<fee>" on the
+  confirmation page and the evidence summary, instead of "Eligible for help with fees", so every page
+  matches the processed-application view, which already showed the refund.
+
 ## 2026-11-10 (rst-8805-hmrc-switch)
 
 - Admin "HMRC message" switch (`HmrcWarning`), a copy of the DWP one: online, offline or use the

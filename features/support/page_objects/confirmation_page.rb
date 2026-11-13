@@ -4,6 +4,7 @@ class ConfirmationPage < BasePage
     element :reference_number, '.reference-number'
     element :eligible, 'h2', text: '✓ Eligible for help with fees'
     element :ineligible, 'h2', text: '✗ Not eligible for help with fees'
+    element :refund_amount, 'h2', text: /The amount to be refunded should be £/
     element :part_payment, '.callout.callout-part'
     element :failed_benefits, '.govuk-summary-list__row', text: '✗ Failed'
     element :passed_benefits, '.govuk-summary-list__row', text: '✓ Passed (paper evidence checked)'

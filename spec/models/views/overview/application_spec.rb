@@ -523,6 +523,20 @@ RSpec.describe Views::Overview::Application do
       subject { view.amount_to_refund }
 
       it { is_expected.to eql(75.to_f) }
+
+      context 'when the evidence check has set the amount to pay' do
+        let(:evidence_check) { build_stubbed(:evidence_check, amount_to_pay: 40) }
+        let(:application) { build_stubbed(:application, amount_to_pay: 25, fee: 100, evidence_check: evidence_check) }
+
+        it { is_expected.to eql(60.to_f) }
+      end
+
+      context 'when the evidence check has no amount to pay yet' do
+        let(:evidence_check) { build_stubbed(:evidence_check, amount_to_pay: nil) }
+        let(:application) { build_stubbed(:application, amount_to_pay: 25, fee: 100, evidence_check: evidence_check) }
+
+        it { is_expected.to eql(75.to_f) }
+      end
     end
 
     describe '#calculation_scheme' do
