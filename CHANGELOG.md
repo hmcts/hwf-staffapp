@@ -14,6 +14,11 @@ with entries grouped by branch and date rather than release version.
 - A refund with a full outcome now shows "The amount to be refunded should be £<fee>" on the
   confirmation page and the evidence summary, instead of "Eligible for help with fees", so every page
   matches the processed-application view, which already showed the refund.
+## 2026-11-16 (gem-updates-v76)
+
+- Security and routine gem updates. Puma 8.0.3 (7 advisories) went in under 7 days old; 8.1 skipped
+  for now. Held: playwright 1.65 (no matching Ruby client yet), sass (exact pin), cucumber 12,
+  devise_invitable 3, rotp/redis-client (pinned upstream).
 
 ## 2026-11-10 (rst-8805-hmrc-switch)
 
