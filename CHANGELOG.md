@@ -5,6 +5,12 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 with entries grouped by branch and date rather than release version.
 
+## 2026-11-16 (gem-updates-v76)
+
+- Security and routine gem updates. Puma 8.0.3 (7 advisories) went in under 7 days old; 8.1 skipped
+  for now. Held: playwright 1.65 (no matching Ruby client yet), sass (exact pin), cucumber 12,
+  devise_invitable 3, rotp/redis-client (pinned upstream).
+
 ## 2026-11-10 (rst-8805-hmrc-switch)
 
 - Admin "HMRC message" switch (`HmrcWarning`), a copy of the DWP one: online, offline or use the
