@@ -5,6 +5,10 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 with entries grouped by branch and date rather than release version.
 
+## 2026-11-18 (chrome-158-capybara-reset)
+
+- Cucumber: Chrome 158 rejects Capybara 3.40.0's reset call (origin `'*'`), so it now clears cookies with `Network.clearBrowserCookies`; remove once Capybara fixes it.
+
 ## 2026-11-12 (rst-8791-refund-banner)
 
 - Post-UCD evidence summary: a refund with a part outcome now shows "The amount to be refunded
