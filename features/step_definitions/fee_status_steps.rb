@@ -16,6 +16,13 @@ Given('I am on the fee status page') do
   expect(fee_status_page.content).to have_header
 end
 
+Then('the date fields should not be number fields') do
+  date_fields = fee_status_page.all('.govuk-date-input__input', visible: :all)
+
+  expect(date_fields.size).to eq(6)
+  expect(date_fields.map { |field| [field[:type], field[:inputmode]] }.uniq).to eq([['text', 'numeric']])
+end
+
 Then('I should see that I must fill in date received') do
   expect(fee_status_page.content).to have_application_date_received_error
 end
