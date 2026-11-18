@@ -46,7 +46,7 @@ Feature: Pre-UCD end-to-end Tests
     When I submit the application signed by myself
     Then I should see check details page pre UCD
     When I successfully submit my application
-    Then I should see that the applicant is eligible for help with fees
+    Then I should see that the amount to be refunded is "£656.66"
 
   Scenario: Process online application with benefits (pre-UCD)
     Given I have looked up an online application with benefits

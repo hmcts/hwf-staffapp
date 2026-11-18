@@ -36,6 +36,6 @@ RSpec.shared_examples "duplicated NINO for successfull DWP" do
 
     click_button 'Complete processing'
     expect(page).to have_no_text('Evidence of income needs to be checked')
-    expect(page).to have_text('✓ Eligible for help with fees')
+    expect(page).to have_text('The amount to be refunded should be £1000')
   end
 end

@@ -203,8 +203,19 @@ bundle exec rails test test/helpers/home_helper_test.rb -n /partner_hmrc/
 Note: the `file:line` syntax does not work with Minitest 6.
 
 #### Run tests in parallel
-Follow the [official guides](https://github.com/grosser/parallel_tests#setup-environment-from-scratch-create-db-and-loads-schema-useful-for-ci) to setup your local env
+Create the test databases (`fr-staffapp_test`, `fr-staffapp_test2`, ...) and load the schema. Use these
+rather than `parallel:setup`, which runs `db:setup` and so loads `db/seeds.rb` into every test database.
+`lib/tasks/test.rake` runs 4 processes, so pass `[4]` to match:
+```
+RAILS_ENV=test bundle exec rake "parallel:create[4]" "parallel:load_schema[4]"
+```
 
+After a new migration, update them with
+```
+RAILS_ENV=test bundle exec rake "parallel:prepare[4]"
+```
+
+See the [parallel_tests guide](https://github.com/grosser/parallel_tests#setup-environment-from-scratch-create-db-and-loads-schema-useful-for-ci) for more.
 
 Run the specs in parallel
 ```

@@ -86,6 +86,85 @@ RSpec.feature 'Evidence check flow' do
     end
   end
 
+  context 'when a full remission refund becomes a part remission after the evidence check (post UCD)' do
+    # Single applicant, no children: £1500 income gives £40 to pay, so £415 of the £455 fee is refunded.
+    let(:application) do
+      create(:application_full_remission, user: user, office: office, state: 1, fee: 455, income: 55, refund: true,
+                                          applicant_traits: [], dependents: false, children: 0,
+                                          detail_traits: [:post_ucd])
+    end
+    let(:evidence) { create(:evidence_check, application: application) }
+    let(:refund_message) { 'The amount to be refunded should be £415' }
+
+    before do
+      visit accuracy_evidence_path(id: evidence.id)
+      choose 'evidence_correct_true'
+      click_button 'Next'
+      fill_in 'evidence_income', with: 1500
+      click_button 'Next'
+    end
+
+    it 'shows the refund on the income result page' do
+      expect(page).to have_text(refund_message)
+      expect(page).to have_no_text('The applicant must pay')
+    end
+
+    it 'shows the same refund on the summary page' do
+      click_link_or_button 'Next'
+      expect(page).to have_text('Check details')
+      expect(page).to have_text(refund_message)
+      expect(page).to have_no_text('The applicant must pay')
+    end
+
+    it 'shows the same refund on the confirmation page' do
+      click_link_or_button 'Next'
+      click_link_or_button 'Complete processing'
+      expect(page).to have_text('Application complete')
+      expect(page).to have_text(refund_message)
+      expect(page).to have_no_text('The applicant must pay')
+      expect(page).to have_no_text('Eligible for help with fees')
+    end
+  end
+
+  context 'when a full remission refund stays full after the evidence check (post UCD)' do
+    # Single applicant, no children: £1000 income is under the threshold, so the whole £455 fee is refunded.
+    let(:application) do
+      create(:application_full_remission, user: user, office: office, state: 1, fee: 455, income: 55, refund: true,
+                                          applicant_traits: [], dependents: false, children: 0,
+                                          detail_traits: [:post_ucd])
+    end
+    let(:evidence) { create(:evidence_check, application: application) }
+    let(:refund_message) { 'The amount to be refunded should be £455' }
+
+    before do
+      visit accuracy_evidence_path(id: evidence.id)
+      choose 'evidence_correct_true'
+      click_button 'Next'
+      fill_in 'evidence_income', with: 1000
+      click_button 'Next'
+    end
+
+    it 'shows the refund on the income result page' do
+      expect(page).to have_text(refund_message)
+      expect(page).to have_no_text('Eligible for help with fees')
+    end
+
+    it 'shows the same refund on the summary page' do
+      click_link_or_button 'Next'
+      expect(page).to have_text('Check details')
+      expect(page).to have_text(refund_message)
+      expect(page).to have_no_text('Eligible for help with fees')
+    end
+
+    it 'shows the same refund on the confirmation page' do
+      click_link_or_button 'Next'
+      click_link_or_button 'Complete processing'
+      expect(page).to have_text('Application complete')
+      expect(page).to have_text(refund_message)
+      expect(page).to have_no_text('Eligible for help with fees')
+    end
+  end
+
   context 'when on "Evidence accuracy" page' do
     before { visit accuracy_evidence_path(id: evidence.id) }
 
@@ -231,6 +310,30 @@ RSpec.feature 'Evidence check flow' do
 
         it 'redirects to the confirmation page' do
           expect(page).to have_text('Application complete')
+        end
+      end
+    end
+
+    context 'for a part remission outcome on a post UCD application' do
+      let(:application) do
+        create(:application_full_remission, user: user, office: office, state: 1, fee: 300, refund: true,
+                                            detail_traits: [:post_ucd])
+      end
+      let(:evidence) { create(:evidence_check_part_outcome, application: application, amount_to_pay: 43.33) }
+
+      it 'shows the amount to be refunded for a refund' do
+        expect(page).to have_text('The amount to be refunded should be £256.67')
+        expect(page).to have_no_text('The applicant must pay')
+      end
+
+      context 'when it is not a refund' do
+        let(:application) do
+          create(:application_full_remission, user: user, office: office, state: 1, fee: 300, refund: false,
+                                              detail_traits: [:post_ucd])
+        end
+
+        it 'shows the amount the applicant must pay' do
+          expect(page).to have_text('The applicant must pay £43.33 towards the fee')
         end
       end
     end
