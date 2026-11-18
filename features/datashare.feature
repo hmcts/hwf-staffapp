@@ -47,3 +47,10 @@ Feature: Datashare income checking
     And There is no additional income for the user
     Then I should see the result for that application
 
+
+  Scenario: Additional income selected without an amount
+    Given I fill in the form details for a low income user
+    When I press complete processing
+    And I check the income for the correct month
+    And I say there is additional income but leave the amount empty
+    Then I should see the additional income amount error

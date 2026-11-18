@@ -81,3 +81,15 @@ Given(/^I fill in the form details for an applicant with child tax credit$/) do
   hmrc_child_tax_credits
   click_button('Next')
 end
+
+And(/^I say there is additional income but leave the amount empty$/) do
+  expect(datashare_evidence_page.content).to have_checked_header
+  choose('Yes, there is additional income for this application')
+  fill_in('hmrc_check_additional_income_amount', with: '')
+  click_button('Next')
+end
+
+Then(/^I should see the additional income amount error$/) do
+  expect(datashare_evidence_page.content).to have_checked_header
+  expect(datashare_evidence_page.content).to have_text("Can't be empty")
+end
