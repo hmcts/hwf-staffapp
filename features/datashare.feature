@@ -52,5 +52,14 @@ Feature: Datashare income checking
     Given I fill in the form details for a low income user
     When I press complete processing
     And I check the income for the correct month
-    And I say there is additional income but leave the amount empty
-    Then I should see the additional income amount error
+    And I say there is additional income of ""
+    Then I should see the additional income error "Enter the total additional income"
+
+  Scenario: Additional income selected with an amount that is not a number
+    Given I fill in the form details for a low income user
+    When I press complete processing
+    And I check the income for the correct month
+    And I say there is additional income of "asdas"
+    Then I should see the additional income error "Total additional income must be a number"
+    And the additional income field shows "asdas"
+    And I should see the declared income

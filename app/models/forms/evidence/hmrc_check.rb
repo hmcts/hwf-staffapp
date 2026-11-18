@@ -26,8 +26,7 @@ module Forms
 
       before_validation :format_dates, unless: :income_step?
       validate :validate_range, unless: :income_step?
-      validate :additional_income_check
-      validates :additional_income_amount, numericality: { greater_than_or_equal_to: 0 }, if: :income_step?
+      validate :additional_income_check, if: :income_step?
 
       def from_date
         from_date_value&.strftime("%Y-%m-%d")
@@ -38,6 +37,11 @@ module Forms
       end
 
       attr_reader :from_date_value, :to_date_value
+
+      # What the user typed, so an invalid amount like 'asdas' is shown back unchanged
+      def additional_income_amount_as_entered
+        @attributes['additional_income_amount'].value_before_type_cast
+      end
 
       def load_additional_income_from_benefits
         if child_benefits_per_month.positive?
@@ -104,10 +108,17 @@ module Forms
         errors.add(:date_range, "Enter a 3 calendar months date range")
       end
 
+      # Checks the value as typed: the integer attribute turns 'asdas' into 0 - see CHANGELOG.md
       def additional_income_check
-        return unless income_step?
-        return unless additional_income_amount.nil?
-        errors.add(:additional_income_amount, "Can't be empty")
+        amount = Float(additional_income_amount_as_entered.to_s, exception: false)
+
+        if additional_income_amount_as_entered.blank?
+          errors.add(:additional_income_amount, :blank)
+        elsif amount.nil?
+          errors.add(:additional_income_amount, :not_a_number)
+        elsif amount.negative?
+          errors.add(:additional_income_amount, :greater_than_or_equal_to, count: 0)
+        end
       end
 
       def income_step?

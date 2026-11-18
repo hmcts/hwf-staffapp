@@ -1071,6 +1071,12 @@ en-GB:
             income:
               blank: Enter the total monthly income
               not_a_number: Enter the total monthly income
+        forms/evidence/hmrc_check:
+          attributes:
+            additional_income_amount:
+              blank: Enter the total additional income
+              not_a_number: Total additional income must be a number
+              greater_than_or_equal_to: Total additional income must be £0 or more
         forms/application/income:
           attributes:
             income:

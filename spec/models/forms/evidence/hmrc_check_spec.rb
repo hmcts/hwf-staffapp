@@ -60,6 +60,43 @@ RSpec.describe Forms::Evidence::HmrcCheck do
       end
     end
 
+    context 'when there is additional income' do
+      let(:additional_income) { true }
+      let(:error) { form.errors[:additional_income_amount] }
+
+      before { form.valid? }
+
+      context 'and the amount is empty' do
+        let(:additional_income_amount) { '' }
+        it { is_expected.to be false }
+        it { expect(error).to eq ['Enter the total additional income'] }
+      end
+
+      context 'and the amount is not a number' do
+        let(:additional_income_amount) { 'asdas' }
+        it { is_expected.to be false }
+        it { expect(error).to eq ['Total additional income must be a number'] }
+        it { expect(form.additional_income_amount_as_entered).to eq 'asdas' }
+      end
+
+      context 'and the amount starts with a number' do
+        let(:additional_income_amount) { '12abc' }
+        it { is_expected.to be false }
+        it { expect(error).to eq ['Total additional income must be a number'] }
+      end
+
+      context 'and the amount is negative' do
+        let(:additional_income_amount) { '-1' }
+        it { is_expected.to be false }
+        it { expect(error).to eq ['Total additional income must be £0 or more'] }
+      end
+
+      context 'and the amount is a number' do
+        let(:additional_income_amount) { '150' }
+        it { is_expected.to be true }
+      end
+    end
+
     describe 'month range' do
       context 'from_date' do
         context 'day' do
