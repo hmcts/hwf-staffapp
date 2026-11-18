@@ -4,6 +4,9 @@ Feature: Fee status page
     Given I started to process paper application
     And I am on the fee status page
 
+    Scenario: Date fields are text fields so the mouse wheel cannot change them
+      Then the date fields should not be number fields
+
     Scenario: Required information
       When I click on next without answering any questions
       Then I should see that I must fill in date received

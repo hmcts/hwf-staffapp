@@ -14,11 +14,23 @@ with entries grouped by branch and date rather than release version.
 - A refund with a full outcome now shows "The amount to be refunded should be £<fee>" on the
   confirmation page and the evidence summary, instead of "Eligible for help with fees", so every page
   matches the processed-application view, which already showed the refund.
+## 2026-11-17 (number-input-wheel)
+
+- Fee status page: the date fields are text fields with `inputmode: numeric` instead of `type: number`,
+  as the fee and income fields were in RST-8023. Staff scrolling down the page were changing dates by
+  accident with the mouse wheel. Other pages still have number date fields; left for now.
 ## 2026-11-16 (gem-updates-v76)
 
 - Security and routine gem updates. Puma 8.0.3 (7 advisories) went in under 7 days old; 8.1 skipped
   for now. Held: playwright 1.65 (no matching Ruby client yet), sass (exact pin), cucumber 12,
   devise_invitable 3, rotp/redis-client (pinned upstream).
+## 2026-11-16 (yarn-install-hardening)
+
+- `.yarnrc.yml`: install scripts off, 3-day age gate on, `approvedGitRepositories` removed (no git
+  JS deps). Supply-chain hardening: install scripts run with full user access, and most malicious
+  releases are pulled within days. The only scripts (@parcel/watcher, unrs-resolver) are build-from-
+  source fallbacks; both use prebuilt binaries. For an urgent fix under 3 days old, add it to
+  `npmPreapprovedPackages`.
 
 ## 2026-11-10 (rst-8805-hmrc-switch)
 
