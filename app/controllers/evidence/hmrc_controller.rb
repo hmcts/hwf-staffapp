@@ -35,6 +35,7 @@ module Evidence
         @evidence.calculate_evidence_income!
         redirect_to evidence_check_hmrc_summary_path(@evidence, @hmrc_check)
       else
+        load_application_view
         render :show
       end
     end
@@ -86,6 +87,10 @@ module Evidence
       @form.user_id = current_user.id
       @form.additional_income = check.additional_income.positive?
       @form.additional_income_amount = check.additional_income
+      load_application_view
+    end
+
+    def load_application_view
       @application_view = Views::Overview::Application.new(evidence.application)
     end
 

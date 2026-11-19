@@ -81,3 +81,23 @@ Given(/^I fill in the form details for an applicant with child tax credit$/) do
   hmrc_child_tax_credits
   click_button('Next')
 end
+
+And(/^I say there is additional income of "([^"]*)"$/) do |amount|
+  expect(datashare_evidence_page.content).to have_checked_header
+  choose('Yes, there is additional income for this application')
+  fill_in('hmrc_check_additional_income_amount', with: amount)
+  click_button('Next')
+end
+
+Then(/^I should see the additional income error "([^"]*)"$/) do |message|
+  expect(datashare_evidence_page.content).to have_checked_header
+  expect(datashare_evidence_page.content).to have_text(message)
+end
+
+Then(/^the additional income field shows "([^"]*)"$/) do |amount|
+  expect(page).to have_field('hmrc_check_additional_income_amount', with: amount)
+end
+
+Then(/^I should see the declared income$/) do
+  expect(page).to have_css('tr', text: /Total monthly income declared\s+\S/)
+end

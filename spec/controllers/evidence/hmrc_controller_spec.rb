@@ -412,11 +412,13 @@ RSpec.describe Evidence::HmrcController do
         end
 
         context 'invalid amount' do
-          # With ActiveModel::Attributes, 'asd' coerces to 0, which is >= 0 (valid)
-          # Use a negative number to test invalid input
           let(:update_return) { false }
-          let(:amount) { '-1' }
+          let(:amount) { 'asdas' }
           it { expect(response).to render_template('show') }
+
+          it 'loads the declared income for the page' do
+            expect(assigns(:application_view)).to be_a(Views::Overview::Application)
+          end
 
           it 'do not trigger calculate_evidence_income' do
             expect(evidence).not_to have_received(:calculate_evidence_income!)
