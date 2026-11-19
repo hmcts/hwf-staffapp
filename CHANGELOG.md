@@ -7,7 +7,7 @@ with entries grouped by branch and date rather than release version.
 
 ## 2026-11-18 (rst-8832-hmrc-render-fix)
 
-- HMRC additional income: a blank amount no longer crashes the page, and the amount is now validated as typed, because the integer attribute (since the Virtus migration) turned "asdas" into 0 and let it through.
+- HMRC additional income: a blank amount no longer crashes the page, and the amount is now validated as typed, because the integer attribute (since the Virtus migration) turned "asdas" into 0 and let it through. The error page now shows what was typed and the declared income.
 
 ## 2026-11-18 (chrome-158-capybara-reset)
 

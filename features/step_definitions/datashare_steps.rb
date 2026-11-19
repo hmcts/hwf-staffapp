@@ -99,5 +99,5 @@ Then(/^the additional income field shows "([^"]*)"$/) do |amount|
 end
 
 Then(/^I should see the declared income$/) do
-  expect(page).to have_css('tr', text: 'Total monthly income declared £')
+  expect(page).to have_css('tr', text: /Total monthly income declared\s+\S/)
 end
