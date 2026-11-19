@@ -5,6 +5,10 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 with entries grouped by branch and date rather than release version.
 
+## 2026-11-19 (rst-8811-hmrc-paper-label)
+
+- Exports (by court, raw data, Power BI new, yearly raw rake): an `ni_exist` evidence check done on paper after an HMRC check now shows "ManualAfterHMRC" instead of a blank evidence check type.
+
 ## 2026-11-18 (rst-8832-hmrc-render-fix)
 
 - HMRC additional income: a blank amount no longer crashes the page, and the amount is now validated as typed, because the integer attribute (since the Virtus migration) turned "asdas" into 0 and let it through. The error page now shows what was typed and the declared income.
