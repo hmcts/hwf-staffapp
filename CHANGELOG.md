@@ -7,9 +7,10 @@ with entries grouped by branch and date rather than release version.
 
 ## 2026-11-23 (gem-updates-v77)
 
-- Security and routine gem/npm updates. The puma fix (8.0.4, not 8.1) and the dev/test gems went in under 7 days old.
-  Held: fresh runtime gems (rack, redis, sentry, etc.), jquery/webpack, majors (cucumber 12, devise_invitable 3, marcel 2),
-  rotp (pinned by hwf_hmrc_api), simplecov (SonarQube).
+- Security and routine gem/npm updates. Went in under 7 days old: the puma, rack, image_processing and addressable
+  security fixes (rack and addressable advisories not yet in ruby-advisory-db), the bootsnap bug fix and the dev/test gems.
+  Held: httparty 0.25 and rotp (pinned by hwf-dwp-api / hwf_hmrc_api), fresh feature releases (redis, sentry, jquery,
+  webpack, azure-blob), majors (cucumber 12, devise_invitable 3, marcel 2), simplecov (SonarQube).
 
 ## 2026-11-20 (ruby-4-0-10)
 
