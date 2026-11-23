@@ -5,6 +5,12 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 with entries grouped by branch and date rather than release version.
 
+## 2026-11-23 (gem-updates-v77)
+
+- Security and routine gem/npm updates. The puma fix (8.0.4, not 8.1) and the dev/test gems went in under 7 days old.
+  Held: fresh runtime gems (rack, redis, sentry, etc.), jquery/webpack, majors (cucumber 12, devise_invitable 3, marcel 2),
+  rotp (pinned by hwf_hmrc_api), simplecov (SonarQube).
+
 ## 2026-11-20 (ruby-4-0-10)
 
 - Ruby 4.0.9 → 4.0.10 for the Regexp and String case conversion security fixes.
