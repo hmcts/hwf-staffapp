@@ -430,6 +430,7 @@ module Views
                WHEN ec.check_type = 'ni_exist' AND ec.income_check_type = 'hmrc' THEN 'HMRC NIDuplicate'
                WHEN ec.check_type = 'low_income' AND ec.income_check_type = 'hmrc' THEN 'HMRC LowIncome'
                WHEN ec.check_type = 'flagExtended' AND ec.income_check_type = 'hmrc' THEN 'HMRC FlagExtended'
+               WHEN ec.check_type = 'ni_exist' AND ec.income_check_type = 'paper' AND hc.hc_id IS NOT NULL THEN 'ManualAfterHMRC'
                WHEN ec.check_type = 'flag' AND ec.income_check_type = 'paper' AND hc.hc_id IS NOT NULL THEN 'ManualAfterHMRC'
                WHEN ec.check_type = 'random' AND ec.income_check_type = 'paper' AND hc.hc_id IS NOT NULL THEN 'ManualAfterHMRC'
                WHEN ec.check_type = 'low_income' AND ec.income_check_type = 'paper' AND hc.hc_id IS NOT NULL THEN 'ManualAfterHMRC'

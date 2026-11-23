@@ -741,6 +741,20 @@ RSpec.describe Views::Reports::RawDataExport do
       end
     end
 
+    context 'when the NI duplicate rule selected the application' do
+      let(:check_type) { 'ni_exist' }
+
+      context 'with paper income check and no HMRC check' do
+        it { expect(row['Evidence check type']).to eq 'Manual NIDuplicate' }
+      end
+
+      context 'with paper income check after an HMRC check' do
+        before { create(:hmrc_check, evidence_check: evidence_check, created_at: 1.day.ago) }
+
+        it { expect(row['Evidence check type']).to eq 'ManualAfterHMRC' }
+      end
+    end
+
     context 'when another rule selected the application' do
       let(:check_type) { 'low_income' }
 

@@ -93,6 +93,10 @@ RSpec.describe YearlyRawDataExporter do
       full = create(:application_full_remission, :processed_state, **shared_parameters, fee: 500)
       create(:evidence_check, application: full, check_type: 'flagExtended', income_check_type: 'paper',
                               completed_at: decision_date)
+      ni_duplicate = create(:application_full_remission, :processed_state, **shared_parameters, fee: 400)
+      ni_duplicate_check = create(:evidence_check, application: ni_duplicate, check_type: 'ni_exist',
+                                                   income_check_type: 'paper', completed_at: decision_date)
+      create(:hmrc_check, evidence_check: ni_duplicate_check, created_at: 1.day.ago)
       create(:application_part_remission, :processed_state, **shared_parameters, fee: 300,
                                                                                  amount_to_pay: 50, decision_cost: 250)
     end
