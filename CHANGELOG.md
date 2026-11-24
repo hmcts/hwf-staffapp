@@ -7,11 +7,7 @@ with entries grouped by branch and date rather than release version.
 
 ## 2026-11-24 (rst-8877-dwp-errors)
 
-- DWP error codes now decide how a failed call is handled. 2001 (multiple active claim records) is tried up to 3 times
-  in total, waiting 0.5s then 1s. 2001 and 1007 (claimant not resolved) are DWP data problems: the check still fails,
-  but they don't count towards the DWP down monitor and the rerun job skips them. 2000 (DWP internal error) is unchanged and still counts.
-- They keep `dwp_result` "Unspecified error", so staff see the same message and override options as before; the monitor reads
-  the code from `error_message`. A "not found" answer from the match call is still a no match, whatever its code.
+- DWP error code 2000 is retried up to 3 times and counts towards DWP down; 2001 and 1007 fail straight away, don't count and aren't rerun (hwf-dwp-api mock citizens added for demo).
 
 ## 2026-11-19 (rst-8811-hmrc-paper-label)
 

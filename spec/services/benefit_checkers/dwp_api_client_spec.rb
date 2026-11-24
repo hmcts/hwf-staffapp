@@ -393,11 +393,11 @@ RSpec.describe BenefitCheckers::DwpApiClient, type: :service do
         allow(Kernel).to receive(:sleep)
       end
 
-      context 'when get_claims answers 2001 every time' do
-        before { allow(connection).to receive(:get_claims).and_raise(dwp_error('2001')) }
+      context 'when get_claims answers 2000 every time' do
+        before { allow(connection).to receive(:get_claims).and_raise(dwp_error('2000')) }
 
         it 'tries get_claims three times in total, then fails' do
-          expect { client.check(params) }.to raise_error(StandardError, /2001/)
+          expect { client.check(params) }.to raise_error(StandardError, /2000/)
           expect(connection).to have_received(:get_claims).exactly(3).times
         end
 
@@ -418,12 +418,12 @@ RSpec.describe BenefitCheckers::DwpApiClient, type: :service do
         end
       end
 
-      context 'when get_claims answers 2001 and then succeeds' do
+      context 'when get_claims answers 2000 and then succeeds' do
         before do
           attempts = 0
           allow(connection).to receive(:get_claims) do
             attempts += 1
-            raise dwp_error('2001') if attempts < 3
+            raise dwp_error('2000') if attempts < 3
 
             claims_on_benefits
           end
@@ -435,20 +435,20 @@ RSpec.describe BenefitCheckers::DwpApiClient, type: :service do
         end
       end
 
-      context 'when the citizen call answers 2001' do
+      context 'when the citizen call answers 2000' do
         before do
-          allow(connection).to receive(:get_citizen).and_raise(dwp_error('2001'))
+          allow(connection).to receive(:get_citizen).and_raise(dwp_error('2000'))
           allow(connection).to receive(:get_claims)
         end
 
         it 'retries that call too, three times in total' do
-          expect { client.check(params) }.to raise_error(StandardError, /2001/)
+          expect { client.check(params) }.to raise_error(StandardError, /2000/)
           expect(connection).to have_received(:get_citizen).exactly(3).times
           expect(connection).not_to have_received(:get_claims)
         end
       end
 
-      ['1007', '2000'].each do |code|
+      ['2001', '1007'].each do |code|
         context "when get_claims answers #{code}" do
           before { allow(connection).to receive(:get_claims).and_raise(dwp_error(code)) }
 

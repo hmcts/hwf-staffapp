@@ -4,7 +4,7 @@ module BenefitCheckers
     MATCH_NOT_FOUND = [:not_found, :unprocessable, :bad_request].freeze
 
     # DWP error codes worth trying again, and how many tries a call gets in total. See CHANGELOG.md
-    RETRY_DWP_ERROR_CODES = ['2001'].freeze
+    RETRY_DWP_ERROR_CODES = ['2000'].freeze
     MAX_DWP_ATTEMPTS = 3
 
     private
