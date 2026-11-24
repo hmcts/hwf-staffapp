@@ -108,17 +108,28 @@ module BenefitCheckers
       { 'benefit_checker_status' => status, 'confirmation_ref' => @guid }.with_indifferent_access
     end
 
-    # One DWP call, recorded whether it was answered or failed. A "not found"
-    # answer comes back as nil; any other failure is raised as the staff app's exception.
-    def call_dwp(endpoint_name, request, not_found: [:not_found], &dwp_call)
-      response = retry_once_if_token_rejected(endpoint_name, request, &dwp_call)
+    # One DWP call, recorded whether it was answered or failed. A "not found" answer comes back as nil;
+    # an error code DWP asks us to retry is tried again; any other failure is raised as the staff app's exception.
+    def call_dwp(endpoint_name, request, not_found: [:not_found], &)
+      call_dwp_once(endpoint_name, request, not_found, 1, &)
+    end
+
+    def call_dwp_once(endpoint_name, request, not_found, attempt, &)
+      response = retry_once_if_token_rejected(endpoint_name, request, &)
       @calls.record(endpoint_name, request, response)
       response
     rescue ::HwfDwpApiError, ::HwfDwpApiTokenError => e
-      @calls.record_error(endpoint_name, request, e)
-      return nil if not_found.include?(e.error_type)
+      handle_dwp_error(e, endpoint_name, request, not_found, attempt, &)
+    end
 
-      raise_mapped_error(e)
+    # Waits 0.5s, then 1s, before trying again, as staff are waiting on the page. See CHANGELOG.md
+    def handle_dwp_error(error, endpoint_name, request, not_found, attempt, &)
+      @calls.record_error(endpoint_name, request, error)
+      return nil if not_found.include?(error.error_type)
+      raise_mapped_error(error) unless retry_dwp_call?(error, attempt)
+
+      Kernel.sleep(0.5 * attempt)
+      call_dwp_once(endpoint_name, request, not_found, attempt + 1, &)
     end
 
     def effective_date_window

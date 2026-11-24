@@ -88,6 +88,32 @@ RSpec.describe BenefitCheckRerunJob do
         end
       end
 
+      context 'with DWP error codes' do
+        let(:applications) { ['2001', '1007', '2000'].index_with { create(:application, :benefit_type) } }
+
+        before do
+          # make the monitor offline
+          create_list(:benefit_check, 6, dwp_result: 'Unspecified error', error_message: '502 Bad Gateway')
+          applications.each do |code, coded_application|
+            create(:benefit_check, applicationable: coded_application, dwp_result: 'Unspecified error',
+                                   error_message: { 'errors' => [{ 'code' => code, 'detail' => 'DWP detail' }] }.to_json)
+          end
+          described_class.perform_now
+        end
+
+        it 'does not re-run a 2001 (DWP data problem)' do
+          expect(BenefitCheckRunner).not_to have_received(:new).with(applications['2001'])
+        end
+
+        it 'does not re-run a 1007 (DWP data problem)' do
+          expect(BenefitCheckRunner).not_to have_received(:new).with(applications['1007'])
+        end
+
+        it 're-runs a 2000 (DWP internal error)' do
+          expect(BenefitCheckRunner).to have_received(:new).with(applications['2000'])
+        end
+      end
+
       context 'offline' do
         let(:dwp_result) { 'BadRequest' }
         before { benefit_check }
