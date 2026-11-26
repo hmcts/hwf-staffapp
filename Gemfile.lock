@@ -7,8 +7,8 @@ GIT
 
 GIT
   remote: https://github.com/hmcts/hwf-dwp-api.git
-  revision: e88865ffa027071dc8959099f33bcf348de43731
-  tag: 0.4.6
+  revision: 9d4cb00079eeaa4bb9c5147827baecf34401007f
+  tag: 0.4.7
   specs:
     hwf-dwp-api (0.4.4)
       httparty (~> 0.24.0)
@@ -269,7 +269,7 @@ GEM
       puma
       rails (>= 3.2.22)
     hashdiff (1.3.0)
-    httparty (0.24.3)
+    httparty (0.24.4)
       csv
       mini_mime (>= 1.0.0)
       multi_xml (>= 0.5.2)
