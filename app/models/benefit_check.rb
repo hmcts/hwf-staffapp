@@ -94,6 +94,11 @@ class BenefitCheck < ActiveRecord::Base
     dwp_result == 'InvalidRequest'
   end
 
+  # DWP error 2001 or 1007: a problem with DWP's record of the person, not an outage
+  def dwp_data_error?
+    DWP_DATA_ERROR_CODES.include?(self.class.dwp_error_code(error_message))
+  end
+
   def benefit_check_unavailable?
     return false if error_message.blank?
     dwp_result == 'Server unavailable' &&

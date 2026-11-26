@@ -188,6 +188,20 @@ RSpec.describe OnlineApplicationBenefitsController do
         end
       end
 
+      context 'when the benefit check failed with a DWP data error (2001 or 1007)' do
+        let(:benefit_check) { instance_double(BenefitCheck, invalid_request?: false, dwp_data_error?: true) }
+        let(:benefit_check_has_error) { true }
+        let(:benefits_override) { false }
+
+        it 'redirects to the summary page' do
+          expect(response).to redirect_to(online_application_path(online_application))
+        end
+
+        it 'does not set alert flash message' do
+          expect(flash[:alert]).to be_nil
+        end
+      end
+
       context 'when DWP Warning is offline' do
         let(:dwp_warning_state) { DwpWarning::STATES[:offline] }
         let(:benefits_override) { false }

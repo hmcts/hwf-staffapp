@@ -62,6 +62,20 @@ RSpec.feature 'Benefit checker flow - paper application' do
     then_summary_page_is_displayed
   end
 
+  # | any | Auto | yes | DWP data error (2001/1007) | yes | no | none | (fails, never pending)
+  scenario 'DWP data error (2001, gem mock citizen Price), no paper evidence' do
+    use_dwp_gem_mock
+    visit current_path # the postcode field only shows with the DWP API on
+    fill_price_personal_details
+    fill_application_details
+    choose 'application_min_threshold_exceeded_false'
+    click_button 'Next'
+    answer_on_benefits_yes
+    expect(BenefitCheck.last).to be_dwp_data_error
+    answer_paper_evidence(provided: false)
+    then_summary_page_is_displayed
+  end
+
   # | any | Auto | yes | outage error | yes | yes | full |
   scenario 'DWP outage error, paper evidence provided' do
     drive_to_benefits_question(ni_number: Settings.dwp_mock.ni_number_dwp_error.first)
@@ -259,6 +273,27 @@ RSpec.feature 'Benefit checker flow - paper application' do
     fill_in 'application_month_date_of_birth', with: dob.month
     fill_in 'application_year_date_of_birth', with: dob.year
     fill_in 'application_ni_number', with: ni_number
+    choose 'application_married_false'
+    click_button 'Next'
+  end
+
+  # The hwf-dwp-api gem mock (DWP_API_CONNECTION=mock_dwp) instead of FAKE_BENEFIT_CHECK
+  def use_dwp_gem_mock
+    allow(Settings.dwp_mock).to receive(:fake_api_enabled).and_return(false)
+    allow(Settings).to receive(:dwp_api_enabled).and_return(true)
+    allow(ENV).to receive(:fetch).and_call_original
+    allow(ENV).to receive(:fetch).with('DWP_API_CONNECTION', nil).and_return(HwfDwpApi::MOCK_CONNECTION)
+  end
+
+  # Gem mock citizen error_code_2001_price
+  def fill_price_personal_details
+    fill_in 'application_first_name', with: 'Dominic'
+    fill_in 'application_last_name', with: 'Price'
+    fill_in 'application_postcode', with: 'HR1 2PJ'
+    fill_in 'application_day_date_of_birth', with: 2
+    fill_in 'application_month_date_of_birth', with: 11
+    fill_in 'application_year_date_of_birth', with: 1993
+    fill_in 'application_ni_number', with: 'JC127808D'
     choose 'application_married_false'
     click_button 'Next'
   end

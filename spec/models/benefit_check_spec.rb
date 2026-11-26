@@ -163,6 +163,38 @@ RSpec.describe BenefitCheck do
     end
   end
 
+  describe '#dwp_data_error?' do
+    subject { check.dwp_data_error? }
+
+    def dwp_error(code)
+      { 'errors' => [{ 'code' => code, 'detail' => 'DWP detail' }] }.to_json
+    end
+
+    context 'when the error code is 2001' do
+      let(:check) { build(:benefit_check, dwp_result: 'Unspecified error', error_message: dwp_error('2001')) }
+
+      it { is_expected.to be true }
+    end
+
+    context 'when the error code is 1007' do
+      let(:check) { build(:benefit_check, dwp_result: 'Unspecified error', error_message: dwp_error('1007')) }
+
+      it { is_expected.to be true }
+    end
+
+    context 'when the error code is 2000' do
+      let(:check) { build(:benefit_check, dwp_result: 'Unspecified error', error_message: dwp_error('2000')) }
+
+      it { is_expected.to be false }
+    end
+
+    context 'when there is no error message' do
+      let(:check) { build(:benefit_check, dwp_result: 'Yes', error_message: nil) }
+
+      it { is_expected.to be false }
+    end
+  end
+
   describe '.dwp_outage_failure?' do
     subject { described_class.dwp_outage_failure?(dwp_result, error_message) }
 

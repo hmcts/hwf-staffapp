@@ -49,6 +49,16 @@ RSpec.feature 'Benefit checker flow - online application' do
     then_summary_page_is_displayed
   end
 
+  # | any | Auto | yes | DWP data error (2001/1007) | yes | no | none | (fails, never pending)
+  scenario 'DWP data error (1007, gem mock citizen Morton), no paper evidence' do
+    use_dwp_gem_mock
+    process_online_application(ni_number: 'JC127807C', first_name: 'Leah', last_name: 'Morton',
+                               date_of_birth: Date.new(1977, 7, 21), postcode: 'CV1 5RW')
+    expect(BenefitCheck.last).to be_dwp_data_error
+    answer_online_evidence(provided: false)
+    then_summary_page_is_displayed
+  end
+
   # | any | Auto | yes | outage error | yes | yes | full |
   scenario 'DWP outage error, paper evidence provided' do
     process_online_application(ni_number: Settings.dwp_mock.ni_number_dwp_error.first)
@@ -116,10 +126,18 @@ RSpec.feature 'Benefit checker flow - online application' do
 
   # Fills the application details form and submits; the benefit check runs on
   # submit and decides whether the Evidence of benefits page is shown.
-  def process_online_application(ni_number:)
+  # The hwf-dwp-api gem mock (DWP_API_CONNECTION=mock_dwp) instead of FAKE_BENEFIT_CHECK
+  def use_dwp_gem_mock
+    allow(Settings.dwp_mock).to receive(:fake_api_enabled).and_return(false)
+    allow(Settings).to receive(:dwp_api_enabled).and_return(true)
+    allow(ENV).to receive(:fetch).and_call_original
+    allow(ENV).to receive(:fetch).with('DWP_API_CONNECTION', nil).and_return(HwfDwpApi::MOCK_CONNECTION)
+  end
+
+  def process_online_application(ni_number:, **applicant)
     online_application = create(:online_application, :with_reference, :benefits, :completed,
                                 ni_number: ni_number, jurisdiction: jurisdictions.first,
-                                calculation_scheme: calculation_scheme)
+                                calculation_scheme: calculation_scheme, **applicant)
     visit "/online_applications/#{online_application.id}/edit"
     fill_application_details
     click_button 'Next'

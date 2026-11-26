@@ -149,6 +149,33 @@ RSpec.describe BenefitOverridesController do
           expect(flash[:alert]).to be_nil
         end
       end
+
+      context 'when the benefit check failed with a DWP data error (2001 or 1007)' do
+        let(:last_benefit_check) { instance_double(BenefitCheck, invalid_request?: false, dwp_data_error?: true) }
+        let(:override_params) { { evidence: 'false' } }
+
+        context 'PRE UCD' do
+          let(:calculation_scheme) { FeatureSwitching::CALCULATION_SCHEMAS[0] }
+          it 'redirects to the summary page' do
+            expect(response).to redirect_to(application_summary_path(application))
+          end
+        end
+
+        context 'POST UCD' do
+          let(:calculation_scheme) { FeatureSwitching::CALCULATION_SCHEMAS[1] }
+          it 'redirects to the declaration page' do
+            expect(response).to redirect_to(application_declaration_path(application))
+          end
+        end
+
+        it 'saves the form' do
+          expect(benefits_evidence_form).to have_received(:save)
+        end
+
+        it 'does not set the alert flash message' do
+          expect(flash[:alert]).to be_nil
+        end
+      end
     end
 
     context 'when the form is not valid' do
