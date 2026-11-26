@@ -19,6 +19,10 @@ class BenefitCheck < ActiveRecord::Base
   # data problem, not a DWP outage - a rerun cannot fix them.
   DWP_VALIDATION_ERROR_PATTERNS = ['is invalid', 'is not valid', 'is missing'].freeze
 
+  # DWP error codes for a problem with DWP's own record of the person: the check
+  # fails, but it is not an outage and a rerun cannot fix it. See CHANGELOG.md
+  DWP_DATA_ERROR_CODES = ['2001', '1007'].freeze
+
   include CommonScopes
 
   # True when a check failed because of DWP itself (an outage), as opposed to a
@@ -30,8 +34,19 @@ class BenefitCheck < ActiveRecord::Base
     result = dwp_result.to_s.strip
     return false if NON_OUTAGE_RESULTS.any? { |answer| result.casecmp?(answer) }
     return false if result == 'BadRequest' && dwp_validation_error?(error_message)
+    return false if DWP_DATA_ERROR_CODES.include?(dwp_error_code(error_message))
 
     true
+  end
+
+  # The code DWP puts in its error body, e.g. {"errors":[{"code":"2001",...}]}; nil when there is none
+  def self.dwp_error_code(error_message)
+    return nil if error_message.blank?
+
+    errors = JSON.parse(error_message)['errors'] if error_message.start_with?('{')
+    errors&.first&.dig('code')
+  rescue JSON::ParserError
+    nil
   end
 
   def self.dwp_validation_error?(error_message)
@@ -77,6 +92,11 @@ class BenefitCheck < ActiveRecord::Base
 
   def invalid_request?
     dwp_result == 'InvalidRequest'
+  end
+
+  # DWP error 2001 or 1007: a problem with DWP's record of the person, not an outage
+  def dwp_data_error?
+    DWP_DATA_ERROR_CODES.include?(self.class.dwp_error_code(error_message))
   end
 
   def benefit_check_unavailable?

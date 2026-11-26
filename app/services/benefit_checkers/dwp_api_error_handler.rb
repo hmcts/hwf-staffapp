@@ -3,7 +3,15 @@ module BenefitCheckers
     # DWP answers these when nobody, or more than one person, fits the match request
     MATCH_NOT_FOUND = [:not_found, :unprocessable, :bad_request].freeze
 
+    # DWP error codes worth trying again, and how many tries a call gets in total. See CHANGELOG.md
+    RETRY_DWP_ERROR_CODES = ['2000'].freeze
+    MAX_DWP_ATTEMPTS = 3
+
     private
+
+    def retry_dwp_call?(error, attempt)
+      attempt < MAX_DWP_ATTEMPTS && RETRY_DWP_ERROR_CODES.include?(BenefitCheck.dwp_error_code(error.message))
+    end
 
     # Maps HwfDwpApiError error_type to the exceptions process_proxy_api_call expects
     def raise_mapped_error(error)

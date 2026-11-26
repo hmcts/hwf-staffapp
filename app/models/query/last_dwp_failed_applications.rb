@@ -54,14 +54,24 @@ module Query
       all_failed_checks.select('distinct on (applicationable_id, applicationable_type) *').order(:applicationable_id)
     end
 
-    # rubocop:disable Layout/LineLength
     def all_failed_checks
+      BenefitCheck.where('benefit_checks.created_at between ? AND ?', 3.months.ago, Time.zone.now).
+        merge(unavailable_checks.or(dwp_internal_error_checks)).includes(:applicationable)
+    end
+
+    # rubocop:disable Layout/LineLength
+    def unavailable_checks
       BenefitCheck.where("dwp_result = 'BadRequest' OR dwp_result = 'Server unavailable'").
-        where('benefit_checks.created_at between ? AND ?', 3.months.ago, Time.zone.now).
         where('benefit_checks.error_message LIKE ? OR benefit_checks.error_message LIKE ? OR benefit_checks.error_message LIKE ?',
-              '%LSCBC%', '%Service unavailable%', '%not available%').includes(:applicationable)
+              '%LSCBC%', '%Service unavailable%', '%not available%')
     end
     # rubocop:enable Layout/LineLength
+
+    # DWP error 2000 should be included too
+    def dwp_internal_error_checks
+      BenefitCheck.where(dwp_result: 'Unspecified error').
+        where('benefit_checks.error_message ~ ?', '"code"\\s*:\\s*"2000"')
+    end
 
     def office_users
       @user.office.users.ids

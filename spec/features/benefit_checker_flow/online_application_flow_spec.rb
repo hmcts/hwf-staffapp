@@ -1,7 +1,7 @@
 require 'rails_helper'
 
 # Feature coverage for docs/benefit_checker_flow.md - online (digital) flow.
-# Fast: rack_test only (no JS). The mocked DWP client (FAKE_BENEFIT_CHECK)
+# Fast: rack_test only (no JS). The mocked DWP client (FAKE_BENEFIT_CHECK, or the gem mock via use_dwp_gem_mock)
 # picks the benefit check result from the application's NI number.
 
 # rubocop:disable RSpec/NoExpectationExample
@@ -45,6 +45,16 @@ RSpec.feature 'Benefit checker flow - online application' do
   # | any | Auto | yes | InvalidRequest | yes | no | none | (rst-8513: not an outage, never blocks)
   scenario 'DWP rejects the applicant data (InvalidRequest), no paper evidence' do
     process_online_application(ni_number: Settings.dwp_mock.surname_dwp_error.first)
+    answer_online_evidence(provided: false)
+    then_summary_page_is_displayed
+  end
+
+  # | any | Auto | yes | DWP data error (2001/1007) | yes | no | none | (fails, never pending)
+  scenario 'DWP data error (1007, gem mock citizen Morton), no paper evidence' do
+    use_dwp_gem_mock
+    process_online_application(ni_number: 'JC127807C', first_name: 'Leah', last_name: 'Morton',
+                               date_of_birth: Date.new(1977, 7, 21), postcode: 'CV1 5RW')
+    expect(BenefitCheck.last).to be_dwp_data_error
     answer_online_evidence(provided: false)
     then_summary_page_is_displayed
   end
@@ -116,10 +126,10 @@ RSpec.feature 'Benefit checker flow - online application' do
 
   # Fills the application details form and submits; the benefit check runs on
   # submit and decides whether the Evidence of benefits page is shown.
-  def process_online_application(ni_number:)
+  def process_online_application(ni_number:, **applicant)
     online_application = create(:online_application, :with_reference, :benefits, :completed,
                                 ni_number: ni_number, jurisdiction: jurisdictions.first,
-                                calculation_scheme: calculation_scheme)
+                                calculation_scheme: calculation_scheme, **applicant)
     visit "/online_applications/#{online_application.id}/edit"
     fill_application_details
     click_button 'Next'

@@ -163,6 +163,38 @@ RSpec.describe BenefitCheck do
     end
   end
 
+  describe '#dwp_data_error?' do
+    subject { check.dwp_data_error? }
+
+    def dwp_error(code)
+      { 'errors' => [{ 'code' => code, 'detail' => 'DWP detail' }] }.to_json
+    end
+
+    context 'when the error code is 2001' do
+      let(:check) { build(:benefit_check, dwp_result: 'Unspecified error', error_message: dwp_error('2001')) }
+
+      it { is_expected.to be true }
+    end
+
+    context 'when the error code is 1007' do
+      let(:check) { build(:benefit_check, dwp_result: 'Unspecified error', error_message: dwp_error('1007')) }
+
+      it { is_expected.to be true }
+    end
+
+    context 'when the error code is 2000' do
+      let(:check) { build(:benefit_check, dwp_result: 'Unspecified error', error_message: dwp_error('2000')) }
+
+      it { is_expected.to be false }
+    end
+
+    context 'when there is no error message' do
+      let(:check) { build(:benefit_check, dwp_result: 'Yes', error_message: nil) }
+
+      it { is_expected.to be false }
+    end
+  end
+
   describe '.dwp_outage_failure?' do
     subject { described_class.dwp_outage_failure?(dwp_result, error_message) }
 
@@ -241,6 +273,32 @@ RSpec.describe BenefitCheck do
       end
     end
 
+    context 'with a DWP error code in the message' do
+      def dwp_error(code)
+        { 'errors' => [{ 'code' => code, 'detail' => 'DWP detail', 'title' => 'DWP title' }] }.to_json
+      end
+
+      let(:dwp_result) { 'Unspecified error' }
+
+      context 'when it is 2001 (multiple active claim records, a DWP data problem)' do
+        let(:error_message) { dwp_error('2001') }
+
+        it { is_expected.to be false }
+      end
+
+      context 'when it is 1007 (claimant not resolved, a DWP data problem)' do
+        let(:error_message) { dwp_error('1007') }
+
+        it { is_expected.to be false }
+      end
+
+      context 'when it is 2000 (DWP internal error)' do
+        let(:error_message) { dwp_error('2000') }
+
+        it { is_expected.to be true }
+      end
+    end
+
     context 'with a missing result' do
       let(:dwp_result) { nil }
 
@@ -251,6 +309,29 @@ RSpec.describe BenefitCheck do
       let(:dwp_result) { '' }
 
       it { is_expected.to be true }
+    end
+  end
+
+  describe '.dwp_error_code' do
+    it 'returns the code of the first DWP error' do
+      message = { 'errors' => [{ 'code' => '2001', 'detail' => 'Unexpected multiple active claim records exists.' }] }.to_json
+      expect(described_class.dwp_error_code(message)).to eq('2001')
+    end
+
+    it 'returns nil when the error has no code' do
+      expect(described_class.dwp_error_code({ 'errors' => [{ 'status' => '500' }] }.to_json)).to be_nil
+    end
+
+    it 'returns nil when there is no errors list' do
+      expect(described_class.dwp_error_code({ 'error' => 'Connection refused' }.to_json)).to be_nil
+    end
+
+    it 'returns nil for a message that is not JSON' do
+      expect(described_class.dwp_error_code('Net::ReadTimeout')).to be_nil
+    end
+
+    it 'returns nil for a blank message' do
+      expect(described_class.dwp_error_code(nil)).to be_nil
     end
   end
 

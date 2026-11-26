@@ -372,6 +372,95 @@ RSpec.describe BenefitCheckers::DwpApiClient, type: :service do
       end
     end
 
+    # RST-8877: what happens depends on the DWP code in the error body, not the HTTP status
+    context 'when DWP answers with an error code' do
+      def dwp_error(code)
+        HwfDwpApiError.new(
+          { 'errors' => [{ 'code' => code, 'detail' => "DWP detail #{code}", 'title' => 'DWP title' }] }.to_json,
+          :standard_error
+        )
+      end
+
+      let(:claims_on_benefits) do
+        { 'data' => [{ 'id' => 'universal_credit_0', 'type' => 'Claim',
+                       'attributes' => { 'guid' => citizen_guid, 'benefitType' => 'universal_credit', 'status' => 'in_payment',
+                                         'awards' => [{ 'startDate' => '2025-01-01', 'status' => 'live', 'amount' => 74_500,
+                                                        'assessmentAttributes' => { 'takeHomePay' => 0 } }] } }] }
+      end
+
+      before do
+        allow(connection).to receive(:match_citizen).with(hash_including(expected_citizen_params)).and_return(match_response)
+        allow(Kernel).to receive(:sleep)
+      end
+
+      context 'when get_claims answers 2000 every time' do
+        before { allow(connection).to receive(:get_claims).and_raise(dwp_error('2000')) }
+
+        it 'tries get_claims three times in total, then fails' do
+          expect { client.check(params) }.to raise_error(StandardError, /2000/)
+          expect(connection).to have_received(:get_claims).exactly(3).times
+        end
+
+        it 'records every try' do
+          expect { client.check(params) }.to raise_error(StandardError)
+          expect(benefit_check.dwp_api_calls.where(endpoint_name: 'get_claims').count).to eq(3)
+        end
+
+        it 'waits 0.5s, then 1s, between the tries' do
+          expect { client.check(params) }.to raise_error(StandardError)
+          expect(Kernel).to have_received(:sleep).with(0.5).ordered
+          expect(Kernel).to have_received(:sleep).with(1.0).ordered
+        end
+
+        it 'does not repeat the match' do
+          expect { client.check(params) }.to raise_error(StandardError)
+          expect(connection).to have_received(:match_citizen).once
+        end
+      end
+
+      context 'when get_claims answers 2000 and then succeeds' do
+        before do
+          attempts = 0
+          allow(connection).to receive(:get_claims) do
+            attempts += 1
+            raise dwp_error('2000') if attempts < 3
+
+            claims_on_benefits
+          end
+        end
+
+        it 'uses the answer from the successful try' do
+          expect(client.check(params)['benefit_checker_status']).to eq('Yes')
+          expect(connection).to have_received(:get_claims).exactly(3).times
+        end
+      end
+
+      context 'when the citizen call answers 2000' do
+        before do
+          allow(connection).to receive(:get_citizen).and_raise(dwp_error('2000'))
+          allow(connection).to receive(:get_claims)
+        end
+
+        it 'retries that call too, three times in total' do
+          expect { client.check(params) }.to raise_error(StandardError, /2000/)
+          expect(connection).to have_received(:get_citizen).exactly(3).times
+          expect(connection).not_to have_received(:get_claims)
+        end
+      end
+
+      ['2001', '1007'].each do |code|
+        context "when get_claims answers #{code}" do
+          before { allow(connection).to receive(:get_claims).and_raise(dwp_error(code)) }
+
+          it 'fails straight away without a retry' do
+            expect { client.check(params) }.to raise_error(StandardError, /#{code}/)
+            expect(connection).to have_received(:get_claims).once
+            expect(Kernel).not_to have_received(:sleep)
+          end
+        end
+      end
+    end
+
     context 'when claims data key is nil' do
       before do
         allow(connection).to receive(:match_citizen).with(hash_including(expected_citizen_params)).and_return(match_response)

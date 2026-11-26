@@ -1,7 +1,7 @@
 require 'rails_helper'
 
 # Feature coverage for docs/benefit_checker_flow.md - paper flow.
-# Fast: rack_test only (no JS). The mocked DWP client (FAKE_BENEFIT_CHECK)
+# Fast: rack_test only (no JS). The mocked DWP client (FAKE_BENEFIT_CHECK, or the gem mock via use_dwp_gem_mock)
 # picks the benefit check result from the applicant's NI number.
 
 # rubocop:disable RSpec/NoExpectationExample
@@ -13,6 +13,16 @@ RSpec.feature 'Benefit checker flow - paper application' do
   let!(:jurisdictions) { create_list(:jurisdiction, 1) }
   let!(:office) { create(:office, jurisdictions: jurisdictions) }
   let!(:user) { create(:user, jurisdiction_id: jurisdictions.first.id, office: office) }
+
+  # hwf-dwp-api gem mock citizens error_code_2001_price and error_code_2000_quinn
+  let(:price) do
+    { first_name: 'Dominic', last_name: 'Price', postcode: 'HR1 2PJ', ni_number: 'JC127808D',
+      day_date_of_birth: 2, month_date_of_birth: 11, year_date_of_birth: 1993 }
+  end
+  let(:quinn) do
+    { first_name: 'Martha', last_name: 'Quinn', postcode: 'BS1 4ST', ni_number: 'JC127805A',
+      day_date_of_birth: 12, month_date_of_birth: 3, year_date_of_birth: 1984 }
+  end
 
   before do
     login_as user
@@ -60,6 +70,27 @@ RSpec.feature 'Benefit checker flow - paper application' do
     answer_on_benefits_yes
     answer_paper_evidence(provided: false)
     then_summary_page_is_displayed
+  end
+
+  # | any | Auto | yes | DWP data error (2001/1007) | yes | no | none | (fails, never pending)
+  scenario 'DWP data error (2001, gem mock citizen Price), no paper evidence' do
+    use_dwp_gem_mock
+    drive_gem_mock_citizen_to_benefits_question(price)
+    answer_on_benefits_yes
+    expect(BenefitCheck.last).to be_dwp_data_error
+    answer_paper_evidence(provided: false)
+    then_summary_page_is_displayed
+  end
+
+  # | any | Auto | yes | DWP error 2000 after retries | yes | no | redirect to homepage, pending list |
+  scenario 'DWP error 2000 (gem mock citizen Quinn), no paper evidence' do
+    use_dwp_gem_mock
+    drive_gem_mock_citizen_to_benefits_question(quinn)
+    answer_on_benefits_yes
+    answer_paper_evidence(provided: false)
+    then_user_is_sent_home_with_cannot_process_alert
+    visit dwp_failed_applications_path
+    expect(page).to have_text('Martha Quinn')
   end
 
   # | any | Auto | yes | outage error | yes | yes | full |
@@ -259,6 +290,22 @@ RSpec.feature 'Benefit checker flow - paper application' do
     fill_in 'application_month_date_of_birth', with: dob.month
     fill_in 'application_year_date_of_birth', with: dob.year
     fill_in 'application_ni_number', with: ni_number
+    choose 'application_married_false'
+    click_button 'Next'
+  end
+
+  # Gem mock citizen error_code_2001_price
+  def drive_gem_mock_citizen_to_benefits_question(citizen)
+    visit current_path # the postcode field only shows with the DWP API on
+    fill_gem_mock_citizen_details(citizen)
+    fill_application_details
+    choose 'application_min_threshold_exceeded_false'
+    click_button 'Next'
+  end
+
+  # citizen keys are the personal details field names without the application_ prefix
+  def fill_gem_mock_citizen_details(citizen)
+    citizen.each { |field, value| fill_in "application_#{field}", with: value }
     choose 'application_married_false'
     click_button 'Next'
   end

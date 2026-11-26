@@ -5,6 +5,10 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 with entries grouped by branch and date rather than release version.
 
+## 2026-11-24 (rst-8877-dwp-errors)
+
+- DWP error code 2000 is retried up to 3 times, counts towards DWP down and shows on the "Process when DWP is back online" list; 2001 and 1007 fail straight away, don't count, aren't rerun, and with no paper evidence the application fails instead of being sent home (hwf-dwp-api mock citizens added for demo).
+
 ## 2026-11-19 (rst-8811-hmrc-paper-label)
 
 - Exports (by court, raw data, Power BI new, yearly raw rake): an `ni_exist` evidence check done on paper after an HMRC check now shows "ManualAfterHMRC" instead of a blank evidence check type.

@@ -80,6 +80,40 @@ RSpec.describe Query::LastDwpFailedApplications do
       end
     end
 
+    context 'with DWP error codes (Unspecified error with the DWP error body)' do
+      def dwp_error(code)
+        { errors: [{ code: code, detail: 'DWP detail', status: '500' }] }.to_json
+      end
+
+      let(:application_2000) { create(:application, :benefit_type, user: user, reference: 'CODE2000', office: office1) }
+      let(:application_2001) { create(:application, :benefit_type, user: user, reference: 'CODE2001', office: office1) }
+      let(:application_1007) { create(:application, :benefit_type, user: user, reference: 'CODE1007', office: office1) }
+      let(:online_2000) { create(:online_application, :benefits, user: user, reference: 'ONLINE2000') }
+
+      before do
+        create(:benefit_check, dwp_result: 'Unspecified error', error_message: dwp_error('2000'),
+                               applicationable: application_2000, user: user)
+        create(:benefit_check, dwp_result: 'Unspecified error', error_message: dwp_error('2001'),
+                               applicationable: application_2001, user: user)
+        create(:benefit_check, dwp_result: 'Unspecified error', error_message: dwp_error('1007'),
+                               applicationable: application_1007, user: user)
+        create(:benefit_check, dwp_result: 'Unspecified error', error_message: dwp_error('2000'),
+                               applicationable: online_2000, user: user)
+      end
+
+      it 'includes a paper application whose check failed with 2000' do
+        is_expected.to include(application_2000)
+      end
+
+      it 'includes an online application whose check failed with 2000' do
+        is_expected.to include(online_2000)
+      end
+
+      it 'excludes the DWP data errors 2001 and 1007' do
+        is_expected.not_to include(application_2001, application_1007)
+      end
+    end
+
     context 'with several online applications (no N+1 on the linked lookup)' do
       before do
         3.times do |i|

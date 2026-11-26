@@ -50,6 +50,28 @@ describe DwpMonitor do
         end
       end
 
+      context 'with DWP error codes' do
+        def create_checks_with_code(code)
+          create_list(:benefit_check, 10, dwp_result: 'Unspecified error',
+                                          error_message: { 'errors' => [{ 'code' => code, 'detail' => 'DWP detail' }] }.to_json)
+        end
+
+        it 'does not count 2001 (a DWP data problem)' do
+          create_checks_with_code('2001')
+          is_expected.to eql 'online'
+        end
+
+        it 'does not count 1007 (a DWP data problem)' do
+          create_checks_with_code('1007')
+          is_expected.to eql 'online'
+        end
+
+        it 'counts 2000 (DWP internal error)' do
+          create_checks_with_code('2000')
+          is_expected.to eql 'offline'
+        end
+      end
+
       context 'when more than 50% of the last dwp_results are "400 Bad Request"' do
         before { build_dwp_checks_with_bad_requests }
 
