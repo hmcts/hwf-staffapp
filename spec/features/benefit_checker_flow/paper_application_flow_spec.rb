@@ -1,7 +1,7 @@
 require 'rails_helper'
 
 # Feature coverage for docs/benefit_checker_flow.md - paper flow.
-# Fast: rack_test only (no JS). The mocked DWP client (FAKE_BENEFIT_CHECK)
+# Fast: rack_test only (no JS). The mocked DWP client (FAKE_BENEFIT_CHECK, or the gem mock via use_dwp_gem_mock)
 # picks the benefit check result from the applicant's NI number.
 
 # rubocop:disable RSpec/NoExpectationExample
@@ -275,14 +275,6 @@ RSpec.feature 'Benefit checker flow - paper application' do
     fill_in 'application_ni_number', with: ni_number
     choose 'application_married_false'
     click_button 'Next'
-  end
-
-  # The hwf-dwp-api gem mock (DWP_API_CONNECTION=mock_dwp) instead of FAKE_BENEFIT_CHECK
-  def use_dwp_gem_mock
-    allow(Settings.dwp_mock).to receive(:fake_api_enabled).and_return(false)
-    allow(Settings).to receive(:dwp_api_enabled).and_return(true)
-    allow(ENV).to receive(:fetch).and_call_original
-    allow(ENV).to receive(:fetch).with('DWP_API_CONNECTION', nil).and_return(HwfDwpApi::MOCK_CONNECTION)
   end
 
   # Gem mock citizen error_code_2001_price

@@ -19,7 +19,19 @@ module DwpSetup
     create_list(:benefit_check, 5, dwp_result: 'Server unavailable', error_message: 'The benefits checker is not available at the moment. Please check again later.')
   end
 
+  # The hwf-dwp-api gem mock (DWP_API_CONNECTION=mock_dwp) instead of FAKE_BENEFIT_CHECK
+  def use_dwp_gem_mock
+    allow(Settings.dwp_mock).to receive(:fake_api_enabled).and_return(false)
+    allow(Settings).to receive(:dwp_api_enabled).and_return(true)
+    stub_dwp_connection_env
+  end
+
   private
+
+  def stub_dwp_connection_env
+    allow(ENV).to receive(:fetch).and_call_original
+    allow(ENV).to receive(:fetch).with('DWP_API_CONNECTION', nil).and_return(HwfDwpApi::MOCK_CONNECTION)
+  end
 
   def teardown
     BenefitCheck.delete_all
