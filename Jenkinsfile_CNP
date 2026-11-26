@@ -96,7 +96,11 @@ withPipeline(type, product, component) {
       startTestDatabase()
     }
 
-    before('build') { installRuby() }
+    before('build') {
+      installRuby()
+      // Baked into the image as the Sentry release; see CHANGELOG.md
+      sh script: 'git rev-parse HEAD > REVISION', label: 'Write REVISION for Sentry'
+    }
     before('smoketest:preview') { prepareFreshAgent() }
     before('smoketest:aat') { prepareFreshAgent() }
     before('functionalTest:preview') { prepareFreshAgent() }
@@ -106,7 +110,8 @@ withPipeline(type, product, component) {
       startTestDatabase()
       // one test database per parallel RSpec process - see lib/tasks/test.rake
       rubyBuilder.bundle("exec rake 'parallel:create[4]' 'parallel:load_schema[4]'")
-      rubyBuilder.bundle("install")
+      // check first: a full install races the parallel Docker Build on vendor/bundle; see CHANGELOG.md
+      rubyBuilder.bundle("check || bundle install")
       sh script: 'chmod -R u+w vendor/bundle || true', label: 'Make bundle cache writable for stash'
       installNodeAndAssets()
   }
