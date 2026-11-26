@@ -6,7 +6,9 @@ Sentry.init do |config|
   config.profiles_sample_rate = 1.0
 
   config.breadcrumbs_logger = [:active_support_logger, :http_logger]
-  config.release = ENV.fetch('APPVERSION', 'unknown')
+  # REVISION is written by Jenkinsfile_CNP before the image build; see CHANGELOG.md
+  revision = Rails.root.join('REVISION')
+  config.release = "staffapp@#{revision.read.strip}" if revision.exist?
 
   config.traces_sampler = lambda do |sampling_context|
     transaction_context = sampling_context[:transaction_context]

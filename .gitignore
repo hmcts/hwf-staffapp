@@ -70,3 +70,6 @@ CLAUDE.md
 
 # Local-only developer tools, never committed (e.g. the e2e data creator)
 script/local/
+
+# Sentry release SHA, written by Jenkinsfile_CNP
+/REVISION
