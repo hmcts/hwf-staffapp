@@ -19,33 +19,33 @@ describe HmrcMonitor do
     end
 
     context 'when all recent checks succeeded' do
-      before { create_checks(10, nil) }
+      before { create_checks(20, nil) }
 
       it { is_expected.to eql 'online' }
     end
 
-    context 'when fewer than 25% of the last 10 checks are service failures' do
+    context 'when fewer than 25% of the last 20 checks are service failures' do
       before do
-        create_checks(8, nil)
-        create_checks(2, 'API: SERVER_ERROR - Service unavailable')
+        create_checks(16, nil)
+        create_checks(4, 'API: SERVER_ERROR - Service unavailable')
       end
 
       it { is_expected.to eql 'online' }
     end
 
-    context 'when 25% or more of the last 10 checks are service failures' do
+    context 'when 25% or more of the last 20 checks are service failures' do
       before do
-        create_checks(7, nil)
-        create_checks(3, 'API: SERVER_ERROR - Service unavailable')
+        create_checks(15, nil)
+        create_checks(5, 'API: SERVER_ERROR - Service unavailable')
       end
 
       it { is_expected.to eql 'warning' }
     end
 
-    context 'when 50% or more of the last 10 checks are service failures' do
+    context 'when 50% or more of the last 20 checks are service failures' do
       before do
-        create_checks(5, nil)
-        create_checks(5, 'API: INTERNAL_SERVER_ERROR - Something went wrong.')
+        create_checks(10, nil)
+        create_checks(10, 'API: INTERNAL_SERVER_ERROR - Something went wrong.')
       end
 
       it { is_expected.to eql 'offline' }
@@ -53,7 +53,7 @@ describe HmrcMonitor do
 
     context 'when the failures are applicant data problems, not service failures' do
       before do
-        create_checks(10, 'API: MATCHING_FAILED - There is no match for the information provided')
+        create_checks(20, 'API: MATCHING_FAILED - There is no match for the information provided')
       end
 
       it { is_expected.to eql 'online' }
@@ -61,19 +61,28 @@ describe HmrcMonitor do
 
     context 'when the failure is the local tax credit entitlement check' do
       before do
-        create_checks(10, I18n.t('hmrc_summary.entitlement_date'))
+        create_checks(20, I18n.t('hmrc_summary.entitlement_date'))
       end
 
       it { is_expected.to eql 'online' }
     end
 
-    context 'when only the last 10 checks count' do
+    context 'when only the last 20 checks count' do
+      before do
+        create_checks(20, 'API: SERVER_ERROR - Service unavailable')
+        create_checks(20, nil)
+      end
+
+      it { is_expected.to eql 'online' }
+    end
+
+    context 'when the failures are older than the last 10 but within the last 20 checks' do
       before do
         create_checks(10, 'API: SERVER_ERROR - Service unavailable')
         create_checks(10, nil)
       end
 
-      it { is_expected.to eql 'online' }
+      it { is_expected.to eql 'offline' }
     end
 
     context 'with each known service failure message' do
@@ -92,7 +101,7 @@ describe HmrcMonitor do
 
       it 'reports offline for every one of them' do
         service_failures.each do |message|
-          checks = create_checks(10, message)
+          checks = create_checks(20, message)
           expect(described_class.new.state).to eql('offline'), "expected offline for #{message.inspect}"
           checks.each(&:destroy)
         end
@@ -104,13 +113,13 @@ describe HmrcMonitor do
     let(:evidence_check) { create(:evidence_check, application: create(:application)) }
 
     it 'is true when the state is offline' do
-      create_list(:hmrc_check, 10, evidence_check: evidence_check, error_response: 'API: SERVER_ERROR - Service unavailable')
+      create_list(:hmrc_check, 20, evidence_check: evidence_check, error_response: 'API: SERVER_ERROR - Service unavailable')
       expect(service.offline?).to be true
     end
 
     it 'is false when the state is warning' do
-      create_list(:hmrc_check, 7, evidence_check: evidence_check, error_response: nil)
-      create_list(:hmrc_check, 3, evidence_check: evidence_check, error_response: 'API: SERVER_ERROR - Service unavailable')
+      create_list(:hmrc_check, 15, evidence_check: evidence_check, error_response: nil)
+      create_list(:hmrc_check, 5, evidence_check: evidence_check, error_response: 'API: SERVER_ERROR - Service unavailable')
       expect(service.offline?).to be false
     end
 

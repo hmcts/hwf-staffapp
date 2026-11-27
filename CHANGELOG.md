@@ -5,6 +5,10 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 with entries grouped by branch and date rather than release version.
 
+## 2026-11-27 (rst-8829-hmrc-frequency)
+
+- The HMRC monitor works out online, warning and offline from the last 20 HMRC checks instead of 10.
+
 ## 2026-11-26 (sentry-release-revision)
 
 - Sentry events carry the git commit as release (`staffapp@<sha>`, from a `REVISION` file the pipeline writes before the image build), replacing the never-set `APPVERSION` that left every release "unknown"; the CI test hook now runs `bundle check` first, because its `bundle install` raced the parallel image build over `vendor/bundle/.../bundler.lock`.

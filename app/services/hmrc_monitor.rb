@@ -1,6 +1,9 @@
 # Mirrors DwpMonitor for the HMRC income check. Drives the HMRC banner and,
 # when offline, routes new evidence checks to paper - see CHANGELOG.md.
 class HmrcMonitor
+  # How many of the latest HMRC checks the state is worked out from - see CHANGELOG.md
+  CHECKS_COUNTED = 20
+
   def initialize
     hmrc_results
   end
@@ -20,7 +23,7 @@ class HmrcMonitor
   end
 
   def hmrc_results
-    @checks = HmrcCheck.order('id desc').limit(10).pluck(:error_response)
+    @checks = HmrcCheck.order('id desc').limit(CHECKS_COUNTED).pluck(:error_response)
   end
 
   def percent
